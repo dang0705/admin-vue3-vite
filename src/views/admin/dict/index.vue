@@ -146,10 +146,10 @@ const handleDelete = async (ids: string[]) => {
 .custom-tree-node .do {
 	display: none;
 }
-.custom-tree-node:hover .code {
+/*.custom-tree-node:hover .code {
 	display: none;
 }
-//.custom-tree-node:hover .do {
-//	display: inline-block;
-//}
+.custom-tree-node:hover .do {
+	display: inline-block;
+}*/
 </style>
