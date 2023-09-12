@@ -20,6 +20,7 @@ const alias: Record<string, string> = {
 
 const viteConfig = defineConfig((mode: ConfigEnv) => {
 	const env = loadEnv(mode.mode, process.cwd());
+	console.log('前端代理域名', env.VITE_ADMIN_PROXY_PATH);
 	return {
 		plugins: [
 			vue(), // Vue 插件
