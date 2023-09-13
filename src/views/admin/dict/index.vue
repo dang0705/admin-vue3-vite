@@ -23,12 +23,12 @@
 											<span class="code">{{ data.dictType }}</span>
 											<span class="do">
 												<el-button-group>
-													<el-button icon="el-icon-edit" size="small" @click.stop="dicDialogRef.openDialog(data.id)"></el-button>
+													<el-button :icon="Edit" size="small" @click.stop="dicDialogRef.openDialog(data.id)"></el-button>
 													<el-tooltip :content="$t('sysdict.deleteDisabledTip')" :disabled="data.systemFlag === '0'" placement="top">
 														<span style="margin-left: 12px">
 															<el-button
 																:disabled="data.systemFlag !== '0'"
-																icon="el-icon-delete"
+																:icon="Delete"
 																size="small"
 																@click.stop="handleDelete([data.id])"
 															></el-button>
@@ -58,6 +58,7 @@
 </template>
 
 <script lang="ts" name="systemDic" setup>
+import { Delete, Edit } from '@element-plus/icons-vue';
 import { delObj, fetchList, refreshCache } from '/@/api/admin/dict';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
@@ -146,10 +147,10 @@ const handleDelete = async (ids: string[]) => {
 .custom-tree-node .do {
 	display: none;
 }
-/*.custom-tree-node:hover .code {
+.custom-tree-node:hover .code {
 	display: none;
 }
 .custom-tree-node:hover .do {
 	display: inline-block;
-}*/
+}
 </style>
