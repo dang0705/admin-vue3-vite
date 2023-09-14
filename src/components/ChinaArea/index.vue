@@ -1,10 +1,10 @@
 <template>
-	<el-cascader :options="optionsData" v-model="selectedOptions" @change="handleChange" />
+	<el-cascader :options="optionsData" :props="cascaderProps" v-model="selectedOptions" @change="handleChange" />
 </template>
 <script setup lang="ts" name="china-area">
 import { provinceAndCityData, provinceAndCityDataPlus, regionData, regionDataPlus } from '/@/utils/chinaArea';
 
-const emit = defineEmits(['update:value', 'change']);
+const emit = defineEmits(['update:modelValue', 'change']);
 const optionsData = ref();
 const props = defineProps({
 	// 当前的值
@@ -19,13 +19,15 @@ const props = defineProps({
 		default: false,
 	},
 });
-
+const cascaderProps = {
+	expandTrigger: 'hover' as const,
+};
 const selectedOptions = computed({
 	get: () => {
 		return props.modelValue?.split(',');
 	},
 	set: (val) => {
-		emit('update:value', val?.join(','));
+		emit('update:modelValue', val?.join(','));
 	},
 });
 

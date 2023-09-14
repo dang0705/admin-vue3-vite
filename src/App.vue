@@ -1,5 +1,6 @@
 <template>
 	<el-config-provider :size="getGlobalComponentSize" :locale="getGlobalI18n">
+		<!--		<ChinaArea v-model="areaData" />-->
 		<router-view v-show="setLockScreen" />
 		<LockScreen v-if="themeConfig.isLockScreen" />
 		<Setings ref="settingRef" v-show="themeConfig.lockScreenTime > 1" />
@@ -8,6 +9,7 @@
 </template>
 
 <script setup lang="ts" name="app">
+import ChinaArea from '/@/components/ChinaArea/index.vue';
 import { useI18n } from 'vue-i18n';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -16,6 +18,7 @@ import { Local, Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 import setIntroduction from '/@/utils/setIconfont';
 
+// const areaData = ref('110000,110100,110102');
 // 引入组件
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
 const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
