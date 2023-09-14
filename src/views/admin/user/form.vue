@@ -1,8 +1,37 @@
 <template>
 	<div class="system-user-dialog-container">
 		<el-dialog :close-on-click-modal="false" :title="dataForm.userId ? $t('common.editBtn') : $t('common.addBtn')" draggable v-model="visible">
-			<el-form :model="dataForm" :rules="dataRules" label-width="90px" ref="dataFormRef" v-loading="loading">
+			<el-form :model="dataForm" :rules="dataRules" label-width="100px" ref="dataFormRef" v-loading="loading">
 				<el-row :gutter="20">
+					<!--            new for 2023.09.14 start-->
+					<el-col :span="12" class="mb20">
+						<el-form-item label="账户类型" prop="type">
+							<el-select class="w100" multiple v-model="dataForm.type">
+								<el-option v-for="{ label, value } in postOptions" :label="label" :value="value" :key="label" />
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12" class="mb20">
+						<el-form-item label="登录账户" prop="loginAccount">
+							<el-input class="w100" multiple placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.loginAccount" />
+						</el-form-item>
+					</el-col>
+					<el-col :span="12" class="mb20">
+						<el-form-item label="服务商授权" prop="providerAuth">
+							<el-select class="w100" multiple v-model="dataForm.providerAuth">
+								<el-option v-for="{ label, value } in providerAuth" :label="label" :value="value" :key="label" />
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :span="12" class="mb20">
+						<el-form-item label="客户授权" prop="customerAuth">
+							<el-select class="w100" multiple v-model="dataForm.customerAuth">
+								<el-option v-for="{ label, value } in customerAuth" :label="label" :value="value" :key="label" />
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<!--            new for 2023.09.14 end-->
+
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.username')" prop="username">
 							<el-input :disabled="dataForm.userId !== ''" placeholder="请输入用户名" v-model="dataForm.username"></el-input>
@@ -92,6 +121,44 @@ import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
 
 const { t } = useI18n();
+const postOptions = [
+	{
+		label: '职员账户',
+		value: 0,
+	},
+	{
+		label: '客户账户',
+		value: 1,
+	},
+	{
+		label: '个人账户',
+		value: 2,
+	},
+	{
+		label: '系统账户',
+		value: 3,
+	},
+];
+const providerAuth = [
+	{
+		label: '全部服务商',
+		value: 0,
+	},
+	{
+		label: '分配的服务商',
+		value: 1,
+	},
+];
+const customerAuth = [
+	{
+		label: '全部客户',
+		value: 0,
+	},
+	{
+		label: '分配的客户',
+		value: 1,
+	},
+];
 
 // 定义刷新表格emit
 const emit = defineEmits(['refresh']);
@@ -123,9 +190,20 @@ const dataForm = reactive({
 	email: '',
 	post: [] as string[],
 	role: [] as string[],
+	//   new
+	type: [0],
+	loginAccount: '',
+	providerAuth: [0],
+	customerAuth: [0],
 });
-
+const isNew = ref(true);
 const dataRules = ref({
+	//new
+	type: [{ required: true }],
+	loginAccount: [{ required: true, message: '登录账户不能为空', trigger: 'blur' }],
+	providerAuth: [{ required: true }],
+	customerAuth: [{ required: true }],
+
 	// 用户名校验，不能为空 、长度 5-20、不能和已有数据重复
 	username: [
 		{ required: true, message: '用户名不能为空', trigger: 'blur' },
@@ -184,6 +262,8 @@ const openDialog = async (id: string) => {
 		dataForm.userId = id;
 		await getUserData(id);
 		dataForm.password = '******';
+		isNew.value = false;
+		dataRules.value.type = [{ required: false }];
 	}
 
 	// 加载使用的数据
