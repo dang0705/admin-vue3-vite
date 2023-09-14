@@ -5,27 +5,27 @@
 				<el-row :gutter="20">
 					<!--            new for 2023.09.14 start-->
 					<el-col :span="12" class="mb20">
-						<el-form-item label="账户类型" prop="type">
-							<el-select class="w100" multiple v-model="dataForm.type">
+						<el-form-item label="账户类型" :rules="typeRules" prop="type">
+							<el-select class="w100" v-model="dataForm.type" :clearable="false" :disabled="!isNew">
 								<el-option v-for="{ label, value } in postOptions" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="登录账户" prop="loginAccount">
-							<el-input class="w100" multiple placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.loginAccount" />
+							<el-input class="w100" placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.loginAccount" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商授权" prop="providerAuth">
-							<el-select class="w100" multiple v-model="dataForm.providerAuth">
+							<el-select class="w100" v-model="dataForm.providerAuth">
 								<el-option v-for="{ label, value } in providerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="客户授权" prop="customerAuth">
-							<el-select class="w100" multiple v-model="dataForm.customerAuth">
+							<el-select class="w100" v-model="dataForm.customerAuth">
 								<el-option v-for="{ label, value } in customerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
@@ -191,15 +191,13 @@ const dataForm = reactive({
 	post: [] as string[],
 	role: [] as string[],
 	//   new
-	type: [0],
+	type: 0,
 	loginAccount: '',
-	providerAuth: [0],
-	customerAuth: [0],
+	providerAuth: 0,
+	customerAuth: 0,
 });
-const isNew = ref(true);
-const dataRules = ref({
+const dataRules = reactive({
 	//new
-	type: [{ required: true }],
 	loginAccount: [{ required: true, message: '登录账户不能为空', trigger: 'blur' }],
 	providerAuth: [{ required: true }],
 	customerAuth: [{ required: true }],
@@ -246,12 +244,15 @@ const dataRules = ref({
 	email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
 	lockFlag: [{ required: true, message: '状态不能为空', trigger: 'blur' }],
 });
+const typeRules = ref([{ required: true }]);
+const isNew = ref(true);
 
 // 打开弹窗
 const openDialog = async (id: string) => {
 	visible.value = true;
 	dataForm.userId = '';
-
+	typeRules.value[0].required = !id;
+	isNew.value = !id;
 	// 重置表单数据
 	nextTick(() => {
 		dataFormRef.value?.resetFields();
@@ -262,8 +263,6 @@ const openDialog = async (id: string) => {
 		dataForm.userId = id;
 		await getUserData(id);
 		dataForm.password = '******';
-		isNew.value = false;
-		dataRules.value.type = [{ required: false }];
 	}
 
 	// 加载使用的数据
