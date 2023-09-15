@@ -1,10 +1,11 @@
 // https://pinia.vuejs.org/
 import { createPinia } from 'pinia';
-import piniaPluginPersist from 'pinia-plugin-persist';
+import { PiniaColadaPlugin } from 'colada-plugin';
+import PiniaPluginPersist from 'pinia-plugin-persistedstate';
 
 // 创建
 const pinia = createPinia();
-pinia.use(piniaPluginPersist);
+pinia.use(PiniaPluginPersist).use(PiniaColadaPlugin);
 
 // 导出
 export default pinia;
