@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import pinia from '/@/stores/index';
+import Colada from 'colada-plugin';
 import App from './App.vue';
 import router from './router';
 import { directive } from '/@/directive';
@@ -45,6 +46,7 @@ directive(app);
 other.elSvg(app);
 app
 	.use(pinia) // pinia 存储
+	.use(Colada)
 	.use(router) // 路由
 	.use(ElementPlus, { i18n: i18n.global.t }) // ElementPlus 全局引入
 	.use(ElementIcons) // elementIcons 图标全局引入

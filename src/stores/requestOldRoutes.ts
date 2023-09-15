@@ -1,15 +1,25 @@
 import { defineStore } from 'pinia';
-
+interface Route {
+	children: Array<object>;
+	[propName: string]: any;
+}
 /**
  * 后端返回原始路由(未处理时)
  * @methods setCacheKeepAlive 设置接口原始路由数据
  */
 export const useRequestOldRoutes = defineStore('requestOldRoutes', {
-	state: (): RequestOldRoutesState => ({
+	state: (): { requestOldRoutes: Route[] } => ({
 		requestOldRoutes: [],
 	}),
+	getters: {
+		modules() {
+			let modules: any[] = [];
+			this.requestOldRoutes.forEach(({ children }) => modules.push(...children));
+			return modules.map(({ meta: { enName: module }, name }) => ({ module, name }));
+		},
+	},
 	actions: {
-		async setRequestOldRoutes(routes: Array<string>) {
+		async setRequestOldRoutes(routes: Route) {
 			this.requestOldRoutes = routes;
 		},
 	},

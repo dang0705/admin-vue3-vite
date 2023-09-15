@@ -69,7 +69,7 @@ export async function setFilterMenuAndCacheTagsViewRoutes() {
  * 缓存多级嵌套数组处理后的一维数组
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
-export function setCacheTagsViewRoutes() {
+function setCacheTagsViewRoutes() {
 	const storesTagsView = useTagsViewRoutes(pinia);
 	storesTagsView.setTagsViewRoutes(formatTwoStageRoutes(formatFlatteningRoutes(baseRoutes))[0].children);
 }
@@ -79,7 +79,7 @@ export function setCacheTagsViewRoutes() {
  * @description 替换 baseRoutes（/@/router/route）第一个顶级 children 的路由
  * @returns 返回替换后的路由数组
  */
-export function setFilterRouteEnd() {
+function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(baseRoutes));
 	// notFoundAndNoPower 防止 404、401 不在 layout 布局中，不设置的话，404、401 界面将全屏显示
 	// 关联问题 No match found for location with path 'xxx'
@@ -93,8 +93,8 @@ export function setFilterRouteEnd() {
  * @description 此处循环为 baseRoutes（/@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
  * @link 参考：https://next.router.vuejs.org/zh/api/#addroute
  */
-export async function setAddRoute() {
-	await setFilterRouteEnd().forEach((route: RouteRecordRaw) => {
+function setAddRoute() {
+	setFilterRouteEnd().forEach((route: RouteRecordRaw) => {
 		router.addRoute(route);
 	});
 }
@@ -104,7 +104,7 @@ export async function setAddRoute() {
  * @description isRequestRoutes 为 true，则开启后端控制路由
  * @returns 返回后端路由菜单数据
  */
-export function getBackEndControlRoutes() {
+function getBackEndControlRoutes() {
 	return menuApi.getAdminMenu();
 }
 
@@ -122,7 +122,7 @@ export async function setBackEndControlRefreshRoutes() {
  * @param routes 后端返回的路由表数组
  * @returns 返回处理成函数后的 component
  */
-export function backEndComponent(routes: any) {
+function backEndComponent(routes: any) {
 	if (!routes) return;
 	return routes.map((item: any) => {
 		if (item.path && item.path.startsWith('http')) {
@@ -149,7 +149,7 @@ export function backEndComponent(routes: any) {
  * @param component 当前要处理项 component
  * @returns 返回处理成函数后的 component
  */
-export function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
+function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
 	const keys = Object.keys(dynamicViewsModules);
 
 	const matchKeys = keys.filter((key) => {
