@@ -95,11 +95,14 @@
 							</template>
 						</el-table-column>
 						<el-table-column :label="$t('sysuser.createTime')" prop="createTime" show-overflow-tooltip width="180"></el-table-column>
-						<el-table-column :label="$t('common.action')" width="160" fixed="right">
+						<el-table-column :label="$t('common.action')" width="200" fixed="right">
 							<template #default="scope">
 								<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
 									{{ $t('common.editBtn') }}
 								</el-button>
+								<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)">{{
+									$t('common.distribution')
+								}}</el-button>
 								<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 									<span style="margin-left: 12px">
 										<el-button
@@ -122,7 +125,7 @@
 		</splitpanes>
 
 		<user-form ref="userDialogRef" @refresh="getDataList(false)" />
-
+		<Distribution ref="distributionRef" />
 		<upload-excel
 			ref="excelUploadRef"
 			:title="$t('sysuser.importUserTip')"
@@ -143,12 +146,14 @@ import { useI18n } from 'vue-i18n';
 // 动态引入组件
 const UserForm = defineAsyncComponent(() => import('./form.vue'));
 const QueryTree = defineAsyncComponent(() => import('/@/components/QueryTree/index.vue'));
+const Distribution = defineAsyncComponent(() => import('/@/components/Distribution/index.vue'));
 
 const { t } = useI18n();
 
 // 定义变量内容
 const userDialogRef = ref();
 const excelUploadRef = ref();
+const distributionRef = ref();
 const queryRef = ref();
 const showSearch = ref(true);
 

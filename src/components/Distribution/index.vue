@@ -4,9 +4,10 @@
 			<template #header>
 				<p class="text-xl my-2">{{ dialogTitle }}</p>
 				<el-transfer
-					class="flex items-center"
-					v-model="leftValue"
+					class="flex items-center w-full justify-between"
+					v-model="result"
 					filterable
+					:filter-placeholder="placeholder"
 					:left-default-checked="[2, 3]"
 					:right-default-checked="[1]"
 					:titles="titles"
@@ -14,15 +15,15 @@
 					:data="data"
 					@change="handleChange"
 				>
-					<template #default="{ option }">
-						<span>{{ option.key }} - {{ option.label }}</span>
+					<template v-for="(_, slot) in $slots" #[slot]="option">
+						<slot :name="slot" v-bind="option" />
 					</template>
 				</el-transfer>
 			</template>
-
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
+					<el-button @click="result = [...resultCache]">重置</el-button>
 					<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
 				</span>
 			</template>
@@ -50,6 +51,9 @@ const props = defineProps({
 		type: Array,
 		default: () => ['移出选中', '授予选中'],
 	},
+	placeholder: {
+		type: String,
+	},
 });
 
 interface Option {
@@ -70,7 +74,8 @@ const generateData = (): Option[] => {
 };
 
 const data = ref(generateData());
-const leftValue = ref([1]);
+const result = ref([1]);
+const resultCache = [...result.value];
 
 const renderFunc = (h: (type: string, props: VNodeProps | null, children?: string) => VNode, option: Option) => {
 	return h('span', null, option.label);

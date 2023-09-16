@@ -1,7 +1,6 @@
-import { defineStore } from 'pinia';
 interface Route {
 	children: Array<object>;
-	[propName: string]: any;
+	[x: string]: any;
 }
 /**
  * 后端返回原始路由(未处理时)
@@ -19,7 +18,7 @@ export const useRequestOldRoutes = defineStore('requestOldRoutes', {
 		},
 	},
 	actions: {
-		async setRequestOldRoutes(routes: Route) {
+		setRequestOldRoutes(routes: Route[]) {
 			this.requestOldRoutes = routes;
 		},
 	},

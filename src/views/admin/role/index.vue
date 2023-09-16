@@ -93,7 +93,11 @@
 		/>
 		<!-- 授权 -->
 		<permession ref="permessionRef" />
-		<Distribution ref="distributionRef" />
+		<Distribution ref="distributionRef">
+			<template #default="{ option }">
+				<span>{{ option.key }} - {{ option.label }}</span>
+			</template>
+		</Distribution>
 	</div>
 </template>
 
@@ -106,7 +110,7 @@ import { useI18n } from 'vue-i18n';
 // 引入组件
 const RoleDialog = defineAsyncComponent(() => import('./form.vue'));
 const Permession = defineAsyncComponent(() => import('./permession.vue'));
-const Distribution = defineAsyncComponent(() => import('./Distribution.vue'));
+const Distribution = defineAsyncComponent(() => import('/@/components/Distribution/index.vue'));
 const { t } = useI18n();
 
 // 定义变量内容
