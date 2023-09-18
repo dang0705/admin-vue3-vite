@@ -16,6 +16,7 @@ export const useUserInfo = defineStore('userInfo', {
 			time: 0,
 			roles: [],
 			authBtnList: [],
+			user: {},
 		},
 	}),
 
@@ -27,7 +28,7 @@ export const useUserInfo = defineStore('userInfo', {
 		 * @param {Object} data - 登录数据
 		 * @returns {Promise<Object>}
 		 */
-		async login(data:any) {
+		async login(data: any) {
 			data.grant_type = 'password';
 			data.scope = 'server';
 
