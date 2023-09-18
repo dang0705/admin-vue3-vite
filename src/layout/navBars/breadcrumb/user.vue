@@ -58,12 +58,14 @@
 					<el-dropdown-item command="/home">{{ $t('user.dropdown1') }}</el-dropdown-item>
 					<el-dropdown-item command="personal">{{ $t('user.dropdown2') }}</el-dropdown-item>
 					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
+					<el-dropdown-item divided command="changePassword">修改密码</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
 		<Search ref="searchRef" />
 		<global-websocket uri="/admin/ws/info" v-if="websocketEnable" @rollback="rollback" />
 		<personal-drawer ref="personalDrawerRef"></personal-drawer>
+		<change-password ref="changePasswordRef"></change-password>
 	</div>
 </template>
 
@@ -85,6 +87,7 @@ const GlobalWebsocket = defineAsyncComponent(() => import('/@/components/Websock
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
 const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
 const PersonalDrawer = defineAsyncComponent(() => import('/@/views/admin/user/personal.vue'));
+const ChangePassword = defineAsyncComponent(() => import('/@/views/admin/user/setPassword.vue'));
 
 // 定义变量内容
 const { locale, t } = useI18n();
@@ -96,6 +99,7 @@ const { themeConfig } = storeToRefs(storesThemeConfig);
 const searchRef = ref();
 const newsRef = ref();
 const personalDrawerRef = ref();
+const changePasswordRef = ref();
 
 interface State {
 	[key: string]: boolean | string;
@@ -176,6 +180,8 @@ const onHandleCommandClick = (path: string) => {
 	} else if (path === 'personal') {
 		// 打开个人页面
 		personalDrawerRef.value.open();
+	} else if (path === 'changePassword') {
+		changePasswordRef.value.openDialog();
 	} else {
 		router.push(path);
 	}
