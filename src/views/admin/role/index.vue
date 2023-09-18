@@ -52,16 +52,16 @@
 				<el-table-column prop="createTime" :label="$t('sysrole.createTime')" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('common.action')" width="300">
 					<template #default="scope">
-						<el-button text type="primary" icon="edit-pen" v-auth="'sys_role_edit'" @click="roleDialogRef.openDialog(scope.row.roleId)">{{
-							$t('common.editBtn')
-						}}</el-button>
+						<el-button text type="primary" icon="edit-pen" v-auth="'sys_role_edit'" @click="roleDialogRef.openDialog(scope.row.roleId)"
+							>{{ $t('common.editBtn') }}
+						</el-button>
 
-						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="permessionRef.openDialog(scope.row)">{{
-							$t('sysrole.permissionTip')
-						}}</el-button>
-						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)">{{
-							$t('common.distribution')
-						}}</el-button>
+						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="permessionRef.openDialog(scope.row)"
+							>{{ $t('sysrole.permissionTip') }}
+						</el-button>
+						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)"
+							>{{ $t('common.distribution') }}
+						</el-button>
 						<el-tooltip :content="$t('sysrole.deleteDisabledTip')" :disabled="scope.row.roleId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button
@@ -93,13 +93,13 @@
 		/>
 		<!-- 授权 -->
 		<permession ref="permessionRef" />
-		<Distribution ref="distributionRef" />
+		<Distribution ref="distributionRef" type="10" list-url="/admin/user/assignRolesPage" save-url="/admin/user/assignRoles" />
 	</div>
 </template>
 
 <script setup lang="ts" name="systemRole">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { pageList, delObj } from '/@/api/admin/role';
+import { delObj, pageList } from '/@/api/admin/role';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
