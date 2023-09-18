@@ -79,11 +79,21 @@
 						<el-table-column :label="$t('sysuser.username')" prop="username" fixed="left" show-overflow-tooltip></el-table-column>
 						<el-table-column :label="$t('sysuser.name')" prop="name" show-overflow-tooltip></el-table-column>
 						<el-table-column :label="$t('sysuser.phone')" prop="phone" show-overflow-tooltip></el-table-column>
-						<el-table-column :label="$t('sysuser.post')" show-overflow-tooltip>
+						<el-table-column :label="$t('sysuser.spAuthScope')" prop="spAuthScope" show-overflow-tooltip>
+							<template #default="{ row: { spAuthScope } }">
+								<span v-text="array2Object(providerAuth)[spAuthScope]" />
+							</template>
+						</el-table-column>
+						<el-table-column :label="$t('sysuser.merchantAuthScope')" prop="merchantAuthScope" show-overflow-tooltip>
+							<template #default="{ row: { merchantAuthScope } }">
+								<span v-text="array2Object(customerAuth)[merchantAuthScope]" />
+							</template>
+						</el-table-column>
+						<!--						<el-table-column :label="$t('sysuser.post')" show-overflow-tooltip>
 							<template #default="scope">
 								<el-tag v-for="(item, index) in scope.row.postList" :key="index">{{ item.postName }}</el-tag>
 							</template>
-						</el-table-column>
+						</el-table-column>-->
 						<el-table-column :label="$t('sysuser.role')" show-overflow-tooltip>
 							<template #default="scope">
 								<el-tag v-for="(item, index) in scope.row.roleList" :key="index">{{ item.roleName }}</el-tag>
@@ -139,7 +149,10 @@ import { deptTree } from '/@/api/admin/dept';
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
+import array2Object from '/@/utils/array-2-object';
+import { customerAuth, providerAuth } from './enum';
 
+console.log(array2Object(providerAuth));
 // 动态引入组件
 const UserForm = defineAsyncComponent(() => import('./form.vue'));
 const QueryTree = defineAsyncComponent(() => import('/@/components/QueryTree/index.vue'));

@@ -18,6 +18,8 @@ export default {
 		importUserTip: 'user import',
 		deleteDisabledTip: 'admin are not allowed to delete',
 		noDataScopeTip: 'no data permissions',
+		spAuthScope: 'spAuthScope',
+		merchantAuthScope: 'merchantAuthScope',
 	},
 	personal: {
 		name: 'personal info',

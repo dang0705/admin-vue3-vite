@@ -32,16 +32,16 @@
 					</el-col>
 					<!--            new for 2023.09.14 end-->
 
-					<el-col :span="12" class="mb20">
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.username')" prop="username">
 							<el-input :disabled="dataForm.userId !== ''" placeholder="请输入用户名" v-model="dataForm.username"></el-input>
 						</el-form-item>
-					</el-col>
-					<el-col :span="12" class="mb20">
+					</el-col>-->
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.password')" prop="password">
 							<el-input clearable placeholder="请输入密码" type="password" v-model="dataForm.password"></el-input>
 						</el-form-item>
-					</el-col>
+					</el-col>-->
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.name')" prop="name">
 							<el-input clearable placeholder="请输入姓名" v-model="dataForm.name"></el-input>
@@ -59,14 +59,14 @@
 							</el-select>
 						</el-form-item>
 					</el-col>
-					<el-col :span="12" class="mb20">
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.post')" prop="post">
 							<el-select class="w100" clearable multiple placeholder="请选择岗位" v-model="dataForm.post">
 								<el-option :key="item.postId" :label="item.postName" :value="item.postId" v-for="item in postData" />
 							</el-select>
 						</el-form-item>
-					</el-col>
-					<el-col :span="12" class="mb20">
+					</el-col>-->
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.dept')" prop="deptId">
 							<el-tree-select
 								:data="deptData"
@@ -79,25 +79,25 @@
 							>
 							</el-tree-select>
 						</el-form-item>
-					</el-col>
+					</el-col>-->
 
-					<el-col :span="12" class="mb20">
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.email')" prop="email">
 							<el-input clearable placeholder="请输入邮箱" v-model="dataForm.email"></el-input>
 						</el-form-item>
-					</el-col>
-					<el-col :span="12" class="mb20">
+					</el-col>-->
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.nickname')" prop="nickname">
 							<el-input clearable placeholder="请输入昵称" v-model="dataForm.nickname"></el-input>
 						</el-form-item>
-					</el-col>
-					<el-col :span="12" class="mb20">
+					</el-col>-->
+					<!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.lockFlag')" prop="lockFlag">
 							<el-radio-group v-model="dataForm.lockFlag">
 								<el-radio :key="index" :label="item.value" border v-for="(item, index) in lock_flag">{{ item.label }} </el-radio>
 							</el-radio-group>
 						</el-form-item>
-					</el-col>
+					</el-col>-->
 				</el-row>
 			</el-form>
 			<template #footer>
@@ -119,6 +119,7 @@ import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
+import { customerAuth, providerAuth } from './enum';
 
 const { t } = useI18n();
 const postOptions = [
@@ -137,26 +138,6 @@ const postOptions = [
 	{
 		label: '系统账户',
 		value: 3,
-	},
-];
-const providerAuth = [
-	{
-		label: '全部服务商',
-		value: 0,
-	},
-	{
-		label: '分配的服务商',
-		value: 1,
-	},
-];
-const customerAuth = [
-	{
-		label: '全部客户',
-		value: 0,
-	},
-	{
-		label: '分配的客户',
-		value: 1,
 	},
 ];
 
