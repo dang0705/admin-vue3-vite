@@ -35,7 +35,7 @@ export const router = createRouter({
 });
 
 /**
- * 路由多级嵌套数组处理成一维数组
+ * 扁平化路由
  * @param arr 传入路由菜单数据数组
  * @returns 返回处理后的一维路由菜单数组
  */
@@ -79,6 +79,7 @@ export function formatTwoStageRoutes(arr: any) {
 			}
 		}
 	});
+	console.log(newArr);
 	return newArr;
 }
 

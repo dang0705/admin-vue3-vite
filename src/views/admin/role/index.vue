@@ -50,7 +50,7 @@
 				<el-table-column prop="roleCode" :label="$t('sysrole.roleCode')" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleDesc" :label="$t('sysrole.roleDesc')" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="createTime" :label="$t('sysrole.createTime')" show-overflow-tooltip></el-table-column>
-				<el-table-column :label="$t('common.action')" width="250">
+				<el-table-column :label="$t('common.action')" width="300">
 					<template #default="scope">
 						<el-button text type="primary" icon="edit-pen" v-auth="'sys_role_edit'" @click="roleDialogRef.openDialog(scope.row.roleId)">{{
 							$t('common.editBtn')
@@ -59,7 +59,9 @@
 						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="permessionRef.openDialog(scope.row)">{{
 							$t('sysrole.permissionTip')
 						}}</el-button>
-
+						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)">{{
+							$t('common.distribution')
+						}}</el-button>
 						<el-tooltip :content="$t('sysrole.deleteDisabledTip')" :disabled="scope.row.roleId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button
@@ -91,6 +93,7 @@
 		/>
 		<!-- 授权 -->
 		<permession ref="permessionRef" />
+		<Distribution ref="distributionRef" />
 	</div>
 </template>
 
@@ -103,11 +106,13 @@ import { useI18n } from 'vue-i18n';
 // 引入组件
 const RoleDialog = defineAsyncComponent(() => import('./form.vue'));
 const Permession = defineAsyncComponent(() => import('./permession.vue'));
+const Distribution = defineAsyncComponent(() => import('./Distribution.vue'));
 const { t } = useI18n();
 
 // 定义变量内容
 const roleDialogRef = ref();
 const permessionRef = ref();
+const distributionRef = ref();
 const excelUploadRef = ref();
 const queryRef = ref();
 const showSearch = ref(true);

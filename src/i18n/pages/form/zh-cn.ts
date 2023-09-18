@@ -22,6 +22,7 @@ export default {
 		confirmButtonText: '确认',
 		cancelButtonText: '取消',
 		download: '下载',
+		distribution: '分配',
 	},
 	message: {
 		box: {

@@ -23,6 +23,7 @@ export default {
 		confirmButtonText: 'Confirm',
 		cancelButtonText: 'Cancel',
 		download: 'Download',
+		distribution: 'Distribution',
 	},
 	message: {
 		box: {

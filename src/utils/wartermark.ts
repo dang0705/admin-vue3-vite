@@ -1,6 +1,6 @@
 // 页面添加水印效果
 const setWatermark = (str: string) => {
-	const id = '1.23452384164.123412416';
+	/*	const id = '1.23452384164.123412416';
 	if (document.getElementById(id) !== null) document.body.removeChild(<HTMLElement>document.getElementById(id));
 	const can = document.createElement('canvas');
 	can.width = 200;
@@ -22,7 +22,7 @@ const setWatermark = (str: string) => {
 	div.style.height = `${document.documentElement.clientHeight}px`;
 	div.style.background = `url(${can.toDataURL('image/png')}) left top repeat`;
 	document.body.appendChild(div);
-	return id;
+	return id;*/
 };
 
 /**
