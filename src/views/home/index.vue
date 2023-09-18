@@ -12,7 +12,7 @@
 								:key="text"
 								class="flex items-center bg-grey-bg px-[20px] py-[14px] mr-[12px] rounded-normal"
 							>
-								<div :style="{ backgroundColor: bg }" class="p-[9.5px] rounded-normal mr-[25px]">
+								<div :style="{ backgroundColor: bg }" class="p-[9.5px] rounded-normal mr-[25px] cursor-pointer">
 									<img :src="icons[img]" />
 								</div>
 								<span v-text="text" />
@@ -29,7 +29,7 @@
 								:style="{ color: statusMap[status], width: `calc(100% / ${data.length})` }"
 							>
 								<span v-text="text" class="text-[14px] leading-10" />
-								<span v-text="value" class="text-[28px] leading-[1]" />
+								<span v-text="value" class="text-[28px] leading-[1] cursor-pointer" />
 							</li>
 						</ul>
 					</div>
@@ -68,7 +68,7 @@
 									class="flex-shrink-0 rounded-small px-[6px] mr-[10px] truncate"
 								/>
 								<span v-text="text" :class="['text-[14px]', 'flex-grow', 'truncate', { 'leading-10': !vertical }]" />
-								<span v-if="!vertical" v-text="value" class="text-[28px] leading-[1]" />
+								<span v-if="!vertical" v-text="value" class="text-[28px] leading-[1] cursor-pointer" />
 								<router-link to="" v-if="vertical" class="flex-shrink-0 text-xs">详情 &nbsp; &gt;</router-link>
 							</li>
 						</ul>
