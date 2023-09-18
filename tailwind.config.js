@@ -3,7 +3,9 @@ module.exports = {
 	content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 	theme: {
 		colors: {
-			white: 'var(--color-white)',
+			white: '#fff',
+			grey: '#F2F3F5',
+			'grey-bg': '#FFF6F6F8',
 			primary: {
 				DEFAULT: 'var(--el-color-primary)',
 				'light-3': 'var(--el-color-primary-light-3)',
@@ -114,6 +116,10 @@ module.exports = {
 			8: '32px',
 			9: '36px',
 			10: '40px',
+		},
+		borderRadius: {
+			normal: '10px',
+			small: '3px',
 		},
 	},
 };
