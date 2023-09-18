@@ -105,8 +105,16 @@
 	z-index: 0;
 }
 .login-container {
-	width: 100vw;
-	height: 100vh;
+	// width: 100vw;
+	// height: 100vh;
+	width: 1200px;
+	height: 700px;
+	background: #fff;
+	border-radius: 12px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-gap: 18rem;

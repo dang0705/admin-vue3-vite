@@ -1,21 +1,17 @@
 <template>
 	<el-dialog :close-on-click-modal="false" title="修改密码" width="600" draggable v-model="visible">
 		<el-form :model="form" :rules="dataRules" formDialogRef label-width="120px" ref="dataFormRef" v-loading="loading">
-			<el-form-item label="账号:" prop="account">
-				<div>user001</div>
-				<!-- <div>{{ form.account }}</div> -->
+			<el-form-item label="账号:" prop="username">
+				<div>{{ form.username }}</div>
 			</el-form-item>
-			<el-form-item label="手机号:" prop="mobile">
-				<div>18365932759836</div>
-				<!-- <div>{{ form.mobile }}</div> -->
+			<el-form-item label="手机号:" prop="phone">
+				<div>{{ form.phone }}</div>
 			</el-form-item>
-			<el-form-item label="验证码:" class="login-animation2" prop="code">
+			<el-form-item label="验证码:" class="login-animation2" prop="checkCode">
 				<el-col :span="15">
-					<el-input text maxlength="6" :placeholder="$t('mobile.placeholder2')" v-model="form.code" clearable autocomplete="off">
+					<el-input text maxlength="6" :placeholder="$t('mobile.placeholder2')" v-model="form.checkCode" clearable autocomplete="off">
 						<template #prefix>
-							<el-icon class="el-input__icon">
-								<ele-Position />
-							</el-icon>
+							<img class="w-[1em] h-[1em]" :src="code" alt="" />
 						</template>
 					</el-input>
 				</el-col>
@@ -24,10 +20,10 @@
 					<el-button v-waves class="login-content-code" @click="handleSendCode" :loading="msg.msgKey">{{ msg.msgText }} </el-button>
 				</el-col>
 			</el-form-item>
-			<el-form-item label="设置密码:" class="login-animation2" prop="password">
+			<el-form-item label="设置密码:" class="login-animation2" prop="newPassword">
 				<strength-meter
 					:placeholder="$t('password.accountPlaceholder2')"
-					v-model="form.password"
+					v-model="form.newPassword"
 					autocomplete="off"
 					:maxLength="20"
 					:minLength="6"
@@ -49,13 +45,17 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="SysOauthClientDetailsDialog" setup>
+<script lang="ts" name="setPassword" setup>
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { addObj, getObj, putObj, validateclientId } from '/@/api/admin/client';
+import { useUserInfo } from '/@/stores/userInfo';
 import { sendMobileCode } from '/@/api/admin/modify';
+import { password } from '/@/api/admin/user';
+import { logout } from '/@/api/login';
+import { Session } from '/@/utils/storage';
 import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
+import code from '/@/assets/icons/code.png';
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
@@ -78,23 +78,23 @@ const { grant_types, common_status } = useDict('grant_types', 'common_status');
 
 // 提交表单数据
 const form = reactive({
-	id: '',
-	account: '',
-	mobile: '18822130371',
+	userId: '',
+	username: '',
+	phone: '',
 	code: '',
-	password: '',
+	newPassword: '',
 });
 
 // 定义校验规则
 const dataRules = ref({
-	code: [
+	checkCode: [
 		{
 			required: true,
 			trigger: 'blur',
 			message: t('mobile.codeText'),
 		},
 	],
-	password: [
+	newPassword: [
 		{ required: true, message: '密码不能为空', trigger: 'blur' },
 		{
 			min: 6,
@@ -119,29 +119,20 @@ const dataRules = ref({
 // 打开弹窗
 const openDialog = (id: string) => {
 	visible.value = true;
-	form.id = '';
-	// 重置表单数据
-	nextTick(() => {
-		dataFormRef.value?.resetFields();
-	});
-
-	// 获取sysOauthClientDetails信息
-	if (id) {
-		form.id = id;
-		getsysOauthClientDetailsData(id);
-	}
+	const data = useUserInfo().userInfos;
+	form.username = data.user.username;
+	form.phone = data.user.phone;
+	form.userId = data.user.userId;
 };
 
 /**
  * 处理发送验证码事件。
  */
 const handleSendCode = async () => {
-	const valid = await dataFormRef.value.validateField('mobile').catch(() => {});
-	console.log(valid, 123);
-
+	const valid = await dataFormRef.value.validateField('phone').catch(() => {});
 	if (!valid) return;
 
-	const response = await sendMobileCode({ phone: form.mobile });
+	const response = await sendMobileCode({ phone: form.phone });
 	if (response.data) {
 		useMessage().success('验证码发送成功');
 		timeCacl();
@@ -187,23 +178,27 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
-		form.id ? await putObj(form) : await addObj(form);
-		useMessage().success(t(form.id ? 'common.editSuccessText' : 'common.addSuccessText'));
+		password(form)
+			.then(async () => {
+				await logout();
+				useMessage().success('修改成功');
+				// 需要重新登录
+				// 清除缓存/token等
+				Session.clear();
+				// 使用 reload 时，不需要调用 resetRoute() 重置路由
+				window.location.reload();
+			})
+			.catch((err) => {
+				useMessage().error(err.msg);
+			});
+		console.log(form, 123);
+
 		visible.value = false;
-		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}
-};
-
-// 初始化表单数据
-const getsysOauthClientDetailsData = (id: string) => {
-	// 获取数据
-	getObj(id).then((res: any) => {
-		Object.assign(form, res.data);
-	});
 };
 
 // 暴露变量
