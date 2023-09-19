@@ -83,7 +83,9 @@
 							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDeactivate([scope.row.id])">停用</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="deactivateShow(scope.row.id, scope.row.spName)"
+							>停用</el-button
+						>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -92,14 +94,14 @@
 
 		<!-- 编辑、新增  -->
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
-
-		<el-dialog v-model="dialogVisible" title="停用服务商" width="40%">
-			<div class="mb-5">您确定要停用服务商"xxx人力服务公司"吗？</div>
+		<!-- 停用服务商 -->
+		<el-dialog v-model="deactivateVisible" title="停用服务商" width="40%">
+			<div class="mb-5">您确定要停用服务商"{{ deactivateInfo.spName }}"吗？</div>
 			<div>停用后服务商不可再承接新的任务；不可签署新的承接人；不可与商户添加新的服务协议</div>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="dialogVisible = false">取消</el-button>
-					<el-button type="primary" @click="dialogVisible = false">确定</el-button>
+					<el-button @click="deactivateVisible = false">取消</el-button>
+					<el-button type="primary" @click="handleDeactivate()">确定</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -126,8 +128,9 @@ const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
-
-const dialogVisible = ref(false);
+// 停用服务商变量
+const deactivateVisible = ref(false);
+const deactivateInfo = ref({}) as any;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {
@@ -160,21 +163,19 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 };
 
 // 停用操作
-const handleDeactivate = async (ids: string[]) => {
+const deactivateShow = (id: string, spName: string) => {
+	deactivateInfo.value.id = id;
+	deactivateInfo.value.spName = spName;
+	deactivateVisible.value = true;
+};
+const handleDeactivate = async () => {
 	try {
-		// await useMessageBox().confirm('此操作将永久删除');
-		dialogVisible.value = true;
-	} catch {
-		return;
+		// await delObjs(ids);
+		getDataList();
+		useMessage().success('停用成功');
+	} catch (err: any) {
+		useMessage().error(err.msg);
 	}
-
-	// try {
-	// 	await delObjs(ids);
-	// 	getDataList();
-	// 	useMessage().success('删除成功');
-	// } catch (err: any) {
-	// 	useMessage().error(err.msg);
-	// }
 };
 
 // 删除操作
