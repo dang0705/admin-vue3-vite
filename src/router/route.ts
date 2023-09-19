@@ -69,7 +69,13 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 		meta: {
 			isAuth: false,
 		},
-	}
+	},
+	{
+		path: '/theme-config',
+		name: 'theme-config',
+		component: () => import('/@/views/theme-config.vue'),
+		meta: {},
+	},
 ];
 
 /**
