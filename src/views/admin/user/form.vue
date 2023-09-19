@@ -53,8 +53,8 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('sysuser.role')" prop="role">
-							<el-select class="w100" clearable multiple placeholder="请选择角色" v-model="dataForm.role">
+						<el-form-item :label="$t('sysuser.role')" prop="roleList">
+							<el-select class="w100" clearable multiple placeholder="请选择角色" v-model="dataForm.roleList">
 								<el-option :key="item.roleId" :label="item.roleName" :value="item.roleId" v-for="item in roleData" />
 							</el-select>
 						</el-form-item>
@@ -208,7 +208,7 @@ const dataRules = reactive({
 		{ validator: rule.chinese, trigger: 'blur' },
 	],
 	deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
-	role: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
+	roleList: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
 	post: [{ required: true, message: '岗位不能为空', trigger: 'blur' }],
 	// 手机号校验，不能为空、新增的时不能重复校验
 	phone: [
