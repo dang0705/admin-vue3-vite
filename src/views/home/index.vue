@@ -1,5 +1,5 @@
 <template>
-	<div id="dashboard" class="md:flex-col p-[20px]">
+	<div id="dashboard" class="p-[20px]">
 		<el-row :gutter="20">
 			<el-col :span="16">
 				<div class="flex flex-col">
@@ -10,12 +10,12 @@
 							<li
 								v-for="{ img, text, bg } in operationData"
 								:key="text"
-								class="flex items-center bg-grey-bg px-[20px] py-[14px] mr-[12px] rounded-normal"
+								class="flex flex-col lg:flex-row justify-center items-center bg-grey-bg px-[20px] py-[14px] mr-[12px] rounded-normal"
 							>
-								<div :style="{ backgroundColor: bg }" class="p-[9.5px] rounded-normal mr-[25px] cursor-pointer">
-									<img :src="icons[img]" />
+								<div :style="{ backgroundColor: bg }" class="p-[9.5px] rounded-normal mr-0 lg:mr-[2vw] cursor-pointer">
+									<img :src="icons[img]" class="w-[28px]" />
 								</div>
-								<span v-text="text" />
+								<span v-text="text" class="text-[14px]" />
 							</li>
 						</ul>
 					</div>

@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-navbars-breadcrumb-user pr15" :style="{ flex: layoutUserFlexNum }">
-		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
+		<!--		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont" :class="state.disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('user.title1')"></i>
 			</div>
@@ -10,12 +10,12 @@
 					<el-dropdown-item command="en" :disabled="state.disabledI18n === 'en'">English</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
-		</el-dropdown>
-		<div class="layout-navbars-breadcrumb-user-icon" @click="onLockClick">
+		</el-dropdown>-->
+		<!--		<div class="layout-navbars-breadcrumb-user-icon" @click="onLockClick">
 			<el-icon :title="$t('layout.threeLockScreenTime')">
 				<ele-Lock />
 			</el-icon>
-		</div>
+		</div>-->
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<el-icon :title="$t('user.title2')">
 				<ele-Search />
@@ -24,7 +24,7 @@
 		<!--		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" :title="$t('user.title3')"></i>
 		</div>-->
-		<div class="layout-navbars-breadcrumb-user-icon">
+		<!--		<div class="layout-navbars-breadcrumb-user-icon">
 			<el-popover placement="bottom" trigger="click" transition="el-zoom-in-top" :width="300" :persistent="false">
 				<template #reference>
 					<el-badge :is-dot="isDot">
@@ -37,7 +37,7 @@
 					<UserNews ref="newsRef" />
 				</template>
 			</el-popover>
-		</div>
+		</div>-->
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
 			<i
 				class="iconfont"
@@ -47,7 +47,7 @@
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
-				<img :src="baseURL + userInfos.user.avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
+				<img :src="userInfos.user.avatar ? baseURL + userInfos.user.avatar : avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
 				{{ userInfos.user.username }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
@@ -55,9 +55,9 @@
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="/home">{{ $t('user.dropdown1') }}</el-dropdown-item>
-					<el-dropdown-item command="personal">{{ $t('user.dropdown2') }}</el-dropdown-item>
-					<el-dropdown-item divided command="changePassword">修改密码</el-dropdown-item>
+					<!--					<el-dropdown-item command="/home">{{ $t('user.dropdown1') }}</el-dropdown-item>-->
+					<!--					<el-dropdown-item command="personal">{{ $t('user.dropdown2') }}</el-dropdown-item>-->
+					<el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
 					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
@@ -81,6 +81,7 @@ import mittBus from '/@/utils/mitt';
 import { Session, Local } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { useMsg } from '/@/stores/msg';
+import avatar from '/@/assets/dashboard/customerProportion.webp';
 
 // 引入组件
 const GlobalWebsocket = defineAsyncComponent(() => import('/@/components/Websocket/index.vue'));

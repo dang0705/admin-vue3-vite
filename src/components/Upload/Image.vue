@@ -1,24 +1,25 @@
 <template>
-	<div class="upload-box">
-		<el-upload
-			action="#"
-			drag
-			:id="uuid"
-			:limit="limit"
-			:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
-			:multiple="multiple"
-			:disabled="self_disabled"
-			:show-file-list="false"
-			:http-request="handleHttpUpload"
-			:before-upload="beforeUpload"
-			:on-success="uploadSuccess"
-			:on-error="uploadError"
-			:accept="fileType.join(',')"
-			:on-change="onchange"
-		>
-			<!-- 如果返回的是OSS 地址则不需要增加 baseURL -->
-			<template v-if="!multiple && images.length">
-				<img :src="images[0]" class="upload-image" />
+	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
+		<div>
+			<el-upload
+				action="#"
+				drag
+				:id="uuid"
+				:limit="limit"
+				:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
+				:multiple="multiple"
+				:disabled="self_disabled"
+				:show-file-list="false"
+				:http-request="handleHttpUpload"
+				:before-upload="beforeUpload"
+				:on-success="uploadSuccess"
+				:on-error="uploadError"
+				:accept="fileType.join(',')"
+				:on-change="onchange"
+			>
+				<!-- 如果返回的是OSS 地址则不需要增加 baseURL -->
+				<!--			<template v-if="images.length">
+				<img :src="getPreview(images[0])" class="upload-image" />
 				<div class="upload-handle" @click.stop>
 					<div class="handle-icon" @click="editImg" v-if="!self_disabled">
 						<el-icon :size="props.iconSize">
@@ -39,29 +40,28 @@
 						<span v-if="!props.iconSize">删除</span>
 					</div>
 				</div>
-			</template>
-			<template v-else>
+			</template>-->
 				<div class="upload-empty">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
 						</el-icon>
-						<span>单击上传或拖拽到此处</span>
+						<span>单击上传<br />或拖拽到此处</span>
 					</slot>
 				</div>
-			</template>
-			<template #tip>
-				<span class="text-[#999] text-[14px]">支持{{ fileType.join(',').replace(/image\//g, '') }}文件</span>
-			</template>
-		</el-upload>
-		<div class="el-upload__tip">
-			<slot name="tip"></slot>
+				<template #tip>
+					<span class="text-[#999] text-[14px]">支持{{ fileType.join(',').replace(/image\//g, '') }}文件</span>
+				</template>
+			</el-upload>
+			<div class="el-upload__tip">
+				<slot name="tip"></slot>
+			</div>
 		</div>
-		<ul v-if="multiple" class="flex flex-warp">
-			<li v-for="(image, index) in images" :key="image">
-				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="images" fit="cover" />
+		<ul class="flex flex-warp">
+			<li v-for="(image, index) in realImages" :key="image">
+				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="realImages" fit="cover" />
 				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
-					<el-icon :size="props.iconSize">
+					<el-icon :size="props.iconSize" class="ml-auto">
 						<Delete />
 					</el-icon>
 					<span v-if="!props.iconSize">删除</span>
@@ -82,8 +82,9 @@ import request from '/@/utils/request';
 const { proxy } = getCurrentInstance();
 
 interface UploadFileProps {
-	modelValue: string | string[]; // 图片地址 ==> 必传
+	modelValue: string[]; // 图片地址 ==> 必传
 	uploadFileUrl?: string; // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
+	getPreviewUrl?: string; // 请求真正图片的api
 	drag?: boolean; // 是否支持拖拽上传 ==> 非必传（默认为 true）
 	disabled?: boolean; // 是否禁用上传组件 ==> 非必传（默认为 false）
 	fileSize?: number; // 图片大小限制 ==> 非必传（默认为 5M）
@@ -94,32 +95,25 @@ interface UploadFileProps {
 	borderRadius?: string; // 组件边框圆角 ==> 非必传（默认为 8px）
 	iconSize?: number;
 	type: string; // 业务类型
-	multiple?: boolean;
+	multiple?: boolean; // 是否多选
 }
 
 // 接受父组件参数
 const props = withDefaults(defineProps<UploadFileProps>(), {
-	modelValue: '',
+	modelValue: [],
 	uploadFileUrl: '/docs/sys-file/upload',
+	getPreviewUrl: '/docs/sys-file/gmyg',
 	drag: true,
 	disabled: false,
 	fileSize: 5,
 	limit: 0, // 上传张数限制
 	fileType: () => ['image/jpeg', 'image/png', 'image/gif'],
-	height: '150px',
-	width: '150px',
-	borderRadius: '8px',
+	height: '120px',
+	width: '120px',
+	borderRadius: '3px',
 	multiple: false,
 });
 
-const initImages = (img: string) => (img.includes('http') ? img : proxy.baseURL + img);
-const images = computed(() =>
-	props.multiple
-		? (data.value.length ? (data.value as []) : (props.modelValue as [])).map((item) => initImages(item))
-		: props.modelValue
-		? [initImages(props.modelValue as string)]
-		: []
-);
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
 
@@ -162,24 +156,20 @@ const upload = async (options: UploadRequestOptions) => {
 	}
 };
 
-let data = ref<string | string[]>(props.modelValue);
-
+const images = ref<string[]>(props.modelValue);
+const realImages = computed(() => images.value.map((image) => `${proxy.baseURL}/${image}`));
 const handleHttpUpload = async (options: UploadRequestOptions) => {
-	const result = await upload(options);
-	if (props.multiple) {
-		(data.value as []).push(result);
-	} else {
-		data.value = result;
-	}
-	emit('update:modelValue', data.value);
+	const image = await upload(options);
+	props.multiple ? images.value.push(image) : (images.value = [image]);
+	emit('update:modelValue', images.value);
 };
 
 /**
  * @description 删除图片
  * */
 const deleteImg = (index: number) => {
-	(data.value as []).splice(index, 1);
-	emit('update:modelValue', data.value);
+	(images.value as []).splice(index, 1);
+	emit('update:modelValue', images.value);
 };
 
 /**
@@ -302,6 +292,7 @@ const uploadError = (err: any) => {
 				background-color: transparent;
 				border: 1px dashed var(--el-border-color-darker);
 				border-radius: v-bind(borderRadius);
+				@apply bg-[#F3F3F3];
 
 				&:hover {
 					border: 1px dashed var(--el-color-primary);

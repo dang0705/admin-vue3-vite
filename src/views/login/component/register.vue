@@ -36,8 +36,8 @@
 			</el-button>
 		</el-form-item>
 		<el-form-item class="login-animation4">
-			<el-button type="primary" color="#FF770F" class="login-content-submit" v-waves @click="handleRegister" :loading="loading">
-				<span class="text-[white]">{{ $t('password.registerBtnText') }}</span>
+			<el-button type="primary" color="#FF6826" class="login-content-submit" v-waves @click="handleRegister" :loading="loading">
+				<span class="text-[white] text-[16px] font-bold">{{ $t('password.registerBtnText') }}</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
