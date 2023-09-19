@@ -149,7 +149,7 @@ const upload = async (options: UploadRequestOptions) => {
 			data: formData,
 		});
 		// 调用 el-form 内部的校验方法（可自动校验）
-		formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
+		// formItemContext?.prop && formContext?.validateField(formItemContext.prop as []);
 		return Promise.resolve(data.url);
 	} catch (error) {
 		options.onError(error as any);
