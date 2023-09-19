@@ -6,14 +6,6 @@
 					<el-form-item :label="$t('spInfo.shName')" prop="shName">
 						<el-input :placeholder="$t('spInfo.inputShNameTip')" style="max-width: 180px" v-model="state.queryForm.shName" />
 					</el-form-item>
-					<el-form-item :label="$t('spInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input :placeholder="$t('spInfo.inputSocialCreditCodeTip')" style="max-width: 180px" v-model="state.queryForm.socialCreditCode" />
-					</el-form-item>
-					<el-form-item :label="t('spInfo.spName')" class="ml2" prop="spName">
-						<el-select :placeholder="t('spInfo.inputSpNameTip')" v-model="state.queryForm.spName">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
-						</el-select>
-					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
@@ -51,21 +43,25 @@
 				:header-cell-style="tableStyle.headerCellStyle"
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
+				style="width: 100%"
 			>
-				<el-table-column type="selection" width="40" align="center" />
-				<el-table-column type="index" label="#" width="40" />
-				<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
-				<el-table-column prop="socialCreditCode" label="社会信用代码" show-overflow-tooltip />
-				<el-table-column prop="legalPersonName" label="法人姓名" show-overflow-tooltip />
-				<el-table-column prop="legalPersonMobile" label="法人手机号" show-overflow-tooltip />
-				<el-table-column prop="status" label="状态" show-overflow-tooltip />
-				<el-table-column label="是否开启支付通道">
+				<!-- <el-table-column type="selection" width="100" align="center" /> -->
+				<el-table-column type="index" label="#" width="200" />
+				<el-table-column prop="spName" label="服务商名称" width="200" show-overflow-tooltip />
+				<el-table-column prop="legalPersonName" label="法人姓名" width="200" show-overflow-tooltip />
+				<el-table-column prop="legalPersonMobile" label="法人手机号" width="250" show-overflow-tooltip />
+				<el-table-column label="状态" width="200">
 					<template #default="scope">
-						<!-- <div>{{ scope.row.status }}</div> -->
-						<el-button text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
+						<div>{{ scope.row.statusDesc }}</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" width="200">
+				<el-table-column label="是否开启支付通道" width="300">
+					<template #default="scope">
+						<div v-if="scope.row.hasPaymentChannel === '1'">是</div>
+						<el-button v-else text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" width="300" fixed="right">
 					<template #default="scope">
 						<el-button
 							icon="view"
@@ -83,8 +79,13 @@
 							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="deactivateShow(scope.row.id, scope.row.spName)"
-							>停用</el-button
+						<el-button
+							icon="turn-off"
+							text
+							type="primary"
+							v-auth="'core_spInfo_del'"
+							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
+							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
 						>
 					</template>
 				</el-table-column>
@@ -110,10 +111,11 @@
 
 <script setup lang="ts" name="systemSpInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/spInfo';
+import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import { el } from 'element-plus/es/locale';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
@@ -163,16 +165,25 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 };
 
 // 停用操作
-const deactivateShow = (id: string, spName: string) => {
+const deactivateShow = (id: string, spName: string, status: string) => {
 	deactivateInfo.value.id = id;
 	deactivateInfo.value.spName = spName;
-	deactivateVisible.value = true;
+	deactivateInfo.value.status = status;
+	if (status === '1') {
+		deactivateVisible.value = true;
+	} else {
+		handleDeactivate();
+	}
 };
 const handleDeactivate = async () => {
 	try {
-		// await delObjs(ids);
+		await switchStatus({
+			id: deactivateInfo.value.id,
+			status: deactivateInfo.value.status === '1' ? '0' : '1',
+		});
 		getDataList();
-		useMessage().success('停用成功');
+		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
+		deactivateVisible.value = false;
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}
