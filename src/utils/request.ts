@@ -27,7 +27,7 @@ service.interceptors.request.use(
 		if (token && !config.headers?.skipToken) {
 			config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`;
 		}
-
+		config.headers.tenantId = 0;
 		// 请求报文加密
 		if (config.headers![CommonHeaderEnum.ENC_FLAG]) {
 			const enc = other.encryption(JSON.stringify(config.data), import.meta.env.VITE_PWD_ENC_KEY);

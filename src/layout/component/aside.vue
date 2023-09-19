@@ -158,3 +158,13 @@ watch(
 	}
 );
 </script>
+<style>
+.el-menu-item:hover,
+.el-menu-item.is-active,
+.el-menu-hover-bg-color,
+.el-sub-menu.is-active .el-sub-menu__title,
+.el-sub-menu:not(.is-opened):hover .el-sub-menu__title {
+	background-image: linear-gradient(90deg, #273045 0%, #4d5466 50%, #273045 100%) !important;
+	background-color: transparent !important;
+}
+</style>

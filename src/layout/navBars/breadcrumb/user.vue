@@ -21,9 +21,9 @@
 				<ele-Search />
 			</el-icon>
 		</div>
-		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
+		<!--		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" :title="$t('user.title3')"></i>
-		</div>
+		</div>-->
 		<div class="layout-navbars-breadcrumb-user-icon">
 			<el-popover placement="bottom" trigger="click" transition="el-zoom-in-top" :width="300" :persistent="false">
 				<template #reference>
@@ -57,8 +57,8 @@
 				<el-dropdown-menu>
 					<el-dropdown-item command="/home">{{ $t('user.dropdown1') }}</el-dropdown-item>
 					<el-dropdown-item command="personal">{{ $t('user.dropdown2') }}</el-dropdown-item>
-					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
 					<el-dropdown-item divided command="changePassword">修改密码</el-dropdown-item>
+					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>

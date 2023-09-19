@@ -4,11 +4,14 @@
 		<div class="flex-c absolute right-5 top-3"></div>
 		<div class="login-container">
 			<div class="img">
-				<img :src="illustration" />
+				<img :src="bg3" />
 			</div>
 			<div class="login-box">
 				<div class="login-form">
-					<div class="login-title">{{ getThemeConfig.globalTitle }}</div>
+					<!-- <div class="login-title">{{ getThemeConfig.globalTitle }}</div> -->
+					<div class="flex justify-center relative mb-16">
+						<img class="w-[240px] h-[78px]" :src="logo" alt="" />
+					</div>
 					<el-tabs v-model="tabsActiveName">
 						<!-- 用户名密码登录 -->
 						<el-tab-pane :label="$t('label.one1')" name="account">
@@ -33,7 +36,9 @@
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';
 import illustration from '/@/assets/login/login_bg.svg';
-import bg from '/@/assets/login/bg.png';
+import bg from '/@/assets/login/bg2.png';
+import bg3 from '/@/assets/login/bg3.png';
+import logo from '/@/assets/login/loginlogo.png';
 import miniQr from '/@/assets/login/mini_qr.png';
 import { useI18n } from 'vue-i18n';
 import { formatAxis } from '/@/utils/formatTime';
@@ -94,3 +99,14 @@ onMounted(() => {
 	NextLoading.done();
 });
 </script>
+<style>
+.el-tabs__item {
+	color: #8c8c8c !important;
+}
+.el-tabs__item.is-active {
+	color: #333333 !important;
+}
+.el-tabs__active-bar {
+	background: #fe7610 !important;
+}
+</style>
