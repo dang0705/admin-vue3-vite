@@ -45,8 +45,8 @@
 			</el-col> -->
 		</el-form-item>
 		<el-form-item class="login-animation4">
-			<el-button type="primary" color="#FF770F" class="login-content-submit" :loading="loading" @click="onSignIn">
-				<span class="text-[white]">{{ $t('password.accountBtnText') }}</span>
+			<el-button type="primary" color="#FF6826" class="login-content-submit" :loading="loading" @click="onSignIn">
+				<span class="text-[white] text-[16px] font-bold">{{ $t('password.accountBtnText') }}</span>
 			</el-button>
 		</el-form-item>
 		<!-- <div class="font12 mt30 login-animation4 login-msg">{{ $t('browserMsgText') }}</div> -->

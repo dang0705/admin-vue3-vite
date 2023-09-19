@@ -176,6 +176,8 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/spInfo';
 import { rule } from '/@/utils/validate';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 import uploadBusinessType from '/@/enums/upload-business-type';
 const emit = defineEmits(['refresh']);
 
@@ -251,9 +253,7 @@ const dataRules = ref({
 	qualificationFile: [{ required: true, message: '资质文件不能为空', trigger: 'blur' }],
 });
 
-// 打开弹窗
-const openDialog = (id: string) => {
-	visible.value = true;
+onMounted(async () => {
 	form.id = '';
 
 	// 重置表单数据
@@ -262,11 +262,11 @@ const openDialog = (id: string) => {
 	});
 
 	// 获取spInfo信息
-	if (id) {
-		form.id = id;
-		getspInfoData(id);
+	if (route.params.id) {
+		form.id = route.params.id as string;
+		getspInfoData(route.params.id as string);
 	}
-};
+});
 
 // 提交
 const onSubmit = async () => {
@@ -300,7 +300,5 @@ const getspInfoData = (id: string) => {
 };
 
 // 暴露变量
-defineExpose({
-	openDialog,
-});
+defineExpose({});
 </script>

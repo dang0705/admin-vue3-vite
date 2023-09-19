@@ -4,7 +4,7 @@
 		<div class="flex-c absolute right-5 top-3"></div>
 		<div class="login-container">
 			<div class="img">
-				<img :src="bg3" />
+				<img class="w-[493px] h-[504px]" :src="bg3" />
 			</div>
 			<div class="login-box">
 				<div class="login-form">
@@ -102,11 +102,13 @@ onMounted(() => {
 <style>
 .el-tabs__item {
 	color: #8c8c8c !important;
+	font-size: 16px !important;
 }
 .el-tabs__item.is-active {
 	color: #333333 !important;
 }
 .el-tabs__active-bar {
-	background: #fe7610 !important;
+	background: #ff6826 !important;
+	height: 4px !important;
 }
 </style>

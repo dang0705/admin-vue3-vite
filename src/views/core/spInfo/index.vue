@@ -6,14 +6,6 @@
 					<el-form-item :label="$t('spInfo.shName')" prop="shName">
 						<el-input :placeholder="$t('spInfo.inputShNameTip')" style="max-width: 180px" v-model="state.queryForm.shName" />
 					</el-form-item>
-					<el-form-item :label="$t('spInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input :placeholder="$t('spInfo.inputSocialCreditCodeTip')" style="max-width: 180px" v-model="state.queryForm.socialCreditCode" />
-					</el-form-item>
-					<el-form-item :label="t('spInfo.spName')" class="ml2" prop="spName">
-						<el-select :placeholder="t('spInfo.inputSpNameTip')" v-model="state.queryForm.spName">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
-						</el-select>
-					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
@@ -30,9 +22,9 @@
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button type="primary" class="ml10" @click="$router.push({ name: '服务商详情' })" v-auth="'core_spInfo_add'"> +添加商户 </el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
+					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
 						删除
-					</el-button>
+					</el-button> -->
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'core_spInfo_export'"
@@ -51,30 +43,50 @@
 				:header-cell-style="tableStyle.headerCellStyle"
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
+				style="width: 100%"
 			>
-				<el-table-column type="selection" width="40" align="center" />
-				<el-table-column type="index" label="#" width="40" />
-				<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
-				<el-table-column prop="busiType" label="业务类型" show-overflow-tooltip />
-				<el-table-column prop="bankNumber" label="银行账户" show-overflow-tooltip />
-				<el-table-column prop="bankName" label="开户行" show-overflow-tooltip />
-				<el-table-column prop="bankArea" label="开户地" show-overflow-tooltip />
-				<el-table-column prop="email" label="企业邮箱" show-overflow-tooltip />
-				<el-table-column prop="businessLicense" label="营业执照" show-overflow-tooltip />
-				<el-table-column prop="socialCreditCode" label="社会信用代码" show-overflow-tooltip />
-				<el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip />
-				<el-table-column prop="legalPersonName" label="法人姓名" show-overflow-tooltip />
-				<el-table-column prop="legalPersonMobile" label="法人手机号" show-overflow-tooltip />
-				<el-table-column prop="legalPersonIdCard" label="法人身份证号" show-overflow-tooltip />
-				<el-table-column prop="legalPersonPortrait" label="法人身份证头像面" show-overflow-tooltip />
-				<el-table-column prop="legalPersonNationalEmblem" label="法人身份证国徽面" show-overflow-tooltip />
-				<el-table-column prop="status" label="状态" show-overflow-tooltip />
-				<el-table-column label="操作" width="150">
+				<!-- <el-table-column type="selection" width="100" align="center" /> -->
+				<el-table-column type="index" label="#" width="200" />
+				<el-table-column prop="spName" label="服务商名称" width="200" show-overflow-tooltip />
+				<el-table-column prop="legalPersonName" label="法人姓名" width="200" show-overflow-tooltip />
+				<el-table-column prop="legalPersonMobile" label="法人手机号" width="250" show-overflow-tooltip />
+				<el-table-column label="状态" width="200">
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_spInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+						<div>{{ scope.row.statusDesc }}</div>
+					</template>
+				</el-table-column>
+				<el-table-column label="是否开启支付通道" width="300">
+					<template #default="scope">
+						<div v-if="scope.row.hasPaymentChannel === '1'">是</div>
+						<el-button v-else text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" width="300" fixed="right">
+					<template #default="scope">
+						<el-button
+							icon="view"
+							text
+							type="primary"
+							v-auth="'core_spInfo_view'"
+							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
+							>查看</el-button
+						>
+						<el-button
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_spInfo_edit'"
+							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button
+							icon="turn-off"
+							text
+							type="primary"
+							v-auth="'core_spInfo_del'"
+							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
+							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
+						>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -83,15 +95,27 @@
 
 		<!-- 编辑、新增  -->
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+		<!-- 停用服务商 -->
+		<el-dialog v-model="deactivateVisible" title="停用服务商" width="40%">
+			<div class="mb-5">您确定要停用服务商"{{ deactivateInfo.spName }}"吗？</div>
+			<div>停用后服务商不可再承接新的任务；不可签署新的承接人；不可与商户添加新的服务协议</div>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="deactivateVisible = false">取消</el-button>
+					<el-button type="primary" @click="handleDeactivate()">确定</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 </template>
 
 <script setup lang="ts" name="systemSpInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/spInfo';
+import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import { el } from 'element-plus/es/locale';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
@@ -106,6 +130,9 @@ const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
+// 停用服务商变量
+const deactivateVisible = ref(false);
+const deactivateInfo = ref({}) as any;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {
@@ -135,6 +162,31 @@ const exportExcel = () => {
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);
 	multiple.value = !objs.length;
+};
+
+// 停用操作
+const deactivateShow = (id: string, spName: string, status: string) => {
+	deactivateInfo.value.id = id;
+	deactivateInfo.value.spName = spName;
+	deactivateInfo.value.status = status;
+	if (status === '1') {
+		deactivateVisible.value = true;
+	} else {
+		handleDeactivate();
+	}
+};
+const handleDeactivate = async () => {
+	try {
+		await switchStatus({
+			id: deactivateInfo.value.id,
+			status: deactivateInfo.value.status === '1' ? '0' : '1',
+		});
+		getDataList();
+		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
+		deactivateVisible.value = false;
+	} catch (err: any) {
+		useMessage().error(err.msg);
+	}
 };
 
 // 删除操作

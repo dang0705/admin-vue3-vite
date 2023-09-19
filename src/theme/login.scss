@@ -109,7 +109,7 @@
 	// height: 100vh;
 	width: 1200px;
 	height: 700px;
-	background: #fff;
+	// background: #fff;
 	border-radius: 12px;
 	position: absolute;
 	top: 50%;
@@ -117,14 +117,16 @@
 	transform: translate(-50%, -50%);
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 18rem;
-	padding: 0 2rem;
+	// grid-gap: 18rem;
+	// padding: 0 2rem;
 }
 
 .img {
+	background: #fff;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: center;
+	border-radius: 12px 0 0 12px;
 }
 
 .img img {
@@ -139,13 +141,17 @@
 	margin-bottom: 32px;
 }
 .login-box {
+	background: rgba(255, 255, 255, 0.63);
 	display: flex;
 	align-items: center;
 	text-align: center;
+	justify-content: center;
+	border-radius: 0px 12px 12px 0px;
 }
 
 .login-form {
 	width: 400px;
+	height: 504px;
 }
 
 .avatar {

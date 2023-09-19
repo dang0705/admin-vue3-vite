@@ -89,7 +89,8 @@ export const rule = {
 	 * 校验手机号
 	 */
 	validatePhone(rule: any, value: any, callback: any) {
-		var isPhone = /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/;
+		// var isPhone = /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/;
+		var isPhone = /^[1][3,4,5,6,7,8][0-9]{9}$/;
 
 		if (value.indexOf('****') >= 0) {
 			return callback();
@@ -183,7 +184,7 @@ export const getRegExp = function (validatorName) {
 		noChinese: '^[^\u4e00-\u9fa5]+$',
 		chinese: '^[\u4e00-\u9fa5]+$',
 		email: '^([-_A-Za-z0-9.]+)@([_A-Za-z0-9]+\\.)+[A-Za-z0-9]{2,3}$',
-		url: '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
+		url: '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]',
 	};
 	return commonRegExp[validatorName];
 };
