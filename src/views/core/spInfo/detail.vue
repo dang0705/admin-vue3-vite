@@ -11,10 +11,10 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="业务类型" prop="busiType">
-							<el-radio-group v-model="form.busiType">
-								<el-radio label="业务类型" border>业务类型</el-radio>
-							</el-radio-group>
+						<el-form-item label="业务类型" label-width="110" prop="busiType">
+							<el-select placeholder="请输入业务类型" v-model="form.busiType">
+								<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
+							</el-select>
 						</el-form-item>
 					</el-col>
 
@@ -98,57 +98,70 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人手机号" prop="legalPersonMobile">
+						<el-form-item label="法人手机号" label-width="100" prop="legalPersonMobile">
 							<el-input v-model="form.legalPersonMobile" placeholder="请输入法人手机号" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证号" prop="legalPersonIdCard">
+						<el-form-item label="法人身份证号" label-width="110" prop="legalPersonIdCard">
 							<el-input v-model="form.legalPersonIdCard" placeholder="请输入法人身份证号" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证头像面" prop="legalPersonPortrait">
+						<el-form-item label="法人身份证头像面" label-width="140" prop="legalPersonPortrait">
 							<el-input v-model="form.legalPersonPortrait" placeholder="请输入法人身份证头像面" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证国徽面" prop="legalPersonNationalEmblem">
+						<el-form-item label="法人身份证国徽面" label-width="140" prop="legalPersonNationalEmblem">
 							<el-input v-model="form.legalPersonNationalEmblem" placeholder="请输入法人身份证国徽面" />
 						</el-form-item>
 					</el-col>
 
 					<el-divider>办税人信息</el-divider>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人姓名" prop="legalPersonName">
-							<el-input v-model="form.legalPersonName" placeholder="请输入法人姓名" />
+						<el-form-item label="办税人姓名" label-width="100" prop="taxpayerName">
+							<el-input v-model="form.taxpayerName" placeholder="请输入办税人姓名" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人手机号" prop="legalPersonMobile">
-							<el-input v-model="form.legalPersonMobile" placeholder="请输入法人手机号" />
+						<el-form-item label="办税人手机号" label-width="110" prop="taxpayerMobile">
+							<el-input v-model="form.taxpayerMobile" placeholder="请输入办税人手机号" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证号" prop="legalPersonIdCard">
-							<el-input v-model="form.legalPersonIdCard" placeholder="请输入法人身份证号" />
+						<el-form-item label="办税人身份证号" label-width="120" prop="taxpayerIdCard">
+							<el-input v-model="form.taxpayerIdCard" placeholder="请输入办税人身份证号" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证头像面" prop="legalPersonPortrait">
-							<el-input v-model="form.legalPersonPortrait" placeholder="请输入法人身份证头像面" />
+						<el-form-item label="办税人身份证头像面" label-width="150" prop="taxpayerPortrait">
+							<el-input v-model="form.taxpayerPortrait" placeholder="请输入办税人身份证头像面" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="法人身份证国徽面" prop="legalPersonNationalEmblem">
-							<el-input v-model="form.legalPersonNationalEmblem" placeholder="请输入法人身份证国徽面" />
+						<el-form-item label="办税人身份证国徽面" label-width="150" prop="taxpayerNationalEmblem">
+							<el-input v-model="form.taxpayerNationalEmblem" placeholder="请输入办税人身份证国徽面" />
+						</el-form-item>
+					</el-col>
+
+					<el-divider>资质信息</el-divider>
+					<el-col :span="12" class="mb20">
+						<el-form-item label="资质名称" prop="qualificationName">
+							<el-input v-model="form.qualificationName" placeholder="请输入资质名称" />
+						</el-form-item>
+					</el-col>
+
+					<el-col :span="12" class="mb20">
+						<el-form-item label="资质文件" prop="qualificationFile">
+							<el-input v-model="form.qualificationFile" placeholder="请输入资质文件" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -197,6 +210,13 @@ const form = reactive({
 	legalPersonIdCard: '',
 	legalPersonPortrait: '',
 	legalPersonNationalEmblem: '',
+	taxpayerName: '',
+	taxpayerMobile: '',
+	taxpayerIdCard: '',
+	taxpayerPortrait: '',
+	taxpayerNationalEmblem: '',
+	qualificationName: '',
+	qualificationFile: '',
 });
 
 // 定义校验规则
@@ -219,6 +239,13 @@ const dataRules = ref({
 	legalPersonIdCard: [{ required: true, message: '法人身份证号不能为空', trigger: 'blur' }],
 	legalPersonPortrait: [{ required: true, message: '法人身份证头像面不能为空', trigger: 'blur' }],
 	legalPersonNationalEmblem: [{ required: true, message: '法人身份证国徽面不能为空', trigger: 'blur' }],
+	taxpayerName: [{ required: true, message: '办税人姓名不能为空', trigger: 'blur' }],
+	taxpayerMobile: [{ required: true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	taxpayerIdCard: [{ required: true, message: '办税人身份证号不能为空', trigger: 'blur' }],
+	taxpayerPortrait: [{ required: true, message: '办税人身份证头像面不能为空', trigger: 'blur' }],
+	taxpayerNationalEmblem: [{ required: true, message: '办税人身份证国徽面不能为空', trigger: 'blur' }],
+	qualificationName: [{ required: true, message: '资质名称不能为空', trigger: 'blur' }],
+	qualificationFile: [{ required: true, message: '资质文件不能为空', trigger: 'blur' }],
 });
 
 // 打开弹窗
