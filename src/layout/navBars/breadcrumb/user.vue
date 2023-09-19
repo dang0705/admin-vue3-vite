@@ -57,8 +57,8 @@
 				<el-dropdown-menu>
 					<el-dropdown-item command="/home">{{ $t('user.dropdown1') }}</el-dropdown-item>
 					<el-dropdown-item command="personal">{{ $t('user.dropdown2') }}</el-dropdown-item>
-					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
 					<el-dropdown-item divided command="changePassword">修改密码</el-dropdown-item>
+					<el-dropdown-item divided command="logOut">{{ $t('user.dropdown5') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
