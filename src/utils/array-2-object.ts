@@ -1,4 +1,4 @@
-export default (array: [{ label: string; value: number }, { label: string; value: number }]) => {
+export default (array: []) => {
 	const result = {};
 	array.forEach((item: any) => (result[item.value] = item.label));
 	return result;
