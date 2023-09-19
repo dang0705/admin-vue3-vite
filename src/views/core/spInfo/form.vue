@@ -1,25 +1,30 @@
 <template>
-	<el-dialog :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="90px" v-loading="loading">
+	<el-dialog title="添加支付通道" v-model="visible" :close-on-click-modal="false" draggable width="80%">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="110px" v-loading="loading">
 			<el-row :gutter="24">
-				<el-divider>基本信息</el-divider>
 				<el-col :span="12" class="mb20">
-					<el-form-item label="服务商名称" prop="spName">
-						<el-input v-model="form.spName" placeholder="请输入服务商名称" />
+					<el-form-item label="服务商" prop="spName">
+						<el-input v-model="form.spName" placeholder="请输入服务商" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="业务类型" prop="busiType">
-						<el-radio-group v-model="form.busiType">
-							<el-radio label="业务类型" border>业务类型</el-radio>
-						</el-radio-group>
+					<el-form-item label="支付通道名称" prop="payAccessName">
+						<el-input v-model="form.payAccessName" placeholder="请输入支付通道名称" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="银行账户" prop="bankNumber">
-						<el-input v-model="form.bankNumber" placeholder="请输入银行账户" />
+					<el-form-item label="账号类别" prop="accountCategory">
+						<el-select placeholder="请输入账号类别" v-model="form.accountCategory">
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="网关地址" prop="bankNumber">
+						<el-input v-model="form.bankNumber" placeholder="请输入网关地址" />
 					</el-form-item>
 				</el-col>
 
@@ -36,66 +41,14 @@
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="企业邮箱" prop="email">
-						<el-input v-model="form.email" placeholder="请输入企业邮箱" />
+					<el-form-item label="开户行联行号" prop="interbankNumber">
+						<el-input v-model="form.interbankNumber" placeholder="请输入开户行联行号" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="营业执照" prop="businessLicense">
-						<el-input v-model="form.businessLicense" placeholder="请输入营业执照" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="社会信用代码" prop="socialCreditCode">
-						<el-input v-model="form.socialCreditCode" placeholder="请输入社会信用代码" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="经营范围" prop="businessScope">
-						<el-input v-model="form.businessScope" placeholder="请输入经营范围" />
-					</el-form-item>
-				</el-col>
-
-				<el-divider>税率设置</el-divider>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="法人姓名" prop="legalPersonName">
-						<el-input v-model="form.legalPersonName" placeholder="请输入法人姓名" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="法人手机号" prop="legalPersonMobile">
-						<el-input v-model="form.legalPersonMobile" placeholder="请输入法人手机号" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="法人身份证号" prop="legalPersonIdCard">
-						<el-input v-model="form.legalPersonIdCard" placeholder="请输入法人身份证号" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="法人身份证头像面" prop="legalPersonPortrait">
-						<el-input v-model="form.legalPersonPortrait" placeholder="请输入法人身份证头像面" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="法人身份证国徽面" prop="legalPersonNationalEmblem">
-						<el-input v-model="form.legalPersonNationalEmblem" placeholder="请输入法人身份证国徽面" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="状态" prop="status">
-						<el-radio-group v-model="form.status">
-							<el-radio label="状态" border>状态</el-radio>
-						</el-radio-group>
+					<el-form-item label="主账号" prop="bankCode">
+						<el-input v-model="form.bankCode" placeholder="请输入主账号" />
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -126,39 +79,25 @@ const loading = ref(false);
 const form = reactive({
 	id: '',
 	spName: '',
-	busiType: '',
+	payAccessName: '',
+	accountCategory: '',
 	bankNumber: '',
 	bankName: '',
 	bankArea: '',
-	email: '',
-	businessLicense: '',
-	socialCreditCode: '',
-	businessScope: '',
-	legalPersonName: '',
-	legalPersonMobile: '',
-	legalPersonIdCard: '',
-	legalPersonPortrait: '',
-	legalPersonNationalEmblem: '',
-	status: '',
+	interbankNumber: '',
+	bankCode: '',
 });
 
 // 定义校验规则
 const dataRules = ref({
-	spName: [{ required: true, message: '服务商名称不能为空', trigger: 'blur' }],
-	busiType: [{ required: true, message: '业务类型不能为空', trigger: 'blur' }],
-	bankNumber: [{ required: true, message: '银行账户不能为空', trigger: 'blur' }],
+	spName: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
+	payAccessName: [{ required: true, message: '支付通道名称不能为空', trigger: 'blur' }],
+	accountCategory: [{ required: true, message: '账号类别不能为空', trigger: 'blur' }],
+	bankNumber: [{ required: true, message: '网关地址不能为空', trigger: 'blur' }],
 	bankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	bankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
-	email: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
-	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
-	socialCreditCode: [{ required: true, message: '社会信用代码不能为空', trigger: 'blur' }],
-	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
-	legalPersonName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
-	legalPersonMobile: [{ required: true, message: '法人手机号不能为空', trigger: 'blur' }],
-	legalPersonIdCard: [{ required: true, message: '法人身份证号不能为空', trigger: 'blur' }],
-	legalPersonPortrait: [{ required: true, message: '法人身份证头像面不能为空', trigger: 'blur' }],
-	legalPersonNationalEmblem: [{ required: true, message: '法人身份证国徽面不能为空', trigger: 'blur' }],
-	status: [{ required: true, message: '状态不能为空', trigger: 'blur' }],
+	interbankNumber: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
+	bankCode: [{ required: true, message: '主账号不能为空', trigger: 'blur' }],
 });
 
 // 打开弹窗

@@ -55,28 +55,35 @@
 				<el-table-column type="selection" width="40" align="center" />
 				<el-table-column type="index" label="#" width="40" />
 				<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
-				<!-- <el-table-column prop="busiType" label="业务类型" show-overflow-tooltip />
-				<el-table-column prop="bankNumber" label="银行账户" show-overflow-tooltip />
-				<el-table-column prop="bankName" label="开户行" show-overflow-tooltip />
-				<el-table-column prop="bankArea" label="开户地" show-overflow-tooltip />
-				<el-table-column prop="email" label="企业邮箱" show-overflow-tooltip />
-				<el-table-column prop="businessLicense" label="营业执照" show-overflow-tooltip /> -->
 				<el-table-column prop="socialCreditCode" label="社会信用代码" show-overflow-tooltip />
-				<!-- <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip /> -->
 				<el-table-column prop="legalPersonName" label="法人姓名" show-overflow-tooltip />
 				<el-table-column prop="legalPersonMobile" label="法人手机号" show-overflow-tooltip />
-				<!-- <el-table-column prop="legalPersonIdCard" label="法人身份证号" show-overflow-tooltip />
-				<el-table-column prop="legalPersonPortrait" label="法人身份证头像面" show-overflow-tooltip />
-				<el-table-column prop="legalPersonNationalEmblem" label="法人身份证国徽面" show-overflow-tooltip /> -->
 				<el-table-column prop="status" label="状态" show-overflow-tooltip />
-				<el-table-column prop="status" label="是否开启支付通道" show-overflow-tooltip />
-				<el-table-column label="操作" width="250">
+				<el-table-column label="是否开启支付通道">
 					<template #default="scope">
-						<el-button icon="view" text type="primary" v-auth="'core_spInfo_view'" @click="formDialogRef.openDialog(scope.row.id)">查看</el-button>
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_spInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+						<!-- <div>{{ scope.row.status }}</div> -->
+						<el-button text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" width="200">
+					<template #default="scope">
+						<el-button
+							icon="view"
+							text
+							type="primary"
+							v-auth="'core_spInfo_view'"
+							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
+							>查看</el-button
+						>
+						<el-button
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_spInfo_edit'"
+							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDelete([scope.row.id])">停用</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDeactivate([scope.row.id])">停用</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -85,6 +92,17 @@
 
 		<!-- 编辑、新增  -->
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+
+		<el-dialog v-model="dialogVisible" title="停用服务商" width="40%">
+			<div class="mb-5">您确定要停用服务商"xxx人力服务公司"吗？</div>
+			<div>停用后服务商不可再承接新的任务；不可签署新的承接人；不可与商户添加新的服务协议</div>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="dialogVisible = false">取消</el-button>
+					<el-button type="primary" @click="dialogVisible = false">确定</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 </template>
 
@@ -108,6 +126,8 @@ const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
+
+const dialogVisible = ref(false);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {
@@ -137,6 +157,24 @@ const exportExcel = () => {
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);
 	multiple.value = !objs.length;
+};
+
+// 停用操作
+const handleDeactivate = async (ids: string[]) => {
+	try {
+		// await useMessageBox().confirm('此操作将永久删除');
+		dialogVisible.value = true;
+	} catch {
+		return;
+	}
+
+	// try {
+	// 	await delObjs(ids);
+	// 	getDataList();
+	// 	useMessage().success('删除成功');
+	// } catch (err: any) {
+	// 	useMessage().error(err.msg);
+	// }
 };
 
 // 删除操作
