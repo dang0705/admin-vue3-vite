@@ -43,18 +43,16 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
+						<el-form-item label="社会信用代码" prop="socialCreditCode">
+							<el-input v-model="form.socialCreditCode" placeholder="请输入社会信用代码" />
+						</el-form-item>
+					</el-col>
+					<el-col :span="12" class="mb20">
 						<el-form-item label="营业执照" prop="businessLicense">
 							<UploadImg :type="businessType" v-model="form.businessLicense" />
 							<!--							<el-input v-model="form.businessLicense" placeholder="请输入营业执照" />-->
 						</el-form-item>
 					</el-col>
-
-					<el-col :span="12" class="mb20">
-						<el-form-item label="社会信用代码" prop="socialCreditCode">
-							<el-input v-model="form.socialCreditCode" placeholder="请输入社会信用代码" />
-						</el-form-item>
-					</el-col>
-
 					<el-col :span="12" class="mb20">
 						<el-form-item label="经营范围" prop="businessScope">
 							<el-input v-model="form.businessScope" placeholder="请输入经营范围" />

@@ -336,3 +336,7 @@ body,
 		padding-left: #{$i}px !important;
 	}
 }
+img,
+video {
+	max-width: unset;
+}
