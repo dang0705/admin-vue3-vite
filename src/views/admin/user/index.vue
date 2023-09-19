@@ -76,15 +76,15 @@
 					>
 						<el-table-column :selectable="handleSelectable" type="selection" width="40" />
 						<el-table-column :label="$t('sysuser.index')" type="index" width="60" fixed="left" />
-						<el-table-column :label="$t('sysuser.username')" prop="username" fixed="left" show-overflow-tooltip></el-table-column>
+						<el-table-column :label="$t('sysuser.username')" prop="username" width="100" fixed="left" show-overflow-tooltip></el-table-column>
 						<el-table-column :label="$t('sysuser.name')" prop="name" show-overflow-tooltip></el-table-column>
-						<el-table-column :label="$t('sysuser.phone')" prop="phone" show-overflow-tooltip></el-table-column>
-						<el-table-column :label="$t('sysuser.spAuthScope')" prop="spAuthScope" show-overflow-tooltip>
+						<el-table-column :label="$t('sysuser.phone')" prop="phone" width="120" show-overflow-tooltip></el-table-column>
+						<el-table-column :label="$t('sysuser.spAuthScope')" prop="spAuthScope" width="120" show-overflow-tooltip>
 							<template #default="{ row: { spAuthScope } }">
 								<span v-text="array2Object(providerAuth)[spAuthScope]" />
 							</template>
 						</el-table-column>
-						<el-table-column :label="$t('sysuser.merchantAuthScope')" prop="merchantAuthScope" show-overflow-tooltip>
+						<el-table-column :label="$t('sysuser.merchantAuthScope')" prop="merchantAuthScope" width="120" show-overflow-tooltip>
 							<template #default="{ row: { merchantAuthScope } }">
 								<span v-text="array2Object(customerAuth)[merchantAuthScope]" />
 							</template>

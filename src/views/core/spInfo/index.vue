@@ -29,7 +29,7 @@
 						v-model:showSearch="showSearch"
 						:export="'core_spInfo_export'"
 						@exportExcel="exportExcel"
-						class="ml10 mr20"
+						class="ml10"
 						style="float: right"
 						@queryTable="getDataList"
 					></right-toolbar>
@@ -115,7 +115,6 @@ import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
-import { el } from 'element-plus/es/locale';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));

@@ -50,7 +50,6 @@
 					<el-col :span="12" class="mb20">
 						<el-form-item label="营业执照" prop="businessLicense">
 							<UploadImg :type="businessType" v-model="form.businessLicense" />
-							<!--							<el-input v-model="form.businessLicense" placeholder="请输入营业执照" />-->
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -69,7 +68,7 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="增值税税率" label-width="100" prop="valueAddedTax">
+						<el-form-item label="增值税税率" prop="valueAddedTax">
 							<div class="flex"><el-input v-model="form.valueAddedTax" placeholder="请输入增值税税率" />%</div>
 						</el-form-item>
 					</el-col>
@@ -230,7 +229,7 @@ const dataRules = ref({
 	bankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	bankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	email: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
-	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
+	businessLicense: [{ type: 'array', required: true, message: '营业执照不能为空', trigger: 'change' }],
 	socialCreditCode: [{ required: true, message: '社会信用代码不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
 	personalIncomeTax: [{ required: true, message: '个税计算方式不能为空', trigger: 'blur' }],
