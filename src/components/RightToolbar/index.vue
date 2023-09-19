@@ -9,18 +9,18 @@
 				placement="top"
 				v-if="search"
 			>
-				<el-button circle icon="Search" @click="toggleSearch()" />
+				<el-button @click="toggleSearch" :icon="showSearch ? 'ArrowUp' : 'ArrowDown'">{{ showSearch ? '收起' : '展开' }}</el-button>
 			</el-tooltip>
 
 			<!-- 导出 -->
 			<el-tooltip class="item" effect="dark" :content="$t('common.exportBtn')" placement="top" v-if="isExport()">
-				<el-button circle icon="Download" @click="handleExport()" />
+				<el-button circle icon="Download" @click="handleExport" />
 			</el-tooltip>
 
 			<!-- 刷新功能 -->
-			<el-tooltip class="item" effect="dark" :content="$t('queryTree.refresh')" placement="top">
+			<!--			<el-tooltip class="item" effect="dark" :content="$t('queryTree.refresh')" placement="top">
 				<el-button circle icon="Refresh" @click="handleRefresh()" />
-			</el-tooltip>
+			</el-tooltip>-->
 		</el-row>
 	</div>
 </template>
@@ -68,7 +68,7 @@ const style = computed(() => {
 	const ret = {};
 	// 如果props中有传入gutter属性，则计算出marginRight
 	if (props.gutter) {
-		ret.marginRight = `${props.gutter / 2}px`;
+		// ret.marginRight = `${props.gutter / 2}px`;
 	}
 	return ret; // 返回计算后的样式对象
 });

@@ -1,0 +1,22 @@
+.layout-padding-view{
+	.el-form{
+		display: flex;
+		width: 100%;
+		.el-form-item{
+			&:not(:nth-last-of-type(1)){
+				.el-form-item__label{
+					padding-right: 0;
+					&:after{
+						content:'：'
+					}
+				}
+				
+			}
+			&:nth-last-of-type(1){
+				flex-shrink: 0;
+				margin-right: 0;
+				margin-left: auto;
+			}
+		}
+	}
+}
