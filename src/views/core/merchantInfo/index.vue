@@ -3,37 +3,54 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
-					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-						<el-input :placeholder="$t('merchantInfo.inputMerchantNameTip')" clearable class="w100" v-model="state.queryForm.merchantName" />
-					</el-form-item>
-					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input :placeholder="$t('merchantInfo.inputSocialCreditCodeTip')" clearable class="w100" v-model="state.queryForm.socialCreditCode" />
-					</el-form-item>
-					<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
-						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" class="w100" clearable v-model="state.queryForm.spList">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-						</el-select>
-					</el-form-item>
-					<el-form-item :label="$t('merchantInfo.status')" prop="status">
-						<el-select :placeholder="$t('merchantInfo.inputStatusTip')" class="w100" clearable v-model="state.queryForm.status">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-						</el-select>
-					</el-form-item>
-					<el-form-item>
-						<el-button @click="getDataList" class="ml10" icon="search" type="primary">
-							{{ $t('common.queryBtn') }}
-						</el-button>
-						<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
-					</el-form-item>
+					<el-row :gutter="24">
+						<el-col :md="8" :sm="24">
+							<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName" class="w100">
+								<el-input :placeholder="$t('merchantInfo.inputMerchantNameTip')" clearable v-model="state.queryForm.merchantName" />
+							</el-form-item>
+						</el-col>
+						<el-col :md="8" :sm="24">
+							<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode" class="w100">
+								<el-input
+									:placeholder="$t('merchantInfo.inputSocialCreditCodeTip')"
+									clearable
+									class="w100"
+									v-model="state.queryForm.socialCreditCode"
+								/>
+							</el-form-item>
+						</el-col>
+						<el-col :md="8" :sm="24">
+							<el-form-item :label="$t('merchantInfo.spList')" prop="spList" class="w100">
+								<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spList">
+									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+								</el-select>
+							</el-form-item>
+						</el-col>
+						<el-col :md="8" :sm="24">
+							<el-form-item :label="$t('merchantInfo.status')" prop="status" class="w100">
+								<el-select :placeholder="$t('merchantInfo.inputStatusTip')" clearable v-model="state.queryForm.status">
+									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+								</el-select>
+							</el-form-item>
+						</el-col>
+						<el-col :md="8" :sm="24">
+							<el-form-item class="w100">
+								<div class="wr100">
+									<el-button @click="getDataList" icon="search" type="primary">
+										{{ $t('common.queryBtn') }}
+									</el-button>
+									<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
+								</div>
+							</el-form-item>
+						</el-col>
+						<!-- <el-col :span="6" :offset="6"><div class="grid-content ep-bg-purple" /></el-col> -->
+					</el-row>
 				</el-form>
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="openMerchantForm('add')" v-auth="'core_merchantInfo_add'">
 						新 增
-					</el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete(selectObjs)">
-						删除
 					</el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
@@ -54,21 +71,20 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column type="selection" width="40" align="center" />
-				<el-table-column prop="merchantName" :label="$t('merchantInfo.merchantName')" show-overflow-tooltip />
+				<el-table-column prop="merchantName" min-width="100" :label="$t('merchantInfo.merchantName')" show-overflow-tooltip />
 				<el-table-column prop="socialCreditCode" min-width="140" :label="$t('merchantInfo.socialCreditCode')" show-overflow-tooltip />
 				<el-table-column prop="spList" :label="$t('merchantInfo.spList')" show-overflow-tooltip />
 				<el-table-column prop="contactName" :label="$t('merchantInfo.contactName')" show-overflow-tooltip />
-				<el-table-column prop="contactPhone" :label="$t('merchantInfo.contactPhone')" show-overflow-tooltip />
+				<el-table-column prop="contactPhone" min-width="120" :label="$t('merchantInfo.contactPhone')" show-overflow-tooltip />
 				<el-table-column prop="createBy" :label="$t('merchantInfo.createBy')" show-overflow-tooltip />
-				<el-table-column prop="createTime" :label="$t('merchantInfo.createTime')" show-overflow-tooltip />
+				<el-table-column prop="createTime" min-width="160" :label="$t('merchantInfo.createTime')" show-overflow-tooltip />
 
 				<el-table-column prop="status" label="状态" show-overflow-tooltip>
 					<template #default="scope">
 						<dict-tag :options="merchant_status" :value="scope.row.status"></dict-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" width="150">
+				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="scope">
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
 							>编辑</el-button
