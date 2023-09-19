@@ -12,20 +12,20 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="登录账户" prop="loginAccount">
-							<el-input class="w100" placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.loginAccount" />
+						<el-form-item label="登录账户" prop="username">
+							<el-input class="w100" placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.username" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商授权" prop="providerAuth">
-							<el-select class="w100" v-model="dataForm.providerAuth">
+							<el-select class="w100" v-model="dataForm.spAuthScope">
 								<el-option v-for="{ label, value } in providerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="客户授权" prop="customerAuth">
-							<el-select class="w100" v-model="dataForm.customerAuth">
+							<el-select class="w100" v-model="dataForm.merchantAuthScope">
 								<el-option v-for="{ label, value } in customerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
@@ -174,15 +174,14 @@ const dataForm = reactive({
 	//   new
 	type: 0,
 	loginAccount: '',
-	providerAuth: 0,
-	customerAuth: 0,
+	spAuthScope: '',
+	merchantAuthScope: '',
 });
 const dataRules = reactive({
 	//new
 	loginAccount: [{ required: true, message: '登录账户不能为空', trigger: 'blur' }],
-	providerAuth: [{ required: true }],
-	customerAuth: [{ required: true }],
-
+	spAuthScope: [{ required: true }],
+	merchantAuthScope: [{ required: true }],
 	// 用户名校验，不能为空 、长度 5-20、不能和已有数据重复
 	username: [
 		{ required: true, message: '用户名不能为空', trigger: 'blur' },
