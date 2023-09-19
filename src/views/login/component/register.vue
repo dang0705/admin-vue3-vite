@@ -3,9 +3,7 @@
 		<el-form-item class="login-animation1" prop="username">
 			<el-input text :placeholder="$t('password.accountPlaceholder1')" v-model="state.ruleForm.username" clearable autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon">
-						<ele-User />
-					</el-icon>
+					<img class="w-[1em] h-[1em]" :src="user" alt="" />
 				</template>
 			</el-input>
 		</el-form-item>
@@ -18,18 +16,14 @@
 				:minLength="6"
 				@score="handlePassScore"
 				><template #prefix>
-					<el-icon class="el-input__icon">
-						<ele-Unlock />
-					</el-icon>
+					<img class="w-[1em] h-[1em]" :src="password" alt="" />
 				</template>
 			</strength-meter>
 		</el-form-item>
 		<el-form-item class="login-animation3" prop="phone">
 			<el-input text :placeholder="$t('password.phonePlaceholder4')" v-model="state.ruleForm.phone" clearable autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon">
-						<ele-Position />
-					</el-icon>
+					<i class="iconfont icon-dianhua el-input__icon"></i>
 				</template>
 			</el-input>
 		</el-form-item>
@@ -42,8 +36,8 @@
 			</el-button>
 		</el-form-item>
 		<el-form-item class="login-animation4">
-			<el-button type="primary" class="login-content-submit" v-waves @click="handleRegister" :loading="loading">
-				<span>{{ $t('password.registerBtnText') }}</span>
+			<el-button type="primary" color="#FF6826" class="login-content-submit" v-waves @click="handleRegister" :loading="loading">
+				<span class="text-[white] text-[16px] font-bold">{{ $t('password.registerBtnText') }}</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
@@ -54,6 +48,8 @@ import { registerUser, validateUsername, validatePhone } from '/@/api/admin/user
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
+import user from '/@/assets/icons/user.png';
+import password from '/@/assets/icons/password.png';
 
 // 注册生命周期事件
 const emit = defineEmits(['afterSuccess']);

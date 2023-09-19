@@ -15,7 +15,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 * 全局主题
 			 */
 			// 默认 primary 主题颜色
-			primary: '#2E5CF6',
+			primary: '#FF6826',
 			// 是否开启深色模式
 			isIsDark: false,
 
@@ -33,11 +33,11 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 * 菜单设置
 			 */
 			// 默认菜单导航背景颜色
-			menuBar: '#FFFFFF',
+			menuBar: '#273045',
 			// 默认菜单导航字体颜色
-			menuBarColor: '#505968',
+			menuBarColor: '#fff',
 			// 默认菜单高亮背景色
-			menuBarActiveColor: 'rgba(242, 243, 245, 1)',
+			// menuBarActiveColor: 'rgba(242, 243, 245, 1)',
 			// 是否开启菜单背景颜色渐变
 			isMenuBarColorGradual: false,
 
@@ -133,7 +133,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 * 全局网站标题 / 副标题
 			 */
 			// 网站主标题（菜单导航、浏览器当前网页标题、登录form顶部右侧）
-			globalTitle: 'PIG ADMIN',
+			globalTitle: '积木优工',
 			// 网站副标题（登录左侧底部页顶部文字）
 			globalViceTitle: 'Pig 快速开发框架',
 			// 网站副标题（登录页顶部文字）
@@ -143,7 +143,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'default'
 			globalComponentSize: 'default',
 			// footer 页面作者
-			footerAuthor: '©2023 pig4cloud.com',
+			footerAuthor: '©2023',
 		},
 	}),
 	actions: {

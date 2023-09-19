@@ -1,7 +1,7 @@
 export default {
 	sysuser: {
 		index: '#',
-		username: '用户名',
+		username: '登录账号',
 		name: '姓名',
 		phone: '手机号',
 		post: '岗位',
@@ -18,6 +18,8 @@ export default {
 		importUserTip: '用户导入',
 		deleteDisabledTip: 'admin 不允许被删除',
 		noDataScopeTip: '没有数据权限',
+		spAuthScope: '服务商授权',
+		merchantAuthScope: '商户授权',
 	},
 	personal: {
 		name: '个人信息',

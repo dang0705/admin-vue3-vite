@@ -8,6 +8,7 @@
 }
 
 :root {
+	--primary: #ff6826;
 	--next-color-white: #ffffff;
 	--next-bg-main-color: #f8f8f8;
 	--next-bg-color: #f5f5ff;
@@ -268,6 +269,10 @@ body,
 .w100 {
 	width: 100% !important;
 }
+.wr100 {
+	width: 100% !important;
+	text-align: right;
+}
 .h100 {
 	height: 100% !important;
 }
@@ -334,4 +339,8 @@ body,
 	.pl#{$i} {
 		padding-left: #{$i}px !important;
 	}
+}
+img,
+video {
+	max-width: unset;
 }

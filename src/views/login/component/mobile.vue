@@ -11,9 +11,7 @@
 			<el-col :span="15">
 				<el-input text maxlength="6" :placeholder="$t('mobile.placeholder2')" v-model="loginForm.code" clearable autocomplete="off">
 					<template #prefix>
-						<el-icon class="el-input__icon">
-							<ele-Position />
-						</el-icon>
+						<img class="w-[1em] h-[1em]" :src="code" alt="" />
 					</template>
 				</el-input>
 			</el-col>
@@ -23,8 +21,8 @@
 			</el-col>
 		</el-form-item>
 		<el-form-item class="login-animation3">
-			<el-button type="primary" v-waves class="login-content-submit" @click="handleLogin" :loading="loading">
-				<span>{{ $t('mobile.btnText') }}</span>
+			<el-button type="primary" color="#FF6826" v-waves class="login-content-submit" @click="handleLogin" :loading="loading">
+				<span class="text-[white]">{{ $t('mobile.btnText') }}</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
@@ -36,6 +34,7 @@ import { useMessage } from '/@/hooks/message';
 import { useUserInfo } from '/@/stores/userInfo';
 import { rule } from '/@/utils/validate';
 import { useI18n } from 'vue-i18n';
+import code from '/@/assets/icons/code.png';
 
 const { t } = useI18n();
 const emit = defineEmits(['signInSuccess']);

@@ -1,5 +1,6 @@
+import { defineStore } from 'pinia';
 interface Route {
-	children: Array<object>;
+	children: Object[];
 	[x: string]: any;
 }
 /**
@@ -18,7 +19,7 @@ export const useRequestOldRoutes = defineStore('requestOldRoutes', {
 		},
 	},
 	actions: {
-		setRequestOldRoutes(routes: Route[]) {
+		async setRequestOldRoutes(routes: Route[]) {
 			this.requestOldRoutes = routes;
 		},
 	},
