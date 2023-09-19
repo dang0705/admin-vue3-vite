@@ -30,9 +30,9 @@
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button type="primary" class="ml10" @click="$router.push({ name: '服务商详情' })" v-auth="'core_spInfo_add'"> +添加商户 </el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
+					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
 						删除
-					</el-button>
+					</el-button> -->
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'core_spInfo_export'"
@@ -55,26 +55,28 @@
 				<el-table-column type="selection" width="40" align="center" />
 				<el-table-column type="index" label="#" width="40" />
 				<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
-				<el-table-column prop="busiType" label="业务类型" show-overflow-tooltip />
+				<!-- <el-table-column prop="busiType" label="业务类型" show-overflow-tooltip />
 				<el-table-column prop="bankNumber" label="银行账户" show-overflow-tooltip />
 				<el-table-column prop="bankName" label="开户行" show-overflow-tooltip />
 				<el-table-column prop="bankArea" label="开户地" show-overflow-tooltip />
 				<el-table-column prop="email" label="企业邮箱" show-overflow-tooltip />
-				<el-table-column prop="businessLicense" label="营业执照" show-overflow-tooltip />
+				<el-table-column prop="businessLicense" label="营业执照" show-overflow-tooltip /> -->
 				<el-table-column prop="socialCreditCode" label="社会信用代码" show-overflow-tooltip />
-				<el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip />
+				<!-- <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip /> -->
 				<el-table-column prop="legalPersonName" label="法人姓名" show-overflow-tooltip />
 				<el-table-column prop="legalPersonMobile" label="法人手机号" show-overflow-tooltip />
-				<el-table-column prop="legalPersonIdCard" label="法人身份证号" show-overflow-tooltip />
+				<!-- <el-table-column prop="legalPersonIdCard" label="法人身份证号" show-overflow-tooltip />
 				<el-table-column prop="legalPersonPortrait" label="法人身份证头像面" show-overflow-tooltip />
-				<el-table-column prop="legalPersonNationalEmblem" label="法人身份证国徽面" show-overflow-tooltip />
+				<el-table-column prop="legalPersonNationalEmblem" label="法人身份证国徽面" show-overflow-tooltip /> -->
 				<el-table-column prop="status" label="状态" show-overflow-tooltip />
-				<el-table-column label="操作" width="150">
+				<el-table-column prop="status" label="是否开启支付通道" show-overflow-tooltip />
+				<el-table-column label="操作" width="250">
 					<template #default="scope">
+						<el-button icon="view" text type="primary" v-auth="'core_spInfo_view'" @click="formDialogRef.openDialog(scope.row.id)">查看</el-button>
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_spInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'core_spInfo_del'" @click="handleDelete([scope.row.id])">停用</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
