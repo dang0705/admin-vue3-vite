@@ -5,8 +5,8 @@
 				<el-row :gutter="20">
 					<!--            new for 2023.09.14 start-->
 					<el-col :span="12" class="mb20">
-						<el-form-item label="账户类型" :rules="typeRules" prop="type">
-							<el-select class="w100" v-model="dataForm.type" :clearable="false" :disabled="!isNew">
+						<el-form-item label="账户类型" :rules="typeRules" prop="levelType">
+							<el-select class="w100" v-model="dataForm.levelType" :clearable="false" :disabled="!isNew">
 								<el-option v-for="{ label, value } in postOptions" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
@@ -17,14 +17,14 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="服务商授权" prop="providerAuth">
+						<el-form-item label="服务商授权" prop="spAuthScope">
 							<el-select class="w100" v-model="dataForm.spAuthScope">
 								<el-option v-for="{ label, value } in providerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="客户授权" prop="customerAuth">
+						<el-form-item label="客户授权" prop="merchantAuthScope">
 							<el-select class="w100" v-model="dataForm.merchantAuthScope">
 								<el-option v-for="{ label, value } in customerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
@@ -53,8 +53,8 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('sysuser.role')" prop="roleList">
-							<el-select class="w100" clearable multiple placeholder="请选择角色" v-model="dataForm.roleList">
+						<el-form-item :label="$t('sysuser.role')" prop="role">
+							<el-select class="w100" clearable multiple placeholder="请选择角色" v-model="dataForm.role">
 								<el-option :key="item.roleId" :label="item.roleName" :value="item.roleId" v-for="item in roleData" />
 							</el-select>
 						</el-form-item>
@@ -125,19 +125,11 @@ const { t } = useI18n();
 const postOptions = [
 	{
 		label: '职员账户',
-		value: 0,
+		value: '20',
 	},
 	{
 		label: '客户账户',
-		value: 1,
-	},
-	{
-		label: '个人账户',
-		value: 2,
-	},
-	{
-		label: '系统账户',
-		value: 3,
+		value: '30',
 	},
 ];
 
@@ -161,10 +153,9 @@ const dataForm = reactive({
 	salt: '',
 	wxOpenid: '',
 	qqOpenid: '',
-	lockFlag: '0',
+	lockFlag: '',
 	phone: '' as String | undefined,
 	deptId: '',
-	roleList: [],
 	postList: [],
 	nickname: '',
 	name: '',
@@ -172,7 +163,7 @@ const dataForm = reactive({
 	post: [] as string[],
 	role: [] as string[],
 	//   new
-	type: 0,
+	levelType: '',
 	loginAccount: '',
 	spAuthScope: '',
 	merchantAuthScope: '',
@@ -187,9 +178,7 @@ const dataRules = reactive({
 		{ required: true, message: '用户名不能为空', trigger: 'blur' },
 		{ min: 5, max: 20, message: '用户名称长度必须介于 5 和 20 之间', trigger: 'blur' },
 		{
-			validator: (rule: any, value: any, callback: any) => {
-				validateUsername(rule, value, callback, dataForm.userId !== '');
-			},
+			validator: (rule: any, value: any, callback: any) => validateUsername(rule, value, callback, dataForm.userId !== ''),
 			trigger: 'blur',
 		},
 	],
@@ -208,7 +197,7 @@ const dataRules = reactive({
 		{ validator: rule.chinese, trigger: 'blur' },
 	],
 	deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
-	roleList: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
+	role: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
 	post: [{ required: true, message: '岗位不能为空', trigger: 'blur' }],
 	// 手机号校验，不能为空、新增的时不能重复校验
 	phone: [
@@ -331,7 +320,7 @@ const getRoleData = () => {
 	roleList().then((res) => {
 		roleData.value = res.data;
 		// 默认选择第一个
-		dataForm.role = [res.data[0].roleId];
+		// dataForm.role = [res.data[0].roleId];
 	});
 };
 
