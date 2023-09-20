@@ -122,3 +122,4 @@ declare module '@vue/runtime-core' {
 		baseURL: string;
 	}
 }
+declare const __isDev__: boolean;

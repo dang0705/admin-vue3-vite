@@ -20,7 +20,7 @@
 						</ul>
 					</div>
 					<div class="section" v-for="{ title, img, data } in data.groupLeft" :key="title">
-						<h2 class="flex items-center text-[18px]"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
+						<h2 class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
 						<ul class="flex">
 							<li
 								:class="['flex', 'flex-col', 'items-center', 'flex-shrink-0', 'item-data', { 'border-left': index }]"
@@ -44,7 +44,7 @@
 						:key="title"
 					>
 						<h2 :class="['flex', 'items-center', 'justify-between', { 'mb-5': showMore }]">
-							<p class="flex items-center text-[18px]"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</p>
+							<p class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</p>
 							<router-link v-if="showMore" to="" class="">更多</router-link>
 						</h2>
 						<div v-if="charts" ref="commandChartRef" id="charts" class="h-[300px] w-full" />
@@ -157,7 +157,7 @@ const statusMap = {
 	0: '#FF6826',
 	1: '#2C80FF',
 	2: '#00D700',
-	3: '#999999',
+	3: '#1D2129',
 	4: '#FF4D45',
 };
 const statusBgMap = {

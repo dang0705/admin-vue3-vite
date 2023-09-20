@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, defineAsyncComponent } from 'vue';
 import pinia from '/@/stores/index';
 import Colada from 'colada-plugin';
 import App from './App.vue';
@@ -12,7 +12,7 @@ import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 
-import { ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, UploadImg, Editor, Tip, DelWrap } from '/@/components/index';
+import { ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, Editor, Tip, DelWrap } from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
 // 布局工具
@@ -27,7 +27,10 @@ app.component('Pagination', Pagination);
 app.component('RightToolbar', RightToolbar);
 app.component('uploadExcel', UploadExcel);
 app.component('UploadFile', UploadFile);
-app.component('UploadImg', UploadImg);
+app.component(
+	'UploadImg',
+	defineAsyncComponent(() => import('/@/components/Upload/Image.vue'))
+);
 app.component('Editor', Editor);
 app.component('Tip', Tip);
 app.component('DelWrap', DelWrap);

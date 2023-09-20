@@ -2,7 +2,7 @@
 	<div class="layout-logo !h-auto flex-col" v-if="setShowLogo" @click="onThemeConfigChange">
 		<!--		<span>{{ themeConfig.globalTitle }}</span>-->
 		<img :src="logo" class="w-[66%] my-[20px]" />
-		<hr class="w-full" style="color: #444c62" />
+		<hr class="w-full" style="color: #f4f7fe; opacity: 0.14" />
 	</div>
 	<div class="layout-logo-size" v-else @click="onThemeConfigChange">
 		<img :src="logoMini" class="layout-logo-size-img" />
