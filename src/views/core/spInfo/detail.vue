@@ -81,9 +81,10 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="个税税率" prop="IndividualIncomeTaxRate">
-							<div class="flex">
-								<el-input style="width: auto" v-model="form.tax" />{{ '元 < 单人单月任务金额 <='
-								}}<el-input style="width: auto" v-model="form.taskAmount" />>元,税率 <el-input style="width: auto" v-model="form.taxRate" />%
+							<div class="flex flex-wrap">
+								<el-input style="width: auto; height: fit-content" v-model="form.tax" />{{ '元 < 单人单月任务金额 <='
+								}}<el-input style="width: auto; height: fit-content" v-model="form.taskAmount" />>元,税率
+								<el-input style="width: auto; height: fit-content" v-model="form.taxRate" />%
 							</div>
 						</el-form-item>
 					</el-col>
