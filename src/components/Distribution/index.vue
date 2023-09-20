@@ -1,41 +1,38 @@
 <template>
-	<div class="system-role-dialog-container">
-		<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
-			<template #header>
-				<p class="text-xl my-2">{{ title }}</p>
-				<el-transfer
-					class="flex items-center"
-					v-model="selected"
-					filterable
-					:props="{ key: 'id' }"
-					:render-content="renderFunc"
-					:left-default-checked="[2, 3]"
-					:right-default-checked="[1]"
-					:titles="titles"
-					:button-texts="buttonTexts"
-					:data="data"
-				>
-					<template v-for="(_, slot) in $slots" #[slot]="option">
-						<slot :name="slot" v-bind="option" />
-					</template>
-					<template #default="{ option }" v-if="!hasDefaultSlot">
-						<ul class="flex justify-between px-3">
-							<li>{{ option.values[0].value }}</li>
-							<li v-if="option.values[1]">{{ option.values[1].value }}</li>
-						</ul>
-					</template>
-				</el-transfer>
+	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
+		<template #header>
+			<p class="text-xl my-2">{{ title }}</p>
+		</template>
+		<el-transfer
+			class="w-full flex justify-between items-center"
+			v-model="selected"
+			filterable
+			:props="{ key: 'id' }"
+			:render-content="renderFunc"
+			:left-default-checked="[2, 3]"
+			:right-default-checked="[1]"
+			:titles="titles"
+			:button-texts="buttonTexts"
+			:data="data"
+		>
+			<template v-for="(_, slot) in $slots" #[slot]="option">
+				<slot :name="slot" v-bind="option" />
 			</template>
-
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
-					<el-button @click="selected = [...selectedCache]">重置</el-button>
-					<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
-				</span>
+			<template #default="{ option }" v-if="!hasDefaultSlot">
+				<ul class="flex justify-between px-3">
+					<li>{{ option.values[0].value }}</li>
+					<li v-if="option.values[1]">{{ option.values[1].value }}</li>
+				</ul>
 			</template>
-		</el-dialog>
-	</div>
+		</el-transfer>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
+				<el-button @click="selected = [...selectedCache]">重置</el-button>
+				<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
+			</span>
+		</template>
+	</el-dialog>
 </template>
 
 <script setup lang="ts" name="distribution">
@@ -166,7 +163,7 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.system-role-dialog-container ::v-deep(.el-transfer__buttons) {
+::v-deep(.el-transfer__buttons) {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -174,6 +171,5 @@ defineExpose({
 		margin: 10px 0 0 0;
 		width: 100%;
 	}
-	//justify-content: center;
 }
 </style>
