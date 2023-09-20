@@ -17,14 +17,14 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="服务商授权" prop="providerAuth">
+						<el-form-item label="服务商授权" prop="spAuthScope">
 							<el-select class="w100" v-model="dataForm.spAuthScope">
 								<el-option v-for="{ label, value } in providerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="客户授权" prop="customerAuth">
+						<el-form-item label="客户授权" prop="merchantAuthScope">
 							<el-select class="w100" v-model="dataForm.merchantAuthScope">
 								<el-option v-for="{ label, value } in customerAuth" :label="label" :value="value" :key="label" />
 							</el-select>
