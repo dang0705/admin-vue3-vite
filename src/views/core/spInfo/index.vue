@@ -8,7 +8,7 @@
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in list"></el-option>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in sp_status"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -113,15 +113,14 @@
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-import { useDict } from '/@/hooks/core';
+import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();
 // 定义查询字典
-const { list } = useDict('list');
-console.log(list, 123);
+const { sp_status } = useDict('sp_status');
 
 // 定义变量内容
 const formDialogRef = ref();
