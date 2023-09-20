@@ -58,8 +58,35 @@
 						</el-form-item>
 					</el-col>
 
-					<!--          个税税率-->
-					<!--					<IndividualTaxRatios v-model="form.individualTaxRatios" />-->
+					<el-divider>税率设置</el-divider>
+					<el-col :span="12" class="mb20">
+						<el-form-item label="个税计算方式" prop="personalIncomeTax">
+							<el-select placeholder="请输入个税计算方式" v-model="form.personalIncomeTax">
+								<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+
+					<el-col :span="12" class="mb20">
+						<el-form-item label="增值税税率" prop="valueAddedTax">
+							<div class="flex"><el-input v-model="form.valueAddedTax" placeholder="请输入增值税税率" />%</div>
+						</el-form-item>
+					</el-col>
+
+					<el-col :span="12" class="mb20">
+						<el-form-item label="单月上限" prop="upperLimit">
+							<div class="flex flex-1"><el-input v-model="form.upperLimit" placeholder="请输入单月上限" />元</div>
+						</el-form-item>
+					</el-col>
+
+					<el-col :span="24" class="mb20">
+						<el-form-item label="个税税率" prop="IndividualIncomeTaxRate">
+							<div class="flex">
+								<el-input style="width: auto" v-model="form.tax" />{{ '元 < 单人单月任务金额 <='
+								}}<el-input style="width: auto" v-model="form.taskAmount" />>元,税率 <el-input style="width: auto" v-model="form.taxRate" />%
+							</div>
+						</el-form-item>
+					</el-col>
 
 					<el-divider>法人信息</el-divider>
 					<el-col :span="12" class="mb20">
