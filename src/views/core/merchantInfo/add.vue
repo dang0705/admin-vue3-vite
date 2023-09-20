@@ -80,12 +80,12 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item label="营业执照" prop="businessLicense">
 									<!-- <el-input v-model="form.businessLicense" placeholder="请输入营业执照" /> -->
-									<upload-image
+									<!-- <upload-image
 										ref="businessLicenseRef"
 										:title="$t('sysdept.importTip')"
 										url="/admin/dept/import"
 										temp-url="/admin/sys-file/local/file/dept.xlsx"
-									/>
+									/> -->
 								</el-form-item>
 							</el-col>
 
@@ -93,12 +93,12 @@
 								<el-form-item label="企业logo" prop="logo">
 									<!-- <el-input v-model="form.logo" placeholder="请输入企业logo" /> -->
 									<!-- <upload @change="uploadSuccess" :model-value="form.logo" /> -->
-									<upload-image
+									<!-- <upload-image
 										ref="logoRef"
 										:title="$t('sysdept.importTip')"
 										url="/admin/dept/import"
 										temp-url="/admin/sys-file/local/file/dept.xlsx"
-									/>
+									/> -->
 								</el-form-item>
 							</el-col>
 
@@ -207,24 +207,24 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item label="法人身份证头像面" prop="legalPersonPortrait">
 									<!-- <el-input v-model="form.legalPersonPortrait" placeholder="请输入法人身份证头像面" /> -->
-									<upload-image
-										ref="logoRef"
+									<!-- <upload-image
+										ref="legalPersonPortraitRef"
 										:title="$t('sysdept.importTip')"
 										url="/admin/dept/import"
 										temp-url="/admin/sys-file/local/file/dept.xlsx"
-									/>
+									/> -->
 								</el-form-item>
 							</el-col>
 
 							<el-col :span="12" class="mb20">
 								<el-form-item label="法人身份证国徽面" prop="legalPersonNationalEmblem">
 									<!-- <el-input v-model="form.legalPersonNationalEmblem" placeholder="请输入法人身份证国徽面" /> -->
-									<upload-image
-										ref="logoRef"
+									<!-- <upload-image
+										ref="legalPersonNationalEmblemRef"
 										:title="$t('sysdept.importTip')"
 										url="/admin/dept/import"
 										temp-url="/admin/sys-file/local/file/dept.xlsx"
-									/>
+									/> -->
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -255,12 +255,12 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item label="办税人身份证头像面" prop="taxOfficerPortrait">
 									<!-- <el-input v-model="form.taxOfficerPortrait" placeholder="请输入办税人身份证头像面" /> -->
-									<upload-image
-										ref="logoRef"
+									<!-- <upload-image
+										ref="taxOfficerPortraitRef"
 										:title="$t('sysdept.importTip')"
 										url="/admin/dept/import"
 										temp-url="/admin/sys-file/local/file/dept.xlsx"
-									/>
+									/> -->
 								</el-form-item>
 							</el-col>
 
@@ -290,7 +290,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="cache">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
@@ -312,7 +312,7 @@ const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict
 	'enterprise_scale'
 );
 
-// 提交表单数据
+// // 提交表单数据
 const form = reactive({
 	id: '',
 	merchantName: '',
@@ -347,7 +347,7 @@ const form = reactive({
 	taxOfficerMobile: '',
 	taxOfficerIdCard: '',
 	taxOfficerPortrait: '',
-	taxOfficerNationalEmblem: '',
+	taxOfficerNationalEmblem: [],
 	status: '',
 	responsiblePerson: '',
 });
@@ -391,7 +391,7 @@ const dataRules = ref({
 	responsiblePerson: [{ required: true, message: '负责人不能为空', trigger: 'blur' }],
 });
 
-// 提交
+// 提交;
 const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
