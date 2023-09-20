@@ -1,10 +1,10 @@
 <template>
 	<div class="layout-padding cache">
 		<el-scrollbar>
-			<el-card class="!border-none" shadow="never">
+			<el-card class="!border-none" :body-style="{ padding: '20px 72px 20px 48px' }" shadow="never">
 				<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading" label-position="right">
 					<el-divider>基本信息</el-divider>
-					<el-row :gutter="24">
+					<el-row :gutter="48">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
 								<el-input v-model="form.merchantName" :placeholder="$t('merchantInfo.inputMerchantNameTip')" />
@@ -59,13 +59,13 @@
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="注册地址" prop="address">
+							<el-form-item :label="$t('merchantInfo.address')" prop="address">
 								<el-input v-model="form.address" :rows="2" :placeholder="$t('merchantInfo.inputAddressTip')" show-word-limit type="textarea" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="入驻日期" prop="entryDate">
+							<el-form-item :label="$t('merchantInfo.entryDate')" prop="entryDate">
 								<el-date-picker type="date" placeholder="请选择入驻日期" v-model="form.entryDate" :value-format="dateStr"></el-date-picker>
 							</el-form-item>
 						</el-col>
@@ -77,19 +77,19 @@
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="营业执照" prop="businessLicense">
+							<el-form-item :label="$t('merchantInfo.businessLicense')" prop="businessLicense">
 								<UploadImg :type="businessType" v-model="form.businessLicense" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="企业logo" prop="logo">
+							<el-form-item :label="$t('merchantInfo.logo')" prop="logo">
 								<UploadImg :type="businessType" v-model="form.logo" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="24" class="mb20">
-							<el-form-item label="经营范围" prop="businessScope">
+							<el-form-item :label="$t('merchantInfo.businessScope')" prop="businessScope">
 								<el-input
 									v-model="form.businessScope"
 									:rows="3"
@@ -100,13 +100,13 @@
 							</el-form-item>
 						</el-col>
 						<el-col :span="12" class="mb20">
-							<el-form-item label="联系人" prop="contactName">
+							<el-form-item :label="$t('merchantInfo.contactName')" prop="contactName">
 								<el-input v-model="form.contactName" placeholder="请输入联系人" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="联系人电话" prop="contactPhone">
+							<el-form-item :label="$t('merchantInfo.contactPhone')" prop="contactPhone">
 								<el-input v-model="form.contactPhone" placeholder="请输入联系人电话" />
 							</el-form-item>
 						</el-col>
@@ -114,7 +114,7 @@
 					<el-divider>税务信息</el-divider>
 					<el-row :gutter="24">
 						<el-col :span="12" class="mb20">
-							<el-form-item label="纳税人识别号" prop="taxRegistrationNumber">
+							<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
 								<el-input v-model="form.taxRegistrationNumber" placeholder="请输入纳税人识别号" />
 							</el-form-item>
 						</el-col>
@@ -128,19 +128,19 @@
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="银行账户" prop="taxBankNumber">
+							<el-form-item :label="$t('merchantInfo.taxBankNumber')" prop="taxBankNumber">
 								<el-input v-model="form.taxBankNumber" placeholder="请输入银行账户" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="开户行" prop="taxBankName">
+							<el-form-item :label="$t('merchantInfo.taxBankName')" prop="taxBankName">
 								<el-input v-model="form.taxBankName" placeholder="请输入开户行" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="24" class="mb20">
-							<el-form-item label="开户地" prop="taxBankArea">
+							<el-form-item :label="$t('merchantInfo.taxBankArea')" prop="taxBankArea">
 								<el-input
 									v-model="form.taxBankArea"
 									:rows="3"
@@ -164,31 +164,31 @@
 					<el-divider>法人信息</el-divider>
 					<el-row :gutter="24">
 						<el-col :span="12" class="mb20">
-							<el-form-item label="法人姓名" prop="legalPersonName">
+							<el-form-item :label="$t('merchantInfo.legalPersonName')" prop="legalPersonName">
 								<el-input v-model="form.legalPersonName" placeholder="请输入法人姓名" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="法人手机号" prop="legalPersonMobile">
+							<el-form-item :label="$t('merchantInfo.legalPersonMobile')" prop="legalPersonMobile">
 								<el-input v-model="form.legalPersonMobile" placeholder="请输入法人手机号" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="法人身份证号" prop="legalPersonIdCard">
+							<el-form-item :label="$t('merchantInfo.legalPersonIdCard')" prop="legalPersonIdCard">
 								<el-input v-model="form.legalPersonIdCard" placeholder="请输入法人身份证号" />
 							</el-form-item>
 						</el-col>
 						<!-- 占位 -->
 						<el-col :span="12" class="mb20"> </el-col>
 						<el-col :span="12" class="mb20">
-							<el-form-item label="法人身份证头像面" prop="legalPersonPortrait">
+							<el-form-item :label="$t('merchantInfo.legalPersonPortrait')" prop="legalPersonPortrait">
 								<UploadImg :type="businessType" v-model="form.legalPersonPortrait" />
 							</el-form-item>
 						</el-col>
 						<el-col :span="12" class="mb20">
-							<el-form-item label="法人身份证国徽面" prop="legalPersonNationalEmblem">
+							<el-form-item :label="$t('merchantInfo.legalPersonNationalEmblem')" prop="legalPersonNationalEmblem">
 								<UploadImg :type="businessType" v-model="form.legalPersonNationalEmblem" />
 							</el-form-item>
 						</el-col>
@@ -196,31 +196,31 @@
 					<el-divider>办税人信息</el-divider>
 					<el-row :gutter="24">
 						<el-col :span="12" class="mb20">
-							<el-form-item label="办税人姓名" prop="taxOfficerName">
+							<el-form-item :label="$t('merchantInfo.taxOfficerName')" prop="taxOfficerName">
 								<el-input v-model="form.taxOfficerName" placeholder="请输入办税人姓名" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="办税人手机号" prop="taxOfficerMobile">
+							<el-form-item :label="$t('merchantInfo.taxOfficerMobile')" prop="taxOfficerMobile">
 								<el-input v-model="form.taxOfficerMobile" placeholder="请输入办税人手机号" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="办税人身份证号" prop="taxOfficerIdCard">
+							<el-form-item :label="$t('merchantInfo.taxOfficerIdCard')" prop="taxOfficerIdCard">
 								<el-input v-model="form.taxOfficerIdCard" placeholder="请输入办税人身份证号" />
 							</el-form-item>
 						</el-col>
 						<el-col :span="12" class="mb20"> </el-col>
 						<el-col :span="12" class="mb20">
-							<el-form-item label="办税人身份证头像面" prop="taxOfficerPortrait">
+							<el-form-item :label="$t('merchantInfo.taxOfficerPortrait')" prop="taxOfficerPortrait">
 								<UploadImg :type="businessType" v-model="form.taxOfficerPortrait" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item label="办税人身份证国徽面" prop="taxOfficerNationalEmblem">
+							<el-form-item :label="$t('merchantInfo.taxOfficerNationalEmblem')" prop="taxOfficerNationalEmblem">
 								<UploadImg :type="businessType" v-model="form.taxOfficerNationalEmblem" />
 							</el-form-item>
 						</el-col>

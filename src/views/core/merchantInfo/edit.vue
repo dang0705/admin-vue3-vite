@@ -2,7 +2,7 @@
 	<merchantInfo-form />
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="merchantEdit">
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 </script>
 
