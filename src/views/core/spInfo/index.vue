@@ -8,7 +8,7 @@
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in list"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -113,13 +113,15 @@
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-import { useDict } from '/@/hooks/dict';
+import { useDict } from '/@/hooks/core';
 import { useI18n } from 'vue-i18n';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();
 // 定义查询字典
+const { list } = useDict('list');
+console.log(list, 123);
 
 // 定义变量内容
 const formDialogRef = ref();
@@ -134,9 +136,7 @@ const deactivateVisible = ref(false);
 const deactivateInfo = ref({}) as any;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {
-		systemFlag: '',
-	},
+	queryForm: {},
 	pageList: fetchList,
 });
 
