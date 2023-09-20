@@ -22,22 +22,22 @@
 					<img :src="realImages[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
 						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
-							<el-icon :size="props.iconSize">
+							<el-icon :size="iconSize">
 								<Edit />
 							</el-icon>
-							<span v-if="!props.iconSize">编辑</span>
+							<span v-if="!iconSize">编辑</span>
 						</div>
 						<div class="handle-icon" @click="imgViewVisible = true">
-							<el-icon :size="props.iconSize">
+							<el-icon :size="iconSize">
 								<ZoomIn />
 							</el-icon>
-							<span v-if="!props.iconSize">查看</span>
+							<span v-if="!iconSize">查看</span>
 						</div>
 						<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
-							<el-icon :size="props.iconSize">
+							<el-icon :size="iconSize">
 								<Delete />
 							</el-icon>
-							<span v-if="!props.iconSize">删除</span>
+							<span v-if="!iconSize">删除</span>
 						</div>
 					</div>
 				</template>
@@ -61,10 +61,10 @@
 			<li v-for="(image, index) in realImages" :key="image">
 				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="realImages" fit="cover" />
 				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
-					<el-icon :size="props.iconSize" class="ml-auto">
+					<el-icon :size="iconSize" class="ml-auto">
 						<Delete />
 					</el-icon>
-					<span v-if="!props.iconSize">删除</span>
+					<span v-if="!iconSize">删除</span>
 				</div>
 			</li>
 		</ul>
@@ -77,47 +77,68 @@ import { ElNotification, formContextKey, formItemContextKey } from 'element-plus
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
-import helper, { isDev } from '/@/utils/helpers';
-
-const { proxy } = getCurrentInstance();
-
-interface UploadFileProps {
-	modelValue: string[]; // 图片地址 ==> 必传
-	uploadFileUrl?: string; // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
-	getPreviewUrl?: string; // 请求真正图片的api
-	drag?: boolean; // 是否支持拖拽上传 ==> 非必传（默认为 true）
-	disabled?: boolean; // 是否禁用上传组件 ==> 非必传（默认为 false）
-	fileSize?: number; // 图片大小限制 ==> 非必传（默认为 5M）
-	limit?: string | number; // 图片数量限制
-	fileType?: File.ImageMimeType[]; // 图片类型限制 ==> 非必传（默认为 ["image/jpeg", "image/png", "image/gif"]）
-	height?: string; // 组件高度 ==> 非必传（默认为 150px）
-	width?: string; // 组件宽度 ==> 非必传（默认为 150px）
-	borderRadius?: string; // 组件边框圆角 ==> 非必传（默认为 8px）
-	iconSize?: number;
-	type: string; // 业务类型
-	multiple?: boolean; // 是否多选
-}
 
 // 接受父组件参数
-const props = withDefaults(defineProps<UploadFileProps>(), {
-	modelValue: <any>[],
-	uploadFileUrl: '/docs/sys-file/upload',
-	getPreviewUrl: '/docs/sys-file/gmyg',
-	drag: true,
-	disabled: false,
-	fileSize: 5,
-	limit: 0, // 上传张数限制
-	fileType: () => ['image/jpeg', 'image/png', 'image/gif'],
-	height: '120px',
-	width: '120px',
-	borderRadius: '3px',
-	multiple: false,
+const props = defineProps({
+	modelValue: {
+		type: Array,
+		required: true,
+		default: () => [],
+	},
+	uploadFileUrl: {
+		type: String,
+		default: '/docs/sys-file/upload',
+	},
+	getPreviewUrl: {
+		type: String,
+		default: '/docs/sys-file/gmyg',
+	},
+	drag: {
+		type: Boolean,
+		default: true,
+	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
+	fileSize: {
+		type: [Number, String],
+		default: 5,
+	},
+	limit: {
+		type: [Number, String],
+		default: 0,
+	},
+	fileType: {
+		type: Array,
+		default: () => ['image/jpeg', 'image/png', 'image/gif'],
+	},
+	height: {
+		type: String,
+		default: '120px',
+	},
+	width: {
+		type: String,
+		default: '120px',
+	},
+	borderRadius: {
+		type: String,
+		default: '3px',
+	},
+	multiple: {
+		type: Boolean,
+		default: false,
+	},
+	iconSize: {
+		type: [String, Number],
+		default: 20,
+	},
+	type: {
+		type: String,
+		default: '',
+	},
 });
-const isModelValueString = helper.isString(props.modelValue);
-if (isDev && isModelValueString) {
-	console.error('请保证UploadImage双向绑定的值为数组类型');
-	throw new Error();
-}
+const { proxy } = getCurrentInstance();
 
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
@@ -160,7 +181,7 @@ const upload = async (options: UploadRequestOptions) => {
 	}
 };
 
-const images = ref<string[]>(props.modelValue);
+const images = ref<string[]>(props.modelValue as []);
 const realImages = computed(() => images.value.map((image) => `${proxy.baseURL}/${image}`));
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
