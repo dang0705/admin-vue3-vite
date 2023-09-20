@@ -105,13 +105,16 @@
 							</template>
 						</el-table-column>
 						<el-table-column :label="$t('sysuser.createTime')" prop="createTime" show-overflow-tooltip width="180"></el-table-column>
-						<el-table-column :label="$t('common.action')" width="200" fixed="right">
+						<el-table-column :label="$t('common.action')" width="350" fixed="right">
 							<template #default="scope">
 								<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
 									{{ $t('common.editBtn') }}
 								</el-button>
-								<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)">{{
-									$t('common.distribution')
+								<el-button text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
+									$t('sysuser.distributionMerchant')
+								}}</el-button>
+								<el-button text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
+									$t('sysuser.distributionSp')
 								}}</el-button>
 								<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 									<span style="margin-left: 12px">
@@ -135,7 +138,20 @@
 		</splitpanes>
 
 		<user-form ref="userDialogRef" @refresh="getDataList(false)" />
-		<Distribution ref="distributionRef" />
+		<Distribution
+			ref="customersRef"
+			id-filed="userId"
+			list-url="core/userMgrMerchant/assignMerchantPage"
+			save-url="core/userMgrMerchant/assignMerchant"
+			title="批量分配客户"
+		/>
+		<Distribution
+			ref="providerRef"
+			id-filed="userId"
+			list-url="core/userMgrSp/assignSpPage"
+			save-url="core/userMgrSp/assignSP"
+			title="批量分配服务商"
+		/>
 		<upload-excel
 			ref="excelUploadRef"
 			:title="$t('sysuser.importUserTip')"
@@ -165,8 +181,9 @@ const { t } = useI18n();
 
 // 定义变量内容
 const userDialogRef = ref();
+const customersRef = ref();
+const providerRef = ref();
 const excelUploadRef = ref();
-const distributionRef = ref();
 const queryRef = ref();
 const showSearch = ref(true);
 

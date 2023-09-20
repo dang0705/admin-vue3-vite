@@ -59,9 +59,7 @@
 						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="permessionRef.openDialog(scope.row)"
 							>{{ $t('sysrole.permissionTip') }}
 						</el-button>
-						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="distributionRef.openDialog(scope.row)"
-							>{{ $t('common.distribution') }}
-						</el-button>
+						<el-button text type="primary" icon="turn-off" @click="distributionRef.openDialog(scope.row)">{{ $t('common.distribution') }} </el-button>
 						<el-tooltip :content="$t('sysrole.deleteDisabledTip')" :disabled="scope.row.roleId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button

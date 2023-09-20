@@ -1,8 +1,8 @@
 <template>
 	<div class="system-role-dialog-container">
-		<el-dialog v-model="state.dialog.isShowDialog" :close-on-click-modal="false" draggable>
+		<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
 			<template #header>
-				<p class="text-xl my-2">{{ dialogTitle }}</p>
+				<p class="text-xl my-2">{{ title }}</p>
 				<el-transfer
 					class="flex items-center"
 					v-model="selected"
@@ -21,7 +21,7 @@
 					<template #default="{ option }" v-if="!hasDefaultSlot">
 						<ul class="flex justify-between px-3">
 							<li>{{ option.values[0].value }}</li>
-							<li>{{ option.values[1].value }}</li>
+							<li v-if="option.values[1]">{{ option.values[1].value }}</li>
 						</ul>
 					</template>
 				</el-transfer>
@@ -44,7 +44,7 @@ import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
 
 const props = defineProps({
-	dialogTitle: {
+	title: {
 		type: String,
 		default: '批量分配用户',
 	},
@@ -70,6 +70,10 @@ const props = defineProps({
 	renderFunc: {
 		type: Function,
 		default: null,
+	},
+	idFiled: {
+		type: String,
+		default: 'roleId',
 	},
 });
 
@@ -108,7 +112,8 @@ const state = reactive({
 
 // 打开弹窗
 const openDialog = async (row: any) => {
-	state.roleId = row.roleId;
+	console.log(props.idFiled, row, row[props.idFiled]);
+	state.roleId = row[props.idFiled];
 	loading.value = true;
 	selected.value = selectedCache.value = [];
 	// console.log(request);
@@ -118,7 +123,7 @@ const openDialog = async (row: any) => {
 		params: {
 			current: 1,
 			size: 9999,
-			roleId: row.roleId,
+			[props.idFiled]: state.roleId,
 		},
 	});
 	data.value = records;
@@ -136,7 +141,6 @@ const onSubmit = async () => {
 		await request.put(props.saveUrl, {
 			assignTo: state.roleId,
 			allocationIds: selected.value,
-			type: '10',
 		});
 		state.dialog.isShowDialog = false;
 		useMessage().success(t('common.editSuccessText'));

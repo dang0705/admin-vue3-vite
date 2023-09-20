@@ -20,6 +20,8 @@ export default {
 		noDataScopeTip: 'no data permissions',
 		spAuthScope: 'spAuthScope',
 		merchantAuthScope: 'merchantAuthScope',
+		distributionMerchant: 'distributionMerchant',
+		distributionSp: 'distributionSp',
 	},
 	personal: {
 		name: 'personal info',
