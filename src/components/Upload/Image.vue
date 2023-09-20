@@ -17,31 +17,31 @@
 				:accept="fileType.join(',')"
 				:on-change="onchange"
 			>
-				<!-- 如果返回的是OSS 地址则不需要增加 baseURL -->
-				<!--			<template v-if="images.length">
-				<img :src="getPreview(images[0])" class="upload-image" />
-				<div class="upload-handle" @click.stop>
-					<div class="handle-icon" @click="editImg" v-if="!self_disabled">
-						<el-icon :size="props.iconSize">
-							<Edit />
-						</el-icon>
-						<span v-if="!props.iconSize">编辑</span>
+				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
+				<template v-if="realImages.length && !multiple">
+					<img :src="realImages[0]" class="upload-image" />
+					<div class="upload-handle" @click.stop>
+						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
+							<el-icon :size="iconSize">
+								<Edit />
+							</el-icon>
+							<span v-if="!iconSize">编辑</span>
+						</div>
+						<div class="handle-icon" @click="imgViewVisible = true">
+							<el-icon :size="iconSize">
+								<ZoomIn />
+							</el-icon>
+							<span v-if="!iconSize">查看</span>
+						</div>
+						<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
+							<el-icon :size="iconSize">
+								<Delete />
+							</el-icon>
+							<span v-if="!iconSize">删除</span>
+						</div>
 					</div>
-					<div class="handle-icon" @click="imgViewVisible = true">
-						<el-icon :size="props.iconSize">
-							<ZoomIn />
-						</el-icon>
-						<span v-if="!props.iconSize">查看</span>
-					</div>
-					<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
-						<el-icon :size="props.iconSize">
-							<Delete />
-						</el-icon>
-						<span v-if="!props.iconSize">删除</span>
-					</div>
-				</div>
-			</template>-->
-				<div class="upload-empty">
+				</template>
+				<div class="upload-empty" v-else-if="!realImages.length || multiple">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -57,62 +57,88 @@
 				<slot name="tip"></slot>
 			</div>
 		</div>
-		<ul class="flex flex-warp">
+		<ul class="flex flex-warp" v-if="multiple">
 			<li v-for="(image, index) in realImages" :key="image">
 				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="realImages" fit="cover" />
 				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
-					<el-icon :size="props.iconSize" class="ml-auto">
+					<el-icon :size="iconSize" class="ml-auto">
 						<Delete />
 					</el-icon>
-					<span v-if="!props.iconSize">删除</span>
+					<span v-if="!iconSize">删除</span>
 				</div>
 			</li>
 		</ul>
-		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="images" />
+		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="realImages" />
 	</div>
 </template>
 
 <script setup lang="ts" name="UploadImg">
-import { ref, computed, inject } from 'vue';
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus';
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
 
-const { proxy } = getCurrentInstance();
-
-interface UploadFileProps {
-	modelValue: string[]; // 图片地址 ==> 必传
-	uploadFileUrl?: string; // 上传图片的 api 方法，一般项目上传都是同一个 api 方法，在组件里直接引入即可 ==> 非必传
-	getPreviewUrl?: string; // 请求真正图片的api
-	drag?: boolean; // 是否支持拖拽上传 ==> 非必传（默认为 true）
-	disabled?: boolean; // 是否禁用上传组件 ==> 非必传（默认为 false）
-	fileSize?: number; // 图片大小限制 ==> 非必传（默认为 5M）
-	limit?: string | number; // 图片数量限制
-	fileType?: File.ImageMimeType[]; // 图片类型限制 ==> 非必传（默认为 ["image/jpeg", "image/png", "image/gif"]）
-	height?: string; // 组件高度 ==> 非必传（默认为 150px）
-	width?: string; // 组件宽度 ==> 非必传（默认为 150px）
-	borderRadius?: string; // 组件边框圆角 ==> 非必传（默认为 8px）
-	iconSize?: number;
-	type: string; // 业务类型
-	multiple?: boolean; // 是否多选
-}
-
 // 接受父组件参数
-const props = withDefaults(defineProps<UploadFileProps>(), {
-	modelValue: [],
-	uploadFileUrl: '/docs/sys-file/upload',
-	getPreviewUrl: '/docs/sys-file/gmyg',
-	drag: true,
-	disabled: false,
-	fileSize: 5,
-	limit: 0, // 上传张数限制
-	fileType: () => ['image/jpeg', 'image/png', 'image/gif'],
-	height: '120px',
-	width: '120px',
-	borderRadius: '3px',
-	multiple: false,
+const props = defineProps({
+	modelValue: {
+		type: Array,
+		required: true,
+		default: () => [],
+	},
+	uploadFileUrl: {
+		type: String,
+		default: '/docs/sys-file/upload',
+	},
+	getPreviewUrl: {
+		type: String,
+		default: '/docs/sys-file/gmyg',
+	},
+	drag: {
+		type: Boolean,
+		default: true,
+	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
+	fileSize: {
+		type: [Number, String],
+		default: 5,
+	},
+	limit: {
+		type: [Number, String],
+		default: 0,
+	},
+	fileType: {
+		type: Array,
+		default: () => ['image/jpeg', 'image/png', 'image/gif'],
+	},
+	height: {
+		type: String,
+		default: '120px',
+	},
+	width: {
+		type: String,
+		default: '120px',
+	},
+	borderRadius: {
+		type: String,
+		default: '3px',
+	},
+	multiple: {
+		type: Boolean,
+		default: false,
+	},
+	iconSize: {
+		type: [String, Number],
+		default: 20,
+	},
+	type: {
+		type: String,
+		default: '',
+	},
 });
+const { proxy } = getCurrentInstance();
 
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
@@ -131,7 +157,7 @@ const self_disabled = computed(() => props.disabled || formContext?.disabled);
  * @param options upload 所有配置项
  * */
 interface UploadEmits {
-	(e: 'update:modelValue', value: string | string[]): void;
+	(e: 'update:modelValue', value: string[]): void;
 }
 
 const emit = defineEmits<UploadEmits>();
@@ -149,19 +175,20 @@ const upload = async (options: UploadRequestOptions) => {
 			data: formData,
 		});
 		// 调用 el-form 内部的校验方法（可自动校验）
-		// formItemContext?.prop && formContext?.validateField(formItemContext.prop as []);
 		return Promise.resolve(data.url);
 	} catch (error) {
 		options.onError(error as any);
 	}
 };
 
-const images = ref<string[]>(props.modelValue);
+const images = ref<string[]>(props.modelValue as []);
 const realImages = computed(() => images.value.map((image) => `${proxy.baseURL}/${image}`));
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
 	props.multiple ? images.value.push(image) : (images.value = [image]);
 	emit('update:modelValue', images.value);
+	await nextTick();
+	formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
 
 /**
