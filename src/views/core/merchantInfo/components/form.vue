@@ -1,10 +1,11 @@
 <template>
 	<div class="layout-padding cache">
 		<el-scrollbar>
-			<el-card class="!border-none" :body-style="{ padding: '20px 72px 20px 48px' }" shadow="never">
+			<!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
+			<el-card class="!border-none" shadow="never">
 				<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading" label-position="right">
 					<el-divider>基本信息</el-divider>
-					<el-row :gutter="48">
+					<el-row class="paddcus" :gutter="48">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
 								<el-input v-model="form.merchantName" :placeholder="$t('merchantInfo.inputMerchantNameTip')" />
@@ -112,7 +113,7 @@
 						</el-col>
 					</el-row>
 					<el-divider>税务信息</el-divider>
-					<el-row :gutter="24">
+					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
 								<el-input v-model="form.taxRegistrationNumber" placeholder="请输入纳税人识别号" />
@@ -162,7 +163,7 @@
 						</el-col>
 					</el-row>
 					<el-divider>法人信息</el-divider>
-					<el-row :gutter="24">
+					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.legalPersonName')" prop="legalPersonName">
 								<el-input v-model="form.legalPersonName" placeholder="请输入法人姓名" />
@@ -194,7 +195,7 @@
 						</el-col>
 					</el-row>
 					<el-divider>办税人信息</el-divider>
-					<el-row :gutter="24">
+					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.taxOfficerName')" prop="taxOfficerName">
 								<el-input v-model="form.taxOfficerName" placeholder="请输入办税人姓名" />
@@ -373,6 +374,9 @@ const getmerchantInfoData = (id: string) => {
 </script>
 
 <style scoped lang="scss">
+.paddcus {
+	padding: 0 48px 0 24px;
+}
 .formBox {
 	display: flex;
 	height: fit-content;
