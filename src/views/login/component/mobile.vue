@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts" name="loginMobile">
-import { sendMobileCode } from '/@/api/login';
+import { sendMobileCode } from '/@/api/admin/modify';
 import { useMessage } from '/@/hooks/message';
 import { useUserInfo } from '/@/stores/userInfo';
 import { rule } from '/@/utils/validate';
@@ -68,7 +68,7 @@ const handleSendCode = async () => {
 	const valid = await loginFormRef.value.validateField('mobile').catch(() => {});
 	if (!valid) return;
 
-	const response = await sendMobileCode(loginForm.mobile);
+	const response = await sendMobileCode({ phone: loginForm.mobile });
 	if (response.data) {
 		useMessage().success('验证码发送成功');
 		timeCacl();

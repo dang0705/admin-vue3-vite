@@ -8,7 +8,7 @@
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in sp_status"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -120,6 +120,7 @@ import { useI18n } from 'vue-i18n';
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();
 // 定义查询字典
+const { sp_status } = useDict('sp_status');
 
 // 定义变量内容
 const formDialogRef = ref();
@@ -134,9 +135,7 @@ const deactivateVisible = ref(false);
 const deactivateInfo = ref({}) as any;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {
-		systemFlag: '',
-	},
+	queryForm: {},
 	pageList: fetchList,
 });
 
