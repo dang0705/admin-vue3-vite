@@ -1,9 +1,9 @@
 <template>
-	<div class="layout-footer pb5">
-		<div class="layout-footer-warp">
-			<div class="mt5">{{ footerAuthor }}</div>
-		</div>
-	</div>
+	<!--	<div class="layout-footer pb5">-->
+	<!--		<div class="layout-footer-warp">-->
+	<!--			<div class="mt5">{{ footerAuthor }}</div>-->
+	<!--		</div>-->
+	<!--	</div>-->
 </template>
 
 <script setup lang="ts" name="layoutFooter">
