@@ -15,7 +15,6 @@
 				:on-success="uploadSuccess"
 				:on-error="uploadError"
 				:accept="fileType.join(',')"
-				:on-change="onchange"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
 				<template v-if="realImages.length && !multiple">
