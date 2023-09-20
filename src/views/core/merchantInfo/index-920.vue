@@ -5,31 +5,31 @@
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<!-- <el-row :gutter="24"> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
+					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName" class="w100">
 						<el-input :placeholder="$t('merchantInfo.inputMerchantNameTip')" clearable v-model="state.queryForm.merchantName" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input :placeholder="$t('merchantInfo.inputSocialCreditCodeTip')" clearable v-model="state.queryForm.socialCreditCode" />
+					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode" class="w100">
+						<el-input :placeholder="$t('merchantInfo.inputSocialCreditCodeTip')" clearable class="w100" v-model="state.queryForm.socialCreditCode" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
+					<el-form-item :label="$t('merchantInfo.spList')" prop="spList" class="w100">
 						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spList">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 						</el-select>
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item :label="$t('merchantInfo.status')" prop="status">
+					<el-form-item :label="$t('merchantInfo.status')" prop="status" class="w100">
 						<el-select :placeholder="$t('merchantInfo.inputStatusTip')" clearable v-model="state.queryForm.status">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 						</el-select>
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item>
+					<el-form-item class="w100">
 						<div class="wr100">
 							<el-button @click="getDataList" icon="search" type="primary">
 								{{ $t('common.queryBtn') }}
@@ -50,7 +50,7 @@
 						v-model:showSearch="showSearch"
 						:export="'core_merchantInfo_export'"
 						@exportExcel="exportExcel"
-						class="ml10"
+						class="ml10 mr20"
 						style="float: right"
 						@queryTable="getDataList"
 					></right-toolbar>
@@ -78,7 +78,7 @@
 						<dict-tag :options="merchant_status" :value="scope.row.status"></dict-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" width="300" fixed="right">
+				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="scope">
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
 							>编辑</el-button
@@ -92,6 +92,9 @@
 			</el-table>
 			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
+
+		<!-- 编辑、新增  -->
+		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
 	</div>
 </template>
 
@@ -104,6 +107,7 @@ import { useDict } from '/@/hooks/dict';
 // 定义变量内容
 const router = useRouter();
 // 引入组件
+const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 // 定义查询字典
 
 const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict(
@@ -113,6 +117,8 @@ const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict
 	'enterprise_scale'
 );
 
+// 定义变量内容
+const formDialogRef = ref();
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
@@ -148,7 +154,6 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 	multiple.value = !objs.length;
 };
 
-// 新增/编辑/详情
 const openMerchantForm = (type: string, id: number) => {
 	console.log('id', id);
 	switch (type) {
