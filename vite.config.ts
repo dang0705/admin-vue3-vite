@@ -20,6 +20,7 @@ const alias: Record<string, string> = {
 
 const viteConfig = defineConfig((mode: ConfigEnv) => {
 	const env = loadEnv(mode.mode, process.cwd());
+	const __isDev__ = mode.mode === 'development';
 	return {
 		plugins: [
 			vue(), // Vue 插件
@@ -94,6 +95,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			__INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
 			__VERSION__: JSON.stringify(process.env.npm_package_version),
 			__NEXT_NAME__: JSON.stringify(process.env.npm_package_name),
+			__isDev__,
 		},
 	};
 });

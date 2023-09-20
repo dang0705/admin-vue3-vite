@@ -47,7 +47,7 @@
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
-				<img :src="userInfos.user.avatar ? baseURL + userInfos.user.avatar : avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
+				<img :src="userInfos.user.avatar ? baseURL + userInfos.user.avatar : avatar" class="layout-navbars-breadcrumb-user-link-photo mr5 w-[16px]" />
 				{{ userInfos.user.username }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
@@ -81,7 +81,7 @@ import mittBus from '/@/utils/mitt';
 import { Session, Local } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { useMsg } from '/@/stores/msg';
-import avatar from '/@/assets/dashboard/customerProportion.webp';
+import avatar from '/@/assets/icon-font/avatar.png';
 
 // 引入组件
 const GlobalWebsocket = defineAsyncComponent(() => import('/@/components/Websocket/index.vue'));
@@ -242,11 +242,11 @@ onMounted(() => {
 		align-items: center;
 		white-space: nowrap;
 
-		&-photo {
+		/*	&-photo {
 			width: 25px;
 			height: 25px;
 			border-radius: 100%;
-		}
+		}*/
 	}
 
 	&-icon {

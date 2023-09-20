@@ -91,7 +91,7 @@ module.exports = {
 			colors: {
 				white: '#fff',
 				grey: '#F2F3F5',
-				'grey-bg': '#FFF6F6F8',
+				'grey-bg': '#F6F6F8',
 				primary: {
 					DEFAULT: 'var(--el-color-primary)',
 					'light-3': 'var(--el-color-primary-light-3)',

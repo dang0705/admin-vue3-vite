@@ -159,12 +159,34 @@ watch(
 );
 </script>
 <style>
+.el-menu {
+	padding: 0 10px;
+}
+.el-sub-menu:not(.is-opened).is-active .el-sub-menu__title span {
+	@apply text-primary;
+}
 .el-menu-item:hover,
 .el-menu-item.is-active,
 .el-menu-hover-bg-color,
-.el-sub-menu.is-active .el-sub-menu__title,
-.el-sub-menu:not(.is-opened):hover .el-sub-menu__title {
+.el-sub-menu:not(.is-opened):not(.is-active):hover .el-sub-menu__title {
+	box-sizing: border-box;
 	background-image: linear-gradient(90deg, #273045 0%, #4d5466 50%, #273045 100%) !important;
 	background-color: transparent !important;
+	position: relative;
+	&:before,
+	&:after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		left: 0;
+		height: 1.5px;
+		background-image: radial-gradient(circle, #fff, transparent);
+	}
+	&:before {
+		top: 0;
+	}
+	&:after {
+		bottom: 0;
+	}
 }
 </style>
