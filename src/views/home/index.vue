@@ -23,8 +23,8 @@
 						<h2 class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
 						<ul class="flex">
 							<li
-								:class="['flex', 'flex-col', 'items-center', 'flex-shrink-0', 'item-data', { 'border-left': index }]"
 								v-for="({ text, value, status }, index) in data"
+								:class="['flex', 'flex-col', 'items-center', 'flex-shrink-0', 'item-data', { 'border-left': index }]"
 								:key="text"
 								:style="{ color: statusMap[status], width: `calc(100% / ${data.length})` }"
 							>
