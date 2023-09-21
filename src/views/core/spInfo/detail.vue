@@ -9,7 +9,6 @@
 							<el-input v-model="form.spName" placeholder="请输入服务商名称" />
 						</el-form-item>
 					</el-col>
-
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务类型" prop="busiType">
 							<el-select placeholder="请输入业务类型" v-model="form.busiType">
@@ -81,26 +80,7 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="个税税率" prop="IndividualIncomeTaxRate">
-							<div :class="['flex', 'flex-wrap', 'items-center', { mt10: index }]" v-for="(_, index) in gradual" :key="index">
-								<el-input-number
-									class="h-fit max-w-[160px]"
-									:step="1000"
-									:disabled="!!index || gradual.length > 1"
-									:precision="0"
-									v-model="gradual[index].min"
-								/>&nbsp; 元 &lt; 单人单月任务金额 &lt;=&nbsp;
-								<el-input-number
-									class="h-fit max-w-[160px]"
-									:disabled="gradual.length - 1 > index"
-									:step="1000"
-									:precision="0"
-									v-model="gradual[index].max"
-								/>&nbsp;元,税率&nbsp; <el-input-number class="h-fit max-w-[120px]" :step="0.1" :precision="2" v-model="gradual[index].ratio" />&nbsp;%
-								<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="index === gradual.length - 1">
-									<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addAGradient">&plus;添加</li>
-									<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeAGradient(index)">删除</li>
-								</ul>
-							</div>
+							<IndividualTaxRatios v-model="form.IndividualIncomeTaxRate" />
 						</el-form-item>
 					</el-col>
 
@@ -191,7 +171,7 @@ import { getObj, addObj, putObj } from '/@/api/core/spInfo';
 import { rule } from '/@/utils/validate';
 import { useRoute } from 'vue-router';
 import uploadBusinessType from '/@/enums/upload-business-type';
-import IndividualTaxRatios from '/@/views/core/spInfo/Individual-tax-ratios.vue';
+import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 
 const route = useRoute();
 const emit = defineEmits(['refresh']);
@@ -201,6 +181,8 @@ const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
 const businessType = uploadBusinessType.sp;
+
+// 提交表单数据
 const form = reactive({
 	id: '',
 	spName: '',
@@ -210,7 +192,7 @@ const form = reactive({
 	bankArea: '',
 	email: '',
 	businessLicense: [],
-	IndividualIncomeTaxRate: [],
+	IndividualIncomeTaxRate: <any>[],
 	socialCreditCode: '',
 	businessScope: '',
 	personalIncomeTax: '',
@@ -231,34 +213,7 @@ const form = reactive({
 	qualificationFile: '',
 });
 
-const gradual = ref([
-	{
-		min: 0,
-		max: 5000,
-		ratio: 3,
-	},
-]);
-const addAGradient = () => {
-	const lastGradient = gradual.value[gradual.value.length - 1];
-	gradual.value.push({
-		min: lastGradient.max,
-		max: lastGradient.max + 1,
-		ratio: lastGradient.ratio + 0.1,
-	});
-};
-const removeAGradient = (index: number) => gradual.value.splice(index, 1);
-
-watch(
-	() => gradual.value,
-	(value) => {
-		console.log(value);
-		form.IndividualIncomeTaxRate = value;
-	},
-	{ immediate: true, deep: true }
-);
 // 定义字典
-
-// 提交表单数据
 
 // 定义校验规则
 const dataRules = ref({
@@ -274,7 +229,7 @@ const dataRules = ref({
 	personalIncomeTax: [{ required: true, message: '个税计算方式不能为空', trigger: 'blur' }],
 	valueAddedTax: [{ required: true, message: '增值税税率不能为空', trigger: 'blur' }],
 	upperLimit: [{ required: true, message: '单月上限不能为空', trigger: 'blur' }],
-	// IndividualIncomeTaxRate: [{ required: true, message: '不能为空', trigger: 'blur' }],
+	IndividualIncomeTaxRate: [{ required: true, trigger: 'change', validator: () => true }],
 	legalPersonName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
 	legalPersonMobile: [{ required: true, message: '法人手机号不能为空', trigger: 'blur' }],
 	legalPersonIdCard: [{ required: true, message: '法人身份证号不能为空', trigger: 'blur' }],
