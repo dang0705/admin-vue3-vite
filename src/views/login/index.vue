@@ -1,10 +1,10 @@
 <template>
 	<div class="select-none">
-		<img :src="bg" class="wave" />
+		<!-- <img :src="bg" class="wave" /> -->
 		<div class="flex-c absolute right-5 top-3"></div>
 		<div class="login-container">
 			<div class="img">
-				<img class="w-[493px] h-[504px]" :src="bg3" />
+				<!-- <img class="w-[493px] h-[504px]" :src="bg3" /> -->
 			</div>
 			<div class="login-box">
 				<div class="login-form">
