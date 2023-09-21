@@ -6,7 +6,8 @@ import router from './router';
 import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
-
+import { isDev } from '/@/utils/helpers';
+import spDetail from '/@/views/core/spInfo/detail.vue';
 import ElementPlus from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
@@ -19,6 +20,7 @@ import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/fo
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
+// const app = createApp(isDev ? spDetail : App);
 const app = createApp(App);
 
 // 导入通用自定义组件

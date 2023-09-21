@@ -19,7 +19,7 @@
 							</li>
 						</ul>
 					</div>
-					<div class="section" v-for="{ title, img, data } in data.groupLeft" :key="title">
+					<div class="section" v-for="{ title, img, data } in dashboardData.groupLeft" :key="title">
 						<h2 class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
 						<ul class="flex">
 							<li
@@ -39,7 +39,7 @@
 				<div class="flex flex-col">
 					<div
 						class="section"
-						v-for="({ title, img, data, showMore, vertical, charts }, groupIndex) in data.groupRight"
+						v-for="({ title, img, data, showMore, vertical, charts }, groupIndex) in dashboardData.groupRight"
 						:style="groupIndex ? {} : { height: '220px' }"
 						:key="title"
 					>
@@ -57,7 +57,7 @@
 									'item-data',
 									{ 'border-left': index && !vertical, 'flex-col': !vertical, 'mb-5': vertical },
 								]"
-								v-for="({ text, value, status, tag, showDetails }, index) in data"
+								v-for="({ text, value, status, tag }, index) in data"
 								:key="text"
 								:style="vertical ? {} : { color: statusMap[status], width: `calc(100% / ${data.length})` }"
 							>
@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts" name="home">
-import { markRaw, nextTick } from 'vue';
+import { nextTick } from 'vue';
 import { useUserInfo } from '/@/stores/userInfo';
 import * as echarts from 'echarts';
 
@@ -165,7 +165,7 @@ const statusBgMap = {
 	1: '#DDE8FE',
 	4: '#FBE5E7',
 };
-const data = {
+const dashboardData = {
 	groupLeft: [
 		{
 			title: '任务',
@@ -305,7 +305,7 @@ const data = {
 };
 onMounted(async () => {
 	await nextTick();
-	const commandChart = echarts.init(document.getElementById('charts'));
+	const commandChart = echarts.init(document.getElementById('charts') as HTMLDivElement);
 	commandChart.setOption(commandCharOption);
 });
 </script>
