@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-divider>基本信息</el-divider>
+		<Divider title="基本信息" />
 		<el-descriptions :column="2">
 			<el-descriptions-item :label="$t('merchantInfo.merchantName')">{{ form.merchantName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.industryLevel')"
@@ -20,7 +20,7 @@
 
 			<el-descriptions-item :label="$t('merchantInfo.taxOfficerNationalEmblem')">{{ form.taxOfficerNationalEmblem }}</el-descriptions-item>
 		</el-descriptions>
-		<el-divider>税务信息</el-divider>
+		<Divider title="税务信息" />
 		<el-descriptions :column="2">
 			<el-descriptions-item :label="$t('merchantInfo.taxRegistrationNumber')">{{ form.taxRegistrationNumber }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxType')">{{ form.taxType }}</el-descriptions-item>
@@ -29,7 +29,7 @@
 			<el-descriptions-item :label="$t('merchantInfo.taxBankArea')">{{ form.taxBankArea }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.enterprisePhone')">{{ form.areaCode }} &nbsp;&nbsp; {{ form.phoneNumber }}</el-descriptions-item>
 		</el-descriptions>
-		<el-divider>法人信息</el-divider>
+		<Divider title="法人信息" />
 		<el-descriptions :column="2">
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonName')">{{ form.legalPersonName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonMobile')">{{ form.legalPersonMobile }}</el-descriptions-item>
@@ -37,7 +37,7 @@
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonPortrait')">{{ form.legalPersonPortrait }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonNationalEmblem')">{{ form.legalPersonNationalEmblem }}</el-descriptions-item>
 		</el-descriptions>
-		<el-divider>办税人信息</el-divider>
+		<Divider title="办税人信息" />
 		<el-descriptions :column="2">
 			<el-descriptions-item :label="$t('merchantInfo.taxOfficerName')">{{ form.taxOfficerName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxOfficerMobile')">{{ form.taxOfficerMobile }}</el-descriptions-item>
@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts" name="log-detail">
+const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 /**
  * 从服务器获取用户数据
  *

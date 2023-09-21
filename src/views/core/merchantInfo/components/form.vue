@@ -4,7 +4,7 @@
 			<!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
 			<el-card class="!border-none" shadow="never">
 				<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading" label-position="right">
-					<el-divider>基本信息</el-divider>
+					<Divider title="基本信息" />
 					<el-row class="paddcus" :gutter="48">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
@@ -112,7 +112,7 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-divider>税务信息</el-divider>
+					<Divider title="税务信息" />
 					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
@@ -162,7 +162,7 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-divider>法人信息</el-divider>
+					<Divider title="法人信息" />
 					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.legalPersonName')" prop="legalPersonName">
@@ -194,7 +194,7 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-divider>办税人信息</el-divider>
+					<Divider title="办税人信息" />
 					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.taxOfficerName')" prop="taxOfficerName">
@@ -243,6 +243,7 @@ import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
 const uploadImage = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
+const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 
 // 定义变量内容
@@ -389,15 +390,6 @@ const getmerchantInfoData = (id: string) => {
 }
 // divider样式调优
 .layout-padding {
-	.el-divider--horizontal {
-		margin: 24px 0 30px;
-		:deep(.el-divider__text) {
-			font-family: PingFangSC-Medium;
-			font-weight: 600;
-			font-size: 16px;
-			color: #000000;
-		}
-	}
 	:deep(.el-form-item__label) {
 		min-width: 120px !important;
 	}
