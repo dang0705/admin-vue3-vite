@@ -2,7 +2,7 @@
 	<spInfo-form />
 </template>
 
-<script setup lang="ts" name="spSee">
+<script setup lang="ts" name="spAdd">
 const spInfoForm = defineAsyncComponent(() => import('./components/formView.vue'));
 </script>
 
