@@ -184,7 +184,7 @@
 				</el-row>
 			</el-form>
 			<span class="dialog-footer m-auto" v-if="!route.params.see">
-				<el-button @click="visible = false">重置</el-button>
+				<el-button @click="resetForm(dataFormRef)">重置</el-button>
 				<el-button type="primary" @click="onSubmit" :disabled="loading">提交</el-button>
 			</span>
 		</div>
@@ -287,6 +287,8 @@ onMounted(async () => {
 
 	// 获取spInfo信息
 	if (route.params.id) {
+		console.log(123);
+
 		form.id = route.params.id as string;
 		getspInfoData(route.params.id as string);
 	}
@@ -302,6 +304,12 @@ const addQualifications = () => {
 
 // 删除资质
 const removeQualifications = (index: number) => form.qualifications.splice(index, 1);
+
+// 重置
+const resetForm = (formEl: any) => {
+	if (!formEl) return;
+	formEl.resetFields();
+};
 
 // 提交
 const onSubmit = async () => {

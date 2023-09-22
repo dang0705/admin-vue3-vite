@@ -3,8 +3,8 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<el-row class="ml10" v-show="showSearch">
 				<el-form :inline="true" :model="state.queryForm" ref="queryRef">
-					<el-form-item :label="$t('spInfo.shName')" prop="shName">
-						<el-input :placeholder="$t('spInfo.inputShNameTip')" style="max-width: 180px" v-model="state.queryForm.shName" />
+					<el-form-item :label="$t('spInfo.spName')" prop="spName">
+						<el-input :placeholder="$t('spInfo.inputSpNameTip')" style="max-width: 180px" v-model="state.queryForm.spName" />
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
