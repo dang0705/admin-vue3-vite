@@ -14,16 +14,15 @@
 			<el-descriptions-item :label="$t('merchantInfo.socialCreditCode')">{{ form.socialCreditCode }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.businessLicense')">
 				<!--{{ form.businessLicense }} -->
-				<UploadImg :type="businessType" v-model="form.businessLicense" />
+				<!-- <UploadImg :type="businessType" v-model="form.businessLicense" /> -->
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.logo')">
 				<!-- {{ form.logo }} -->
-				<UploadImg :type="businessType" v-model="form.logo" />
+				<!-- <UploadImg :type="businessType" v-model="form.logo" /> -->
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.businessScope')">{{ form.businessScope }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.contactName')">{{ form.contactName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.contactPhone')">{{ form.contactPhone }}</el-descriptions-item>
-
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerNationalEmblem')">{{ form.taxManagerNationalEmblem }}</el-descriptions-item>
 		</el-descriptions>
 		<Divider title="税务信息" />
