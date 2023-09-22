@@ -382,3 +382,33 @@ svg {
 	display: inline;
 	vertical-align: baseline;
 }
+
+.detailDisabled {
+	.el-input__wrapper {
+		background: none !important;
+		box-shadow: none !important;
+	}
+	.el-input__inner {
+		color: #000000 !important;
+		-webkit-text-fill-color: #000000 !important;
+		cursor: default !important;
+	}
+	.is-disabled {
+		cursor: default !important;
+	}
+	.el-input__suffix {
+		display: none !important;
+	}
+	.el-textarea__inner {
+		background: none !important;
+		box-shadow: none !important;
+		color: #000000 !important;
+		cursor: default !important;
+	}
+	.el-input-number__increase {
+		display: none !important;
+	}
+	.el-input-number__decrease {
+		display: none !important;
+	}
+}
