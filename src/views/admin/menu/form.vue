@@ -114,9 +114,8 @@ const dataRules = reactive({
 watch(
 	() => visible.value,
 	(val) => {
-		console.log('关闭了', val);
 		if (!val) {
-			// menuDialogFormRef.value?.resetFields();
+			menuDialogFormRef.value?.resetFields();
 		}
 	}
 );

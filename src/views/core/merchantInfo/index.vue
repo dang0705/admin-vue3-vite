@@ -80,24 +80,44 @@
 				</el-table-column>
 				<el-table-column label="操作" width="300" fixed="right">
 					<template #default="scope">
+						<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary"> 查看 </el-button>
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary">
-							{{ $t('common.detailBtn') }}
-						</el-button>
+
 						<el-button icon="delete" text type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<!-- <el-button icon="delete" text type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete([scope.row.id])">启用</el-button> -->
+						<!-- <el-button
+							icon="turn-off"
+							text
+							type="primary"
+							v-auth="'core_spInfo_del'"
+							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
+							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
+						> -->
 					</template>
 				</el-table-column>
 			</el-table>
 			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
+
+		<!-- 停用服务商 -->
+		<el-dialog v-model="deactivateVisible" title="停用服务商" width="40%">
+			<div class="mb-5">您确定要停用服务商"{{ deactivateInfo.spName }}"吗？</div>
+			<div>停用后服务商不可再承接新的任务；不可签署新的承接人；不可与商户添加新的服务协议</div>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="deactivateVisible = false">取消</el-button>
+					<el-button type="primary" @click="handleDeactivate()">确定</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 </template>
 
 <script setup lang="ts" name="systemMerchantInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/merchantInfo';
+import { fetchList, delObjs, stopObj } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
@@ -120,6 +140,10 @@ const showSearch = ref(true);
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
 
+// 停用服务商变量
+const deactivateVisible = ref(false);
+const deactivateInfo = ref({}) as any;
+
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
 	pageList: fetchList,
@@ -141,7 +165,30 @@ const resetQuery = () => {
 const exportExcel = () => {
 	downBlobFile('/core/merchantInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'merchantInfo.xlsx');
 };
-
+// 停用操作
+const deactivateShow = (id: string, spName: string, status: string) => {
+	deactivateInfo.value.id = id;
+	deactivateInfo.value.spName = spName;
+	deactivateInfo.value.status = status;
+	if (status === '1') {
+		deactivateVisible.value = true;
+	} else {
+		handleDeactivate();
+	}
+};
+const handleDeactivate = async () => {
+	try {
+		await stopObj({
+			id: deactivateInfo.value.id,
+			status: deactivateInfo.value.status === '1' ? '0' : '1',
+		});
+		getDataList();
+		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
+		deactivateVisible.value = false;
+	} catch (err: any) {
+		useMessage().error(err.msg);
+	}
+};
 // 多选事件
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);

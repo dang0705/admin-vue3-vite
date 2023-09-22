@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-padding cache">
+	<div class="layout-padding cache" :class="isDetail ? 'isDetail' : ''">
 		<el-scrollbar>
 			<!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
 			<el-card class="!border-none" shadow="never">
@@ -8,19 +8,26 @@
 					<el-row class="paddcus" :gutter="48">
 						<el-col :span="12" class="mb20">
 							<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-								<el-input v-model="form.merchantName" :placeholder="$t('merchantInfo.inputMerchantNameTip')" />
+								<el-input readonly v-model="form.merchantName" :placeholder="$t('merchantInfo.inputMerchantNameTip')" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20 formBox">
 							<el-form-item :label="$t('merchantInfo.industryLevel')" prop="industryLevel1">
-								<el-select :placeholder="$t('merchantInfo.inputIndustryLevel1Tip')" class="w100" clearable v-model="form.industryLevel1">
-									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+								<el-select
+									readonly
+									@change="handleIndustryLevel1"
+									:placeholder="$t('merchantInfo.inputIndustryLevel1Tip')"
+									class="w100"
+									clearable
+									v-model="form.industryLevel1"
+								>
+									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in industryLevel_option.industryLevel1_option" />
 								</el-select>
 							</el-form-item>
 							<el-form-item prop="industryLevel2" style="margin-left: 12px">
 								<el-select :placeholder="$t('merchantInfo.inputIndustryLevel2Tip')" class="w100" clearable v-model="form.industryLevel2">
-									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in industryLevel_option.industryLevel2_option" />
 								</el-select>
 							</el-form-item>
 						</el-col>
@@ -42,8 +49,8 @@
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.area')" prop="areaCode">
-								<ChinaArea v-model="form.areaCode" class="w100" />
+							<el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
+								<ChinaArea @change="handleChangeArea" ref="chinaAreaRef" v-model="form.areaDatas" class="w100" />
 								<!-- <el-select :placeholder="$t('merchantInfo.inputProvinceTip')" class="w100" clearable v-model="form.province">
 									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 								</el-select> -->
@@ -154,7 +161,7 @@
 						</el-col>
 
 						<el-col :span="12" class="mb20 formBox">
-							<el-form-item :label="$t('merchantInfo.enterprisePhone')" prop="areaCode">
+							<el-form-item :label="$t('merchantInfo.areaCode')" prop="areaCode">
 								<el-input v-model="form.areaCode" placeholder="请输入区号" />
 							</el-form-item>
 							&nbsp;&nbsp;-&nbsp;&nbsp;
@@ -198,37 +205,37 @@
 					<Divider title="办税人信息" />
 					<el-row class="paddcus" :gutter="24">
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.taxOfficerName')" prop="taxOfficerName">
-								<el-input v-model="form.taxOfficerName" placeholder="请输入办税人姓名" />
+							<el-form-item :label="$t('merchantInfo.taxManagerName')" prop="taxManagerName">
+								<el-input v-model="form.taxManagerName" placeholder="请输入办税人姓名" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.taxOfficerMobile')" prop="taxOfficerMobile">
-								<el-input v-model="form.taxOfficerMobile" placeholder="请输入办税人手机号" />
+							<el-form-item :label="$t('merchantInfo.taxManagerMobile')" prop="taxManagerMobile">
+								<el-input v-model="form.taxManagerMobile" placeholder="请输入办税人手机号" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.taxOfficerIdCard')" prop="taxOfficerIdCard">
-								<el-input v-model="form.taxOfficerIdCard" placeholder="请输入办税人身份证号" />
+							<el-form-item :label="$t('merchantInfo.taxManagerIdCard')" prop="taxManagerIdCard">
+								<el-input v-model="form.taxManagerIdCard" placeholder="请输入办税人身份证号" />
 							</el-form-item>
 						</el-col>
 						<el-col :span="12" class="mb20"> </el-col>
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.taxOfficerPortrait')" prop="taxOfficerPortrait">
-								<UploadImg :type="businessType" v-model="form.taxOfficerPortrait" />
+							<el-form-item :label="$t('merchantInfo.taxManagerPortrait')" prop="taxManagerPortrait">
+								<UploadImg :type="businessType" v-model="form.taxManagerPortrait" />
 							</el-form-item>
 						</el-col>
 
 						<el-col :span="12" class="mb20">
-							<el-form-item :label="$t('merchantInfo.taxOfficerNationalEmblem')" prop="taxOfficerNationalEmblem">
-								<UploadImg :type="businessType" v-model="form.taxOfficerNationalEmblem" />
+							<el-form-item :label="$t('merchantInfo.taxManagerNationalEmblem')" prop="taxManagerNationalEmblem">
+								<UploadImg :type="businessType" v-model="form.taxManagerNationalEmblem" />
 							</el-form-item>
 						</el-col>
 					</el-row>
 					<span class="flex justify-center items-center">
-						<el-button @click="visible = false">取消</el-button>
+						<el-button @click="resetFields">重置</el-button>
 						<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
 					</span>
 				</el-form>
@@ -250,9 +257,10 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 
 // 定义变量内容
 const dataFormRef = ref();
-const visible = ref(false);
 const loading = ref(false);
 const businessType = uploadBusinessType.merchant;
+const route = useRoute();
+const router = useRouter();
 // 定义字典
 const { enterprise_type, tax_type, merchant_status, enterprise_scale, industry } = useDict(
 	'enterprise_type',
@@ -262,11 +270,10 @@ const { enterprise_type, tax_type, merchant_status, enterprise_scale, industry }
 	'industry'
 );
 
-console.log('industry', industry);
-
 // // 提交表单数据
 const form = reactive({
 	id: '',
+	// 基本信息
 	merchantName: '',
 	socialCreditCode: '',
 	industryLevel1: '',
@@ -283,27 +290,33 @@ const form = reactive({
 	businessScope: '',
 	contactName: '',
 	contactPhone: '',
+	// 税务信息
 	taxRegistrationNumber: '',
 	taxType: '',
 	taxBankNumber: '',
 	taxBankName: '',
 	taxBankArea: '',
 	areaCode: '',
+	areaDatas: '',
 	phoneNumber: '',
+	// 法人信息
 	legalPersonName: '',
 	legalPersonMobile: '',
 	legalPersonIdCard: '',
 	legalPersonPortrait: [],
 	legalPersonNationalEmblem: [],
-	taxOfficerName: '',
-	taxOfficerMobile: '',
-	taxOfficerIdCard: '',
-	taxOfficerPortrait: [],
-	taxOfficerNationalEmblem: [],
-	status: '',
-	responsiblePerson: '',
+	// 办税人信息
+	taxManagerName: '',
+	taxManagerMobile: '',
+	taxManagerIdCard: '',
+	taxManagerPortrait: [],
+	taxManagerNationalEmblem: [],
 });
 
+const industryLevel_option = reactive({
+	industryLevel1_option: [],
+	industryLevel2_option: [],
+});
 // 定义校验规则
 const dataRules = ref({
 	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }],
@@ -328,21 +341,23 @@ const dataRules = ref({
 	taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	taxBankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	areaCode: [{ required: true, message: '区号不能为空', trigger: 'blur' }],
+	areaDatas: [{ required: true, message: '省市区不能为空', trigger: 'blur' }],
 	phoneNumber: [{ required: true, message: '企业电话不能为空', trigger: 'blur' }],
 	legalPersonName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
 	legalPersonMobile: [{ required: true, message: '法人手机号不能为空', trigger: 'blur' }],
 	legalPersonIdCard: [{ required: true, message: '法人身份证号不能为空', trigger: 'blur' }],
 	legalPersonPortrait: [{ required: true, message: '法人身份证头像面不能为空', trigger: 'blur' }],
 	legalPersonNationalEmblem: [{ required: true, message: '法人身份证国徽面不能为空', trigger: 'blur' }],
-	taxOfficerName: [{ required: true, message: '办税人姓名不能为空', trigger: 'blur' }],
-	taxOfficerMobile: [{ required: true, message: '办税人手机号不能为空', trigger: 'blur' }],
-	taxOfficerIdCard: [{ required: true, message: '办税人身份证号不能为空', trigger: 'blur' }],
-	taxOfficerPortrait: [{ required: true, message: '办税人身份证头像面不能为空', trigger: 'blur' }],
-	taxOfficerNationalEmblem: [{ required: true, message: '办税人身份证国徽面不能为空', trigger: 'blur' }],
-	status: [{ required: true, message: '状态不能为空', trigger: 'blur' }],
-	responsiblePerson: [{ required: true, message: '负责人不能为空', trigger: 'blur' }],
+	taxManagerName: [{ required: true, message: '办税人姓名不能为空', trigger: 'blur' }],
+	taxManagerMobile: [{ required: true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	taxManagerIdCard: [{ required: true, message: '办税人身份证号不能为空', trigger: 'blur' }],
+	taxManagerPortrait: [{ required: true, message: '办税人身份证头像面不能为空', trigger: 'blur' }],
+	taxManagerNationalEmblem: [{ required: true, message: '办税人身份证国徽面不能为空', trigger: 'blur' }],
 });
 
+const resetFields = () => {
+	dataFormRef.value?.resetFields();
+};
 // 提交;
 const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
@@ -352,8 +367,9 @@ const onSubmit = async () => {
 		loading.value = true;
 		form.id ? await putObj(form) : await addObj(form);
 		useMessage().success(form.id ? '修改成功' : '添加成功');
-		visible.value = false;
-		emit('refresh');
+		router.push({
+			path: '/core/merchantInfo/index',
+		});
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {
@@ -361,8 +377,10 @@ const onSubmit = async () => {
 	}
 };
 
-const uploadSuccess = () => {
-	// emit('refresh');
+const handleChangeArea = (e) => {
+	// var thsAreaCode = this.$refs['chinaAreaRef'].currentLabels; //注意2： 获取label值
+	// console.log(thsAreaCode); // 注意3： 最终结果是个一维数组对象
+	// console.log(e);
 };
 
 // 初始化表单数据
@@ -372,11 +390,46 @@ const getmerchantInfoData = (id: string) => {
 	getObj(id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			console.log('form-1', form);
+			setTimeout(() => {
+				industry.value.forEach((item: object) => {
+					if (form.industryLevel1 == item.parentValue) {
+						industryLevel_option.industryLevel1_option.push(item);
+						industryLevel_option.industryLevel2_option.push(item);
+					} else if (!item.parentValue) {
+						industryLevel_option.industryLevel1_option.push(item);
+					}
+				});
+			}, 500);
 		})
 		.finally(() => {
 			loading.value = false;
 		});
 };
+
+const handleIndustryLevel1 = () => {
+	form.industryLevel2 = '';
+	industryLevel_option.industryLevel2_option = [];
+	industry.value.forEach((item) => {
+		if (form.industryLevel1 == item.parentValue) {
+			industryLevel_option.industryLevel2_option.push(item);
+		}
+	});
+};
+
+onMounted(async () => {
+	if (route.query.id) {
+		await getmerchantInfoData(route.query.id);
+	} else {
+		setTimeout(() => {
+			industry.value.forEach((item: object) => {
+				if (!item.parentValue) {
+					industryLevel_option.industryLevel1_option.push(item);
+				}
+			});
+		}, 500);
+	}
+});
 </script>
 
 <style scoped lang="scss">
@@ -397,6 +450,11 @@ const getmerchantInfoData = (id: string) => {
 .layout-padding {
 	:deep(.el-form-item__label) {
 		min-width: 120px !important;
+	}
+}
+.isDetail {
+	:deep(.el-input__wrapper) {
+		box-shadow: none !important;
 	}
 }
 </style>
