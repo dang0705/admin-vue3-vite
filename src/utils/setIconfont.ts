@@ -1,16 +1,18 @@
 // 字体图标 url
 const cssCdnUrlList: Array<string> = [
-	'//at.alicdn.com/t/c/font_2298093_rnp72ifj3ba.css', //
-	'/assets/styles/font-awesome.min.css',
+	'//at.alicdn.com/t/font_2298093_y6u00apwst.css', // 初始图标
+	'//at.alicdn.com/t/c/font_4194340_qaidk4jgbm.css', // 设计给的图标
+	'//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
 ];
 // 第三方 js url
-const jsCdnUrlList: Array<string> = [];
+const jsCdnUrlList: Array<string> = ['//at.alicdn.com/t/c/font_4194340_qaidk4jgbm.js'];
 
 // 动态批量设置字体图标
 export function setCssCdn() {
 	if (cssCdnUrlList.length <= 0) return false;
 	cssCdnUrlList.map((v) => {
 		let link = document.createElement('link');
+		link.className = v;
 		link.rel = 'stylesheet';
 		link.href = v;
 		link.crossOrigin = 'anonymous';
