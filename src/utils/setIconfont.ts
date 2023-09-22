@@ -12,7 +12,6 @@ export function setCssCdn() {
 	if (cssCdnUrlList.length <= 0) return false;
 	cssCdnUrlList.map((v) => {
 		let link = document.createElement('link');
-		link.className = v;
 		link.rel = 'stylesheet';
 		link.href = v;
 		link.crossOrigin = 'anonymous';

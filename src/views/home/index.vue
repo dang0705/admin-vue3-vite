@@ -29,7 +29,7 @@
 								:style="{ color: statusMap[status], width: `calc(100% / ${data.length})` }"
 							>
 								<span v-text="text" class="text-[14px] leading-10" />
-								<span v-text="value" class="text-[28px] leading-[1] cursor-pointer" />
+								<span v-text="value" class="text-[28px] leading-[1] cursor-pointer hover:underline" />
 							</li>
 						</ul>
 					</div>
@@ -68,7 +68,7 @@
 									class="flex-shrink-0 rounded-small px-[6px] mr-[10px] truncate"
 								/>
 								<span v-text="text" :class="['text-[14px]', 'flex-grow', 'truncate', { 'leading-10': !vertical }]" />
-								<span v-if="!vertical" v-text="value" class="text-[28px] leading-[1] cursor-pointer" />
+								<span v-if="!vertical" v-text="value" class="text-[28px] leading-[1] cursor-pointer hover:underline" />
 								<router-link to="" v-if="vertical" class="flex-shrink-0 text-xs">详情 &nbsp; &gt;</router-link>
 							</li>
 						</ul>

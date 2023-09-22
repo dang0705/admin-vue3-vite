@@ -88,7 +88,14 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 				},
 			},
 		},
-		css: { preprocessorOptions: { css: { charset: false } } },
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: `@use "./src/theme/element/_index.scss" as *;`,
+				},
+				css: { charset: false },
+			},
+		},
 		define: {
 			__VUE_I18N_LEGACY_API__: JSON.stringify(false),
 			__VUE_I18N_FULL_INSTALL__: JSON.stringify(false),
