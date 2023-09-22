@@ -2,7 +2,7 @@ import { nextTick } from 'vue';
 import * as svg from '@element-plus/icons-vue';
 
 // 获取阿里字体图标
-const getAlicdnIconfont = () => {
+const getAlicdnIconfont = (type = 'ali') => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
 			const styles: any = document.styleSheets;
@@ -13,15 +13,18 @@ const getAlicdnIconfont = () => {
 					sheetsList.push(styles[i]);
 				}
 			}
+			// console.log('sheetsList', sheetsList);
 			for (let i = 0; i < sheetsList.length; i++) {
 				for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
-					if (sheetsList[i].cssRules[j].selectorText && sheetsList[i].cssRules[j].selectorText.indexOf('.icon-') > -1) {
+					const regex = type === 'ali' ? /\.icon[-]/ : /\.icon[_]/;
+					if (regex.test(sheetsList[i].cssRules[j].selectorText)) {
 						sheetsIconList.push(
 							`${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
 						);
 					}
 				}
 			}
+			console.log('sheetsIconList', sheetsIconList);
 			if (sheetsIconList.length > 0) resolve(sheetsIconList);
 			else reject('未获取到值，请刷新重试');
 		});
@@ -109,6 +112,9 @@ const initIconfont = {
 	// iconfont
 	ali: () => {
 		return getAlicdnIconfont();
+	},
+	jmyg: () => {
+		return getAlicdnIconfont('jmyg');
 	},
 	// element plus
 	ele: () => {
