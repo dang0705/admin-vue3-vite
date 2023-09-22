@@ -181,15 +181,15 @@ const upload = async (options: UploadRequestOptions) => {
 };
 
 const images = ref<string[]>([]);
+const realImages = ref<string[]>([]);
 watch(
-	() => props.modelValue,
-	(value) => (images.value = value),
+	() => props.modelValue as [],
+	(value: []) => {
+		images.value = value;
+		realImages.value = images.value.map((image) => `${proxy.baseURL}/${image}`);
+	},
 	{ immediate: true }
 );
-console.log('images.value', images.value);
-
-const realImages = images.value?.length ? computed(() => images.value.map((image) => `${proxy.baseURL}/${image}`)) : [];
-console.log('realImages', realImages);
 
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
