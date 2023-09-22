@@ -51,9 +51,9 @@
 							<UploadImg :type="businessType" v-model="form.businessLicense" :disabled="!!route.params.see" />
 						</el-form-item>
 					</el-col>
-					<el-col :span="12" class="mb20">
+					<el-col :span="24" class="mb20">
 						<el-form-item label="经营范围:" prop="businessScope">
-							<el-input v-model="form.businessScope" placeholder="请输入经营范围" :disabled="!!route.params.see" />
+							<el-input type="textarea" v-model="form.businessScope" placeholder="请输入经营范围" :disabled="!!route.params.see" />
 						</el-form-item>
 					</el-col>
 
@@ -163,16 +163,21 @@
 								</el-form-item>
 							</el-col>
 
-							<el-col :span="7" class="mb20">
+							<el-col :span="12" class="mb20">
 								<el-form-item label="资质文件:" prop="filePath">
-									<UploadImg :type="businessType" v-model="_.filePath" :disabled="!!route.params.see" />
+									<div class="flex items-start flex-wrap">
+										<UploadImg :type="businessType" v-model="_.filePath" :disabled="!!route.params.see" />
+										<ul
+											class="gradual-tax-operation flex items-center ml-[10px]"
+											v-if="!route.params.see && index === form.qualifications.length - 1"
+										>
+											<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addQualifications">&plus;添加</li>
+											<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeQualifications(index)">
+												删除
+											</li>
+										</ul>
+									</div>
 								</el-form-item>
-							</el-col>
-							<el-col :span="5">
-								<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!route.params.see && index === form.qualifications.length - 1">
-									<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addQualifications">&plus;添加</li>
-									<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeQualifications(index)">删除</li>
-								</ul>
 							</el-col>
 						</el-row>
 					</el-col>

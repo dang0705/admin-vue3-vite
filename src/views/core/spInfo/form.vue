@@ -111,10 +111,10 @@ const openDialog = (id: string) => {
 	});
 
 	// 获取spInfo信息
-	if (id) {
-		form.id = id;
-		getspInfoData(id);
-	}
+	// if (id) {
+	// 	form.id = id;
+	// 	getspInfoData(id);
+	// }
 };
 
 // 提交
