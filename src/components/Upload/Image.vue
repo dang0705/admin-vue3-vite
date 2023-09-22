@@ -180,7 +180,12 @@ const upload = async (options: UploadRequestOptions) => {
 	}
 };
 
-const images = ref<string[]>(props.modelValue as []);
+const images = ref<string[]>([]);
+watch(
+	() => props.modelValue,
+	(value) => (images.value = value),
+	{ immediate: true }
+);
 const realImages = computed(() => images.value.map((image) => `${proxy.baseURL}/${image}`));
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
