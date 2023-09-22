@@ -41,13 +41,14 @@
 							</el-form-item>
 						</el-col>
 
-						<el-col :span="12" class="mb20 formBox">
-							<el-form-item :label="$t('merchantInfo.area')" prop="province">
-								<el-select :placeholder="$t('merchantInfo.inputProvinceTip')" class="w100" clearable v-model="form.province">
+						<el-col :span="12" class="mb20">
+							<el-form-item :label="$t('merchantInfo.area')" prop="areaCode">
+								<ChinaArea v-model="form.areaCode" class="w100" />
+								<!-- <el-select :placeholder="$t('merchantInfo.inputProvinceTip')" class="w100" clearable v-model="form.province">
 									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-								</el-select>
+								</el-select> -->
 							</el-form-item>
-							<el-form-item prop="city" style="margin-left: 12px">
+							<!-- <el-form-item prop="city" style="margin-left: 12px">
 								<el-select :placeholder="$t('merchantInfo.inputCityTip')" class="w100" clearable v-model="form.city">
 									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 								</el-select>
@@ -56,7 +57,7 @@
 								<el-select :placeholder="$t('merchantInfo.inputDistrictTip')" class="w100" clearable v-model="form.district">
 									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 								</el-select>
-							</el-form-item>
+							</el-form-item> -->
 						</el-col>
 
 						<el-col :span="12" class="mb20">
@@ -241,6 +242,7 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
+import ChinaArea from '/@/components/ChinaArea/index.vue';
 const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
 const uploadImage = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
 const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
@@ -252,12 +254,15 @@ const visible = ref(false);
 const loading = ref(false);
 const businessType = uploadBusinessType.merchant;
 // 定义字典
-const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict(
+const { enterprise_type, tax_type, merchant_status, enterprise_scale, industry } = useDict(
 	'enterprise_type',
 	'tax_type',
 	'merchant_status',
-	'enterprise_scale'
+	'enterprise_scale',
+	'industry'
 );
+
+console.log('industry', industry);
 
 // // 提交表单数据
 const form = reactive({
