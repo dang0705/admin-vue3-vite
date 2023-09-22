@@ -46,3 +46,10 @@ export function stopObj(obj?: Object) {
 		data: obj,
 	});
 }
+export function getSpInfoList(obj?: Object) {
+	return request({
+		url: '/core/spInfo/list',
+		method: 'get',
+		data: obj,
+	});
+}

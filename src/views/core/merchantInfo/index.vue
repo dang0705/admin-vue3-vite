@@ -17,7 +17,7 @@
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
 						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spList">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 						</el-select>
 					</el-form-item>
 					<!-- </el-col> -->
@@ -117,7 +117,7 @@
 
 <script setup lang="ts" name="systemMerchantInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs, stopObj } from '/@/api/core/merchantInfo';
+import { fetchList, delObjs, stopObj, getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
@@ -143,6 +143,7 @@ const multiple = ref(true);
 // 停用服务商变量
 const deactivateVisible = ref(false);
 const deactivateInfo = ref({}) as any;
+const spinfoList = ref([]) as array;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
@@ -239,4 +240,15 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
+
+const getmerchantInfoData = () => {
+	// 获取数据
+	getSpInfoList().then((res: any) => {
+		spinfoList.value = res.data || [];
+	});
+};
+
+onMounted(async () => {
+	await getmerchantInfoData();
+});
 </script>

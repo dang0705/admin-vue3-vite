@@ -159,17 +159,23 @@ const initFontIconName = () => {
 	if (!props.modelValue) {
 		return name;
 	}
-	if (props.modelValue!.indexOf('iconfont') > -1) name = 'ali';
-	else if (props.modelValue!.indexOf('ele-') > -1) name = 'ele';
-	else if (props.modelValue!.indexOf('fa') > -1) name = 'awe';
-	else if (props.modelValue!.indexOf('local') > -1) name = 'local';
+	const regEx = {
+		ali: /icon-/,
+		ele: /ele/,
+		jmyg: /icon_/,
+		awe: /awe/,
+		local: /local/,
+	};
+
+	for (let regExKey in regEx) {
+		regEx[regExKey].test(props.modelValue) && (name = regExKey);
+	}
 	// 初始化 tab 高亮回显
 	state.fontIconTabActive = name;
 	return name;
 };
 // 初始化数据
 const initFontIconData = async (name: string) => {
-	console.log(name);
 	switch (name) {
 		case 'ali':
 			// 阿里字体图标使用 `iconfont xxx`

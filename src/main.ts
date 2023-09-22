@@ -7,7 +7,6 @@ import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
 import { isDev } from '/@/utils/helpers';
-import spDetail from '/@/views/core/spInfo/detail.vue';
 import ElementPlus from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
@@ -16,11 +15,12 @@ import '/@/theme/index.scss';
 import { ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, Editor, Tip, DelWrap } from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
+import Test from '/@/views/Test.vue';
 // 布局工具
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
-// const app = createApp(isDev ? spDetail : App);
+// const app = createApp(isDev ? Test : App);
 const app = createApp(App);
 
 // 导入通用自定义组件
