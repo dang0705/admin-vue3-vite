@@ -21,7 +21,9 @@
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button type="primary" class="ml10" @click="$router.push({ name: '服务商详情' })" v-auth="'core_spInfo_add'"> +添加服务商 </el-button>
+					<el-button type="primary" class="ml10" @click="$router.push({ path: '/core/spInfo/detail' })" v-auth="'core_spInfo_add'">
+						+添加服务商
+					</el-button>
 					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
 						删除
 					</el-button> -->
@@ -68,7 +70,7 @@
 							text
 							type="primary"
 							v-auth="'core_spInfo_view'"
-							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id } })"
+							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id, see: 1 } })"
 							>查看</el-button
 						>
 						<el-button

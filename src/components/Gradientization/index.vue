@@ -36,6 +36,10 @@ const props = defineProps({
 		type: Boolean,
 		default: true,
 	},
+	forceDisabled: {
+		type: Boolean,
+		default: false,
+	},
 });
 interface GradientizationEmits {
 	(e: 'update:modelValue', value: any[]): void;
@@ -72,21 +76,27 @@ watch(
 			class="h-fit max-w-[160px]"
 			:min="0"
 			:step="steps[0]"
-			:disabled="!!index || gradual.length > 1"
+			:disabled="forceDisabled || !!index || gradual.length > 1"
 			:precision="precisions[0]"
 			v-model="gradual[index][props.itemField?.min]"
 		/>&nbsp;<span v-html="texts[0]" />&nbsp;
 		<el-input-number
 			class="h-fit max-w-[160px]"
-			:disabled="gradual.length - 1 > index"
+			:disabled="forceDisabled || gradual.length - 1 > index"
 			:min="index ? gradual[index][props.itemField?.min] + 1 : 100"
 			:step="steps[1] - (gradual[index][props.itemField?.max] % steps[1])"
 			:precision="precisions[1]"
 			v-model="gradual[index][props.itemField?.max]"
 		/>&nbsp;<span v-html="texts[1]" />&nbsp;
-		<el-input-number class="h-fit max-w-[120px]" :step="steps[2]" :precision="precisions[2]" v-model="gradual[index].ratio" />&nbsp;
+		<el-input-number
+			class="h-fit max-w-[120px]"
+			:step="steps[2]"
+			:precision="precisions[2]"
+			v-model="gradual[index].ratio"
+			:disabled="forceDisabled"
+		/>&nbsp;
 		<span v-html="texts[2]" />
-		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="index === gradual.length - 1">
+		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!forceDisabled && index === gradual.length - 1">
 			<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addAGradient">&plus;添加</li>
 			<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeAGradient(index)">删除</li>
 		</ul>
