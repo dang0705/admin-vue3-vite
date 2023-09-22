@@ -8,7 +8,7 @@
 				:limit="limit"
 				:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
 				:multiple="multiple"
-				:disabled="self_disabled"
+				:disabled="self_disabled || isView"
 				:show-file-list="false"
 				:http-request="handleHttpUpload"
 				:before-upload="beforeUpload"
@@ -20,7 +20,7 @@
 				<template v-if="realImages.length && !multiple">
 					<img :src="realImages[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
-						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
+						<div class="handle-icon" @click="editImg" v-if="!self_disabled && !isView">
 							<el-icon :size="iconSize">
 								<Edit />
 							</el-icon>
@@ -32,7 +32,7 @@
 							</el-icon>
 							<span v-if="!iconSize">查看</span>
 						</div>
-						<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
+						<div class="handle-icon" @click="deleteImg" v-if="!self_disabled && !isView">
 							<el-icon :size="iconSize">
 								<Delete />
 							</el-icon>
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 				</template>
-				<div class="upload-empty" v-else-if="!realImages.length || multiple">
+				<div class="upload-empty" v-else-if="(!realImages.length || multiple) && !isView">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -48,7 +48,7 @@
 						<span>单击上传<br />或拖拽到此处</span>
 					</slot>
 				</div>
-				<template #tip>
+				<template #tip v-if="!isView">
 					<span class="text-[#999] text-[14px]">支持{{ fileType.join(',').replace(/image\//g, '') }}文件</span>
 				</template>
 			</el-upload>
@@ -135,6 +135,10 @@ const props = defineProps({
 	type: {
 		type: String,
 		default: '',
+	},
+	isView: {
+		type: Boolean,
+		default: false,
 	},
 });
 const { proxy } = getCurrentInstance();
