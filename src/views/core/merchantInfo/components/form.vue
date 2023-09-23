@@ -736,9 +736,4 @@ onMounted(async () => {
 		min-width: 120px !important;
 	}
 }
-.isDetail {
-	:deep(.el-input__wrapper) {
-		box-shadow: none !important;
-	}
-}
 </style>
