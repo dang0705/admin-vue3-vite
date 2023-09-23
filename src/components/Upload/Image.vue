@@ -32,7 +32,7 @@
 							</el-icon>
 							<span v-if="!iconSize">查看</span>
 						</div>
-						<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
+						<div class="handle-icon" @click="deleteImg(0)" v-if="!self_disabled">
 							<el-icon :size="iconSize">
 								<Delete />
 							</el-icon>
@@ -203,7 +203,7 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
  * @description 删除图片
  * */
 const deleteImg = (index: number) => {
-	(images.value as []).splice(index, 1);
+	props.multiple ? images.value.splice(index, 1) : (images.value = []);
 	emit('update:modelValue', images.value);
 };
 
