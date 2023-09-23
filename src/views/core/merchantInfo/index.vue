@@ -80,7 +80,9 @@
 				</el-table-column>
 				<el-table-column label="操作" width="300" fixed="right">
 					<template #default="scope">
-						<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" text type="primary"> 查看 </el-button>
+						<el-button v-auth="'core_merchantInfo_view'" icon="view" @click="openMerchantForm('view', scope.row.id)" text type="primary">
+							查看
+						</el-button>
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
 							>编辑</el-button
 						>
