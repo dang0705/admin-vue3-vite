@@ -15,8 +15,8 @@
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
-						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spList">
+					<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
+						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spId">
 							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 						</el-select>
 					</el-form-item>
@@ -73,10 +73,10 @@
 				<el-table-column prop="createBy" :label="$t('merchantInfo.createBy')" show-overflow-tooltip />
 				<el-table-column prop="createTime" min-width="160" :label="$t('merchantInfo.createTime')" show-overflow-tooltip />
 
-				<el-table-column prop="status" label="状态" show-overflow-tooltip>
-					<template #default="scope">
+				<el-table-column prop="statusDesc" label="状态" show-overflow-tooltip>
+					<!-- <template #default="scope">
 						<dict-tag :options="merchant_status" :value="scope.row.status"></dict-tag>
-					</template>
+					</template> -->
 				</el-table-column>
 				<el-table-column label="操作" width="300" fixed="right">
 					<template #default="scope">
