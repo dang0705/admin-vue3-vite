@@ -1,5 +1,7 @@
 <template>
-	<merchantInfo-form />
+	<div class="layout-padding cache overflow-auto">
+		<merchantInfo-form />
+	</div>
 </template>
 
 <script setup lang="ts" name="merchantEdit">
