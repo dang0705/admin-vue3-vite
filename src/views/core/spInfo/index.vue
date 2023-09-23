@@ -70,7 +70,7 @@
 							text
 							type="primary"
 							v-auth="'core_spInfo_view'"
-							@click="$router.push({ name: '服务商详情', params: { id: scope.row.id, see: 1 } })"
+							@click="$router.push({ path: '/core/spInfo/detail', query: { id: scope.row.id, see: 1 } })"
 							>查看</el-button
 						>
 						<el-button
@@ -78,14 +78,14 @@
 							text
 							type="primary"
 							v-auth="'core_spInfo_edit'"
-							@click="$router.push({ name: '编辑服务商', params: { id: scope.row.id } })"
+							@click="$router.push({ path: '/core/spInfo/edit', query: { id: scope.row.id } })"
 							>编辑</el-button
 						>
 						<el-button
 							icon="turn-off"
 							text
 							type="primary"
-							v-auth="'core_spInfo_del'"
+							v-auth="'core_spInfo_switchStatus'"
 							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
 							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
 						>
