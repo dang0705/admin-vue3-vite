@@ -87,33 +87,29 @@
 							>编辑</el-button
 						>
 
-						<el-button icon="delete" text type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
-						<!-- <el-button icon="delete" text type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete([scope.row.id])">启用</el-button> -->
-						<!-- <el-button
+						<el-button
+							v-if="scope.row.status == 0 || scope.row.status == 2"
+							icon="delete"
+							text
+							type="primary"
+							v-auth="'core_merchantInfo_del'"
+							@click="handleDelete([scope.row.id])"
+							>删除</el-button
+						>
+						<el-button
+							v-if="scope.row.status == 1"
 							icon="turn-off"
 							text
 							type="primary"
-							v-auth="'core_spInfo_del'"
-							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
-							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
-						> -->
+							v-auth="'core_merchantInfo_stop'"
+							@click="setStopObj([scope.row.id])"
+							>终止合作</el-button
+						>
 					</template>
 				</el-table-column>
 			</el-table>
 			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
-
-		<!-- 停用服务商 -->
-		<el-dialog v-model="deactivateVisible" title="停用服务商" width="40%">
-			<div class="mb-5">您确定要停用服务商"{{ deactivateInfo.spName }}"吗？</div>
-			<div>停用后服务商不可再承接新的任务；不可签署新的承接人；不可与商户添加新的服务协议</div>
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="deactivateVisible = false">取消</el-button>
-					<el-button type="primary" @click="handleDeactivate()">确定</el-button>
-				</span>
-			</template>
-		</el-dialog>
 	</div>
 </template>
 
@@ -142,9 +138,6 @@ const showSearch = ref(true);
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
 
-// 停用服务商变量
-const deactivateVisible = ref(false);
-const deactivateInfo = ref({}) as any;
 const spinfoList = ref([]) as array;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
@@ -168,30 +161,7 @@ const resetQuery = () => {
 const exportExcel = () => {
 	downBlobFile('/core/merchantInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'merchantInfo.xlsx');
 };
-// 停用操作
-const deactivateShow = (id: string, spName: string, status: string) => {
-	deactivateInfo.value.id = id;
-	deactivateInfo.value.spName = spName;
-	deactivateInfo.value.status = status;
-	if (status === '1') {
-		deactivateVisible.value = true;
-	} else {
-		handleDeactivate();
-	}
-};
-const handleDeactivate = async () => {
-	try {
-		await stopObj({
-			id: deactivateInfo.value.id,
-			status: deactivateInfo.value.status === '1' ? '0' : '1',
-		});
-		getDataList();
-		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
-		deactivateVisible.value = false;
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
-};
+
 // 多选事件
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);
@@ -200,7 +170,6 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 
 // 新增/编辑/详情
 const openMerchantForm = (type: string, id: number) => {
-	console.log('id', id);
 	switch (type) {
 		case 'view':
 			router.push({
@@ -238,6 +207,23 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
+	} catch (err: any) {
+		useMessage().error(err.msg);
+	}
+};
+
+// 终止合作
+const setStopObj = async (ids: string[]) => {
+	try {
+		await useMessageBox().confirm('您确定将终止该商户合作吗？');
+	} catch {
+		return;
+	}
+
+	try {
+		await stopObj(ids);
+		getDataList();
+		useMessage().success('终止合作成功');
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}

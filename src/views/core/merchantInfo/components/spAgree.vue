@@ -130,7 +130,6 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 
 // 新增/编辑/详情
 const openMerchantForm = (type: string, id: number) => {
-	console.log('id', id);
 	switch (type) {
 		case 'view':
 			router.push({

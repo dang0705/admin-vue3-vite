@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-padding w100 overflow-auto">
-		<div class="layout-padding-auto">
+		<div class="layout-padding-auto layout-padding-view">
 			<el-tabs class="demo-tabs">
 				<el-tab-pane label="商户信息">
 					<!-- <merchantInfo-view /> -->

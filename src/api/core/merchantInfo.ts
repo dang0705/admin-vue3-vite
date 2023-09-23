@@ -39,11 +39,11 @@ export function putObj(obj?: Object) {
 	});
 }
 
-export function stopObj(obj?: Object) {
+export function stopObj(ids?: Object) {
 	return request({
 		url: '/core/merchantInfo/stop',
 		method: 'post',
-		data: obj,
+		data: ids,
 	});
 }
 export function getSpInfoList(obj?: Object) {
