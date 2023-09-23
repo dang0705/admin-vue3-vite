@@ -85,7 +85,7 @@
 							icon="turn-off"
 							text
 							type="primary"
-							v-auth="'core_spInfo_del'"
+							v-auth="'core_spInfo_switchStatus'"
 							@click="deactivateShow(scope.row.id, scope.row.spName, scope.row.status)"
 							>{{ scope.row.status === '1' ? '停用' : '启用' }}</el-button
 						>
