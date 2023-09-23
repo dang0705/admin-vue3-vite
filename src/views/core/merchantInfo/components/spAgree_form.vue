@@ -1,0 +1,211 @@
+<template>
+	<el-dialog width="850px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
+			<el-row :gutter="24">
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务协议名称" prop="agreementName">
+						<el-input v-model="form.agreementName" placeholder="请输入" />
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务商" prop="spId">
+						<el-select placeholder="请选择" clearable v-model="form.spId">
+							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务负责人" prop="spId">
+						<el-select placeholder="请选择" clearable v-model="form.spId">
+							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12" class="mb20">
+					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
+						<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isUploadAchievement">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务费计算方式" prop="feeCalculationMethod">
+						<el-select clearable v-model="form.feeCalculationMethod">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in calcType" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="开票类目" prop="invoiceCategory">
+						<el-input v-model="form.invoiceCategory" placeholder="请输入" />
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="要求电子签署" prop="isElectronicSignature">
+						<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isElectronicSignature">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="起始时间" prop="startTime">
+						<el-date-picker type="date" placeholder="请选择起始时间" v-model="form.startTime" :value-format="dateStr"></el-date-picker>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="终止时间" prop="endTime">
+						<el-date-picker type="date" placeholder="请选择终止时间" v-model="form.endTime" :value-format="dateStr"></el-date-picker>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="企业上传附件" prop="uploadAttachment">
+						<UploadFile type="simple" :isLink="false" v-model="form.uploadAttachment" />
+					</el-form-item>
+				</el-col>
+
+				<!-- <el-col :span="12" class="mb20">
+					<el-form-item label="* 服务费比例" prop="gradientSpRatio">
+						<GradientSpRatio v-model="form.gradientSpRatio" />
+					</el-form-item>
+				</el-col> -->
+			</el-row>
+		</el-form>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button @click="visible = false">取消</el-button>
+				<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			</span>
+		</template>
+	</el-dialog>
+</template>
+
+<script setup lang="ts" name="MerchantServiceAgreementDialog">
+import { useDict } from '/@/hooks/dict';
+import { useMessage } from '/@/hooks/message';
+import { getObj, addObj, putObj } from '/@/api/core/merchantServiceAgreement';
+import { getSpInfoList } from '/@/api/core/merchantInfo';
+import { rule } from '/@/utils/validate';
+const emit = defineEmits(['refresh']);
+const { is_need } = useDict('is_need');
+import uploadBusinessType from '/@/enums/upload-business-type';
+import GradientSpRatio from '/@/components/Gradientization/GradientSpRatio.vue';
+const businessType = uploadBusinessType.merchant;
+
+// 定义变量内容
+const dataFormRef = ref();
+const visible = ref(false);
+const loading = ref(false);
+const spinfoList = ref([]) as array;
+// 定义字典
+
+// 提交表单数据
+const form = reactive({
+	id: '',
+	merchantId: '',
+	agreementName: '',
+	spId: '',
+	serviceManager: '',
+	isUploadAchievement: '',
+	feeCalculationMethod: '',
+	invoiceCategory: '',
+	isElectronicSignature: '',
+	startTime: '',
+	endTime: '',
+	uploadAttachment: [],
+	status: '',
+});
+const calcType = ref([
+	{
+		value: 1,
+		label: '服务费 = 任务金额*服务费比例',
+	},
+	{
+		value: 2,
+		label: '服务费 = 任务金额/(1-服务费比例)*服务费比例',
+	},
+]);
+// 定义校验规则
+const dataRules = ref({
+	merchantId: [{ required: true, message: '商户id不能为空', trigger: 'blur' }],
+	agreementName: [{ required: true, message: '服务协议名称不能为空', trigger: 'blur' }],
+	spId: [{ required: true, message: '服务商id不能为空', trigger: 'blur' }],
+	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
+	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
+	feeCalculationMethod: [{ required: true, message: '服务费计算方式不能为空', trigger: 'blur' }],
+	invoiceCategory: [{ required: true, message: '开票类目不能为空', trigger: 'blur' }],
+	isElectronicSignature: [{ required: true, message: '要求电子签署不能为空', trigger: 'blur' }],
+	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
+	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
+	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
+	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
+});
+
+// 打开弹窗
+const openDialog = (id: string) => {
+	visible.value = true;
+	form.id = '';
+
+	// 重置表单数据
+	nextTick(() => {
+		dataFormRef.value?.resetFields();
+	});
+
+	// 获取merchantServiceAgreement信息
+	if (id) {
+		form.id = id;
+		getmerchantServiceAgreementData(id);
+	}
+};
+
+// 提交
+const onSubmit = async () => {
+	const valid = await dataFormRef.value.validate().catch(() => {});
+	if (!valid) return false;
+
+	try {
+		loading.value = true;
+		form.id ? await putObj(form) : await addObj(form);
+		useMessage().success(form.id ? '修改成功' : '添加成功');
+		visible.value = false;
+		emit('refresh');
+	} catch (err: any) {
+		useMessage().error(err.msg);
+	} finally {
+		loading.value = false;
+	}
+};
+
+// 初始化表单数据
+const getmerchantServiceAgreementData = (id: string) => {
+	// 获取数据
+	loading.value = true;
+	getObj(id)
+		.then((res: any) => {
+			Object.assign(form, res.data);
+		})
+		.finally(() => {
+			loading.value = false;
+		});
+};
+
+const getmerchantInfoData = () => {
+	// 获取数据
+	getSpInfoList().then((res: any) => {
+		spinfoList.value = res.data || [];
+	});
+};
+
+getmerchantInfoData();
+
+// 暴露变量
+defineExpose({
+	openDialog,
+});
+</script>

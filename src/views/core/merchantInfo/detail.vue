@@ -1,16 +1,16 @@
 <template>
 	<div class="layout-padding w100 overflow-auto">
 		<div class="layout-padding-auto layout-padding-view">
-			<el-tabs class="demo-tabs">
+			<el-tabs style="min-height: 300px" class="demo-tabs">
 				<el-tab-pane label="商户信息">
 					<!-- <merchantInfo-view /> -->
 					<merchantInfo-form :isDetail="true" />
 					<!-- <merchantInfo-detail :isDetail="true" /> -->
 				</el-tab-pane>
-				<el-tab-pane label="服务协议">
+				<el-tab-pane lazy label="服务协议">
 					<sp-agree />
 				</el-tab-pane>
-				<el-tab-pane label="支付通道">
+				<el-tab-pane lazy label="支付通道">
 					<pay-exit />
 				</el-tab-pane>
 			</el-tabs>

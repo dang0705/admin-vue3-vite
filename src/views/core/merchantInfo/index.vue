@@ -236,7 +236,5 @@ const getmerchantInfoData = () => {
 	});
 };
 
-onMounted(async () => {
-	await getmerchantInfoData();
-});
+getmerchantInfoData();
 </script>

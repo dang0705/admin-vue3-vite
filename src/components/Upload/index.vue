@@ -52,7 +52,7 @@
 			class="upload-file-uploader"
 			multiple
 		>
-			<el-button type="primary" link>{{ $t('excel.clickUpload') }}</el-button>
+			<el-button type="primary" :link="isLink">{{ $t('excel.clickUpload') }}</el-button>
 		</el-upload>
 	</div>
 </template>
@@ -97,6 +97,10 @@ const props = defineProps({
 		type: Object,
 	},
 	autoUpload: {
+		type: Boolean,
+		default: true,
+	},
+	isLink: {
 		type: Boolean,
 		default: true,
 	},

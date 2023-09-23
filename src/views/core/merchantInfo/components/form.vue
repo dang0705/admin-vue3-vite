@@ -268,7 +268,7 @@
 					</el-col>
 				</el-row>
 				<span class="flex justify-center items-center" v-if="!isDetail">
-					<el-button @click="resetFields">重置</el-button>
+					<el-button @click="resetFibusinessTypeelds">重置</el-button>
 					<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
 				</span>
 			</div>
@@ -283,7 +283,7 @@ import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
-const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
+// const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
 // const uploadImage = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
 const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';

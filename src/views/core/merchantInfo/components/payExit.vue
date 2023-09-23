@@ -31,8 +31,9 @@
 			></right-toolbar>
 		</div>
 	</el-row>
+	<!-- :data="state.dataList" -->
 	<el-table
-		:data="state.dataList"
+		:data="list"
 		v-loading="state.loading"
 		border
 		:cell-style="tableStyle.cellStyle"
@@ -87,6 +88,7 @@ const queryRef = ref();
 const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
+const list = ref([]) as any;
 const multiple = ref(true);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
