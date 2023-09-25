@@ -1,6 +1,6 @@
 <template>
 	<el-dialog title="上传文件" v-model="visible" :close-on-click-modal="false" draggable>
-		<Upload @change="success" :model-value="fileList" />
+		<UploadFile @change="success" :model-value="fileList" />
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>

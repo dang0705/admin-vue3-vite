@@ -33,10 +33,10 @@
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonName')">{{ form.legalPersonName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonMobile')">{{ form.legalPersonMobile }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonPortrait')">
-				<Upload isView :type="businessType" v-model="form.legalPersonPortrait" />
+				<UploadFile isView :type="businessType" v-model="form.legalPersonPortrait" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonNationalEmblem')">
-				<Upload isView :type="businessType" v-model="form.legalPersonNationalEmblem" />
+				<UploadFile isView :type="businessType" v-model="form.legalPersonNationalEmblem" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonIdCard')">{{ form.legalPersonIdCard }}</el-descriptions-item>
 		</el-descriptions>
@@ -45,10 +45,10 @@
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerName')">{{ form.taxManagerName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerMobile')">{{ form.taxManagerMobile }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerPortrait')">
-				<Upload isView :type="businessType" v-model="form.taxManagerPortrait" />
+				<UploadFile isView :type="businessType" v-model="form.taxManagerPortrait" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerNationalEmblem')">
-				<Upload isView :type="businessType" v-model="form.taxManagerNationalEmblem" />
+				<UploadFile isView :type="businessType" v-model="form.taxManagerNationalEmblem" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerIdCard')">{{ form.taxManagerIdCard }}</el-descriptions-item>
 		</el-descriptions>

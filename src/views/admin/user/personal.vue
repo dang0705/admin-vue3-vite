@@ -6,12 +6,12 @@
 					<el-row :gutter="20">
 						<el-col :span="24" class="mb20">
 							<el-form-item prop="avatar">
-								<Upload v-model:imageUrl="formData.avatar" borderRadius="50%">
+								<UploadFile v-model:imageUrl="formData.avatar" borderRadius="50%">
 									<template #empty>
 										<el-icon><Avatar /></el-icon>
 										<span>请上传头像</span>
 									</template>
-								</Upload>
+								</UploadFile>
 							</el-form-item>
 						</el-col>
 						<el-col :span="24" class="mb20">

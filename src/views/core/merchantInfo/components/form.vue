@@ -118,13 +118,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.businessLicense')" prop="businessLicense">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.businessLicense" />
+							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.businessLicense" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.logo')" prop="logo">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.logo" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.logo" />
 						</el-form-item>
 					</el-col>
 
@@ -226,12 +226,12 @@
 					<el-col :span="12" class="mb20"> </el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonPortrait')" prop="legalPersonPortrait">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.legalPersonPortrait" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.legalPersonPortrait" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonNationalEmblem')" prop="legalPersonNationalEmblem">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.legalPersonNationalEmblem" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.legalPersonNationalEmblem" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -257,13 +257,13 @@
 					<el-col :span="12" class="mb20"> </el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerPortrait')" prop="taxManagerPortrait">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerNationalEmblem')" prop="taxManagerNationalEmblem">
-							<Upload :disabled="isDetail" :type="businessType" v-model="form.taxManagerNationalEmblem" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerNationalEmblem" />
 						</el-form-item>
 					</el-col>
 				</el-row>

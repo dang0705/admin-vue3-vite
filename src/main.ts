@@ -29,9 +29,14 @@ app.component('Pagination', Pagination);
 app.component('RightToolbar', RightToolbar);
 app.component('uploadExcel', UploadExcel);
 app.component('UploadFile', UploadFile);
+
+// app.component(
+// 	'UploadFile',
+// 	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))
+// );
 app.component(
-	'Upload',
-	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))
+	'UploadImg',
+	defineAsyncComponent(() => import('/@/components/Upload/image.vue'))
 );
 app.component('Editor', Editor);
 app.component('Tip', Tip);

@@ -207,7 +207,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="工作环境" prop="taxManagerPortrait">
-						<Upload :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
+						<UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
 					</el-form-item>
 				</el-col>
 			</el-row>

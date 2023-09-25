@@ -48,7 +48,7 @@
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="营业执照:" prop="businessLicense">
-							<Upload :type="businessType" v-model="form.businessLicense" :disabled="!!route.query.see" />
+							<UploadFile :type="businessType" v-model="form.businessLicense" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="24" class="mb20">
@@ -111,13 +111,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人身份证头像面:" prop="legalPersonPortrait">
-							<Upload :type="businessType" v-model="form.legalPersonPortrait" :disabled="!!route.query.see" />
+							<UploadFile :type="businessType" v-model="form.legalPersonPortrait" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人身份证国徽面:" prop="legalPersonNationalEmblem">
-							<Upload :type="businessType" v-model="form.legalPersonNationalEmblem" :disabled="!!route.query.see" />
+							<UploadFile :type="businessType" v-model="form.legalPersonNationalEmblem" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -144,13 +144,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人身份证头像面:" prop="taxManagerPortrait">
-							<Upload :type="businessType" v-model="form.taxManagerPortrait" :disabled="!!route.query.see" />
+							<UploadFile :type="businessType" v-model="form.taxManagerPortrait" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人身份证国徽面:" prop="taxManagerNationalEmblem">
-							<Upload :type="businessType" v-model="form.taxManagerNationalEmblem" :disabled="!!route.query.see" />
+							<UploadFile :type="businessType" v-model="form.taxManagerNationalEmblem" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -166,7 +166,7 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item label="资质文件:" prop="filePath">
 									<div class="flex items-start flex-wrap">
-										<Upload :type="businessType" v-model="_.filePath" :disabled="!!route.query.see" />
+										<UploadFile :type="businessType" v-model="_.filePath" :disabled="!!route.query.see" />
 										<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!route.query.see && index === form.qualifications.length - 1">
 											<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addQualifications">&plus;添加</li>
 											<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeQualifications(index)">

@@ -49,7 +49,10 @@
 					</slot>
 				</div>
 				<template #tip>
-					<span class="text-[#999] text-[14px]">支持{{ accept.join(',').replace(/image\//g, '') }}文件</span>
+					<!-- accept.length ? accept.join(',') : new_accept.join(',') -->
+					<span class="text-[#999] text-[14px]"
+						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
+					>
 				</template>
 			</el-upload>
 			<div class="el-upload__tip">
@@ -151,6 +154,8 @@ const new_accept = ref(
 		? ['image/jpeg', 'image/png', 'image/gif']
 		: ['png', 'jpg', 'jpeg', 'doc', 'xls', 'ppt', 'txt', 'pdf', 'docx', 'xlsx', 'pptx']
 );
+
+console.log('new_accept ', new_accept);
 
 // 查看图片
 const imgViewVisible = ref(false);
