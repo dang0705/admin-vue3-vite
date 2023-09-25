@@ -20,8 +20,8 @@ import Test from '/@/views/Test.vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
-const app = createApp(isDev ? Test : App);
-// const app = createApp(App);
+// const app = createApp(isDev ? Test : App);
+const app = createApp(App);
 
 // 导入通用自定义组件
 app.component('DictTag', DictTag);
@@ -38,6 +38,13 @@ app.component(
 	'UploadImg',
 	defineAsyncComponent(() => import('/@/components/Upload/image.vue'))
 );
+
+app.component(
+	'Divider',
+	defineAsyncComponent(() => import('/@/components/Divider/index.vue'))
+);
+// const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
+
 app.component('Editor', Editor);
 app.component('Tip', Tip);
 app.component('DelWrap', DelWrap);

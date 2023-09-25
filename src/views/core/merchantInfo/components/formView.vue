@@ -57,7 +57,7 @@
 
 <script setup lang="ts" name="log-detail">
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
-const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
+// const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 const route = useRoute();
 /**

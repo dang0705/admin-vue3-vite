@@ -283,7 +283,7 @@ import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
-const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
+
 import uploadBusinessType from '/@/enums/upload-business-type';
 
 // 定义变量内容
