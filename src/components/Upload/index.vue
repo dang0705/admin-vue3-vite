@@ -237,7 +237,7 @@ const editImg = () => {
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	const imgType = props.accept.includes(rawFile.type as File.ImageMimeType);
+	const imgType = (props.accept.length ? props.accept : new_accept.value).includes(rawFile.type as File.ImageMimeType);
 	if (!imgType)
 		ElNotification({
 			title: '温馨提示',

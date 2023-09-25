@@ -3,116 +3,94 @@
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules && false" formDialogRef label-width="120px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
-					<el-form-item label="姓名" prop="undertakerName">
+					<el-form-item label="姓名:" prop="undertakerName">
 						<el-input v-model="form.undertakerName" placeholder="请输入姓名" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="证件号码" prop="undertakerCard">
+					<el-form-item label="证件号码:" prop="undertakerCard">
 						<el-input v-model="form.undertakerCard" placeholder="请输入证件号码" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="手机号码" prop="undertakerPhone">
+					<el-form-item label="手机号码:" prop="undertakerPhone">
 						<el-input v-model="form.undertakerPhone" placeholder="请输入手机号码" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="银行卡号" prop="bankNumber">
+					<el-form-item label="银行卡号:" prop="bankNumber">
 						<el-input v-model="form.bankNumber" placeholder="请输入银行卡号" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="开户行" prop="bankName">
+					<el-form-item label="开户行:" prop="bankName">
 						<el-input v-model="form.bankName" placeholder="请输入开户行" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="是否实名认证" prop="isAuthentication">
-						<el-radio-group v-model="form.isAuthentication">
-							<el-radio label="是否实名认证,0: 未认证,1:已认证" border>是否实名认证,0: 未认证,1:已认证</el-radio>
-						</el-radio-group>
+					<el-form-item label="是否实名认证:" prop="isAuthentication">
+						<el-select placeholder="请输入是否实名认证" v-model="form.isAuthentication" disabled>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
+						</el-select>
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人性别 0:男,1:女" prop="undertakerSex">
-						<el-input v-model="form.undertakerSex" placeholder="请输入承接人性别 0:男,1:女" />
+					<el-form-item label="性别:" prop="undertakerSex">
+						<el-select placeholder="请输入性别" v-model="form.undertakerSex" disabled>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in gender"></el-option>
+						</el-select>
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人家庭住址" prop="undertakerAddress">
-						<el-input v-model="form.undertakerAddress" placeholder="请输入承接人家庭住址" />
+					<el-form-item label="年龄:" prop="undertakerAge">
+						<el-input v-model="form.undertakerAge" placeholder="请输入年龄" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人 民族 id" prop="undertakerClan">
-						<el-input-number :min="1" :max="1000" v-model="form.undertakerClan" placeholder="请输入承接人 民族 id"></el-input-number>
+					<el-form-item label="学历:" prop="undertakerEducationName">
+						<el-input v-model="form.undertakerEducationName" placeholder="请输入学历" disabled />
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20"></el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务商:" prop="undertakerEducationName">
+						<span v-for="(_, i) in form.spList" :key="i"
+							>{{ _.spName }}
+							<span v-if="i != form.spList.length - 1">,</span>
+						</span>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20"></el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="身份证正面" prop="undertakerPortrait">
+						<!-- <UploadFile :type="businessType" v-model="form.undertakerPortrait" disabled /> -->
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人 民族 名称" prop="undertakerClanName">
-						<el-input v-model="form.undertakerClanName" placeholder="请输入承接人 民族 名称" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人学历" prop="undertakerEducation">
-						<el-input-number :min="1" :max="1000" v-model="form.undertakerEducation" placeholder="请输入承接人学历"></el-input-number>
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人 学历 名称" prop="undertakerEducationName">
-						<el-input v-model="form.undertakerEducationName" placeholder="请输入承接人 学历 名称" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="参加工作日期" prop="workTime">
-						<el-date-picker type="datetime" placeholder="请选择参加工作日期" v-model="form.workTime" :value-format="dateTimeStr"></el-date-picker>
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人身份证正面" prop="undertakerPortrait">
-						<el-input v-model="form.undertakerPortrait" placeholder="请输入承接人身份证正面" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="承接人身份证国徽面" prop="undertakerNationalEmblem">
-						<el-input v-model="form.undertakerNationalEmblem" placeholder="请输入承接人身份证国徽面" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="银行开户地址" prop="bankAddress">
-						<el-input v-model="form.bankAddress" placeholder="请输入银行开户地址" />
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="12" class="mb20">
-					<el-form-item label="是否验证银行四要素,0 否, 1:是" prop="isBankFourEssentialFactor">
-						<el-input v-model="form.isBankFourEssentialFactor" placeholder="请输入是否验证银行四要素,0 否, 1:是" />
+					<el-form-item label="身份证反面" prop="undertakerNationalEmblem">
+						<!-- <UploadFile :type="businessType" v-model="form.undertakerNationalEmblem" disabled /> -->
 					</el-form-item>
 				</el-col>
 			</el-row>
 		</el-form>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="visible = false">取消</el-button>
-				<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
-			</span>
-		</template>
+		<span class="flex justify-center items-center">
+			<!-- <el-button @click="visible = false">取消</el-button> -->
+			<!-- <el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button> -->
+			<el-button type="primary" @click="visible = false">确认</el-button>
+		</span>
 	</el-dialog>
 </template>
 
@@ -121,14 +99,16 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
+import uploadBusinessType from '/@/enums/upload-business-type';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
+const businessType = uploadBusinessType.hro;
 // 定义字典
-
+const { yes_no_type, gender } = useDict('yes_no_type', 'gender');
 // 提交表单数据
 const form = reactive({
 	id: '',

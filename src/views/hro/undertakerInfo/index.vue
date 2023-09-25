@@ -92,7 +92,7 @@
 				<el-table-column prop="undertakerPhone" label="手机号码" width="120" show-overflow-tooltip />
 				<el-table-column label="性别" width="60" show-overflow-tooltip>
 					<template #default="scope">
-						<div>{{ scope.row.undertakerSex == 0 ? '男' : '女' }}</div>
+						<div>{{ scope.row.undertakerSex == 1 ? '男' : '女' }}</div>
 					</template>
 				</el-table-column>
 				<el-table-column prop="undertakerAge" label="年龄" width="60" show-overflow-tooltip />
