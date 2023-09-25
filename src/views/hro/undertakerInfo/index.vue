@@ -16,11 +16,26 @@
 							v-model="state.queryForm.undertakerPhone"
 						/>
 					</el-form-item>
-					<!-- <el-form-item :label="t('undertakerInfo.isAuthentication')" class="ml2" prop="isAuthentication">
+					<el-form-item :label="t('undertakerInfo.isAuthentication')" class="ml2" prop="isAuthentication">
 						<el-select :placeholder="t('undertakerInfo.inputIsAuthenticationTip')" v-model="state.queryForm.isAuthentication">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in sp_status"></el-option>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
 						</el-select>
-					</el-form-item> -->
+					</el-form-item>
+					<el-form-item :label="t('undertakerInfo.isSign')" class="ml2" prop="isSign">
+						<el-select :placeholder="t('undertakerInfo.inputIsSignTip')" v-model="state.queryForm.isSign">
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item :label="t('undertakerInfo.spName')" class="ml2" prop="spId">
+						<el-select :placeholder="t('undertakerInfo.inputSpNameTip')" v-model="state.queryForm.spId">
+							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item :label="t('undertakerInfo.merchantName')" class="ml2" prop="merchantId">
+						<el-select :placeholder="t('undertakerInfo.inputMerchantNameTip')" v-model="state.queryForm.merchantId">
+							<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantInfoList"></el-option>
+						</el-select>
+					</el-form-item>
 					<el-form-item>
 						<el-button @click="getDataList" formDialogRef icon="search" type="primary">
 							{{ $t('common.queryBtn') }}
@@ -31,15 +46,29 @@
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+						批量导出
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+						批量上传身份证
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+						批量绑定银行卡
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+						发起批量批量签署
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+						批量导入承接人
+					</el-button>
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						新 增
+						添加承接人
 					</el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'hro_undertakerInfo_del'" @click="handleDelete(selectObjs)">
+					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'hro_undertakerInfo_del'" @click="handleDelete(selectObjs)">
 						删除
-					</el-button>
+					</el-button> -->
 					<right-toolbar
 						v-model:showSearch="showSearch"
-						:export="'hro_undertakerInfo_export'"
 						@exportExcel="exportExcel"
 						class="ml10 mr20"
 						style="float: right"
@@ -56,29 +85,49 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column type="selection" width="40" align="center" />
-				<el-table-column type="index" label="#" width="40" />
-				<el-table-column prop="undertakerName" label="姓名" show-overflow-tooltip />
-				<el-table-column prop="undertakerCard" label="身份证号码" show-overflow-tooltip />
-				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip />
-				<el-table-column prop="undertakerAddress" label="承接人家庭住址" show-overflow-tooltip />
-				<el-table-column prop="undertakerClan" label="承接人 民族 id" show-overflow-tooltip />
-				<el-table-column prop="undertakerClanName" label="承接人 民族 名称" show-overflow-tooltip />
-				<el-table-column prop="undertakerEducation" label="承接人学历" show-overflow-tooltip />
-				<el-table-column prop="undertakerEducationName" label="承接人 学历 名称" show-overflow-tooltip />
-				<el-table-column prop="workTime" label="参加工作日期" show-overflow-tooltip />
-				<el-table-column prop="undertakerPortrait" label="承接人身份证正面" show-overflow-tooltip />
-				<el-table-column prop="undertakerNationalEmblem" label="承接人身份证国徽面" show-overflow-tooltip />
-				<el-table-column prop="isAuthentication" label="是否实名认证" show-overflow-tooltip />
-				<el-table-column prop="bankNumber" label="银行卡号" show-overflow-tooltip />
-				<el-table-column prop="bankName" label="银行名称" show-overflow-tooltip />
-				<el-table-column prop="bankAddress" label="银行开户地址" show-overflow-tooltip />
-				<el-table-column label="操作" width="150">
+				<!-- <el-table-column type="selection" width="40" align="center" /> -->
+				<!-- <el-table-column type="index" label="#" width="40" /> -->
+				<el-table-column prop="undertakerName" label="姓名" width="100" show-overflow-tooltip />
+				<el-table-column prop="undertakerCard" label="身份证号码" width="200" show-overflow-tooltip />
+				<el-table-column prop="undertakerPhone" label="手机号码" width="120" show-overflow-tooltip />
+				<el-table-column label="性别" width="60" show-overflow-tooltip>
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
-							>编辑</el-button
+						<div>{{ scope.row.undertakerSex == 0 ? '男' : '女' }}</div>
+					</template>
+				</el-table-column>
+				<el-table-column prop="undertakerAge" label="年龄" width="60" show-overflow-tooltip />
+				<el-table-column prop="undertakerEducationName" label="学历" width="60" show-overflow-tooltip />
+				<el-table-column prop="bankName" label="开户行" width="150" show-overflow-tooltip />
+				<el-table-column prop="bankNumber" label="银行卡号" width="200" show-overflow-tooltip />
+				<el-table-column label="服务商" width="150" show-overflow-tooltip>
+					<template #default="scope">
+						<div v-for="(_, i) in scope.row.spList" :key="i">{{ _.spName }}</div>
+					</template>
+				</el-table-column>
+				<el-table-column label="是否签署协议" width="150" show-overflow-tooltip>
+					<template #default="scope">
+						<div v-for="(_, i) in scope.row.spList" :key="i">{{ _.isSign == 0 ? '否' : '是' }}</div>
+					</template>
+				</el-table-column>
+				<el-table-column label="是否银行四要素验证" width="160" show-overflow-tooltip>
+					<template #default="scope">
+						<div>{{ scope.row.isBankFourEssentialFactor == 0 ? '否' : '是' }}</div>
+					</template>
+				</el-table-column>
+				<el-table-column label="操作" width="395" fixed="right">
+					<template #default="scope">
+						<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
+							>查看</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'hro_undertakerInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button icon="folder-add" text type="primary" v-auth="'hro_undertakerInfo_join'" @click="formDialogRef.openDialog(scope.row.id)"
+							>加入服务商</el-button
+						>
+						<el-button icon="Upload" text type="primary" v-auth="'hro_undertakerInfo_uploadCard'" @click="formDialogRef.openDialog(scope.row.id)"
+							>上传身份证</el-button
+						>
+						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+							>修改手机号码</el-button
+						>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -87,27 +136,36 @@
 
 		<!-- 编辑、新增  -->
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+		<!-- 查看 -->
+		<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
 	</div>
 </template>
 
 <script setup lang="ts" name="systemUndertakerInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/hro/undertakerInfo';
+import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+import { useI18n } from 'vue-i18n';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
+const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
+const { t } = useI18n();
 // 定义查询字典
-const { sp_status } = useDict('sp_status');
+const { yes_no_type } = useDict('yes_no_type');
 // 定义变量内容
 const formDialogRef = ref();
+const detailDialogRef = ref();
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
+const spinfoList = ref([]) as array;
+const merchantInfoList = ref([]) as array;
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
@@ -153,4 +211,16 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
+
+const getUndertakerInfoData = () => {
+	// 获取数据
+	getSpInfoList().then((res: any) => {
+		spinfoList.value = res.data || [];
+	});
+	getMerchantInfoList().then((res: any) => {
+		merchantInfoList.value = res.data || [];
+	});
+};
+
+getUndertakerInfoData();
 </script>

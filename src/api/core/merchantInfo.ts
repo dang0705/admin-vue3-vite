@@ -53,3 +53,10 @@ export function getSpInfoList(obj?: Object) {
 		data: obj,
 	});
 }
+export function getMerchantInfoList(obj?: Object) {
+	return request({
+		url: '/core/merchantInfo/list',
+		method: 'get',
+		data: obj,
+	});
+}

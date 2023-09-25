@@ -22,6 +22,12 @@
       </el-col>
 
     <el-col :span="12" class="mb20">
+      <el-form-item label="承接人性别 0:男,1:女" prop="undertakerSex">
+        <el-input v-model="form.undertakerSex" placeholder="请输入承接人性别 0:男,1:女"/>
+      </el-form-item>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
       <el-form-item label="承接人家庭住址" prop="undertakerAddress">
         <el-input v-model="form.undertakerAddress" placeholder="请输入承接人家庭住址"/>
       </el-form-item>
@@ -71,9 +77,9 @@
       </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="是否实名认证" prop="isAuthentication">
+      <el-form-item label="是否实名认证,0: 未认证,1:已认证" prop="isAuthentication">
             <el-radio-group v-model="form.isAuthentication">
-           <el-radio label="是否实名认证" border>是否实名认证</el-radio>
+           <el-radio label="是否实名认证,0: 未认证,1:已认证" border>是否实名认证,0: 未认证,1:已认证</el-radio>
             </el-radio-group>
         </el-form-item>
       </el-col>
@@ -93,6 +99,12 @@
     <el-col :span="12" class="mb20">
       <el-form-item label="银行开户地址" prop="bankAddress">
         <el-input v-model="form.bankAddress" placeholder="请输入银行开户地址"/>
+      </el-form-item>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="是否验证银行四要素,0 否, 1:是" prop="isBankFourEssentialFactor">
+        <el-input v-model="form.isBankFourEssentialFactor" placeholder="请输入是否验证银行四要素,0 否, 1:是"/>
       </el-form-item>
       </el-col>
 
@@ -126,6 +138,7 @@ const form = reactive({
 	  undertakerName: '',
 	  undertakerCard: '',
 	  undertakerPhone: '',
+	  undertakerSex: '',
 	  undertakerAddress: '',
 		undertakerClan: 0,
 	  undertakerClanName: '',
@@ -138,6 +151,7 @@ const form = reactive({
 	  bankNumber: '',
 	  bankName: '',
 	  bankAddress: '',
+	  isBankFourEssentialFactor: '',
 });
 
 // 定义校验规则
@@ -145,6 +159,7 @@ const dataRules = ref({
         undertakerName: [{required: true, message: '承接人姓名不能为空', trigger: 'blur'}],
         undertakerCard: [{required: true, message: '承接人身份证号不能为空', trigger: 'blur'}],
         undertakerPhone: [{required: true, message: '承接人手机号不能为空', trigger: 'blur'}],
+        undertakerSex: [{required: true, message: '承接人性别 0:男,1:女不能为空', trigger: 'blur'}],
         undertakerAddress: [{required: true, message: '承接人家庭住址不能为空', trigger: 'blur'}],
         undertakerClan: [{required: true, message: '承接人 民族 id不能为空', trigger: 'blur'}],
         undertakerClanName: [{required: true, message: '承接人 民族 名称不能为空', trigger: 'blur'}],
@@ -153,10 +168,11 @@ const dataRules = ref({
         workTime: [{required: true, message: '参加工作日期不能为空', trigger: 'blur'}],
         undertakerPortrait: [{required: true, message: '承接人身份证正面不能为空', trigger: 'blur'}],
         undertakerNationalEmblem: [{required: true, message: '承接人身份证国徽面不能为空', trigger: 'blur'}],
-        isAuthentication: [{required: true, message: '是否实名认证不能为空', trigger: 'blur'}],
+        isAuthentication: [{required: true, message: '是否实名认证,0: 未认证,1:已认证不能为空', trigger: 'blur'}],
         bankNumber: [{required: true, message: '银行卡号不能为空', trigger: 'blur'}],
         bankName: [{required: true, message: '银行名称不能为空', trigger: 'blur'}],
         bankAddress: [{required: true, message: '银行开户地址不能为空', trigger: 'blur'}],
+        isBankFourEssentialFactor: [{required: true, message: '是否验证银行四要素,0 否, 1:是不能为空', trigger: 'blur'}],
 })
 
 // 打开弹窗
