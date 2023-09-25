@@ -48,7 +48,7 @@
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'core_task_add'"> 新 增 </el-button>
+					<el-button icon="folder-add" type="primary" class="ml10" @click="openTask('add')" v-auth="'core_task_add'"> 新 增 </el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'core_task_export'"
@@ -109,7 +109,7 @@
 		</div>
 
 		<!-- 编辑、新增  -->
-		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+		<!-- <form-dialog ref="formDialogRef" @refresh="getDataList(false)" /> -->
 	</div>
 </template>
 
@@ -120,8 +120,11 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
 // 引入组件
-const FormDialog = defineAsyncComponent(() => import('./form.vue'));
+// const FormDialog = defineAsyncComponent(() => import('./components/form.vue'));
 // 定义查询字典
+
+// 定义变量内容
+const router = useRouter();
 
 // 定义变量内容
 const formDialogRef = ref();
@@ -152,6 +155,33 @@ const resetQuery = () => {
 // 导出excel
 const exportExcel = () => {
 	downBlobFile('/core/task/export', Object.assign(state.queryForm, { ids: selectObjs }), 'task.xlsx');
+};
+
+// 新增/编辑/详情
+const openTask = (type: string, id: number) => {
+	switch (type) {
+		case 'view':
+			router.push({
+				path: '/core/task/detail',
+				query: {
+					id,
+				},
+			});
+			break;
+		case 'edit':
+			router.push({
+				path: '/core/task/edit',
+				query: {
+					id,
+				},
+			});
+			break;
+		case 'add':
+			router.push({
+				path: '/core/task/add',
+			});
+			break;
+	}
 };
 
 // 多选事件

@@ -30,8 +30,8 @@ app.component('RightToolbar', RightToolbar);
 app.component('uploadExcel', UploadExcel);
 app.component('UploadFile', UploadFile);
 app.component(
-	'UploadImg',
-	defineAsyncComponent(() => import('/@/components/Upload/Image.vue'))
+	'Upload',
+	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))
 );
 app.component('Editor', Editor);
 app.component('Tip', Tip);

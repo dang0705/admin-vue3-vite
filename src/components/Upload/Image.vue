@@ -14,7 +14,7 @@
 				:before-upload="beforeUpload"
 				:on-success="uploadSuccess"
 				:on-error="uploadError"
-				:accept="fileType.join(',')"
+				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
 				<template v-if="realImages.length && !multiple">
@@ -49,7 +49,7 @@
 					</slot>
 				</div>
 				<template #tip>
-					<span class="text-[#999] text-[14px]">支持{{ fileType.join(',').replace(/image\//g, '') }}文件</span>
+					<span class="text-[#999] text-[14px]">支持{{ accept.join(',').replace(/image\//g, '') }}文件</span>
 				</template>
 			</el-upload>
 			<div class="el-upload__tip">
@@ -109,8 +109,12 @@ const props = defineProps({
 		default: 0,
 	},
 	fileType: {
+		type: String,
+		default: 'image',
+	},
+	accept: {
 		type: Array,
-		default: () => ['image/jpeg', 'image/png', 'image/gif'],
+		default: () => [],
 	},
 	height: {
 		type: String,
@@ -141,6 +145,12 @@ const { proxy } = getCurrentInstance();
 
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
+
+const new_accept = ref(
+	props.fileType == 'image'
+		? ['image/jpeg', 'image/png', 'image/gif']
+		: ['png', 'jpg', 'jpeg', 'doc', 'xls', 'ppt', 'txt', 'pdf', 'docx', 'xlsx', 'pptx']
+);
 
 // 查看图片
 const imgViewVisible = ref(false);
@@ -222,7 +232,7 @@ const editImg = () => {
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	const imgType = props.fileType.includes(rawFile.type as File.ImageMimeType);
+	const imgType = props.accept.includes(rawFile.type as File.ImageMimeType);
 	if (!imgType)
 		ElNotification({
 			title: '温馨提示',

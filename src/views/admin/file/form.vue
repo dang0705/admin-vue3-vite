@@ -1,6 +1,6 @@
 <template>
 	<el-dialog title="上传文件" v-model="visible" :close-on-click-modal="false" draggable>
-		<upload @change="success" :model-value="fileList" />
+		<Upload @change="success" :model-value="fileList" />
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts" name="SysFileDialog">
-const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

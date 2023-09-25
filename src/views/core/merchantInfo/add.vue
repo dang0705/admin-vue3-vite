@@ -1,6 +1,6 @@
 <template>
-	<div class="layout-padding cache overflow-auto">
-		<div class="layout-padding-auto layout-padding-view">
+	<div class="layout-padding cache overflow-auto formLabelM120">
+		<div class="layout-padding-view">
 			<merchantInfo-form />
 		</div>
 	</div>
@@ -9,5 +9,3 @@
 <script setup lang="ts" name="merchantAdd">
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 </script>
-
-<style scoped lang="scss"></style>
