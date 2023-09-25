@@ -258,10 +258,10 @@
 
 /* Steps 步骤条
 ------------------------------- */
-.el-step__icon-inner {
-	font-size: 30px !important;
-	font-weight: 400 !important;
-}
+// .el-step__icon-inner {
+// 	font-size: 30px !important;
+// 	font-weight: 400 !important;
+// }
 
 .el-step__title {
 	font-size: 14px;
@@ -411,4 +411,22 @@ svg {
 	// .el-input-number__decrease {
 	// 	display: none !important;
 	// }
+}
+
+.formBox {
+	display: flex !important;
+	height: fit-content;
+	.el-form-item {
+		margin-bottom: 0 !important;
+	}
+	:deep(.el-form-item__content) {
+		align-items: flex-start !important;
+	}
+}
+
+// divider样式调优
+.formLabelM120 {
+	.el-form-item__label {
+		min-width: 160px !important;
+	}
 }

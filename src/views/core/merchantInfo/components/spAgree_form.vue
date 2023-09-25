@@ -1,5 +1,5 @@
 <template>
-	<el-dialog width="850px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
+	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
@@ -33,7 +33,7 @@
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务费计算方式" prop="feeCalculationMethod">
 						<el-select clearable v-model="form.feeCalculationMethod">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in calcType" />
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
 						</el-select>
 					</el-form-item>
 				</el-col>
@@ -66,15 +66,15 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="企业上传附件" prop="uploadAttachment">
-						<UploadFile type="simple" :isLink="false" v-model="form.uploadAttachment" />
+						<UploadFile :isImage="false" type="simple" :isLink="false" v-model="form.uploadAttachment" />
 					</el-form-item>
 				</el-col>
 
-				<!-- <el-col :span="12" class="mb20">
-					<el-form-item label="* 服务费比例" prop="gradientSpRatio">
-						<GradientSpRatio v-model="form.gradientSpRatio" />
+				<el-col :span="24" class="mb20">
+					<el-form-item label="* 服务费比例">
+						<IndividualTaxRatios v-model="form.feeRates" :texts="iTRTexts" />
 					</el-form-item>
-				</el-col> -->
+				</el-col>
 			</el-row>
 		</el-form>
 		<template #footer>
@@ -93,13 +93,14 @@ import { getObj, addObj, putObj } from '/@/api/core/merchantServiceAgreement';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
-const { is_need } = useDict('is_need');
+const { is_need, fee_calculation_method } = useDict('is_need', 'fee_calculation_method');
 import uploadBusinessType from '/@/enums/upload-business-type';
-import GradientSpRatio from '/@/components/Gradientization/GradientSpRatio.vue';
+import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 const businessType = uploadBusinessType.merchant;
 
 // 定义变量内容
 const dataFormRef = ref();
+const iTRTexts = ref(['元 < 单人单月任务金额 <=', '元，比例', '%']);
 const visible = ref(false);
 const loading = ref(false);
 const spinfoList = ref([]) as array;
@@ -119,18 +120,10 @@ const form = reactive({
 	startTime: '',
 	endTime: '',
 	uploadAttachment: [],
+	feeRates: [],
 	status: '',
 });
-const calcType = ref([
-	{
-		value: 1,
-		label: '服务费 = 任务金额*服务费比例',
-	},
-	{
-		value: 2,
-		label: '服务费 = 任务金额/(1-服务费比例)*服务费比例',
-	},
-]);
+
 // 定义校验规则
 const dataRules = ref({
 	merchantId: [{ required: true, message: '商户id不能为空', trigger: 'blur' }],
@@ -144,6 +137,7 @@ const dataRules = ref({
 	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
 	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
 	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
+	feeRates: [{ required: true, message: '服务费比例不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
 });
 

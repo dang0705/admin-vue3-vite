@@ -12,14 +12,8 @@
 			<el-descriptions-item :label="$t('merchantInfo.address')">{{ form.address }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.entryDate')">{{ form.entryDate }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.socialCreditCode')">{{ form.socialCreditCode }}</el-descriptions-item>
-			<el-descriptions-item :label="$t('merchantInfo.businessLicense')">
-				<!--{{ form.businessLicense }} -->
-				<!-- <UploadImg :type="businessType" v-model="form.businessLicense" /> -->
-			</el-descriptions-item>
-			<el-descriptions-item :label="$t('merchantInfo.logo')">
-				<!-- {{ form.logo }} -->
-				<!-- <UploadImg :type="businessType" v-model="form.logo" /> -->
-			</el-descriptions-item>
+			<el-descriptions-item :label="$t('merchantInfo.businessLicense')"> </el-descriptions-item>
+			<el-descriptions-item :label="$t('merchantInfo.logo')"> </el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.businessScope')">{{ form.businessScope }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.contactName')">{{ form.contactName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.contactPhone')">{{ form.contactPhone }}</el-descriptions-item>
@@ -39,10 +33,10 @@
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonName')">{{ form.legalPersonName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonMobile')">{{ form.legalPersonMobile }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonPortrait')">
-				<UploadImg isView :type="businessType" v-model="form.legalPersonPortrait" />
+				<UploadFile isView :type="businessType" v-model="form.legalPersonPortrait" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonNationalEmblem')">
-				<UploadImg isView :type="businessType" v-model="form.legalPersonNationalEmblem" />
+				<UploadFile isView :type="businessType" v-model="form.legalPersonNationalEmblem" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.legalPersonIdCard')">{{ form.legalPersonIdCard }}</el-descriptions-item>
 		</el-descriptions>
@@ -51,10 +45,10 @@
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerName')">{{ form.taxManagerName }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerMobile')">{{ form.taxManagerMobile }}</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerPortrait')">
-				<UploadImg isView :type="businessType" v-model="form.taxManagerPortrait" />
+				<UploadFile isView :type="businessType" v-model="form.taxManagerPortrait" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerNationalEmblem')">
-				<UploadImg isView :type="businessType" v-model="form.taxManagerNationalEmblem" />
+				<UploadFile isView :type="businessType" v-model="form.taxManagerNationalEmblem" />
 			</el-descriptions-item>
 			<el-descriptions-item :label="$t('merchantInfo.taxManagerIdCard')">{{ form.taxManagerIdCard }}</el-descriptions-item>
 		</el-descriptions>
@@ -64,7 +58,6 @@
 <script setup lang="ts" name="log-detail">
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
-const uploadImage = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 const route = useRoute();
 /**
@@ -136,21 +129,3 @@ onMounted(async () => {
 	}
 });
 </script>
-
-<style scoped lang="scss">
-// divider样式调优
-.layout-padding {
-	.el-divider--horizontal {
-		margin: 24px 0 30px;
-		:deep(.el-divider__text) {
-			font-family: PingFangSC-Medium;
-			font-weight: 600;
-			font-size: 16px;
-			color: #000000;
-		}
-	}
-	:deep(.el-form-item__label) {
-		min-width: 120px !important;
-	}
-}
-</style>

@@ -6,12 +6,12 @@
 					<el-row :gutter="20">
 						<el-col :span="24" class="mb20">
 							<el-form-item prop="avatar">
-								<ImageUpload v-model:imageUrl="formData.avatar" borderRadius="50%">
+								<UploadFile v-model:imageUrl="formData.avatar" borderRadius="50%">
 									<template #empty>
 										<el-icon><Avatar /></el-icon>
 										<span>请上传头像</span>
 									</template>
-								</ImageUpload>
+								</UploadFile>
 							</el-form-item>
 						</el-col>
 						<el-col :span="24" class="mb20">
@@ -114,7 +114,6 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const ImageUpload = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
 const StrengthMeter = defineAsyncComponent(() => import('/@/components/StrengthMeter/index.vue'));
 
 const visible = ref(false);

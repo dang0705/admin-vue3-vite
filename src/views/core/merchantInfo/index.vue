@@ -44,7 +44,7 @@
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="openMerchantForm('add')" v-auth="'core_merchantInfo_add'">
-						新 增
+						添加商户
 					</el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"

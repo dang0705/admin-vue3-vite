@@ -5,7 +5,7 @@
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading" label-position="right">
 			<div>
 				<Divider title="基本信息" />
-				<el-row class="paddcus" :gutter="48">
+				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
 							<el-input :disabled="isDetail" v-model="form.merchantName" :placeholder="$t('merchantInfo.inputMerchantNameTip')" />
@@ -124,7 +124,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.logo')" prop="logo">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.logo" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.logo" />
 						</el-form-item>
 					</el-col>
 
@@ -226,12 +226,12 @@
 					<el-col :span="12" class="mb20"> </el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonPortrait')" prop="legalPersonPortrait">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.legalPersonPortrait" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.legalPersonPortrait" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonNationalEmblem')" prop="legalPersonNationalEmblem">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.legalPersonNationalEmblem" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.legalPersonNationalEmblem" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -257,13 +257,13 @@
 					<el-col :span="12" class="mb20"> </el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerPortrait')" prop="taxManagerPortrait">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerNationalEmblem')" prop="taxManagerNationalEmblem">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.taxManagerNationalEmblem" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerNationalEmblem" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -283,8 +283,6 @@ import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
-// const Upload = defineAsyncComponent(() => import('/@/components/Upload/index.vue'));
-// const uploadImage = defineAsyncComponent(() => import('/@/components/Upload/Image.vue'));
 const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 
@@ -468,21 +466,5 @@ if (route.query.id) {
 <style scoped lang="scss">
 .paddcus {
 	padding: 0 48px 0 24px;
-}
-.formBox {
-	display: flex;
-	height: fit-content;
-	.el-form-item {
-		margin-bottom: 0 !important;
-	}
-	:deep(.el-form-item__content) {
-		align-items: flex-start !important;
-	}
-}
-// divider样式调优
-.layout-padding {
-	:deep(.el-form-item__label) {
-		min-width: 120px !important;
-	}
 }
 </style>
