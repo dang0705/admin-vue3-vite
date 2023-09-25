@@ -146,6 +146,7 @@ const props = defineProps({
 });
 const { proxy } = getCurrentInstance();
 
+const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
 
@@ -154,8 +155,6 @@ const new_accept = ref(
 		? ['image/jpeg', 'image/png', 'image/gif']
 		: ['png', 'jpg', 'jpeg', 'doc', 'xls', 'ppt', 'txt', 'pdf', 'docx', 'xlsx', 'pptx']
 );
-
-console.log('new_accept ', new_accept);
 
 // 查看图片
 const imgViewVisible = ref(false);
@@ -237,18 +236,19 @@ const editImg = () => {
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	const imgType = (props.accept.length ? props.accept : new_accept.value).includes(rawFile.type as File.ImageMimeType);
+	let imgType =
+		props.fileType !== 'image' ? true : (props.accept.length ? props.accept : new_accept.value).includes(rawFile.type as File.ImageMimeType);
 	if (!imgType)
 		ElNotification({
 			title: '温馨提示',
-			message: '上传图片不符合所需的格式！',
+			message: `上传${fileTypeText}不符合所需的格式！`,
 			type: 'warning',
 		});
 	if (!imgSize)
 		setTimeout(() => {
 			ElNotification({
 				title: '温馨提示',
-				message: `上传图片大小不能超过 ${props.fileSize}M！`,
+				message: `上传${fileTypeText}大小不能超过 ${props.fileSize}M！`,
 				type: 'warning',
 			});
 		}, 0);
@@ -261,7 +261,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const uploadSuccess = () => {
 	ElNotification({
 		title: '温馨提示',
-		message: '图片上传成功！',
+		message: `${fileTypeText}上传成功！`,
 		type: 'success',
 	});
 };
@@ -272,7 +272,7 @@ const uploadSuccess = () => {
 const uploadError = (err: any) => {
 	ElNotification({
 		title: '温馨提示',
-		message: err || '图片上传失败，请您重新上传！',
+		message: err || `${fileTypeText}上传失败，请您重新上传！`,
 		type: 'error',
 	});
 };

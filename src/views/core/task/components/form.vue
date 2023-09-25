@@ -225,7 +225,7 @@
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/task';
-import { getMerchantList, getSpInfoList } from '/@/api/core/merchantInfo';
+import { getMerchantInfoList, getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
@@ -385,7 +385,7 @@ const gettaskData = (id: string) => {
 };
 
 // 获取数据
-getMerchantList().then((res: any) => {
+getMerchantInfoList().then((res: any) => {
 	merchantList.value = res.data || [];
 });
 

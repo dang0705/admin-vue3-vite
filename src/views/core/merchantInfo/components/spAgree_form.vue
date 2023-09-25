@@ -4,27 +4,27 @@
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务协议名称" prop="agreementName">
-						<el-input v-model="form.agreementName" placeholder="请输入" />
+						<el-input :disabled="isDetail" v-model="form.agreementName" placeholder="请输入" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务商" prop="spId">
-						<el-select placeholder="请选择" clearable v-model="form.spId">
+						<el-select :disabled="isDetail" placeholder="请选择" clearable v-model="form.spId">
 							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 						</el-select>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
-					<el-form-item label="服务负责人" prop="spId">
-						<el-select placeholder="请选择" clearable v-model="form.spId">
-							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
+					<el-form-item label="服务负责人" prop="serviceManager">
+						<el-select :disabled="isDetail" placeholder="请选择" clearable v-model="form.serviceManager">
+							<el-option :key="item.userId" :label="item.name" :value="item.userId" v-for="item in userList" />
 						</el-select>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
-						<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isUploadAchievement">
+						<el-select :disabled="isDetail" :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isUploadAchievement">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
@@ -32,7 +32,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务费计算方式" prop="feeCalculationMethod">
-						<el-select clearable v-model="form.feeCalculationMethod">
+						<el-select :disabled="isDetail" clearable v-model="form.feeCalculationMethod">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
 						</el-select>
 					</el-form-item>
@@ -40,13 +40,13 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开票类目" prop="invoiceCategory">
-						<el-input v-model="form.invoiceCategory" placeholder="请输入" />
+						<el-input :disabled="isDetail" v-model="form.invoiceCategory" placeholder="请输入" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求电子签署" prop="isElectronicSignature">
-						<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isElectronicSignature">
+						<el-select :disabled="isDetail" :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isElectronicSignature">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
@@ -54,25 +54,37 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="起始时间" prop="startTime">
-						<el-date-picker type="date" placeholder="请选择起始时间" v-model="form.startTime" :value-format="dateStr"></el-date-picker>
+						<el-date-picker
+							:disabled="isDetail"
+							type="date"
+							placeholder="请选择起始时间"
+							v-model="form.startTime"
+							:value-format="dateStr"
+						></el-date-picker>
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="终止时间" prop="endTime">
-						<el-date-picker type="date" placeholder="请选择终止时间" v-model="form.endTime" :value-format="dateStr"></el-date-picker>
+						<el-date-picker
+							:disabled="isDetail"
+							type="date"
+							placeholder="请选择终止时间"
+							v-model="form.endTime"
+							:value-format="dateStr"
+						></el-date-picker>
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="企业上传附件" prop="uploadAttachment">
-						<UploadFile :isImage="false" type="simple" :isLink="false" v-model="form.uploadAttachment" />
+						<UploadFile :disabled="isDetail" fileType="file" type="simple" :isLink="false" v-model="form.uploadAttachment" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="* 服务费比例">
-						<IndividualTaxRatios v-model="form.feeRates" :texts="iTRTexts" />
+						<IndividualTaxRatios :disabled="isDetail" v-model="form.feeRates" :texts="iTRTexts" />
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -89,7 +101,7 @@
 <script setup lang="ts" name="MerchantServiceAgreementDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { getObj, addObj, putObj } from '/@/api/core/merchantServiceAgreement';
+import { getObj, addObj, putObj, userDropList } from '/@/api/core/merchantServiceAgreement';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
@@ -97,13 +109,16 @@ const { is_need, fee_calculation_method } = useDict('is_need', 'fee_calculation_
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 const businessType = uploadBusinessType.merchant;
+const route = useRoute();
 
 // 定义变量内容
 const dataFormRef = ref();
+const isDetail = ref(false);
 const iTRTexts = ref(['元 < 单人单月任务金额 <=', '元，比例', '%']);
 const visible = ref(false);
 const loading = ref(false);
 const spinfoList = ref([]) as array;
+const userList = reactive([]);
 // 定义字典
 
 // 提交表单数据
@@ -142,9 +157,15 @@ const dataRules = ref({
 });
 
 // 打开弹窗
-const openDialog = (id: string) => {
+const openDialog = (id: string, type: any) => {
 	visible.value = true;
 	form.id = '';
+
+	if (type == 'view') {
+		isDetail.value = true;
+	} else {
+		isDetail.value = false;
+	}
 
 	// 重置表单数据
 	nextTick(() => {
@@ -162,7 +183,7 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
-
+	form.merchantId = route.query.id;
 	try {
 		loading.value = true;
 		form.id ? await putObj(form) : await addObj(form);
@@ -189,6 +210,16 @@ const getmerchantServiceAgreementData = (id: string) => {
 		});
 };
 
+// 获取用户列表
+const getUserDropList = () => {
+	// levelType 用户类型（10：平台级，20：租户级，30：客户级）
+	userDropList({
+		levelType: 20,
+	}).then((res: any) => {
+		Object.assign(userList, res.data);
+	});
+};
+
 const getmerchantInfoData = () => {
 	// 获取数据
 	getSpInfoList().then((res: any) => {
@@ -196,8 +227,10 @@ const getmerchantInfoData = () => {
 	});
 };
 
-getmerchantInfoData();
-
+onMounted(() => {
+	getmerchantInfoData();
+	getUserDropList();
+});
 // 暴露变量
 defineExpose({
 	openDialog,

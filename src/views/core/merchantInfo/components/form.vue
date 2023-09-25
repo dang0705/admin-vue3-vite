@@ -2,7 +2,7 @@
 	<!-- <el-scrollbar> -->
 	<!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
 	<el-card class="!border-none" shadow="never">
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading" label-position="right">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="160px" formDialogRef v-loading="loading" label-position="right">
 			<div>
 				<Divider title="基本信息" />
 				<el-row class="paddcus" :gutter="24">
@@ -25,7 +25,7 @@
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in industryLevel_option.industryLevel1_option" />
 							</el-select>
 						</el-form-item>
-						<el-form-item prop="industryLevel2" style="margin-left: 12px">
+						<el-form-item prop="industryLevel2" label-width="0" style="margin-left: 12px">
 							<el-select
 								:disabled="isDetail"
 								:placeholder="$t('merchantInfo.inputIndustryLevel2Tip')"
@@ -198,7 +198,7 @@
 							<el-input :disabled="isDetail" v-model="form.areaCode" placeholder="请输入区号" />
 						</el-form-item>
 						&nbsp;&nbsp;-&nbsp;&nbsp;
-						<el-form-item prop="phoneNumber">
+						<el-form-item prop="phoneNumber" label-width="0px">
 							<el-input :disabled="isDetail" v-model="form.phoneNumber" placeholder="请输入企业电话" />
 						</el-form-item>
 					</el-col>
