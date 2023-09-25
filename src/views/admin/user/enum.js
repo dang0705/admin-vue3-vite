@@ -10,11 +10,11 @@ const providerAuth = [
 ];
 const customerAuth = [
 	{
-		label: '全部客户',
+		label: '全部商户',
 		value: '10',
 	},
 	{
-		label: '分配的客户',
+		label: '分配的商户',
 		value: '20',
 	},
 ];

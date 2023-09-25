@@ -197,7 +197,7 @@ const dataRules = reactive({
 		{ validator: rule.chinese, trigger: 'blur' },
 	],
 	deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
-	role: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
+	// role: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
 	post: [{ required: true, message: '岗位不能为空', trigger: 'blur' }],
 	// 手机号校验，不能为空、新增的时不能重复校验
 	phone: [
