@@ -40,9 +40,9 @@
 					<el-button v-auth="'sys_user_add'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()">
 						{{ $t('common.addBtn') }}
 					</el-button>
-					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
+					<!--					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
 						{{ $t('common.importBtn') }}
-					</el-button>
+					</el-button>-->
 
 					<el-button plain v-auth="'sys_user_del'" :disabled="multiple" class="ml10" icon="Delete" type="primary" @click="handleDelete(selectObjs)">
 						{{ $t('common.delBtn') }}
@@ -97,10 +97,14 @@
 						<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
 							{{ $t('common.editBtn') }}
 						</el-button>
-						<el-button text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
+						<!--            10 means all-->
+						<el-button v-if="scope.row.merchantAuthScope !== '10'" text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
 							$t('sysuser.distributionMerchant')
 						}}</el-button>
-						<el-button text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{ $t('sysuser.distributionSp') }}</el-button>
+						<!--            10 means all-->
+						<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
+							$t('sysuser.distributionSp')
+						}}</el-button>
 						<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button

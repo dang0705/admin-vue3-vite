@@ -1,33 +1,68 @@
 <!-- excel 导入组件 -->
 <template>
-	<el-dialog :title="prop.title" v-model="state.upload.open" :close-on-click-modal="false" draggable>
-		<el-upload
-			ref="uploadRef"
-			:limit="1"
-			accept=".xlsx, .xls"
-			:headers="headers"
-			:action="baseURL + other.adaptationUrl(url)"
-			:disabled="state.upload.isUploading"
-			:on-progress="handleFileUploadProgress"
-			:on-success="handleFileSuccess"
-			:on-error="handleFileError"
-			:auto-upload="false"
-			drag
-		>
-			<i class="el-icon-upload"></i>
-			<div class="el-upload__text">
-				{{ $t('excel.operationNotice') }}
-				<em>{{ $t('excel.clickUpload') }}</em>
-			</div>
-			<template #tip>
-				<div class="el-upload__tip text-center">
-					<span>{{ $t('excel.fileFormat') }}</span>
-					<el-link type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp" v-if="tempUrl"
-						>{{ $t('excel.downloadTemplate') }}
-					</el-link>
-				</div>
-			</template>
-		</el-upload>
+	<el-dialog :title="prop.title" v-model="open" :close-on-click-modal="false" draggable>
+		<template v-if="tempUrl">
+			<a v-if="templateOnFront" class="color-primary" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
+			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp"
+				>{{ $t('excel.downloadTemplate') }}
+			</el-link>
+		</template>
+		<el-form ref="formRef" :label-width="formLabelWidth">
+			<slot :name="forms">
+				<el-form-item v-for="form in forms" :key="form.key" :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+					<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
+						<template v-for="(_, slot) in $slots" #[slot]>
+							<slot :name="slot" />
+						</template>
+						<template v-if="form.control === 'el-select'">
+							<el-option
+								v-for="item in formOptions[form.key]"
+								:key="item[form.props.value]"
+								:value="item[form.props.value || 'value']"
+								:label="item[form.props.label || 'label']"
+							/>
+						</template>
+						<template v-if="form.control === 'el-radio-group'">
+							<el-radio v-for="item in formOptions[form.key]"></el-radio>
+							<!--							<el-radio v-for="item in formOptions[form.key]" :key="item[form.props.value]" :label="item[form.props.value || 'value']">{{
+								item[form.props.label || 'label']
+							}}</el-radio>-->
+						</template>
+					</component>
+				</el-form-item>
+			</slot>
+			<el-form-item :prop="forms[prop.fileField]" :label="`${uploadLabel}：`">
+				<el-upload
+					action="#"
+					accept=".xlsx, .xls"
+					drag
+					ref="uploadRef"
+					:auto-upload="false"
+					:limit="1"
+					:show-file-list="false"
+					:http-request="upload"
+					:headers="headers"
+					:disabled="state.upload.isUploading"
+					:on-progress="handleFileUploadProgress"
+					:on-success="handleFileSuccess"
+					:on-error="handleFileError"
+					:on-change="onChange"
+				>
+					<i class="el-icon-upload" />
+					<div class="el-upload__text">
+						{{ $t('excel.operationNotice') }}
+						<em>{{ $t('excel.clickUpload') }}</em>
+					</div>
+					<template #tip>
+						<div class="el-upload__tip text-center">
+							<span>{{ $t('excel.fileFormat') }}</span>
+						</div>
+						<span v-if="fileName" v-text="`文件名称：${fileName}`" />
+					</template>
+				</el-upload>
+			</el-form-item>
+		</el-form>
+
 		<template #footer>
 			<el-button type="primary" @click="submitFileForm">{{ $t('common.confirmButtonText') }}</el-button>
 			<el-button @click="state.upload.open = false">{{ $t('common.cancelButtonText') }}</el-button>
@@ -51,6 +86,8 @@
 import { useMessage } from '/@/hooks/message';
 import other from '/@/utils/other';
 import { Session } from '/@/utils/storage';
+import request from '/@/utils/request';
+import { ElNotification, UploadProps, UploadRequestOptions } from 'element-plus';
 
 const emit = defineEmits(['sizeChange', 'refreshDataList']);
 const prop = defineProps({
@@ -60,8 +97,40 @@ const prop = defineProps({
 	title: {
 		type: String,
 	},
+	uploadFileUrl: {
+		type: String,
+		default: '/docs/sys-file/upload',
+	},
 	tempUrl: {
 		type: String,
+	},
+	forceOpen: {
+		type: Boolean,
+		default: false,
+	},
+	templateOnFront: {
+		type: Boolean,
+		default: false,
+	},
+	forms: {
+		type: Array,
+		default: () => [],
+	},
+	fileSize: {
+		type: [Number, String],
+		default: 5,
+	},
+	formLabelWidth: {
+		type: [String, Number],
+		default: 140,
+	},
+	fileField: {
+		type: String,
+		default: 'file',
+	},
+	uploadLabel: {
+		type: String,
+		default: '',
 	},
 });
 
@@ -79,12 +148,31 @@ const state = reactive({
 		isUploading: false,
 	},
 });
+const formRef = ref();
+const formData = ref({});
+const formOptions = reactive({});
 
+// 控制表单控件的对象结构
+interface Form {
+	control: string;
+	key: string;
+	optionUrl?: string;
+	props: object;
+	options?: [];
+}
+const getOptions = async () => {
+	for (let i = 0; i < prop.forms.length; i++) {
+		const item: Form = prop.forms[i];
+		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
+	}
+};
+getOptions();
+const open = computed(() => prop.forceOpen || state.dialog.isShowDialog);
 /**
  * 下载模板文件
  */
 const downExcelTemp = () => {
-	other.downBlobFile(other.adaptationUrl(prop.tempUrl), {}, 'temp.xlsx');
+	other.downBlobFile(prop.templateOnFront ? prop.tempUrl : other.adaptationUrl(prop.tempUrl), {}, 'temp.xlsx');
 };
 
 /**
@@ -93,7 +181,49 @@ const downExcelTemp = () => {
 const handleFileUploadProgress = () => {
 	state.upload.isUploading = true;
 };
+let fileName = ref('');
 
+let file: any = null;
+const onChange = (e) => {
+	const imgSize = e.size / 1024 / 1024 < prop.fileSize;
+	if (!imgSize) {
+		setTimeout(() => {
+			ElNotification({
+				title: '温馨提示',
+				message: `上传图片大小不能超过 ${prop.fileSize}M！`,
+				type: 'warning',
+			});
+		}, 0);
+		return;
+	}
+	formData.value[prop.fileField] = e.raw;
+	fileName.value = e.name;
+	file = e.raw;
+};
+const upload = async () => {
+	let formDataObject = new FormData();
+	formDataObject.append('file', file);
+	for (let key in formData.value) {
+		formDataObject.append(key, formData.value[key]);
+	}
+	formDataObject.append('businessType', '10');
+
+	try {
+		const { data } = await request({
+			url: prop.uploadFileUrl,
+			method: 'post',
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+			data: formDataObject,
+		});
+		// 调用 el-form 内部的校验方法（可自动校验）
+		fileName.value = file.name;
+	} catch (error) {
+		console.log(error);
+		// onError(error as any);
+	}
+};
 /**
  * 上传失败事件处理
  */
@@ -107,7 +237,12 @@ const handleFileError = () => {
  * @param {any} response - 上传成功的响应结果
  */
 const handleFileSuccess = (response: any) => {
-	state.upload.isUploading = false;
+	ElNotification({
+		title: '温馨提示',
+		message: '图片上传成功！',
+		type: 'success',
+	});
+	/*	state.upload.isUploading = false;
 	state.upload.open = false;
 	uploadRef.value.clearFiles();
 
@@ -123,14 +258,15 @@ const handleFileSuccess = (response: any) => {
 		useMessage().success(response.msg ? response.msg : '导入成功');
 		// 刷新表格
 		emit?.('refreshDataList');
-	}
+	}*/
 };
 
 /**
  * 提交表单，触发上传
  */
 const submitFileForm = () => {
-	uploadRef.value.submit();
+	// uploadRef.value.submit();
+	upload();
 };
 
 /**

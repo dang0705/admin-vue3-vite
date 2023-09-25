@@ -20,8 +20,8 @@ import Test from '/@/views/Test.vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
-// const app = createApp(isDev ? Test : App);
-const app = createApp(App);
+const app = createApp(isDev ? Test : App);
+// const app = createApp(App);
 
 // 导入通用自定义组件
 app.component('DictTag', DictTag);
