@@ -12,7 +12,19 @@ import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 
-import { ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, UploadImg, Divider Editor, Tip, DelWrap } from '/@/components/index';
+import {
+	ElementIcons,
+	Pagination,
+	RightToolbar,
+	DictTag,
+	UploadExcel,
+	UploadFile,
+	UploadImg,
+	Divider,
+	Editor,
+	Tip,
+	DelWrap,
+} from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
 import Test from '/@/views/Test.vue';
