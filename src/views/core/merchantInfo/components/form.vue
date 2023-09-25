@@ -118,7 +118,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.businessLicense')" prop="businessLicense">
-							<UploadImg :disabled="isDetail" :type="businessType" v-model="form.businessLicense" />
+							<UploadFile :disabled="isDetail" :type="businessType" v-model="form.businessLicense" />
 						</el-form-item>
 					</el-col>
 
