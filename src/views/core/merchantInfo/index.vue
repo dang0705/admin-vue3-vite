@@ -16,7 +16,7 @@
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
-						<sp-select />
+						<sp-select v-model="state.queryForm.spId" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
