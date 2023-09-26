@@ -19,9 +19,9 @@
 					<el-button icon="folder-add" type="primary" class="ml10" @click="roleDialogRef.openDialog()" v-auth="'sys_role_add'">
 						{{ $t('common.addBtn') }}
 					</el-button>
-					<el-button plain icon="upload-filled" type="primary" class="ml10" @click="excelUploadRef.show()" v-auth="'sys_user_add'">
+					<!--					<el-button plain icon="upload-filled" type="primary" class="ml10" @click="excelUploadRef.show()" v-auth="'sys_user_add'">
 						{{ $t('common.importBtn') }}
-					</el-button>
+					</el-button>-->
 					<el-button plain :disabled="multiple" icon="Delete" type="primary" class="ml10" v-auth="'sys_user_del'" @click="handleDelete(selectObjs)">
 						{{ $t('common.delBtn') }}
 					</el-button>

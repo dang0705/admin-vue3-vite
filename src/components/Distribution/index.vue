@@ -7,6 +7,7 @@
 			class="w-full flex justify-between items-center"
 			v-model="selected"
 			filterable
+			:filter-method="filterMethod"
 			:props="{ key: 'id' }"
 			:render-content="renderFunc"
 			:left-default-checked="[2, 3]"
@@ -79,6 +80,10 @@ const props = defineProps({
 	forceOpen: {
 		type: Boolean,
 		default: false,
+	},
+	filterMethod: {
+		type: Function,
+		default: (query: string, item: Data) => item.values.some(({ value }) => value?.includes(query.toLowerCase())),
 	},
 });
 

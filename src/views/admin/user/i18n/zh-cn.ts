@@ -20,7 +20,7 @@ export default {
 		noDataScopeTip: '没有数据权限',
 		spAuthScope: '服务商授权',
 		merchantAuthScope: '商户授权',
-		distributionMerchant: '分配客户',
+		distributionMerchant: '分配商户',
 		distributionSp: '分配服务商',
 	},
 	personal: {
