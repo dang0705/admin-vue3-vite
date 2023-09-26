@@ -18,7 +18,7 @@
 			v-model:show="state.upload.open"
 			label-width="140"
 			:on-submit="upload"
-			:submit-button-text="$t('common.goToBatchManagement')"
+			:submit-button-text="submitButtonText"
 		>
 			<template v-for="(_, slot) in $slots" #[slot]>
 				<slot :name="slot" />
@@ -144,6 +144,10 @@ const prop = defineProps({
 	inlineForm: {
 		type: Boolean,
 		default: false,
+	},
+	submitButtonText: {
+		type: String,
+		default: '确认',
 	},
 });
 const valid = ref(false);
