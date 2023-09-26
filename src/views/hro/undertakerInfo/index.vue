@@ -61,7 +61,7 @@
 					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
 						批量导入承接人
 					</el-button>
-					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+					<el-button icon="folder-add" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
 						添加承接人
 					</el-button>
 					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'hro_undertakerInfo_del'" @click="handleDelete(selectObjs)">
@@ -119,13 +119,28 @@
 						<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 							>查看</el-button
 						>
-						<el-button icon="folder-add" text type="primary" v-auth="'hro_undertakerInfo_join'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="folder-add"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_join'"
+							@click="editDialogRef.openDialog(scope.row.id, 'addSp')"
 							>加入服务商</el-button
 						>
-						<el-button icon="Upload" text type="primary" v-auth="'hro_undertakerInfo_uploadCard'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="Upload"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_uploadCard'"
+							@click="editDialogRef.openDialog(scope.row.id, 'uploadCard')"
 							>上传身份证</el-button
 						>
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_edit'"
+							@click="editDialogRef.openDialog(scope.row.id, 'editPhone', scope.row.undertakerPhone)"
 							>修改手机号码</el-button
 						>
 					</template>
@@ -138,6 +153,21 @@
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
 		<!-- 查看 -->
 		<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
+
+		<!-- 加入服务商 上传身份证 修改手机号 -->
+		<edit-dialog ref="editDialogRef" @refresh="getDataList(false)" />
+
+		<!--    添加承接人-->
+		<uploadExcel
+			ref="addUnderTakerRef"
+			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
+			upload-label="待签署用户名单"
+			upload-url="core/undertakerInfo/import"
+			temp-url="/files/合同批量签署模板.xlsx"
+			template-on-front
+			title="批量导入承接人"
+			:forms="addUnderTakerForms"
+		/>
 	</div>
 </template>
 
@@ -148,16 +178,45 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import { UploadExcel } from '/@/components';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
+const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
 const { t } = useI18n();
 // 定义查询字典
 const { yes_no_type } = useDict('yes_no_type');
 // 定义变量内容
 const formDialogRef = ref();
 const detailDialogRef = ref();
+const editDialogRef = ref();
+
+const addUnderTakerRef = ref();
+
+const addUnderTakerForms = [
+	{
+		control: 'el-radio-group',
+		key: 'isInventoryUser',
+		label: '是否存量用户',
+		options: [
+			{
+				label: '是',
+				value: 1,
+			},
+			{
+				label: '否',
+				value: 0,
+			},
+		],
+		rules: [
+			{
+				required: true,
+			},
+		],
+		value: 1,
+	},
+];
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
@@ -171,6 +230,8 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
 	pageList: fetchList,
 });
+
+const readExcel = () => console.log(addUnderTakerRef);
 
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
