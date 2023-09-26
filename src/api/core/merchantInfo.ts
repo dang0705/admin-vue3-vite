@@ -46,7 +46,7 @@ export function stopObj(ids?: Object) {
 		data: ids,
 	});
 }
-export function getSpInfoList(type = 'platform') {
+export function getSpInfoList(type: any) {
 	return request({
 		url: type === 'platform' ? '/core/spInfo/listAll' : '/core/spInfo/list',
 		method: 'get',

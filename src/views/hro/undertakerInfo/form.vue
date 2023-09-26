@@ -62,6 +62,15 @@
 			<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-dialog>
+	<!-- 成功 已存在提示 -->
+	<el-dialog title="添加承接人" v-model="msgVisible" width="40%">
+		<p class="text-center" v-text="msgData" />
+		<template #footer>
+			<span class="flex justify-center items-center">
+				<el-button type="primary" @click="msgVisible = false">确定</el-button>
+			</span>
+		</template>
+	</el-dialog>
 </template>
 
 <script setup lang="ts" name="UndertakerInfoDialog">
@@ -71,6 +80,7 @@ import { getObj, addObj, putObj } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import { useI18n } from 'vue-i18n';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
+import { el } from 'element-plus/es/locale';
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();
 
@@ -78,6 +88,8 @@ const { t } = useI18n();
 const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
+const msgVisible = ref(false);
+const msgData = ref('');
 const spinfoList = ref([]) as array;
 // 定义字典
 const { nation, education } = useDict('nation', 'education');
@@ -133,9 +145,16 @@ const onSubmit = async () => {
 		form.id ? await putObj(form) : await addObj(form);
 		useMessage().success(form.id ? '修改成功' : '添加成功');
 		visible.value = false;
+		msgData.value = `身份证号为${form.undertakerCard}的承接人已添加成功！`;
+		msgVisible.value = true;
 		emit('refresh');
 	} catch (err: any) {
-		useMessage().error(err.msg);
+		if (err.code === 4140013) {
+			msgData.value = err.msg;
+			msgVisible.value = true;
+		} else {
+			useMessage().error(err.msg);
+		}
 	} finally {
 		loading.value = false;
 	}
