@@ -4,13 +4,14 @@
 		<div class="guidance mb10">
 			<p v-html="guidance" />
 		</div>
-		<div v-if="tempUrl" class="mb10">
-			<a v-if="templateOnFront" class="color-primary" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
+		<div v-if="tempUrl" class="my-6">
+			<a v-if="templateOnFront" class="color-primary hover:" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
 			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp">
 				{{ $t('excel.downloadTemplate') }}
 			</el-link>
 		</div>
-		<el-form ref="formRef" :label-width="formLabelWidth" :rules="overallRules">
+		<el-divider />
+		<el-form :inline="inlineForm" ref="formRef" :label-width="formLabelWidth" :model="formData">
 			<slot :name="forms">
 				<el-form-item v-for="form in forms" :key="form.key" :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 					<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
@@ -33,7 +34,7 @@
 					</component>
 				</el-form-item>
 			</slot>
-			<el-form-item :prop="forms[prop.fileField]" :label="`${uploadLabel}：`" :rules="excelRules">
+			<el-form-item :prop="fileField" :label="`${uploadLabel}：`" :rules="excelRules">
 				<el-upload
 					action="#"
 					drag
@@ -72,19 +73,16 @@
 	</el-dialog>
 
 	<!--校验失败错误数据-->
-	<el-dialog :title="$t('excel.validationFailureData')" v-model="state.errorVisible">
-		<el-table :data="state.errorData">
-			<el-table-column property="lineNum" :label="$t('excel.lineNumbers')" width="100"></el-table-column>
-			<el-table-column property="errors" :label="$t('excel.misDescription')" show-overflow-tooltip>
-				<template v-slot="scope">
-					<el-tag type="danger" v-for="error in scope.row.errors" :key="error">{{ error }}</el-tag>
-				</template>
-			</el-table-column>
-		</el-table>
+	<el-dialog :title="title" v-model="state.successVisible">
+		<p v-text="state.upload.data" />
+		<template #footer>
+			<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
+			<el-button @click="state.successVisible = false">{{ $t('common.cancelButtonText') }}</el-button>
+		</template>
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="upload-excel">
+<script setup lang="ts" name="UploadExcel">
 import { useMessage } from '/@/hooks/message';
 import other, { generateUUID } from '/@/utils/other';
 import { Session } from '/@/utils/storage';
@@ -153,20 +151,28 @@ const prop = defineProps({
 		type: String,
 		default: '',
 	},
+	successfulDialog: {
+		type: Boolean,
+		default: true,
+	},
+	inlineForm: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const uploadRef = ref();
 
 const state = reactive({
-	errorVisible: false,
+	successVisible: false,
 	errorData: [],
 	dialog: {
 		title: '',
-		isShowDialog: false,
 	},
 	upload: {
 		open: false,
 		isUploading: false,
+		data: '',
 	},
 });
 const accept = ['.xlsx', '.xls'];
@@ -178,7 +184,7 @@ const overallRules = computed(() => [...prop.rules, ...excelRules.value]);
 const excelRules = ref([
 	{
 		required: prop.required,
-		...(prop.required ? { trigger: 'change' } : {}),
+		...(prop.required ? { trigger: 'blur', message: `${prop.uploadLabel}必须上传` } : {}),
 	},
 ]);
 // 控制表单控件的对象结构
@@ -198,7 +204,7 @@ const initForms = async () => {
 	}
 };
 initForms();
-const open = computed(() => prop.forceOpen || state.dialog.isShowDialog);
+const open = computed(() => prop.forceOpen || state.upload.open);
 /**
  * 下载模板文件
  */
@@ -217,7 +223,6 @@ let fileName = ref('');
 const onChange = (e) => {
 	const excelSize = e.size / 1024 / 1024 < prop.fileSize;
 	const excelType = accept.includes(e.name.slice(e.name.lastIndexOf('.')));
-	console.log(excelType);
 	if (!excelSize || !excelType) {
 		setTimeout(() => {
 			ElNotification({
@@ -231,16 +236,23 @@ const onChange = (e) => {
 		uploadRef.value.clearFiles();
 		return;
 	}
-	ElNotification({
+	/*	ElNotification({
 		title: '温馨提示',
 		message: '文件上传成功！',
 		type: 'success',
-	});
+	});*/
 	formData.value[prop.fileField] = e.raw;
 	fileName.value = e.name;
 	uploadRef.value.clearFiles();
 };
 const upload = async () => {
+	let valid;
+	try {
+		valid = await formRef.value.validate();
+	} catch (e) {
+		valid = false;
+	}
+	if (!valid) return false;
 	let formDataObject = new FormData();
 	for (let key in formData.value) {
 		formDataObject.append(key, formData.value[key]);
@@ -255,11 +267,17 @@ const upload = async () => {
 			},
 			data: formDataObject,
 		});
+		state.upload.data = data;
+		if (prop.successfulDialog) {
+			state.successVisible = true;
+		}
+		state.upload.open = false;
 	} catch (error) {
 		console.log(error);
 		// onError(error as any);
 	}
 };
+const goToBatchManagement = () => {};
 /**
  * 上传失败事件处理
  */
@@ -308,9 +326,11 @@ const submitFileForm = () => {
 /**
  * 显示上传文件对话框，并清除上传信息
  */
-const show = () => {
+const openDialog = () => {
 	state.upload.isUploading = false;
 	state.upload.open = true;
+	fileName.value = '';
+	initForms();
 };
 
 /**
@@ -324,8 +344,16 @@ const headers = computed(() => {
 });
 // 暴露变量
 defineExpose({
-	show,
+	openDialog,
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-form {
+	&.el-form--inline {
+		:deep(.el-form-item) {
+			vertical-align: top;
+		}
+	}
+}
+</style>

@@ -23,6 +23,7 @@ export default {
 		cancelButtonText: '取消',
 		download: '下载',
 		distribution: '分配',
+		goToBatchManagement: '前往批次管理',
 	},
 	message: {
 		box: {
