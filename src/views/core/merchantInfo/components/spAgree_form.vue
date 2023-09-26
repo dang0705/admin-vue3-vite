@@ -141,9 +141,9 @@ const form = reactive({
 
 // 定义校验规则
 const dataRules = ref({
-	merchantId: [{ required: true, message: '商户id不能为空', trigger: 'blur' }],
+	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
 	agreementName: [{ required: true, message: '服务协议名称不能为空', trigger: 'blur' }],
-	spId: [{ required: true, message: '服务商id不能为空', trigger: 'blur' }],
+	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
 	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
 	feeCalculationMethod: [{ required: true, message: '服务费计算方式不能为空', trigger: 'blur' }],

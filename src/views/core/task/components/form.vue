@@ -4,7 +4,7 @@
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="140px" formDialogRef v-loading="loading">
 			<div>
 				<Divider v-if="curStep == 2" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
@@ -45,7 +45,8 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
-						<el-form-item label="任务类型" prop="taskTypeFirst">
+						<div style="min-width: 140px" class="com_label">任务类型</div>
+						<el-form-item label-width="0" prop="taskTypeFirst">
 							<el-select
 								:disabled="self_disabled"
 								@change="handleTaskTypeLevel1"
@@ -57,7 +58,7 @@
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 							</el-select>
 						</el-form-item>
-						<el-form-item prop="taskTypeSecond" style="margin-left: 12px">
+						<el-form-item prop="taskTypeSecond" label-width="0" style="margin-left: 12px; flex-shrink: 1">
 							<el-select :disabled="self_disabled" placeholder="二级分类" class="w100" clearable v-model="form.taskTypeSecond">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
 							</el-select>
@@ -349,8 +350,8 @@ const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 
 const dataRules = ref({
 	taskNo: [{ required: true, message: '任务编号不能为空', trigger: 'blur' }],
 	taskName: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
-	merchantId: [{ required: true, message: '客户id不能为空', trigger: 'blur' }],
-	spId: [{ required: true, message: '服务商id不能为空', trigger: 'blur' }],
+	merchantId: [{ required: true, message: '客户不能为空', trigger: 'blur' }],
+	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '任务状态不能为空', trigger: 'blur' }],
 	auditStatus: [{ required: true, message: '审核状态不能为空', trigger: 'blur' }],
 	serviceContract: [{ required: true, message: '服务协议不能为空', trigger: 'blur' }],
