@@ -46,11 +46,10 @@ export function stopObj(ids?: Object) {
 		data: ids,
 	});
 }
-export function getSpInfoList(obj?: Object) {
+export function getSpInfoList(type = 'platform') {
 	return request({
-		url: '/core/spInfo/list',
+		url: type === 'platform' ? '/core/spInfo/listAll' : '/core/spInfo/list',
 		method: 'get',
-		data: obj,
 	});
 }
 

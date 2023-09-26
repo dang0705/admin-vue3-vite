@@ -45,7 +45,10 @@ app.component('UploadFile', UploadFile);
 app.component('UploadImg', UploadImg);
 app.component('Divider', Divider);
 app.component('FormView', FormView);
-
+app.component(
+	'SpSelect',
+	defineAsyncComponent(() => import('/@/components/forms-control/sp-select.vue'))
+);
 // app.component(
 // 	'UploadFile',
 // 	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))

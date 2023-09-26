@@ -16,9 +16,7 @@
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
-						<el-select :placeholder="$t('merchantInfo.inputSpListTip')" clearable v-model="state.queryForm.spId">
-							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
-						</el-select>
+						<sp-select />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
@@ -114,6 +112,7 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, stopObj, getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+import SpSelect from '/@/components/forms-control/sp-select.vue';
 
 // 定义变量内容
 const router = useRouter();
@@ -224,13 +223,4 @@ const setStopObj = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
-
-const getmerchantInfoData = () => {
-	// 获取数据
-	getSpInfoList().then((res: any) => {
-		spinfoList.value = res.data || [];
-	});
-};
-
-getmerchantInfoData();
 </script>
