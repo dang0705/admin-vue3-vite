@@ -75,13 +75,13 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="身份证正面" prop="undertakerPortrait">
-						<!-- <UploadFile :type="businessType" v-model="form.undertakerPortrait" disabled /> -->
+						<UploadFile :type="businessType" v-model="form.undertakerPortrait" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="身份证反面" prop="undertakerNationalEmblem">
-						<!-- <UploadFile :type="businessType" v-model="form.undertakerNationalEmblem" disabled /> -->
+						<UploadFile :type="businessType" v-model="form.undertakerNationalEmblem" disabled />
 					</el-form-item>
 				</el-col>
 			</el-row>
@@ -122,8 +122,8 @@ const form = reactive({
 	undertakerEducation: 0,
 	undertakerEducationName: '',
 	workTime: '',
-	undertakerPortrait: '',
-	undertakerNationalEmblem: '',
+	undertakerPortrait: [],
+	undertakerNationalEmblem: [],
 	isAuthentication: '',
 	bankNumber: '',
 	bankName: '',
@@ -136,20 +136,19 @@ const dataRules = ref({
 	undertakerName: [{ required: true, message: '承接人姓名不能为空', trigger: 'blur' }],
 	undertakerCard: [{ required: true, message: '承接人身份证号不能为空', trigger: 'blur' }],
 	undertakerPhone: [{ required: true, message: '承接人手机号不能为空', trigger: 'blur' }],
-	undertakerSex: [{ required: true, message: '承接人性别 0:男,1:女不能为空', trigger: 'blur' }],
+	undertakerSex: [{ required: true, message: '承接人性别不能为空', trigger: 'blur' }],
 	undertakerAddress: [{ required: true, message: '承接人家庭住址不能为空', trigger: 'blur' }],
-	undertakerClan: [{ required: true, message: '承接人 民族 id不能为空', trigger: 'blur' }],
 	undertakerClanName: [{ required: true, message: '承接人 民族 名称不能为空', trigger: 'blur' }],
 	undertakerEducation: [{ required: true, message: '承接人学历不能为空', trigger: 'blur' }],
 	undertakerEducationName: [{ required: true, message: '承接人 学历 名称不能为空', trigger: 'blur' }],
 	workTime: [{ required: true, message: '参加工作日期不能为空', trigger: 'blur' }],
 	undertakerPortrait: [{ required: true, message: '承接人身份证正面不能为空', trigger: 'blur' }],
 	undertakerNationalEmblem: [{ required: true, message: '承接人身份证国徽面不能为空', trigger: 'blur' }],
-	isAuthentication: [{ required: true, message: '是否实名认证,0: 未认证,1:已认证不能为空', trigger: 'blur' }],
+	isAuthentication: [{ required: true, message: '是否实名认证不能为空', trigger: 'blur' }],
 	bankNumber: [{ required: true, message: '银行卡号不能为空', trigger: 'blur' }],
 	bankName: [{ required: true, message: '银行名称不能为空', trigger: 'blur' }],
 	bankAddress: [{ required: true, message: '银行开户地址不能为空', trigger: 'blur' }],
-	isBankFourEssentialFactor: [{ required: true, message: '是否验证银行四要素,0 否, 1:是不能为空', trigger: 'blur' }],
+	isBankFourEssentialFactor: [{ required: true, message: '是否验证银行四要素不能为空', trigger: 'blur' }],
 });
 
 // 打开弹窗
