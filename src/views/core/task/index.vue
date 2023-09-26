@@ -85,7 +85,7 @@
 				<el-table-column prop="measuringUnit" label="计量单位" show-overflow-tooltip />
 				<el-table-column prop="userCount" label="需要人数" show-overflow-tooltip />
 
-				<el-table-column prop="status" label="状态" show-overflow-tooltip />
+				<el-table-column prop="statusStr" min-width="100px" label="状态" show-overflow-tooltip />
 				<!-- <el-table-column prop="auditStatus" label="审核状态" show-overflow-tooltip />
 				<el-table-column prop="serviceContract" label="服务协议" show-overflow-tooltip />
 				<el-table-column prop="address" label="工作地址" show-overflow-tooltip />
@@ -101,6 +101,7 @@
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('edit', scope.row.id)">编辑</el-button>
+						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_exam'" @click="formDialogRef.openDialog(scope.row.id)">审核</el-button>
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 					</template>
 				</el-table-column>
@@ -109,19 +110,19 @@
 		</div>
 
 		<!-- 编辑、新增  -->
-		<!-- <form-dialog ref="formDialogRef" @refresh="getDataList(false)" /> -->
+		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
 	</div>
 </template>
 
 <script setup lang="ts" name="systemTask">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/task';
+import { fetchList, delObjs, putAuditTask } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 
 // 引入组件
-// const FormDialog = defineAsyncComponent(() => import('./components/form.vue'));
+const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 // 定义查询字典
 
 // 定义变量内容

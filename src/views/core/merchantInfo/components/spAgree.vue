@@ -2,17 +2,17 @@
 	<el-row shadow="hover" v-show="showSearch" class="ml10">
 		<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 			<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.spId">
+				<el-select placeholder="请选择" clearable v-model="state.queryForm.spId">
 					<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 				</el-select>
 			</el-form-item>
 			<el-form-item :label="$t('merchantInfo.feeCalculationMethod')" prop="feeCalculationMethod">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.feeCalculationMethod">
+				<el-select placeholder="请选择" clearable v-model="state.queryForm.feeCalculationMethod">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
 				</el-select>
 			</el-form-item>
 			<el-form-item :label="$t('merchantInfo.isUploadAchievement')" prop="isUploadAchievement">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.isUploadAchievement">
+				<el-select placeholder="请选择" clearable v-model="state.queryForm.isUploadAchievement">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 				</el-select>
 			</el-form-item>

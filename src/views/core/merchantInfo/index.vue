@@ -6,12 +6,12 @@
 					<!-- <el-row :gutter="24"> -->
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-						<el-input :placeholder="$t('merchantInfo.inputMerchantNameTip')" clearable v-model="state.queryForm.merchantName" />
+						<el-input placeholder="请输入" clearable v-model="state.queryForm.merchantName" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input :placeholder="$t('merchantInfo.inputSocialCreditCodeTip')" clearable v-model="state.queryForm.socialCreditCode" />
+						<el-input placeholder="请输入" clearable v-model="state.queryForm.socialCreditCode" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
@@ -21,7 +21,7 @@
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.status')" prop="status">
-						<el-select :placeholder="$t('merchantInfo.inputStatusTip')" clearable v-model="state.queryForm.status">
+						<el-select placeholder="请选择" clearable v-model="state.queryForm.status">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 						</el-select>
 					</el-form-item>

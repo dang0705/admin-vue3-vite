@@ -2,7 +2,7 @@
 	<el-row shadow="hover" v-show="showSearch" class="ml10">
 		<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 			<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.spList">
+				<el-select placeholder="请选择" clearable v-model="state.queryForm.spList">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 				</el-select>
 			</el-form-item>

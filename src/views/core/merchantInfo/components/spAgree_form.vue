@@ -24,7 +24,7 @@
 				</el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
-						<el-select :disabled="isDetail" :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isUploadAchievement">
+						<el-select :disabled="isDetail" placeholder="请选择" clearable v-model="form.isUploadAchievement">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
@@ -40,7 +40,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开票类目" prop="invoiceCategory">
-						<el-select :disabled="isDetail" clearable v-model="form.invoiceCategory">
+						<el-select multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
 						</el-select>
 					</el-form-item>
@@ -48,7 +48,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求电子签署" prop="isElectronicSignature">
-						<el-select :disabled="isDetail" :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="form.isElectronicSignature">
+						<el-select :disabled="isDetail" placeholder="请选择" clearable v-model="form.isElectronicSignature">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
