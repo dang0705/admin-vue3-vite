@@ -3,11 +3,11 @@
 	<el-dialog :title="prop.title" v-model="open" :close-on-click-modal="false" draggable>
 		<template v-if="tempUrl">
 			<a v-if="templateOnFront" class="color-primary" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
-			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp"
-				>{{ $t('excel.downloadTemplate') }}
+			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp">
+				{{ $t('excel.downloadTemplate') }}
 			</el-link>
 		</template>
-		<el-form ref="formRef" :label-width="formLabelWidth">
+		<el-form ref="formRef" :label-width="formLabelWidth" :rules="overallRules">
 			<slot :name="forms">
 				<el-form-item v-for="form in forms" :key="form.key" :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 					<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
@@ -23,24 +23,23 @@
 							/>
 						</template>
 						<template v-if="form.control === 'el-radio-group'">
-							<el-radio v-for="item in formOptions[form.key]"></el-radio>
-							<!--							<el-radio v-for="item in formOptions[form.key]" :key="item[form.props.value]" :label="item[form.props.value || 'value']">{{
-								item[form.props.label || 'label']
-							}}</el-radio>-->
+							<el-radio v-for="item in formOptions[form.key]" :key="item[props.value] || item.value" :label="item[props.value] || item.value">{{
+								item[props.label] || item.label
+							}}</el-radio>
 						</template>
 					</component>
 				</el-form-item>
 			</slot>
-			<el-form-item :prop="forms[prop.fileField]" :label="`${uploadLabel}：`">
+			<el-form-item :prop="forms[prop.fileField]" :label="`${uploadLabel}：`" :rules="excelRules">
 				<el-upload
 					action="#"
-					accept=".xlsx, .xls"
 					drag
 					ref="uploadRef"
+					:id="uuid"
+					:accept="accept.join(',')"
 					:auto-upload="false"
 					:limit="1"
 					:show-file-list="false"
-					:http-request="upload"
 					:headers="headers"
 					:disabled="state.upload.isUploading"
 					:on-progress="handleFileUploadProgress"
@@ -57,7 +56,7 @@
 						<div class="el-upload__tip text-center">
 							<span>{{ $t('excel.fileFormat') }}</span>
 						</div>
-						<span v-if="fileName" v-text="`文件名称：${fileName}`" />
+						<span v-if="fileName" class="text-primary" v-text="`文件名称：${fileName}`" />
 					</template>
 				</el-upload>
 			</el-form-item>
@@ -84,11 +83,13 @@
 
 <script setup lang="ts" name="upload-excel">
 import { useMessage } from '/@/hooks/message';
-import other from '/@/utils/other';
+import other, { generateUUID } from '/@/utils/other';
 import { Session } from '/@/utils/storage';
 import request from '/@/utils/request';
 import { ElNotification, UploadProps, UploadRequestOptions } from 'element-plus';
+import { nextTick } from 'vue';
 
+const uuid = ref('id-' + generateUUID());
 const emit = defineEmits(['sizeChange', 'refreshDataList']);
 const prop = defineProps({
 	url: {
@@ -132,6 +133,18 @@ const prop = defineProps({
 		type: String,
 		default: '',
 	},
+	props: {
+		type: Object,
+		default: () => ({ label: 'label', value: 'value' }),
+	},
+	required: {
+		type: Boolean,
+		default: true,
+	},
+	rules: {
+		type: Array,
+		default: () => [],
+	},
 });
 
 const uploadRef = ref();
@@ -148,25 +161,35 @@ const state = reactive({
 		isUploading: false,
 	},
 });
+const accept = ['.xlsx', '.xls'];
 const formRef = ref();
 const formData = ref({});
 const formOptions = reactive({});
 
+const overallRules = computed(() => [...prop.rules, ...excelRules.value]);
+const excelRules = ref([
+	{
+		required: prop.required,
+		...(prop.required ? { trigger: 'change' } : {}),
+	},
+]);
 // 控制表单控件的对象结构
 interface Form {
-	control: string;
-	key: string;
-	optionUrl?: string;
-	props: object;
-	options?: [];
+	control: string; // 控件名称
+	key: string; // 后端字段
+	optionUrl?: string; // 下拉/多选/单选组件的后端接口
+	props: object; // element ui 控件对应的props
+	options?: []; // 下拉/多选/单选组件的子元素数组
+	value?: unknown; // 组件默认数据
 }
-const getOptions = async () => {
+const initForms = async () => {
 	for (let i = 0; i < prop.forms.length; i++) {
-		const item: Form = prop.forms[i];
+		const item = prop.forms[i] as Form;
+		item.value !== undefined && (formData.value[item.key] = item.value);
 		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
 	}
 };
-getOptions();
+initForms();
 const open = computed(() => prop.forceOpen || state.dialog.isShowDialog);
 /**
  * 下载模板文件
@@ -183,42 +206,47 @@ const handleFileUploadProgress = () => {
 };
 let fileName = ref('');
 
-let file: any = null;
 const onChange = (e) => {
-	const imgSize = e.size / 1024 / 1024 < prop.fileSize;
-	if (!imgSize) {
+	const excelSize = e.size / 1024 / 1024 < prop.fileSize;
+	const excelType = accept.includes(e.name.slice(e.name.lastIndexOf('.')));
+	console.log(excelType);
+	if (!excelSize || !excelType) {
 		setTimeout(() => {
 			ElNotification({
 				title: '温馨提示',
-				message: `上传图片大小不能超过 ${prop.fileSize}M！`,
+				message: !excelSize ? `上传图片大小不能超过 ${prop.fileSize}M！` : `文件必须是${accept.join('和')}后缀`,
 				type: 'warning',
 			});
 		}, 0);
+		formData.value[prop.fileField] = null;
+		fileName.value = null;
+		uploadRef.value.clearFiles();
 		return;
 	}
+	ElNotification({
+		title: '温馨提示',
+		message: '文件上传成功！',
+		type: 'success',
+	});
 	formData.value[prop.fileField] = e.raw;
 	fileName.value = e.name;
-	file = e.raw;
+	uploadRef.value.clearFiles();
 };
 const upload = async () => {
 	let formDataObject = new FormData();
-	formDataObject.append('file', file);
 	for (let key in formData.value) {
 		formDataObject.append(key, formData.value[key]);
 	}
-	formDataObject.append('businessType', '10');
-
 	try {
 		const { data } = await request({
 			url: prop.uploadFileUrl,
 			method: 'post',
 			headers: {
 				'Content-Type': 'multipart/form-data',
+				...headers.value,
 			},
 			data: formDataObject,
 		});
-		// 调用 el-form 内部的校验方法（可自动校验）
-		fileName.value = file.name;
 	} catch (error) {
 		console.log(error);
 		// onError(error as any);
@@ -286,7 +314,6 @@ const headers = computed(() => {
 		'TENANT-ID': Session.getTenant(),
 	};
 });
-
 // 暴露变量
 defineExpose({
 	show,

@@ -15,6 +15,13 @@ const forms = [
 				value: 0,
 			},
 		],
+		rules: [
+			{
+				required: true,
+				validator: (value: number) => value !== undefined,
+			},
+		],
+		value: 1,
 	},
 ];
 </script>
