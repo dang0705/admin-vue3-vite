@@ -119,13 +119,28 @@
 						<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 							>查看</el-button
 						>
-						<el-button icon="folder-add" text type="primary" v-auth="'hro_undertakerInfo_join'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="folder-add"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_join'"
+							@click="editDialogRef.openDialog(scope.row.id, 'addSp')"
 							>加入服务商</el-button
 						>
-						<el-button icon="Upload" text type="primary" v-auth="'hro_undertakerInfo_uploadCard'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="Upload"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_uploadCard'"
+							@click="editDialogRef.openDialog(scope.row.id, 'uploadCard')"
 							>上传身份证</el-button
 						>
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerInfo_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'hro_undertakerInfo_edit'"
+							@click="editDialogRef.openDialog(scope.row.id, 'editPhone', scope.row.undertakerPhone)"
 							>修改手机号码</el-button
 						>
 					</template>
@@ -138,6 +153,8 @@
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
 		<!-- 查看 -->
 		<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
+		<!-- 加入服务商 上传身份证 修改手机号 -->
+		<edit-dialog ref="editDialogRef" @refresh="getDataList(false)" />
 	</div>
 </template>
 
@@ -152,12 +169,14 @@ import { useI18n } from 'vue-i18n';
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
+const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
 const { t } = useI18n();
 // 定义查询字典
 const { yes_no_type } = useDict('yes_no_type');
 // 定义变量内容
 const formDialogRef = ref();
 const detailDialogRef = ref();
+const editDialogRef = ref();
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);

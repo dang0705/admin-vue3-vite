@@ -38,3 +38,30 @@ export function putObj(obj?: Object) {
 		data: obj,
 	});
 }
+
+// 承接人加入服务商POST
+export function addSp(obj?: Object) {
+	return request({
+		url: '/core/undertakerInfo/saveUndertakerSp',
+		method: 'post',
+		data: obj,
+	});
+}
+
+// 上传 承接人身份证件
+export function uploadCard(obj?: Object) {
+	return request({
+		url: '/core/undertakerInfo/uploadCardImage',
+		method: 'post',
+		data: obj,
+	});
+}
+
+// 承接人手机号码修改
+export function updateMobile(obj?: Object) {
+	return request({
+		url: '/core/undertakerInfo/updateMobile',
+		method: 'post',
+		data: obj,
+	});
+}
