@@ -10,7 +10,13 @@
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="客户" prop="merchantId">
-							<el-select @change="getAgreeList" :disabled="self_disabled" placeholder="请选择" clearable v-model="form.merchantId">
+							<el-select
+								@change="getAgreeList(), (form.serviceContractId = '')"
+								:disabled="self_disabled"
+								placeholder="请选择"
+								clearable
+								v-model="form.merchantId"
+							>
 								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 							</el-select>
 						</el-form-item>
@@ -18,7 +24,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商" prop="spId">
-							<el-select @change="getAgreeList" :disabled="self_disabled" placeholder="请选择" clearable v-model="form.spId">
+							<el-select
+								@change="getAgreeList(), (form.serviceContractId = '')"
+								:disabled="self_disabled"
+								placeholder="请选择"
+								clearable
+								v-model="form.spId"
+							>
 								<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 							</el-select>
 						</el-form-item>
@@ -211,10 +223,22 @@
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 140px" class="com_label">年龄要求</div>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.requiredAgeMin" placeholder="请输入"></el-input-number>
+							<el-input-number
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMin"
+								placeholder="请输入"
+							></el-input-number>
 						</el-form-item>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.requiredAgeMax" placeholder="请输入"></el-input-number>
+							<el-input-number
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMax"
+								placeholder="请输入"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
@@ -376,6 +400,7 @@ const dataRules = ref({
 	userCount: [{ required: true, message: '需要人数不能为空', trigger: 'blur' }],
 	province: [{ required: true, message: '省份不能为空', trigger: 'blur' }],
 	city: [{ required: true, message: '城市不能为空', trigger: 'blur' }],
+	areaDatas: [{ required: true, message: '所在地区不能为空', trigger: 'blur' }],
 	county: [{ required: true, message: '区县不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '工作地址不能为空', trigger: 'blur' }],
 	startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
@@ -405,6 +430,7 @@ const onSubmit = async () => {
 	try {
 		loading.value = true;
 		form.taskId ? await putObj(form) : await addObj(form);
+		// 您已成功创建指派任务"小白楼保洁服务"！
 		useMessage().success(form.taskId ? '修改成功' : '添加成功');
 		router.push({
 			path: '/core/task/index',
