@@ -5,31 +5,32 @@
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<!-- <el-row :gutter="24"> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item label="任务编号" prop="merchantName">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.merchantName" />
+					<el-form-item label="任务编号" prop="id">
+						<el-input placeholder="请输入" clearable v-model="state.queryForm.id" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item label="任务名称" prop="socialCreditCode">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.socialCreditCode" />
+					<el-form-item label="任务名称" prop="taskName">
+						<el-input placeholder="请输入" clearable v-model="state.queryForm.taskName" />
 					</el-form-item>
 					<!-- </el-col> -->
 					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item label="任务类型" prop="spId">
+					<!-- 伪代码 -->
+					<!-- <el-form-item label="任务类型" prop="taskTypeFirst">
+						<el-select placeholder="请选择" clearable v-model="state.queryForm.taskTypeFirst">
+							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
+						</el-select>
+					</el-form-item> -->
+					<!-- </el-col> -->
+					<!-- <el-col :md="8" :sm="24"> -->
+					<el-form-item label="服务商" prop="spId">
 						<el-select placeholder="请选择" clearable v-model="state.queryForm.spId">
 							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 						</el-select>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
-					<el-form-item label="服务商" prop="status1">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.status1">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-						</el-select>
-					</el-form-item>
-					<el-form-item label="客户 " prop="status">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.status">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
+					<el-form-item label="客户 " prop="merchantId">
+						<el-select placeholder="请选择" clearable v-model="state.queryForm.merchantId">
+							<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 						</el-select>
 					</el-form-item>
 					<!-- </el-col> -->
@@ -75,8 +76,8 @@
 				<!-- taskTypeSecond -->
 				<el-table-column prop="startTime" label="开始时间" show-overflow-tooltip />
 				<el-table-column prop="endTime" label="结束时间" show-overflow-tooltip />
-				<el-table-column prop="spId" label="服务商" show-overflow-tooltip />
-				<el-table-column prop="merchantId" label="客户" show-overflow-tooltip />
+				<el-table-column prop="spName" label="服务商" show-overflow-tooltip />
+				<el-table-column prop="merchantName" label="客户" show-overflow-tooltip />
 				<el-table-column prop="province" label="工作地区" show-overflow-tooltip />
 				<!-- <el-table-column prop="city" label="城市" show-overflow-tooltip /> -->
 				<!-- <el-table-column prop="county" label="区县" show-overflow-tooltip /> -->
@@ -87,8 +88,6 @@
 				<el-table-column prop="status" label="状态" show-overflow-tooltip />
 				<!-- <el-table-column prop="auditStatus" label="审核状态" show-overflow-tooltip />
 				<el-table-column prop="serviceContract" label="服务协议" show-overflow-tooltip />
-				<el-table-column prop="taskTypeFirst" label="任务类型，一级分类" show-overflow-tooltip />
-				<el-table-column prop="taskTypeSecond" label="任务类型，二级分类" show-overflow-tooltip />
 				<el-table-column prop="address" label="工作地址" show-overflow-tooltip />
 				<el-table-column prop="count" label="发包数量" show-overflow-tooltip />
 				<el-table-column prop="taskDesc" label="任务描述" show-overflow-tooltip />
@@ -119,6 +118,7 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 
 // 引入组件
 // const FormDialog = defineAsyncComponent(() => import('./components/form.vue'));
@@ -129,6 +129,8 @@ const router = useRouter();
 
 // 定义变量内容
 const formDialogRef = ref();
+const merchantList = ref([]);
+const spinfoList = ref([]);
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
@@ -207,4 +209,14 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
+
+// 获取数据
+getMerchantInfoList().then((res: any) => {
+	merchantList.value = res.data || [];
+});
+
+// 获取数据
+getSpInfoList().then((res: any) => {
+	spinfoList.value = res.data || [];
+});
 </script>

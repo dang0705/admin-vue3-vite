@@ -3,29 +3,41 @@
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
-		<el-transfer
-			class="w-full flex justify-between items-center"
-			v-model="selected"
-			filterable
-			:filter-method="filterMethod"
-			:props="{ key: 'id' }"
-			:render-content="renderFunc"
-			:left-default-checked="[2, 3]"
-			:right-default-checked="[1]"
-			:titles="titles"
-			:button-texts="buttonTexts"
-			:data="data"
-		>
-			<template v-for="(_, slot) in $slots" #[slot]="option">
-				<slot :name="slot" v-bind="option" />
+		<FormView :forms="forms" v-model="formData">
+			<template v-for="(_, slot) in $slots" #[slot]>
+				<slot :name="slot" />
 			</template>
-			<template #default="{ option }" v-if="!hasDefaultSlot">
-				<ul class="flex justify-between px-3">
-					<li>{{ option.values[0].value }}</li>
-					<li v-if="option.values[1]">{{ option.values[1].value }}</li>
-				</ul>
+			<template #after-forms>
+				<el-form-item :prop="mainField" :class="{ 'no-label': !mainLabel }">
+					<template #label v-if="mainLabel">
+						<label v-text="`${mainLabel}：`" />
+					</template>
+					<el-transfer
+						class="w-full flex justify-between items-center"
+						v-model="selected"
+						filterable
+						:filter-method="filterMethod"
+						:props="{ key: 'id' }"
+						:render-content="renderFunc"
+						:left-default-checked="[2, 3]"
+						:right-default-checked="[1]"
+						:titles="titles"
+						:button-texts="buttonTexts"
+						:data="data"
+					>
+						<template v-for="(_, slot) in $slots" #[slot]="option">
+							<slot :name="slot" v-bind="option" />
+						</template>
+						<template #default="{ option }" v-if="!hasDefaultSlot">
+							<ul class="flex justify-between px-3">
+								<li>{{ option.values[0].value }}</li>
+								<li v-if="option.values[1]">{{ option.values[1].value }}</li>
+							</ul>
+						</template>
+					</el-transfer>
+				</el-form-item>
 			</template>
-		</el-transfer>
+		</FormView>
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
@@ -40,6 +52,7 @@
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
+import FormView from '/@/components/Form-view.vue';
 
 const props = defineProps({
 	title: {
@@ -85,6 +98,18 @@ const props = defineProps({
 		type: Function,
 		default: (query: string, item: Data) => item.values.some(({ value }) => value?.includes(query.toLowerCase())),
 	},
+	forms: {
+		type: Array,
+		default: () => [],
+	},
+	mainField: {
+		type: String,
+		default: '',
+	},
+	mainLabel: {
+		type: String,
+		default: '',
+	},
 });
 
 interface Data {
@@ -102,6 +127,8 @@ const data = ref<Data[]>([]);
 const selectedCache = ref<(string | number)[]>([]);
 const selected = ref<(string | number)[]>([]);
 const hasDefaultSlot = !!useSlots().default;
+
+const formData = ref({});
 
 const { t } = useI18n();
 
@@ -168,14 +195,6 @@ const onSubmit = async () => {
 	} finally {
 		loading.value = false;
 	}
-	/*	permissionUpd(state.roleId, menuIds)
-		.then(() => {
-			state.dialog.isShowDialog = false;
-			useMessage().success(t('common.editSuccessText'));
-		})
-		.finally(() => {
-			loading.value = false;
-		});*/
 };
 
 // 暴露变量
@@ -192,6 +211,11 @@ defineExpose({
 	button {
 		margin: 10px 0 0 0;
 		width: 100%;
+	}
+}
+::v-deep(.no-label) {
+	.el-form-item__content {
+		margin-left: 0 !important;
 	}
 }
 </style>

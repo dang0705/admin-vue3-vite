@@ -1,24 +1,23 @@
 .layout-container {
 	.layout-padding-view {
-		&.layout-padding-auto{
+		&.layout-padding-auto {
 			padding: 20px 10px;
 		}
 		.el-form {
 			display: flex;
 			width: 100%;
-			
+			@apply xl:flex-nowrap flex-wrap;
 			.el-form-item {
 				&:not(:nth-last-of-type(1)) {
 					.el-form-item__label {
 						padding-right: 0;
-						
+
 						&:after {
-							content: '：'
+							content: '：';
 						}
 					}
-					
 				}
-				
+
 				&:nth-last-of-type(1) {
 					flex-shrink: 0;
 					margin-right: 0;

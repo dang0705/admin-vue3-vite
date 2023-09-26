@@ -4,11 +4,9 @@
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
-						新 增
+						手动上传合同
 					</el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete(selectObjs)">
-						删除
-					</el-button>
+					<el-button plain icon="Delete" type="primary" v-auth="'hro_undertakingContract_export'"> 批量电子签署 </el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'hro_undertakingContract_export'"

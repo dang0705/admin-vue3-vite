@@ -239,8 +239,6 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
 });
 
-const readExcel = () => console.log(addUnderTakerRef);
-
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 
