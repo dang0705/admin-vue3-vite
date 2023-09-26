@@ -1,12 +1,15 @@
 <!-- excel 导入组件 -->
 <template>
-	<el-dialog :title="prop.title" v-model="open" :close-on-click-modal="false" draggable>
-		<template v-if="tempUrl">
+	<el-dialog :title="title" v-model="open" :close-on-click-modal="false" draggable>
+		<div class="guidance mb10">
+			<p v-html="guidance" />
+		</div>
+		<div v-if="tempUrl" class="mb10">
 			<a v-if="templateOnFront" class="color-primary" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
 			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp">
 				{{ $t('excel.downloadTemplate') }}
 			</el-link>
-		</template>
+		</div>
 		<el-form ref="formRef" :label-width="formLabelWidth" :rules="overallRules">
 			<slot :name="forms">
 				<el-form-item v-for="form in forms" :key="form.key" :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
@@ -86,9 +89,7 @@ import { useMessage } from '/@/hooks/message';
 import other, { generateUUID } from '/@/utils/other';
 import { Session } from '/@/utils/storage';
 import request from '/@/utils/request';
-import { ElNotification, UploadProps, UploadRequestOptions } from 'element-plus';
-import { nextTick } from 'vue';
-
+import { ElNotification } from 'element-plus';
 const uuid = ref('id-' + generateUUID());
 const emit = defineEmits(['sizeChange', 'refreshDataList']);
 const prop = defineProps({
@@ -98,7 +99,7 @@ const prop = defineProps({
 	title: {
 		type: String,
 	},
-	uploadFileUrl: {
+	uploadUrl: {
 		type: String,
 		default: '/docs/sys-file/upload',
 	},
@@ -144,6 +145,13 @@ const prop = defineProps({
 	rules: {
 		type: Array,
 		default: () => [],
+	},
+	/**
+	 * 指导文案, 处于对话框第一行
+	 */
+	guidance: {
+		type: String,
+		default: '',
 	},
 });
 
@@ -239,7 +247,7 @@ const upload = async () => {
 	}
 	try {
 		const { data } = await request({
-			url: prop.uploadFileUrl,
+			url: prop.uploadUrl,
 			method: 'post',
 			headers: {
 				'Content-Type': 'multipart/form-data',
