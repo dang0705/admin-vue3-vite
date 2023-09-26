@@ -40,7 +40,9 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开票类目" prop="invoiceCategory">
-						<el-input :disabled="isDetail" v-model="form.invoiceCategory" placeholder="请输入" />
+						<el-select :disabled="isDetail" clearable v-model="form.invoiceCategory">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
+						</el-select>
 					</el-form-item>
 				</el-col>
 
@@ -105,7 +107,7 @@ import { getObj, addObj, putObj, userDropList } from '/@/api/core/merchantServic
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
-const { is_need, fee_calculation_method } = useDict('is_need', 'fee_calculation_method');
+const { is_need, fee_calculation_method, invoice_category } = useDict('is_need', 'fee_calculation_method', 'invoice_category');
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 const businessType = uploadBusinessType.merchant;
