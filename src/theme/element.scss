@@ -437,7 +437,7 @@ svg {
 	box-sizing: border-box;
 	white-space: nowrap;
 	text-align: right;
-	&::before {
+	&.require::before {
 		content: '*';
 		color: var(--el-color-danger);
 		margin-right: 4px;

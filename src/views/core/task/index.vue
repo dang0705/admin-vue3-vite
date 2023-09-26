@@ -68,7 +68,7 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column prop="taskNo" label="任务编号" show-overflow-tooltip />
+				<el-table-column prop="id" label="任务编号" show-overflow-tooltip />
 				<el-table-column prop="taskName" label="任务名称" show-overflow-tooltip />
 				<el-table-column prop="undertakeType" label="任务承接方式" show-overflow-tooltip />
 				<el-table-column prop="taskTypeFirst" label="任务类型" show-overflow-tooltip />
@@ -98,9 +98,10 @@
 				<el-table-column prop="checkOutTime" label="签退时间" show-overflow-tooltip />
 				<el-table-column prop="businessMerchant" label="业务商户" show-overflow-tooltip />
 				<el-table-column prop="businessPhone" label="业务商户手机号" show-overflow-tooltip /> -->
-				<el-table-column label="操作" width="150">
+				<el-table-column label="操作" width="250" fixed="right">
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="formDialogRef.openDialog(scope.row.id)">编辑</el-button>
+						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
+						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('edit', scope.row.id)">编辑</el-button>
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 					</template>
 				</el-table-column>
@@ -164,7 +165,7 @@ const openTask = (type: string, id: number) => {
 			router.push({
 				path: '/core/task/detail',
 				query: {
-					id,
+					taskId: id,
 				},
 			});
 			break;
@@ -172,7 +173,7 @@ const openTask = (type: string, id: number) => {
 			router.push({
 				path: '/core/task/edit',
 				query: {
-					id,
+					taskId: id,
 				},
 			});
 			break;

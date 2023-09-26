@@ -13,7 +13,7 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 160px" class="com_label">行业</div>
+						<div style="min-width: 160px" class="com_label require">行业</div>
 						<el-form-item label-width="0" prop="industryLevel1">
 							<el-select
 								:disabled="isDetail"
@@ -195,7 +195,7 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 160px" class="com_label">{{ $t('merchantInfo.areaCode') }}</div>
+						<div style="min-width: 160px" class="com_label require">{{ $t('merchantInfo.areaCode') }}</div>
 						<el-form-item label-width="0px" prop="areaCode">
 							<el-input :disabled="isDetail" v-model="form.areaCode" placeholder="请输入区号" />
 						</el-form-item>
@@ -422,7 +422,6 @@ const onSubmit = async () => {
 const getmerchantInfoData = (id: string) => {
 	// 获取数据
 	loading.value = true;
-
 	getObj(id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
