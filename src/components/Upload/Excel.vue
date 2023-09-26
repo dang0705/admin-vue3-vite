@@ -13,6 +13,8 @@
 		<el-divider />
 		<form-view
 			:forms="forms"
+			:columns="24"
+			vertical
 			v-model="formData"
 			v-model:valid="valid"
 			v-model:show="state.upload.open"

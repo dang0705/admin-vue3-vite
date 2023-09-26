@@ -1,7 +1,17 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<el-row class="ml10" v-show="showSearch">
+			<form-view
+				ref="queryRef"
+				v-show="showSearch"
+				v-model="state.queryForm"
+				:forms="conditionForms"
+				:on-cancel="resetQuery"
+				:on-submit="getDataList"
+				submit-button-text="查询"
+				cancel-button-text="重置"
+			/>
+			<!--			<el-row class="ml10" v-show="showSearch">
 				<el-form :inline="true" :model="state.queryForm" ref="queryRef">
 					<el-form-item :label="$t('undertakerInfo.undertakerName')" prop="undertakerName">
 						<el-input :placeholder="$t('undertakerInfo.inputUndertakerNameTip')" style="max-width: 180px" v-model="state.queryForm.undertakerName" />
@@ -43,7 +53,7 @@
 						<el-button @click="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
 					</el-form-item>
 				</el-form>
-			</el-row>
+			</el-row>-->
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
@@ -184,6 +194,7 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import FormView from '/@/components/Form-view.vue';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
@@ -191,8 +202,60 @@ const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
 const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
 const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'));
 const { t } = useI18n();
-// 定义查询字典
 const { yes_no_type } = useDict('yes_no_type');
+const conditionForms = ref([
+	{
+		control: 'el-input',
+		key: 'undertakerName',
+		label: t('undertakerInfo.undertakerName'),
+		props: {
+			placeholder: t('undertakerInfo.inputUndertakerNameTip'),
+		},
+	},
+	{
+		control: 'el-input',
+		key: 'undertakerCard',
+		label: t('undertakerInfo.undertakerCard'),
+		props: {
+			placeholder: t('undertakerInfo.inputUndertakerCardTip'),
+		},
+	},
+	{
+		control: 'el-input',
+		key: 'undertakerPhone',
+		label: t('undertakerInfo.undertakerPhone'),
+		props: {
+			placeholder: t('undertakerInfo.inputUndertakerPhoneTip'),
+		},
+	},
+	{
+		control: 'YesOrNo',
+		key: 'isAuthentication',
+		label: t('undertakerInfo.isAuthentication'),
+		props: {
+			placeholder: t('undertakerInfo.inputIsAuthenticationTip'),
+		},
+	},
+	{
+		control: 'YesOrNo',
+		key: 'isSign',
+		label: t('undertakerInfo.isSign'),
+		props: {
+			placeholder: t('undertakerInfo.inputIsSignTip'),
+		},
+	},
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: t('undertakerInfo.spName'),
+	},
+	{
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: t('undertakerInfo.merchantName'),
+	},
+]);
+// 定义查询字典
 // 定义变量内容
 const formDialogRef = ref();
 const detailDialogRef = ref();
@@ -244,8 +307,8 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
+	state.queryForm = {};
 	// 清空搜索条件
-	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();

@@ -46,8 +46,16 @@ app.component('UploadImg', UploadImg);
 app.component('Divider', Divider);
 app.component('FormView', FormView);
 app.component(
+	'YesOrNo',
+	defineAsyncComponent(() => import('/@/components/forms-control/yes-or-no-select.vue'))
+);
+app.component(
 	'SpSelect',
 	defineAsyncComponent(() => import('/@/components/forms-control/sp-select.vue'))
+);
+app.component(
+	'MerchantSelect',
+	defineAsyncComponent(() => import('/@/components/forms-control/merchant-select.vue'))
 );
 // app.component(
 // 	'UploadFile',

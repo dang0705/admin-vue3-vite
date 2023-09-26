@@ -1,12 +1,21 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
+			<form-view
+				v-show="showSearch"
+				v-model="state.queryForm"
+				:forms="conditionForms"
+				:on-cancel="resetQuery"
+				:on-submit="getDataList"
+				submit-button-text="查询"
+				cancel-button-text="重置"
+			/>
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
 						手动上传合同
 					</el-button>
-					<el-button plain icon="Delete" type="primary" v-auth="'hro_undertakingContract_export'"> 批量电子签署 </el-button>
+					<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'"> 批量电子签署 </el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'hro_undertakingContract_export'"
@@ -26,24 +35,26 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column type="selection" width="40" align="center" />
-				<el-table-column type="index" label="#" width="40" />
-				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip />
-				<el-table-column prop="spId" label="服务商id" show-overflow-tooltip />
-				<el-table-column prop="undertakerId" label="承接人ID" show-overflow-tooltip />
-				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip />
-				<el-table-column prop="state" label="签约状态" show-overflow-tooltip />
-				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip />
-				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip />
-				<el-table-column prop="agreementId" label="协议ID(电子签署合同选择的签署模板)" show-overflow-tooltip />
-				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip />
-				<el-table-column prop="contractFile" label="合同文件" show-overflow-tooltip />
-				<el-table-column label="操作" width="150">
+				<el-table-column prop="undertakerName" label="姓名" show-overflow-tooltip width="100" />
+				<el-table-column prop="undertakerCard" label="证件号码" show-overflow-tooltip width="100" />
+				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip width="100" />
+				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100" />
+				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip width="100" />
+				<el-table-column prop="createTime" label="发起签约时间" show-overflow-tooltip width="150" />
+				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip width="150" />
+				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip width="150" />
+				<el-table-column prop="contractEndTime" label="合同终止时间" show-overflow-tooltip width="150" />
+				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100" />
+				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="100" />
+				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="100" />
+				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakingContract_edit'" @click="formDialogRef.openDialog(scope.row.id)"
-							>编辑</el-button
-						>
-						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakingContract_edit'" @click="formDialogRef.openDialog(scope.row.id)">
+							编辑
+						</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([scope.row.id])">
+							删除
+						</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -57,10 +68,43 @@
 
 <script setup lang="ts" name="systemUndertakingContract">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/hro/undertakingContract';
+import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-import { useDict } from '/@/hooks/dict';
 
+const input = 'el-input';
+const conditionForms = [
+	{
+		control: input,
+		key: 'name',
+		label: '姓名',
+	},
+	{
+		control: input,
+		key: 'undertakerCard',
+		label: '证件号码',
+	},
+	{
+		control: input,
+		key: 'undertakerPhone',
+		label: '手机号码',
+	},
+	{
+		control: input,
+		key: 'contractNumber',
+		label: '签约编号',
+	},
+	{
+		control: 'SpSelect',
+		key: 'spName',
+		label: '签约服务商',
+	},
+	{
+		control: 'el-select',
+		key: 'contractType',
+		label: '合同类型',
+		options: [{}],
+	},
+];
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 // 定义查询字典
@@ -88,6 +132,7 @@ const resetQuery = () => {
 	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
+	state.queryForm = {};
 	getDataList();
 };
 
