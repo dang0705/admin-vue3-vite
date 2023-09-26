@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-padding cache overflow-auto formLabelM120">
+	<div class="layout-padding cache overflow-auto">
 		<div class="layout-padding-view">
 			<merchantInfo-form />
 		</div>

@@ -23,8 +23,8 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<el-row v-show="showSearch">
 				<el-form ref="queryRef" :inline="true" :model="state.queryForm" @keyup.enter="getDataList">
-					<el-form-item :label="$t('sysuser.username')" prop="username">
-						<el-input v-model="state.queryForm.username" :placeholder="$t('sysuser.inputUsernameTip')" clearable />
+					<el-form-item :label="$t('sysuser.name')" prop="name">
+						<el-input v-model="state.queryForm.name" :placeholder="$t('sysuser.inputNameTip')" clearable />
 					</el-form-item>
 					<el-form-item :label="$t('sysuser.phone')" prop="phone">
 						<el-input v-model="state.queryForm.phone" :placeholder="$t('sysuser.inputPhoneTip')" clearable />
@@ -40,13 +40,13 @@
 					<el-button v-auth="'sys_user_add'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()">
 						{{ $t('common.addBtn') }}
 					</el-button>
-					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
+					<!--					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
 						{{ $t('common.importBtn') }}
-					</el-button>
+					</el-button>-->
 
-					<el-button plain v-auth="'sys_user_del'" :disabled="multiple" class="ml10" icon="Delete" type="primary" @click="handleDelete(selectObjs)">
+					<!--					<el-button plain v-auth="'sys_user_del'" :disabled="multiple" class="ml10" icon="Delete" type="primary" @click="handleDelete(selectObjs)">
 						{{ $t('common.delBtn') }}
-					</el-button>
+					</el-button>-->
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'sys_user_export'"
@@ -97,10 +97,14 @@
 						<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
 							{{ $t('common.editBtn') }}
 						</el-button>
-						<el-button text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
+						<!--            10 means all-->
+						<el-button v-if="scope.row.merchantAuthScope !== '10'" text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
 							$t('sysuser.distributionMerchant')
 						}}</el-button>
-						<el-button text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{ $t('sysuser.distributionSp') }}</el-button>
+						<!--            10 means all-->
+						<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
+							$t('sysuser.distributionSp')
+						}}</el-button>
 						<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button
@@ -126,9 +130,10 @@
 		<Distribution
 			ref="customersRef"
 			id-filed="userId"
+			:titles="['未分配商户', '已分配商户']"
 			list-url="core/userMgrMerchant/assignMerchantPage"
 			save-url="core/userMgrMerchant/assignMerchant"
-			title="批量分配客户"
+			title="批量分配商户"
 		/>
 		<Distribution
 			ref="providerRef"
@@ -156,7 +161,6 @@ import { useI18n } from 'vue-i18n';
 import array2Object from '/@/utils/array-2-object';
 import { customerAuth, providerAuth } from './enum';
 
-console.log(array2Object(providerAuth));
 // 动态引入组件
 const UserForm = defineAsyncComponent(() => import('./form.vue'));
 const QueryTree = defineAsyncComponent(() => import('/@/components/QueryTree/index.vue'));
@@ -246,7 +250,7 @@ const handleDelete = async (ids: string[]) => {
 //表格内开关 (用户状态)
 const changeSwitch = async (row: object) => {
 	await putObj(row);
-	useMessage().success(t('common.optSuccessText'));
+	// useMessage().success(t('common.optSuccessText'));
 	getDataList();
 };
 </script>

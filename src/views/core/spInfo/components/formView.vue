@@ -197,7 +197,7 @@ import { useRoute } from 'vue-router';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 // import { useRouter } from 'vue-router';
-const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
+// const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 
 const route = useRoute();
 const router = useRouter();

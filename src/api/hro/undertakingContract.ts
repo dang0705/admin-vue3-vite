@@ -2,7 +2,7 @@ import request from '/@/utils/request';
 
 export function fetchList(query?: Object) {
 	return request({
-		url: '/core/merchantServiceAgreement/page',
+		url: '/core/undertakingContract/page',
 		method: 'get',
 		params: query,
 	});
@@ -10,7 +10,7 @@ export function fetchList(query?: Object) {
 
 export function addObj(obj?: Object) {
 	return request({
-		url: '/core/merchantServiceAgreement',
+		url: '/core/undertakingContract',
 		method: 'post',
 		data: obj,
 	});
@@ -18,14 +18,14 @@ export function addObj(obj?: Object) {
 
 export function getObj(id?: string) {
 	return request({
-		url: '/core/merchantServiceAgreement/' + id,
+		url: '/core/undertakingContract/' + id,
 		method: 'get',
 	});
 }
 
 export function delObjs(ids?: Object) {
 	return request({
-		url: '/core/merchantServiceAgreement',
+		url: '/core/undertakingContract',
 		method: 'delete',
 		data: ids,
 	});
@@ -33,16 +33,8 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
 	return request({
-		url: '/core/merchantServiceAgreement',
+		url: '/core/undertakingContract',
 		method: 'put',
 		data: obj,
-	});
-}
-
-export function userDropList(query?: Object) {
-	return request({
-		url: '/admin/user/dropList',
-		method: 'get',
-		params: query,
 	});
 }

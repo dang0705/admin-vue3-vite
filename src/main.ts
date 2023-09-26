@@ -12,7 +12,19 @@ import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 
-import { ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, Editor, Tip, DelWrap } from '/@/components/index';
+import {
+	ElementIcons,
+	Pagination,
+	RightToolbar,
+	DictTag,
+	UploadExcel,
+	UploadFile,
+	UploadImg,
+	Divider,
+	Editor,
+	Tip,
+	DelWrap,
+} from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
 import Test from '/@/views/Test.vue';
@@ -29,15 +41,24 @@ app.component('Pagination', Pagination);
 app.component('RightToolbar', RightToolbar);
 app.component('uploadExcel', UploadExcel);
 app.component('UploadFile', UploadFile);
+app.component('UploadImg', UploadImg);
+app.component('Divider', Divider);
 
 // app.component(
 // 	'UploadFile',
 // 	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))
 // );
-app.component(
-	'UploadImg',
-	defineAsyncComponent(() => import('/@/components/Upload/image.vue'))
-);
+// app.component(
+// 	'UploadImg',
+// 	defineAsyncComponent(() => import('/@/components/Upload/image.vue'))
+// );
+
+// app.component(
+// 	'Divider',
+// 	defineAsyncComponent(() => import('/@/components/Divider/index.vue'))
+// );
+// const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
+
 app.component('Editor', Editor);
 app.component('Tip', Tip);
 app.component('DelWrap', DelWrap);

@@ -1,5 +1,5 @@
 <template>
-	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
+	<el-dialog v-model="isOpen" class="w-full" :close-on-click-modal="false" draggable>
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
@@ -7,6 +7,7 @@
 			class="w-full flex justify-between items-center"
 			v-model="selected"
 			filterable
+			:filter-method="filterMethod"
 			:props="{ key: 'id' }"
 			:render-content="renderFunc"
 			:left-default-checked="[2, 3]"
@@ -45,6 +46,10 @@ const props = defineProps({
 		type: String,
 		default: '批量分配用户',
 	},
+	lists: {
+		type: Array,
+		default: null,
+	},
 	titles: {
 		type: Array,
 		default: () => ['未分配用户', '已分配用户'],
@@ -71,6 +76,14 @@ const props = defineProps({
 	idFiled: {
 		type: String,
 		default: 'roleId',
+	},
+	forceOpen: {
+		type: Boolean,
+		default: false,
+	},
+	filterMethod: {
+		type: Function,
+		default: (query: string, item: Data) => item.values.some(({ value }) => value?.includes(query.toLowerCase())),
 	},
 });
 
@@ -106,26 +119,35 @@ const state = reactive({
 		submitTxt: '更新',
 	},
 });
+const isOpen = computed({
+	get() {
+		return props.forceOpen || state.dialog.isShowDialog;
+	},
+	set(value) {
+		state.dialog.isShowDialog = value;
+	},
+});
 
 // 打开弹窗
 const openDialog = async (row: any) => {
-	console.log(props.idFiled, row, row[props.idFiled]);
 	state.roleId = row[props.idFiled];
 	loading.value = true;
 	selected.value = selectedCache.value = [];
 	// console.log(request);
-	const {
-		data: { records },
-	} = await request.get(props.listUrl, {
-		params: {
-			current: 1,
-			size: 9999,
-			[props.idFiled]: state.roleId,
-		},
-	});
-	data.value = records;
+	if (!props.lists) {
+		var {
+			data: { records },
+		} = await request.get(props.listUrl, {
+			params: {
+				current: 1,
+				size: 9999,
+				[props.idFiled]: state.roleId,
+			},
+		});
+	}
+	data.value = records || props.lists;
 
-	records.forEach(({ selected: select, id }: Data) => select && selected.value.push(id));
+	data.value.forEach(({ selected: select, id }: Data) => select && selected.value.push(id));
 	selectedCache.value = [...selected.value];
 	state.dialog.isShowDialog = true;
 };

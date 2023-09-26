@@ -73,12 +73,8 @@
 				<el-table-column prop="createBy" :label="$t('merchantInfo.createBy')" show-overflow-tooltip />
 				<el-table-column prop="createTime" min-width="160" :label="$t('merchantInfo.createTime')" show-overflow-tooltip />
 
-				<el-table-column prop="statusDesc" label="状态" show-overflow-tooltip>
-					<!-- <template #default="scope">
-						<dict-tag :options="merchant_status" :value="scope.row.status"></dict-tag>
-					</template> -->
-				</el-table-column>
-				<el-table-column label="操作" width="300" fixed="right">
+				<el-table-column prop="statusDesc" min-width="100" label="状态" show-overflow-tooltip> </el-table-column>
+				<el-table-column label="操作" width="250" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_merchantInfo_view'" icon="view" @click="openMerchantForm('view', scope.row.id)" text type="primary">
 							查看

@@ -24,6 +24,7 @@ export default {
 		cancelButtonText: 'Cancel',
 		download: 'Download',
 		distribution: 'Distribution',
+		goToBatchManagement: 'goToBatchManagement',
 	},
 	message: {
 		box: {
