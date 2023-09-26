@@ -75,7 +75,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 	const status = Number(error.response.status) || 200;
 	if (status === 424) {
 		useMessageBox()
-			.confirm('令牌状态已过期，请点击重新登录')
+			.confirm('您的登录已过期，请点击重新登录')
 			.then(() => {
 				Session.clear(); // 清除浏览器全部临时缓存
 				window.location.href = '/'; // 去登录页
