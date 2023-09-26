@@ -122,4 +122,6 @@ declare module '@vue/runtime-core' {
 		baseURL: string;
 	}
 }
-declare const __isDev__: boolean;
+declare interface EmitModelValue<T = any> {
+	(e: 'update:modelValue', value: string[]): void;
+}
