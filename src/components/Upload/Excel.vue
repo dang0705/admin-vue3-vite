@@ -1,6 +1,6 @@
 <!-- excel 导入组件 -->
 <template>
-	<el-dialog :title="title" v-model="open" :close-on-click-modal="false" draggable>
+	<el-dialog :title="title" v-model="state.upload.open" :close-on-click-modal="false" draggable>
 		<div class="guidance mb10">
 			<p v-html="guidance" />
 		</div>
@@ -11,65 +11,51 @@
 			</el-link>
 		</div>
 		<el-divider />
-		<el-form :inline="inlineForm" ref="formRef" :label-width="formLabelWidth" :model="formData">
-			<slot :name="forms">
-				<el-form-item v-for="form in forms" :key="form.key" :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-					<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
-						<template v-for="(_, slot) in $slots" #[slot]>
-							<slot :name="slot" />
-						</template>
-						<template v-if="form.control === 'el-select'">
-							<el-option
-								v-for="item in formOptions[form.key]"
-								:key="item[form.props.value]"
-								:value="item[form.props.value || 'value']"
-								:label="item[form.props.label || 'label']"
-							/>
-						</template>
-						<template v-if="form.control === 'el-radio-group'">
-							<el-radio v-for="item in formOptions[form.key]" :key="item[props.value] || item.value" :label="item[props.value] || item.value">{{
-								item[props.label] || item.label
-							}}</el-radio>
-						</template>
-					</component>
-				</el-form-item>
-			</slot>
-			<el-form-item :prop="fileField" :label="`${uploadLabel}：`" :rules="excelRules">
-				<el-upload
-					action="#"
-					drag
-					ref="uploadRef"
-					:id="uuid"
-					:accept="accept.join(',')"
-					:auto-upload="false"
-					:limit="1"
-					:show-file-list="false"
-					:headers="headers"
-					:disabled="state.upload.isUploading"
-					:on-progress="handleFileUploadProgress"
-					:on-success="handleFileSuccess"
-					:on-error="handleFileError"
-					:on-change="onChange"
-				>
-					<i class="el-icon-upload" />
-					<div class="el-upload__text">
-						{{ $t('excel.operationNotice') }}
-						<em>{{ $t('excel.clickUpload') }}</em>
-					</div>
-					<template #tip>
-						<div class="el-upload__tip text-center">
-							<span>{{ $t('excel.fileFormat') }}</span>
+		<form-view
+			:forms="forms"
+			v-model="formData"
+			v-model:valid="valid"
+			v-model:show="state.upload.open"
+			label-width="140"
+			:on-submit="upload"
+			:submit-button-text="$t('common.goToBatchManagement')"
+		>
+			<template v-for="(_, slot) in $slots" #[slot]>
+				<slot :name="slot" />
+			</template>
+			<template #after-forms>
+				<el-form-item :prop="mainField" :label="`${title}：`" :rules="excelRules">
+					<el-upload
+						action="#"
+						drag
+						ref="uploadRef"
+						:id="uuid"
+						:accept="accept.join(',')"
+						:auto-upload="false"
+						:limit="1"
+						:show-file-list="false"
+						:headers="headers"
+						:disabled="state.upload.isUploading"
+						:on-progress="handleFileUploadProgress"
+						:on-success="handleFileSuccess"
+						:on-error="handleFileError"
+						:on-change="onChange"
+					>
+						<i class="el-icon-upload" />
+						<div class="el-upload__text">
+							{{ $t('excel.operationNotice') }}
+							<em>{{ $t('excel.clickUpload') }}</em>
 						</div>
-						<span v-if="fileName" class="text-primary" v-text="`文件名称：${fileName}`" />
-					</template>
-				</el-upload>
-			</el-form-item>
-		</el-form>
-
-		<template #footer>
-			<el-button type="primary" @click="submitFileForm">{{ $t('common.confirmButtonText') }}</el-button>
-			<el-button @click="state.upload.open = false">{{ $t('common.cancelButtonText') }}</el-button>
-		</template>
+						<template #tip>
+							<div class="el-upload__tip text-center">
+								<span>{{ $t('excel.fileFormat') }}</span>
+							</div>
+							<span v-if="fileName" class="text-primary" v-text="`文件名称：${fileName}`" />
+						</template>
+					</el-upload>
+				</el-form-item>
+			</template>
+		</form-view>
 	</el-dialog>
 
 	<!--校验失败错误数据-->
@@ -124,11 +110,11 @@ const prop = defineProps({
 		type: [String, Number],
 		default: 140,
 	},
-	fileField: {
+	mainField: {
 		type: String,
 		default: 'file',
 	},
-	uploadLabel: {
+	mainLabel: {
 		type: String,
 		default: '',
 	},
@@ -160,7 +146,7 @@ const prop = defineProps({
 		default: false,
 	},
 });
-
+const valid = ref(false);
 const uploadRef = ref();
 
 const state = reactive({
@@ -176,34 +162,15 @@ const state = reactive({
 	},
 });
 const accept = ['.xlsx', '.xls'];
-const formRef = ref();
 const formData = ref({});
-const formOptions = reactive({});
-
 const overallRules = computed(() => [...prop.rules, ...excelRules.value]);
 const excelRules = ref([
 	{
 		required: prop.required,
-		...(prop.required ? { trigger: 'blur', message: `${prop.uploadLabel}必须上传` } : {}),
+		...(prop.required ? { trigger: 'blur', message: `${prop.mainLabel}必须上传` } : {}),
 	},
 ]);
 // 控制表单控件的对象结构
-interface Form {
-	control: string; // 控件名称
-	key: string; // 后端字段
-	optionUrl?: string; // 下拉/多选/单选组件的后端接口
-	props: object; // element ui 控件对应的props
-	options?: []; // 下拉/多选/单选组件的子元素数组
-	value?: unknown; // 组件默认数据
-}
-const initForms = async () => {
-	for (let i = 0; i < prop.forms.length; i++) {
-		const item = prop.forms[i] as Form;
-		item.value !== undefined && (formData.value[item.key] = item.value);
-		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
-	}
-};
-initForms();
 const open = computed(() => prop.forceOpen || state.upload.open);
 /**
  * 下载模板文件
@@ -231,7 +198,7 @@ const onChange = (e) => {
 				type: 'warning',
 			});
 		}, 0);
-		formData.value[prop.fileField] = null;
+		formData.value[prop.mainField] = null;
 		fileName.value = null;
 		uploadRef.value.clearFiles();
 		return;
@@ -241,18 +208,11 @@ const onChange = (e) => {
 		message: '文件上传成功！',
 		type: 'success',
 	});*/
-	formData.value[prop.fileField] = e.raw;
+	formData.value[prop.mainField] = e.raw;
 	fileName.value = e.name;
 	uploadRef.value.clearFiles();
 };
 const upload = async () => {
-	let valid;
-	try {
-		valid = await formRef.value.validate();
-	} catch (e) {
-		valid = false;
-	}
-	if (!valid) return false;
 	let formDataObject = new FormData();
 	for (let key in formData.value) {
 		formDataObject.append(key, formData.value[key]);
@@ -316,21 +276,13 @@ const handleFileSuccess = (response: any) => {
 };
 
 /**
- * 提交表单，触发上传
- */
-const submitFileForm = () => {
-	// uploadRef.value.submit();
-	upload();
-};
-
-/**
  * 显示上传文件对话框，并清除上传信息
  */
 const openDialog = () => {
 	state.upload.isUploading = false;
 	state.upload.open = true;
 	fileName.value = '';
-	initForms();
+	// initForms();
 };
 
 /**
@@ -347,13 +299,3 @@ defineExpose({
 	openDialog,
 });
 </script>
-
-<style scoped>
-.el-form {
-	&.el-form--inline {
-		:deep(.el-form-item) {
-			vertical-align: top;
-		}
-	}
-}
-</style>

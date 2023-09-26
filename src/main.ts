@@ -11,6 +11,7 @@ import ElementPlus from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
+import FormView from '/@/components/Form-view.vue';
 
 import {
 	ElementIcons,
@@ -43,6 +44,7 @@ app.component('uploadExcel', UploadExcel);
 app.component('UploadFile', UploadFile);
 app.component('UploadImg', UploadImg);
 app.component('Divider', Divider);
+app.component('FormView', FormView);
 
 // app.component(
 // 	'UploadFile',
