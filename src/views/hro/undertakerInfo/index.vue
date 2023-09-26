@@ -46,22 +46,12 @@
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						批量导出
-					</el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						批量上传身份证
-					</el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						批量绑定银行卡
-					</el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						发起批量批量签署
-					</el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
-						批量导入承接人
-					</el-button>
-					<el-button icon="folder-add" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
+					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()"> 批量上传身份证 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()"> 批量绑定银行卡 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()"> 发起批量签署 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量导入承接人 </el-button>
+					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
 						添加承接人
 					</el-button>
 					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'hro_undertakerInfo_del'" @click="handleDelete(selectObjs)">
@@ -156,17 +146,31 @@
 
 		<!-- 加入服务商 上传身份证 修改手机号 -->
 		<edit-dialog ref="editDialogRef" @refresh="getDataList(false)" />
+		<!-- 批量上传身份证 -->
+		<batchCard-dialog ref="batchCardDialogRef" @refresh="getDataList(false)" />
 
-		<!--    添加承接人-->
+		<!-- 批量导入承接人-->
 		<uploadExcel
 			ref="addUnderTakerRef"
 			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
 			upload-label="待签署用户名单"
 			upload-url="core/undertakerInfo/import"
-			temp-url="/files/合同批量签署模板.xlsx"
+			temp-url="/files/批量导入承接人模板.xlsx"
 			template-on-front
 			title="批量导入承接人"
 			:forms="addUnderTakerForms"
+		/>
+
+		<!-- 批量绑定银行卡 -->
+		<uploadExcel
+			ref="bindBankRef"
+			guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
+			upload-label="承接人银行卡信息表"
+			upload-url="core/undertakerInfo/import"
+			temp-url="/files/批量绑定银行卡模板.xlsx"
+			template-on-front
+			formLabelWidth="170"
+			title="批量绑定银行卡"
 		/>
 	</div>
 </template>
@@ -178,12 +182,12 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
-import { UploadExcel } from '/@/components';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
 const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
+const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'));
 const { t } = useI18n();
 // 定义查询字典
 const { yes_no_type } = useDict('yes_no_type');
@@ -191,8 +195,10 @@ const { yes_no_type } = useDict('yes_no_type');
 const formDialogRef = ref();
 const detailDialogRef = ref();
 const editDialogRef = ref();
+const batchCardDialogRef = ref();
 
 const addUnderTakerRef = ref();
+const bindBankRef = ref();
 
 const addUnderTakerForms = [
 	{
@@ -247,7 +253,7 @@ const resetQuery = () => {
 
 // 导出excel
 const exportExcel = () => {
-	downBlobFile('/hro/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+	downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
 };
 
 // 多选事件

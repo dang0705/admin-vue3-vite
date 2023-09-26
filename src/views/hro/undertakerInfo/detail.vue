@@ -74,13 +74,13 @@
 				<el-col :span="12" class="mb20"></el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="身份证正面" prop="undertakerPortrait">
+					<el-form-item label="身份证正面:" prop="undertakerPortrait">
 						<UploadFile :type="businessType" v-model="form.undertakerPortrait" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="身份证反面" prop="undertakerNationalEmblem">
+					<el-form-item label="身份证反面:" prop="undertakerNationalEmblem">
 						<UploadFile :type="businessType" v-model="form.undertakerNationalEmblem" disabled />
 					</el-form-item>
 				</el-col>

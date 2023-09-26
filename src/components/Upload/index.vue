@@ -17,7 +17,7 @@
 				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-				<template v-if="realImages.length && !multiple">
+				<template v-if="props.fileType === 'image' && realImages.length && !multiple">
 					<img :src="realImages[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
 						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 				</template>
-				<div class="upload-empty" v-else-if="!realImages.length || multiple">
+				<div class="upload-empty" v-else-if="props.fileType !== 'image' || !realImages.length || multiple">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -53,6 +53,7 @@
 					<span class="text-[#999] text-[14px]"
 						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
 					>
+					<div v-if="fileNameShow" class="text-primary" v-text="`${fileName}`" />
 				</template>
 			</el-upload>
 			<div class="el-upload__tip">
@@ -143,6 +144,10 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	fileNameShow: {
+		type: Boolean,
+		default: false,
+	},
 });
 const { proxy } = getCurrentInstance();
 
@@ -164,6 +169,8 @@ const formContext = inject(formContextKey, void 0);
 const formItemContext = inject(formItemContextKey, void 0);
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => props.disabled || formContext?.disabled);
+// 文件名称
+let fileName = ref('');
 
 /**
  * @description 图片上传
@@ -235,9 +242,12 @@ const editImg = () => {
  * @param rawFile 选择的文件
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
+	let typeArr = rawFile.name.split('.');
+	let type = typeArr[typeArr.length - 1];
+
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	let imgType =
-		props.fileType !== 'image' ? true : (props.accept.length ? props.accept : new_accept.value).includes(rawFile.type as File.ImageMimeType);
+	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(type as File.ImageMimeType);
+
 	if (!imgType)
 		ElNotification({
 			title: '温馨提示',
@@ -252,6 +262,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 				type: 'warning',
 			});
 		}, 0);
+
+	if (imgType && imgSize) fileName.value = '文件名称：' + rawFile.name;
+
 	return imgType && imgSize;
 };
 
