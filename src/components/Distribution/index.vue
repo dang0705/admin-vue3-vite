@@ -179,7 +179,6 @@ const openDialog = async (row: any) => {
 			params: {
 				current: 1,
 				size: 9999,
-				spId: '2',
 				...(state.roleId ? { [props.idFiled]: state.roleId } : {}),
 			},
 		});
