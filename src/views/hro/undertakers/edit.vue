@@ -116,14 +116,14 @@ const onSubmit = async () => {
 	}
 };
 
-const getUndertakerInfoData = () => {
+/*const getUndertakerInfoData = () => {
 	// 获取数据
 	getSpInfoList().then((res: any) => {
 		spinfoList.value = res.data || [];
 	});
 };
 
-getUndertakerInfoData();
+getUndertakerInfoData();*/
 
 // 暴露变量
 defineExpose({

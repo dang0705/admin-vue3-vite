@@ -377,7 +377,7 @@ const handleDelete = async (ids: string[]) => {
 	}
 };
 
-const getUndertakerInfoData = () => {
+/*const getUndertakerInfoData = () => {
 	// 获取数据
 	getSpInfoList().then((res: any) => {
 		spinfoList.value = res.data || [];
@@ -387,5 +387,5 @@ const getUndertakerInfoData = () => {
 	});
 };
 
-getUndertakerInfoData();
+getUndertakerInfoData();*/
 </script>
