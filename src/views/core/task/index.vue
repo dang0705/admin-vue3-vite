@@ -37,7 +37,29 @@
 				:on-submit="getDataList"
 				submit-button-text="查询"
 				cancel-button-text="重置"
-			/>
+			>
+				<template #taskTypeFirst="{ form }">
+					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+						<el-select
+							:disabled="self_disabled"
+							@change="handleTaskTypeLevel1"
+							placeholder="一级分类"
+							class="w100"
+							clearable
+							v-model="form.taskTypeFirst"
+						>
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
+						</el-select>
+					</el-form-item>
+				</template>
+				<template #taskTypeSecond="{ form }">
+					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+						<el-select :disabled="self_disabled" placeholder="二级分类" class="w100" clearable v-model="form.taskTypeSecond">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
+						</el-select>
+					</el-form-item>
+				</template>
+			</form-view>
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="openTask('add')" v-auth="'core_task_add'"> 新 增 </el-button>
@@ -129,6 +151,12 @@ const selectType = {
 		placeholder: '请选择',
 	},
 };
+
+const task_typeLevel_option = reactive({
+	task_typeLevel1_option: [],
+	task_typeLevel2_option: [],
+});
+
 const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
 const conditionForms = [
 	{
@@ -140,6 +168,25 @@ const conditionForms = [
 		...inputType,
 		key: 'taskName',
 		label: '任务名称',
+	},
+	{
+		...inputType,
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		...inputType,
+		control: 'el-input',
+		key: 'taskTypeFirst',
+		label: '行业一级',
+		slot: true,
+	},
+	{
+		...inputType,
+		control: 'el-input',
+		key: 'taskTypeSecond',
+		label: '行业一级',
+		slot: true,
 	},
 	{
 		...selectType,
@@ -176,6 +223,9 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
+
+// 定义字典
+const { task_type } = useDict('task_type');
 
 // 清空搜索条件
 const resetQuery = () => {
@@ -249,5 +299,14 @@ getMerchantInfoList().then((res: any) => {
 // 获取数据
 getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
+});
+
+task_type.value.forEach((item: object) => {
+	if (state.queryForm.taskTypeFirst == item.parentValue) {
+		task_typeLevel_option.task_typeLevel1_option.push(item);
+		task_typeLevel_option.task_typeLevel2_option.push(item);
+	} else if (!item.parentValue) {
+		task_typeLevel_option.task_typeLevel1_option.push(item);
+	}
 });
 </script>

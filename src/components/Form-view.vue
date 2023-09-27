@@ -118,7 +118,8 @@ defineExpose({
 					<slot name="before-forms" />
 					<slot name="forms">
 						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-3">
-							<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+							<slot v-if="form.slot" :name="form.key" v-bind="{ form, dynamicColumns }"></slot>
+							<el-form-item v-else :prop="form.key" :label="`${form.label}`" :rules="form.rules">
 								<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
 									<template v-if="form.control === 'el-select'">
 										<el-option

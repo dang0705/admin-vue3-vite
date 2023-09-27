@@ -10,7 +10,8 @@
 				:on-submit="getDataList"
 				submit-button-text="查询"
 				cancel-button-text="重置"
-			/>
+			>
+			</form-view>
 			<!--			<el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<el-form-item label="承接编号" prop="id">
