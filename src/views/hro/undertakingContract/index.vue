@@ -68,7 +68,7 @@
 			ref="batchElectronicSignRef"
 			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
 			main-label="待签署用户名单"
-			upload-url="core/undertakerInfo/import"
+			upload-url="core/undertakingContract/contractBatchSigning"
 			temp-url="/files/合同批量签署模板.xlsx"
 			template-on-front
 			title="添加合同签署"
