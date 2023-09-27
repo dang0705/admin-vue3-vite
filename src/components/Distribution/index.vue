@@ -4,16 +4,17 @@
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
 		<FormView
+			v-if="state.dialog.isShowDialog"
 			v-model="formData"
-			vertical
 			v-model:show="state.dialog.isShowDialog"
 			:columns="24"
 			:forms="forms"
 			:on-submit="onSubmit"
 			button-position="center"
+			vertical
 		>
 			<template v-for="(_, slot) in $slots" #[slot]>
-				<slot :name="slot" />
+				<slot :name="slot" v-bind="{ formData }" />
 			</template>
 			<template #after-forms>
 				<el-form-item :prop="mainField" :class="{ 'no-label': !mainLabel }">
@@ -49,13 +50,6 @@
 				<el-button @click="selected = [...selectedCache]">重置</el-button>
 			</template>
 		</FormView>
-		<!--		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
-				<el-button @click="selected = [...selectedCache]">重置</el-button>
-				<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
-			</span>
-		</template>-->
 	</el-dialog>
 </template>
 
@@ -212,6 +206,7 @@ const onSubmit = async () => {
 		await request.put(props.saveUrl, {
 			assignTo: state.roleId,
 			allocationIds: selected.value,
+			...formData.value,
 		});
 		state.dialog.isShowDialog = false;
 		useMessage().success(t('common.editSuccessText'));
