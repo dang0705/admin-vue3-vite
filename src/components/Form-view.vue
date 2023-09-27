@@ -106,10 +106,10 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 	<div>
 		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form">
 			<div :class="['flex', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
-				<el-row gutter="10" class="w-full">
+				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-2">
+						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-3">
 							<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
 								<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
 									<template v-if="form.control === 'el-select'">
@@ -136,7 +136,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<el-form-item :class="['flex', 'justify-end actions', 'h-fit', { horizontal: !vertical }]">
+				<el-form-item style="margin-left: 6px !important" :class="['flex', 'justify-end actions', 'h-fit', { horizontal: !vertical }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
 					<el-button @click="cancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>

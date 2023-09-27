@@ -55,9 +55,6 @@
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'core_undertakerInfo_add'">
 						新 增
 					</el-button>
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_undertakerInfo_del'" @click="handleDelete(selectObjs)">
-						删除
-					</el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
 						:export="'core_undertakerInfo_export'"
@@ -132,6 +129,15 @@ const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 // 定义查询字典
 const inputType = {
 	control: 'el-input',
+	props: {
+		placeholder: '请输入',
+	},
+};
+const selectType = {
+	control: 'el-select',
+	props: {
+		placeholder: '请选择',
+	},
 };
 const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
 const conditionForms = [
@@ -139,9 +145,6 @@ const conditionForms = [
 		...inputType,
 		key: 'id',
 		label: '承接编号',
-		props: {
-			placeholder: '请输入',
-		},
 	},
 	{
 		...inputType,
@@ -150,7 +153,7 @@ const conditionForms = [
 	},
 	{
 		...inputType,
-		key: 'id',
+		key: 'taskId',
 		label: '任务编号',
 	},
 	{
@@ -159,11 +162,13 @@ const conditionForms = [
 		label: '任务名称',
 	},
 	{
+		...selectType,
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
 	},
 	{
+		...selectType,
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '服务商',
