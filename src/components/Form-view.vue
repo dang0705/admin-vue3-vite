@@ -86,6 +86,9 @@ const initForms = async (forms: [], formData: object) => {
 		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
 	}
 };
+const resetFields = () => {
+	form.value?.resetFields();
+};
 initForms(prop.forms as [], formData.value);
 const submit = async () => {
 	let valid;
@@ -100,6 +103,11 @@ const submit = async () => {
 };
 const cancel = () => (prop.onCancel ? prop.onCancel() : emit('update:show', false));
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
+
+// 暴露变量
+defineExpose({
+	resetFields,
+});
 </script>
 
 <template>

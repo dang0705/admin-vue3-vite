@@ -2,6 +2,7 @@
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
 			<form-view
+				ref="queryRef"
 				v-show="showSearch"
 				v-model="state.queryForm"
 				:forms="conditionForms"
