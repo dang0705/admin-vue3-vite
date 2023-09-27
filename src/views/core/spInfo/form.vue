@@ -4,19 +4,19 @@
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务商" prop="spName">
-						<el-input v-model="form.spName" placeholder="请输入服务商" />
+						<el-input v-model="form.spName" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="支付通道名称" prop="payAccessName">
-						<el-input v-model="form.payAccessName" placeholder="请输入支付通道名称" />
+						<el-input v-model="form.payAccessName" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="账号类别" prop="accountCategory">
-						<el-select placeholder="请输入账号类别" v-model="form.accountCategory">
+						<el-select v-model="form.accountCategory">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in dict_type"></el-option>
 						</el-select>
 					</el-form-item>
@@ -24,31 +24,31 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="网关地址" prop="bankNumber">
-						<el-input v-model="form.bankNumber" placeholder="请输入网关地址" />
+						<el-input v-model="form.bankNumber" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开户行" prop="bankName">
-						<el-input v-model="form.bankName" placeholder="请输入开户行" />
+						<el-input v-model="form.bankName" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开户地" prop="bankArea">
-						<el-input v-model="form.bankArea" placeholder="请输入开户地" />
+						<el-input v-model="form.bankArea" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开户行联行号" prop="interbankNumber">
-						<el-input v-model="form.interbankNumber" placeholder="请输入开户行联行号" />
+						<el-input v-model="form.interbankNumber" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="主账号" prop="bankCode">
-						<el-input v-model="form.bankCode" placeholder="请输入主账号" />
+						<el-input v-model="form.bankCode" />
 					</el-form-item>
 				</el-col>
 			</el-row>

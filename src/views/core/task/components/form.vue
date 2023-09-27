@@ -10,13 +10,7 @@
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="客户" prop="merchantId">
-							<el-select
-								@change="getAgreeList(), (form.serviceContractId = '')"
-								:disabled="self_disabled"
-								placeholder="请选择"
-								clearable
-								v-model="form.merchantId"
-							>
+							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.merchantId">
 								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 							</el-select>
 						</el-form-item>
@@ -24,13 +18,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商" prop="spId">
-							<el-select
-								@change="getAgreeList(), (form.serviceContractId = '')"
-								:disabled="self_disabled"
-								placeholder="请选择"
-								clearable
-								v-model="form.spId"
-							>
+							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.spId">
 								<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 							</el-select>
 						</el-form-item>
@@ -38,7 +26,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务协议" prop="serviceContractId">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.serviceContractId">
+							<el-select :disabled="self_disabled" clearable v-model="form.serviceContractId">
 								<el-option :key="item.agreementId" :label="item.agreementName" :value="item.agreementId" v-for="item in agree_list" />
 							</el-select>
 						</el-form-item>
@@ -46,7 +34,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="任务承接方式" prop="undertakeType">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.undertakeType">
+							<el-select :disabled="self_disabled" clearable v-model="form.undertakeType">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_undertaking_type" />
 							</el-select>
 						</el-form-item>
@@ -54,7 +42,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="任务名称" prop="taskName">
-							<el-input :disabled="self_disabled" v-model="form.taskName" placeholder="请输入任务名称" />
+							<el-input :disabled="self_disabled" v-model="form.taskName" />
 						</el-form-item>
 					</el-col>
 
@@ -81,7 +69,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.userCount" placeholder="请输入需要人数"></el-input-number>
+							<el-input-number :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -92,14 +80,7 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="工作地址" prop="address">
-							<el-input
-								:disabled="self_disabled"
-								v-model="form.address"
-								:rows="2"
-								:placeholder="$t('merchantInfo.inputAddressTip')"
-								show-word-limit
-								type="textarea"
-							/>
+							<el-input :disabled="self_disabled" v-model="form.address" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -108,7 +89,7 @@
 							<el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="请选择工作开始时间"
+								placeholder="工作开始时间"
 								v-model="form.startTime"
 								:value-format="dateTimeStr"
 							></el-date-picker>
@@ -120,7 +101,7 @@
 							<el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="请选择工作结束时间"
+								placeholder="工作结束时间"
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
 							></el-date-picker>
@@ -129,26 +110,19 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包单价" prop="unitPrice">
-							<el-input-number
-								:disabled="self_disabled"
-								:min="0"
-								v-model="form.unitPrice"
-								:precision="2"
-								:step="0.1"
-								placeholder="请输入发包单价"
-							></el-input-number>
+							<el-input-number :disabled="self_disabled" :min="0" v-model="form.unitPrice" :precision="2" :step="0.1"></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包数量" prop="count">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.count" placeholder="请输入发包数量"></el-input-number>
+							<el-input-number :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="计量单位" prop="measuringUnit">
-							<el-select :disabled="self_disabled" placeholder="请选择" class="w100" clearable v-model="form.measuringUnit">
+							<el-select :disabled="self_disabled" class="w100" clearable v-model="form.measuringUnit">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_unit" />
 							</el-select>
 						</el-form-item>
@@ -156,13 +130,13 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="任务描述" prop="taskDesc">
-							<el-input :disabled="self_disabled" v-model="form.taskDesc" :rows="2" placeholder="请输入" show-word-limit type="textarea" />
+							<el-input :disabled="self_disabled" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label=" 是否要求打卡" prop="clockRequired">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.clockRequired">
+							<el-select :disabled="self_disabled" clearable v-model="form.clockRequired">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in options" />
 							</el-select>
 						</el-form-item>
@@ -170,43 +144,31 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="打卡范围" prop="clockRank">
-							<el-input :disabled="self_disabled" v-model="form.clockRank" placeholder="请输入打卡范围" />
+							<el-input :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="签到时间" prop="signInTime">
-							<el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择签到时间"
-								v-model="form.signInTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
+							<el-date-picker :disabled="self_disabled" type="datetime" v-model="form.signInTime" :value-format="dateTimeStr"></el-date-picker>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">
-							<el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择签退时间"
-								v-model="form.checkOutTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
+							<el-date-picker :disabled="self_disabled" type="datetime" v-model="form.checkOutTime" :value-format="dateTimeStr"></el-date-picker>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务商户" prop="businessMerchant">
-							<el-input :disabled="self_disabled" v-model="form.businessMerchant" placeholder="请输入业务商户" />
+							<el-input :disabled="self_disabled" v-model="form.businessMerchant" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务商户手机号" prop="businessPhone">
-							<el-input :disabled="self_disabled" v-model="form.businessPhone" placeholder="请输入业务商户手机号" />
+							<el-input :disabled="self_disabled" v-model="form.businessPhone" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -214,7 +176,7 @@
 				<el-row v-if="curStep == 1 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="性别" prop="taskRequireInfo.requiredSex">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.taskRequireInfo.requiredSex">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender" />
 							</el-select>
 						</el-form-item>
@@ -223,28 +185,16 @@
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 140px" class="com_label">年龄要求</div>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
-							<el-input-number
-								:disabled="self_disabled"
-								:min="16"
-								:max="65"
-								v-model="form.taskRequireInfo.requiredAgeMin"
-								placeholder="请输入"
-							></el-input-number>
+							<el-input-number :disabled="self_disabled" :min="16" :max="65" v-model="form.taskRequireInfo.requiredAgeMin"></el-input-number>
 						</el-form-item>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
-							<el-input-number
-								:disabled="self_disabled"
-								:min="16"
-								:max="65"
-								v-model="form.taskRequireInfo.requiredAgeMax"
-								placeholder="请输入"
-							></el-input-number>
+							<el-input-number :disabled="self_disabled" :min="16" :max="65" v-model="form.taskRequireInfo.requiredAgeMax"></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="学历要求" prop="taskRequireInfo.educational">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.taskRequireInfo.educational">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.educational">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in education" />
 							</el-select>
 						</el-form-item>
@@ -252,7 +202,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="经验要求" prop="taskRequireInfo.experience">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.taskRequireInfo.experience">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.experience">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in experience" />
 							</el-select>
 						</el-form-item>
@@ -260,14 +210,7 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="工作福利" prop="taskRequireInfo.workFare">
-							<el-input
-								:disabled="self_disabled"
-								v-model="form.taskRequireInfo.workFare"
-								:rows="2"
-								:placeholder="$t('merchantInfo.inputAddressTip')"
-								show-word-limit
-								type="textarea"
-							/>
+							<el-input :disabled="self_disabled" v-model="form.taskRequireInfo.workFare" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 

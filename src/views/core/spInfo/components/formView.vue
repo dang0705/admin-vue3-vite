@@ -6,12 +6,12 @@
 					<Divider title="基本信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商名称:" prop="spName">
-							<el-input v-model="form.spName" placeholder="请输入服务商名称" :disabled="!!route.query.see" />
+							<el-input v-model="form.spName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务类型:" prop="busiType">
-							<el-select placeholder="请输入业务类型" v-model="form.busiType" :disabled="!!route.query.see">
+							<el-select v-model="form.busiType" :disabled="!!route.query.see">
 								<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in busi_type"></el-option>
 							</el-select>
 						</el-form-item>
@@ -19,31 +19,31 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="银行账户:" prop="bankNumber">
-							<el-input v-model="form.bankNumber" placeholder="请输入银行账户" :disabled="!!route.query.see" />
+							<el-input v-model="form.bankNumber" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="开户行:" prop="bankName">
-							<el-input v-model="form.bankName" placeholder="请输入开户行" :disabled="!!route.query.see" />
+							<el-input v-model="form.bankName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="开户地:" prop="bankArea">
-							<el-input v-model="form.bankArea" placeholder="请输入开户地" :disabled="!!route.query.see" />
+							<el-input v-model="form.bankArea" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="企业邮箱:" prop="email">
-							<el-input v-model="form.email" placeholder="请输入企业邮箱" :disabled="!!route.query.see" />
+							<el-input v-model="form.email" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="社会信用代码:" prop="socialCreditCode">
-							<el-input v-model="form.socialCreditCode" placeholder="请输入社会信用代码" :disabled="!!route.query.see" />
+							<el-input v-model="form.socialCreditCode" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -53,14 +53,14 @@
 					</el-col>
 					<el-col :span="24" class="mb20">
 						<el-form-item label="经营范围:" prop="businessScope">
-							<el-input type="textarea" v-model="form.businessScope" placeholder="请输入经营范围" :disabled="!!route.query.see" />
+							<el-input type="textarea" v-model="form.businessScope" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<Divider title="税率设置" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="个税计算方式:" prop="taxCalculationType">
-							<el-select placeholder="请输入个税计算方式" v-model="form.taxCalculationType" :disabled="!!route.query.see">
+							<el-select v-model="form.taxCalculationType" :disabled="!!route.query.see">
 								<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in tax_calculation_type"></el-option>
 							</el-select>
 						</el-form-item>
@@ -68,17 +68,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="增值税税率:" prop="valueAddedTaxRatio">
-							<div class="flex">
-								<el-input-number v-model="form.valueAddedTaxRatio" placeholder="请输入增值税税率" :disabled="!!route.query.see" />&nbsp;%
-							</div>
+							<div class="flex"><el-input-number v-model="form.valueAddedTaxRatio" :disabled="!!route.query.see" />&nbsp;%</div>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="单月上限:" prop="monthUpperLimit">
-							<div class="flex flex-1">
-								<el-input-number v-model="form.monthUpperLimit" placeholder="请输入单月上限" :disabled="!!route.query.see" />&nbsp;元
-							</div>
+							<div class="flex flex-1"><el-input-number v-model="form.monthUpperLimit" :disabled="!!route.query.see" />&nbsp;元</div>
 						</el-form-item>
 					</el-col>
 
@@ -91,19 +87,19 @@
 					<Divider title="法人信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人姓名:" prop="legalPersonName">
-							<el-input v-model="form.legalPersonName" placeholder="请输入法人姓名" :disabled="!!route.query.see" />
+							<el-input v-model="form.legalPersonName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人手机号:" prop="legalPersonMobile">
-							<el-input v-model="form.legalPersonMobile" placeholder="请输入法人手机号" :disabled="!!route.query.see" />
+							<el-input v-model="form.legalPersonMobile" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人身份证号:" prop="legalPersonIdCard">
-							<el-input v-model="form.legalPersonIdCard" placeholder="请输入法人身份证号" :disabled="!!route.query.see" />
+							<el-input v-model="form.legalPersonIdCard" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -124,19 +120,19 @@
 					<Divider title="办税人信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人姓名:" prop="taxManagerName">
-							<el-input v-model="form.taxManagerName" placeholder="请输入办税人姓名" :disabled="!!route.query.see" />
+							<el-input v-model="form.taxManagerName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人手机号:" prop="taxManagerMobile">
-							<el-input v-model="form.taxManagerMobile" placeholder="请输入办税人手机号" :disabled="!!route.query.see" />
+							<el-input v-model="form.taxManagerMobile" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人身份证号:" prop="taxManagerIdCard">
-							<el-input v-model="form.taxManagerIdCard" placeholder="请输入办税人身份证号" :disabled="!!route.query.see" />
+							<el-input v-model="form.taxManagerIdCard" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -159,7 +155,7 @@
 						<el-row>
 							<el-col :span="12" class="mb20">
 								<el-form-item label="资质名称:" prop="qualificationName">
-									<el-input v-model="_.qualificationName" placeholder="请输入资质名称" :disabled="!!route.query.see" />
+									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" />
 								</el-form-item>
 							</el-col>
 

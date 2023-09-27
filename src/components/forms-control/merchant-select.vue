@@ -25,7 +25,7 @@ const value = computed({
 </script>
 
 <template>
-	<el-select :placeholder="$t('merchantInfo.inputMerchantNameTip')" clearable v-model="value">
+	<el-select clearable v-model="value">
 		<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in options" />
 	</el-select>
 </template>

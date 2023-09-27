@@ -8,7 +8,7 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-							<el-input :disabled="isDetail" v-model="form.merchantName" placeholder="请选择" />
+							<el-input :disabled="isDetail" v-model="form.merchantName" />
 						</el-form-item>
 					</el-col>
 
@@ -35,7 +35,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.enterpriseType')" prop="enterpriseType">
-							<el-select :disabled="isDetail" placeholder="请选择" class="w100" clearable v-model="form.enterpriseType">
+							<el-select :disabled="isDetail" class="w100" clearable v-model="form.enterpriseType">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in enterprise_type" />
 							</el-select>
 						</el-form-item>
@@ -43,7 +43,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.enterpriseScale')" prop="enterpriseScale">
-							<el-select :disabled="isDetail" placeholder="请选择" class="w100" clearable v-model="form.enterpriseScale">
+							<el-select :disabled="isDetail" class="w100" clearable v-model="form.enterpriseScale">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in enterprise_scale" />
 							</el-select>
 						</el-form-item>
@@ -57,7 +57,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.address')" prop="address">
-							<el-input :disabled="isDetail" v-model="form.address" :rows="3" placeholder="请选择" show-word-limit type="textarea" />
+							<el-input :disabled="isDetail" v-model="form.address" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -66,7 +66,7 @@
 							<el-date-picker
 								:disabled="isDetail"
 								type="date"
-								placeholder="请选择入驻日期"
+								placeholder="入驻日期"
 								v-model="form.entryDate"
 								:value-format="dateStr"
 							></el-date-picker>
@@ -75,7 +75,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-							<el-input :disabled="isDetail" v-model="form.socialCreditCode" placeholder="请选择" />
+							<el-input :disabled="isDetail" v-model="form.socialCreditCode" />
 						</el-form-item>
 					</el-col>
 
@@ -93,18 +93,18 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.businessScope')" prop="businessScope">
-							<el-input :disabled="isDetail" v-model="form.businessScope" :rows="3" placeholder="请选择" show-word-limit type="textarea" />
+							<el-input :disabled="isDetail" v-model="form.businessScope" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.contactName')" prop="contactName">
-							<el-input :disabled="isDetail" v-model="form.contactName" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.contactName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.contactPhone')" prop="contactPhone">
-							<el-input :disabled="isDetail" v-model="form.contactPhone" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.contactPhone" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -112,13 +112,13 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
-							<el-input :disabled="isDetail" v-model="form.taxRegistrationNumber" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxRegistrationNumber" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxType')" prop="taxType">
-							<el-select :disabled="isDetail" placeholder="请选择" class="w100" clearable v-model="form.taxType">
+							<el-select :disabled="isDetail" class="w100" clearable v-model="form.taxType">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in tax_type" />
 							</el-select>
 						</el-form-item>
@@ -126,19 +126,19 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankNumber')" prop="taxBankNumber">
-							<el-input :disabled="isDetail" v-model="form.taxBankNumber" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxBankNumber" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankName')" prop="taxBankName">
-							<el-input :disabled="isDetail" v-model="form.taxBankName" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxBankName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankArea')" prop="taxBankArea">
-							<el-input :disabled="isDetail" v-model="form.taxBankArea" :rows="3" placeholder="请选择" show-word-limit type="textarea" />
+							<el-input :disabled="isDetail" v-model="form.taxBankArea" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -157,19 +157,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonName')" prop="legalPersonName">
-							<el-input :disabled="isDetail" v-model="form.legalPersonName" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.legalPersonName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonMobile')" prop="legalPersonMobile">
-							<el-input :disabled="isDetail" v-model="form.legalPersonMobile" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.legalPersonMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonIdCard')" prop="legalPersonIdCard">
-							<el-input :disabled="isDetail" v-model="form.legalPersonIdCard" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.legalPersonIdCard" />
 						</el-form-item>
 					</el-col>
 					<!-- 占位 -->
@@ -189,19 +189,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerName')" prop="taxManagerName">
-							<el-input :disabled="isDetail" v-model="form.taxManagerName" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxManagerName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerMobile')" prop="taxManagerMobile">
-							<el-input :disabled="isDetail" v-model="form.taxManagerMobile" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxManagerMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerIdCard')" prop="taxManagerIdCard">
-							<el-input :disabled="isDetail" v-model="form.taxManagerIdCard" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.taxManagerIdCard" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20"> </el-col>
@@ -221,19 +221,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="收件人" prop="recipient">
-							<el-input :disabled="isDetail" v-model="form.recipient" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.recipient" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="收件人手机号" prop="recipientMobile">
-							<el-input :disabled="isDetail" v-model="form.recipientMobile" placeholder="请输入" />
+							<el-input :disabled="isDetail" v-model="form.recipientMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="邮寄地址" prop="postAddress">
-							<el-input :disabled="isDetail" v-model="form.postAddress" :rows="3" placeholder="请选择" show-word-limit type="textarea" />
+							<el-input :disabled="isDetail" v-model="form.postAddress" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 				</el-row>

@@ -4,18 +4,18 @@
 			<el-row :gutter="20">
 				<el-col :span="12" class="mb20">
 					<el-form-item :label="t('job.jobName')" prop="jobName">
-						<el-input v-model="form.jobName" :placeholder="t('job.inputjobNameTip')" />
+						<el-input v-model="form.jobName" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item :label="t('job.jobGroup')" prop="jobGroup">
-						<el-input v-model="form.jobGroup" :placeholder="t('job.inputjobGroupTip')" />
+						<el-input v-model="form.jobGroup" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item :label="t('job.jobType')" prop="jobType">
-						<el-select v-model="form.jobType" :placeholder="t('job.jobType')">
+						<el-select v-model="form.jobType">
 							<el-option v-for="(item, index) in job_type" :key="index" :label="item.label" :value="item.value"></el-option>
 						</el-select>
 					</el-form-item>
@@ -23,7 +23,7 @@
 
 				<el-col :span="12" class="mb20" v-if="['3', '4'].includes(form.jobType)">
 					<el-form-item :label="t('job.executePath')" prop="executePath">
-						<el-input v-model="form.executePath" :placeholder="t('job.inputexecutePathTip')" />
+						<el-input v-model="form.executePath" />
 					</el-form-item>
 				</el-col>
 

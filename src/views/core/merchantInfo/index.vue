@@ -3,30 +3,20 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
-					<!-- <el-row :gutter="24"> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.merchantName" />
+						<el-input clearable v-model="state.queryForm.merchantName" />
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.socialCreditCode" />
+						<el-input clearable v-model="state.queryForm.socialCreditCode" />
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
 						<sp-select v-model="state.queryForm.spId" />
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item :label="$t('merchantInfo.status')" prop="status">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.status">
+						<el-select clearable v-model="state.queryForm.status">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 						</el-select>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item>
 						<div class="wr100">
 							<el-button @click="getDataList" icon="search" type="primary">
@@ -35,8 +25,6 @@
 							<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 						</div>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- </el-row> -->
 				</el-form>
 			</el-row>
 			<el-row>

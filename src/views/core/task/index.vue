@@ -1,34 +1,6 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<!-- <el-row shadow="hover" v-show="showSearch" class="ml10">
-				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
-					<el-form-item label="任务编号" prop="id">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.id" />
-					</el-form-item>
-					<el-form-item label="任务名称" prop="taskName">
-						<el-input placeholder="请输入" clearable v-model="state.queryForm.taskName" />
-					</el-form-item>
-					<el-form-item label="服务商" prop="spId">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.spId">
-							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
-						</el-select>
-					</el-form-item>
-					<el-form-item label="客户 " prop="merchantId">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.merchantId">
-							<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
-						</el-select>
-					</el-form-item>
-					<el-form-item>
-						<div class="wr100">
-							<el-button @click="getDataList" icon="search" type="primary">
-								{{ $t('common.queryBtn') }}
-							</el-button>
-							<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
-						</div>
-					</el-form-item>
-				</el-form>
-			</el-row> -->
 			<form-view
 				ref="queryRef"
 				v-show="showSearch"
@@ -41,14 +13,14 @@
 			>
 				<template #taskTypeFirst="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-						<el-select placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
+						<el-select placeholder="一级分类" class="w100" v-model="state.queryForm.taskTypeFirst">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 						</el-select>
 					</el-form-item>
 				</template>
 				<template #taskTypeSecond="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-						<el-select placeholder="二级分类" class="w100" clearable v-model="state.queryForm.taskTypeSecond">
+						<el-select placeholder="二级分类" class="w100" v-model="state.queryForm.taskTypeSecond">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
 						</el-select>
 					</el-form-item>
@@ -132,59 +104,40 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 // 定义查询字典
 
-// 定义查询字典
-const inputType = {
-	control: 'el-input',
-	props: {
-		placeholder: '请输入',
-	},
-};
-const selectType = {
-	control: 'el-select',
-	props: {
-		placeholder: '请选择',
-	},
-};
-
-const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
 const conditionForms = [
 	{
-		...inputType,
+		control: 'el-input',
 		key: 'id',
 		label: '任务编号',
 	},
 	{
-		...inputType,
+		control: 'el-input',
 		key: 'taskName',
 		label: '任务名称',
 	},
 	{
-		...inputType,
+		control: 'el-input',
 		key: 'taskName',
 		label: '任务名称',
 	},
 	{
-		...inputType,
 		control: 'el-input',
 		key: 'taskTypeFirst',
 		label: '行业一级',
 		slot: true,
 	},
 	{
-		...inputType,
 		control: 'el-input',
 		key: 'taskTypeSecond',
 		label: '行业二级',
 		slot: true,
 	},
 	{
-		...selectType,
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
 	},
 	{
-		...selectType,
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '服务商',

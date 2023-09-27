@@ -7,7 +7,7 @@ import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
 import { isDev } from '/@/utils/helpers';
-import ElementPlus from 'element-plus';
+import ElementPlus, { ElSelect, ElInput } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
@@ -35,6 +35,21 @@ import 'splitpanes/dist/splitpanes.css';
 
 // const app = createApp(isDev ? Test : App);
 const app = createApp(App);
+
+console.log('Element', Element);
+
+ElSelect.props.clearable = {
+	type: Boolean,
+	default: true,
+};
+ElInput.props.placeholder = {
+	type: String,
+	default: '请输入',
+};
+ElSelect.props.placeholder = {
+	type: String,
+	default: '请选择',
+};
 
 // 导入通用自定义组件
 app.component('DictTag', DictTag);
