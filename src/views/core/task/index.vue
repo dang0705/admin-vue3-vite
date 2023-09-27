@@ -40,14 +40,14 @@
 				cancel-button-text="重置"
 			>
 				<template #taskTypeFirst="{ form }">
-					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 						<el-select placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 						</el-select>
 					</el-form-item>
 				</template>
 				<template #taskTypeSecond="{ form }">
-					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 						<el-select placeholder="二级分类" class="w100" clearable v-model="state.queryForm.taskTypeSecond">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
 						</el-select>
@@ -78,8 +78,8 @@
 			>
 				<el-table-column prop="id" label="任务编号" show-overflow-tooltip />
 				<el-table-column prop="taskName" label="任务名称" show-overflow-tooltip />
-				<el-table-column prop="undertakeType" label="任务承接方式" show-overflow-tooltip />
-				<el-table-column prop="taskTypeFirst" label="任务类型" show-overflow-tooltip />
+				<el-table-column prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
+				<el-table-column prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
 				<!-- taskTypeSecond -->
 				<el-table-column prop="startTime" label="开始时间" show-overflow-tooltip />
 				<el-table-column prop="endTime" label="结束时间" show-overflow-tooltip />
@@ -89,7 +89,7 @@
 				<!-- <el-table-column prop="city" label="城市" show-overflow-tooltip /> -->
 				<!-- <el-table-column prop="county" label="区县" show-overflow-tooltip /> -->
 				<el-table-column prop="unitPrice" label="发包单价" show-overflow-tooltip />
-				<el-table-column prop="measuringUnit" label="计量单位" show-overflow-tooltip />
+				<el-table-column prop="measuringUnitStr" label="计量单位" show-overflow-tooltip />
 				<el-table-column prop="userCount" label="需要人数" show-overflow-tooltip />
 
 				<el-table-column prop="statusStr" min-width="100px" label="状态" show-overflow-tooltip />

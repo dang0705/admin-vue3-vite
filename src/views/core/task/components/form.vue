@@ -61,7 +61,14 @@
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 140px" class="com_label require">任务类型</div>
 						<el-form-item label-width="0" prop="taskTypeFirst">
-							<el-select :disabled="self_disabled" placeholder="一级分类" class="w100" clearable v-model="form.taskTypeFirst">
+							<el-select
+								@change="form.taskTypeSecond = ''"
+								:disabled="self_disabled"
+								placeholder="一级分类"
+								class="w100"
+								clearable
+								v-model="form.taskTypeFirst"
+							>
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 							</el-select>
 						</el-form-item>
@@ -474,7 +481,6 @@ const task_typeLevel_option = computed(() => {
 		task_typeLevel1_option: [],
 		task_typeLevel2_option: [],
 	};
-	form.taskTypeSecond = '';
 	task_type.value.forEach((item: object) => {
 		if (!item.parentValue) {
 			task_typeLevel_option.task_typeLevel1_option.push(item);
