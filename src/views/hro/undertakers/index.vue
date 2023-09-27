@@ -162,6 +162,7 @@
 		<!-- 批量签署 -->
 		<Distribution
 			ref="customersRef"
+			id-filed="id"
 			:titles="['未签署承接人']"
 			list-url="core/undertakerInfo/getUnsignedReceiverInformation"
 			save-url="core/userMgrMerchant/assignMerchant"
