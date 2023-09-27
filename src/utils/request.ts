@@ -60,11 +60,12 @@ const ERROR_MSG = {
 	500: '服务器内部错误',
 	404: '服务器内部错误',
 };
+const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
-	if (config.url !== '/auth/token/check_token' && response.data.code !== STATUS.success) {
+	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success) {
 		useMessageBox().error(response.data.msg);
-		return Promise.reject();
+		return Promise.reject(response.data.msg);
 	}
 	// 针对密文返回解密
 	if (response.data.encryption) {
