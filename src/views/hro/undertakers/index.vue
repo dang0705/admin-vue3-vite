@@ -162,12 +162,20 @@
 		<!-- 批量签署 -->
 		<Distribution
 			ref="customersRef"
-			id-filed="id"
+			dialogWidth="60%"
 			:titles="['未签署承接人', '待签署承接人']"
 			list-url="core/undertakerInfo/getUnsignedReceiverInformation"
-			save-url="core/userMgrMerchant/assignMerchant"
+			save-url="core/undertakingContract/undertakerSignContract"
 			title="批量签署"
-		/>
+			:forms="conditionForms2"
+			watchField="spId"
+		>
+			<template #startTime>
+				<el-form-item label="开始结束日期:" prop="workTime">
+					<el-date-picker type="date" placeholder="请选择" v-model="form.workTime" :value-format="dateStr"></el-date-picker>
+				</el-form-item>
+			</template>
+		</Distribution>
 
 		<!-- 批量导入承接人-->
 		<uploadExcel
@@ -264,6 +272,21 @@ const conditionForms = ref([
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: t('undertakerInfo.merchantName'),
+	},
+]);
+const conditionForms2 = ref([
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: t('undertakerInfo.spName'),
+		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'blur' }],
+	},
+	{
+		// control: 'el-date-picker',
+		// key: 'startTime',
+		// label: '合同开始时间',
+		// rules: [{ required: true, message: '合同开始时间不能为空', trigger: 'blur' }],
+		slot: 'startTime',
 	},
 ]);
 // 定义查询字典

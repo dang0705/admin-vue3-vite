@@ -143,7 +143,6 @@ const onSubmit = async () => {
 	try {
 		loading.value = true;
 		let res = form.id ? await putObj(form) : await addObj(form);
-		console.log(res, 132123);
 		if (res.code === 4140013) {
 			msgData.value = res.msg;
 			msgVisible.value = true;
@@ -155,7 +154,6 @@ const onSubmit = async () => {
 		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

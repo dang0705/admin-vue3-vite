@@ -1,5 +1,5 @@
 <template>
-	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
+	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
@@ -38,7 +38,7 @@
 						</template>
 						<template #default="{ option }" v-if="!hasDefaultSlot">
 							<ul class="flex justify-between px-3">
-								<li>{{ option.values[0].value }}</li>
+								<li class="mr-5">{{ option.values[0].value }}</li>
 								<li v-if="option.values[1]">{{ option.values[1].value }}</li>
 							</ul>
 						</template>
@@ -121,6 +121,14 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	dialogWidth: {
+		type: String,
+		default: '50%',
+	},
+	watchField: {
+		type: String,
+		default: '',
+	},
 });
 
 interface Data {
@@ -140,6 +148,11 @@ const selected = ref<(string | number)[]>([]);
 const hasDefaultSlot = !!useSlots().default;
 
 const formData = ref({});
+props.watchField &&
+	watch(
+		() => formData.value[props.watchField],
+		(value) => openDialog()
+	);
 
 const { t } = useI18n();
 
@@ -179,6 +192,7 @@ const openDialog = async (row: any) => {
 			params: {
 				current: 1,
 				size: 9999,
+				...(props.watchField ? { [props.watchField]: formData.value[props.watchField] } : {}),
 				...(state.roleId ? { [props.idFiled]: state.roleId } : {}),
 			},
 		});
@@ -228,5 +242,11 @@ defineExpose({
 	.el-form-item__content {
 		margin-left: 0 !important;
 	}
+}
+::v-deep(.el-transfer-panel) {
+	width: fit-content;
+}
+::v-deep(.el-checkbox) {
+	margin-right: 0;
 }
 </style>
