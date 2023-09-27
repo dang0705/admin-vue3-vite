@@ -12,7 +12,7 @@
 <script setup lang="ts" name="layoutLogo">
 import { useThemeConfig } from '/@/stores/themeConfig';
 import logo from '/@/assets/menu-logo.png';
-import logoMini from '/@/assets/logo-mini.svg';
+import logoMini from '/@/assets/logo-mini.webp';
 
 // 定义变量内容
 const storesThemeConfig = useThemeConfig();
