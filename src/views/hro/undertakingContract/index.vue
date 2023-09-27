@@ -15,15 +15,10 @@
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
 						手动上传合同
 					</el-button>
-					<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'"> 批量电子签署 </el-button>
-					<right-toolbar
-						v-model:showSearch="showSearch"
-						:export="'hro_undertakingContract_export'"
-						@exportExcel="exportExcel"
-						class="ml10 mr20"
-						style="float: right"
-						@queryTable="getDataList"
-					></right-toolbar>
+					<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'" @click="batchElectronicSignRef.openDialog()">
+						批量电子签署
+					</el-button>
+					<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
 				</div>
 			</el-row>
 			<el-table
@@ -36,21 +31,27 @@
 				@sort-change="sortChangeHandle"
 			>
 				<el-table-column prop="undertakerName" label="姓名" show-overflow-tooltip width="100" />
-				<el-table-column prop="undertakerCard" label="证件号码" show-overflow-tooltip width="100" />
-				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip width="100" />
+				<el-table-column prop="undertakerCard" label="证件号码" show-overflow-tooltip width="180" />
+				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip width="120" />
 				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100" />
 				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip width="100" />
-				<el-table-column prop="createTime" label="发起签约时间" show-overflow-tooltip width="150" />
-				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip width="150" />
-				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip width="150" />
-				<el-table-column prop="contractEndTime" label="合同终止时间" show-overflow-tooltip width="150" />
-				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100" />
+				<el-table-column prop="createTime" label="发起签约时间" show-overflow-tooltip width="180" />
+				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip width="180" />
+				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip width="180" />
+				<el-table-column prop="contractEndTime" label="合同终止时间" show-overflow-tooltip width="180" />
+				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100">
+					<template #default="{ row: { contractType } }">
+						<span v-text="contractTypeMap[contractType]" />
+					</template>
+				</el-table-column>
 				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="100" />
-				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="100" />
+				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="140">
+					<template #default="{ row: { state } }"><span v-text="contractStatusMap[state]" /></template>
+				</el-table-column>
 				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakingContract_edit'" @click="formDialogRef.openDialog(scope.row.id)">
-							编辑
+						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakingContract_view'" @click="formDialogRef.openDialog(scope.row.id)">
+							查看
 						</el-button>
 						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([scope.row.id])">
 							删除
@@ -66,7 +67,7 @@
 		<uploadExcel
 			ref="batchElectronicSignRef"
 			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
-			upload-label="待签署用户名单"
+			main-label="待签署用户名单"
 			upload-url="core/undertakerInfo/import"
 			temp-url="/files/合同批量签署模板.xlsx"
 			template-on-front
@@ -81,29 +82,49 @@
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import { FormOptions } from '/@/components/Form-view.vue';
+import { useI18n } from 'vue-i18n';
+import { useDict } from '/@/hooks/dict';
+import Array2Object from '/@/utils/array-2-object';
 
+const { t } = useI18n();
+const { contract_type } = useDict('contract_type');
+const { contract_status } = useDict('contract_status');
 const input = 'el-input';
+const i18 = (str = '', key = 'label') => ({ [key]: t(`undertakingContract.${str}`) });
 // 筛选条件控件与数据
-const conditionForms = [
+const conditionForms = computed(() => [
 	{
 		control: input,
 		key: 'name',
-		label: '姓名',
+		...i18('name'),
+		props: {
+			...i18('inputName', 'placeholder'),
+		},
 	},
 	{
 		control: input,
 		key: 'undertakerCard',
-		label: '证件号码',
+		...i18('undertakerCard'),
+		props: {
+			...i18('inputUndertakerCard', 'placeholder'),
+		},
 	},
 	{
 		control: input,
 		key: 'undertakerPhone',
-		label: '手机号码',
+		...i18('undertakerPhone'),
+		props: {
+			...i18('undertakerPhone', 'placeholder'),
+		},
 	},
 	{
 		control: input,
 		key: 'contractNumber',
-		label: '签约编号',
+		...i18('contractNumber'),
+		props: {
+			...i18('inputContractNumberTip', 'placeholder'),
+		},
 	},
 	{
 		control: 'SpSelect',
@@ -114,15 +135,37 @@ const conditionForms = [
 		control: 'el-select',
 		key: 'contractType',
 		label: '合同类型',
-		options: [{}],
+		options: contract_type.value,
 	},
-];
+]);
+// 合同类型枚举
+const contractTypeMap = computed(() => Array2Object(contract_type.value));
+// 合同状态枚举
+const contractStatusMap = computed(() => Array2Object(contract_status.value));
+
+const batchElectronicSignRef = ref();
 // 批量电子签署控件与数据
 const batchElectronicSignForms = [
 	{
 		control: 'SpSelect',
 		label: '服务商',
-		key: '',
+		key: 'spId ',
+		rules: [
+			{
+				required: true,
+			},
+		],
+	},
+	{
+		control: 'el-select',
+		label: '合同模板',
+		key: 'contractTemplate',
+		options: 'contract_template',
+		rules: [
+			{
+				required: true,
+			},
+		],
 	},
 ];
 // 引入组件
