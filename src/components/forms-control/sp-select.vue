@@ -14,7 +14,15 @@ const props = defineProps({
 });
 const options = ref([]);
 const emit = defineEmits('update:modelValue');
-const getOptions = async () => (options.value = await useSpStore().getSp(props.platform ? 'platform' : ''));
+const getOptions = async () => {
+	const spStore = useSpStore();
+	const { sp, spAll } = storeToRefs(spStore);
+	if (sp.value.length || spAll.value.length) {
+		options.value = props.platform ? spAll.value : sp.value;
+	} else {
+		options.value = await spStore.getSp(props.platform ? 'platform' : '');
+	}
+};
 
 getOptions();
 
