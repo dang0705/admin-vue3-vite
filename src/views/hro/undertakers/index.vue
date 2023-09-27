@@ -59,7 +59,7 @@
 					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
 					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()"> 批量上传身份证 </el-button>
 					<el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()"> 批量绑定银行卡 </el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="formDialogRef.openDialog()"> 发起批量签署 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="customersRef.openDialog()"> 发起批量签署 </el-button>
 					<el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量导入承接人 </el-button>
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
 						添加承接人
@@ -159,6 +159,15 @@
 		<!-- 批量上传身份证 -->
 		<batchCard-dialog ref="batchCardDialogRef" @refresh="getDataList(false)" />
 
+		<!-- 批量签署 -->
+		<Distribution
+			ref="customersRef"
+			:titles="['未签署承接人']"
+			list-url="core/undertakerInfo/getUnsignedReceiverInformation"
+			save-url="core/userMgrMerchant/assignMerchant"
+			title="批量签署"
+		/>
+
 		<!-- 批量导入承接人-->
 		<uploadExcel
 			ref="addUnderTakerRef"
@@ -201,6 +210,7 @@ const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detail.vue'));
 const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
 const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'));
+const Distribution = defineAsyncComponent(() => import('/@/components/Distribution/index.vue'));
 const { t } = useI18n();
 const { yes_no_type } = useDict('yes_no_type');
 const conditionForms = ref([
@@ -261,6 +271,7 @@ const formDialogRef = ref();
 const detailDialogRef = ref();
 const editDialogRef = ref();
 const batchCardDialogRef = ref();
+const customersRef = ref();
 
 const addUnderTakerRef = ref();
 const bindBankRef = ref();
