@@ -63,6 +63,17 @@
 
 		<!-- 编辑、新增  -->
 		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+		<uploadExcel
+			ref="batchElectronicSignRef"
+			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
+			upload-label="待签署用户名单"
+			upload-url="core/undertakerInfo/import"
+			temp-url="/files/合同批量签署模板.xlsx"
+			template-on-front
+			title="添加合同签署"
+			:forms="batchElectronicSignForms"
+			submitButtonText="下一步"
+		/>
 	</div>
 </template>
 
@@ -72,6 +83,7 @@ import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 
 const input = 'el-input';
+// 筛选条件控件与数据
 const conditionForms = [
 	{
 		control: input,
@@ -103,6 +115,14 @@ const conditionForms = [
 		key: 'contractType',
 		label: '合同类型',
 		options: [{}],
+	},
+];
+// 批量电子签署控件与数据
+const batchElectronicSignForms = [
+	{
+		control: 'SpSelect',
+		label: '服务商',
+		key: '',
 	},
 ];
 // 引入组件

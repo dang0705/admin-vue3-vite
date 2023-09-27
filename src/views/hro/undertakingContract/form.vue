@@ -13,14 +13,17 @@
 				<el-input v-model="formData.contractName" placeholder="请输入合同名称" />
 			</el-form-item>
 
-			<el-form-item label="签约编号" prop="contractNumber">
+			<!--			<el-form-item label="签约编号" prop="contractNumber">
 				<el-input v-model="formData.contractNumber" placeholder="请输入签约编号" />
-			</el-form-item>
+			</el-form-item>-->
 			<el-form-item label="合同开始时间" prop="startTime">
 				<el-date-picker type="datetime" placeholder="请选择合同开始时间" v-model="formData.startTime" :value-format="dateTimeStr"></el-date-picker>
 			</el-form-item>
 			<el-form-item label="合同结束时间" prop="endTime">
 				<el-date-picker type="datetime" placeholder="请选择合同结束时间" v-model="formData.endTime" :value-format="dateTimeStr"></el-date-picker>
+			</el-form-item>
+			<el-form-item label="上传合同扫描件" prop="contractFile">
+				<UploadFile v-model="formData.contractFile" />
 			</el-form-item>
 		</el-form>
 		<template #footer>
@@ -38,7 +41,6 @@ import request from '/@/utils/request';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/hro/undertakingContract';
 import { rule } from '/@/utils/validate';
-import FormView from '/@/components/Form-view.vue';
 import SpSelect from '/@/components/forms-control/sp-select.vue';
 const emit = defineEmits(['refresh']);
 
@@ -59,7 +61,7 @@ const formData = reactive({
 	startTime: '',
 	endTime: '',
 	contractType: 0,
-	contractFile: '',
+	contractFile: [],
 });
 
 const underTaker = ref([]);
