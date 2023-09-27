@@ -7,7 +7,7 @@ import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
 import { isDev } from '/@/utils/helpers';
-import ElementPlus, { ElSelect, ElInput } from 'element-plus';
+import ElementPlus, { ElSelect, ElInput, ElTimePicker } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
@@ -47,6 +47,10 @@ ElInput.props.placeholder = {
 	default: '请输入',
 };
 ElSelect.props.placeholder = {
+	type: String,
+	default: '请选择',
+};
+ElTimePicker.props.placeholder = {
 	type: String,
 	default: '请选择',
 };

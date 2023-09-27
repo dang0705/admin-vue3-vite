@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import request from '/@/utils/request';
+import helper from '/@/utils/helpers';
+import { useDict } from '/@/hooks/dict';
+
 interface Props {
 	value?: string;
 	label?: string;
@@ -72,6 +75,10 @@ const prop = defineProps({
 		type: String,
 		default: 'left',
 	},
+	formRules: {
+		type: Object,
+		default: () => ({}),
+	},
 });
 const form = ref();
 const formData = computed({
@@ -87,11 +94,17 @@ const initForms = async (forms: [], formData: object) => {
 	for (let i = 0; i < forms.length; i++) {
 		const item = forms[i] as FormOptions;
 		item.value !== undefined && (formData[item.key] = item.value);
-		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
+		if (item.optionUrl || item.options) {
+			formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
+			if (helper.isString(item.options)) {
+				const { [item.options]: dic } = useDict(item.options);
+				formOptions[item.key] = computed(() => dic.value);
+			}
+		}
 	}
 };
 const resetFields = () => {
-	form.value?.resetFields();
+	form?.value?.resetFields();
 };
 initForms(prop.forms as [], formData.value);
 // 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
@@ -102,7 +115,10 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
 	() => prop.show,
-	(show) => show && form.value.resetFields()
+	async (show) => {
+		await nextTick();
+		!show && form.value.resetFields();
+	}
 );
 const submit = async () => {
 	let valid;
@@ -130,8 +146,8 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 
 <template>
 	<div>
-		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form">
-			<div :class="['flex', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
+		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form" :rules="formRules">
+			<div :class="['flex', 'w100', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">

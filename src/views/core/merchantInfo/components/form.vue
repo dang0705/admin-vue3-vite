@@ -17,7 +17,7 @@
 						<el-form-item label-width="0" prop="industryLevel1">
 							<el-select
 								:disabled="isDetail"
-								@change="handleIndustryLevel1"
+								@change="form.industryLevel2 = ''"
 								placeholder="一级分类"
 								class="w100"
 								clearable
@@ -323,10 +323,10 @@ const form = reactive({
 	taxManagerNationalEmblem: [],
 });
 
-const industryLevel_option = reactive({
-	industryLevel1_option: [],
-	industryLevel2_option: [],
-});
+// const industryLevel_option = reactive({
+// 	industryLevel1_option: [],
+// 	industryLevel2_option: [],
+// });
 // 定义校验规则
 const dataRules = ref({
 	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }],
@@ -394,43 +394,41 @@ const getmerchantInfoData = (id: string) => {
 	getObj(id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
-			setTimeout(() => {
-				industry.value.forEach((item: object) => {
-					if (form.industryLevel1 == item.parentValue) {
-						industryLevel_option.industryLevel1_option.push(item);
-						industryLevel_option.industryLevel2_option.push(item);
-					} else if (!item.parentValue) {
-						industryLevel_option.industryLevel1_option.push(item);
-					}
-				});
-			}, 500);
 		})
 		.finally(() => {
 			loading.value = false;
 		});
 };
 
-const handleIndustryLevel1 = () => {
-	form.industryLevel2 = '';
-	industryLevel_option.industryLevel2_option = [];
-	industry.value.forEach((item) => {
-		if (form.industryLevel1 == item.parentValue) {
-			industryLevel_option.industryLevel2_option.push(item);
-		}
-	});
-};
+// const handleIndustryLevel1 = () => {
+// 	form.industryLevel2 = '';
+// 	industryLevel_option.industryLevel2_option = [];
+// 	industry.value.forEach((item) => {
+// 		if (form.industryLevel1 == item.parentValue) {
+// 			industryLevel_option.industryLevel2_option.push(item);
+// 		}
+// 	});
+// };
 
 if (route.query.id) {
 	getmerchantInfoData(route.query.id);
-} else {
-	setTimeout(() => {
-		industry.value.forEach((item: object) => {
-			if (!item.parentValue) {
-				industryLevel_option.industryLevel1_option.push(item);
-			}
-		});
-	}, 500);
 }
+
+const industryLevel_option = computed(() => {
+	let industryLevel_option = {
+		industryLevel1_option: [],
+		industryLevel2_option: [],
+	};
+	industry.value.forEach((item: object) => {
+		if (!item.parentValue) {
+			industryLevel_option.industryLevel1_option.push(item);
+		}
+		if (form.industryLevel1 == item.parentValue && form.industryLevel1) {
+			industryLevel_option.industryLevel2_option.push(item);
+		}
+	});
+	return industryLevel_option;
+});
 </script>
 
 <style scoped lang="scss">
