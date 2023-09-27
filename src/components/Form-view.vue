@@ -149,7 +149,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 								>
 									<template v-if="form.control === 'el-select'">
 										<el-option
-											v-for="item in forms[form.key]"
+											v-for="item in formOptions[form.key]"
 											:key="item[form.props?.value]"
 											:value="item[form.props?.value || 'value']"
 											:label="item[form.props?.label || 'label']"
