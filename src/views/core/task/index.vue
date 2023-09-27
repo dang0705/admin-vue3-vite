@@ -1,28 +1,14 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<el-row shadow="hover" v-show="showSearch" class="ml10">
+			<!-- <el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
-					<!-- <el-row :gutter="24"> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item label="任务编号" prop="id">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.id" />
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item label="任务名称" prop="taskName">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.taskName" />
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
-					<!-- 伪代码 -->
-					<!-- <el-form-item label="任务类型" prop="taskTypeFirst">
-						<el-select placeholder="请选择" clearable v-model="state.queryForm.taskTypeFirst">
-							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
-						</el-select>
-					</el-form-item> -->
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item label="服务商" prop="spId">
 						<el-select placeholder="请选择" clearable v-model="state.queryForm.spId">
 							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
@@ -33,8 +19,6 @@
 							<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 						</el-select>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- <el-col :md="8" :sm="24"> -->
 					<el-form-item>
 						<div class="wr100">
 							<el-button @click="getDataList" icon="search" type="primary">
@@ -43,10 +27,33 @@
 							<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 						</div>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- </el-row> -->
 				</el-form>
-			</el-row>
+			</el-row> -->
+			<form-view
+				ref="queryRef"
+				v-show="showSearch"
+				v-model="state.queryForm"
+				:forms="conditionForms"
+				:on-cancel="resetQuery"
+				:on-submit="getDataList"
+				submit-button-text="查询"
+				cancel-button-text="重置"
+			>
+				<template #taskTypeFirst="{ form }">
+					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+						<el-select @change="handleTaskTypeLevel1" placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
+						</el-select>
+					</el-form-item>
+				</template>
+				<template #taskTypeSecond="{ form }">
+					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+						<el-select placeholder="二级分类" class="w100" clearable v-model="state.queryForm.taskTypeSecond">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
+						</el-select>
+					</el-form-item>
+				</template>
+			</form-view>
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="openTask('add')" v-auth="'core_task_add'"> 新 增 </el-button>
@@ -125,6 +132,70 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 // 定义查询字典
 
+// 定义查询字典
+const inputType = {
+	control: 'el-input',
+	props: {
+		placeholder: '请输入',
+	},
+};
+const selectType = {
+	control: 'el-select',
+	props: {
+		placeholder: '请选择',
+	},
+};
+
+const task_typeLevel_option = reactive({
+	task_typeLevel1_option: [],
+	task_typeLevel2_option: [],
+});
+
+const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
+const conditionForms = [
+	{
+		...inputType,
+		key: 'id',
+		label: '任务编号',
+	},
+	{
+		...inputType,
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		...inputType,
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		...inputType,
+		control: 'el-input',
+		key: 'taskTypeFirst',
+		label: '行业一级',
+		slot: true,
+	},
+	{
+		...inputType,
+		control: 'el-input',
+		key: 'taskTypeSecond',
+		label: '行业二级',
+		slot: true,
+	},
+	{
+		...selectType,
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+	},
+	{
+		...selectType,
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: '服务商',
+	},
+];
+
 // 定义变量内容
 const router = useRouter();
 
@@ -147,10 +218,11 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 
+// 定义字典
+const { task_type } = useDict('task_type');
+
 // 清空搜索条件
 const resetQuery = () => {
-	// 清空搜索条件
-	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();
@@ -220,4 +292,26 @@ getMerchantInfoList().then((res: any) => {
 getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
 });
+
+setTimeout(() => {
+	task_type.value.forEach((item: object) => {
+		if (state.queryForm.taskTypeFirst == item.parentValue) {
+			task_typeLevel_option.task_typeLevel2_option.push(item);
+		} else if (!item.parentValue) {
+			task_typeLevel_option.task_typeLevel1_option.push(item);
+		}
+	});
+}, 500);
+
+console.log('task_typeLevel_option', task_typeLevel_option);
+
+const handleTaskTypeLevel1 = () => {
+	state.queryForm.taskTypeSecond = '';
+	task_typeLevel_option.task_typeLevel2_option = [];
+	task_type.value.forEach((item) => {
+		if (state.queryForm.taskTypeFirst == item.parentValue) {
+			task_typeLevel_option.task_typeLevel2_option.push(item);
+		}
+	});
+};
 </script>

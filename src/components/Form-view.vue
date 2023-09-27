@@ -86,6 +86,9 @@ const initForms = async (forms: [], formData: object) => {
 		formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
 	}
 };
+const resetFields = () => {
+	form.value?.resetFields();
+};
 initForms(prop.forms as [], formData.value);
 const submit = async () => {
 	let valid;
@@ -98,19 +101,33 @@ const submit = async () => {
 	emit('update:valid', valid);
 	prop.onSubmit && prop.onSubmit();
 };
-const cancel = () => (prop.onCancel ? prop.onCancel() : emit('update:show', false));
+const cancel = () => {
+	resetFields();
+	prop.onCancel
+		? () => {
+				prop.onCancel();
+		  }
+		: emit('update:show', false);
+};
+
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
+
+// 暴露变量
+// defineExpose({
+// 	resetFields,
+// });
 </script>
 
 <template>
 	<div>
 		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form">
 			<div :class="['flex', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
-				<el-row gutter="10" class="w-full">
+				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-2">
-							<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
+						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-3">
+							<slot v-if="form.slot" :name="form.key" v-bind="{ form, dynamicColumns }"></slot>
+							<el-form-item v-else :prop="form.key" :label="`${form.label}`" :rules="form.rules">
 								<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
 									<template v-if="form.control === 'el-select'">
 										<el-option
