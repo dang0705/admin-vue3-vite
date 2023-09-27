@@ -41,7 +41,7 @@
 			>
 				<template #taskTypeFirst="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
-						<el-select @change="handleTaskTypeLevel1" placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
+						<el-select placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 						</el-select>
 					</el-form-item>
@@ -146,11 +146,6 @@ const selectType = {
 	},
 };
 
-const task_typeLevel_option = reactive({
-	task_typeLevel1_option: [],
-	task_typeLevel2_option: [],
-});
-
 const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
 const conditionForms = [
 	{
@@ -223,6 +218,7 @@ const { task_type } = useDict('task_type');
 
 // 清空搜索条件
 const resetQuery = () => {
+	task_typeLevel_option.task_typeLevel2_option = [];
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();
@@ -293,25 +289,20 @@ getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
 });
 
-setTimeout(() => {
+const task_typeLevel_option = computed(() => {
+	let task_typeLevel_option = {
+		task_typeLevel1_option: [],
+		task_typeLevel2_option: [],
+	};
+	state.queryForm.taskTypeSecond = '';
 	task_type.value.forEach((item: object) => {
-		if (state.queryForm.taskTypeFirst == item.parentValue) {
-			task_typeLevel_option.task_typeLevel2_option.push(item);
-		} else if (!item.parentValue) {
+		if (!item.parentValue) {
 			task_typeLevel_option.task_typeLevel1_option.push(item);
 		}
-	});
-}, 500);
-
-console.log('task_typeLevel_option', task_typeLevel_option);
-
-const handleTaskTypeLevel1 = () => {
-	state.queryForm.taskTypeSecond = '';
-	task_typeLevel_option.task_typeLevel2_option = [];
-	task_type.value.forEach((item) => {
-		if (state.queryForm.taskTypeFirst == item.parentValue) {
+		if (state.queryForm.taskTypeFirst == item.parentValue && state.queryForm.taskTypeFirst) {
 			task_typeLevel_option.task_typeLevel2_option.push(item);
 		}
 	});
-};
+	return task_typeLevel_option;
+});
 </script>

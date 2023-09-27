@@ -5,9 +5,8 @@ interface Props {
 	label?: string;
 	[k: string]: any;
 }
-interface FormOptions {
+export interface FormOptions {
 	control: string; // 控件名称
-	dict?: string; // 字典
 	label: string; // 中文字
 	key: string; // 后端字段
 	props?: Props; // element ui 控件对应的props
@@ -15,6 +14,7 @@ interface FormOptions {
 	options?: []; // 下拉/多选/单选组件的子元素数组
 	value?: unknown; // 组件默认数据
 	rules?: []; // 验证规则
+	slot?: boolean | string; //插槽
 }
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
 
@@ -68,6 +68,10 @@ const prop = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	buttonPosition: {
+		type: String,
+		default: 'left',
+	},
 });
 const form = ref();
 const formData = computed({
@@ -90,6 +94,16 @@ const resetFields = () => {
 	form.value?.resetFields();
 };
 initForms(prop.forms as [], formData.value);
+// 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
+watch(
+	() => prop.forms,
+	(forms) => initForms(forms as [], formData.value)
+);
+// 每次弹框关闭后,清空验证状态
+watch(
+	() => prop.show,
+	(show) => show && form.value.resetFields()
+);
 const submit = async () => {
 	let valid;
 	try {
@@ -103,11 +117,7 @@ const submit = async () => {
 };
 const cancel = () => {
 	resetFields();
-	prop.onCancel
-		? () => {
-				prop.onCancel();
-		  }
-		: emit('update:show', false);
+	prop.onCancel ? prop.onCancel() : emit('update:show', false);
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
@@ -125,13 +135,17 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" class="mb-3">
-							<slot v-if="form.slot" :name="form.key" v-bind="{ form, dynamicColumns }"></slot>
-							<el-form-item v-else :prop="form.key" :label="`${form.label}`" :rules="form.rules">
-								<component :is="form.control" v-bind="form.props" v-model="formData[form.key]">
+						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" :class="['mb-2', { 'mb-[14px]': vertical }]">
+							<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
+							<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+								<component
+									:is="form.control"
+									v-model="formData[form.key]"
+									v-bind="{ ...form.props, ...(form.props?.clearable === undefined ? { clearable: true } : {}) }"
+								>
 									<template v-if="form.control === 'el-select'">
 										<el-option
-											v-for="item in forms[form.key]"
+											v-for="item in formOptions[form.key]"
 											:key="item[form.props?.value]"
 											:value="item[form.props?.value || 'value']"
 											:label="item[form.props?.label || 'label']"
@@ -153,7 +167,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<el-form-item :class="['flex', 'justify-end actions', 'h-fit', { horizontal: !vertical }]">
+				<el-form-item :class="['flex', 'actions', 'h-fit', { horizontal: !vertical, [buttonPosition]: true }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
 					<el-button @click="cancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>
@@ -174,6 +188,12 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 		&.horizontal {
 			:deep(.el-form-item__content) {
 				margin-left: 10px !important;
+			}
+		}
+		&.center {
+			:deep(.el-form-item__content) {
+				margin-left: 0 !important;
+				justify-content: center;
 			}
 		}
 	}
