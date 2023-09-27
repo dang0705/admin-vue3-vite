@@ -168,7 +168,7 @@ const isOpen = computed({
 
 // 打开弹窗
 const openDialog = async (row: any) => {
-	state.roleId = row[props.idFiled];
+	state.roleId = row?.[props.idFiled];
 	loading.value = true;
 	selected.value = selectedCache.value = [];
 	// console.log(request);
@@ -179,7 +179,7 @@ const openDialog = async (row: any) => {
 			params: {
 				current: 1,
 				size: 9999,
-				[props.idFiled]: state.roleId,
+				...(state.roleId ? { [props.idFiled]: state.roleId } : {}),
 			},
 		});
 	}
