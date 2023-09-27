@@ -61,14 +61,7 @@
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 140px" class="com_label require">任务类型</div>
 						<el-form-item label-width="0" prop="taskTypeFirst">
-							<el-select
-								:disabled="self_disabled"
-								@change="handleTaskTypeLevel1"
-								placeholder="一级分类"
-								class="w100"
-								clearable
-								v-model="form.taskTypeFirst"
-							>
+							<el-select :disabled="self_disabled" placeholder="一级分类" class="w100" clearable v-model="form.taskTypeFirst">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 							</el-select>
 						</el-form-item>
@@ -379,11 +372,6 @@ const form = reactive({
 	},
 });
 
-const task_typeLevel_option = reactive({
-	task_typeLevel1_option: [],
-	task_typeLevel2_option: [],
-});
-
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 2 ? true : false));
 
@@ -461,15 +449,6 @@ const gettaskData = (taskId: string) => {
 		.then((res: any) => {
 			Object.assign(form, res.data);
 			getAgreeList();
-			setTimeout(() => {
-				task_type.value.forEach((item: object) => {
-					if (form.taskTypeFirst == item.parentValue) {
-						task_typeLevel_option.task_typeLevel1_option.push(item);
-					} else if (!item.parentValue) {
-						task_typeLevel_option.task_typeLevel1_option.push(item);
-					}
-				});
-			}, 500);
 		})
 		.finally(() => {
 			loading.value = false;
@@ -486,27 +465,26 @@ getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
 });
 
-const handleTaskTypeLevel1 = () => {
+if (route.query.taskId) {
+	gettaskData(route.query.taskId);
+}
+
+const task_typeLevel_option = computed(() => {
+	let task_typeLevel_option = {
+		task_typeLevel1_option: [],
+		task_typeLevel2_option: [],
+	};
 	form.taskTypeSecond = '';
-	task_typeLevel_option.task_typeLevel2_option = [];
-	task_type.value.forEach((item) => {
-		if (form.taskTypeFirst == item.parentValue) {
+	task_type.value.forEach((item: object) => {
+		if (!item.parentValue) {
+			task_typeLevel_option.task_typeLevel1_option.push(item);
+		}
+		if (form.taskTypeFirst == item.parentValue && form.taskTypeFirst) {
 			task_typeLevel_option.task_typeLevel2_option.push(item);
 		}
 	});
-};
-
-if (route.query.taskId) {
-	gettaskData(route.query.taskId);
-} else {
-	setTimeout(() => {
-		task_type.value.forEach((item: object) => {
-			if (!item.parentValue) {
-				task_typeLevel_option.task_typeLevel1_option.push(item);
-			}
-		});
-	}, 500);
-}
+	return task_typeLevel_option;
+});
 
 // 获取协议
 const getAgreeList = () => {

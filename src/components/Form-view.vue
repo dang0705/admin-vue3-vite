@@ -103,11 +103,7 @@ const submit = async () => {
 };
 const cancel = () => {
 	resetFields();
-	prop.onCancel
-		? () => {
-				prop.onCancel();
-		  }
-		: emit('update:show', false);
+	prop.onCancel ? prop.onCancel() : emit('update:show', false);
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
