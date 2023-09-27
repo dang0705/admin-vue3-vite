@@ -57,7 +57,7 @@
 				</template>
 			</el-upload>
 			<div class="el-upload__tip">
-				<slot name="tip"></slot>
+				<slot name="tip" />
 			</div>
 		</div>
 		<ul class="flex flex-warp" v-if="multiple">
@@ -201,14 +201,16 @@ const upload = async (options: UploadRequestOptions) => {
 
 const images = ref<string[]>([]);
 const realImages = ref<string[]>([]);
-watch(
-	() => props.modelValue as [],
-	(value: []) => {
-		images.value = value;
-		realImages.value = images.value.map((image) => `${proxy.baseURL}/${image}`);
-	},
-	{ immediate: true }
-);
+
+props.fileType === 'image' &&
+	watch(
+		() => props.modelValue as [],
+		(value: []) => {
+			images.value = value;
+			realImages.value = images.value.map((image) => `${proxy.baseURL}/${image}`);
+		},
+		{ immediate: true }
+	);
 
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
@@ -240,11 +242,9 @@ const editImg = () => {
  * @param rawFile 选择的文件
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-	let typeArr = rawFile.name.split('.');
-	let type = typeArr[typeArr.length - 1];
-
+	const fileSuffix = rawFile.name.slice(rawFile.name.indexOf('.'));
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(type as File.ImageMimeType);
+	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(fileSuffix);
 
 	if (!imgType)
 		ElNotification({
