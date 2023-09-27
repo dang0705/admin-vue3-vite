@@ -55,15 +55,17 @@
 				</el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="学历:" prop="undertakerEducationName">
-						<el-input v-model="form.undertakerEducationName" placeholder="请输入学历" disabled />
+					<el-form-item label="学历:" prop="undertakerEducation">
+						<el-select placeholder="请输入学历" v-model="form.undertakerEducation" disabled>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in education"></el-option>
+						</el-select>
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20"></el-col>
 
 				<el-col :span="12" class="mb20">
-					<el-form-item label="服务商:" prop="undertakerEducationName">
+					<el-form-item label="服务商:" prop="spName">
 						<span v-for="(_, i) in form.spList" :key="i"
 							>{{ _.spName }}
 							<span v-if="i != form.spList.length - 1">,</span>
@@ -108,7 +110,7 @@ const visible = ref(false);
 const loading = ref(false);
 const businessType = uploadBusinessType.hro;
 // 定义字典
-const { yes_no_type, gender } = useDict('yes_no_type', 'gender');
+const { yes_no_type, gender, education } = useDict('yes_no_type', 'gender', 'education');
 // 提交表单数据
 const form = reactive({
 	id: '',
@@ -117,10 +119,9 @@ const form = reactive({
 	undertakerPhone: '',
 	undertakerSex: '',
 	undertakerAddress: '',
-	undertakerClan: 0,
+	undertakerClan: '',
 	undertakerClanName: '',
-	undertakerEducation: 0,
-	undertakerEducationName: '',
+	undertakerEducation: '',
 	workTime: '',
 	undertakerPortrait: [],
 	undertakerNationalEmblem: [],
@@ -140,7 +141,6 @@ const dataRules = ref({
 	undertakerAddress: [{ required: true, message: '承接人家庭住址不能为空', trigger: 'blur' }],
 	undertakerClanName: [{ required: true, message: '承接人 民族 名称不能为空', trigger: 'blur' }],
 	undertakerEducation: [{ required: true, message: '承接人学历不能为空', trigger: 'blur' }],
-	undertakerEducationName: [{ required: true, message: '承接人 学历 名称不能为空', trigger: 'blur' }],
 	workTime: [{ required: true, message: '参加工作日期不能为空', trigger: 'blur' }],
 	undertakerPortrait: [{ required: true, message: '承接人身份证正面不能为空', trigger: 'blur' }],
 	undertakerNationalEmblem: [{ required: true, message: '承接人身份证国徽面不能为空', trigger: 'blur' }],

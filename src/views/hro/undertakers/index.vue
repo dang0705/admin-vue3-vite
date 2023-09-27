@@ -92,7 +92,7 @@
 				<el-table-column prop="undertakerPhone" label="手机号码" width="120" show-overflow-tooltip />
 				<el-table-column label="性别" width="60" show-overflow-tooltip>
 					<template #default="scope">
-						<div>{{ scope.row.undertakerSex == 1 ? '男' : '女' }}</div>
+						<div>{{ scope.row.undertakerSex == 1 ? '男' : scope.row.undertakerSex == 1 ? '女' : '未知' }}</div>
 					</template>
 				</el-table-column>
 				<el-table-column prop="undertakerAge" label="年龄" width="60" show-overflow-tooltip />
@@ -177,7 +177,7 @@
 			ref="bindBankRef"
 			guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
 			upload-label="承接人银行卡信息表"
-			upload-url="core/undertakerInfo/import"
+			upload-url=""
 			temp-url="/files/批量绑定银行卡模板.xlsx"
 			template-on-front
 			formLabelWidth="170"
