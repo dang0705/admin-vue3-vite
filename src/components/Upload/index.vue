@@ -156,7 +156,9 @@ const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
 const uuid = ref('id-' + generateUUID());
 
 const new_accept = ref(
-	props.fileType == 'image' ? ['jpeg', 'png', 'gif'] : ['png', 'jpg', 'jpeg', 'doc', 'xls', 'ppt', 'txt', 'pdf', 'docx', 'xlsx', 'pptx']
+	props.fileType == 'image'
+		? ['.xbm', '.tif', '.pjp', '.svgz', '.jpg', '.jpeg', '.ico', '.tiff', '.gif', '.svg', '.jfif', '.webp', '.png', '.bmp', 'pjpeg', '.avif']
+		: ['.png', '.jpg', '.jpeg', '.doc', '.xls', '.ppt', '.txt', '.pdf', '.docx', '.xlsx', '.pptx']
 );
 
 // 查看图片

@@ -127,8 +127,8 @@ const conditionForms = [
 		label: '承接人',
 	},
 	{
-		control: 'el-input',
-		key: 'taskName',
+		control: 'el-date-picker',
+		key: 'createTime',
 		label: '生成时间',
 	},
 ];

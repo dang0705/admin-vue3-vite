@@ -150,13 +150,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="签到时间" prop="signInTime">
-							<el-date-picker :disabled="self_disabled" type="datetime" v-model="form.signInTime" :value-format="dateTimeStr"></el-date-picker>
+							<el-time-picker v-model="form.signInTime" :value-format="timeStr" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">
-							<el-date-picker :disabled="self_disabled" type="datetime" v-model="form.checkOutTime" :value-format="dateTimeStr"></el-date-picker>
+							<el-time-picker v-model="form.checkOutTime" :value-format="timeStr" />
 						</el-form-item>
 					</el-col>
 
