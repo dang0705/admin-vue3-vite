@@ -161,18 +161,24 @@
 
 		<!-- 批量签署 -->
 		<Distribution
+			:titles="['未签署承接人', '待签署承接人']"
+			:forms="conditionForms2"
 			ref="customersRef"
 			dialogWidth="60%"
-			:titles="['未签署承接人', '待签署承接人']"
 			list-url="core/undertakerInfo/getUnsignedReceiverInformation"
 			save-url="core/undertakingContract/undertakerSignContract"
 			title="批量签署"
-			:forms="conditionForms2"
 			watchField="spId"
 		>
-			<template #startTime>
-				<el-form-item label="开始结束日期:" prop="workTime">
-					<el-date-picker type="date" placeholder="请选择" v-model="form.workTime" :value-format="dateStr"></el-date-picker>
+			<template #dateRange="{ formData }">
+				<el-form-item label="开始结束日期:" prop="dateRange" :rules="[{ required: true, trigger: 'change', message: '开始结束日期不能为空' }]">
+					<el-date-picker
+						type="daterange"
+						start-placeholder="请选择开始时间"
+						end-placeholder="请选择结束时间"
+						value-format="YYYY-MM-DD"
+						v-model="formData.dateRange"
+					/>
 				</el-form-item>
 			</template>
 		</Distribution>
@@ -279,14 +285,12 @@ const conditionForms2 = ref([
 		control: 'SpSelect',
 		key: 'spId',
 		label: t('undertakerInfo.spName'),
-		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'blur' }],
+		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 	},
 	{
-		// control: 'el-date-picker',
-		// key: 'startTime',
-		// label: '合同开始时间',
-		// rules: [{ required: true, message: '合同开始时间不能为空', trigger: 'blur' }],
-		slot: 'startTime',
+		key: 'dateRange',
+		rules: [{ required: true, trigger: 'change' }],
+		slot: true,
 	},
 ]);
 // 定义查询字典
