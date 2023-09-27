@@ -1,5 +1,6 @@
 <script setup lang="ts" name="SpSelect">
-import { getSpInfoList } from '/@/api/core/merchantInfo';
+import { useSpStore } from '/@/stores/sp';
+
 const props = defineProps({
 	modelValue: {
 		type: String,
@@ -13,10 +14,8 @@ const props = defineProps({
 });
 const options = ref([]);
 const emit = defineEmits('update:modelValue');
-const getOptions = async () => {
-	const { data } = await getSpInfoList(props.platform ? 'platform' : '');
-	options.value = data;
-};
+const getOptions = async () => (options.value = await useSpStore().getSp(props.platform ? 'platform' : ''));
+
 getOptions();
 
 const value = computed({
@@ -34,5 +33,3 @@ const value = computed({
 		<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in options" />
 	</el-select>
 </template>
-
-<style scoped lang="scss"></style>
