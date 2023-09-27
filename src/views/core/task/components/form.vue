@@ -84,7 +84,7 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="工作开始时间" prop="startTime">
 							<el-date-picker
 								:disabled="self_disabled"
@@ -94,17 +94,26 @@
 								:value-format="dateTimeStr"
 							></el-date-picker>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="工作结束时间" prop="endTime">
-							<el-date-picker
+						<el-form-item label="工作时间" prop="workTimeRange">
+							<!-- <el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="工作结束时间"
+								placeholder="工作开始时间"
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
-							></el-date-picker>
+							></el-date-picker> -->
+
+							<el-time-picker
+								:value-format="dateTimeStr"
+								v-model="form.workTimeRange"
+								is-range
+								range-separator="To"
+								start-placeholder="工作开始时间"
+								end-placeholder="工作结束时间"
+							/>
 						</el-form-item>
 					</el-col>
 
@@ -149,16 +158,23 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="签到时间" prop="signInTime">
-							<el-time-picker v-model="form.signInTime" :value-format="timeStr" />
+						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
+							<el-time-picker
+								v-model="form.signInOrCheckOutTime"
+								is-range
+								range-separator="To"
+								start-placeholder="签到时间"
+								end-placeholder="签退时间"
+								:value-format="timeStr"
+							/>
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">
 							<el-time-picker v-model="form.checkOutTime" :value-format="timeStr" />
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务商户" prop="businessMerchant">
@@ -298,8 +314,9 @@ const form = reactive({
 	areaDatas: '',
 	county: '',
 	address: '',
-	startTime: '',
-	endTime: '',
+	// startTime: '',
+	// endTime: '',
+	workTimeRange: [],
 	unitPrice: 0,
 	count: 0,
 	measuringUnit: '',
@@ -308,6 +325,7 @@ const form = reactive({
 	clockRank: '',
 	signInTime: '',
 	checkOutTime: '',
+	signInOrCheckOutTime: [],
 	businessMerchant: '',
 	businessPhone: '',
 	taskRequireInfo: {
@@ -341,16 +359,18 @@ const dataRules = ref({
 	areaDatas: [{ required: true, message: '所在地区不能为空', trigger: 'blur' }],
 	county: [{ required: true, message: '区县不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '工作地址不能为空', trigger: 'blur' }],
-	startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
-	endTime: [{ required: true, message: '工作结束时间不能为空', trigger: 'blur' }],
+	// startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
+	workTimeRange: [{ required: true, message: '工作时间不能为空', trigger: 'blur' }],
 	unitPrice: [{ required: true, message: '发包单价不能为空', trigger: 'blur' }],
 	count: [{ required: true, message: '发包数量不能为空', trigger: 'blur' }],
 	measuringUnit: [{ required: true, message: '计量单位不能为空', trigger: 'blur' }],
 	taskDesc: [{ required: true, message: '任务描述不能为空', trigger: 'blur' }],
 	clockRequired: [{ required: true, message: ' 是否要求打卡不能为空', trigger: 'blur' }],
 	clockRank: [{ required: true, message: '打卡范围不能为空', trigger: 'blur' }],
-	signInTime: [{ required: true, message: '签到时间不能为空', trigger: 'blur' }],
-	checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
+	// signInTime: [{ required: true, message: '签到时间不能为空', trigger: 'blur' }],
+	// checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
+	signInOrCheckOutTime: [{ required: true, message: '签到签退时间不能为空', trigger: 'blur' }],
+
 	businessMerchant: [{ required: true, message: '业务商户不能为空', trigger: 'blur' }],
 	businessPhone: [{ required: true, message: '业务商户手机号不能为空', trigger: 'blur' }],
 });
