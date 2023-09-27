@@ -101,13 +101,21 @@ const submit = async () => {
 	emit('update:valid', valid);
 	prop.onSubmit && prop.onSubmit();
 };
-const cancel = () => (prop.onCancel ? prop.onCancel() : emit('update:show', false));
+const cancel = () => {
+	resetFields();
+	prop.onCancel
+		? () => {
+				prop.onCancel();
+		  }
+		: emit('update:show', false);
+};
+
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
 
 // 暴露变量
-defineExpose({
-	resetFields,
-});
+// defineExpose({
+// 	resetFields,
+// });
 </script>
 
 <template>
@@ -145,7 +153,7 @@ defineExpose({
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<el-form-item style="margin-left: 6px !important" :class="['flex', 'justify-end actions', 'h-fit', { horizontal: !vertical }]">
+				<el-form-item :class="['flex', 'justify-end actions', 'h-fit', { horizontal: !vertical }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
 					<el-button @click="cancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>

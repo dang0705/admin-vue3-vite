@@ -465,7 +465,6 @@ const gettaskData = (taskId: string) => {
 				task_type.value.forEach((item: object) => {
 					if (form.taskTypeFirst == item.parentValue) {
 						task_typeLevel_option.task_typeLevel1_option.push(item);
-						task_typeLevel_option.task_typeLevel2_option.push(item);
 					} else if (!item.parentValue) {
 						task_typeLevel_option.task_typeLevel1_option.push(item);
 					}

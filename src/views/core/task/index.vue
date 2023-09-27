@@ -30,6 +30,7 @@
 				</el-form>
 			</el-row> -->
 			<form-view
+				ref="queryRef"
 				v-show="showSearch"
 				v-model="state.queryForm"
 				:forms="conditionForms"
@@ -40,21 +41,14 @@
 			>
 				<template #taskTypeFirst="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
-						<el-select
-							:disabled="self_disabled"
-							@change="handleTaskTypeLevel1"
-							placeholder="一级分类"
-							class="w100"
-							clearable
-							v-model="form.taskTypeFirst"
-						>
+						<el-select @change="handleTaskTypeLevel1" placeholder="一级分类" class="w100" clearable v-model="state.queryForm.taskTypeFirst">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
 						</el-select>
 					</el-form-item>
 				</template>
 				<template #taskTypeSecond="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}`" :rules="form.rules">
-						<el-select :disabled="self_disabled" placeholder="二级分类" class="w100" clearable v-model="form.taskTypeSecond">
+						<el-select placeholder="二级分类" class="w100" clearable v-model="state.queryForm.taskTypeSecond">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
 						</el-select>
 					</el-form-item>
@@ -185,7 +179,7 @@ const conditionForms = [
 		...inputType,
 		control: 'el-input',
 		key: 'taskTypeSecond',
-		label: '行业一级',
+		label: '行业二级',
 		slot: true,
 	},
 	{
@@ -229,8 +223,6 @@ const { task_type } = useDict('task_type');
 
 // 清空搜索条件
 const resetQuery = () => {
-	// 清空搜索条件
-	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();
@@ -301,12 +293,25 @@ getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
 });
 
-task_type.value.forEach((item: object) => {
-	if (state.queryForm.taskTypeFirst == item.parentValue) {
-		task_typeLevel_option.task_typeLevel1_option.push(item);
-		task_typeLevel_option.task_typeLevel2_option.push(item);
-	} else if (!item.parentValue) {
-		task_typeLevel_option.task_typeLevel1_option.push(item);
-	}
-});
+setTimeout(() => {
+	task_type.value.forEach((item: object) => {
+		if (state.queryForm.taskTypeFirst == item.parentValue) {
+			task_typeLevel_option.task_typeLevel2_option.push(item);
+		} else if (!item.parentValue) {
+			task_typeLevel_option.task_typeLevel1_option.push(item);
+		}
+	});
+}, 500);
+
+console.log('task_typeLevel_option', task_typeLevel_option);
+
+const handleTaskTypeLevel1 = () => {
+	state.queryForm.taskTypeSecond = '';
+	task_typeLevel_option.task_typeLevel2_option = [];
+	task_type.value.forEach((item) => {
+		if (state.queryForm.taskTypeFirst == item.parentValue) {
+			task_typeLevel_option.task_typeLevel2_option.push(item);
+		}
+	});
+};
 </script>

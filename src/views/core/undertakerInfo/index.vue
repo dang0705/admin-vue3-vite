@@ -6,8 +6,8 @@
 				v-show="showSearch"
 				v-model="state.queryForm"
 				:forms="conditionForms"
-				:on-cancel="resetQuery"
 				:on-submit="getDataList"
+				:on-cancel="resetQuery"
 				submit-button-text="查询"
 				cancel-button-text="重置"
 			>
@@ -197,8 +197,6 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
-	// 清空搜索条件
-	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();
