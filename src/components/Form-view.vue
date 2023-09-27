@@ -137,17 +137,12 @@ const cancel = () => {
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
-
-// 暴露变量
-// defineExpose({
-// 	resetFields,
-// });
 </script>
 
 <template>
 	<div>
 		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form" :rules="formRules">
-			<div :class="['flex', 'w100', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
+			<div :class="['flex', 'w-full', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
