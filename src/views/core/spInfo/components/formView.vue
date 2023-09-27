@@ -284,8 +284,6 @@ onMounted(async () => {
 
 	// 获取spInfo信息
 	if (route.query.id) {
-		console.log(123);
-
 		form.id = route.query.id as string;
 		getspInfoData(route.query.id as string);
 	}
