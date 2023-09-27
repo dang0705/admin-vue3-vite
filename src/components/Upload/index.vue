@@ -242,7 +242,7 @@ const editImg = () => {
  * @param rawFile 选择的文件
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-	const fileSuffix = rawFile.name.slice(rawFile.name.indexOf('.'));
+	const fileSuffix = rawFile.name.slice(rawFile.name.lastIndexOf('.'));
 	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
 	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(fileSuffix);
 
