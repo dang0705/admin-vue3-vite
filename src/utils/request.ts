@@ -53,15 +53,22 @@ service.interceptors.request.use(
  * @param response 响应结果
  * @returns 如果响应成功，则返回响应的data属性；否则，抛出错误或者执行其他操作
  */
+const STATUS = {
+	success: 0,
+};
+const ERROR_MSG = {
+	500: '服务器内部错误',
+	404: '服务器内部错误',
+};
 const handleResponse = (response: AxiosResponse<any>) => {
-	if (response.data.code === 1) {
-		throw response.data;
+	const { config } = response;
+	if (config.url !== '/auth/token/check_token' && response.data.code !== STATUS.success) {
+		useMessageBox().error(response.data.msg);
+		return Promise.reject();
 	}
-
 	// 针对密文返回解密
 	if (response.data.encryption) {
-		const originData = JSON.parse(other.decryption(response.data.encryption, import.meta.env.VITE_PWD_ENC_KEY));
-		response.data = originData;
+		response.data = JSON.parse(other.decryption(response.data.encryption, import.meta.env.VITE_PWD_ENC_KEY));
 		return response.data;
 	}
 
@@ -81,7 +88,10 @@ service.interceptors.response.use(handleResponse, (error) => {
 				window.location.href = '/'; // 去登录页
 				return;
 			});
+	} else if ([500, 401].includes(status)) {
+		useMessageBox().error(ERROR_MSG[status]);
 	}
+
 	return Promise.reject(error.response.data);
 });
 
