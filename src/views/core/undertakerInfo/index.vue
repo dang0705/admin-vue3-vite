@@ -1,7 +1,16 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<el-row shadow="hover" v-show="showSearch" class="ml10">
+			<form-view
+				v-show="showSearch"
+				v-model="state.queryForm"
+				:forms="conditionForms"
+				:on-cancel="resetQuery"
+				:on-submit="getDataList"
+				submit-button-text="查询"
+				cancel-button-text="重置"
+			/>
+			<!--			<el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<el-form-item label="承接编号" prop="id">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.id" />
@@ -9,9 +18,9 @@
 					<el-form-item label="承接人" prop="undertakerName">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.undertakerName" />
 					</el-form-item>
-					<!-- <el-form-item label="生成时间" prop="id">
+					&lt;!&ndash; <el-form-item label="生成时间" prop="id">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.taskId" />
-					</el-form-item> -->
+					</el-form-item> &ndash;&gt;
 
 					<el-form-item label="任务编号" prop="id">
 						<el-input placeholder="请输入" clearable v-model="state.queryForm.taskId" />
@@ -37,10 +46,10 @@
 							<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 						</div>
 					</el-form-item>
-					<!-- </el-col> -->
-					<!-- </el-row> -->
+					&lt;!&ndash; </el-col> &ndash;&gt;
+					&lt;!&ndash; </el-row> &ndash;&gt;
 				</el-form>
-			</el-row>
+			</el-row>-->
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'core_undertakerInfo_add'">
@@ -115,11 +124,51 @@ import { fetchList, delObjs } from '/@/api/core/undertakerInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 // 定义查询字典
-
+const inputType = {
+	control: 'el-input',
+};
+const placeholder = (strForI18n: string) => ({ placeholder: t(strForI18n) });
+const conditionForms = [
+	{
+		...inputType,
+		key: 'id',
+		label: '承接编号',
+		props: {
+			placeholder: '请输入',
+		},
+	},
+	{
+		...inputType,
+		key: 'undertakerName',
+		label: '承接人',
+	},
+	{
+		...inputType,
+		key: 'id',
+		label: '任务编号',
+	},
+	{
+		...inputType,
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+	},
+	{
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: '服务商',
+	},
+];
 // 定义变量内容
 const formDialogRef = ref();
 const spinfoList = ref([]);
