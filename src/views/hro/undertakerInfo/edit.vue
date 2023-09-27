@@ -6,7 +6,7 @@
 		draggable
 		width="50%"
 	>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="120px" v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="24" class="mb20" v-if="form.type === 'editPhone'">
 					<el-form-item label="当前手机号码:">

@@ -25,7 +25,6 @@
 <script setup lang="ts" name="UndertakerInfoDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { addSp, uploadCard, updateMobile } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 const emit = defineEmits(['refresh']);
