@@ -14,12 +14,12 @@
 			</form-view>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'core_undertakerTask_add'">
+					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerTask_add'">
 						新 增
 					</el-button>
 					<right-toolbar
 						v-model:showSearch="showSearch"
-						:export="'core_undertakerTask_export'"
+						:export="'hro_undertakerTask_export'"
 						@exportExcel="exportExcel"
 						class="ml10 mr20"
 						style="float: right"
@@ -61,9 +61,11 @@
 						<span v-if="scope.row.isSign == 0">否</span>
 					</template>
 				</el-table-column>
-				<!-- <el-table-column prop="isBankFourEssentialFactor" label="是否银行四要素校验" show-overflow-tooltip /> -->
-				<el-table-column prop="stateStr" label="状态" show-overflow-tooltip />
-
+				<el-table-column prop="state" label="状态" show-overflow-tooltip>
+					<template #default="scope">
+						<span>{{ undertaking_status.find((item) => item.value == scope.row.state).label }}</span>
+					</template>
+				</el-table-column>
 				<!-- <el-table-column prop="serviceFeeAmount" label="服务费金额" show-overflow-tooltip />
 				<el-table-column prop="orderReceivingTime" label="接单时间" show-overflow-tooltip />
 				<el-table-column prop="state" label="接单任务状态" show-overflow-tooltip />
@@ -77,10 +79,10 @@
 				<el-table-column prop="enterpriseAcceptanceMoney" label="企业验收金额" show-overflow-tooltip /> -->
 				<el-table-column label="操作" width="250" fixed="right">
 					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_undertakerTask_edit'" @click="formDialogRef.openDialog(scope.row.id)"
+						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_edit'" @click="formDialogRef.openDialog(scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_undertakerTask_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'hro_undertakerTask_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -97,6 +99,9 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/core/undertakerTask';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+
+const { undertaking_status } = useDict('undertaking_status');
+console.log('undertaking_status', undertaking_status);
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
