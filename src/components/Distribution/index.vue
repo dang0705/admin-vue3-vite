@@ -1,9 +1,17 @@
 <template>
-	<el-dialog v-model="isOpen" class="w-full" :close-on-click-modal="false" draggable>
+	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable>
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
-		<FormView :forms="forms" v-model="formData">
+		<FormView
+			v-model="formData"
+			vertical
+			v-model:show="state.dialog.isShowDialog"
+			:columns="24"
+			:forms="forms"
+			:on-submit="onSubmit"
+			button-position="center"
+		>
 			<template v-for="(_, slot) in $slots" #[slot]>
 				<slot :name="slot" />
 			</template>
@@ -37,14 +45,17 @@
 					</el-transfer>
 				</el-form-item>
 			</template>
+			<template #third-button>
+				<el-button @click="selected = [...selectedCache]">重置</el-button>
+			</template>
 		</FormView>
-		<template #footer>
+		<!--		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
 				<el-button @click="selected = [...selectedCache]">重置</el-button>
 				<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
 			</span>
-		</template>
+		</template>-->
 	</el-dialog>
 </template>
 
