@@ -123,6 +123,15 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	saveMethod: {
+		type: String,
+		default: 'put', // 表格行间保存使用put 表格顶部批量操作使用post
+	},
+	idsField: {
+		// 不同业务对应的id字段名
+		type: String,
+		default: 'allocationIds',
+	},
 });
 
 interface Data {
@@ -203,9 +212,9 @@ const onSubmit = async () => {
 	// const menuIds = menuTree.value.getCheckedKeys().join(',').concat(',').concat(menuTree.value.getHalfCheckedKeys().join(','));
 	loading.value = true;
 	try {
-		await request.put(props.saveUrl, {
+		await request[props.saveMethod](props.saveUrl, {
 			assignTo: state.roleId,
-			allocationIds: selected.value,
+			[props.idsField]: selected.value,
 			...formData.value,
 		});
 		state.dialog.isShowDialog = false;

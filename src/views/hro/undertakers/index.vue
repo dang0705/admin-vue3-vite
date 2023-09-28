@@ -159,25 +159,35 @@
 		<!-- 批量上传身份证 -->
 		<batchCard-dialog ref="batchCardDialogRef" @refresh="getDataList(false)" />
 
-		<!-- 批量签署 -->
+		<!-- 批量签署
+		 ids-field:   自定义保存接口的字段名
+		 save-method: 自定义保存接口的method
+		 watch-field: 监听额外的表单中的某个字段，根据其值刷新列表
+		 -->
 		<Distribution
 			:titles="['未签署承接人', '待签署承接人']"
 			:forms="conditionForms2"
+			ids-field="undertakerIds"
 			ref="customersRef"
-			dialogWidth="60%"
+			dialog-width="60%"
 			list-url="core/undertakerInfo/getUnsignedReceiverInformation"
 			save-url="core/undertakingContract/undertakerSignContract"
+			save-method="post"
 			title="批量签署"
-			watchField="spId"
+			watch-field="spId"
 		>
-			<template #dateRange="{ formData }">
-				<el-form-item label="开始结束日期:" prop="dateRange" :rules="[{ required: true, trigger: 'change', message: '开始结束日期不能为空' }]">
+			<template #contractTimeRange="{ formData }">
+				<el-form-item
+					label="开始结束日期:"
+					prop="contractTimeRange"
+					:rules="[{ required: true, trigger: 'change', message: '开始结束日期不能为空' }]"
+				>
 					<el-date-picker
 						type="daterange"
 						start-placeholder="请选择开始时间"
 						end-placeholder="请选择结束时间"
 						value-format="YYYY-MM-DD"
-						v-model="formData.dateRange"
+						v-model="formData.contractTimeRange"
 					/>
 				</el-form-item>
 			</template>
@@ -288,7 +298,7 @@ const conditionForms2 = ref([
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 	},
 	{
-		key: 'dateRange',
+		key: 'contractTimeRange',
 		rules: [{ required: true, trigger: 'change' }],
 		slot: true,
 	},
