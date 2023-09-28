@@ -7,7 +7,7 @@ const props = defineProps({
 	},
 });
 const options = ref([]);
-const emit = defineEmits('update:modelValue');
+const emit = defineEmits(['update:modelValue']);
 const getOptions = async () => {
 	const { data } = await getMerchantInfoList();
 	options.value = data;

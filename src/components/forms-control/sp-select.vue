@@ -13,7 +13,7 @@ const props = defineProps({
 	},
 });
 const options = ref([]);
-const emit = defineEmits('update:modelValue');
+const emit = defineEmits(['update:modelValue']);
 const getOptions = async () => {
 	const spStore = useSpStore();
 	const { sp, spAll } = storeToRefs(spStore);
