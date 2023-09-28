@@ -175,6 +175,10 @@ const deactivateShow = (id: string, spName: string, status: string) => {
 		handleDeactivate();
 	}
 };
+const clearCache = async () => {
+	const { useSpStore } = await import('/@/stores/sp');
+	useSpStore().$patch((state) => (state.sp = state.spAll = []));
+};
 const handleDeactivate = async () => {
 	try {
 		await switchStatus({
@@ -184,6 +188,7 @@ const handleDeactivate = async () => {
 		getDataList();
 		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
 		deactivateVisible.value = false;
+		clearCache();
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}
@@ -201,6 +206,7 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
+		clearCache();
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}

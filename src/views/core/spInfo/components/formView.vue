@@ -245,29 +245,29 @@ const form = reactive({
 
 // 定义校验规则
 const dataRules = ref({
-	spName: [{ required: !!route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }],
-	busiType: [{ required: !!route.query.see ? false : true, message: '业务类型不能为空', trigger: 'blur' }],
-	bankNumber: [{ required: !!route.query.see ? false : true, message: '银行账户不能为空', trigger: 'blur' }],
-	bankName: [{ required: !!route.query.see ? false : true, message: '开户行不能为空', trigger: 'blur' }],
-	bankArea: [{ required: !!route.query.see ? false : true, message: '开户地不能为空', trigger: 'blur' }],
-	email: [{ required: !!route.query.see ? false : true, message: '企业邮箱不能为空', trigger: 'blur' }],
-	businessLicense: [{ type: 'array', required: !!route.query.see ? false : true, message: '营业执照不能为空', trigger: 'change' }],
-	socialCreditCode: [{ required: !!route.query.see ? false : true, message: '社会信用代码不能为空', trigger: 'blur' }],
-	businessScope: [{ required: !!route.query.see ? false : true, message: '经营范围不能为空', trigger: 'blur' }],
-	taxCalculationType: [{ required: !!route.query.see ? false : true, message: '个税计算方式不能为空', trigger: 'blur' }],
-	valueAddedTaxRatio: [{ required: !!route.query.see ? false : true, message: '增值税税率不能为空', trigger: 'blur' }],
-	monthUpperLimit: [{ required: !!route.query.see ? false : true, message: '单月上限不能为空', trigger: 'blur' }],
-	individualTaxRatios: [{ required: !!route.query.see ? false : true, trigger: 'change', validator: () => (!!route.query.see ? false : true) }],
-	legalPersonName: [{ required: !!route.query.see ? false : true, message: '法人姓名不能为空', trigger: 'blur' }],
-	legalPersonMobile: [{ required: !!route.query.see ? false : true, message: '法人手机号不能为空', trigger: 'blur' }],
-	legalPersonIdCard: [{ required: !!route.query.see ? false : true, message: '法人身份证号不能为空', trigger: 'blur' }],
-	legalPersonPortrait: [{ type: 'array', required: !!route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
-	legalPersonNationalEmblem: [{ type: 'array', required: !!route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
-	taxManagerName: [{ required: !!route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
-	taxManagerMobile: [{ required: !!route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
-	taxManagerIdCard: [{ required: !!route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
-	taxManagerPortrait: [{ type: 'array', required: !!route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
-	taxManagerNationalEmblem: [{ type: 'array', required: !!route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
+	spName: [{ required: route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }],
+	busiType: [{ required: route.query.see ? false : true, message: '业务类型不能为空', trigger: 'blur' }],
+	bankNumber: [{ required: route.query.see ? false : true, message: '银行账户不能为空', trigger: 'blur' }],
+	bankName: [{ required: route.query.see ? false : true, message: '开户行不能为空', trigger: 'blur' }],
+	bankArea: [{ required: route.query.see ? false : true, message: '开户地不能为空', trigger: 'blur' }],
+	email: [{ required: route.query.see ? false : true, message: '企业邮箱不能为空', trigger: 'blur' }],
+	businessLicense: [{ type: 'array', required: route.query.see ? false : true, message: '营业执照不能为空', trigger: 'change' }],
+	socialCreditCode: [{ required: route.query.see ? false : true, message: '社会信用代码不能为空', trigger: 'blur' }],
+	businessScope: [{ required: route.query.see ? false : true, message: '经营范围不能为空', trigger: 'blur' }],
+	taxCalculationType: [{ required: route.query.see ? false : true, message: '个税计算方式不能为空', trigger: 'blur' }],
+	valueAddedTaxRatio: [{ required: route.query.see ? false : true, message: '增值税税率不能为空', trigger: 'blur' }],
+	monthUpperLimit: [{ required: route.query.see ? false : true, message: '单月上限不能为空', trigger: 'blur' }],
+	individualTaxRatios: [{ required: route.query.see ? false : true, trigger: 'change', validator: () => (route.query.see ? false : true) }],
+	legalPersonName: [{ required: route.query.see ? false : true, message: '法人姓名不能为空', trigger: 'blur' }],
+	legalPersonMobile: [{ required: route.query.see ? false : true, message: '法人手机号不能为空', trigger: 'blur' }],
+	legalPersonIdCard: [{ required: route.query.see ? false : true, message: '法人身份证号不能为空', trigger: 'blur' }],
+	legalPersonPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
+	legalPersonNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
+	taxManagerName: [{ required: route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
+	taxManagerMobile: [{ required: route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	taxManagerIdCard: [{ required: route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
+	taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
+	taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
 });
 
 onMounted(async () => {
@@ -314,6 +314,8 @@ const onSubmit = async () => {
 		visible.value = false;
 		emit('refresh');
 		router.push({ name: '服务商' });
+		const { useSpStore } = await import('/@/stores/sp');
+		useSpStore().$patch((state) => (state.sp = state.spAll = []));
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {
