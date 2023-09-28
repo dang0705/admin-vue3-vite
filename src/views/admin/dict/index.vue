@@ -106,6 +106,10 @@ const handleRefreshTree = async (data: any) => {
 	// 选择当前编辑、新增的节点
 	handleNodeClick(data);
 };
+const clearCache = async () => {
+	const { dict } = await import('/@/stores/dict');
+	dict().$patch((state) => (state.dict = []));
+};
 
 // 删除操作
 const handleDelete = async (ids: string[]) => {
@@ -118,6 +122,7 @@ const handleDelete = async (ids: string[]) => {
 	try {
 		await delObj(ids);
 		useMessage().success(t('common.delSuccessText'));
+		clearCache();
 		dictTreeRef.value.getdeptTree();
 	} catch (err: any) {
 		useMessage().error(err.msg);

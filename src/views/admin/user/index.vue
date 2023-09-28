@@ -72,12 +72,12 @@
 				<el-table-column :label="$t('sysuser.phone')" prop="phone" width="120" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('sysuser.spAuthScope')" prop="spAuthScope" width="120" show-overflow-tooltip>
 					<template #default="{ row: { spAuthScope } }">
-						<span v-text="array2Object(providerAuth)[spAuthScope]" />
+						<span v-text="array2Object({ array: providerAuth as [] })[spAuthScope]" />
 					</template>
 				</el-table-column>
 				<el-table-column :label="$t('sysuser.merchantAuthScope')" prop="merchantAuthScope" width="120" show-overflow-tooltip>
 					<template #default="{ row: { merchantAuthScope } }">
-						<span v-text="array2Object(customerAuth)[merchantAuthScope]" />
+						<span v-text="array2Object({array:customerAuth as []})[merchantAuthScope]" />
 					</template>
 				</el-table-column>
 
