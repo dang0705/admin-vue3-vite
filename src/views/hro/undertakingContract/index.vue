@@ -41,12 +41,12 @@
 				<el-table-column prop="contractEndTime" label="合同终止时间" show-overflow-tooltip width="180" />
 				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100">
 					<template #default="{ row: { contractType } }">
-						<span v-text="contractTypeMap[contractType]" />
+						<span v-text="contractMap?.contract_type[contractType]" />
 					</template>
 				</el-table-column>
 				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="100" />
 				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="140">
-					<template #default="{ row: { state } }"><span v-text="contractStatusMap[state]" /></template>
+					<template #default="{ row: { state } }"><span v-text="contractMap?.contract_status[state]" /></template>
 				</el-table-column>
 				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="scope">
@@ -84,47 +84,32 @@ import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { FormOptions } from '/@/components/Form-view.vue';
 import { useI18n } from 'vue-i18n';
-import { useDict } from '/@/hooks/dict';
 import Array2Object from '/@/utils/array-2-object';
 
 const { t } = useI18n();
-const { contract_type } = useDict('contract_type');
-const { contract_status } = useDict('contract_status');
 const input = 'el-input';
 const i18 = (str = '', key = 'label') => ({ [key]: t(`undertakingContract.${str}`) });
 // 筛选条件控件与数据
-const conditionForms = computed(() => [
+const conditionForms = [
 	{
 		control: input,
 		key: 'name',
 		...i18('name'),
-		props: {
-			...i18('inputName', 'placeholder'),
-		},
 	},
 	{
 		control: input,
 		key: 'undertakerCard',
 		...i18('undertakerCard'),
-		props: {
-			...i18('inputUndertakerCard', 'placeholder'),
-		},
 	},
 	{
 		control: input,
 		key: 'undertakerPhone',
 		...i18('undertakerPhone'),
-		props: {
-			...i18('undertakerPhone', 'placeholder'),
-		},
 	},
 	{
 		control: input,
 		key: 'contractNumber',
 		...i18('contractNumber'),
-		props: {
-			...i18('inputContractNumberTip', 'placeholder'),
-		},
 	},
 	{
 		control: 'SpSelect',
@@ -135,13 +120,11 @@ const conditionForms = computed(() => [
 		control: 'el-select',
 		key: 'contractType',
 		label: '合同类型',
-		options: contract_type.value,
+		options: 'contract_type',
 	},
-]);
-// 合同类型枚举
-const contractTypeMap = computed(() => Array2Object(contract_type.value));
-// 合同状态枚举
-const contractStatusMap = computed(() => Array2Object(contract_status.value));
+];
+// 合同类型、状态枚举
+const contractMap = computed(() => Array2Object({ dic: ['contract_type', 'contract_status'] }).value);
 
 const batchElectronicSignRef = ref();
 // 批量电子签署控件与数据
@@ -149,7 +132,7 @@ const batchElectronicSignForms = [
 	{
 		control: 'SpSelect',
 		label: '服务商',
-		key: 'spId ',
+		key: 'spId',
 		rules: [
 			{
 				required: true,
@@ -160,7 +143,7 @@ const batchElectronicSignForms = [
 		control: 'el-select',
 		label: '合同模板',
 		key: 'contractTemplate',
-		options: 'contract_template',
+		options: 'contract_template', // 此处走字典
 		rules: [
 			{
 				required: true,
