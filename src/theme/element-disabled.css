@@ -1,0 +1,21 @@
+[class^='el-'].is-disabled,
+[class^='el-'][class$='--disabled'] {
+	cursor: auto;
+	color: var(--el-text-color-regular);
+	-webkit-text-fill-color: var(--el-text-color-regular);
+	@apply !w-auto;
+	* {
+		color: inherit !important;
+		cursor: inherit !important;
+		-webkit-text-fill-color: inherit !important;
+	}
+	.el-input__wrapper {
+		@apply px-0;
+	}
+	.el-input-number {
+		&__decrease,
+		&__increase {
+			display: none;
+		}
+	}
+}
