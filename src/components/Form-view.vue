@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import request from '/@/utils/request';
-import helper from '/@/utils/helpers';
+import helper from '/src/utils/helpers';
 import { useDict } from '/@/hooks/dict';
 
 interface Props {
@@ -89,7 +89,7 @@ const formData = computed({
 		emit('update:modelValue', value);
 	},
 });
-const formOptions = reactive({});
+const formOptions = reactive({} as any);
 const initForms = async (forms: [], formData: object) => {
 	for (let i = 0; i < forms.length; i++) {
 		const item = forms[i] as FormOptions;
@@ -103,21 +103,20 @@ const initForms = async (forms: [], formData: object) => {
 		}
 	}
 };
-const resetFields = () => {
-	form?.value?.resetFields();
-};
-initForms(prop.forms as [], formData.value);
+const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
+
 // 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
 watch(
 	() => prop.forms,
-	(forms) => initForms(forms as [], formData.value)
+	(forms) => initForms(forms as [], formData.value),
+	{ immediate: true }
 );
 // 每次弹框关闭后,清空验证状态
 watch(
 	() => prop.show,
 	async (show) => {
 		await nextTick();
-		!show && form.value.resetFields();
+		!prop.modelValue.id && show && form.value.resetFields();
 	}
 );
 const submit = async () => {
@@ -178,7 +177,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<el-form-item :class="['flex', 'actions', 'h-fit', { horizontal: !vertical, [buttonPosition]: true }]">
+				<el-form-item :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
 					<el-button @click="cancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>
