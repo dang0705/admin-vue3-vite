@@ -40,7 +40,7 @@
 						</div>
 					</div>
 				</template>
-				<div class="upload-empty" v-else-if="props.fileType !== 'image' || !realImages.length || multiple">
+				<div class="upload-empty" v-else-if="self_disabled ? false : props.fileType !== 'image' || !realImages.length || multiple">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -48,7 +48,7 @@
 						<span>单击上传<br />或拖拽到此处</span>
 					</slot>
 				</div>
-				<template #tip>
+				<template #tip v-if="!self_disabled">
 					<!-- accept.length ? accept.join(',') : new_accept.join(',') -->
 					<span class="text-[#999] text-[14px]"
 						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
