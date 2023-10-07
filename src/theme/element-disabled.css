@@ -18,4 +18,28 @@
 			display: none;
 		}
 	}
+	/*下拉框箭头隐藏*/
+	&.el-select {
+		:is(span.el-input__suffix) {
+			display: none;
+		}
+	}
+
+	&.el-date-editor {
+		justify-content: unset;
+		/*:is(.el-icon) {
+			display: none;
+		}*/
+		&.el-input__wrapper {
+			box-shadow: unset;
+			@apply px-0;
+			.el-range-input {
+				width: fit-content;
+				/*text-align: left;*/
+			}
+			.el-range-separator {
+				flex-grow: unset;
+			}
+		}
+	}
 }
