@@ -18,7 +18,13 @@ export function useDict(...args: any): any {
 			} else {
 				getDicts(dictType).then((resp) => {
 					// @ts-ignore
-					res.value[dictType] = resp.data.map((p: any) => ({ label: p.label, value: p.value, elTagType: p.listClass, elTagClass: p.cssClass }));
+					res.value[dictType] = resp.data.map((p: any) => ({
+						label: p.label,
+						value: p.value,
+						elTagType: p.listClass,
+						elTagClass: p.cssClass,
+						parentValue: p.parentValue,
+					}));
 					// @ts-ignore
 					dict().setDict(dictType, res.value[dictType]);
 				});
