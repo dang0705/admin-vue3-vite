@@ -2,7 +2,7 @@
 	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
 		<div>
 			<el-upload
-				v-if="props.fileType === 'image' || (props.fileType !== 'image' && !disabled)"
+				v-if="isImage || (!isImage && !disabled)"
 				action="#"
 				drag
 				:id="uuid"
@@ -13,12 +13,11 @@
 				:show-file-list="false"
 				:http-request="handleHttpUpload"
 				:before-upload="beforeUpload"
-				:on-success="uploadSuccess"
 				:on-error="uploadError"
 				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-				<template v-if="props.fileType === 'image' && prefixedUrls.length && !multiple">
+				<template v-if="isImage && prefixedUrls.length && !multiple">
 					<img :src="prefixedUrls[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
 						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
@@ -54,10 +53,22 @@
 					<span class="text-[#999] text-[14px]"
 						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
 					>
-					<div v-if="showName" class="text-primary" v-text="`${fileName}`" />
+					<!--          upload file loading-->
+					<template v-if="!isImage">
+						<ul>
+							<li v-for="(name, index) in fileNames" :key="name">
+								<el-progress v-if="fileLoading[name]?.loading" :percentage="fileLoading[name].progress" />
+								<div v-else class="flex items-center">
+									<el-icon class="cursor-pointer mr-2" @click="deleteImg(index)" v-if="multiple"><Delete /></el-icon>
+									<span v-text="name.split('^')[0]" class="text-primary mr-2" />
+									<el-icon class="ml-auto" color="green"><Select /></el-icon>
+								</div>
+							</li>
+						</ul>
+					</template>
 				</template>
 			</el-upload>
-			<template v-if="disabled && props.fileType !== 'image'">
+			<template v-if="disabled && !isImage">
 				<a
 					class="color-primary hover:underline"
 					v-for="(url, index) in prefixedUrls"
@@ -164,18 +175,20 @@ const props = defineProps({
 		default: false,
 	},
 });
-let fileName = ref('');
+let fileNames = ref([]);
+const isImage = props.fileType === 'image';
 
 const { isInDialog, isDialogShow } = useDialogVisibility();
 
 watch(
 	() => isDialogShow?.value as boolean,
-	(value) => isInDialog && !value && (fileName.value = ''),
+	(value) => isInDialog && !value && (fileNames.value = []),
 	{ immediate: true }
 );
+
 const { proxy } = getCurrentInstance();
 
-const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
+const fileTypeText = isImage ? '图片' : '文件';
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
 
@@ -200,8 +213,13 @@ interface UploadEmits {
 }
 
 const emit = defineEmits<UploadEmits>();
+const fileLoading = reactive({} as any);
 const upload = async (options: UploadRequestOptions) => {
 	let formData = new FormData();
+	const { name, uid } = options.file;
+	const fileName = `${name}^${uid}`;
+	fileLoading[fileName] = {};
+	fileLoading[fileName].loading = true;
 	formData.append('file', options.file);
 	formData.append('businessType', props.type);
 	try {
@@ -212,11 +230,16 @@ const upload = async (options: UploadRequestOptions) => {
 				'Content-Type': 'multipart/form-data',
 			},
 			data: formData,
+			onUploadProgress: (progressEvent) => {
+				fileLoading[fileName].progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+			},
 		});
 		// 调用 el-form 内部的校验方法（可自动校验）
 		return Promise.resolve(data.url);
 	} catch (error) {
 		options.onError(error as any);
+	} finally {
+		fileLoading[fileName].loading = false;
 	}
 };
 
@@ -246,7 +269,7 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
  * */
 const deleteImg = (index: number) => {
 	// (images.value as []).splice(index, 1);
-	props.multiple ? urls.value.splice(index, 1) : (urls.value = []);
+	props.multiple ? urls.value.splice(index, 1) && fileNames.value.splice(index, 1) : (urls.value = []);
 	emit('update:modelValue', urls.value);
 };
 
@@ -262,10 +285,10 @@ const editImg = () => {
  * @description 文件上传之前判断
  * @param rawFile 选择的文件
  * */
-const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-	const suffix = rawFile.name.slice(rawFile.name.lastIndexOf('.'));
+const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
+	const suffix = name.slice(name.lastIndexOf('.'));
 	const limit = IMAGE_TYPES.includes(suffix) ? LIMIT.image : COMPRESSION.includes(suffix) ? LIMIT.compression : LIMIT.file;
-	const sizeValid = rawFile.size / 1024 / 1024 < (props.fileSize || limit);
+	const sizeValid = size / 1024 / 1024 < (props.fileSize || limit);
 	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(suffix);
 
 	if (!imgType)
@@ -283,7 +306,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 			});
 		}, 0);
 
-	if (imgType && sizeValid) fileName.value = '文件名称：' + rawFile.name;
+	if (imgType && sizeValid) {
+		props.multiple ? fileNames.value.push(`${name}^${uid}`) : (fileNames.value = [`${name}^${uid}`]);
+	}
 
 	return imgType && sizeValid;
 };
