@@ -38,7 +38,7 @@
 				</div>
 			</el-row>
 			<el-table
-				:data="state.dataList"
+				:data="state.dataList.filter((v) => v.isPlatform !== '1')"
 				v-loading="state.loading"
 				border
 				:cell-style="tableStyle.cellStyle"
