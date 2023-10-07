@@ -3,7 +3,9 @@
 	cursor: auto;
 	color: var(--el-text-color-regular);
 	-webkit-text-fill-color: var(--el-text-color-regular);
-	@apply !w-auto;
+	&:not(.el-input-number__decrease, .el-input-number__increase) {
+		@apply !w-fit;
+	}
 	* {
 		color: inherit !important;
 		cursor: inherit !important;
