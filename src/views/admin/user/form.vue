@@ -5,7 +5,7 @@
 				<el-row :gutter="20">
 					<!--            new for 2023.09.14 start-->
 					<el-col :span="12" class="mb20">
-						<el-form-item label="账户类型" :rules="typeRules" prop="levelType">
+						<el-form-item label="账户类型" prop="levelType">
 							<el-select class="w100" v-model="dataForm.levelType" :clearable="false" :disabled="!isNew">
 								<el-option v-for="{ label, value } in postOptions" :label="label" :value="value" :key="label" />
 							</el-select>
@@ -13,7 +13,7 @@
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="登录账户" prop="username">
-							<el-input class="w100" placeholder="用于登录的凭据，不允许与现有账号重复" v-model="dataForm.username" />
+							<el-input class="w100" placeholder="用于登录的凭据，必须唯一" v-model="dataForm.username" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -171,8 +171,9 @@ const dataForm = reactive({
 const dataRules = reactive({
 	//new
 	loginAccount: [{ required: true, message: '登录账户不能为空', trigger: 'blur' }],
-	spAuthScope: [{ required: true }],
-	merchantAuthScope: [{ required: true }],
+	spAuthScope: [{ required: true, message: '服务商授权不能为空', trigger: 'change' }],
+	levelType: [{ required: true, message: '账户类型不能为空', trigger: 'change' }],
+	merchantAuthScope: [{ required: true, message: '客户授权不能为空' }],
 	// 用户名校验，不能为空 、长度 5-20、不能和已有数据重复
 	username: [
 		{ required: true, message: '用户名不能为空', trigger: 'blur' },

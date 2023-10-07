@@ -252,7 +252,8 @@
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
-import { rule } from '/@/utils/validate';
+import { limitText } from '/@/rules';
+
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 
 import uploadBusinessType from '/@/enums/upload-business-type';
@@ -329,7 +330,7 @@ const form = reactive({
 // });
 // 定义校验规则
 const dataRules = ref({
-	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }],
+	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }, limitText({ title: '客户名称' })],
 	socialCreditCode: [{ required: true, message: '社会信用代码不能为空', trigger: 'blur' }],
 	industryLevel1: [{ required: true, message: '行业一级不能为空', trigger: 'blur' }],
 	industryLevel2: [{ required: true, message: '行业二级不能为空', trigger: 'blur' }],

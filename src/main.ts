@@ -18,13 +18,14 @@ import {
 	Pagination,
 	RightToolbar,
 	DictTag,
-	UploadExcel,
+	// UploadExcel,
 	UploadFile,
 	UploadImg,
 	Divider,
 	Editor,
 	Tip,
 	DelWrap,
+	customComponents,
 } from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
@@ -59,31 +60,11 @@ ElTimePicker.props.placeholder = {
 app.component('DictTag', DictTag);
 app.component('Pagination', Pagination);
 app.component('RightToolbar', RightToolbar);
-app.component('uploadExcel', UploadExcel);
-app.component('UploadFile', UploadFile);
 app.component('UploadImg', UploadImg);
 app.component('Divider', Divider);
+
 app.component('FormView', FormView);
-app.component(
-	'YesOrNo',
-	defineAsyncComponent(() => import('/@/components/form-controls/yes-or-no-select.vue'))
-);
-app.component(
-	'SpSelect',
-	defineAsyncComponent(() => import('/@/components/form-controls/sp-select.vue'))
-);
-app.component(
-	'MerchantSelect',
-	defineAsyncComponent(() => import('/@/components/form-controls/merchant-select.vue'))
-);
-// app.component(
-// 	'UploadFile',
-// 	defineAsyncComponent(() => import('/@/components/Upload/index.vue'))
-// );
-// app.component(
-// 	'UploadImg',
-// 	defineAsyncComponent(() => import('/@/components/Upload/image.vue'))
-// );
+customComponents.forEach(({ name, component }) => app.component(name, defineAsyncComponent(component)));
 
 // app.component(
 // 	'Divider',
