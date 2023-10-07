@@ -97,27 +97,34 @@
 						<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
 							{{ $t('common.editBtn') }}
 						</el-button>
-						<!--            10 means all-->
-						<el-button v-if="scope.row.merchantAuthScope !== '10'" text type="primary" icon="turn-off" @click="customersRef.openDialog(scope.row)">{{
-							$t('sysuser.distributionMerchant')
-						}}</el-button>
-						<!--            10 means all-->
-						<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
-							$t('sysuser.distributionSp')
-						}}</el-button>
-						<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
-							<span style="margin-left: 12px">
-								<el-button
-									icon="delete"
-									v-auth="'sys_user_del'"
-									:disabled="scope.row.username === 'admin'"
-									text
-									type="primary"
-									@click="handleDelete([scope.row.userId])"
-									>{{ $t('common.delBtn') }}
-								</el-button>
-							</span>
-						</el-tooltip>
+						<template v-if="scope.row.lockFlag === userAbleToggleStatus.enable">
+							<!--            10 means all-->
+							<el-button
+								v-if="scope.row.merchantAuthScope !== '10'"
+								text
+								type="primary"
+								icon="turn-off"
+								@click="customersRef.openDialog(scope.row)"
+								>{{ $t('sysuser.distributionMerchant') }}</el-button
+							>
+							<!--            10 means all-->
+							<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
+								$t('sysuser.distributionSp')
+							}}</el-button>
+							<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
+								<span style="margin-left: 12px">
+									<el-button
+										icon="delete"
+										v-auth="'sys_user_del'"
+										:disabled="scope.row.username === 'admin'"
+										text
+										type="primary"
+										@click="handleDelete([scope.row.userId])"
+										>{{ $t('common.delBtn') }}
+									</el-button>
+								</span>
+							</el-tooltip>
+						</template>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -161,6 +168,10 @@ import { useI18n } from 'vue-i18n';
 import array2Object from '/@/utils/array-2-object';
 import { customerAuth, providerAuth } from './enum';
 
+const userAbleToggleStatus = {
+	enable: '0',
+	disable: '9',
+};
 // 动态引入组件
 const UserForm = defineAsyncComponent(() => import('./form.vue'));
 const QueryTree = defineAsyncComponent(() => import('/@/components/QueryTree/index.vue'));

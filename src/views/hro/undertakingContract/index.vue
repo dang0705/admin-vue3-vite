@@ -82,7 +82,6 @@
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-import { FormOptions } from '/@/components/Form-view.vue';
 import { useI18n } from 'vue-i18n';
 import Array2Object from '/@/utils/array-2-object';
 
