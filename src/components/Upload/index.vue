@@ -2,6 +2,7 @@
 	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
 		<div>
 			<el-upload
+				v-if="props.fileType === 'image' || (props.fileType !== 'image' && !disabled)"
 				action="#"
 				drag
 				:id="uuid"
@@ -17,8 +18,8 @@
 				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-				<template v-if="props.fileType === 'image' && realImages.length && !multiple">
-					<img :src="realImages[0]" class="upload-image" />
+				<template v-if="props.fileType === 'image' && prefixedUrls.length && !multiple">
+					<img :src="prefixedUrls[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
 						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
 							<el-icon :size="iconSize">
@@ -40,7 +41,7 @@
 						</div>
 					</div>
 				</template>
-				<div class="upload-empty" v-else-if="self_disabled ? false : props.fileType !== 'image' || !realImages.length || multiple">
+				<div class="upload-empty" v-else-if="self_disabled ? false : props.fileType !== 'image' || !prefixedUrls.length || multiple">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -53,16 +54,26 @@
 					<span class="text-[#999] text-[14px]"
 						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
 					>
-					<div v-if="fileNameShow" class="text-primary" v-text="`${fileName}`" />
+					<div v-if="showName" class="text-primary" v-text="`${fileName}`" />
 				</template>
 			</el-upload>
+			<template v-if="disabled && props.fileType !== 'image'">
+				<a
+					class="color-primary hover:underline"
+					v-for="(url, index) in prefixedUrls"
+					:key="url"
+					:download="url"
+					:href="url"
+					v-text="`附件${index + 1}`"
+				/>
+			</template>
 			<div class="el-upload__tip">
 				<slot name="tip" />
 			</div>
 		</div>
 		<ul class="flex flex-warp" v-if="multiple">
-			<li v-for="(image, index) in realImages" :key="image">
-				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="realImages" fit="cover" />
+			<li v-for="(image, index) in prefixedUrls" :key="image">
+				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
 				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
 					<el-icon :size="iconSize" class="ml-auto">
 						<Delete />
@@ -71,7 +82,7 @@
 				</div>
 			</li>
 		</ul>
-		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="realImages" />
+		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="prefixedUrls" />
 	</div>
 </template>
 
@@ -81,6 +92,7 @@ import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
 import { IMAGE_TYPES, FILE_TYPES, LIMIT, COMPRESSION } from '/@/configuration/upload-rules';
+import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility';
 
 // 接受父组件参数
 const props = defineProps({
@@ -147,11 +159,20 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
-	fileNameShow: {
+	showName: {
 		type: Boolean,
 		default: false,
 	},
 });
+let fileName = ref('');
+
+const { isInDialog, isDialogShow } = useDialogVisibility();
+
+watch(
+	() => isDialogShow?.value as boolean,
+	(value) => isInDialog && !value && (fileName.value = ''),
+	{ immediate: true }
+);
 const { proxy } = getCurrentInstance();
 
 const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
@@ -169,7 +190,6 @@ const formItemContext = inject(formItemContextKey, void 0);
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => props.disabled || formContext?.disabled);
 // 文件名称
-let fileName = ref('');
 
 /**
  * @description 图片上传
@@ -200,23 +220,23 @@ const upload = async (options: UploadRequestOptions) => {
 	}
 };
 
-const images = ref<string[]>([]);
-const realImages = ref<string[]>([]);
+const urls = ref<string[]>([]);
+const prefixedUrls = ref<string[]>([]);
 
-props.fileType === 'image' &&
-	watch(
-		() => props.modelValue as [],
-		(value: []) => {
-			images.value = value;
-			realImages.value = images.value.map((image) => `${proxy.baseURL}/${image}`);
-		},
-		{ immediate: true }
-	);
+// props.fileType === 'image' &&
+watch(
+	() => props.modelValue as [],
+	(value: []) => {
+		urls.value = value;
+		prefixedUrls.value = urls.value.map((url) => `${proxy.baseURL}/${url}`);
+	},
+	{ immediate: true }
+);
 
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
-	props.multiple ? images.value.push(image) : (images.value = [image]);
-	emit('update:modelValue', images.value);
+	props.multiple ? urls.value.push(image) : (urls.value = [image]);
+	emit('update:modelValue', urls.value);
 	await nextTick();
 	formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
@@ -226,8 +246,8 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
  * */
 const deleteImg = (index: number) => {
 	// (images.value as []).splice(index, 1);
-	props.multiple ? images.value.splice(index, 1) : (images.value = []);
-	emit('update:modelValue', images.value);
+	props.multiple ? urls.value.splice(index, 1) : (urls.value = []);
+	emit('update:modelValue', urls.value);
 };
 
 /**
