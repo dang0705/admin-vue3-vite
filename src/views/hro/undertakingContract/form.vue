@@ -3,6 +3,7 @@
 		<Form-view
 			v-model="formData"
 			v-model:show="visible"
+			:disabled="!!formData.id"
 			:forms="forms"
 			:columns="24"
 			:label-width="140"
@@ -136,10 +137,12 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	try {
 		loading.value = true;
-		formData.id ? await putObj(formData) : await addObj(formData);
-		useMessage().success(formData.id ? '修改成功' : '添加成功');
+		if (!formData.id) {
+			await putObj(formData);
+			useMessage().success('添加成功');
+			emit('refresh');
+		}
 		visible.value = false;
-		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {

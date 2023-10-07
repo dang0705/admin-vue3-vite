@@ -79,6 +79,10 @@ const prop = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
 });
 const form = ref();
 const formData = computed({
@@ -116,13 +120,13 @@ watch(
 	() => prop.show,
 	async (show) => {
 		await nextTick();
-		!prop.modelValue.id && show && form.value.resetFields();
+		show && form.value.resetFields();
 	}
 );
 const submit = async () => {
-	let valid;
+	let valid: boolean;
 	try {
-		valid = await form.value.validate();
+		valid = !prop.disabled ? await form.value.validate() : true;
 	} catch (e) {
 		valid = false;
 	}
