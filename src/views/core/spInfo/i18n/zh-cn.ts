@@ -3,7 +3,7 @@ export default {
 		index: '#',
 		importspInfoTip: '导入服务商-信息',
 		id: '服务商id',
-		spName: '服务商',
+		spName: '服务商名称',
 		busiType: '业务类型',
 		bankNumber: '银行账户',
 		bankName: '开户行',

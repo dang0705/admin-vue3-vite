@@ -48,8 +48,9 @@
 				style="width: 100%"
 			>
 				<!-- <el-table-column type="selection" width="100" align="center" /> -->
-				<el-table-column type="index" label="#" width="200" />
+				<!-- <el-table-column type="index" label="#" width="200" /> -->
 				<el-table-column prop="spName" label="服务商名称" width="200" show-overflow-tooltip />
+				<el-table-column prop="socialCreditCode" label="社会统一信用代码" width="200" show-overflow-tooltip />
 				<el-table-column prop="legalPersonName" label="法人姓名" width="200" show-overflow-tooltip />
 				<el-table-column prop="legalPersonMobile" label="法人手机号" width="250" show-overflow-tooltip />
 				<el-table-column label="状态" width="200">
