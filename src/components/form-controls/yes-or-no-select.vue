@@ -12,7 +12,7 @@ const props = defineProps({
 		default: '',
 	},
 });
-const emit = defineEmits('update:modelValue');
+const emit = defineEmits(['update:modelValue']);
 
 const value = computed({
 	get() {
