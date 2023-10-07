@@ -68,7 +68,15 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="企业上传附件" prop="uploadAttachment">
-						<UploadFile :disabled="isDetail" fileType="file" type="simple" :isLink="false" v-model="form.uploadAttachment" />
+						<UploadFile
+							:disabled="isDetail"
+							fileType="file"
+							file-name-show
+							type="simple"
+							:accept="['.pdf']"
+							:isLink="false"
+							v-model="form.uploadAttachment"
+						/>
 					</el-form-item>
 				</el-col>
 
