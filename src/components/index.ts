@@ -11,3 +11,30 @@ import Editor from '/@/components/Editor/index.vue';
 import Tip from '/@/components/Tip/index.vue';
 
 export { DelWrap, ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, UploadImg, Divider, Editor, Tip };
+
+export const customComponents = [
+	{
+		name: 'SpSelect',
+		component: () => import('/@/components/form-controls/sp-select.vue'),
+	},
+	{
+		name: 'MerchantSelect',
+		component: () => import('/@/components/form-controls/merchant-select.vue'),
+	},
+	{
+		name: 'Dialog',
+		component: () => import('/@/components/Dialog/index.vue'),
+	},
+	{
+		name: 'YesOrNo',
+		component: () => import('/@/components/form-controls/yes-or-no-select.vue'),
+	},
+	{
+		name: 'UploadExcel',
+		component: () => import('/@/components/Upload/Excel.vue'),
+	},
+	{
+		name: 'UploadFile',
+		component: () => import('/@/components/Upload/index.vue'),
+	},
+];

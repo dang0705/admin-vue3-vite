@@ -1,5 +1,37 @@
 <template>
-	<el-dialog :title="formData.id ? '查看合同' : '手动上传合同'" v-model="visible" :close-on-click-modal="false" draggable>
+	<Dialog
+		v-model="visible"
+		v-model:formData="formData"
+		:title="formData.id ? '查看合同' : '手动上传合同'"
+		:disabled="!!formData.id"
+		:forms="forms"
+		:columns="24"
+		:label-width="140"
+		:form-rules="dataRules"
+		:on-submit="onSubmit"
+		vertical
+	>
+		<template #undertakerId>
+			<el-form-item prop="undertakerId" label="签约承接人：">
+				<el-select v-model="formData.undertakerId" :disabled="!!formData.id">
+					<el-option v-for="{ id, undertakerName } in underTackers" :key="id" :value="id" :label="undertakerName" />
+				</el-select>
+			</el-form-item>
+		</template>
+		<template #contractTimeRange>
+			<el-form-item prop="contractTimeRange" label="合同起止时间：">
+				<el-date-picker
+					v-model="formData.contractTimeRange"
+					:disabled="!!formData.id"
+					type="daterange"
+					start-placeholder="请选择开始时间"
+					end-placeholder="请选择结束时间"
+					value-format="YYYY-MM-DD"
+				/>
+			</el-form-item>
+		</template>
+	</Dialog>
+	<!--	<el-dialog :title="formData.id ? '查看合同' : '手动上传合同'" v-model="visible" :close-on-click-modal="false" draggable>
 		<Form-view
 			v-model="formData"
 			v-model:show="visible"
@@ -32,12 +64,12 @@
 				</el-form-item>
 			</template>
 		</Form-view>
-	</el-dialog>
+	</el-dialog>-->
 </template>
 
 <script setup lang="ts" name="UndertakingContractDialog">
 import { useMessage } from '/@/hooks/message';
-import { getObj, addObj, putObj } from '/@/api/hro/undertakingContract';
+import { getObj, addObj } from '/@/api/hro/undertakingContract';
 import request from '/@/utils/request';
 
 const emit = defineEmits(['refresh']);
@@ -46,7 +78,8 @@ const emit = defineEmits(['refresh']);
 const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
-// 定义字典
+
+// 提交表单数据
 const formData = reactive({
 	id: '',
 	contractName: '',
@@ -68,46 +101,37 @@ watch(
 	(spId) => spId && getUndertakerFromSpId(spId)
 );
 
-const forms = computed(() => {
-	const disabled = !!formData.id;
-	return [
-		{
-			control: 'el-input',
-			label: '合同名称',
-			key: 'contractName',
-			props: {
-				placeholder: '请输入合同名称',
-			},
+const forms = [
+	{
+		control: 'el-input',
+		label: '合同名称',
+		key: 'contractName',
+	},
+	{
+		control: 'SpSelect',
+		label: '服务商',
+		key: 'spId',
+	},
+	{
+		key: 'undertakerId',
+		slot: true,
+	},
+	{
+		key: 'contractTimeRange',
+		slot: true,
+	},
+	{
+		control: 'UploadFile',
+		key: 'contractFiles',
+		label: '上传合同扫描件',
+		props: {
+			fileType: 'file',
+			accept: ['.pdf'],
+			type: '10',
+			showName: true,
 		},
-		{
-			control: 'SpSelect',
-			label: '服务商',
-			key: 'spId',
-			props: {
-				placeholder: '请输入合同名称',
-			},
-		},
-		{
-			key: 'undertakerId',
-			slot: true,
-		},
-		{
-			key: 'contractTimeRange',
-			slot: true,
-		},
-		{
-			control: 'UploadFile',
-			key: 'contractFiles',
-			label: '上传合同扫描件',
-			props: {
-				fileType: 'file',
-				accept: ['.pdf'],
-				type: '10',
-			},
-		},
-	];
-});
-// 提交表单数据
+	},
+];
 
 // 定义校验规则
 const dataRules = ref({
