@@ -24,8 +24,8 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="开户行:" prop="bankName">
-							<el-input v-model="form.bankName" :disabled="!!route.query.see" />
+						<el-form-item label="企业邮箱:" prop="email">
+							<el-input v-model="form.email" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -36,8 +36,8 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="企业邮箱:" prop="email">
-							<el-input v-model="form.email" :disabled="!!route.query.see" />
+						<el-form-item label="开户行:" prop="bankName">
+							<el-input v-model="form.bankName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -68,13 +68,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="增值税税率:" prop="valueAddedTaxRatio">
-							<div class="flex"><el-input-number v-model="form.valueAddedTaxRatio" :disabled="!!route.query.see" />&nbsp;%</div>
+							<div class="flex"><el-input-number v-model="form.valueAddedTaxRatio" :min="0" :disabled="!!route.query.see" />&nbsp;%</div>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="单月上限:" prop="monthUpperLimit">
-							<div class="flex flex-1"><el-input-number v-model="form.monthUpperLimit" :disabled="!!route.query.see" />&nbsp;元</div>
+							<div class="flex flex-1"><el-input-number v-model="form.monthUpperLimit" :min="0" :disabled="!!route.query.see" />&nbsp;元</div>
 						</el-form-item>
 					</el-col>
 
@@ -154,14 +154,22 @@
 					<el-col :span="24" class="mb20" v-for="(_, index) in form.qualifications" :key="index">
 						<el-row>
 							<el-col :span="12" class="mb20">
-								<el-form-item label="资质名称:" prop="qualificationName">
-									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" />
+								<el-form-item
+									label="资质名称:"
+									prop="qualificationName"
+									:rules="[{ required: _.filePath.length != 0, message: '资质名称不能为空', trigger: 'blur' }]"
+								>
+									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" :placeholder="!!route.query.see ? '' : '请输入'" />
 								</el-form-item>
 							</el-col>
 
 							<el-col :span="12" class="mb20">
-								<el-form-item label="资质文件:" prop="filePath">
-									<div class="flex items-start flex-wrap">
+								<el-form-item
+									label="资质文件:"
+									prop="filePath"
+									:rules="[{ type: 'array', required: _.qualificationName, message: '资质文件不能为空', trigger: 'change' }]"
+								>
+									<div class="flex items-start flex-wrap" v-if="!(!!route.query.see && _.filePath.length == 0)">
 										<UploadFile :type="businessType" v-model="_.filePath" :disabled="!!route.query.see" />
 										<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!route.query.see && index === form.qualifications.length - 1">
 											<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addQualifications">&plus;添加</li>

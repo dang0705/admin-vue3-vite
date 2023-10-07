@@ -46,3 +46,11 @@ export function switchStatus(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function spPaymentChannel(obj?: Object) {
+	return request({
+		url: '/core/spPaymentChannel',
+		method: 'post',
+		data: obj,
+	});
+}

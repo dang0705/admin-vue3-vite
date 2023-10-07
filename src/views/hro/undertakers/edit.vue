@@ -51,7 +51,7 @@ import { useMessage } from '/@/hooks/message';
 import { addSp, uploadCard, updateMobile } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
-import { getSpInfoList } from '/@/api/core/merchantInfo';
+import { getSpInfoListId } from '/@/api/hro/undertakerInfo';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
@@ -118,7 +118,7 @@ const onSubmit = async () => {
 
 const getUndertakerInfoData = () => {
 	// 获取数据
-	getSpInfoList().then((res: any) => {
+	getSpInfoListId(form.id).then((res: any) => {
 		spinfoList.value = res.data || [];
 	});
 };

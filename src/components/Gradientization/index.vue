@@ -6,7 +6,7 @@ const props = defineProps({
 	},
 	texts: {
 		type: Array,
-		default: () => ['元; 单人单月任务金额 <=', '元,税率', '%'],
+		default: () => ['元 < 单人单月任务金额 <=', '元,税率', '%'],
 	},
 	precisions: {
 		type: Array,
@@ -14,7 +14,7 @@ const props = defineProps({
 	},
 	itemInitValues: {
 		type: Array,
-		default: () => [0, 5000, 3],
+		default: () => [0, 0, 0],
 	},
 	steps: {
 		type: Array,
@@ -72,18 +72,19 @@ watch(
 
 <template>
 	<div :class="['flex', 'flex-wrap', 'items-center', { mt10: index }]" v-for="(_, index) in gradual" :key="index">
+		<!-- :disabled="forceDisabled || !!index || gradual.length > 1" -->
 		<el-input-number
 			class="h-fit max-w-[160px]"
 			:min="0"
 			:step="steps[0]"
-			:disabled="forceDisabled || !!index || gradual.length > 1"
+			disabled
 			:precision="precisions[0]"
 			v-model="gradual[index][props.itemField?.min]"
 		/>&nbsp;<span v-html="texts[0]" />&nbsp;
 		<el-input-number
 			class="h-fit max-w-[160px]"
 			:disabled="forceDisabled || gradual.length - 1 > index"
-			:min="index ? gradual[index][props.itemField?.min] + 1 : 100"
+			:min="index ? gradual[index][props.itemField?.min] + 1 : 0"
 			:step="steps[1] - (gradual[index][props.itemField?.max] % steps[1])"
 			:precision="precisions[1]"
 			v-model="gradual[index][props.itemField?.max]"

@@ -18,7 +18,7 @@
 <script setup lang="ts" name="SpInfoDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { addObj, putObj } from '/@/api/core/spInfo';
+import { spPaymentChannel } from '/@/api/core/spInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
 
@@ -32,13 +32,13 @@ const loading = ref(false);
 const form = reactive({
 	id: '',
 	spId: '',
-	payAccessName: '',
-	accountCategory: '',
-	bankNumber: '',
+	channelName: '',
 	bankName: '',
+	// bankNumber: '',
+	bankBranch: '',
 	bankArea: '',
 	interbankNumber: '',
-	bankCode: '',
+	mainAccount: '',
 });
 
 const conditionForms = ref([
@@ -50,7 +50,7 @@ const conditionForms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'payAccessName',
+		key: 'channelName',
 		label: '支付通道名称:',
 		props: {
 			placeholder: '请输入支付通道名称',
@@ -60,22 +60,22 @@ const conditionForms = ref([
 	{
 		control: 'el-select',
 		options: 'bank_name',
-		key: 'accountCategory',
-		label: '账号类别:',
-		rules: [{ required: true, message: '账号类别不能为空', trigger: 'blur' }],
-	},
-	{
-		control: 'el-input',
-		key: 'bankNumber',
-		label: '网关地址:',
-		props: {
-			placeholder: '请输入网关地址',
-		},
-		rules: [{ required: true, message: '网关地址不能为空', trigger: 'blur' }],
-	},
-	{
-		control: 'el-input',
 		key: 'bankName',
+		label: '账号类别:',
+		rules: [{ required: true, message: '账号类别不能为空', trigger: 'change' }],
+	},
+	// {
+	// 	control: 'el-input',
+	// 	key: 'bankNumber',
+	// 	label: '网关地址:',
+	// 	props: {
+	// 		placeholder: '请输入网关地址',
+	// 	},
+	// 	rules: [{ required: true, message: '网关地址不能为空', trigger: 'blur' }],
+	// },
+	{
+		control: 'el-input',
+		key: 'bankBranch',
 		label: '开户行:',
 		props: {
 			placeholder: '请输入开户行',
@@ -102,7 +102,7 @@ const conditionForms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'bankCode',
+		key: 'mainAccount',
 		label: '主账号:',
 		props: {
 			placeholder: '请输入主账号',
@@ -124,17 +124,13 @@ const openDialog = (id: string) => {
 
 // 提交
 const onSubmit = async () => {
-	const valid = await dataFormRef.value.validate().catch(() => {});
-	if (!valid) return false;
-
 	try {
 		loading.value = true;
-		form.id ? await putObj(form) : await addObj(form);
-		useMessage().success(form.id ? '修改成功' : '添加成功');
+		await spPaymentChannel(form);
+		useMessage().success('开启成功');
 		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

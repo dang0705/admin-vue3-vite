@@ -65,3 +65,10 @@ export function updateMobile(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function getSpInfoListId(id?: string) {
+	return request({
+		url: '/core/merchantInfo/getSpInfoList/' + id,
+		method: 'get',
+	});
+}
