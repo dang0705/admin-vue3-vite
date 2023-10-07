@@ -80,6 +80,7 @@ import { ElNotification, formContextKey, formItemContextKey } from 'element-plus
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
+import { IMAGE_TYPES, FILE_TYPES, LIMIT, COMPRESSION } from '/@/configuration/upload-rules';
 
 // 接受父组件参数
 const props = defineProps({
@@ -104,10 +105,12 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	// 大小约束
 	fileSize: {
 		type: [Number, String],
-		default: 5,
+		default: 0,
 	},
+	// 数量约束
 	limit: {
 		type: [Number, String],
 		default: 0,
@@ -155,11 +158,7 @@ const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
 
-const new_accept = ref(
-	props.fileType == 'image'
-		? ['.xbm', '.tif', '.pjp', '.svgz', '.jpg', '.jpeg', '.ico', '.tiff', '.gif', '.svg', '.jfif', '.webp', '.png', '.bmp', 'pjpeg', '.avif']
-		: ['.png', '.jpg', '.jpeg', '.doc', '.xls', '.ppt', '.txt', '.pdf', '.docx', '.xlsx', '.pptx']
-);
+const new_accept = computed(() => (props.accept.length ? props.accept : props.fileType == 'image' ? IMAGE_TYPES : FILE_TYPES));
 
 // 查看图片
 const imgViewVisible = ref(false);
@@ -244,9 +243,10 @@ const editImg = () => {
  * @param rawFile 选择的文件
  * */
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-	const fileSuffix = rawFile.name.slice(rawFile.name.lastIndexOf('.'));
-	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(fileSuffix);
+	const suffix = rawFile.name.slice(rawFile.name.lastIndexOf('.'));
+	const limit = IMAGE_TYPES.includes(suffix) ? LIMIT.image : COMPRESSION.includes(suffix) ? LIMIT.compression : LIMIT.file;
+	const sizeValid = rawFile.size / 1024 / 1024 < (props.fileSize || limit);
+	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(suffix);
 
 	if (!imgType)
 		ElNotification({
@@ -254,7 +254,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 			message: `上传${fileTypeText}不符合所需的格式！`,
 			type: 'warning',
 		});
-	if (!imgSize)
+	if (!sizeValid)
 		setTimeout(() => {
 			ElNotification({
 				title: '温馨提示',
@@ -263,9 +263,9 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 			});
 		}, 0);
 
-	if (imgType && imgSize) fileName.value = '文件名称：' + rawFile.name;
+	if (imgType && sizeValid) fileName.value = '文件名称：' + rawFile.name;
 
-	return imgType && imgSize;
+	return imgType && sizeValid;
 };
 
 /**

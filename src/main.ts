@@ -66,15 +66,15 @@ app.component('Divider', Divider);
 app.component('FormView', FormView);
 app.component(
 	'YesOrNo',
-	defineAsyncComponent(() => import('/@/components/forms-control/yes-or-no-select.vue'))
+	defineAsyncComponent(() => import('/@/components/form-controls/yes-or-no-select.vue'))
 );
 app.component(
 	'SpSelect',
-	defineAsyncComponent(() => import('/@/components/forms-control/sp-select.vue'))
+	defineAsyncComponent(() => import('/@/components/form-controls/sp-select.vue'))
 );
 app.component(
 	'MerchantSelect',
-	defineAsyncComponent(() => import('/@/components/forms-control/merchant-select.vue'))
+	defineAsyncComponent(() => import('/@/components/form-controls/merchant-select.vue'))
 );
 // app.component(
 // 	'UploadFile',

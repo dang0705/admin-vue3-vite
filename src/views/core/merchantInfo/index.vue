@@ -100,7 +100,7 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, stopObj, getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
-import SpSelect from '/@/components/forms-control/sp-select.vue';
+import SpSelect from '/@/components/form-controls/sp-select.vue';
 
 // 定义变量内容
 const router = useRouter();

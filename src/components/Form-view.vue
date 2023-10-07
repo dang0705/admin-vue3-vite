@@ -12,7 +12,7 @@ export interface FormOptions {
 	control: string; // 控件名称
 	label: string; // 中文字
 	key: string; // 后端字段
-	props?: Props; // element ui 控件对应的props
+	props?: Props; // element ui 控件或自定义组件的props
 	optionUrl?: string; // 下拉/多选/单选组件的后端接口
 	options?: []; // 下拉/多选/单选组件的子元素数组
 	value?: unknown; // 组件默认数据
@@ -107,6 +107,11 @@ const initForms = async (forms: [], formData: object) => {
 		}
 	}
 };
+const dynamicForms = computed(() => {
+	const forms = <any>[];
+	prop.disabled && prop.forms?.forEach((item) => forms.push({ ...item, props: { ...item.props, disabled: true } }));
+	return prop.disabled ? forms : prop.forms;
+});
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
 
 // 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
@@ -149,7 +154,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<el-col v-bind="dynamicColumns" v-for="form in forms" :key="form.key" :class="['mb-2', { 'mb-[14px]': vertical }]">
+						<el-col v-bind="dynamicColumns" v-for="form in dynamicForms" :key="form.key" :class="['mb-2', { 'mb-[14px]': vertical }]">
 							<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
 							<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 								<component

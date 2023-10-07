@@ -76,8 +76,9 @@ import other, { generateUUID } from '/@/utils/other';
 import { Session } from '/@/utils/storage';
 import request from '/@/utils/request';
 import { ElNotification } from 'element-plus';
+import { LIMIT } from '/@/configuration/upload-rules';
+
 const uuid = ref('id-' + generateUUID());
-const emit = defineEmits(['sizeChange', 'refreshDataList']);
 const prop = defineProps({
 	url: {
 		type: String,
@@ -106,7 +107,7 @@ const prop = defineProps({
 	},
 	fileSize: {
 		type: [Number, String],
-		default: 5,
+		default: LIMIT.excel,
 	},
 	formLabelWidth: {
 		type: [String, Number],
@@ -154,6 +155,7 @@ const prop = defineProps({
 });
 const valid = ref(false);
 const uploadRef = ref();
+const emit = defineEmits(['sizeChange', 'refreshDataList']);
 
 const state = reactive({
 	successVisible: false,

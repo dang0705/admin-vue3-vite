@@ -4,7 +4,7 @@
 			<el-row :gutter="24">
 				<el-col :span="24" class="mb20">
 					<el-form-item label="上传身份证:" prop="cardZip">
-						<UploadFile :type="businessType" :accept="['.zip']" fileType="zip" fileSize="200" fileNameShow v-model="form.cardZip" />
+						<UploadFile :type="businessType" :accept="['.zip']" fileType="zip" fileSize="200" fileNameShow v-model="form.cardZip" v-if="visible" />
 					</el-form-item>
 					<ul class="pl-[20px]">
 						<li class="mb-[10px]">文件要求:</li>

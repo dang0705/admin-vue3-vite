@@ -77,7 +77,6 @@ const forms = computed(() => {
 			key: 'contractName',
 			props: {
 				placeholder: '请输入合同名称',
-				disabled,
 			},
 		},
 		{
@@ -86,7 +85,6 @@ const forms = computed(() => {
 			key: 'spId',
 			props: {
 				placeholder: '请输入合同名称',
-				disabled,
 			},
 		},
 		{
@@ -104,7 +102,6 @@ const forms = computed(() => {
 			props: {
 				fileType: 'file',
 				accept: ['.pdf'],
-				disabled,
 				type: '10',
 			},
 		},
@@ -138,7 +135,7 @@ const onSubmit = async () => {
 	try {
 		loading.value = true;
 		if (!formData.id) {
-			await putObj(formData);
+			await addObj(formData);
 			useMessage().success('添加成功');
 			emit('refresh');
 		}
