@@ -42,7 +42,7 @@
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="社会信用代码:" prop="socialCreditCode">
+						<el-form-item label="社会统一信用代码:" prop="socialCreditCode">
 							<el-input v-model="form.socialCreditCode" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
@@ -252,7 +252,7 @@ const dataRules = ref({
 	bankArea: [{ required: route.query.see ? false : true, message: '开户地不能为空', trigger: 'blur' }],
 	email: [{ required: route.query.see ? false : true, message: '企业邮箱不能为空', trigger: 'blur' }],
 	businessLicense: [{ type: 'array', required: route.query.see ? false : true, message: '营业执照不能为空', trigger: 'change' }],
-	socialCreditCode: [{ required: route.query.see ? false : true, message: '社会信用代码不能为空', trigger: 'blur' }],
+	socialCreditCode: [{ required: route.query.see ? false : true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
 	businessScope: [{ required: route.query.see ? false : true, message: '经营范围不能为空', trigger: 'blur' }],
 	taxCalculationType: [{ required: route.query.see ? false : true, message: '个税计算方式不能为空', trigger: 'blur' }],
 	valueAddedTaxRatio: [{ required: route.query.see ? false : true, message: '增值税税率不能为空', trigger: 'blur' }],
