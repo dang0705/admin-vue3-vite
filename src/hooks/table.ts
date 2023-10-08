@@ -132,7 +132,7 @@ export function useTable(options?: BasicTableProps) {
 				});
 
 				// 设置表格展示的数据数组
-				state.dataList = state.isPage ? res.data[state.props.item] : res.data;
+				state.dataList = state.isPage ? eval('res.data.' + state.props.item) : res.data;
 				// 设置分页信息中的总数据条数
 				state.pagination!.total = state.isPage ? res.data[state.props.totalCount] : 0;
 			} catch (err: any) {
