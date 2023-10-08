@@ -91,12 +91,13 @@ watch(
 			class="h-fit max-w-[160px]"
 			:disabled="forceDisabled || gradual.length - 1 > index"
 			:min="index ? gradual[index][props.itemField?.min] + 1 : 0"
-			:step="steps[1] - (gradual[index][props.itemField?.max] % steps[1])"
+			:step="1000"
 			:precision="precisions[1]"
 			v-model="gradual[index][props.itemField?.max]"
 		/>&nbsp;<span v-html="texts[1]" />&nbsp;
 		<el-input-number
 			class="h-fit max-w-[120px]"
+			:min="0"
 			:step="steps[2]"
 			:precision="precisions[2]"
 			v-model="gradual[index].ratio"
