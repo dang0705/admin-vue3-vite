@@ -45,12 +45,18 @@
 				:header-cell-style="tableStyle.headerCellStyle"
 			>
 				<el-table-column type="selection" :selectable="handleSelectable" width="50" align="center" />
-				<el-table-column type="index" :label="$t('sysrole.index')" width="80" />
+				<!--				<el-table-column type="index" :label="$t('sysrole.index')" width="80" />-->
 				<el-table-column prop="roleName" :label="$t('sysrole.roleName')" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleCode" :label="$t('sysrole.roleCode')" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleDesc" :label="$t('sysrole.roleDesc')" show-overflow-tooltip></el-table-column>
+				<el-table-column prop="assignedUsers" :label="$t('sysrole.assignedUsers')" show-overflow-tooltip />
+				<el-table-column prop="enabledStr" :label="$t('sysrole.status')" show-overflow-tooltip>
+					<template #default="{ row: { enabled } }">
+						<span v-text="enabled ? '启用' : '停用'" />
+					</template>
+				</el-table-column>
 				<el-table-column prop="createTime" :label="$t('sysrole.createTime')" show-overflow-tooltip></el-table-column>
-				<el-table-column :label="$t('common.action')" width="300">
+				<el-table-column fixed="right" :label="$t('common.action')" width="300">
 					<template #default="scope">
 						<el-button text type="primary" icon="edit-pen" v-auth="'sys_role_edit'" @click="roleDialogRef.openDialog(scope.row.roleId)"
 							>{{ $t('common.editBtn') }}
