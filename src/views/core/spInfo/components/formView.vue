@@ -270,13 +270,13 @@ const dataRules = ref({
 	legalPersonName: [{ required: route.query.see ? false : true, message: '法人姓名不能为空', trigger: 'blur' }],
 	legalPersonMobile: [{ required: route.query.see ? false : true, message: '法人手机号不能为空', trigger: 'blur' }],
 	legalPersonIdCard: [{ required: route.query.see ? false : true, message: '法人身份证号不能为空', trigger: 'blur' }],
-	legalPersonPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
-	legalPersonNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
-	taxManagerName: [{ required: route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
-	taxManagerMobile: [{ required: route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
-	taxManagerIdCard: [{ required: route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
-	taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
-	taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
+	// legalPersonPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
+	// legalPersonNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
+	// taxManagerName: [{ required: route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
+	// taxManagerMobile: [{ required: route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	// taxManagerIdCard: [{ required: route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
+	// taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
+	// taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
 });
 
 onMounted(async () => {
