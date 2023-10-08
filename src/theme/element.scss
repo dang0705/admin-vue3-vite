@@ -448,3 +448,13 @@ svg {
 		margin-right: 4px;
 	}
 }
+
+.inputNumber {
+	.el-input__wrapper {
+		padding-left: 11px !important;
+		padding-right: 11px !important;
+	}
+	.el-input__inner {
+		text-align: left;
+	}
+}

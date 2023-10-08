@@ -190,9 +190,7 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 
 // 终止合作
@@ -207,8 +205,6 @@ const setStopObj = async (ids: string[]) => {
 		await stopObj(ids);
 		getDataList();
 		useMessage().success('终止合作成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 </script>

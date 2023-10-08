@@ -69,7 +69,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
+							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -119,13 +119,21 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包单价" prop="unitPrice">
-							<el-input-number :disabled="self_disabled" :min="0" v-model="form.unitPrice" :precision="2" :step="0.1"></el-input-number>
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="0"
+								v-model="form.unitPrice"
+								:precision="2"
+								:step="0.1"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包数量" prop="count">
-							<el-input-number :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
+							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
 						</el-form-item>
 					</el-col>
 
@@ -201,10 +209,24 @@
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 140px" class="com_label">年龄要求</div>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
-							<el-input-number :disabled="self_disabled" :min="16" :max="65" v-model="form.taskRequireInfo.requiredAgeMin"></el-input-number>
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMin"
+							></el-input-number>
 						</el-form-item>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
-							<el-input-number :disabled="self_disabled" :min="16" :max="65" v-model="form.taskRequireInfo.requiredAgeMax"></el-input-number>
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMax"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
@@ -395,7 +417,6 @@ const onSubmit = async () => {
 			path: '/core/task/index',
 		});
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

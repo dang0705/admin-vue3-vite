@@ -190,9 +190,7 @@ const handleDeactivate = async () => {
 		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
 		deactivateVisible.value = false;
 		clearCache();
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 
 // 删除操作
@@ -208,8 +206,6 @@ const handleDelete = async (ids: string[]) => {
 		getDataList();
 		useMessage().success('删除成功');
 		clearCache();
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 </script>

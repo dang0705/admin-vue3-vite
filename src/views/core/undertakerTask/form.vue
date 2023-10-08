@@ -239,7 +239,6 @@ const onSubmit = async () => {
 		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

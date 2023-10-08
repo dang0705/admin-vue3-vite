@@ -173,8 +173,6 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 </script>

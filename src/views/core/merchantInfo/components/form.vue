@@ -126,7 +126,8 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankNumber')" prop="taxBankNumber">
-							<el-input :disabled="isDetail" v-model="form.taxBankNumber" />
+							<!-- <el-input :disabled="isDetail" v-model="form.taxBankNumber" /> -->
+							<el-input-number class="inputNumber" :controls="false" :disabled="isDetail" v-model="form.taxBankNumber"></el-input-number>
 						</el-form-item>
 					</el-col>
 
@@ -331,7 +332,7 @@ const form = reactive({
 // 定义校验规则
 const dataRules = ref({
 	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }, limitText({ title: '客户名称' })],
-	socialCreditCode: [{ required: true, message: '社会信用代码不能为空', trigger: 'blur' }],
+	socialCreditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
 	industryLevel1: [{ required: true, message: '行业一级不能为空', trigger: 'blur' }],
 	industryLevel2: [{ required: true, message: '行业二级不能为空', trigger: 'blur' }],
 	enterpriseType: [{ required: true, message: '企业性质(1:私营企业，2：国有企业)不能为空', trigger: 'blur' }],
@@ -345,10 +346,10 @@ const dataRules = ref({
 	logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
 	contactName: [{ required: true, message: '联系人不能为空', trigger: 'blur' }],
-	contactPhone: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' }],
+	contactPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
 	taxRegistrationNumber: [{ required: true, message: '纳税人识别号不能为空', trigger: 'blur' }],
 	taxType: [{ required: true, message: '纳税人类型(1:小规模纳税人，2：一般纳税人)不能为空', trigger: 'blur' }],
-	taxBankNumber: [{ required: true, message: '银行账户不能为空', trigger: 'blur' }],
+	taxBankNumber: [{ required: true, message: '银行账户不能为空', trigger: 'blur' }, limitText({ title: '银行账户', max: 30 })],
 	taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	taxBankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	areaCode: [{ required: true, message: '区号不能为空', trigger: 'blur' }],
@@ -382,7 +383,6 @@ const onSubmit = async () => {
 			path: '/core/merchantInfo/index',
 		});
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

@@ -18,9 +18,9 @@
 	</el-row>
 	<el-row>
 		<div class="mb8" style="width: 100%">
-			<el-button icon="folder-add" type="primary" class="ml10" @click="openMerchantForm('add')" v-auth="'core_merchantInfo_add'">
+			<!-- <el-button icon="folder-add" type="primary" class="ml10" @click="openMerchantForm('add')" v-auth="'core_merchantInfo_add'">
 				{{ $t('merchantInfo.openPayExit') }}
-			</el-button>
+			</el-button> -->
 			<right-toolbar
 				v-model:showSearch="showSearch"
 				:export="'core_merchantInfo_export'"
@@ -158,8 +158,6 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 </script>
