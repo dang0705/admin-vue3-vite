@@ -15,5 +15,7 @@ export default {
 		please_enter_the_role_description: 'please enter the role description',
 		menu_authority: 'menu authority',
 		please_select: 'please select',
+		assignedUsers: 'assignedUsers',
+		status: 'status',
 	},
 };

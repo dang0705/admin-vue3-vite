@@ -89,7 +89,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 				window.location.href = '/'; // 去登录页
 				return;
 			});
-	} else if ([500, 401].includes(status)) {
+	} else if ([500, 401, 400].includes(status)) {
 		useMessageBox().error(ERROR_MSG[status]);
 	}
 
