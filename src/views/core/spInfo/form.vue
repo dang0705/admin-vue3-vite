@@ -47,6 +47,9 @@ const conditionForms = ref([
 		key: 'spId',
 		label: '服务商:',
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
+		props: {
+			disabled: true,
+		},
 	},
 	{
 		control: 'el-input',
@@ -115,6 +118,7 @@ const conditionForms = ref([
 const openDialog = (id: string) => {
 	visible.value = true;
 	form.id = id;
+	form.spId = id;
 
 	// 重置表单数据
 	nextTick(() => {

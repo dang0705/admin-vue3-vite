@@ -156,7 +156,7 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item
 									label="资质名称:"
-									prop="qualificationName"
+									:prop="`qualifications.${index}.qualificationName`"
 									:rules="[{ required: _.filePath.length != 0, message: '资质名称不能为空', trigger: 'blur' }]"
 								>
 									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" :placeholder="!!route.query.see ? '' : '请输入'" />
@@ -166,8 +166,8 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item
 									label="资质文件:"
-									prop="filePath"
-									:rules="[{ type: 'array', required: _.qualificationName, message: '资质文件不能为空', trigger: 'change' }]"
+									:prop="`qualifications.${index}.filePath`"
+									:rules="[{ type: 'array', required: _.qualificationName != '', message: '资质文件不能为空', trigger: 'change' }]"
 								>
 									<div class="flex items-start flex-wrap" v-if="!(!!route.query.see && _.filePath.length == 0)">
 										<UploadFile :type="businessType" v-model="_.filePath" :disabled="!!route.query.see" />
@@ -326,7 +326,7 @@ const onSubmit = async () => {
 		const { useSpStore } = await import('/@/stores/sp');
 		useSpStore().$patch((state) => (state.sp = state.spAll = []));
 	} catch (err: any) {
-		useMessage().error(err.msg);
+		// useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

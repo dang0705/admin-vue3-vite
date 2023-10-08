@@ -1,5 +1,5 @@
 // 上传图片支持的类型
-export const IMAGE_TYPES = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.bmp'];
+export const IMAGE_TYPES = ['.png', '.jpg', '.jpeg', '.gif'];
 
 // 上传文件支持的类型
 export const FILE_TYPES = ['.ppt', '.doc', '.pdf'];
