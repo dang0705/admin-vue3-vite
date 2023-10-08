@@ -152,10 +152,13 @@ const prop = defineProps({
 		type: String,
 		default: '确认',
 	},
+	params: {
+		type: Object,
+		default: () => ({}),
+	},
 });
 const valid = ref(false);
 const uploadRef = ref();
-const emit = defineEmits(['sizeChange', 'refreshDataList']);
 
 const state = reactive({
 	successVisible: false,
@@ -170,7 +173,7 @@ const state = reactive({
 	},
 });
 const accept = ['.xlsx', '.xls'];
-const formData = ref({});
+const formData = ref({ ...prop.params });
 const overallRules = computed(() => [...prop.rules, ...excelRules.value]);
 const excelRules = ref([
 	{
