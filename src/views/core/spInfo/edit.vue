@@ -2,7 +2,7 @@
 	<spInfo-form />
 </template>
 
-<script setup lang="ts" name="spEdit">
+<script setup lang="ts" name="编辑服务商">
 const spInfoForm = defineAsyncComponent(() => import('./components/formView.vue'));
 </script>
 

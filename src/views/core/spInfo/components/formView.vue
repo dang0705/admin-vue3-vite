@@ -156,7 +156,7 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item
 									label="资质名称:"
-									prop="qualificationName"
+									:prop="`qualifications.${index}.qualificationName`"
 									:rules="[{ required: _.filePath.length != 0, message: '资质名称不能为空', trigger: 'blur' }]"
 								>
 									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" :placeholder="!!route.query.see ? '' : '请输入'" />
@@ -166,8 +166,8 @@
 							<el-col :span="12" class="mb20">
 								<el-form-item
 									label="资质文件:"
-									prop="filePath"
-									:rules="[{ type: 'array', required: _.qualificationName, message: '资质文件不能为空', trigger: 'change' }]"
+									:prop="`qualifications.${index}.filePath`"
+									:rules="[{ type: 'array', required: _.qualificationName != '', message: '资质文件不能为空', trigger: 'change' }]"
 								>
 									<div class="flex items-start flex-wrap" v-if="!(!!route.query.see && _.filePath.length == 0)">
 										<UploadFile :type="businessType" v-model="_.filePath" :disabled="!!route.query.see" />
@@ -200,6 +200,7 @@ import { rule } from '/@/utils/validate';
 import { useRoute } from 'vue-router';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
+import { limitText } from '/@/rules';
 // import { useRouter } from 'vue-router';
 // const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 
@@ -253,7 +254,7 @@ const form = reactive({
 
 // 定义校验规则
 const dataRules = ref({
-	spName: [{ required: route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }],
+	spName: [{ required: route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }, limitText({ title: '服务商名称' })],
 	busiType: [{ required: route.query.see ? false : true, message: '业务类型不能为空', trigger: 'blur' }],
 	bankNumber: [{ required: route.query.see ? false : true, message: '银行账户不能为空', trigger: 'blur' }],
 	bankName: [{ required: route.query.see ? false : true, message: '开户行不能为空', trigger: 'blur' }],
@@ -269,13 +270,13 @@ const dataRules = ref({
 	legalPersonName: [{ required: route.query.see ? false : true, message: '法人姓名不能为空', trigger: 'blur' }],
 	legalPersonMobile: [{ required: route.query.see ? false : true, message: '法人手机号不能为空', trigger: 'blur' }],
 	legalPersonIdCard: [{ required: route.query.see ? false : true, message: '法人身份证号不能为空', trigger: 'blur' }],
-	legalPersonPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
-	legalPersonNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
-	taxManagerName: [{ required: route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
-	taxManagerMobile: [{ required: route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
-	taxManagerIdCard: [{ required: route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
-	taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
-	taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
+	// legalPersonPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证头像面不能为空', trigger: 'change' }],
+	// legalPersonNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '法人身份证国徽面不能为空', trigger: 'change' }],
+	// taxManagerName: [{ required: route.query.see ? false : true, message: '办税人姓名不能为空', trigger: 'blur' }],
+	// taxManagerMobile: [{ required: route.query.see ? false : true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	// taxManagerIdCard: [{ required: route.query.see ? false : true, message: '办税人身份证号不能为空', trigger: 'blur' }],
+	// taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
+	// taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
 });
 
 onMounted(async () => {
@@ -325,7 +326,7 @@ const onSubmit = async () => {
 		const { useSpStore } = await import('/@/stores/sp');
 		useSpStore().$patch((state) => (state.sp = state.spAll = []));
 	} catch (err: any) {
-		useMessage().error(err.msg);
+		// useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}
