@@ -60,7 +60,7 @@ const ERROR_MSG = {
 	500: '服务器内部错误',
 	404: '服务器内部错误',
 };
-const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
+const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token', '/gen/generator/download'];
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
 	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success) {
