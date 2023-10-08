@@ -52,6 +52,12 @@ const gradual = ref([
 		[props.itemField?.ratio]: props.itemInitValues[2],
 	},
 ]);
+watch(
+	() => props.modelValue as [],
+	(value: []) => value.length && (gradual.value = value),
+	{ immediate: true }
+);
+
 const addAGradient = () => {
 	const lastGradient = gradual.value[gradual.value.length - 1];
 	const lastMax = lastGradient[props.itemField?.max] as number;
