@@ -105,6 +105,10 @@ const prop = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	params: {
+		type: Object,
+		default: () => {},
+	},
 	fileSize: {
 		type: [Number, String],
 		default: LIMIT.excel,
@@ -225,6 +229,12 @@ const upload = async () => {
 	for (let key in formData.value) {
 		formDataObject.append(key, formData.value[key]);
 	}
+	for (let key in prop.params) {
+		formDataObject.append(key, prop.params[key]);
+	}
+
+	// formDataObject.append('taskId', prop.params.taskId);
+	// console.log('11222', { ...formData.value, ...prop.params });
 	try {
 		const { data } = await request({
 			url: prop.uploadUrl,
@@ -307,3 +317,9 @@ defineExpose({
 	openDialog,
 });
 </script>
+
+<style scoped>
+.el-upload__tip {
+	text-align: left;
+}
+</style>

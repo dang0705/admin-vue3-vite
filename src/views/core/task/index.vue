@@ -98,6 +98,10 @@
 							@click="appointRef.openDialog(scope.row)"
 							>指派承接人</el-button
 						>
+						<el-button v-if="scope.row.status == 20" icon="edit-pen" text type="primary" v-auth="'core_task_exam'" @click="batchAddTask(scope.row)"
+							>批量指派承接人</el-button
+						>
+						<!-- <el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量指派 </el-button> -->
 						<el-button
 							v-if="scope.row.status == 20"
 							icon="edit-pen"
@@ -117,6 +121,20 @@
 		<!-- 编辑、新增  -->
 		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
 		<Appoint ref="appointRef" list-url="/core/undertakerTask/getAssignUndertaker" save-url="/core/undertakerTask/determineAssignUndertaker" />
+
+		<!-- 批量指派承接人-->
+		<uploadExcel
+			ref="addUnderTakerRef"
+			guidance="请先确保待指派的承接人已录入系统且已签署任务的承接服务商，然后按照导入模版填写承接人信息。"
+			upload-label="待签署用户名单"
+			upload-url="core/undertakerTask/batchAppointUndertaker"
+			temp-url="/files/批量导入承接人模板.xlsx"
+			template-on-front
+			:params="params"
+			title="批量指派承接人"
+			:forms="addUnderTakerForms"
+			submitButtonText="下一步"
+		/>
 	</div>
 </template>
 
@@ -175,16 +193,18 @@ const conditionForms = [
 	// 	label: '状态',
 	// },
 ];
+const addUnderTakerRef = ref();
 
 // 定义变量内容
 const router = useRouter();
-
+const addUnderTakerForms = [];
 // 定义变量内容
 const formDialogRef = ref();
 const appointRef = ref();
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
+const params = ref({});
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
@@ -216,6 +236,13 @@ const resetQuery = () => {
 // 导出excel
 const exportExcel = () => {
 	downBlobFile('/core/task/export', Object.assign(state.queryForm, { ids: selectObjs }), 'task.xlsx');
+};
+
+const batchAddTask = (row: any) => {
+	params.value.taskId = row.id;
+	console.log('params', params);
+
+	addUnderTakerRef.value.openDialog(row);
 };
 
 // 新增/编辑/详情
