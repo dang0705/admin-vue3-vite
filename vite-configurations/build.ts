@@ -3,7 +3,7 @@ export default {
 	outDir: 'dist', // 打包输出目录
 	chunkSizeWarningLimit: 1500, // 代码分包阈值
 	rollupOptions: {
-		external: ['element-plus'],
+		// external: ['element-plus'],
 		output: {
 			entryFileNames: `assets/[name].[hash].js`,
 			chunkFileNames: `assets/[name].[hash].js`,
