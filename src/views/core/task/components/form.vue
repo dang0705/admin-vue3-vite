@@ -110,7 +110,7 @@
 								:value-format="dateTimeStr"
 								v-model="form.workTimeRange"
 								is-range
-								range-separator="To"
+								range-separator="至"
 								start-placeholder="工作开始时间"
 								end-placeholder="工作结束时间"
 							/>
@@ -162,7 +162,7 @@
 							<el-time-picker
 								v-model="form.signInOrCheckOutTime"
 								is-range
-								range-separator="To"
+								range-separator="至"
 								start-placeholder="签到时间"
 								end-placeholder="签退时间"
 								:value-format="timeStr"
@@ -330,8 +330,8 @@ const form = reactive({
 	businessPhone: '',
 	taskRequireInfo: {
 		requiredSex: '',
-		requiredAgeMin: '',
-		requiredAgeMax: '',
+		requiredAgeMin: 0,
+		requiredAgeMax: 0,
 		educational: '',
 		experience: '',
 		workFare: '',

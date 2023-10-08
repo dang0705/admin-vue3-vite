@@ -80,7 +80,33 @@
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('edit', scope.row.id)">编辑</el-button>
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_exam'" @click="formDialogRef.openDialog(scope.row.id)">审核</el-button>
+						<el-button
+							v-if="scope.row.status == 10"
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_task_exam'"
+							@click="formDialogRef.openDialog(scope.row.id)"
+							>审核</el-button
+						>
+						<el-button
+							v-if="scope.row.status == 20"
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_task_exam'"
+							@click="appointRef.openDialog(scope.row)"
+							>指派承接人</el-button
+						>
+						<el-button
+							v-if="scope.row.status == 20"
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_task_exam'"
+							@click="formDialogRef.openDialog(scope.row)"
+							>下架</el-button
+						>
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 					</template>
 				</el-table-column>
@@ -90,6 +116,7 @@
 
 		<!-- 编辑、新增  -->
 		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
+		<Appoint ref="appointRef" list-url="/core/undertakerTask/getAssignUndertaker" save-url="/core/undertakerTask/determineAssignUndertaker" />
 	</div>
 </template>
 
@@ -98,10 +125,10 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, putAuditTask } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
-import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 
 // 引入组件
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
+const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
 // 定义查询字典
 
 const conditionForms = [
@@ -140,8 +167,13 @@ const conditionForms = [
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
-		label: '服务商',
+		label: '商户',
 	},
+	// {
+	// 	control: 'status',
+	// 	key: 'merchantId',
+	// 	label: '状态',
+	// },
 ];
 
 // 定义变量内容
@@ -149,8 +181,7 @@ const router = useRouter();
 
 // 定义变量内容
 const formDialogRef = ref();
-const merchantList = ref([]);
-const spinfoList = ref([]);
+const appointRef = ref();
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
@@ -161,6 +192,11 @@ const multiple = ref(true);
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
 	pageList: fetchList,
+	isPage: true,
+	props: {
+		item: 'list.records',
+		totalCount: 'list.total',
+	},
 });
 
 //  table hook
@@ -231,16 +267,6 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
-
-// 获取数据
-getMerchantInfoList().then((res: any) => {
-	merchantList.value = res.data || [];
-});
-
-// 获取数据
-getSpInfoList().then((res: any) => {
-	spinfoList.value = res.data || [];
-});
 
 const task_typeLevel_option = computed(() => {
 	let task_typeLevel_option = {
