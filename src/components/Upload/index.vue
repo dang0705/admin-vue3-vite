@@ -251,7 +251,7 @@ watch(
 	() => props.modelValue as [],
 	(value: []) => {
 		urls.value = value;
-		prefixedUrls.value = urls.value.map((url) => `${proxy.baseURL}/${url}`);
+		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
 	},
 	{ immediate: true }
 );
@@ -311,17 +311,6 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
 	}
 
 	return imgType && sizeValid;
-};
-
-/**
- * @description 图片上传成功
- * */
-const uploadSuccess = () => {
-	ElNotification({
-		title: '温馨提示',
-		message: `${fileTypeText}上传成功！`,
-		type: 'success',
-	});
 };
 
 /**

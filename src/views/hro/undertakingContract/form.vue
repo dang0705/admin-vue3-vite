@@ -31,40 +31,6 @@
 			</el-form-item>
 		</template>
 	</Dialog>
-	<!--	<el-dialog :title="formData.id ? '查看合同' : '手动上传合同'" v-model="visible" :close-on-click-modal="false" draggable>
-		<Form-view
-			v-model="formData"
-			v-model:show="visible"
-			:disabled="!!formData.id"
-			:forms="forms"
-			:columns="24"
-			:label-width="140"
-			:form-rules="dataRules"
-			:on-submit="onSubmit"
-			vertical
-			ref="dataFormRef"
-		>
-			<template #undertakerId>
-				<el-form-item prop="undertakerId" label="签约承接人：">
-					<el-select v-model="formData.undertakerId" :disabled="!!formData.id">
-						<el-option v-for="{ id, undertakerName } in underTackers" :key="id" :value="id" :label="undertakerName" />
-					</el-select>
-				</el-form-item>
-			</template>
-			<template #contractTimeRange>
-				<el-form-item prop="contractTimeRange" label="合同起止时间：">
-					<el-date-picker
-						v-model="formData.contractTimeRange"
-						:disabled="!!formData.id"
-						type="daterange"
-						start-placeholder="请选择开始时间"
-						end-placeholder="请选择结束时间"
-						value-format="YYYY-MM-DD"
-					/>
-				</el-form-item>
-			</template>
-		</Form-view>
-	</el-dialog>-->
 </template>
 
 <script setup lang="ts" name="UndertakingContractDialog">
