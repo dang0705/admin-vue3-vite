@@ -3,7 +3,7 @@
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
 				<keep-alive :include="getKeepAliveNames">
-					<component :is="Component" :key="state.refreshRouterViewKey" class="w100" v-show="!isIframePage" />
+					<component :is="Component" :key="state.refreshRouterViewKey" class="w100" v-show="!isIframePage" v-if="route.meta.isKeepAlive" />
 				</keep-alive>
 			</transition>
 			<transition :name="setTransitionName" mode="out-in">
@@ -44,9 +44,13 @@ const setTransitionName = computed(() => {
 	return themeConfig.value.animation;
 });
 // 获取组件缓存列表(name值)
+<<<<<<< HEAD
 const getKeepAliveNames = computed(() => {
 	return themeConfig.value.isTagsview ? cachedViews.value : state.keepAliveNameList;
 });
+=======
+const getKeepAliveNames = computed(() => (themeConfig.value.isTagsview ? cachedViews.value : state.keepAliveNameList));
+>>>>>>> feature_1.0.0
 // 设置 iframe 显示/隐藏
 const isIframePage = computed(() => {
 	return route.meta.isIframe;
