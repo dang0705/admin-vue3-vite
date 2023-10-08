@@ -52,6 +52,7 @@ import { addSp, uploadCard, updateMobile } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import { getSpInfoListId } from '/@/api/hro/undertakerInfo';
+
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
@@ -87,6 +88,7 @@ const openDialog = (id: string, type: string, phone: string) => {
 	form.id = id;
 	form.type = type;
 	if (phone) form.phone = phone;
+	if (type === 'addSp') getUndertakerInfoData();
 
 	// 重置表单数据
 	nextTick(() => {
@@ -122,8 +124,6 @@ const getUndertakerInfoData = () => {
 		spinfoList.value = res.data || [];
 	});
 };
-
-getUndertakerInfoData();
 
 // 暴露变量
 defineExpose({

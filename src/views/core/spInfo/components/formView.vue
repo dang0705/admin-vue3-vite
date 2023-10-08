@@ -200,6 +200,7 @@ import { rule } from '/@/utils/validate';
 import { useRoute } from 'vue-router';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
+import { limitText } from '/@/rules';
 // import { useRouter } from 'vue-router';
 // const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 
@@ -253,7 +254,7 @@ const form = reactive({
 
 // 定义校验规则
 const dataRules = ref({
-	spName: [{ required: route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }],
+	spName: [{ required: route.query.see ? false : true, message: '服务商名称不能为空', trigger: 'blur' }, limitText({ title: '服务商名称' })],
 	busiType: [{ required: route.query.see ? false : true, message: '业务类型不能为空', trigger: 'blur' }],
 	bankNumber: [{ required: route.query.see ? false : true, message: '银行账户不能为空', trigger: 'blur' }],
 	bankName: [{ required: route.query.see ? false : true, message: '开户行不能为空', trigger: 'blur' }],

@@ -68,7 +68,7 @@ export function updateMobile(obj?: Object) {
 
 export function getSpInfoListId(id?: string) {
 	return request({
-		url: '/core/merchantInfo/getSpInfoList/' + id,
+		url: '/core/undertakerInfo/getSpInfoList/' + id,
 		method: 'get',
 	});
 }
