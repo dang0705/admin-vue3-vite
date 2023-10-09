@@ -19,7 +19,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="银行账户:" prop="bankNumber">
-							<el-input v-model="form.bankNumber" :disabled="!!route.query.see" />
+							<el-input v-model="form.bankNumber" @input="inputVal" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -280,6 +280,10 @@ const dataRules = ref({
 	// taxManagerPortrait: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证头像面不能为空', trigger: 'change' }],
 	// taxManagerNationalEmblem: [{ type: 'array', required: route.query.see ? false : true, message: '办税人身份证国徽面不能为空', trigger: 'change' }],
 });
+// 纯数字输入框
+const inputVal = () => {
+	form.bankNumber = form.bankNumber.replace(/[^0-9]/g, '');
+};
 
 onMounted(async () => {
 	form.id = '';
