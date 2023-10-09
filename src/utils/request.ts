@@ -56,11 +56,6 @@ service.interceptors.request.use(
 const STATUS = {
 	success: 0,
 };
-const ERROR_MSG = {
-	500: '服务器内部错误',
-	404: '服务器内部错误',
-};
-
 // exclude token url
 const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
 // exclude download url
@@ -93,8 +88,8 @@ service.interceptors.response.use(handleResponse, (error) => {
 				window.location.href = '/'; // 去登录页
 				return;
 			});
-	} else if ([500, 401].includes(status)) {
-		useMessageBox().error(ERROR_MSG[status]);
+	} else {
+		useMessageBox().error(`服务内部错误${status}`);
 	}
 
 	return Promise.reject(error.response.data);
