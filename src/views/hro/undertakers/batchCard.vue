@@ -27,6 +27,7 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
+import { uploadUndertakerCard } from '/@/api/hro/undertakerInfo';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
@@ -63,12 +64,11 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
-
+		await uploadUndertakerCard({ file: form.cardZip });
 		useMessage().success('上传身份证成功');
 		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

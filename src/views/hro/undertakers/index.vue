@@ -11,49 +11,6 @@
 				submit-button-text="查询"
 				cancel-button-text="重置"
 			/>
-			<!--			<el-row class="ml10" v-show="showSearch">
-				<el-form :inline="true" :model="state.queryForm" ref="queryRef">
-					<el-form-item :label="$t('undertakerInfo.undertakerName')" prop="undertakerName">
-						<el-input :placeholder="$t('undertakerInfo.inputUndertakerNameTip')" style="max-width: 180px" v-model="state.queryForm.undertakerName" />
-					</el-form-item>
-					<el-form-item :label="$t('undertakerInfo.undertakerCard')" prop="undertakerCard">
-						<el-input :placeholder="$t('undertakerInfo.inputUndertakerCardTip')" style="max-width: 180px" v-model="state.queryForm.undertakerCard" />
-					</el-form-item>
-					<el-form-item :label="$t('undertakerInfo.undertakerPhone')" prop="undertakerPhone">
-						<el-input
-							:placeholder="$t('undertakerInfo.inputUndertakerPhoneTip')"
-							style="max-width: 180px"
-							v-model="state.queryForm.undertakerPhone"
-						/>
-					</el-form-item>
-					<el-form-item :label="t('undertakerInfo.isAuthentication')" class="ml2" prop="isAuthentication">
-						<el-select :placeholder="t('undertakerInfo.inputIsAuthenticationTip')" v-model="state.queryForm.isAuthentication">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item :label="t('undertakerInfo.isSign')" class="ml2" prop="isSign">
-						<el-select :placeholder="t('undertakerInfo.inputIsSignTip')" v-model="state.queryForm.isSign">
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item :label="t('undertakerInfo.spName')" class="ml2" prop="spId">
-						<el-select :placeholder="t('undertakerInfo.inputSpNameTip')" v-model="state.queryForm.spId">
-							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item :label="t('undertakerInfo.merchantName')" class="ml2" prop="merchantId">
-						<el-select :placeholder="t('undertakerInfo.inputMerchantNameTip')" v-model="state.queryForm.merchantId">
-							<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantInfoList"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item>
-						<el-button @click="getDataList" formDialogRef icon="search" type="primary">
-							{{ $t('common.queryBtn') }}
-						</el-button>
-						<el-button @click="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
-					</el-form-item>
-				</el-form>
-			</el-row>-->
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
@@ -211,7 +168,7 @@
 			ref="bindBankRef"
 			guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
 			upload-label="承接人银行卡信息表"
-			upload-url=""
+			upload-url="core/undertakerInfo/importUndertakerBank"
 			temp-url="/files/批量绑定银行卡模板.xlsx"
 			template-on-front
 			formLabelWidth="170"

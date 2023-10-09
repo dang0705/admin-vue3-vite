@@ -4,37 +4,37 @@
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="姓名:" prop="undertakerName">
-						<el-input v-model="form.undertakerName" placeholder="请输入姓名" disabled />
+						<el-input v-model="form.undertakerName" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="证件号码:" prop="undertakerCard">
-						<el-input v-model="form.undertakerCard" placeholder="请输入证件号码" disabled />
+						<el-input v-model="form.undertakerCard" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="手机号码:" prop="undertakerPhone">
-						<el-input v-model="form.undertakerPhone" placeholder="请输入手机号码" disabled />
+						<el-input v-model="form.undertakerPhone" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="银行卡号:" prop="bankNumber">
-						<el-input v-model="form.bankNumber" placeholder="请输入银行卡号" disabled />
+						<el-input v-model="form.bankNumber" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开户行:" prop="bankName">
-						<el-input v-model="form.bankName" placeholder="请输入开户行" disabled />
+						<el-input v-model="form.bankName" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="是否实名认证:" prop="isAuthentication">
-						<el-select placeholder="请输入是否实名认证" v-model="form.isAuthentication" disabled>
+						<el-select placeholder="" v-model="form.isAuthentication" disabled>
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
 						</el-select>
 					</el-form-item>
@@ -42,7 +42,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="性别:" prop="undertakerSex">
-						<el-select placeholder="请输入性别" v-model="form.undertakerSex" disabled>
+						<el-select placeholder="" v-model="form.undertakerSex" disabled>
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in gender"></el-option>
 						</el-select>
 					</el-form-item>
@@ -50,13 +50,13 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="年龄:" prop="undertakerAge">
-						<el-input v-model="form.undertakerAge" placeholder="请输入年龄" disabled />
+						<el-input v-model="form.undertakerAge" placeholder="" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="学历:" prop="undertakerEducation">
-						<el-select placeholder="请输入学历" v-model="form.undertakerEducation" disabled>
+						<el-select placeholder="" v-model="form.undertakerEducation" disabled>
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in education"></el-option>
 						</el-select>
 					</el-form-item>
@@ -77,13 +77,13 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="身份证正面:" prop="undertakerPortrait">
-						<UploadFile :type="businessType" v-model="form.undertakerPortrait" disabled />
+						<UploadFile v-if="form.undertakerPortrait.length > 0" :type="businessType" v-model="form.undertakerPortrait" disabled />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="身份证反面:" prop="undertakerNationalEmblem">
-						<UploadFile :type="businessType" v-model="form.undertakerNationalEmblem" disabled />
+						<UploadFile v-if="form.undertakerNationalEmblem.length > 0" :type="businessType" v-model="form.undertakerNationalEmblem" disabled />
 					</el-form-item>
 				</el-col>
 			</el-row>
