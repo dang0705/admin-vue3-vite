@@ -324,9 +324,7 @@ const onSubmit = async () => {
 		form.id ? await putObj(form) : await addObj(form);
 		useMessage().success(form.id ? '修改成功' : '添加成功');
 		visible.value = false;
-		emit('refresh');
-		mittBus.emit('spRefresh');
-		router.push({ name: '服务商' });
+		router.push({ name: '服务商', state: { refresh: 1 } });
 		const { useSpStore } = await import('/@/stores/sp');
 		useSpStore().$patch((state) => (state.sp = state.spAll = []));
 	} catch (err: any) {
