@@ -255,7 +255,7 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { limitText } from '/@/rules';
-
+import mittBus from '/@/utils/mitt';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 
 import uploadBusinessType from '/@/enums/upload-business-type';
@@ -377,9 +377,6 @@ const resetFields = () => {
 };
 // 提交;
 const onSubmit = async () => {
-	// console.log('ssss', ref());
-
-	// return;
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
 
@@ -390,7 +387,7 @@ const onSubmit = async () => {
 		router.push({
 			path: '/core/merchantInfo/index',
 		});
-		// console.log('当前state', state);
+		mittBus.emit('refresh', '/core/merchantInfo/index');
 	} catch (err: any) {
 	} finally {
 		loading.value = false;

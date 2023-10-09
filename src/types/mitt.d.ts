@@ -9,6 +9,7 @@
  * @method layoutMobileResize 浏览器窗口改变时，用于适配移动端界面显示
  * @method openOrCloseSortable 布局设置弹窗，开启 TagsView 拖拽
  * @method openShareTagsView 布局设置弹窗，开启 TagsView 共用
+ * @method refresh 设置tab刷新
  * @method onTagsViewRefreshRouterView tagsview 刷新界面
  * @method onCurrentContextmenuClick tagsview 右键菜单每项点击时
  */
@@ -21,6 +22,7 @@ declare type MittType<T = any> = {
 	layoutMobileResize: T;
 	openOrCloseSortable?: string;
 	openShareTagsView?: string;
+	refresh?: string;
 	onTagsViewRefreshRouterView?: T;
 	onCurrentContextmenuClick?: T;
 };
