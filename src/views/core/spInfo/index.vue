@@ -118,6 +118,7 @@ import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import keepAliveListRefresh from '/@/hooks/keep-alive-list-refresh';
 
 import mittBus from '/@/utils/mitt';
 
@@ -150,12 +151,12 @@ mittBus.on('spRefresh', () => resetQuery());
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 
 // 清空搜索条件
-const resetQuery = () => {
+const resetQuery = async () => {
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
-	getDataList();
+	await getDataList();
 };
 
 // 导出excel
@@ -204,7 +205,6 @@ const handleDelete = async (ids: string[]) => {
 	} catch {
 		return;
 	}
-
 	try {
 		await delObjs(ids);
 		getDataList();
@@ -212,4 +212,5 @@ const handleDelete = async (ids: string[]) => {
 		clearCache();
 	} catch (err: any) {}
 };
+keepAliveListRefresh(resetQuery);
 </script>
