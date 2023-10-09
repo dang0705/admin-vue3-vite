@@ -26,7 +26,7 @@
 				<slot :name="slot" />
 			</template>
 			<template #after-forms>
-				<el-form-item :prop="mainField" :label="`${title}：`" :rules="excelRules">
+				<el-form-item style="margin-bottom: 20px !important" :prop="mainField" :label="`${title}：`" :rules="excelRules">
 					<el-upload
 						action="#"
 						drag

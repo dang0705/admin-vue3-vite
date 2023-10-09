@@ -112,8 +112,8 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
-							<!-- <el-input :disabled="isDetail" v-model="form.taxRegistrationNumber" /> -->
-							<span>{{ form.socialCreditCode }}</span>
+							<el-input readonly v-model="form.socialCreditCode" />
+							<!-- <span>{{ form.socialCreditCode }}</span> -->
 						</el-form-item>
 					</el-col>
 
