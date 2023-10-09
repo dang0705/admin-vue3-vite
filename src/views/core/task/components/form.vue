@@ -1,12 +1,12 @@
 <template>
 	<el-card class="!border-none" shadow="never">
-		<el-steps class="mb-8" :active="curStep" finish-status="success">
+		<el-steps v-if="!self_disabled" class="mb-8" :active="curStep" finish-status="success">
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="140px" formDialogRef v-loading="loading">
 			<div>
-				<Divider v-if="curStep == 2" :title="stepList[0]" />
+				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="客户" prop="merchantId">
@@ -107,6 +107,7 @@
 							></el-date-picker> -->
 
 							<el-time-picker
+								:disabled="self_disabled"
 								:value-format="dateTimeStr"
 								v-model="form.workTimeRange"
 								is-range
@@ -168,6 +169,7 @@
 					<el-col :span="12" class="mb20">
 						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
 							<el-time-picker
+								:disabled="self_disabled"
 								v-model="form.signInOrCheckOutTime"
 								is-range
 								range-separator="至"
@@ -196,8 +198,8 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
-				<Divider v-if="curStep == 2" :title="stepList[1]" />
-				<el-row v-if="curStep == 1 || curStep == 2" :gutter="24">
+				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
+				<el-row v-if="curStep == 1 || curStep == 2 || self_disabled" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="性别" prop="taskRequireInfo.requiredSex">
 							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
@@ -260,7 +262,7 @@
 				</el-row>
 			</div>
 		</el-form>
-		<span class="flex justify-center items-center mt-5">
+		<span v-if="!self_disabled" class="flex justify-center items-center mt-5">
 			<el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
 			<el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
 			<el-button v-if="curStep == stepList.length - 1" type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
@@ -364,6 +366,13 @@ const form = reactive({
 
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 2 ? true : false));
+// const self_disabled = watch(() => (props.isDetail ? true : curStep.value === 2 ? true : false));
+// watch(
+// 	() => props.isDetail,
+// 	(val) => {
+// 		console.log('val-111', val);
+// 	}
+// );
 
 // 定义校验规则
 const dataRules = ref({
