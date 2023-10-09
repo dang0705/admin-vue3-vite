@@ -13,7 +13,22 @@ export default [
 	svgBuilder('./src/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
 	vueSetupExtend(), // setup语法糖增强插件
 	AutoImport({
-		imports: ['vue', 'vue-router', 'pinia'], // 自动导入的依赖库数组
+		include: [
+			/\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+			/\.vue$/,
+			/\.vue\?vue/, // .vue
+		],
+		eslintrc: {
+			enabled: true,
+		},
+		imports: [
+			'vue',
+			'vue-router',
+			'pinia',
+			{
+				'/@/utils/mitt': [['default', '$bus']],
+			},
+		], // 自动导入的依赖库数组
 		dts: './auto-imports.d.ts', // 自动导入类型定义文件路径
 	}),
 	createStyleImportPlugin({
