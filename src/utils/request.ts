@@ -60,10 +60,14 @@ const ERROR_MSG = {
 	500: '服务器内部错误',
 	404: '服务器内部错误',
 };
+
+// exclude token url
 const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
+// exclude download url
+const downloadUrlRegex = /^\/gen\/generator\/download/;
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
-	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success) {
+	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success && !downloadUrlRegex.test(config.url as string)) {
 		useMessageBox().error(response.data.msg);
 		return Promise.reject(response.data.msg);
 	}
@@ -89,7 +93,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 				window.location.href = '/'; // 去登录页
 				return;
 			});
-	} else if ([500, 401, 400].includes(status)) {
+	} else if ([500, 401].includes(status)) {
 		useMessageBox().error(ERROR_MSG[status]);
 	}
 
