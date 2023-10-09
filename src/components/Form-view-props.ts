@@ -12,7 +12,9 @@ export interface FormOptions {
 	options?: []; // 下拉/多选/单选组件的子元素数组
 	value?: unknown; // 组件默认数据
 	rules?: []; // 验证规则
-	slot?: boolean | string; //插槽
+	slot?: boolean | string; //插槽,
+	title?: string; // 表单区间的标题
+	getValue?: Function; // 转义值的函数
 }
 export default {
 	forms: {
@@ -42,6 +44,10 @@ export default {
 	onCancel: {
 		type: Function,
 		default: null,
+	},
+	showCancel: {
+		type: Boolean,
+		default: true,
 	},
 	submitButtonText: {
 		type: String,
