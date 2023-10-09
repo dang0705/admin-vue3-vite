@@ -60,11 +60,11 @@ watch(
 
 const addAGradient = () => {
 	const lastGradient = gradual.value[gradual.value.length - 1];
-	const lastMax = lastGradient[props.itemField?.max] as number;
+	const lastMax = Number(lastGradient[props.itemField?.max] as number);
 	gradual.value.push({
 		[props.itemField?.min]: lastMax,
 		[props.itemField?.max]: lastMax + 1000,
-		[props.itemField?.ratio]: (lastGradient[props.itemField?.ratio] as number) + 0.1,
+		[props.itemField?.ratio]: Number(lastGradient[props.itemField?.ratio] as number) + 0.1,
 	});
 };
 const removeAGradient = (index: number) => gradual.value.splice(index, 1);
