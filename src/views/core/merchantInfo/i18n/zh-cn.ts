@@ -1,9 +1,9 @@
 export default {
 	merchantInfo: {
 		index: '#',
-		importmerchantInfoTip: '导入商户-信息',
-		id: '商户id',
-		merchantName: '商户名称',
+		importmerchantInfoTip: '导入客户-信息',
+		id: '客户id',
+		merchantName: '客户名称',
 		socialCreditCode: '社会统一信用代码',
 		spList: '服务商',
 		openPayExit: '开通支付通道',
@@ -54,8 +54,8 @@ export default {
 		updateBy: '修改人',
 		updateTime: '更新时间',
 		delFlag: '删除标志，0未删除，1已删除',
-		inputIdTip: '请输入商户id',
-		inputMerchantNameTip: '请输入商户名称',
+		inputIdTip: '请输入客户id',
+		inputMerchantNameTip: '请输入客户名称',
 		inputSocialCreditCodeTip: '请输入社会统一信用代码',
 		inputIndustryLevel1Tip: '请选择行业一级',
 		inputIndustryLevel2Tip: '请选择行业二级',
