@@ -37,4 +37,8 @@ export const customComponents = [
 		name: 'UploadFile',
 		component: () => import('/@/components/Upload/index.vue'),
 	},
+	{
+		name: 'DateRange',
+		component: () => import('/@/components/form-controls/Date-range.vue'),
+	},
 ];
