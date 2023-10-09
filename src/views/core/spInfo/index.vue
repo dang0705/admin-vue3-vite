@@ -112,7 +112,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemSpInfo">
+<script setup lang="ts" name="服务商">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';

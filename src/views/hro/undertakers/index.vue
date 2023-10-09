@@ -221,7 +221,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemUndertakerInfo">
+<script setup lang="ts" name="承接人名册">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/hro/undertakerInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
