@@ -18,7 +18,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="merchantDetail">
+<script setup lang="ts" name="商户详情">
 // const merchantInfoView = defineAsyncComponent(() => import('./components/formView.vue'));
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 // const merchantInfoDetail = defineAsyncComponent(() => import('./components/formDetail.vue'));

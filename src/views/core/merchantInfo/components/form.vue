@@ -112,7 +112,8 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
-							<el-input :disabled="isDetail" v-model="form.taxRegistrationNumber" />
+							<!-- <el-input :disabled="isDetail" v-model="form.taxRegistrationNumber" /> -->
+							<span>{{ form.socialCreditCode }}</span>
 						</el-form-item>
 					</el-col>
 
@@ -126,8 +127,8 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankNumber')" prop="taxBankNumber">
-							<!-- <el-input :disabled="isDetail" v-model="form.taxBankNumber" /> -->
-							<el-input-number class="inputNumber" :controls="false" :disabled="isDetail" v-model="form.taxBankNumber"></el-input-number>
+							<el-input :disabled="isDetail" v-model="form.taxBankNumber" />
+							<!-- <el-input-number class="inputNumber" :controls="false" :disabled="isDetail" v-model="form.taxBankNumber"></el-input-number> -->
 						</el-form-item>
 					</el-col>
 
@@ -254,7 +255,7 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { limitText } from '/@/rules';
-
+import mittBus from '/@/utils/mitt';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 
 import uploadBusinessType from '/@/enums/upload-business-type';
@@ -331,7 +332,7 @@ const form = reactive({
 // });
 // 定义校验规则
 const dataRules = ref({
-	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }, limitText({ title: '客户名称' })],
+	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }, limitText({ title: '客户名称', min: 1 })],
 	socialCreditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
 	industryLevel1: [{ required: true, message: '行业一级不能为空', trigger: 'blur' }],
 	industryLevel2: [{ required: true, message: '行业二级不能为空', trigger: 'blur' }],
@@ -347,9 +348,13 @@ const dataRules = ref({
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
 	contactName: [{ required: true, message: '联系人不能为空', trigger: 'blur' }],
 	contactPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
-	taxRegistrationNumber: [{ required: true, message: '纳税人识别号不能为空', trigger: 'blur' }],
+	// taxRegistrationNumber: [{ required: true, message: '纳税人识别号不能为空', trigger: 'blur' }],
 	taxType: [{ required: true, message: '纳税人类型(1:小规模纳税人，2：一般纳税人)不能为空', trigger: 'blur' }],
-	taxBankNumber: [{ required: true, message: '银行账户不能为空', trigger: 'blur' }, limitText({ title: '银行账户', max: 30 })],
+	taxBankNumber: [
+		{ required: true, message: '银行账户不能为空', trigger: 'blur' },
+		{ message: '请输入正确的银行账户', pattern: /(^[1-9]\d*$)/, max: 30 },
+		// limitText({ title: '银行账户', min: 3, max: 30 }),
+	],
 	taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	taxBankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	areaCode: [{ required: true, message: '区号不能为空', trigger: 'blur' }],
@@ -382,6 +387,7 @@ const onSubmit = async () => {
 		router.push({
 			path: '/core/merchantInfo/index',
 		});
+		mittBus.emit('refresh', '/core/merchantInfo/index');
 	} catch (err: any) {
 	} finally {
 		loading.value = false;

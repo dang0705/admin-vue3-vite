@@ -95,7 +95,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemMerchantInfo">
+<script setup lang="ts" name="商户">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, stopObj, getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
