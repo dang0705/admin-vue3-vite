@@ -43,7 +43,7 @@ const dynamicForms = computed(() => {
 });
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
 
-// 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
+// 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
 watch(
 	() => prop.forms,
 	(forms) => initForms(forms as [], formData.value),
@@ -83,33 +83,40 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<el-col v-bind="dynamicColumns" v-for="form in dynamicForms" :key="form.key" :class="['mb-2', { 'mb-[14px]': vertical }]">
-							<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
-							<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-								<component
-									:is="form.control"
-									v-model="formData[form.key]"
-									v-bind="{ ...form.props, ...(form.props?.clearable === undefined ? { clearable: true } : {}) }"
-								>
-									<template v-if="form.control === 'el-select'">
-										<el-option
-											v-for="item in formOptions[form.key]"
-											:key="item[form.props?.value]"
-											:value="item[form.props?.value || 'value']"
-											:label="item[form.props?.label || 'label']"
-										/>
-									</template>
-									<template v-if="form.control === 'el-radio-group'">
-										<el-radio
-											v-for="item in formOptions[form.key]"
-											:key="item[form.props?.value || 'value']"
-											:label="item[form.props?.value || 'value']"
-											>{{ item[form.props?.label || 'label'] }}</el-radio
-										>
-									</template>
-								</component>
-							</el-form-item>
-						</el-col>
+						<template v-for="form in dynamicForms" :key="form.key">
+							<el-col :span="24" v-if="form.title">
+								<slot :name="`title-before-${form.key}`">
+									<h1 v-text="form.title" class="mb-[20px]" />
+								</slot>
+							</el-col>
+							<el-col v-bind="dynamicColumns" :class="['mb-2', { 'mb-[14px]': vertical }]">
+								<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
+								<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+									<component
+										:is="form.control"
+										v-model="formData[form.key]"
+										v-bind="{ ...form.props, ...(form.props?.clearable === undefined ? { clearable: true } : {}) }"
+									>
+										<template v-if="form.control === 'el-select'">
+											<el-option
+												v-for="item in formOptions[form.key]"
+												:key="item[form.props?.value]"
+												:value="item[form.props?.value || 'value']"
+												:label="item[form.props?.label || 'label']"
+											/>
+										</template>
+										<template v-if="form.control === 'el-radio-group'">
+											<el-radio
+												v-for="item in formOptions[form.key]"
+												:key="item[form.props?.value || 'value']"
+												:label="item[form.props?.value || 'value']"
+												>{{ item[form.props?.label || 'label'] }}</el-radio
+											>
+										</template>
+									</component>
+								</el-form-item>
+							</el-col>
+						</template>
 					</slot>
 					<el-col v-bind="dynamicColumns" class="my-2">
 						<slot name="after-forms" />
@@ -118,7 +125,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 				<el-form-item :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
-					<el-button @click="cancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>
+					<el-button @click="cancel" v-if="showCancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>
 				</el-form-item>
 			</div>
 		</el-form>

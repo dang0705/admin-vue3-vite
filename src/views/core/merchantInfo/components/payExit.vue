@@ -1,10 +1,13 @@
 <template>
 	<el-row shadow="hover" v-show="showSearch" class="ml10">
 		<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
-			<el-form-item :label="$t('merchantInfo.spList')" prop="spList">
+			<!-- <el-form-item :label="$t('merchantInfo.spList')" prop="spList">
 				<el-select placeholder="请选择" clearable v-model="state.queryForm.spList">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
 				</el-select>
+			</el-form-item> -->
+			<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
+				<sp-select v-model="state.queryForm.spId" />
 			</el-form-item>
 			<el-form-item>
 				<div class="wr100">
@@ -18,9 +21,9 @@
 	</el-row>
 	<el-row>
 		<div class="mb8" style="width: 100%">
-			<!-- <el-button icon="folder-add" type="primary" class="ml10" @click="openMerchantForm('add')" v-auth="'core_merchantInfo_add'">
+			<el-button icon="folder-add" type="primary" class="ml10" @click="openPayExit('add')">
 				{{ $t('merchantInfo.openPayExit') }}
-			</el-button> -->
+			</el-button>
 			<right-toolbar
 				v-model:showSearch="showSearch"
 				:export="'core_merchantInfo_export'"
@@ -33,7 +36,7 @@
 	</el-row>
 	<!-- :data="state.dataList" -->
 	<el-table
-		:data="list"
+		:data="state.dataList"
 		v-loading="state.loading"
 		border
 		:cell-style="tableStyle.cellStyle"
@@ -41,35 +44,54 @@
 		@selection-change="selectionChangHandle"
 		@sort-change="sortChangeHandle"
 	>
-		<el-table-column prop="subAccount" min-width="100" :label="$t('merchantInfo.subAccount')" show-overflow-tooltip />
+		<el-table-column prop="subAccountNum" min-width="100" :label="$t('merchantInfo.subAccount')" show-overflow-tooltip />
 		<el-table-column prop="mainAccount" min-width="140" :label="$t('merchantInfo.mainAccount')" show-overflow-tooltip />
-		<el-table-column prop="spList" :label="$t('merchantInfo.spList')" show-overflow-tooltip />
-		<el-table-column prop="payExit" :label="$t('merchantInfo.payExit')" show-overflow-tooltip />
-		<el-table-column prop="status" label="状态" show-overflow-tooltip>
-			<template #default="scope">
-				<dict-tag :options="merchant_status" :value="scope.row.status"></dict-tag>
-			</template>
-		</el-table-column>
+		<el-table-column prop="spName" :label="$t('merchantInfo.spList')" show-overflow-tooltip />
+		<el-table-column prop="channelName" :label="$t('merchantInfo.payExit')" show-overflow-tooltip />
+		<el-table-column prop="channelStatusDesc" label="状态" show-overflow-tooltip> </el-table-column>
 		<el-table-column label="操作" width="300" fixed="right">
 			<template #default="scope">
-				<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
-					>编辑</el-button
-				>
 				<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary">
 					{{ $t('common.detailBtn') }}
 				</el-button>
-				<el-button icon="delete" text type="primary" v-auth="'core_merchantInfo_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
 	<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
+
+	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
+			<el-row :gutter="24">
+				<el-col :span="12" class="mb20">
+					<el-form-item label="服务商" prop="spId">
+						<sp-select v-model="form.spId" @change="getSpPaymentChannelListData(form.spId)" />
+					</el-form-item>
+				</el-col>
+				<el-col :span="12" class="mb20">
+					<el-form-item label="支付通道" prop="paymentChannelId">
+						<el-select clearable v-model="form.paymentChannelId">
+							<el-option :key="item.id" :label="item.channelName" :value="item.id" v-for="item in spPaymentChannelList" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+			</el-row>
+		</el-form>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button @click="visible = false">取消</el-button>
+				<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			</span>
+		</template>
+	</el-dialog>
 </template>
 
 <script setup lang="ts" name="systemMerchantInfo">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/merchantInfo';
+import { getMerchantSubAccountList, getSpPaymentChannelList, putMerchantSubAccount } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+const route = useRoute();
+// import SpSelect from '/@/components/form-controls/sp-select.vue';
 
 // 定义变量内容
 const router = useRouter();
@@ -86,14 +108,57 @@ const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict
 // 搜索变量
 const queryRef = ref();
 const showSearch = ref(true);
+const visible = ref(false);
+const loading = ref(false);
+
+const dataFormRef = ref();
+
 // 多选变量
 const selectObjs = ref([]) as any;
-const list = ref([]) as any;
 const multiple = ref(true);
+const spPaymentChannelList = ref([]) as array;
+console.log('route.query.id', route.query.id);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {},
-	pageList: fetchList,
+	queryForm: {
+		merchantId: route.query.id,
+	},
+	pageList: getMerchantSubAccountList,
+});
+
+// 提交表单数据
+const form = reactive({
+	id: '',
+	merchantId: '',
+	agreementName: '',
+	spId: '',
+	serviceManager: '',
+	isUploadAchievement: '',
+	feeCalculationMethod: '',
+	invoiceCategory: '',
+	isElectronicSignature: '',
+	startTime: '',
+	endTime: '',
+	uploadAttachment: [],
+	feeRates: [],
+	status: '',
+});
+
+// 定义校验规则
+const dataRules = ref({
+	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
+	agreementName: [{ required: true, message: '服务协议名称不能为空', trigger: 'blur' }],
+	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
+	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
+	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
+	feeCalculationMethod: [{ required: true, message: '服务费计算方式不能为空', trigger: 'blur' }],
+	invoiceCategory: [{ required: true, message: '开票类目不能为空', trigger: 'blur' }],
+	isElectronicSignature: [{ required: true, message: '要求电子签署不能为空', trigger: 'blur' }],
+	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
+	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
+	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
+	feeRates: [{ required: true, message: '服务费比例不能为空', trigger: 'blur' }],
+	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
 });
 
 //  table hook
@@ -106,6 +171,11 @@ const resetQuery = () => {
 	// 清空多选
 	selectObjs.value = [];
 	getDataList();
+};
+
+const openPayExit = () => {
+	console.log(111);
+	visible.value = true;
 };
 
 // 导出excel
@@ -123,26 +193,24 @@ const selectionChangHandle = (objs: { id: string }[]) => {
 const openMerchantForm = (type: string, id: number) => {
 	switch (type) {
 		case 'view':
-			router.push({
-				path: '/core/merchantInfo/detail',
-				query: {
-					id,
-				},
-			});
 			break;
-		case 'edit':
-			router.push({
-				path: '/core/merchantInfo/edit',
-				query: {
-					id,
-				},
-			});
-			break;
-		case 'add':
-			router.push({
-				path: '/core/merchantInfo/add',
-			});
-			break;
+	}
+};
+
+// 提交
+const onSubmit = async () => {
+	const valid = await dataFormRef.value.validate().catch(() => {});
+	if (!valid) return false;
+	form.merchantId = route.query.id;
+	try {
+		loading.value = true;
+		await putMerchantSubAccount(form);
+		useMessage().success(form.id ? '修改成功' : '添加成功');
+		visible.value = false;
+		getDataList();
+	} catch (err: any) {
+	} finally {
+		loading.value = false;
 	}
 };
 
@@ -160,4 +228,14 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().success('删除成功');
 	} catch (err: any) {}
 };
+
+const getSpPaymentChannelListData = (spId) => {
+	// 获取数据
+	getSpPaymentChannelList({
+		spId: spId,
+	}).then((res: any) => {
+		spPaymentChannelList.value = res.data || [];
+	});
+};
+getSpPaymentChannelListData('');
 </script>

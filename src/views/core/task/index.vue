@@ -79,7 +79,15 @@
 				<el-table-column label="操作" width="250" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('edit', scope.row.id)">编辑</el-button>
+						<el-button
+							v-if="scope.row.status == 10"
+							icon="edit-pen"
+							text
+							type="primary"
+							v-auth="'core_task_edit'"
+							@click="openTask('edit', scope.row.id)"
+							>编辑</el-button
+						>
 						<el-button
 							v-if="scope.row.status == 10"
 							icon="edit-pen"
@@ -138,7 +146,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemTask">
+<script setup lang="ts" name="任务记录">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, putAuditTask } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';

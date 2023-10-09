@@ -60,3 +60,34 @@ export function getMerchantInfoList(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function putMerchantSubAccount(obj?: Object) {
+	return request({
+		url: '/core/merchantSubAccount',
+		method: 'post',
+		data: obj,
+	});
+}
+
+export function getMerchantSubAccountDetail(id?: string) {
+	return request({
+		url: '/core/merchantSubAccount/' + id,
+		method: 'get',
+	});
+}
+
+export function getMerchantSubAccountList(query?: Object) {
+	return request({
+		url: '/core/merchantSubAccount/page',
+		method: 'get',
+		params: query,
+	});
+}
+
+export function getSpPaymentChannelList(query?: Object) {
+	return request({
+		url: '/core/spPaymentChannel/list',
+		method: 'get',
+		params: query,
+	});
+}

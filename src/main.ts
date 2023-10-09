@@ -37,20 +37,24 @@ import 'splitpanes/dist/splitpanes.css';
 // const app = createApp(isDev ? Test : App);
 const app = createApp(App);
 
-console.log('Element', Element);
-
-ElSelect.props.clearable = {
-	type: Boolean,
-	default: true,
-};
 ElInput.props.placeholder = {
 	type: String,
 	default: '请输入',
 };
-ElSelect.props.placeholder = {
-	type: String,
-	default: '请选择',
+ElSelect.props = {
+	...ElSelect.props,
+	placeholder: {
+		type: String,
+		default: '请选择',
+	},
+	clearable: {
+		default: true,
+	},
+	filterable: {
+		default: true,
+	},
 };
+
 ElTimePicker.props.placeholder = {
 	type: String,
 	default: '请选择',
