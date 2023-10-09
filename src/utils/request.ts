@@ -60,10 +60,14 @@ const ERROR_MSG = {
 	500: '服务器内部错误',
 	404: '服务器内部错误',
 };
-const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token', '/gen/generator/download'];
+
+// exclude token url
+const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
+// exclude download url
+const downloadUrlRegex = /^\/gen\/generator\/download/;
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
-	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success) {
+	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success && !downloadUrlRegex.test(config.url as string)) {
 		useMessageBox().error(response.data.msg);
 		return Promise.reject(response.data.msg);
 	}
