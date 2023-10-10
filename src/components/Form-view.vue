@@ -101,7 +101,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 											<el-option
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value]"
-												:value="+item[form.props?.value || 'value']"
+												:value="item[form.props?.value || 'value']"
 												:label="item[form.props?.label || 'label']"
 											/>
 										</template>
