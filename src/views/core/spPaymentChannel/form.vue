@@ -132,7 +132,7 @@ const openDialog = (id: string, disabled: boolean) => {
 
 	// 重置表单数据
 	nextTick(() => {
-		dataFormRef.value?.resetFields();
+		dataFormRef.value?.reset();
 	});
 
 	// 获取spPaymentChannel信息

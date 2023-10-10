@@ -45,6 +45,7 @@ const dynamicForms = computed(() => {
 	return prop.disabled ? forms : prop.forms;
 });
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
+const reset = () => form?.value?.resetFields();
 
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
 watch(
@@ -77,6 +78,10 @@ const cancel = () => {
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
+// 暴露变量
+defineExpose({
+	reset,
+});
 </script>
 
 <template>

@@ -31,14 +31,14 @@
 		@selection-change="selectionChangHandle"
 		@sort-change="sortChangeHandle"
 	>
-		<el-table-column prop="undertakerNumber" label="承接编号" show-overflow-tooltip />
-		<el-table-column prop="undertakerName" label="承接人" show-overflow-tooltip />
-		<el-table-column prop="createTime" label="生成时间" show-overflow-tooltip />
-		<el-table-column prop="taskNumber" label="任务编号" show-overflow-tooltip />
-		<el-table-column prop="undertakerCard" label="承接人证件号码" show-overflow-tooltip />
-		<el-table-column prop="undertakerPhone" label="承接人手机号" show-overflow-tooltip />
-		<el-table-column prop="taskName" label="任务名称" show-overflow-tooltip />
-		<el-table-column prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="undertakerNumber" label="承接编号" show-overflow-tooltip />
+		<el-table-column width="120px" prop="undertakerName" label="承接人" show-overflow-tooltip />
+		<el-table-column width="170px" prop="createTime" label="生成时间" show-overflow-tooltip />
+		<el-table-column width="160px" prop="taskNumber" label="任务编号" show-overflow-tooltip />
+		<el-table-column width="160px" prop="undertakerCard" label="承接人证件号码" show-overflow-tooltip />
+		<el-table-column width="120px" prop="undertakerPhone" label="承接人手机号" show-overflow-tooltip />
+		<el-table-column width="120px" prop="taskName" label="任务名称" show-overflow-tooltip />
+		<el-table-column width="120px" prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip />
 		<el-table-column prop="taskMoney" label="任务金额(元)" show-overflow-tooltip />
 		<el-table-column prop="startTime" label="承接开始时间" show-overflow-tooltip />
 		<el-table-column prop="doneTime" label="承接完成时间" show-overflow-tooltip />
