@@ -51,7 +51,7 @@
 		<el-table-column prop="channelStatusDesc" label="状态" show-overflow-tooltip> </el-table-column>
 		<el-table-column label="操作" width="300" fixed="right">
 			<template #default="scope">
-				<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary"> 查看 </el-button>
+				<el-button icon="view" @click="payExitDetailDialogRef.openDialog(scope.row.id)" size="small" text type="primary"> 查看 </el-button>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -81,6 +81,7 @@
 			</span>
 		</template>
 	</el-dialog>
+	<PayExitDetailDialog ref="payExitDetailDialogRef"></PayExitDetailDialog>
 </template>
 
 <script setup lang="ts" name="systemMerchantInfo">
@@ -90,6 +91,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 const route = useRoute();
 // import SpSelect from '/@/components/form-controls/sp-select.vue';
+const PayExitDetailDialog = defineAsyncComponent(() => import('./payExitDetailDialog.vue'));
 
 // 定义变量内容
 const router = useRouter();
@@ -105,6 +107,7 @@ const { enterprise_type, tax_type, merchant_status, enterprise_scale } = useDict
 
 // 搜索变量
 const queryRef = ref();
+const payExitDetailDialogRef = ref();
 const showSearch = ref(true);
 const visible = ref(false);
 const loading = ref(false);
