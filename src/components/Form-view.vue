@@ -66,7 +66,7 @@ const submit = async () => {
 	}
 	if (!valid) return;
 	emit('update:valid', valid);
-	prop.onSubmit && prop.onSubmit();
+	prop.onSubmit ? prop.onSubmit() : emit('update:show', false);
 };
 const cancel = () => {
 	resetFields();
