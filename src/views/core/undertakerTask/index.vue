@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<undertaking-records></undertaking-records>
+			<undertaking-records />
 		</div>
 	</div>
 </template>

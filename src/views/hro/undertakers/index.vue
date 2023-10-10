@@ -348,15 +348,5 @@ const handleDelete = async (ids: string[]) => {
 	}
 };
 
-/*const getUndertakerInfoData = () => {
-	// 获取数据
-	getSpInfoList().then((res: any) => {
-		spinfoList.value = res.data || [];
-	});
-	getMerchantInfoList().then((res: any) => {
-		merchantInfoList.value = res.data || [];
-	});
-};
-
-getUndertakerInfoData();*/
+$refreshList(resetQuery);
 </script>

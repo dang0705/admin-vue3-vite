@@ -208,4 +208,5 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
+$refreshList(resetQuery);
 </script>

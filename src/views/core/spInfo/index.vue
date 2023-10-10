@@ -119,8 +119,6 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 
-import keepAliveListRefresh from '/@/hooks/keep-alive-list-refresh';
-
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();
@@ -209,5 +207,6 @@ const handleDelete = async (ids: string[]) => {
 		clearCache();
 	} catch (err: any) {}
 };
-keepAliveListRefresh(resetQuery);
+
+$refreshList(resetQuery);
 </script>
