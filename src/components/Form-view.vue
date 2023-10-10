@@ -86,14 +86,14 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 						<template v-for="form in dynamicForms" :key="form.key">
 							<el-col :span="24" v-if="form.title">
 								<slot :name="`title-before-${form.key}`">
-									<h1 v-text="form.title" class="mb-[20px]" />
+									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
 								</slot>
 							</el-col>
-							<el-col v-bind="dynamicColumns" :class="['mb-2', { 'mb-[14px]': vertical }]">
+							<el-col v-bind="dynamicColumns" :class="['mb-2', { 'mb-[14px]': vertical }]" v-show="!form.hidden">
 								<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
 								<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 									<component
-										:is="form.control"
+										:is="!form.hidden ? form.control : 'template'"
 										v-model="formData[form.key]"
 										v-bind="{ ...form.props, ...(form.props?.clearable === undefined ? { clearable: true } : {}) }"
 									>
@@ -101,7 +101,7 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 											<el-option
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value]"
-												:value="item[form.props?.value || 'value']"
+												:value="+item[form.props?.value || 'value']"
 												:label="item[form.props?.label || 'label']"
 											/>
 										</template>
