@@ -6,13 +6,14 @@
 					<Form-view
 						label-width="90"
 						v-model="state.queryForm"
+						v-show="showSearch"
 						submit-button-text="查询"
 						cancel-button-text="重置"
 						:forms="conditionForms"
 						:on-submit="getDataList"
 						:on-cancel="resetQuery"
 					/>
-					<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList"></right-toolbar>
+					<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
 				</div>
 			</el-row>
 			<el-table
@@ -79,7 +80,9 @@
 			<template #after-forms v-if="hasFail">
 				<ul class="flex justify-between">
 					<li class="mb-[20px] text-lg font-bold">失败记录表</li>
-					<li><el-button @click="exportFile">导出</el-button></li>
+					<li>
+						<el-button @click="exportFile">导出</el-button>
+					</li>
 				</ul>
 				<NewTable :tbody="failList" :columns="failListHead" :id="currentId" />
 			</template>
@@ -89,8 +92,7 @@
 
 <script setup lang="ts" name="导入批次">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, getFailList } from '/@/api/core/batchUploadRecord';
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { fetchList } from '/@/api/core/batchUploadRecord';
 import { getObj } from '/@/api/core/batchUploadRecord';
 import Array2Object from '/@/utils/array-2-object';
 import { downBlobFile } from '/@/utils/other';
@@ -127,12 +129,14 @@ enum Type {
 	'批量电子签署' = '4',
 	'批量指派承接人' = '5',
 }
+
 enum State {
 	'进行中' = '101',
 	'全部成功' = '102',
 	'部分成功' = '103',
 	'全部失败' = '104',
 }
+
 const failListHead = ref<any[]>([]);
 const failFormStatic = [
 	{
