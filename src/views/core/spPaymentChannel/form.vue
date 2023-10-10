@@ -76,7 +76,7 @@ const self_disabled = ref(false);
 // 提交表单数据
 const form = reactive({
 	id: '',
-	spId: 0,
+	spId: '',
 	channelName: '',
 	bankName: '',
 	bankBranch: '',
