@@ -6,6 +6,7 @@
 export {}
 declare global {
   const $bus: typeof import('../../@/utils/mitt')['default']
+  const $refreshList: typeof import('../../@/hooks/keep-alive-list-refresh')['default']
   const EffectScope: typeof import('vue')['EffectScope']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']

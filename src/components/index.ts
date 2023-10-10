@@ -41,4 +41,12 @@ export const customComponents = [
 		name: 'DateRange',
 		component: () => import('/@/components/form-controls/Date-range.vue'),
 	},
+	{
+		name: 'DownloadFile',
+		component: () => import('/@/components/form-controls/Download.vue'),
+	},
+	{
+		name: 'NewTable',
+		component: () => import('/@/components/FormTable/new-index.vue'),
+	},
 ];

@@ -61,7 +61,7 @@
 	</el-dialog>
 
 	<!--校验失败错误数据-->
-	<el-dialog :title="title" v-model="state.successVisible">
+	<el-dialog :title="title" v-model="state.successVisible" v-if="toBatch">
 		<p v-text="state.upload.data" />
 		<template #footer>
 			<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
@@ -77,6 +77,7 @@ import { Session } from '/@/utils/storage';
 import request from '/@/utils/request';
 import { ElNotification } from 'element-plus';
 import { LIMIT } from '/@/configuration/upload-rules';
+import { useRouter } from 'vue-router';
 
 const uuid = ref('id-' + generateUUID());
 const prop = defineProps({
@@ -159,6 +160,10 @@ const prop = defineProps({
 	params: {
 		type: Object,
 		default: () => ({}),
+	},
+	toBatch: {
+		type: Boolean,
+		default: true,
 	},
 });
 const valid = ref(false);
@@ -258,7 +263,9 @@ const upload = async () => {
 		// onError(error as any);
 	}
 };
-const goToBatchManagement = () => {};
+const router = useRouter();
+const goToBatchManagement = () => router.push({ name: '导入批次', state: { refresh: 1 } });
+
 /**
  * 上传失败事件处理
  */

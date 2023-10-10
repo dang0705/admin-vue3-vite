@@ -318,4 +318,5 @@ const task_typeLevel_option = computed(() => {
 	});
 	return task_typeLevel_option;
 });
+$refreshList(resetQuery);
 </script>

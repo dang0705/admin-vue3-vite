@@ -28,10 +28,13 @@ const initForms = async (forms: [], formData: object) => {
 		const item = forms[i] as FormOptions;
 		item.value !== undefined && (formData[item.key] = item.value);
 		if (item.optionUrl || item.options) {
-			formOptions[item.key] = item.optionUrl ? await request.get(item.optionUrl) : item.options;
 			if (helper.isString(item.options)) {
 				const { [item.options]: dic } = useDict(item.options);
 				formOptions[item.key] = computed(() => dic.value);
+			} else if (item.optionUrl) {
+				formOptions[item.key] = await request.get(item.optionUrl);
+			} else {
+				formOptions[item.key] = item.options || [];
 			}
 		}
 	}
@@ -66,7 +69,7 @@ const submit = async () => {
 	}
 	if (!valid) return;
 	emit('update:valid', valid);
-	prop.onSubmit && prop.onSubmit();
+	prop.onSubmit ? prop.onSubmit() : emit('update:show', false);
 };
 const cancel = () => {
 	resetFields();

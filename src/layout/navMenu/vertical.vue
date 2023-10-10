@@ -1,6 +1,5 @@
 <template>
 	<el-menu
-		router
 		:default-active="state.defaultActive"
 		background-color="transparent"
 		:collapse="state.isCollapse"
@@ -16,7 +15,7 @@
 				<SubItem :chil="val.children" />
 			</el-sub-menu>
 			<template v-else>
-				<el-menu-item :index="val.path" :key="val.path">
+				<el-menu-item :index="val.path" :key="val.path" @click="$router.push({ path: val.path, state: { refresh: 1 } })">
 					<SvgIcon :name="val.meta.icon" />
 					<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 						<span>{{ other.setMenuI18n(val) }} </span>

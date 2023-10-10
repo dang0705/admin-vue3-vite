@@ -214,4 +214,5 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().success('删除成功');
 	} catch (err: any) {}
 };
+$refreshList(resetQuery);
 </script>

@@ -207,4 +207,5 @@ const setStopObj = async (ids: string[]) => {
 		useMessage().success('终止合作成功');
 	} catch (err: any) {}
 };
+$refreshList(resetQuery);
 </script>
