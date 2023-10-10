@@ -97,8 +97,7 @@ const forms = [
 	},
 	{
 		control: 'el-input',
-		// 伪代码
-		key: 'xxx',
+		key: 'orderReceivingTime',
 		label: '接单时间',
 		title: '个人承接页',
 	},
@@ -109,18 +108,17 @@ const forms = [
 	},
 	{
 		control: 'el-input',
-		key: 'endTime',
+		key: 'doneTime',
 		label: '完成时间',
 	},
 	{
 		control: 'el-input',
-		// 伪代码
-		key: 'xxx',
+		key: 'workload',
 		label: '确认工作量',
 	},
 	{
 		control: 'el-input',
-		key: 'taskMoney',
+		key: 'confirmMoney',
 		label: '承接人确认金额',
 	},
 	{
@@ -137,23 +135,23 @@ const forms = [
 	{
 		control: 'el-input',
 		// 伪代码
-		key: 'xxx',
+		key: 'enterpriseAcceptanceTime',
 		label: '企业验收时间',
 		title: '企业验收页',
 	},
 	{
 		control: 'el-input',
-		key: 'xxx',
+		key: 'enterpriseAcceptanceWorkload',
 		label: '企业验收工作量',
 	},
 	{
 		control: 'el-input',
-		key: 'xxx',
+		key: 'enterpriseAcceptanceMoney',
 		label: '企业验收金额',
 	},
 	{
 		control: 'el-input',
-		key: 'xxx',
+		key: 'enterpriseAcceptanceImages',
 		label: '验收上传图片',
 	},
 ];

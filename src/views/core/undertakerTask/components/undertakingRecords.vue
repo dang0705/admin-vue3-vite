@@ -190,8 +190,8 @@ const resetQuery = () => {
 
 // 导出excel
 const exportExcel = () => {
-	// downBlobFile('/core/undertakerTask/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
-	downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+	downBlobFile('/core/undertakerTask/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
 };
 
 // 多选事件

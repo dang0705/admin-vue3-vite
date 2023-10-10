@@ -57,7 +57,7 @@ const forms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx',
+		key: 'spName',
 		label: '收款户名',
 	},
 	{

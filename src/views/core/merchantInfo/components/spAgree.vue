@@ -53,7 +53,12 @@
 		<el-table-column prop="spName" label="服务商" show-overflow-tooltip />
 		<!-- <el-table-column prop="serviceManager" label="服务负责人" show-overflow-tooltip /> -->
 		<el-table-column prop="feeCalculationMethodDesc" min-width="140" label="服务费计算方式" show-overflow-tooltip />
-		<el-table-column prop="feeRate" label="服务费率" min-width="100" show-overflow-tooltip />
+		<el-table-column prop="feeRate" label="服务费率" min-width="100" show-overflow-tooltip>
+			<template #default="scope">
+				{{ scope.row.feeRate + '%' }}
+			</template>
+		</el-table-column>
+
 		<el-table-column prop="isElectronicSignatureDesc" min-width="110" label="要求电子签署" show-overflow-tooltip />
 		<el-table-column prop="isUploadAchievementDesc" min-width="140" label="要求上传任务成果" show-overflow-tooltip />
 		<el-table-column prop="startTime" min-width="100" label="起始时间" show-overflow-tooltip />
