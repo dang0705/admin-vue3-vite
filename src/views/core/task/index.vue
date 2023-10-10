@@ -235,6 +235,7 @@ const { task_type } = useDict('task_type');
 
 // 清空搜索条件
 const resetQuery = () => {
+	state.queryForm = {};
 	task_typeLevel_option.task_typeLevel2_option = [];
 	// 清空多选
 	selectObjs.value = [];

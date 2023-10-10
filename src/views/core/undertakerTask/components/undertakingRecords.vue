@@ -72,7 +72,7 @@
 				<el-table-column prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
 				<el-table-column prop="enterpriseAcceptanceWorkload" label="企业验收工作量" show-overflow-tooltip />
 				<el-table-column prop="enterpriseAcceptanceMoney" label="企业验收金额" show-overflow-tooltip /> -->
-		<el-table-column label="操作" width="250" fixed="right">
+		<el-table-column label="操作" width="150" fixed="right">
 			<template #default="scope">
 				<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 					>查看</el-button
@@ -180,6 +180,7 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
+	state.queryForm = {};
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选
