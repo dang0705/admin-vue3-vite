@@ -60,9 +60,15 @@ const STATUS = {
 const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token', '/core/undertakerInfo/export', '/core/undertakerTask/export'];
 // exclude download url
 const downloadUrlRegex = /^\/gen\/generator\/download/;
+const exportUrlRegex = /export/;
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
-	if (!excludeUrl.includes(config.url as string) && response.data.code !== STATUS.success && !downloadUrlRegex.test(config.url as string)) {
+	if (
+		!excludeUrl.includes(config.url as string) &&
+		response.data.code !== STATUS.success &&
+		!downloadUrlRegex.test(config.url as string) &&
+		!exportUrlRegex.test(config.url as string)
+	) {
 		useMessageBox().error(response.data.msg);
 		return Promise.reject(response.data.msg);
 	}
