@@ -57,7 +57,7 @@ const STATUS = {
 	success: 0,
 };
 // exclude token url
-const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token'];
+const excludeUrl = ['/auth/token/check_token', '/auth/oauth2/token', '/core/undertakerInfo/export'];
 // exclude download url
 const downloadUrlRegex = /^\/gen\/generator\/download/;
 const handleResponse = (response: AxiosResponse<any>) => {

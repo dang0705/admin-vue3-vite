@@ -7,7 +7,7 @@
 					<task-detail :isDetail="true" />
 				</el-tab-pane>
 				<el-tab-pane lazy label="承接记录">
-					<undertaking-records />
+					<undertaking-records :taskId="route.query.taskId" />
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts" name="任务详情">
+const route = useRoute();
 const taskDetail = defineAsyncComponent(() => import('./components/form.vue'));
-const undertakingRecords = defineAsyncComponent(() => import('./components/undertakingRecords.vue'));
+const undertakingRecords = defineAsyncComponent(() => import('../undertakerTask/components/undertakingRecords.vue'));
 </script>
 
 <style scoped lang="scss"></style>

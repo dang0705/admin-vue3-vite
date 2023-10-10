@@ -30,7 +30,7 @@ const value = computed({
 		return isArrayValue.value ? props.modelValue : (props.modelValue as string).split(',');
 	},
 	set(value: any) {
-		emit('update:modelValue', isArrayValue.value ? value : value.join(','));
+		emit('update:modelValue', props.valueType === 'array' ? value : value.join(','));
 	},
 });
 </script>

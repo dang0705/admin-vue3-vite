@@ -51,23 +51,21 @@
 		<el-table-column prop="channelStatusDesc" label="状态" show-overflow-tooltip> </el-table-column>
 		<el-table-column label="操作" width="300" fixed="right">
 			<template #default="scope">
-				<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary">
-					{{ $t('common.detailBtn') }}
-				</el-button>
+				<el-button icon="view" @click="openMerchantForm('view', scope.row.id)" size="small" text type="primary"> 查看 </el-button>
 			</template>
 		</el-table-column>
 	</el-table>
 	<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 
-	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
+	<el-dialog width="640px" title="开通支付通道" v-model="visible" :close-on-click-modal="false" draggable>
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
 			<el-row :gutter="24">
-				<el-col :span="12" class="mb20">
+				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商" prop="spId">
 						<sp-select v-model="form.spId" @change="getSpPaymentChannelListData(form.spId)" />
 					</el-form-item>
 				</el-col>
-				<el-col :span="12" class="mb20">
+				<el-col :span="24" class="mb20">
 					<el-form-item label="支付通道" prop="paymentChannelId">
 						<el-select clearable v-model="form.paymentChannelId">
 							<el-option :key="item.id" :label="item.channelName" :value="item.id" v-for="item in spPaymentChannelList" />
@@ -146,19 +144,8 @@ const form = reactive({
 
 // 定义校验规则
 const dataRules = ref({
-	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
-	agreementName: [{ required: true, message: '服务协议名称不能为空', trigger: 'blur' }],
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
-	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
-	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
-	feeCalculationMethod: [{ required: true, message: '服务费计算方式不能为空', trigger: 'blur' }],
-	invoiceCategory: [{ required: true, message: '开票类目不能为空', trigger: 'blur' }],
-	isElectronicSignature: [{ required: true, message: '要求电子签署不能为空', trigger: 'blur' }],
-	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
-	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
-	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
-	feeRates: [{ required: true, message: '服务费比例不能为空', trigger: 'blur' }],
-	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
+	paymentChannelId: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }],
 });
 
 //  table hook
@@ -230,6 +217,7 @@ const handleDelete = async (ids: string[]) => {
 };
 
 const getSpPaymentChannelListData = (spId) => {
+	form.paymentChannelId = '';
 	// 获取数据
 	getSpPaymentChannelList({
 		spId: spId,

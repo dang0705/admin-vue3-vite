@@ -1,20 +1,17 @@
 <template>
-	<form-view
-		ref="queryRef"
+	<Form-view
 		v-show="showSearch"
+		label-width="90"
 		v-model="state.queryForm"
-		:forms="conditionForms"
-		:on-cancel="resetQuery"
-		:on-submit="getDataList"
 		submit-button-text="查询"
 		cancel-button-text="重置"
-	>
-	</form-view>
+		:forms="taskId ? conditionForms_task : conditionForms"
+		:on-submit="getDataList"
+		:on-cancel="resetQuery"
+	/>
 	<el-row>
 		<div class="mb8" style="width: 100%">
-			<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerTask_add'">
-				新 增
-			</el-button>
+			<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
 			<right-toolbar
 				v-model:showSearch="showSearch"
 				:export="'hro_undertakerTask_export'"
@@ -64,16 +61,27 @@
 				<span>{{ undertaking_status.find((item) => item.value == scope.row.state).label }}</span>
 			</template>
 		</el-table-column>
+		<!-- <el-table-column prop="serviceFeeAmount" label="服务费金额" show-overflow-tooltip />
+				<el-table-column prop="orderReceivingTime" label="接单时间" show-overflow-tooltip />
+				<el-table-column prop="state" label="接单任务状态" show-overflow-tooltip />
+				<el-table-column prop="workload" label="工作量" show-overflow-tooltip />
+				<el-table-column prop="rejectReason" label="驳回原因" show-overflow-tooltip />
+				<el-table-column prop="spId" label="服务商ID" show-overflow-tooltip />
+				<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
+				<el-table-column prop="merchantId" label="商户ID(客户)" show-overflow-tooltip />
+				<el-table-column prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
+				<el-table-column prop="enterpriseAcceptanceWorkload" label="企业验收工作量" show-overflow-tooltip />
+				<el-table-column prop="enterpriseAcceptanceMoney" label="企业验收金额" show-overflow-tooltip /> -->
 		<el-table-column label="操作" width="250" fixed="right">
 			<template #default="scope">
-				<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_edit'" @click="formDialogRef.openDialog(scope.row.id)"
-					>编辑</el-button
+				<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
+					>查看</el-button
 				>
-				<el-button icon="delete" text type="primary" v-auth="'hro_undertakerTask_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
 	<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
+	<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
 </template>
 
 <script setup lang="ts" name="systemUndertakerTask">
@@ -83,19 +91,37 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
 const { undertaking_status } = useDict('undertaking_status');
-
 // 引入组件
 // const FormDialog = defineAsyncComponent(() => import('./form.vue'));
+const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
 // 定义查询字典
 
 // 定义变量内容
 // const formDialogRef = ref();
 // 搜索变量
+const detailDialogRef = ref();
 const queryRef = ref();
 const showSearch = ref(true);
 // 多选变量
 const selectObjs = ref([]) as any;
 const multiple = ref(true);
+const conditionForms_task = [
+	{
+		control: 'el-input',
+		key: 'undertakerNumber',
+		label: '承接编号',
+	},
+	{
+		control: 'el-input',
+		key: 'undertakerName',
+		label: '承接人',
+	},
+	{
+		control: 'DateRange',
+		key: 'timeRange',
+		label: '生成时间',
+	},
+];
 const conditionForms = [
 	{
 		control: 'el-input',
@@ -108,11 +134,41 @@ const conditionForms = [
 		label: '承接人',
 	},
 	{
-		control: 'el-date-picker',
-		key: 'createTime',
+		control: 'DateRange',
+		key: 'timeRange',
 		label: '生成时间',
+		props: {
+			valueType: 'string',
+		},
+	},
+	{
+		control: 'el-input',
+		key: 'taskNumber',
+		label: '任务编号',
+	},
+	{
+		control: 'el-input',
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+	},
+	{
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: '商户',
 	},
 ];
+
+const prop = defineProps({
+	taskId: {
+		type: String,
+		default: '',
+	},
+});
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	queryForm: {},
@@ -133,7 +189,8 @@ const resetQuery = () => {
 
 // 导出excel
 const exportExcel = () => {
-	downBlobFile('/core/undertakerTask/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	// downBlobFile('/core/undertakerTask/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
 };
 
 // 多选事件
