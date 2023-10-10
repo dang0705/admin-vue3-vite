@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<el-row shadow="hover" v-show="showSearch" class="ml10">
+			<!-- <el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<el-form-item>
 						<div class="wr100">
@@ -12,7 +12,7 @@
 						</div>
 					</el-form-item>
 				</el-form>
-			</el-row>
+			</el-row> -->
 			<el-row>
 				<div class="mb8" style="width: 100%">
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'core_spPaymentChannel_add'">
@@ -44,7 +44,7 @@
 				<el-table-column prop="bankArea" label="开户地" show-overflow-tooltip />
 				<el-table-column prop="interbankNumber" label="联行号" show-overflow-tooltip /> -->
 				<el-table-column prop="mainAccount" label="主账号" show-overflow-tooltip />
-				<el-table-column prop="bankName" label="账号类别" show-overflow-tooltip />
+				<el-table-column prop="bankNameDesc" label="账号类别" show-overflow-tooltip />
 				<el-table-column prop="bankBranch" label="开户行" show-overflow-tooltip />
 				<el-table-column prop="bankArea" label="开户地" show-overflow-tooltip />
 				<el-table-column prop="channelStatusDesc" label="状态" show-overflow-tooltip />

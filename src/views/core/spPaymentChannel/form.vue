@@ -1,6 +1,7 @@
 <template>
-	<el-dialog title="添加支付通道" v-model="visible" :close-on-click-modal="false" draggable width="60%">
+	<el-dialog :title="title" v-model="visible" :close-on-click-modal="false" draggable width="60%">
 		<form-view
+			:disabled="self_disabled"
 			ref="dataFormRef"
 			v-model="form"
 			:forms="conditionForms"
@@ -27,6 +28,7 @@ const emit = defineEmits(['refresh']);
 const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
+const title = ref('');
 // 定义字典
 
 // 提交表单数据
@@ -115,6 +117,15 @@ const conditionForms = ref([
 
 // 打开弹窗
 const openDialog = (id: string, disabled: boolean) => {
+	if (id) {
+		if (disabled) {
+			title.value = '查看支付通道';
+		} else {
+			title.value = '编辑支付通道';
+		}
+	} else {
+		title.value = '添加支付通道';
+	}
 	self_disabled.value = disabled || false;
 	visible.value = true;
 	form.id = '';
@@ -144,6 +155,10 @@ const getspPaymentChannelData = (id: string) => {
 };
 // 提交
 const onSubmit = async () => {
+	if (self_disabled.value) {
+		visible.value = false;
+		return;
+	}
 	// const valid = await dataFormRef.value.validate().catch(() => {});
 	// if (!valid) return false;
 	try {
