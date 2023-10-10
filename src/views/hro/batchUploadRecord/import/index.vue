@@ -54,17 +54,46 @@
 			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
 
-		<!-- 编辑、新增  -->
-		<Dialog v-model="show" disabled title="导入详情" :forms="forms" v-model:form-data="formSecondLevelData" />
+		<!-- 查看  -->
+		<Dialog
+			vertical
+			button-position="center"
+			v-model="show"
+			disabled
+			:title="`【 ${currentTitle} 】 导入详情`"
+			v-bind="{ fullscreen: hasFail }"
+			:show-cancel="false"
+			:label-width="160"
+			:forms="forms"
+			:columns="24"
+			v-model:form-data="dialogFormData"
+		>
+			<template #status v-if="hasFail">
+				<el-form-item label="状态明细：">
+					<ul class="flex">
+						<li class="mr20">成功 <span v-text="dialogFormData.success" class="text-success" /> 条</li>
+						<li>失败 <span v-text="dialogFormData.fail" class="text-error" /> 条</li>
+					</ul>
+				</el-form-item>
+			</template>
+			<template #after-forms v-if="hasFail">
+				<ul class="flex justify-between">
+					<li class="mb-[20px] text-lg font-bold">失败记录表</li>
+					<li><el-button @click="exportFile">导出</el-button></li>
+				</ul>
+				<NewTable :tbody="failList" :columns="failListHead" :id="currentId" />
+			</template>
+		</Dialog>
 	</div>
 </template>
 
 <script setup lang="ts" name="导入批次">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs } from '/@/api/core/batchUploadRecord';
+import { fetchList, getFailList } from '/@/api/core/batchUploadRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { getObj } from '/@/api/core/batchUploadRecord';
 import Array2Object from '/@/utils/array-2-object';
+import { downBlobFile } from '/@/utils/other';
 
 const conditionForms = [
 	{
@@ -90,25 +119,191 @@ const conditionForms = [
 		label: '创建人',
 	},
 ];
-enum Type {
-	'批量导入承接人' = 1,
-	'批量上传身份证' = 2,
-	'批量绑定银行卡' = 3,
-	'批量电子签署' = 4,
-	'批量指派承接人' = 5,
-}
 
+enum Type {
+	'批量导入承接人' = '1',
+	'批量上传身份证' = '2',
+	'批量绑定银行卡' = '3',
+	'批量电子签署' = '4',
+	'批量指派承接人' = '5',
+}
+enum State {
+	'进行中' = '101',
+	'全部成功' = '102',
+	'部分成功' = '103',
+	'全部失败' = '104',
+}
+const failListHead = ref<any[]>([]);
+const failFormStatic = [
+	{
+		title: '导入结果',
+		control: 'el-select',
+		label: '状态',
+		key: 'batchState',
+		options: 'batch_status',
+	},
+	{
+		key: 'status',
+		slot: true,
+	},
+];
+const failListHeadStatic = [
+	{
+		prop: 'errorMessage',
+		label: '失败原因',
+	},
+];
 const forms = computed(() => {
-	let form = [];
+	let form: any[];
 	switch (currentType.value) {
 		case Type['批量导入承接人']:
+			currentTitle.value = '批量导入承接人';
 			form = [
 				{
-					control: 'el-radio',
+					control: 'el-select',
 					label: '是否存量用户',
-					key: 'isInventoryUser',
-					props: {},
+					key: 'paramObject.isInventoryUser',
+					title: '参数信息',
+					options: [
+						{
+							label: '是',
+							value: 1,
+						},
+						{
+							label: '否',
+							value: 0,
+						},
+					],
 				},
+				{
+					control: 'DownloadFile',
+					label: '任务承接明细表',
+					key: 'paramObject.fileUrl',
+					props: {
+						text: '承接人信息表.xlsx',
+					},
+				},
+				...failFormStatic,
+			];
+			failListHead.value = [
+				{
+					prop: 'undertakerName',
+					label: '姓名',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '身份证号',
+				},
+				{
+					prop: 'undertakerPhone',
+					label: '手机号',
+				},
+				...failListHeadStatic,
+			];
+			break;
+		case Type['批量绑定银行卡']:
+			currentTitle.value = '批量绑定银行卡';
+			form = [
+				{
+					control: 'DownloadFile',
+					label: '任务人银行卡信息表',
+					key: 'paramObject.fileUrl',
+					props: {
+						text: '承接人银行卡号.xlsx',
+					},
+				},
+				...failFormStatic,
+			];
+			failListHead.value = [
+				{
+					prop: 'undertakerName',
+					label: '姓名',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '身份证号',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '银行卡号码',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '开户行',
+				},
+				...failListHeadStatic,
+			];
+			break;
+		case Type['批量电子签署']:
+			currentTitle.value = '批量电子签署';
+			form = [
+				{
+					control: 'SpSelect',
+					label: '服务商',
+					key: 'paramObject.spId',
+				},
+				{
+					control: 'el-select',
+					label: '合同模板',
+					key: 'paramObject.contractTemplate',
+					options: 'contract_template', // 此处走字典
+				},
+				...failFormStatic,
+			];
+			failListHead.value = [
+				{
+					prop: 'undertakerName',
+					label: '姓名',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '身份证号',
+				},
+				{
+					prop: 'startTime',
+					label: '合同开始时间',
+				},
+				{
+					prop: 'endTime',
+					label: '合同结束时间',
+				},
+				...failListHeadStatic,
+			];
+			break;
+		case Type['批量指派承接人']:
+			currentTitle.value = '批量指派承接人';
+			form = [
+				{
+					title: '参数信息',
+					label: '任务编码',
+					key: 'paramObject.taskNumber',
+					control: 'el-input',
+				},
+				{ label: '任务名称', key: 'paramObject.taskName', control: 'el-input' },
+				{
+					label: '承接人名单',
+					key: 'paramObject.fileUrl',
+					control: 'DownloadFile',
+					props: {
+						text: '指派承接人名单.xlsx',
+					},
+				},
+				...failFormStatic,
+			];
+			failListHead.value = [
+				{
+					prop: 'undertakerName',
+					label: '姓名',
+				},
+				{
+					prop: 'undertakerCard',
+					label: '身份证号',
+				},
+				{
+					prop: 'undertakerPhone',
+					label: '手机号',
+				},
+				...failListHeadStatic,
 			];
 			break;
 		default:
@@ -116,21 +311,24 @@ const forms = computed(() => {
 	}
 	return form;
 });
-const dialogFormData = reactive({});
 const currentId = ref(''); // 主键
 const currentType = ref(-1); // 批次类型
 const currentState = ref(-1); // 批次状态
+const currentTitle = ref('');
 const show = ref(false);
-let formFirstLevelData = ref({});
+let dialogFormData = ref({});
 
-const formSecondLevelData = computed(() => formFirstLevelData.value.paramObject);
+const hasFail = computed(() => currentState.value !== State['进行中'] && currentState.value !== State['全部成功']);
+
 const view = async ({ id, type, state }) => {
 	show.value = true;
 	currentId.value = id;
 	currentType.value = type;
 	currentState.value = state;
-	formFirstLevelData.value = (await getObj(id)).data;
+	dialogFormData.value = (await getObj(id)).data;
 };
+const failList = ref([]);
+
 // 定义查询字典
 const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type'] }).value);
 
@@ -153,21 +351,8 @@ const resetQuery = () => {
 	selectObjs.value = [];
 	getDataList();
 };
-
-// 删除操作
-const handleDelete = async (ids: string[]) => {
-	try {
-		await useMessageBox().confirm('此操作将永久删除');
-	} catch {
-		return;
-	}
-
-	try {
-		await delObjs(ids);
-		getDataList();
-		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+const exportFile = async () => {
+	await downBlobFile('/core/batchFailDetails/export', { batchId: currentId.value }, `${currentTitle.value}-失败记录表.xlsx`);
 };
+$refreshList(resetQuery);
 </script>
