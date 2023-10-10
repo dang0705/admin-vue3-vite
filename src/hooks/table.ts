@@ -57,7 +57,7 @@ export interface Pagination {
 	layout?: String;
 }
 
-export function useTable(options?: BasicTableProps) {
+export function useTable(options?: BasicTableProps, others: any) {
 	const defaultOptions: BasicTableProps = {
 		// 列表数据是否正在加载中，默认为false
 		dataListLoading: false,
@@ -115,7 +115,7 @@ export function useTable(options?: BasicTableProps) {
 	/**
 	 * 发起分页查询，并设置表格数据和分页信息
 	 */
-	const query = async () => {
+	const query = async (others: any = {}) => {
 		// 判断是否存在state.pageList属性
 		if (state.pageList) {
 			try {
@@ -125,6 +125,7 @@ export function useTable(options?: BasicTableProps) {
 				// 调用state.pageList方法发起分页查询
 				const res = await state.pageList({
 					...state.queryForm,
+					...others,
 					current: state.pagination?.current,
 					size: state.pagination?.size,
 					descs: state.descs?.join(','),
@@ -136,8 +137,9 @@ export function useTable(options?: BasicTableProps) {
 				// 设置分页信息中的总数据条数
 				state.pagination!.total = state.isPage ? res.data[state.props.totalCount] : 0;
 			} catch (err: any) {
+				state.dataList = [];
 				// 捕获异常并显示错误提示
-				ElMessage.error(err.msg || err.data.msg);
+				// ElMessage.error(err.msg || err.data.msg);
 			} finally {
 				// 结束加载数据，设置state.loading为false
 				state.loading = false;
@@ -147,7 +149,7 @@ export function useTable(options?: BasicTableProps) {
 
 	onMounted(() => {
 		if (state.createdIsNeed) {
-			query();
+			query(others);
 		}
 	});
 
@@ -159,7 +161,7 @@ export function useTable(options?: BasicTableProps) {
 		// 修改state.pagination中的size属性
 		state.pagination!.size = val;
 		// 再次发起查询操作
-		query();
+		query(others);
 	};
 
 	/**
@@ -170,7 +172,7 @@ export function useTable(options?: BasicTableProps) {
 		// 修改state.pagination中的current属性
 		state.pagination!.current = val;
 		// 再次发起查询操作
-		query();
+		query(others);
 	};
 
 	// 排序触发事件
@@ -194,7 +196,7 @@ export function useTable(options?: BasicTableProps) {
 				state.descs?.splice(state.descs.indexOf(prop), 1);
 			}
 		}
-		query();
+		query(others);
 	};
 
 	/**
@@ -208,7 +210,7 @@ export function useTable(options?: BasicTableProps) {
 			state.pagination!.current = 1;
 		}
 		// 再次发起查询操作
-		query();
+		query(others);
 	};
 
 	/**
@@ -236,6 +238,7 @@ export function useTable(options?: BasicTableProps) {
 	};
 
 	return {
+		query,
 		tableStyle,
 		getDataList,
 		sizeChangeHandle,
