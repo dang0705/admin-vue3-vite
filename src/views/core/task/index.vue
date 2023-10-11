@@ -1,6 +1,7 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
+			<Mytab :tabs="state.countResp"></Mytab>
 			<form-view
 				ref="queryRef"
 				v-show="showSearch"
@@ -155,8 +156,10 @@ import { useDict } from '/@/hooks/dict';
 // 引入组件
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
+const Mytab = defineAsyncComponent(() => import('./components/mytab.vue'));
 // 定义查询字典
 
+const tabs = ref([]);
 const conditionForms = [
 	{
 		control: 'el-input',
@@ -249,8 +252,6 @@ const exportExcel = () => {
 
 const batchAddTask = (row: any) => {
 	params.value.taskId = row.id;
-	console.log('params', params);
-
 	addUnderTakerRef.value.openDialog(row);
 };
 
