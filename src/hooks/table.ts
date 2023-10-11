@@ -58,7 +58,7 @@ export interface Pagination {
 	layout?: String;
 }
 
-export function useTable(options?: BasicTableProps, others: any) {
+export function useTable(options?: BasicTableProps, others?: any = null) {
 	const defaultOptions: BasicTableProps = {
 		// 列表数据是否正在加载中，默认为false
 		dataListLoading: false,
@@ -95,7 +95,6 @@ export function useTable(options?: BasicTableProps, others: any) {
 			totalCount: 'total',
 		},
 	};
-
 	/**
 	 * 合并默认属性配置和自定义属性配置
 	 * @param options 默认属性配置对象
@@ -123,7 +122,6 @@ export function useTable(options?: BasicTableProps, others: any) {
 			try {
 				// 开始加载数据，设置state.loading为true
 				state.loading = true;
-
 				// 调用state.pageList方法发起分页查询
 				const res = await state.pageList({
 					...state.queryForm,
@@ -139,9 +137,8 @@ export function useTable(options?: BasicTableProps, others: any) {
 				// 设置分页信息中的总数据条数
 				state.pagination!.total = state.isPage ? res.data[state.props.totalCount] : 0;
 				state.countResp = state.isPage ? res.data.countResp : [];
-				console.log('state.countResp', state.countResp);
 			} catch (err: any) {
-				// state.dataList = [];
+				state.dataList = [];
 				// 捕获异常并显示错误提示
 				// ElMessage.error(err.msg || err.data.msg);
 			} finally {
@@ -154,17 +151,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 	/**
 	 * 监听外部参数的变化，刷新列表
 	 */
-	others &&
-		watch(
-			() => others.value,
-			(value) => query(value),
-			{ deep: true }
-		);
-	onMounted(() => {
-		if (state.createdIsNeed) {
-			query(others?.value);
-		}
-	});
+	watchEffect(() => state.createdIsNeed && (others?.value ? Object.keys(others.value).length && query(others?.value) : query()));
 
 	/**
 	 * 分页大小改变事件处理函数

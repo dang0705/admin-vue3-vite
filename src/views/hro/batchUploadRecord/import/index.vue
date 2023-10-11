@@ -39,7 +39,7 @@
 						<el-button @click="exportFile">导出</el-button>
 					</li>
 				</ul>
-				<NewTable :tbody="failList" :columns="failListHead" :id="currentId" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
+				<NewTable :columns="failListHead" :params="failParams" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
 			</template>
 		</Dialog>
 	</NewTable>
@@ -310,7 +310,7 @@ const forms = computed(() => {
 	}
 	return form;
 });
-const currentId = ref(''); // 主键
+let currentId = ''; // 主键
 const currentType = ref(-1); // 批次类型
 const currentState = ref(-1); // 批次状态
 const currentTitle = ref('');
@@ -318,15 +318,15 @@ const show = ref(false);
 let dialogFormData = ref({});
 
 const hasFail = computed(() => currentState.value !== State['进行中'] && currentState.value !== State['全部成功']);
-
+let failParams = {};
 const view = async ({ id, type, state }) => {
 	show.value = true;
-	currentId.value = id;
+	currentId = id;
 	currentType.value = type;
 	currentState.value = state;
 	dialogFormData.value = (await getObj(id)).data;
+	failParams = { batchId: currentId };
 };
-const failList = ref([]);
 
 // 定义查询字典
 const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type'] }).value);
@@ -334,6 +334,5 @@ const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type
 // 搜索变量
 // 多选变量
 
-const exportFile = async () =>
-	await downBlobFile('/core/batchFailDetails/export', { batchId: currentId.value }, `${currentTitle.value}-失败记录表.xlsx`);
+const exportFile = async () => await downBlobFile('/core/batchFailDetails/export', failParams, `${currentTitle.value}-失败记录表.xlsx`);
 </script>
