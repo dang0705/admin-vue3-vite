@@ -11,6 +11,13 @@
 				查看
 			</el-button>
 		</template>
+		<template #top-bar="{ otherInfo }">
+			<!-- {{ otherInfo.sumResp }} -->
+			<div class="info_list">
+				<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
+			</div>
+			<!-- 结算总金额: {{state.otherInfo}} 元          任务总金额: {{state.otherInfo.}}元   -->
+		</template>
 		<Dialog
 			vertical
 			button-position="center"
@@ -409,3 +416,12 @@ const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type
 
 const exportFile = async () => await downBlobFile('/core/batchFailDetails/export', failParams, `${currentTitle.value}-失败记录表.xlsx`);
 </script>
+
+<style lang="scss" scoped>
+.info_list {
+	display: flex;
+	.info_item {
+		margin-right: 20px;
+	}
+}
+</style>

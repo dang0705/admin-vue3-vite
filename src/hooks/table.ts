@@ -14,6 +14,7 @@ export interface BasicTableProps {
 	// 数据列表数组
 	dataList?: any[];
 	countResp?: any[];
+	otherInfo?: object;
 	// 分页属性对象
 	pagination?: Pagination;
 	// 数据列表，loading状态标志，默认为false
@@ -71,6 +72,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 		// 表格展示的数据数组，默认为空数组
 		dataList: [],
 		countResp: [],
+		otherInfo: {},
 		// 分页组件属性配置，如当前页码、每页展示数据条数等，默认值为 {current:1, size:10,total:0,pageSizes:[1, 10, 20, 50, 100, 200],layout:'total, sizes, prev, pager, next, jumper'}
 		pagination: {
 			current: 1,
@@ -137,6 +139,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 				// 设置分页信息中的总数据条数
 				state.pagination!.total = state.isPage ? res.data[state.props.totalCount] : 0;
 				state.countResp = state.isPage ? res.data.countResp : [];
+				state.otherInfo = state.isPage ? res.data : {};
 			} catch (err: any) {
 				state.dataList = [];
 				// 捕获异常并显示错误提示

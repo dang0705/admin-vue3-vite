@@ -15,7 +15,7 @@
 				/>
 				<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
 				<div class="top-bar">
-					<slot name="top-bar" v-bind="{ refresh: resetQuery }" />
+					<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 				</div>
 			</div>
 			<el-table
@@ -112,7 +112,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 		  }
 		: {}),
 });
-const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList } = useTable(state, params.value ? params : null);
+const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList } = useTable(state, params.value ? params : null, props.indexInfo);
 const selectObjs = ref([]) as any;
 
 /**
