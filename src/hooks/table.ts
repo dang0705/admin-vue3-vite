@@ -148,10 +148,23 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 		}
 	};
 
-	/**
-	 * 监听外部参数的变化，刷新列表
-	 */
-	watchEffect(() => state.createdIsNeed && (others?.value ? Object.keys(others.value).length && query(others?.value) : query()));
+	others &&
+		watch(
+			() => others.value,
+			(value) => query(value),
+			{ deep: true }
+		);
+	onMounted(() => {
+		if (state.createdIsNeed && !others?.value) {
+			query(others?.value);
+		}
+	});
+	// /**
+	//  * 监听外部参数的变化，刷新列表
+	//  */
+	// watchEffect(() => {
+	// 	state.createdIsNeed && (others?.value ? Object.keys(others.value).length && query(others?.value) : query());
+	// });
 
 	/**
 	 * 分页大小改变事件处理函数

@@ -61,6 +61,9 @@ const conditionForms = [
 		control: 'DateRange',
 		key: 'timeRange',
 		label: '创建时间',
+		props: {
+			valueType: 'string',
+		},
 	},
 	{
 		control: 'el-select',
