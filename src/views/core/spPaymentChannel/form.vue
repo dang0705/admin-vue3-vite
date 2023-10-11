@@ -58,6 +58,7 @@ const conditionForms = ref([
 		label: '支付通道名称:',
 		props: {
 			placeholder: '请输入支付通道名称',
+			maxlength: 30,
 		},
 		rules: [{ required: true, message: '支付通道名称不能为空', trigger: 'blur' }],
 	},
@@ -83,6 +84,7 @@ const conditionForms = ref([
 		label: '开户行:',
 		props: {
 			placeholder: '请输入开户行',
+			maxlength: 50,
 		},
 		rules: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	},
@@ -92,6 +94,7 @@ const conditionForms = ref([
 		label: '开户地:',
 		props: {
 			placeholder: '请输入开户地',
+			maxlength: 100,
 		},
 		rules: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	},
@@ -101,6 +104,7 @@ const conditionForms = ref([
 		label: '开户行联行号:',
 		props: {
 			placeholder: '请输入开户行联行号',
+			maxlength: 12,
 		},
 		rules: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
 	},
@@ -110,6 +114,7 @@ const conditionForms = ref([
 		label: '主账号:',
 		props: {
 			placeholder: '请输入主账号',
+			maxlength: 30,
 		},
 		rules: [{ required: true, message: '主账号不能为空', trigger: 'blur' }],
 	},
