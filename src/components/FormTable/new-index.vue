@@ -1,9 +1,10 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
+			<Mytab :tabs="state.countResp"></Mytab>
 			<div class="mb8" style="width: 100%" v-if="conditionForms.length">
 				<Form-view
-					label-width="90"
+					:label-width="labelWidth"
 					v-model="state.queryForm"
 					v-show="showSearch"
 					submit-button-text="查询"
@@ -45,7 +46,7 @@
 
 <script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-
+const Mytab = defineAsyncComponent(() => import('./mytab.vue'));
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
 	columns: {
@@ -77,6 +78,14 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	isTab: {
+		type: Boolean,
+		default: false,
+	},
+	labelWidth: {
+		type: String,
+		default: '90px',
+	},
 });
 /**
  * 获取api目录下所有的文件，并获取文件内容
@@ -94,6 +103,14 @@ const params = computed(() => props.params);
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
 	pagination: {},
+	...(props.isTab
+		? {
+				props: {
+					item: 'list.records',
+					totalCount: 'list.total',
+				},
+		  }
+		: {}),
 });
 const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList } = useTable(state, params.value ? params : null);
 const selectObjs = ref([]) as any;

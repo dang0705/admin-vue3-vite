@@ -159,7 +159,6 @@ const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
 const Mytab = defineAsyncComponent(() => import('./components/mytab.vue'));
 // 定义查询字典
 
-const tabs = ref([]);
 const conditionForms = [
 	{
 		control: 'el-input',
