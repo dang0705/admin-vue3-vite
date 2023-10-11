@@ -1,5 +1,5 @@
 <template>
-	<NewTable :columns="indexThead" module="core/batchUploadRecord.ts" get-list-fn-name="fetchList" :condition-forms="conditionForms">
+	<NewTable :columns="indexThead" module="core/batchUploadRecord.ts" :condition-forms="conditionForms">
 		<template #batchType="{ row: { batchType } }">
 			<span v-text="batchMap?.batch_type[batchType]" />
 		</template>
@@ -80,32 +80,39 @@ const indexThead = [
 	{
 		prop: 'batchNumber',
 		label: '批次编号',
+		width: 200,
 	},
 	{
 		prop: 'batchType',
 		label: '批次类型',
+		width: 200,
 		slot: true,
 	},
 	{
 		prop: 'createTime',
 		label: '创建时间',
+		width: 200,
 	},
 	{
 		prop: 'doneTime',
 		label: '完成时间',
+		width: 200,
 	},
 	{
 		prop: 'createBy',
 		label: '创建人',
+		width: 160,
 	},
 	{
 		prop: 'batchState',
 		label: '状态',
+		width: 120,
 		slot: true,
 	},
 	{
 		label: '操作',
 		prop: 'actions',
+		fixed: 'right',
 		slot: true,
 	},
 ];
@@ -327,8 +334,6 @@ const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type
 // 搜索变量
 // 多选变量
 
-const exportFile = async () => {
+const exportFile = async () =>
 	await downBlobFile('/core/batchFailDetails/export', { batchId: currentId.value }, `${currentTitle.value}-失败记录表.xlsx`);
-};
-// $refreshList(resetQuery);
 </script>

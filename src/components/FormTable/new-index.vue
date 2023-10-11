@@ -13,6 +13,9 @@
 					:on-cancel="resetQuery"
 				/>
 				<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
+				<div class="top-bar">
+					<slot name="top-bar" v-bind="{ refresh: resetQuery }" />
+				</div>
 			</div>
 			<el-table v-loading="state.loading" :data="state.dataList" :cell-style="tableStyle.cellStyle" :header-cell-style="tableStyle.headerCellStyle">
 				<template v-for="column in columns" :key="column.prop">
@@ -55,7 +58,7 @@ const props = defineProps({
 	},
 	getListFnName: {
 		type: String,
-		default: '',
+		default: 'fetchList',
 	},
 	keyName: {
 		type: String,
@@ -93,4 +96,5 @@ const resetQuery = () => {
 	selectObjs.value = [];
 	getDataList();
 };
+$refreshList(resetQuery);
 </script>
