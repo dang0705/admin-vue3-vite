@@ -141,7 +141,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 				state.countResp = state.isPage ? res.data.countResp : [];
 				console.log('state.countResp', state.countResp);
 			} catch (err: any) {
-				state.dataList = [];
+				// state.dataList = [];
 				// 捕获异常并显示错误提示
 				// ElMessage.error(err.msg || err.data.msg);
 			} finally {
@@ -151,9 +151,18 @@ export function useTable(options?: BasicTableProps, others: any) {
 		}
 	};
 
+	/**
+	 * 监听外部参数的变化，刷新列表
+	 */
+	others &&
+		watch(
+			() => others.value,
+			(value) => query(value),
+			{ deep: true }
+		);
 	onMounted(() => {
 		if (state.createdIsNeed) {
-			query(others);
+			query(others?.value);
 		}
 	});
 
@@ -165,7 +174,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 		// 修改state.pagination中的size属性
 		state.pagination!.size = val;
 		// 再次发起查询操作
-		query(others);
+		query(others?.value);
 	};
 
 	/**
@@ -176,7 +185,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 		// 修改state.pagination中的current属性
 		state.pagination!.current = val;
 		// 再次发起查询操作
-		query(others);
+		query(others?.value);
 	};
 
 	// 排序触发事件
@@ -200,7 +209,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 				state.descs?.splice(state.descs.indexOf(prop), 1);
 			}
 		}
-		query(others);
+		query(others?.value);
 	};
 
 	/**
@@ -214,7 +223,7 @@ export function useTable(options?: BasicTableProps, others: any) {
 			state.pagination!.current = 1;
 		}
 		// 再次发起查询操作
-		query(others);
+		query(others?.value);
 	};
 
 	/**
@@ -242,7 +251,6 @@ export function useTable(options?: BasicTableProps, others: any) {
 	};
 
 	return {
-		query,
 		tableStyle,
 		getDataList,
 		sizeChangeHandle,

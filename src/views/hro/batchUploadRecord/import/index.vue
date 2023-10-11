@@ -1,61 +1,16 @@
 <template>
-	<div class="layout-padding">
-		<div class="layout-padding-auto layout-padding-view">
-			<el-row>
-				<div class="mb8" style="width: 100%">
-					<Form-view
-						label-width="90"
-						v-model="state.queryForm"
-						v-show="showSearch"
-						submit-button-text="查询"
-						cancel-button-text="重置"
-						:forms="conditionForms"
-						:on-submit="getDataList"
-						:on-cancel="resetQuery"
-					/>
-					<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
-				</div>
-			</el-row>
-			<el-table
-				:data="state.dataList"
-				v-loading="state.loading"
-				border
-				:cell-style="tableStyle.cellStyle"
-				:header-cell-style="tableStyle.headerCellStyle"
-				@sort-change="sortChangeHandle"
-			>
-				<el-table-column prop="batchNumber" label="批次编号" show-overflow-tooltip />
-				<el-table-column prop="batchType" label="批次类型" show-overflow-tooltip>
-					<template #default="{ row: { batchType } }">
-						<span v-text="batchMap?.batch_type[batchType]" />
-					</template>
-				</el-table-column>
-				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip />
-				<el-table-column prop="doneTime" label="完成时间" show-overflow-tooltip />
-				<el-table-column prop="createBy" label="创建人" show-overflow-tooltip />
-				<el-table-column prop="batchState" label="状态" show-overflow-tooltip>
-					<template #default="{ row: { batchState } }">
-						<span v-text="batchMap?.batch_status[batchState]" />
-					</template>
-				</el-table-column>
-				<el-table-column label="操作" width="150">
-					<template #default="{ row: { id, batchType, batchState } }">
-						<el-button
-							icon="view"
-							text
-							type="primary"
-							v-auth="'core_batchUploadRecord_view'"
-							@click="view({ id, type: batchType, state: batchState })"
-						>
-							查看
-						</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
-		</div>
-
-		<!-- 查看  -->
+	<NewTable :columns="indexThead" module="core/batchUploadRecord.ts" get-list-fn-name="fetchList" :condition-forms="conditionForms">
+		<template #batchType="{ row: { batchType } }">
+			<span v-text="batchMap?.batch_type[batchType]" />
+		</template>
+		<template #batchState="{ row: { batchState } }">
+			<span v-text="batchMap?.batch_status[batchState]" />
+		</template>
+		<template #actions="{ row: { id, batchType, batchState } }">
+			<el-button icon="view" text type="primary" v-auth="'core_batchUploadRecord_view'" @click="view({ id, type: batchType, state: batchState })">
+				查看
+			</el-button>
+		</template>
 		<Dialog
 			vertical
 			button-position="center"
@@ -84,19 +39,17 @@
 						<el-button @click="exportFile">导出</el-button>
 					</li>
 				</ul>
-				<NewTable :tbody="failList" :columns="failListHead" :id="currentId" />
+				<NewTable :tbody="failList" :columns="failListHead" :id="currentId" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
 			</template>
 		</Dialog>
-	</div>
+	</NewTable>
 </template>
 
 <script setup lang="ts" name="导入批次">
-import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList } from '/@/api/core/batchUploadRecord';
 import { getObj } from '/@/api/core/batchUploadRecord';
 import Array2Object from '/@/utils/array-2-object';
 import { downBlobFile } from '/@/utils/other';
-
+// 筛选表单
 const conditionForms = [
 	{
 		control: 'el-select',
@@ -119,6 +72,41 @@ const conditionForms = [
 		control: 'el-input',
 		key: 'createBy',
 		label: '创建人',
+	},
+];
+
+// 表头
+const indexThead = [
+	{
+		prop: 'batchNumber',
+		label: '批次编号',
+	},
+	{
+		prop: 'batchType',
+		label: '批次类型',
+		slot: true,
+	},
+	{
+		prop: 'createTime',
+		label: '创建时间',
+	},
+	{
+		prop: 'doneTime',
+		label: '完成时间',
+	},
+	{
+		prop: 'createBy',
+		label: '创建人',
+	},
+	{
+		prop: 'batchState',
+		label: '状态',
+		slot: true,
+	},
+	{
+		label: '操作',
+		prop: 'actions',
+		slot: true,
 	},
 ];
 
@@ -337,26 +325,10 @@ const failList = ref([]);
 const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type'] }).value);
 
 // 搜索变量
-const showSearch = ref(true);
 // 多选变量
-const selectObjs = ref([]) as any;
 
-const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {},
-	pageList: fetchList,
-});
-
-//  table hook
-const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, tableStyle } = useTable(state);
-
-// 清空搜索条件
-const resetQuery = () => {
-	state.queryForm = {};
-	selectObjs.value = [];
-	getDataList();
-};
 const exportFile = async () => {
 	await downBlobFile('/core/batchFailDetails/export', { batchId: currentId.value }, `${currentTitle.value}-失败记录表.xlsx`);
 };
-$refreshList(resetQuery);
+// $refreshList(resetQuery);
 </script>
