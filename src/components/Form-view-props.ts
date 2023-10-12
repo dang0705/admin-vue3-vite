@@ -78,4 +78,8 @@ export default {
 		type: Boolean,
 		default: false,
 	},
+	showBtn: {
+		type: Boolean,
+		default: true,
+	},
 };

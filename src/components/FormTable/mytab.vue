@@ -10,6 +10,8 @@
 </template>
 
 <script setup lang="ts" name="systemUndertakerTask">
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['toggleTab']);
 const props = defineProps({
 	tabs: {
 		type: Array,
@@ -19,6 +21,7 @@ const props = defineProps({
 const curIndex = ref(0);
 const handleTabs = (item: object, index: number) => {
 	curIndex.value = index;
+	emit('toggleTab', item);
 };
 </script>
 

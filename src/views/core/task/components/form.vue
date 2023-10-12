@@ -1,6 +1,6 @@
 <template>
 	<el-card class="!border-none" shadow="never">
-		<el-steps v-if="!self_disabled" class="mb-8" :active="curStep" finish-status="success">
+		<el-steps v-if="!self_disabled || curStep == 2" class="mb-8" :active="curStep" finish-status="success">
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
@@ -262,7 +262,7 @@
 				</el-row>
 			</div>
 		</el-form>
-		<span v-if="!self_disabled" class="flex justify-center items-center mt-5">
+		<span v-if="!self_disabled || curStep == 2" class="flex justify-center items-center mt-5">
 			<el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
 			<el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
 			<el-button v-if="curStep == stepList.length - 1" type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
@@ -485,6 +485,9 @@ const task_typeLevel_option = computed(() => {
 	return task_typeLevel_option;
 });
 
+const setCurStep = (step: number) => {
+	curStep.value = step;
+};
 // 获取协议
 const getAgreeList = () => {
 	// 获取数据
@@ -495,6 +498,9 @@ const getAgreeList = () => {
 		agree_list.value = res.data || [];
 	});
 };
+
+// 接受外部强刷页面的钩子
+$refreshList(setCurStep, 0);
 </script>
 
 <style scoped lang="scss"></style>

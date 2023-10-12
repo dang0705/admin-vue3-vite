@@ -68,7 +68,6 @@
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_merchantInfo_edit'" @click="openMerchantForm('edit', scope.row.id)"
 							>编辑</el-button
 						>
-
 						<el-button
 							v-if="scope.row.status == 0 || scope.row.status == 2"
 							icon="delete"

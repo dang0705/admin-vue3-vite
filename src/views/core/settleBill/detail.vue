@@ -1,5 +1,8 @@
 <template>
 	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+		<template #tableTop="{ otherInfo }">
+			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
+		</template>
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
 		</template>
@@ -12,8 +15,75 @@
 </template>
 
 <script setup lang="ts" name="导入批次">
+import { getObj, addObj, putObj } from '/@/api/core/settleBill';
+const route: any = useRoute();
 // 定义变量内容
 const router = useRouter();
+const loading = ref(false);
+// 提交表单数据
+const form = reactive({});
+const topInfoForms = [
+	{
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: '账单编号',
+	},
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '账单名称',
+	},
+	{
+		control: 'el-input',
+		key: 'id',
+		label: '服务商',
+	},
+	{
+		control: 'el-input',
+		key: 'billName',
+		label: '客户',
+	},
+	{
+		control: 'el-input',
+		key: 'taskNum',
+		label: '任务编号',
+	},
+	{
+		control: 'el-input',
+		key: 'channelId',
+		label: '任务名称',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '任务承接数量',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '支付通道',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '平台支付通道',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '生成时间',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '管理费计算方式',
+	},
+	{
+		control: 'el-input',
+		key: 'createBillUser',
+		label: '创建人',
+	},
+];
 // 筛选表单
 const conditionForms = [
 	{
@@ -162,6 +232,22 @@ const view = (row: any) => {
 		},
 	});
 };
+
+// 初始化表单数据
+const getmerchantInfoData = (id: string) => {
+	// 获取数据
+	loading.value = true;
+	getObj(id)
+		.then((res: any) => {
+			Object.assign(form, res.data);
+		})
+		.finally(() => {
+			loading.value = false;
+		});
+};
+if (route.query.id) {
+	getmerchantInfoData(route.query.id);
+}
 </script>
 
 <style lang="scss" scoped>

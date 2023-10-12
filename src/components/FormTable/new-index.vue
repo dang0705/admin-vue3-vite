@@ -1,6 +1,7 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
+			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
 			<Mytab :tabs="state.countResp"></Mytab>
 			<div class="mb8" style="width: 100%" v-if="conditionForms.length">
 				<Form-view
@@ -14,7 +15,7 @@
 					:on-cancel="resetQuery"
 				/>
 				<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
-				<div class="top-bar">
+				<div class="top-bar h-8 flex items-center">
 					<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 				</div>
 			</div>

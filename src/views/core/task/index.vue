@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<Mytab :tabs="state.countResp"></Mytab>
+			<Mytab @toggleTab="toggleTab" :tabs="state.countResp"></Mytab>
 			<form-view
 				ref="queryRef"
 				v-show="showSearch"
@@ -156,7 +156,7 @@ import { useDict } from '/@/hooks/dict';
 // 引入组件
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
-const Mytab = defineAsyncComponent(() => import('./components/mytab.vue'));
+const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
 // 定义查询字典
 
 const conditionForms = [
@@ -263,6 +263,9 @@ const openTask = (type: string, id: number) => {
 				query: {
 					taskId: id,
 				},
+				state: {
+					refresh: 1,
+				},
 			});
 			break;
 		case 'edit':
@@ -271,11 +274,17 @@ const openTask = (type: string, id: number) => {
 				query: {
 					taskId: id,
 				},
+				state: {
+					refresh: 1,
+				},
 			});
 			break;
 		case 'add':
 			router.push({
 				path: '/core/task/add',
+				state: {
+					refresh: 1,
+				},
 			});
 			break;
 	}
@@ -300,6 +309,13 @@ const handleDelete = async (ids: string[]) => {
 		getDataList();
 		useMessage().success('删除成功');
 	} catch (err: any) {}
+};
+
+const toggleTab = (item: any) => {
+	console.log('toggleTab-11', item);
+	let pro = item.attributeName;
+	Object.assign(state.queryForm, { [pro]: item.attributeVal });
+	getDataList();
 };
 
 const task_typeLevel_option = computed(() => {
