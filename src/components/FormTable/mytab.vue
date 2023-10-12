@@ -39,6 +39,9 @@ const handleTabs = (item: object, index: number) => {
 		padding: 2px 0;
 		color: rgba(0, 0, 0, 0.45);
 		white-space: nowrap;
+		&:last-child {
+			margin-right: 0;
+		}
 		.num {
 			font-size: 12px;
 			background: #8c8c8c1a;

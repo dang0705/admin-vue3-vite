@@ -18,7 +18,7 @@
 			v-model="formData"
 			v-model:valid="valid"
 			v-model:show="state.upload.open"
-			label-width="140"
+			:label-width="labelWidth"
 			:on-submit="upload"
 			:submit-button-text="submitButtonText"
 		>
@@ -165,6 +165,10 @@ const prop = defineProps({
 		type: Boolean,
 		default: true,
 	},
+	labelWidth: {
+		type: [String, Number],
+		default: 140,
+	},
 });
 const valid = ref(false);
 const uploadRef = ref();
@@ -241,7 +245,9 @@ const upload = async () => {
 		formDataObject.append(key, prop.params[key]);
 	}
 
-	// formDataObject.append('taskId', prop.params.taskId);
+	// formDataObject.append('taskId', '1710888261904424962');
+	// formDataObject.append('paymentBankId', '1711984959995449345');
+	// formDataObject.append('platformBankId', '1711984959995449345');
 	// console.log('11222', { ...formData.value, ...prop.params });
 	try {
 		const { data } = await request({

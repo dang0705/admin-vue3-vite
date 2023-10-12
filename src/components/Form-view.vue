@@ -103,7 +103,11 @@ defineExpose({
 									<component
 										:is="!form.hidden ? form.control : 'template'"
 										v-model="formData[form.key]"
-										v-bind="{ ...form.props, ...(form.props?.clearable === undefined ? { clearable: true } : {}) }"
+										v-bind="{
+											...form.props,
+											...(form.props?.clearable === undefined ? { clearable: true } : {}),
+											...(form.props?.disabled ? { placeholder: '--' } : {}),
+										}"
 									>
 										<template v-if="form.control === 'el-select'">
 											<el-option

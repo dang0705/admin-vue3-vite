@@ -14,18 +14,23 @@
 			>
 				<template #taskTypeFirst="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-						<el-select placeholder="一级分类" class="w100" v-model="state.queryForm.taskTypeFirst">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
-						</el-select>
+						<div class="flex items-center">
+							<el-select placeholder="一级分类" class="w100" v-model="state.queryForm.taskTypeFirst">
+								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
+							</el-select>
+							<el-select style="margin-left: 10px" placeholder="二级分类" class="w100" v-model="state.queryForm.taskTypeSecond">
+								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
+							</el-select>
+						</div>
 					</el-form-item>
 				</template>
-				<template #taskTypeSecond="{ form }">
+				<!-- <template #taskTypeSecond="{ form }">
 					<el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 						<el-select placeholder="二级分类" class="w100" v-model="state.queryForm.taskTypeSecond">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
 						</el-select>
 					</el-form-item>
-				</template>
+				</template> -->
 			</form-view>
 			<el-row>
 				<div class="mb8" style="width: 100%">
@@ -172,21 +177,16 @@ const conditionForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'taskName',
-		label: '任务名称',
-	},
-	{
-		control: 'el-input',
 		key: 'taskTypeFirst',
-		label: '行业一级',
+		label: '任务类型',
 		slot: true,
 	},
-	{
-		control: 'el-input',
-		key: 'taskTypeSecond',
-		label: '行业二级',
-		slot: true,
-	},
+	// {
+	// 	control: 'el-input',
+	// 	key: 'taskTypeSecond',
+	// 	label: '行业二级',
+	// 	slot: true,
+	// },
 	{
 		control: 'SpSelect',
 		key: 'spId',
@@ -312,7 +312,6 @@ const handleDelete = async (ids: string[]) => {
 };
 
 const toggleTab = (item: any) => {
-	console.log('toggleTab-11', item);
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });
 	getDataList();

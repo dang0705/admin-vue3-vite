@@ -137,7 +137,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 				// 设置表格展示的数据数组
 				state.dataList = state.isPage ? eval('res.data.' + state.props.item) : res.data;
 				// 设置分页信息中的总数据条数
-				state.pagination!.total = state.isPage ? res.data[state.props.totalCount] : 0;
+				state.pagination!.total = state.isPage ? eval('res.data.' + state.props.totalCount) : 0;
 				state.countResp = state.isPage ? res.data.countResp : [];
 				state.otherInfo = state.isPage ? res.data : {};
 			} catch (err: any) {

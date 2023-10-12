@@ -2,6 +2,51 @@
 	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 		<template #tableTop="{ otherInfo }">
 			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
+			<div class="total_wrapper">
+				<div class="total_list">
+					<!-- <div class="total_item" v-for="(item, index) in 4" :key="index"> -->
+					<div class="total_item">
+						<img src="/src/assets/images/total_1.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">0.00</div>
+								<div class="unit">元</div>
+							</div>
+							<div class="info_label">结算总金额</div>
+						</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_3.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">0.00</div>
+								<div class="unit">元</div>
+							</div>
+							<div class="info_label">任务金额</div>
+						</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_6.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">0.00</div>
+								<div class="unit">元</div>
+							</div>
+							<div class="info_label">平台服务费</div>
+						</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_4.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">0.00</div>
+								<div class="unit">元</div>
+							</div>
+							<div class="info_label">服务费</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</template>
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
@@ -255,6 +300,41 @@ if (route.query.id) {
 	display: flex;
 	.info_item {
 		margin-right: 20px;
+	}
+}
+.total_wrapper {
+	padding: 28px 0;
+	background: #fafafa;
+	margin-bottom: 30px;
+}
+.total_list {
+	display: flex;
+	.total_item {
+		width: 25%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: rgba(0, 0, 0, 0.5);
+	}
+	.icon {
+		width: 38px;
+		height: 37px;
+		margin-right: 15px;
+	}
+	.price_box {
+		font-size: 30px;
+	}
+	.price {
+		color: rgba(0, 0, 0, 0.8);
+		display: inline-block;
+	}
+	.unit {
+		font-size: 14px;
+		vertical-align: baseline;
+		display: inline-block;
+	}
+	.info_label {
+		font-size: 14px;
 	}
 }
 </style>

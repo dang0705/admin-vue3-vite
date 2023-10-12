@@ -1,19 +1,91 @@
 <template>
-	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
-		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
-		</template>
-		<template #top-bar="{ otherInfo }">
-			<div class="info_list">
-				<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
-			</div>
-		</template>
-	</NewTable>
+	<div>
+		<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+			<template #actions="{ row }">
+				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
+			</template>
+			<template #top-bar="{ otherInfo }">
+				<el-button style="margin-right: 24px" icon="Upload" type="primary" class="ml10" @click="importBillRef.openDialog()"> 导入结算 </el-button>
+				<div class="info_list">
+					<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
+				</div>
+			</template>
+		</NewTable>
+		<!-- 导入结算-->
+		<uploadExcel
+			ref="importBillRef"
+			guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
+			upload-label="导入结算"
+			upload-url="core/settleBill/import"
+			temp-url="/files/任务承接明细表.xlsx"
+			template-on-front
+			title="导入结算"
+			label-width="178px"
+			:forms="addUnderTakerForms"
+			submitButtonText="下一步"
+		/>
+	</div>
 </template>
 
 <script setup lang="ts" name="导入批次">
-// 定义变量内容
+const ImportBill = defineAsyncComponent(() => import('./components/importBill.vue'));
 const router = useRouter();
+const importBillRef = ref();
+
+const addUnderTakerForms = [
+	{
+		control: 'el-input',
+		key: 'billName',
+		label: '账单名称',
+	},
+	{
+		control: 'MerchantSelect',
+		key: 'merchantId',
+		label: '结算商户',
+	},
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+	},
+	// {
+	// 	control: 'el-select',
+	// 	key: 'taskId',
+	// 	label: '结算任务',
+	// },
+	// {
+	// 	control: 'el-select',
+	// 	key: 'paymentBankId',
+	// 	label: '支付通道',
+	// },
+	// {
+	// 	control: 'el-input',
+	// 	key: 'platformBankId',
+	// 	label: '平台支付通道',
+	// },
+	{
+		control: 'el-radio-group',
+		key: 'isSendMsg',
+		label: '是否发送结算成功短信',
+		options: [
+			{
+				label: '是',
+				value: 1,
+			},
+			{
+				label: '否',
+				value: 0,
+			},
+		],
+		rules: [
+			{
+				required: true,
+			},
+		],
+		value: 1,
+	},
+];
+
 // 筛选表单
 const conditionForms = [
 	{
@@ -154,7 +226,6 @@ const indexThead = [
 	},
 ];
 const view = (row: any) => {
-	console.log(1111, row);
 	router.push({
 		path: '/core/settleBill/detail',
 		query: {

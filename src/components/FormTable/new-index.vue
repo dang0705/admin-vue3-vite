@@ -2,7 +2,7 @@
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-			<Mytab :tabs="state.countResp"></Mytab>
+			<Mytab @toggleTab="toggleTab" :tabs="state.countResp"></Mytab>
 			<div class="mb8" style="width: 100%" v-if="conditionForms.length">
 				<Form-view
 					:label-width="labelWidth"
@@ -129,6 +129,12 @@ const onSelectionChange = (item: []) => {
 const resetQuery = () => {
 	state.queryForm = {};
 	selectObjs.value = [];
+	getDataList();
+};
+
+const toggleTab = (item: any) => {
+	let pro = item.attributeName;
+	Object.assign(state.queryForm, { [pro]: item.attributeVal });
 	getDataList();
 };
 
