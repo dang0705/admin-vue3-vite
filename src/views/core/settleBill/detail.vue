@@ -4,12 +4,11 @@
 			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
 			<div class="total_wrapper">
 				<div class="total_list">
-					<!-- <div class="total_item" v-for="(item, index) in 4" :key="index"> -->
 					<div class="total_item">
 						<img src="/src/assets/images/total_1.png" class="icon" alt="" />
 						<div class="info">
 							<div class="price_box">
-								<div class="price">0.00</div>
+								<div class="price">{{ form.billAmountTotal || '0.00' }}</div>
 								<div class="unit">元</div>
 							</div>
 							<div class="info_label">结算总金额</div>
@@ -19,7 +18,7 @@
 						<img src="/src/assets/images/total_3.png" class="icon" alt="" />
 						<div class="info">
 							<div class="price_box">
-								<div class="price">0.00</div>
+								<div class="price">{{ form.taskAmountTotal || '0.00' }}</div>
 								<div class="unit">元</div>
 							</div>
 							<div class="info_label">任务金额</div>
@@ -29,17 +28,17 @@
 						<img src="/src/assets/images/total_6.png" class="icon" alt="" />
 						<div class="info">
 							<div class="price_box">
-								<div class="price">0.00</div>
+								<div class="price">{{ form.managementAmountTotal || '0.00' }}</div>
 								<div class="unit">元</div>
 							</div>
-							<div class="info_label">平台服务费</div>
+							<div class="info_label">管理费</div>
 						</div>
 					</div>
 					<div class="total_item">
 						<img src="/src/assets/images/total_4.png" class="icon" alt="" />
 						<div class="info">
 							<div class="price_box">
-								<div class="price">0.00</div>
+								<div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
 								<div class="unit">元</div>
 							</div>
 							<div class="info_label">服务费</div>
@@ -70,57 +69,57 @@ const form = reactive({});
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
-		key: 'merchantId',
+		key: 'id',
 		label: '账单编号',
 	},
 	{
 		control: 'SpSelect',
-		key: 'spId',
+		key: 'billName',
 		label: '账单名称',
 	},
 	{
 		control: 'el-input',
-		key: 'id',
+		key: 'spName',
 		label: '服务商',
 	},
 	{
 		control: 'el-input',
-		key: 'billName',
+		key: 'merchantName',
 		label: '客户',
 	},
 	{
 		control: 'el-input',
-		key: 'taskNum',
+		key: 'taskId',
 		label: '任务编号',
 	},
 	{
 		control: 'el-input',
-		key: 'channelId',
+		key: 'taskName',
 		label: '任务名称',
 	},
 	{
 		control: 'el-input',
-		key: 'createBillUser',
+		key: 'taskUndertakerCount',
 		label: '任务承接数量',
 	},
 	{
 		control: 'el-input',
-		key: 'createBillUser',
+		key: 'paymentBankName',
 		label: '支付通道',
 	},
 	{
 		control: 'el-input',
-		key: 'createBillUser',
+		key: 'platformBankName',
 		label: '平台支付通道',
 	},
 	{
 		control: 'el-input',
-		key: 'createBillUser',
+		key: 'billCreateTime',
 		label: '生成时间',
 	},
 	{
 		control: 'el-input',
-		key: 'createBillUser',
+		key: 'feeCalculationMethodDesc',
 		label: '管理费计算方式',
 	},
 	{

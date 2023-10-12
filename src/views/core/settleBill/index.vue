@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+		<NewTable ref="NewTableRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 			<template #actions="{ row }">
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
 			</template>
@@ -14,6 +14,7 @@
 		<!-- 导入结算-->
 		<uploadExcel
 			ref="importBillRef"
+			@refreshDataList="refreshDataList"
 			guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
 			upload-label="导入结算"
 			upload-url="core/settleBill/import"
@@ -23,14 +24,36 @@
 			label-width="178px"
 			:forms="addUnderTakerForms"
 			submitButtonText="下一步"
-		/>
+		>
+			<template #taskId="formData">
+				{{ formData }}
+				<!-- <el-form-item :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+					<div class="flex items-center">
+						<el-select placeholder="一级分类" class="w100" v-model="state.queryForm.taskTypeFirst">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
+						</el-select>
+						<el-select style="margin-left: 10px" placeholder="二级分类" class="w100" v-model="state.queryForm.taskTypeSecond">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
+						</el-select>
+					</div>
+				</el-form-item> -->
+			</template>
+		</uploadExcel>
 	</div>
 </template>
 
 <script setup lang="ts" name="导入批次">
+import { fetchList } from '/@/api/core/task';
+import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
+
 const ImportBill = defineAsyncComponent(() => import('./components/importBill.vue'));
 const router = useRouter();
 const importBillRef = ref();
+const NewTableRef = ref();
+const formInfo = reactive({
+	taskList: [],
+	spPaymentChannelList: [],
+});
 
 const addUnderTakerForms = [
 	{
@@ -48,21 +71,24 @@ const addUnderTakerForms = [
 		key: 'spId',
 		label: '服务商',
 	},
-	// {
-	// 	control: 'el-select',
-	// 	key: 'taskId',
-	// 	label: '结算任务',
-	// },
-	// {
-	// 	control: 'el-select',
-	// 	key: 'paymentBankId',
-	// 	label: '支付通道',
-	// },
-	// {
-	// 	control: 'el-input',
-	// 	key: 'platformBankId',
-	// 	label: '平台支付通道',
-	// },
+	{
+		control: 'el-select',
+		key: 'taskId',
+		label: '结算任务',
+		// slot: true,
+	},
+	{
+		control: 'el-select',
+		key: 'paymentBankId',
+		label: '支付通道',
+		// slot: true,
+	},
+	{
+		control: 'el-select',
+		key: 'platformBankId',
+		label: '平台支付通道',
+		// slot: true,
+	},
 	{
 		control: 'el-radio-group',
 		key: 'isSendMsg',
@@ -112,6 +138,7 @@ const conditionForms = [
 		control: 'el-input',
 		key: 'taskNum',
 		label: '任务编号',
+		// options: formInfo.taskList,
 	},
 	{
 		control: 'el-input',
@@ -233,6 +260,58 @@ const view = (row: any) => {
 		},
 	});
 };
+// 初始化表单数据
+const getmerchantInfoData = () => {
+	fetchList()
+		.then((res: any) => {
+			// console.log('res-111', res);
+			formInfo.taskList =
+				res.data.list.records.map((item) => {
+					return {
+						label: item.taskName,
+						value: item.id,
+					};
+				}) || [];
+			// console.log('formInfo.taskList', formInfo.taskList);
+			// console.log('addUnderTakerForms', addUnderTakerForms);
+			addUnderTakerForms.forEach((item) => {
+				if (item.key == 'taskId') {
+					item.options = formInfo.taskList;
+					// console.log('formInfo.taskList', formInfo.taskList);
+				}
+			});
+		})
+		.finally(() => {});
+};
+
+const getSpPaymentChannelListData = () => {
+	// form.paymentChannelId = '';
+	// 获取数据
+	getSpPaymentChannelList({
+		spId: '1711284142851432449',
+	}).then((res: any) => {
+		formInfo.spPaymentChannelList =
+			res.data.map((item) => {
+				return {
+					label: item.channelName,
+					value: item.id,
+				};
+			}) || [];
+		console.log('formInfo.spPaymentChannelList', formInfo.spPaymentChannelList);
+
+		addUnderTakerForms.forEach((item) => {
+			if (item.key == 'paymentBankId' || item.key == 'platformBankId') {
+				item.options = formInfo.spPaymentChannelList;
+				// console.log('formInfo.taskList', formInfo.taskList);
+			}
+		});
+	});
+};
+const refreshDataList = () => {
+	NewTableRef?.value.resetQuery();
+};
+getmerchantInfoData();
+getSpPaymentChannelListData();
 </script>
 
 <style lang="scss" scoped>

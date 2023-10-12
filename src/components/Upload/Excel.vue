@@ -1,73 +1,75 @@
 <!-- excel 导入组件 -->
 <template>
-	<el-dialog :title="title" v-model="state.upload.open" :close-on-click-modal="false" draggable>
-		<div class="guidance mb10">
-			<p v-html="guidance" />
-		</div>
-		<div v-if="tempUrl" class="my-6">
-			<a v-if="templateOnFront" class="color-primary hover:" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
-			<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp">
-				{{ $t('excel.downloadTemplate') }}
-			</el-link>
-		</div>
-		<el-divider />
-		<form-view
-			:forms="forms"
-			:columns="24"
-			vertical
-			v-model="formData"
-			v-model:valid="valid"
-			v-model:show="state.upload.open"
-			:label-width="labelWidth"
-			:on-submit="upload"
-			:submit-button-text="submitButtonText"
-		>
-			<template v-for="(_, slot) in $slots" #[slot]>
-				<slot :name="slot" />
-			</template>
-			<template #after-forms>
-				<el-form-item style="margin-bottom: 20px !important" :prop="mainField" :label="`${title}：`" :rules="excelRules">
-					<el-upload
-						action="#"
-						drag
-						ref="uploadRef"
-						:id="uuid"
-						:accept="accept.join(',')"
-						:auto-upload="false"
-						:limit="1"
-						:show-file-list="false"
-						:headers="headers"
-						:disabled="state.upload.isUploading"
-						:on-progress="handleFileUploadProgress"
-						:on-success="handleFileSuccess"
-						:on-error="handleFileError"
-						:on-change="onChange"
-					>
-						<i class="el-icon-upload" />
-						<div class="el-upload__text">
-							{{ $t('excel.operationNotice') }}
-							<em>{{ $t('excel.clickUpload') }}</em>
-						</div>
-						<template #tip>
-							<div class="el-upload__tip text-center">
-								<span>{{ $t('excel.fileFormat') }}</span>
+	<div>
+		<el-dialog :title="title" v-model="state.upload.open" :close-on-click-modal="false" draggable>
+			<div class="guidance mb10">
+				<p v-html="guidance" />
+			</div>
+			<div v-if="tempUrl" class="my-6">
+				<a v-if="templateOnFront" class="color-primary hover:" download :href="tempUrl" v-text="$t('excel.downloadTemplate')" />
+				<el-link v-else type="primary" :underline="false" style="font-size: 12px; vertical-align: baseline" @click="downExcelTemp">
+					{{ $t('excel.downloadTemplate') }}
+				</el-link>
+			</div>
+			<el-divider />
+			<form-view
+				:forms="forms"
+				:columns="24"
+				vertical
+				v-model="formData"
+				v-model:valid="valid"
+				v-model:show="state.upload.open"
+				:label-width="labelWidth"
+				:on-submit="upload"
+				:submit-button-text="submitButtonText"
+			>
+				<template v-for="(_, slot) in $slots" #[slot]>
+					<slot :name="slot" v-bind="{ formData }" />
+				</template>
+				<template #after-forms>
+					<el-form-item style="margin-bottom: 20px !important" :prop="mainField" :label="`${title}：`" :rules="excelRules">
+						<el-upload
+							action="#"
+							drag
+							ref="uploadRef"
+							:id="uuid"
+							:accept="accept.join(',')"
+							:auto-upload="false"
+							:limit="1"
+							:show-file-list="false"
+							:headers="headers"
+							:disabled="state.upload.isUploading"
+							:on-progress="handleFileUploadProgress"
+							:on-success="handleFileSuccess"
+							:on-error="handleFileError"
+							:on-change="onChange"
+						>
+							<i class="el-icon-upload" />
+							<div class="el-upload__text">
+								{{ $t('excel.operationNotice') }}
+								<em>{{ $t('excel.clickUpload') }}</em>
 							</div>
-							<span v-if="fileName" class="text-primary" v-text="`文件名称：${fileName}`" />
-						</template>
-					</el-upload>
-				</el-form-item>
-			</template>
-		</form-view>
-	</el-dialog>
+							<template #tip>
+								<div class="el-upload__tip text-center">
+									<span>{{ $t('excel.fileFormat') }}</span>
+								</div>
+								<span v-if="fileName" class="text-primary" v-text="`文件名称：${fileName}`" />
+							</template>
+						</el-upload>
+					</el-form-item>
+				</template>
+			</form-view>
+		</el-dialog>
 
-	<!--校验失败错误数据-->
-	<el-dialog :title="title" v-model="state.successVisible" v-if="toBatch">
-		<p v-text="state.upload.data" />
-		<template #footer>
-			<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
-			<el-button @click="state.successVisible = false">{{ $t('common.cancelButtonText') }}</el-button>
-		</template>
-	</el-dialog>
+		<!--校验失败错误数据-->
+		<el-dialog :title="title" v-model="state.successVisible" v-if="toBatch">
+			<p v-text="state.upload.data" />
+			<template #footer>
+				<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
+				<el-button @click="handleCancel">{{ $t('common.cancelButtonText') }}</el-button>
+			</template>
+		</el-dialog>
+	</div>
 </template>
 
 <script setup lang="ts" name="UploadExcel">
@@ -172,6 +174,7 @@ const prop = defineProps({
 });
 const valid = ref(false);
 const uploadRef = ref();
+const emit = defineEmits(['refreshDataList']);
 
 const state = reactive({
 	successVisible: false,
@@ -245,9 +248,9 @@ const upload = async () => {
 		formDataObject.append(key, prop.params[key]);
 	}
 
-	// formDataObject.append('taskId', '1710888261904424962');
-	// formDataObject.append('paymentBankId', '1711984959995449345');
-	// formDataObject.append('platformBankId', '1711984959995449345');
+	formDataObject.append('taskId', '1710888261904424962');
+	formDataObject.append('paymentBankId', '1711984959995449345');
+	formDataObject.append('platformBankId', '1711984959995449345');
 	// console.log('11222', { ...formData.value, ...prop.params });
 	try {
 		const { data } = await request({
@@ -272,6 +275,10 @@ const upload = async () => {
 const router = useRouter();
 const goToBatchManagement = () => router.push({ name: '导入批次', state: { refresh: 1 } });
 
+const handleCancel = () => {
+	state.successVisible = false;
+	emit?.('refreshDataList');
+};
 /**
  * 上传失败事件处理
  */

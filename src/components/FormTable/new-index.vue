@@ -138,6 +138,10 @@ const toggleTab = (item: any) => {
 	getDataList();
 };
 
+// 暴露变量
+defineExpose({
+	resetQuery,
+});
 // 接受外部强刷页面的钩子
 $refreshList(resetQuery);
 </script>
