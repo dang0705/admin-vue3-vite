@@ -7,7 +7,7 @@
 					审核
 				</el-button>
 				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('toSubmit', row)">
-					提交
+					提交账单
 				</el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
