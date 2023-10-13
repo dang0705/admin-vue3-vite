@@ -47,7 +47,8 @@ export function submitObj(obj?: Object) {
 }
 export function taskRecordItem(obj?: any) {
 	return request({
-		url: '/core/settleBillTaskRecordItem/page/' + obj.id,
+		url: '/core/settleBillTaskRecordItem/page/',
 		method: 'get',
+		params: obj,
 	});
 }

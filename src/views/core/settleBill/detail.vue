@@ -201,127 +201,127 @@ const conditionForms = [
 ];
 const indexThead = [
 	{
-		prop: '承接人',
+		prop: 'undertakerName',
 		label: '承接人',
 		width: 100,
 	},
 	{
-		prop: '承接人证件号码',
+		prop: 'undertakerCard',
 		label: '承接人证件号码',
 		width: 150,
 	},
 	{
-		prop: '承接人手机号码',
+		prop: 'undertakerPhone',
 		label: '承接人手机号码',
 		width: 150,
 	},
 	{
-		prop: '服务商',
+		prop: 'spName',
 		label: '服务商',
 		width: 100,
 	},
 	{
-		prop: '支付通道',
+		prop: 'paymentBankName',
 		label: '支付通道',
 		width: 100,
 	},
 	{
-		prop: '商户',
+		prop: 'merchantName',
 		label: '商户',
 		width: 100,
 	},
 	{
-		prop: '任务名称',
+		prop: 'taskName',
 		label: '任务名称',
 		width: 100,
 	},
 	{
-		prop: '任务承接编号',
+		prop: 'taskUndertakerId',
 		label: '任务承接编号',
 		width: 150,
 	},
 	{
-		prop: '任务编号',
+		prop: 'taskId',
 		label: '任务编号',
 		width: 100,
 	},
 	{
-		prop: '承接人开户行',
+		prop: 'undertakerBankName',
 		label: '承接人开户行',
 		width: 150,
 	},
 	{
-		prop: '承接人银行卡号',
+		prop: 'undertakerBankNumber',
 		label: '承接人银行卡号',
 		width: 150,
 	},
 	{
-		prop: '任务金额(元)',
+		prop: 'taskAmount',
 		label: '任务金额(元)',
 		width: 150,
 	},
 	{
-		prop: '代扣税款(元)',
+		prop: 'taxWithheld',
 		label: '代扣税款(元)',
 		width: 150,
 	},
 	{
-		prop: '实发金额(元)',
+		prop: 'paidAmount',
 		label: '实发金额(元)',
 		width: 150,
 	},
 	{
-		prop: '管理费(元)',
+		prop: 'commissionAmount',
 		label: '管理费(元)',
 		width: 150,
 	},
 	{
-		prop: '承接开始时间',
+		prop: 'undertaderStartTime',
 		label: '承接开始时间',
 		width: 150,
 	},
 	{
-		prop: '承接结束时间',
+		prop: 'undertaderEndTime',
 		label: '承接结束时间',
 		width: 150,
 	},
 	{
-		prop: '任务结算明细编号',
+		prop: 'id',
 		label: '任务结算明细编号',
 		width: 150,
 	},
 	{
-		prop: '付款时间',
-		label: '付款时间',
+		prop: 'billSettleTime',
+		label: '付款时间', // 伪代码
 		width: 150,
 	},
 	{
-		prop: '是否签署协议',
+		prop: 'isSignServiceContract',
 		label: '是否签署协议',
 		width: 150,
 	},
 	{
-		prop: '是否银行四要素校验',
+		prop: 'isBankFourEssentialFactor',
 		label: '是否银行四要素校验',
 		width: 150,
 	},
 	{
-		prop: '结算状态',
+		prop: 'billStatus',
 		label: '结算状态',
 		width: 100,
 	},
 	{
-		prop: '支付时间',
+		prop: 'billSettleTime',
 		label: '支付时间',
 		width: 100,
 	},
 	{
-		prop: '支付状态',
+		prop: 'paymentStatus',
 		label: '支付状态',
 		width: 100,
 	},
 	{
-		prop: '支付失败原因',
+		prop: 'failureReason',
 		label: '支付失败原因',
 		width: 150,
 	},
@@ -334,11 +334,11 @@ const indexThead = [
 	},
 ];
 const queryForm = {
-	id: route.query.id,
+	settleBillId: route.query.id,
 };
 const newIndexThead = [
 	{
-		prop: 'serviceBillRecord',
+		prop: 'settleBillName',
 		label: '账单名称',
 		width: 100,
 	},

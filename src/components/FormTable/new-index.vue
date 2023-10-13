@@ -15,7 +15,13 @@
 					:on-submit="getDataList"
 					:on-cancel="resetQuery"
 				/>
-				<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
+				<right-toolbar
+					v-if="conditionForms.length"
+					v-model:showSearch="showSearch"
+					class="ml10 mr20"
+					style="float: right"
+					@queryTable="getDataList"
+				/>
 				<div class="top-bar h-8 flex items-center">
 					<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 				</div>
