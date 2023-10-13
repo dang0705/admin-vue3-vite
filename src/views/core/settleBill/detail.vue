@@ -1,5 +1,13 @@
 <template>
-	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="140px">
+	<NewTable
+		:columns="indexThead"
+		module="core/settleBill.ts"
+		getListFnName="taskRecordItem"
+		:queryForm="queryForm"
+		isTab
+		:condition-forms="conditionForms"
+		labelWidth="140px"
+	>
 		<template #tableTop="{ otherInfo }">
 			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
 			<div class="total_wrapper">
@@ -51,9 +59,10 @@
 				style="margin-bottom: 28px"
 				ref="NewTableRef"
 				noPadding
-				:tableData="[form.serviceBillRecord]"
+				:tableData="form.serviceBillRecord"
 				:columns="newIndexThead"
 				module="core/settleBill.ts"
+				:createdIsNeed="false"
 				labelWidth="120px"
 			>
 				<template #actions="{ row }">
@@ -75,9 +84,10 @@
 				style="margin-bottom: 28px"
 				ref="NewTableRef"
 				noPadding
-				:tableData="[form.taskBillRecord]"
+				:tableData="form.taskBillRecord"
 				:columns="newIndexThead"
 				module="core/settleBill.ts"
+				:createdIsNeed="false"
 				labelWidth="120px"
 			>
 				<template #actions="{ row }">
@@ -323,6 +333,9 @@ const indexThead = [
 		width: 300,
 	},
 ];
+const queryForm = {
+	id: route.query.id,
+};
 const newIndexThead = [
 	{
 		prop: 'serviceBillRecord',

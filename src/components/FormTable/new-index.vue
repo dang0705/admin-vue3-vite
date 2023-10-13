@@ -80,6 +80,10 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	queryForm: {
+		type: Object,
+		default: () => {},
+	},
 	tableData: {
 		type: Array,
 		default: () => [],
@@ -95,6 +99,10 @@ const props = defineProps({
 	noPagination: {
 		type: Boolean,
 		default: false,
+	},
+	createdIsNeed: {
+		type: Boolean,
+		default: true,
 	},
 	labelWidth: {
 		type: String,
@@ -116,7 +124,9 @@ const params = computed(() => props.params);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
+	queryForm: props.queryForm,
 	pagination: {},
+	createdIsNeed: props.createdIsNeed,
 	...(props.isTab
 		? {
 				props: {
