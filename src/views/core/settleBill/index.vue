@@ -2,7 +2,13 @@
 	<div>
 		<NewTable ref="NewTableRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 			<template #actions="{ row }">
-				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
+				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('view', row)"> 查看 </el-button>
+				<el-button v-if="row.status == 20" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('exam', row)">
+					审核
+				</el-button>
+				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('toSubmit', row)">
+					提交
+				</el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
@@ -64,11 +70,12 @@
 			<template #platformBankId="{ formData }">
 				<el-form-item prop="platformBankId" label="平台支付通道" :rules="[{ required: true, message: '平台支付通道不能为空', trigger: 'blur' }]">
 					<el-select placeholder="请选择" class="w100" clearable v-model="formData.platformBankId">
-						<el-option :key="item.id" :label="item.channelName" :value="item.id" v-for="item in formInfo.spPaymentChannelList" />
+						<el-option :key="item.id" :label="item.channelName" :value="item.id" v-for="item in formInfo.spPaymentChannelList1" />
 					</el-select>
 				</el-form-item>
 			</template>
 		</uploadExcel>
+		<form-audit ref="formAuditDialogRef" formId="billId" getUrl="/core/settleBill/" putUrl="/core/settleBill/audit" @refresh="getDataList(false)" />
 	</div>
 </template>
 
@@ -76,14 +83,18 @@
 import { fetchList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
+import { submitObj } from '/@/api/core/settleBill';
 
-const ImportBill = defineAsyncComponent(() => import('./components/importBill.vue'));
+const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
+import { useMessage, useMessageBox } from '/@/hooks/message';
 const router = useRouter();
 const importBillRef = ref();
 const NewTableRef = ref();
+const formAuditDialogRef = ref();
 const formInfo = reactive({
 	taskList: [],
 	spPaymentChannelList: [],
+	spPaymentChannelList1: [],
 	merchantList: [],
 	spinfoList: [],
 });
@@ -290,16 +301,34 @@ const indexThead = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
+		width: 200,
 	},
 ];
-const view = (row: any) => {
-	router.push({
-		path: '/core/settleBill/detail',
-		query: {
-			id: row.id,
-		},
-	});
+const handleAction = async (type: string, row: any) => {
+	switch (type) {
+		case 'view':
+			router.push({
+				path: '/core/settleBill/detail',
+				query: {
+					id: row.id,
+				},
+			});
+			break;
+		case 'exam':
+			formAuditDialogRef?.value.openDialog(row.id);
+			break;
+		case 'toSubmit':
+			// setStopObj()
+			await useMessageBox().confirm('在提交账单之前，请确定账单信息无误！');
+			await submitObj({
+				id: row.id,
+			});
+			refreshDataList();
+			useMessage().success('提交账单成功');
+			break;
+	}
 };
+
 // 初始化表单数据
 const getTaskList = (formData: any) => {
 	fetchList({
@@ -319,6 +348,16 @@ const getSpPaymentChannelListData = (formData: any) => {
 		formInfo.spPaymentChannelList = res.data || [];
 	});
 };
+
+const getSpPaymentChannelListData1 = () => {
+	getSpPaymentChannelList({
+		spId: 3,
+	}).then((res: any) => {
+		formInfo.spPaymentChannelList1 = res.data || [];
+	});
+};
+getSpPaymentChannelListData1();
+
 const refreshDataList = () => {
 	formInfo.taskList = [];
 	formInfo.spPaymentChannelList = [];

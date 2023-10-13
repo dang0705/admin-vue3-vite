@@ -185,10 +185,7 @@ const isOpen = computed({
 // 打开弹窗
 const openDialog = async (row: any) => {
 	console.log('row', row);
-
 	state.taskId = row?.[props.idFiled];
-	console.log('state.taskId', state.taskId);
-
 	loading.value = true;
 	selected.value = selectedCache.value = [];
 	// console.log(request);
