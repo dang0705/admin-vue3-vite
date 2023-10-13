@@ -75,7 +75,7 @@
 				</el-form-item>
 			</template>
 		</uploadExcel>
-		<form-audit ref="formAuditDialogRef" formId="billId" getUrl="/core/settleBill/" putUrl="/core/settleBill/audit" @refresh="getDataList(false)" />
+		<form-audit ref="formAuditDialogRef" formId="billId" getUrl="/core/settleBill/" putUrl="/core/settleBill/audit" @refresh="refreshDataList()" />
 	</div>
 </template>
 

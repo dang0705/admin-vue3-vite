@@ -86,7 +86,7 @@
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
 						<el-button
-							v-if="scope.row.status === '10'"
+							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
 							icon="edit-pen"
 							text
 							type="primary"
@@ -95,7 +95,7 @@
 							>编辑</el-button
 						>
 						<el-button
-							v-if="scope.row.status === '10'"
+							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
 							icon="edit-pen"
 							text
 							type="primary"

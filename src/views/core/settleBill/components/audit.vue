@@ -84,75 +84,33 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
-	// try {
-	// 	loading.value = true;
-	// 	await putAuditTask({
-	// 		auditPass: form.auditPass,
-	// 		auditPostscript: form.auditPostscript,
-	// 		taskId: form.taskId,
-	// 	});
-	// 	useMessage().success(t(form.taskId ? 'common.editSuccessText' : 'common.addSuccessText'));
-	// 	visible.value = false;
-	// 	emit('refresh');
-	// } catch (err: any) {
-	// } finally {
-	// 	loading.value = false;
-	// }
 	try {
 		const { data } = await request({
 			url: props.putUrl,
 			method: 'post',
-			// headers: {
-			// 	'Content-Type': 'multipart/form-data',
-			// 	...headers.value,
-			// },
 			data: {
 				...form,
 				[props.formId]: form.id,
 			},
 		});
-		console.log('data-111', data);
-
-		// state.upload.data = data;
-		// if (prop.successfulDialog) {
-		// 	state.successVisible = true;
-		// }
-		// state.upload.open = false;
-	} catch (error) {
-		console.log(error);
-		// onError(error as any);
-	}
+		useMessage().success('审核成功');
+		visible.value = false;
+		emit('refresh');
+	} catch (error) {}
 };
 
 // 初始化表单数据
 const getInfo = async (id: string) => {
-	// // 获取数据
-	// getObj(taskId).then((res: any) => {
-	// 	Object.assign(form, res.data);
-	// });
 	try {
 		const { data } = await request({
 			url: props.getUrl + id,
 			method: 'get',
-			// headers: {
-			// 	'Content-Type': 'multipart/form-data',
-			// 	...headers.value,
-			// },
 			data: {
-				// ...form,
 				[props.formId]: form.id,
 			},
 		});
-		console.log('data-222', data);
-		// state.upload.data = data;
-		// if (prop.successfulDialog) {
-		// 	state.successVisible = true;
-		// }
-		// state.upload.open = false;
-	} catch (error) {
-		console.log(error);
-		// onError(error as any);
-	}
+		Object.assign(form, data || {});
+	} catch (error) {}
 };
 
 // 暴露变量
