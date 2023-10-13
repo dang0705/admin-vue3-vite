@@ -177,7 +177,7 @@ const conditionForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'id',
+		key: 'billNum',
 		label: '账单编号',
 	},
 	{
@@ -189,10 +189,9 @@ const conditionForms = [
 		control: 'el-input',
 		key: 'taskNum',
 		label: '任务编号',
-		// options: formInfo.taskList,
 	},
 	{
-		control: 'el-input',
+		control: 'el-select',
 		key: 'channelId',
 		label: '支付通道',
 	},

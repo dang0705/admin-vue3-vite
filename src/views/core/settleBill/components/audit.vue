@@ -21,11 +21,7 @@
 </template>
 
 <script lang="ts" name="SysOauthClientDetailsDialog" setup>
-import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { getObj, putAuditTask } from '/@/api/core/task';
-import { useI18n } from 'vue-i18n';
-import { rule } from '/@/utils/validate';
 import request from '/@/utils/request';
 
 // 定义子组件向父组件传值/事件
@@ -44,8 +40,6 @@ const props = defineProps({
 		default: 'id',
 	},
 });
-
-const { t } = useI18n();
 
 // 定义变量内容
 const dataFormRef = ref();
@@ -101,6 +95,7 @@ const onSubmit = async () => {
 
 // 初始化表单数据
 const getInfo = async (id: string) => {
+	loading.value = true;
 	try {
 		const { data } = await request({
 			url: props.getUrl + id,
@@ -110,7 +105,10 @@ const getInfo = async (id: string) => {
 			},
 		});
 		Object.assign(form, data || {});
-	} catch (error) {}
+		loading.value = false;
+	} catch (error) {
+		loading.value = false;
+	}
 };
 
 // 暴露变量
