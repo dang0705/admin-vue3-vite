@@ -248,10 +248,6 @@ const upload = async () => {
 		formDataObject.append(key, prop.params[key]);
 	}
 
-	formDataObject.append('taskId', '1710888261904424962');
-	formDataObject.append('paymentBankId', '1711984959995449345');
-	formDataObject.append('platformBankId', '1711984959995449345');
-	// console.log('11222', { ...formData.value, ...prop.params });
 	try {
 		const { data } = await request({
 			url: prop.uploadUrl,
