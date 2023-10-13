@@ -1,5 +1,5 @@
 <template>
-	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+	<NewTable :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="140px">
 		<template #tableTop="{ otherInfo }">
 			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
 			<div class="total_wrapper">
@@ -46,14 +46,62 @@
 					</div>
 				</div>
 			</div>
+			<NewTable
+				noPagination
+				style="margin-bottom: 28px"
+				ref="NewTableRef"
+				noPadding
+				:tableData="[form.serviceBillRecord]"
+				:columns="newIndexThead"
+				module="core/settleBill.ts"
+				labelWidth="120px"
+			>
+				<template #actions="{ row }">
+					<el-button icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button icon="view" text type="primary"> 查看资金账户 </el-button>
+				</template>
+				<template #top-bar="{ otherInfo }">
+					<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
+					<div class="info_list">
+						<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
+						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
+					</div>
+					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
+					<el-button style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+				</template>
+			</NewTable>
+			<NewTable
+				noPagination
+				style="margin-bottom: 28px"
+				ref="NewTableRef"
+				noPadding
+				:tableData="[form.taskBillRecord]"
+				:columns="newIndexThead"
+				module="core/settleBill.ts"
+				labelWidth="120px"
+			>
+				<template #actions="{ row }">
+					<el-button icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button icon="view" text type="primary"> 查看资金账户 </el-button>
+				</template>
+				<template #top-bar="{ otherInfo }">
+					<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
+					<div class="info_list">
+						<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
+						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
+					</div>
+					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
+					<el-button style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+				</template>
+			</NewTable>
 		</template>
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="view(row)"> 查看 </el-button>
+			<el-button icon="view" text type="primary"> 查看关联协议 </el-button>
+			<el-button icon="view" text type="primary"> 查看支付凭证 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
-			<div class="info_list">
-				<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
-			</div>
+			<el-button style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+			<el-button style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
 		</template>
 	</NewTable>
 </template>
@@ -131,84 +179,165 @@ const topInfoForms = [
 // 筛选表单
 const conditionForms = [
 	{
-		control: 'MerchantSelect',
-		key: 'merchantId',
-		label: '商户',
-	},
-	{
-		control: 'SpSelect',
-		key: 'spId',
-		label: '服务商',
-	},
-	{
 		control: 'el-input',
 		key: 'id',
-		label: '账单编号',
+		label: '承接人',
 	},
 	{
 		control: 'el-input',
 		key: 'billName',
-		label: '账单名称',
-	},
-	{
-		control: 'el-input',
-		key: 'taskNum',
-		label: '任务编号',
-	},
-	{
-		control: 'el-input',
-		key: 'channelId',
-		label: '支付通道',
-	},
-	{
-		control: 'el-input',
-		key: 'createBillUser',
-		label: '创建人',
-	},
-	{
-		control: 'DateRange',
-		key: 'billCreateTimeFromTo',
-		label: '账单生成时间',
-		props: {
-			valueType: 'string',
-		},
-	},
-	{
-		control: 'DateRange',
-		key: 'billSettleTimeFromTo',
-		label: '账单发放时间',
-		props: {
-			valueType: 'string',
-		},
+		label: '承接人证件号码',
 	},
 ];
-// 表头
 const indexThead = [
 	{
-		prop: 'merchantName',
-		label: '商户',
+		prop: '承接人',
+		label: '承接人',
 		width: 100,
 	},
 	{
-		prop: 'spName',
+		prop: '承接人证件号码',
+		label: '承接人证件号码',
+		width: 150,
+	},
+	{
+		prop: '承接人手机号码',
+		label: '承接人手机号码',
+		width: 150,
+	},
+	{
+		prop: '服务商',
 		label: '服务商',
 		width: 100,
 	},
 	{
-		prop: 'id',
+		prop: '支付通道',
+		label: '支付通道',
+		width: 100,
+	},
+	{
+		prop: '商户',
+		label: '商户',
+		width: 100,
+	},
+	{
+		prop: '任务名称',
+		label: '任务名称',
+		width: 100,
+	},
+	{
+		prop: '任务承接编号',
+		label: '任务承接编号',
+		width: 150,
+	},
+	{
+		prop: '任务编号',
+		label: '任务编号',
+		width: 100,
+	},
+	{
+		prop: '承接人开户行',
+		label: '承接人开户行',
+		width: 150,
+	},
+	{
+		prop: '承接人银行卡号',
+		label: '承接人银行卡号',
+		width: 150,
+	},
+	{
+		prop: '任务金额(元)',
+		label: '任务金额(元)',
+		width: 150,
+	},
+	{
+		prop: '代扣税款(元)',
+		label: '代扣税款(元)',
+		width: 150,
+	},
+	{
+		prop: '实发金额(元)',
+		label: '实发金额(元)',
+		width: 150,
+	},
+	{
+		prop: '管理费(元)',
+		label: '管理费(元)',
+		width: 150,
+	},
+	{
+		prop: '承接开始时间',
+		label: '承接开始时间',
+		width: 150,
+	},
+	{
+		prop: '承接结束时间',
+		label: '承接结束时间',
+		width: 150,
+	},
+	{
+		prop: '任务结算明细编号',
+		label: '任务结算明细编号',
+		width: 150,
+	},
+	{
+		prop: '付款时间',
+		label: '付款时间',
+		width: 150,
+	},
+	{
+		prop: '是否签署协议',
+		label: '是否签署协议',
+		width: 150,
+	},
+	{
+		prop: '是否银行四要素校验',
+		label: '是否银行四要素校验',
+		width: 150,
+	},
+	{
+		prop: '结算状态',
+		label: '结算状态',
+		width: 100,
+	},
+	{
+		prop: '支付时间',
+		label: '支付时间',
+		width: 100,
+	},
+	{
+		prop: '支付状态',
+		label: '支付状态',
+		width: 100,
+	},
+	{
+		prop: '支付失败原因',
+		label: '支付失败原因',
+		width: 150,
+	},
+	{
+		label: '操作',
+		prop: 'actions',
+		fixed: 'right',
+		slot: true,
+		width: 300,
+	},
+];
+const newIndexThead = [
+	{
+		prop: 'serviceBillRecord',
+		label: '账单名称',
+		width: 100,
+	},
+	{
+		prop: 'settleBillId',
 		label: '账单编号',
 		width: 100,
 	},
 	{
-		prop: 'billName',
-		label: '账单名称',
+		prop: 'id',
+		label: '结算单编号',
 		width: 100,
-	},
-
-	{
-		prop: 'taskId',
-		label: '任务编号',
-		width: 160,
 	},
 	{
 		prop: 'paymentBankName',
@@ -216,55 +345,36 @@ const indexThead = [
 		width: 100,
 	},
 	{
-		prop: 'taskAmountTotal',
-		label: '任务金额(元)',
-		width: 150,
+		prop: 'bankAccountNumberRecipient',
+		label: '收款方银行账号',
+		width: 100,
 	},
 	{
-		prop: 'serviceAmountTotal',
-		label: '服务费(元)',
-		width: 150,
+		prop: 'accountNameRecipient',
+		label: '收款方户名',
+		width: 100,
 	},
 	{
-		prop: 'xxx',
-		label: '结算总金额(元)',
-		width: 150,
+		prop: 'serviceAmount',
+		label: '结算金额(元)',
+		width: 100,
 	},
 	{
-		prop: 'taskUndertakerCount',
-		label: '任务承接数量',
-		width: 150,
-	},
-	{
-		prop: 'createBillUser',
-		label: '账单创建人',
-		width: 200,
-	},
-	{
-		prop: 'billCreateTime',
-		label: '账单生成时间',
-		width: 200,
-	},
-	{
-		prop: 'billSettleTime',
-		label: '账单发放时间',
-		width: 200,
+		prop: 'payTime',
+		label: '付款时间',
+		width: 100,
 	},
 	{
 		prop: 'statusDesc',
-		label: '状态',
-		width: 200,
-	},
-	{
-		prop: 'auditPostscript',
-		label: '驳回原因',
-		width: 200,
+		label: '结算状态',
+		width: 100,
 	},
 	{
 		label: '操作',
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
+		width: 300,
 	},
 ];
 const view = (row: any) => {

@@ -1,10 +1,11 @@
 <template>
-	<div class="layout-padding">
-		<div class="layout-padding-auto layout-padding-view">
+	<div :class="{ 'layout-padding': !noPadding }">
+		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-			<Mytab @toggleTab="toggleTab" :tabs="state.countResp"></Mytab>
-			<div class="mb8" style="width: 100%" v-if="conditionForms.length">
+			<Mytab v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp"></Mytab>
+			<div class="mb8" style="width: 100%">
 				<Form-view
+					v-if="conditionForms.length"
 					:label-width="labelWidth"
 					v-model="state.queryForm"
 					v-show="showSearch"
@@ -21,7 +22,7 @@
 			</div>
 			<el-table
 				v-loading="state.loading"
-				:data="state.dataList"
+				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
 				:header-cell-style="tableStyle.headerCellStyle"
 				@selection-change="onSelectionChange"
@@ -39,7 +40,7 @@
 					</template>
 				</el-table-column>
 			</el-table>
-			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
+			<pagination v-if="!noPagination" @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
 		<slot />
 	</div>
@@ -79,7 +80,19 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	tableData: {
+		type: Array,
+		default: () => [],
+	},
 	isTab: {
+		type: Boolean,
+		default: false,
+	},
+	noPadding: {
+		type: Boolean,
+		default: false,
+	},
+	noPagination: {
 		type: Boolean,
 		default: false,
 	},
