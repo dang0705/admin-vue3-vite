@@ -76,7 +76,15 @@
 						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
 					</div>
 					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
-					<el-button @click="handlePayBillRecord(form.serviceBillRecord, 1)" style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+					<el-button
+						:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
+						@click="handlePayBillRecord(form.serviceBillRecord, 1)"
+						style="margin-right: 24px"
+						type="primary"
+						class="ml10"
+					>
+						付款
+					</el-button>
 				</template>
 			</NewTable>
 			<NewTable
@@ -97,11 +105,19 @@
 				<template #top-bar="{ otherInfo }">
 					<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
 					<div class="info_list">
-						<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
-						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
+						<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
+						<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: ${form.taskAmountTotal}元` : '无需充值' }}</div>
 					</div>
 					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
-					<el-button @click="handlePayBillRecord(form.taskBillRecord, 2)" style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+					<el-button
+						:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
+						@click="handlePayBillRecord(form.taskBillRecord, 2)"
+						style="margin-right: 24px"
+						type="primary"
+						class="ml10"
+					>
+						付款
+					</el-button>
 				</template>
 			</NewTable>
 		</template>
@@ -124,7 +140,10 @@ const route: any = useRoute();
 const router = useRouter();
 const loading = ref(false);
 // 提交表单数据
-const form = reactive({});
+const form = reactive({
+	serviceBillRecord: [],
+	taskBillRecord: [],
+});
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
@@ -418,7 +437,6 @@ if (route.query.id) {
 }
 
 const handlePayBillRecord = (list = [], type: number) => {
-	console.log(123);
 	let obj = list[0] || {};
 	loading.value = true;
 	payBillRecord({
@@ -431,6 +449,7 @@ const handlePayBillRecord = (list = [], type: number) => {
 			} else if (type === 2) {
 				useMessage().success('任务结算单付款成功');
 			}
+			getmerchantInfoData(route.query.id);
 		})
 		.finally(() => {
 			loading.value = false;
