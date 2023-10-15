@@ -1,6 +1,15 @@
 <template>
 	<el-dialog :close-on-click-modal="false" :title="title" width="600" draggable v-model="visible">
-		<el-form :model="form" :rules="dataRules" style="min-height: 150px" label-width="140px" formDialogRef ref="dataFormRef" v-loading="loading">
+		<el-form
+			v-if="dialogType === 1 || dialogType === 2"
+			:model="form"
+			:rules="dataRules"
+			style="min-height: 150px"
+			label-width="140px"
+			formDialogRef
+			ref="dataFormRef"
+			v-loading="loading"
+		>
 			<template v-if="dialogType === 1">
 				<el-form-item label="资金账户可用余额">
 					{{ settleBillType == 1 ? form.serviceAmountTotal : form.taskAmountTotal }}
@@ -13,6 +22,27 @@
 				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0].id : form.taskBillRecord[0].id }} 成功发起付款！
 			</template>
 		</el-form>
+
+		<div>
+			<form-view
+				v-if="dialogType == 3"
+				:on-cancel="onCancel"
+				:on-submit="onSubmit"
+				submit-button-text="确认"
+				cancel-button-text="取消"
+				:columns="24"
+				:vertical="true"
+				label-width="160px"
+				v-model="form"
+				:forms="addUnderTakerForms"
+			>
+				<template #xxx5="{ form }">
+					<el-form-item label="上传转账凭证" prop="xxx5">
+						<UploadFile :type="businessType" v-model="form.xxx5" />
+					</el-form-item>
+				</template>
+			</form-view>
+		</div>
 		<template #footer>
 			<span v-if="dialogType === 1" class="dialog-footer">
 				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
@@ -29,6 +59,8 @@
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
+import uploadBusinessType from '/@/enums/upload-business-type';
+const businessType = uploadBusinessType.merchant;
 const route: any = useRoute();
 const title = ref('');
 const visible = ref(false);
@@ -39,19 +71,79 @@ const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
 });
+const addUnderTakerForms = [
+	{
+		control: 'Upload',
+		key: 'xxx5',
+		label: '上传转账凭证',
+		slot: true,
+	},
+	{
+		control: 'el-input',
+		key: 'xxx333',
+		label: '付款户名',
+		rules: [
+			{
+				required: true,
+				message: '付款户名不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'xxx2',
+		label: '付付款账号款户名',
+		rules: [
+			{
+				required: true,
+				message: '付款账号不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'xxx1',
+		label: '开户行',
+		rules: [
+			{
+				required: true,
+				message: '开户行不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'xxx',
+		label: '付款金额',
+		rules: [
+			{
+				required: true,
+				message: '付款金额不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+];
 // 定义校验规则
 const dataRules = ref({
 	auditPass: [{ required: true, message: '审核结果不能为空', trigger: 'blur' }],
 	auditPostscript: [{ required: true, message: '驳回原因不能为空', trigger: 'blur' }],
 });
-
+const onCancel = () => {
+	visible.value = false;
+};
 // 打开弹窗
-const openDialog = async (id: string, type: number, billType: number) => {
-	dialogType.value = type;
+const openDialog = async (id: string, dType: number, billType: number) => {
+	dialogType.value = dType;
 	visible.value = true;
 	settleBillType.value = billType;
-	if (type === 1) {
+	if (dType === 1) {
 		title.value = '发起付款';
+	} else if (dType === 3) {
+		title.value = '发起充值';
 	}
 	if (id) {
 		getmerchantInfoData();
@@ -86,6 +178,7 @@ const onSubmit = async () => {
 					useMessage().success('任务结算单付款成功');
 				}
 				dialogType.value = 2;
+				title.value = '发起付款成功';
 				// visible.value = false;
 				emit('refresh');
 			})

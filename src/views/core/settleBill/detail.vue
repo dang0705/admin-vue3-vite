@@ -76,7 +76,14 @@
 							<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
 							<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
 						</div>
-						<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
+						<el-button
+							@click="detailDialogRef.openDialog(form.id, 3)"
+							style="margin-right: 24px; margin-left: auto !important"
+							type="primary"
+							class="ml10"
+						>
+							充值
+						</el-button>
 						<el-button
 							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
 							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
@@ -109,10 +116,17 @@
 							<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
 							<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
 						</div>
-						<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
+						<el-button
+							@click="detailDialogRef.openDialog(form.id, 3)"
+							style="margin-right: 24px; margin-left: auto !important"
+							type="primary"
+							class="ml10"
+						>
+							充值
+						</el-button>
 						<el-button
 							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
-							@click="handlePayBillRecord(form.taskBillRecord, 2)"
+							@click="handlePayBillRecord(form.taskBillRecord, 1)"
 							style="margin-right: 24px"
 							type="primary"
 							class="ml10"
@@ -142,6 +156,7 @@ const DetailDialog = defineAsyncComponent(() => import('./components/detailDialo
 
 const route: any = useRoute();
 const detailDialogRef = ref();
+
 // 定义变量内容
 const router = useRouter();
 const loading = ref(false);
@@ -150,6 +165,7 @@ const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
 });
+
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
@@ -442,28 +458,15 @@ if (route.query.id) {
 	getmerchantInfoData();
 }
 
-const handlePayBillRecord = (list = [], type: number) => {
-	detailDialogRef.value?.openDialog(form.id, 1, type);
-	// let obj = list[0] || {};
-	// loading.value = true;
-	// payBillRecord({
-	// 	billId: form.id,
-	// 	settleRecordId: obj.id,
-	// })
-	// 	.then((res: any) => {
-	// 		if (type === 1) {
-	// 			useMessage().success('服务结算单付款成功');
-	// 		} else if (type === 2) {
-	// 			useMessage().success('任务结算单付款成功');
-	// 		}
-	// 		getmerchantInfoData(route.query.id);
-	// 	})
-	// 	.finally(() => {
-	// 		loading.value = false;
-	// 	});
+const handlePayBillRecord = (list = [], dialogType: number) => {
+	detailDialogRef.value?.openDialog(form.id, dialogType);
 };
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+
+const refreshDataList = () => {
+	getmerchantInfoData();
 };
 </script>
 
