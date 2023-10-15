@@ -52,3 +52,10 @@ export function taskRecordItem(obj?: any) {
 		params: obj,
 	});
 }
+export function payBillRecord(obj?: any) {
+	return request({
+		url: '/core/settleBill/payBillRecord/',
+		method: 'post',
+		data: obj,
+	});
+}

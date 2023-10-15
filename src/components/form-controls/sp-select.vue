@@ -22,7 +22,7 @@ const emit = defineEmits(['update:modelValue']);
 const getOptions = async () => {
 	const spStore = useSpStore();
 	const { sp, spAll } = storeToRefs(spStore);
-	if (sp.value.length || spAll.value.length) {
+	if ((sp.value.length && !props.platform) || (props.platform && spAll.value.length)) {
 		options.value = props.platform ? spAll.value : sp.value;
 	} else {
 		options.value = await spStore.getSp(props.platform ? 'platform' : '');

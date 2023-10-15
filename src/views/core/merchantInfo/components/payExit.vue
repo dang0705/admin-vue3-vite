@@ -62,7 +62,7 @@
 			<el-row :gutter="24">
 				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商" prop="spId">
-						<sp-select v-model="form.spId" @change="getSpPaymentChannelListData(form.spId)" />
+						<sp-select platform v-model="form.spId" @change="getSpPaymentChannelListData(form.spId)" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="24" class="mb20">

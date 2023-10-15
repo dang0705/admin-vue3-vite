@@ -76,7 +76,7 @@
 						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
 					</div>
 					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
-					<el-button style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+					<el-button @click="handlePayBillRecord(form.serviceBillRecord, 1)" style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
 				</template>
 			</NewTable>
 			<NewTable
@@ -101,7 +101,7 @@
 						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
 					</div>
 					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
-					<el-button style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
+					<el-button @click="handlePayBillRecord(form.taskBillRecord, 2)" style="margin-right: 24px" type="primary" class="ml10"> 付款 </el-button>
 				</template>
 			</NewTable>
 		</template>
@@ -117,7 +117,8 @@
 </template>
 
 <script setup lang="ts" name="导入批次">
-import { getObj, addObj, putObj } from '/@/api/core/settleBill';
+import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 const route: any = useRoute();
 // 定义变量内容
 const router = useRouter();
@@ -415,6 +416,26 @@ const getmerchantInfoData = (id: string) => {
 if (route.query.id) {
 	getmerchantInfoData(route.query.id);
 }
+
+const handlePayBillRecord = (list = [], type: number) => {
+	console.log(123);
+	let obj = list[0] || {};
+	loading.value = true;
+	payBillRecord({
+		billId: form.id,
+		settleRecordId: obj.id,
+	})
+		.then((res: any) => {
+			if (type === 1) {
+				useMessage().success('服务结算单付款成功');
+			} else if (type === 2) {
+				useMessage().success('任务结算单付款成功');
+			}
+		})
+		.finally(() => {
+			loading.value = false;
+		});
+};
 </script>
 
 <style lang="scss" scoped>
