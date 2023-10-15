@@ -33,12 +33,12 @@
 				:columns="24"
 				:vertical="true"
 				label-width="160px"
-				v-model="form"
+				v-model="formData"
 				:forms="addUnderTakerForms"
 			>
 				<template #xxx5="{ form }">
 					<el-form-item label="上传转账凭证" prop="xxx5">
-						<UploadFile :type="businessType" v-model="form.xxx5" />
+						<UploadFile :type="businessType" v-model="formData.xxx5" />
 					</el-form-item>
 				</template>
 			</form-view>
@@ -71,6 +71,13 @@ const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
 });
+const formData = reactive({
+	xxx1: '',
+	xxx2: '',
+	xxx3: '',
+	xxx4: '',
+	xxx5: [],
+});
 const addUnderTakerForms = [
 	{
 		control: 'Upload',
@@ -80,7 +87,7 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx333',
+		key: 'xxx1',
 		label: '付款户名',
 		rules: [
 			{
@@ -104,7 +111,7 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx1',
+		key: 'xxx3',
 		label: '开户行',
 		rules: [
 			{
@@ -116,7 +123,7 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx',
+		key: 'xxx4',
 		label: '付款金额',
 		rules: [
 			{
@@ -185,6 +192,9 @@ const onSubmit = async () => {
 			.finally(() => {
 				loading.value = false;
 			});
+	} else if (dialogType.value === 3) {
+		console.log('xxx', formData);
+		useMessage().wraning('功能正在开发, 请等待~');
 	}
 };
 
