@@ -1,141 +1,147 @@
 <template>
-	<NewTable
-		:columns="indexThead"
-		module="core/settleBill.ts"
-		getListFnName="taskRecordItem"
-		:queryForm="queryForm"
-		isTab
-		:condition-forms="conditionForms"
-		labelWidth="140px"
-	>
-		<template #tableTop="{ otherInfo }">
-			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
-			<div class="total_wrapper">
-				<div class="total_list">
-					<div class="total_item">
-						<img src="/src/assets/images/total_1.png" class="icon" alt="" />
-						<div class="info">
-							<div class="price_box">
-								<div class="price">{{ form.billAmountTotal || '0.00' }}</div>
-								<div class="unit">元</div>
+	<div>
+		<NewTable
+			:columns="indexThead"
+			module="core/settleBill.ts"
+			getListFnName="taskRecordItem"
+			:queryForm="queryForm"
+			isTab
+			:condition-forms="conditionForms"
+			labelWidth="140px"
+		>
+			<template #tableTop="{ otherInfo }">
+				<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
+				<div class="total_wrapper">
+					<div class="total_list">
+						<div class="total_item">
+							<img src="/src/assets/images/total_1.png" class="icon" alt="" />
+							<div class="info">
+								<div class="price_box">
+									<div class="price">{{ form.billAmountTotal || '0.00' }}</div>
+									<div class="unit">元</div>
+								</div>
+								<div class="info_label">结算总金额</div>
 							</div>
-							<div class="info_label">结算总金额</div>
 						</div>
-					</div>
-					<div class="total_item">
-						<img src="/src/assets/images/total_3.png" class="icon" alt="" />
-						<div class="info">
-							<div class="price_box">
-								<div class="price">{{ form.taskAmountTotal || '0.00' }}</div>
-								<div class="unit">元</div>
+						<div class="total_item">
+							<img src="/src/assets/images/total_3.png" class="icon" alt="" />
+							<div class="info">
+								<div class="price_box">
+									<div class="price">{{ form.taskAmountTotal || '0.00' }}</div>
+									<div class="unit">元</div>
+								</div>
+								<div class="info_label">任务金额</div>
 							</div>
-							<div class="info_label">任务金额</div>
 						</div>
-					</div>
-					<div class="total_item">
-						<img src="/src/assets/images/total_6.png" class="icon" alt="" />
-						<div class="info">
-							<div class="price_box">
-								<div class="price">{{ form.managementAmountTotal || '0.00' }}</div>
-								<div class="unit">元</div>
+						<div class="total_item">
+							<img src="/src/assets/images/total_6.png" class="icon" alt="" />
+							<div class="info">
+								<div class="price_box">
+									<div class="price">{{ form.managementAmountTotal || '0.00' }}</div>
+									<div class="unit">元</div>
+								</div>
+								<div class="info_label">管理费</div>
 							</div>
-							<div class="info_label">管理费</div>
 						</div>
-					</div>
-					<div class="total_item">
-						<img src="/src/assets/images/total_4.png" class="icon" alt="" />
-						<div class="info">
-							<div class="price_box">
-								<div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
-								<div class="unit">元</div>
+						<div class="total_item">
+							<img src="/src/assets/images/total_4.png" class="icon" alt="" />
+							<div class="info">
+								<div class="price_box">
+									<div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
+									<div class="unit">元</div>
+								</div>
+								<div class="info_label">服务费</div>
 							</div>
-							<div class="info_label">服务费</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<NewTable
-				noPagination
-				style="margin-bottom: 28px"
-				ref="NewTableRef"
-				noPadding
-				:tableData="form.serviceBillRecord"
-				:columns="newIndexThead"
-				module="core/settleBill.ts"
-				:createdIsNeed="false"
-				labelWidth="120px"
-			>
-				<template #actions="{ row }">
-					<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
-					<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
-				</template>
-				<template #top-bar="{ otherInfo }">
-					<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
-					<div class="info_list">
-						<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
-						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
-					</div>
-					<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
-					<el-button
-						:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
-						@click="handlePayBillRecord(form.serviceBillRecord, 1)"
-						style="margin-right: 24px"
-						type="primary"
-						class="ml10"
-					>
-						付款
-					</el-button>
-				</template>
-			</NewTable>
-			<NewTable
-				noPagination
-				style="margin-bottom: 28px"
-				ref="NewTableRef"
-				noPadding
-				:tableData="form.taskBillRecord"
-				:columns="newIndexThead"
-				module="core/settleBill.ts"
-				:createdIsNeed="false"
-				labelWidth="120px"
-			>
-				<template #actions="{ row }">
-					<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
-					<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
-				</template>
-				<template #top-bar="{ otherInfo }">
-					<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
-					<div class="info_list">
-						<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
-						<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: ${form.taskAmountTotal}元` : '无需充值' }}</div>
-					</div>
-					<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
-					<el-button
-						:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
-						@click="handlePayBillRecord(form.taskBillRecord, 2)"
-						style="margin-right: 24px"
-						type="primary"
-						class="ml10"
-					>
-						付款
-					</el-button>
-				</template>
-			</NewTable>
-		</template>
-		<template #actions="{ row }">
-			<el-button @click="handleBtn" icon="view" text type="primary"> 查看关联协议 </el-button>
-			<el-button @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
-		</template>
-		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
-		</template>
-	</NewTable>
+				<NewTable
+					noPagination
+					style="margin-bottom: 28px"
+					ref="NewTableRef"
+					noPadding
+					:tableData="form.serviceBillRecord"
+					:columns="newIndexThead"
+					module="core/settleBill.ts"
+					:createdIsNeed="false"
+					labelWidth="120px"
+				>
+					<template #actions="{ row }">
+						<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
+					</template>
+					<template #top-bar="{ otherInfo }">
+						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
+						<div class="info_list">
+							<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
+							<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+						</div>
+						<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
+						<el-button
+							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
+							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
+							style="margin-right: 24px"
+							type="primary"
+							class="ml10"
+						>
+							付款
+						</el-button>
+					</template>
+				</NewTable>
+				<NewTable
+					noPagination
+					style="margin-bottom: 28px"
+					ref="NewTableRef"
+					noPadding
+					:tableData="form.taskBillRecord"
+					:columns="newIndexThead"
+					module="core/settleBill.ts"
+					:createdIsNeed="false"
+					labelWidth="120px"
+				>
+					<template #actions="{ row }">
+						<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
+					</template>
+					<template #top-bar="{ otherInfo }">
+						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
+						<div class="info_list">
+							<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
+							<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+						</div>
+						<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
+						<el-button
+							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
+							@click="handlePayBillRecord(form.taskBillRecord, 2)"
+							style="margin-right: 24px"
+							type="primary"
+							class="ml10"
+						>
+							付款
+						</el-button>
+					</template>
+				</NewTable>
+			</template>
+			<template #actions="{ row }">
+				<el-button @click="handleBtn" icon="view" text type="primary"> 查看关联协议 </el-button>
+				<el-button @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
+			</template>
+			<template #top-bar="{ otherInfo }">
+				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
+			</template>
+		</NewTable>
+		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" />
+	</div>
 </template>
 
 <script setup lang="ts" name="导入批次">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
+
 const route: any = useRoute();
+const detailDialogRef = ref();
 // 定义变量内容
 const router = useRouter();
 const loading = ref(false);
@@ -421,10 +427,10 @@ const view = (row: any) => {
 };
 
 // 初始化表单数据
-const getmerchantInfoData = (id: string) => {
+const getmerchantInfoData = () => {
 	// 获取数据
 	loading.value = true;
-	getObj(id)
+	getObj(route.query.id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
 		})
@@ -433,27 +439,28 @@ const getmerchantInfoData = (id: string) => {
 		});
 };
 if (route.query.id) {
-	getmerchantInfoData(route.query.id);
+	getmerchantInfoData();
 }
 
 const handlePayBillRecord = (list = [], type: number) => {
-	let obj = list[0] || {};
-	loading.value = true;
-	payBillRecord({
-		billId: form.id,
-		settleRecordId: obj.id,
-	})
-		.then((res: any) => {
-			if (type === 1) {
-				useMessage().success('服务结算单付款成功');
-			} else if (type === 2) {
-				useMessage().success('任务结算单付款成功');
-			}
-			getmerchantInfoData(route.query.id);
-		})
-		.finally(() => {
-			loading.value = false;
-		});
+	detailDialogRef.value?.openDialog(form.id, 1, type);
+	// let obj = list[0] || {};
+	// loading.value = true;
+	// payBillRecord({
+	// 	billId: form.id,
+	// 	settleRecordId: obj.id,
+	// })
+	// 	.then((res: any) => {
+	// 		if (type === 1) {
+	// 			useMessage().success('服务结算单付款成功');
+	// 		} else if (type === 2) {
+	// 			useMessage().success('任务结算单付款成功');
+	// 		}
+	// 		getmerchantInfoData(route.query.id);
+	// 	})
+	// 	.finally(() => {
+	// 		loading.value = false;
+	// 	});
 };
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
