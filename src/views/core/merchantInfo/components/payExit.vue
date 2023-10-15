@@ -156,7 +156,9 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
-	state.queryForm = {};
+	state.queryForm = {
+		merchantId: route.query.id,
+	};
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选

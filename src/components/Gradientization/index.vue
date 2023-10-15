@@ -40,6 +40,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
 });
 interface GradientizationEmits {
 	(e: 'update:modelValue', value: any[]): void;
@@ -54,7 +58,25 @@ const gradual = ref([
 ]);
 watch(
 	() => props.modelValue as [],
-	(value: []) => value.length && (gradual.value = value),
+	(value: []) => {
+		if (value?.length > 0) {
+			gradual.value = value || [
+				{
+					[props.itemField?.min]: props.itemInitValues[0],
+					[props.itemField?.max]: props.itemInitValues[1],
+					[props.itemField?.ratio]: props.itemInitValues[2],
+				},
+			];
+		} else {
+			gradual.value = [
+				{
+					[props.itemField?.min]: props.itemInitValues[0],
+					[props.itemField?.max]: props.itemInitValues[1],
+					[props.itemField?.ratio]: props.itemInitValues[2],
+				},
+			];
+		}
+	},
 	{ immediate: true }
 );
 
@@ -67,18 +89,22 @@ const addAGradient = () => {
 		[props.itemField?.ratio]: Number(lastGradient[props.itemField?.ratio] as number) + 0.1,
 	});
 };
-const removeAGradient = (index: number) => gradual.value.splice(index, 1);
+
+const removeAGradient = (index: number) => {
+	gradual.value.splice(index, 1);
+};
 
 watch(
 	() => gradual.value,
-	(value) => emit('update:modelValue', value),
+	(value) => {
+		emit('update:modelValue', value);
+	},
 	{ immediate: true, deep: true }
 );
 </script>
 
 <template>
 	<div :class="['flex', 'flex-wrap', 'items-center', { mt10: index }]" v-for="(_, index) in gradual" :key="index">
-		<!-- :disabled="forceDisabled || !!index || gradual.length > 1" -->
 		<el-input-number
 			class="h-fit max-w-[160px]"
 			:min="0"
@@ -89,8 +115,8 @@ watch(
 		/>&nbsp;<span v-html="texts[0]" />&nbsp;
 		<el-input-number
 			class="h-fit max-w-[160px]"
-			:disabled="forceDisabled || gradual.length - 1 > index"
-			:min="index ? gradual[index][props.itemField?.min] + 1 : 0"
+			:disabled="forceDisabled || gradual.length - 1 > index || disabled"
+			:min="index ? Number(gradual[index][props.itemField?.min]) + 1 : 0"
 			:step="1000"
 			:precision="precisions[1]"
 			v-model="gradual[index][props.itemField?.max]"
@@ -101,10 +127,10 @@ watch(
 			:step="steps[2]"
 			:precision="precisions[2]"
 			v-model="gradual[index].ratio"
-			:disabled="forceDisabled"
+			:disabled="forceDisabled || disabled"
 		/>&nbsp;
 		<span v-html="texts[2]" />
-		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!forceDisabled && index === gradual.length - 1">
+		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!forceDisabled && index === gradual.length - 1 && !disabled">
 			<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addAGradient">&plus;添加</li>
 			<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeAGradient(index)">删除</li>
 		</ul>

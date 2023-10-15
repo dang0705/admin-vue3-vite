@@ -4,11 +4,12 @@
 			<template #actions="{ row }">
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('view', row)"> 查看 </el-button>
 				<el-button v-if="row.status == 20" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('exam', row)">
-					审核
+					审核账单
 				</el-button>
 				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('toSubmit', row)">
 					提交账单
 				</el-button>
+				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 下载电子协议 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
@@ -306,7 +307,7 @@ const indexThead = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		width: 200,
+		width: 300,
 	},
 ];
 const handleAction = async (type: string, row: any) => {
@@ -333,7 +334,9 @@ const handleAction = async (type: string, row: any) => {
 			break;
 	}
 };
-
+const handleBtn = () => {
+	useMessage().wraning('功能正在开发, 请等待~');
+};
 // 初始化表单数据
 const getTaskList = (formData: any) => {
 	fetchList({

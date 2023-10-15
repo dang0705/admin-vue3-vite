@@ -81,7 +81,7 @@
 				</el-col>
 
 				<el-col :span="24" class="mb20">
-					<el-form-item label="* 服务费比例">
+					<el-form-item label="* 服务费比例" prop="feeRates">
 						<IndividualTaxRatios :disabled="isDetail" v-model="form.feeRates" :texts="iTRTexts" />
 					</el-form-item>
 				</el-col>
@@ -120,7 +120,7 @@ const userList = reactive([]);
 // 定义字典
 
 // 提交表单数据
-const form = reactive({
+let form = reactive({
 	id: '',
 	merchantId: '',
 	agreementName: '',
@@ -158,7 +158,6 @@ const dataRules = ref({
 const openDialog = (id: string, type: any) => {
 	visible.value = true;
 	form.id = '';
-
 	if (type == 'view') {
 		isDetail.value = true;
 	} else {
@@ -167,6 +166,7 @@ const openDialog = (id: string, type: any) => {
 
 	// 重置表单数据
 	nextTick(() => {
+		console.log('form-11111', form);
 		dataFormRef.value?.resetFields();
 	});
 
@@ -182,6 +182,9 @@ const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
 	form.merchantId = route.query.id;
+	form.feeRates.forEach((item) => {
+		delete item.id;
+	});
 	try {
 		loading.value = true;
 		form.id ? await putObj(form) : await addObj(form);
@@ -201,6 +204,11 @@ const getmerchantServiceAgreementData = (id: string) => {
 	getObj(id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			console.log('form', form);
+			// if (!form.feeRates) {
+			// 	form.feeRates = [];
+			// }
+			// console.log('form.feeRates-1', form.feeRates);
 		})
 		.finally(() => {
 			loading.value = false;

@@ -62,7 +62,7 @@
 				<el-table-column width="170px" prop="startTime" label="开始时间" show-overflow-tooltip />
 				<el-table-column width="170px" prop="endTime" label="结束时间" show-overflow-tooltip />
 				<el-table-column width="120px" prop="spName" label="服务商" show-overflow-tooltip />
-				<el-table-column width="120px" prop="merchantName" label="客户" show-overflow-tooltip />
+				<el-table-column width="120px" prop="merchantName" label="商户" show-overflow-tooltip />
 				<el-table-column prop="province" label="工作地区" show-overflow-tooltip />
 				<!-- <el-table-column prop="city" label="城市" show-overflow-tooltip /> -->
 				<!-- <el-table-column prop="county" label="区县" show-overflow-tooltip /> -->
@@ -80,8 +80,8 @@
 				<el-table-column prop="clockRank" label="打卡范围" show-overflow-tooltip />
 				<el-table-column prop="signInTime" label="签到时间" show-overflow-tooltip />
 				<el-table-column prop="checkOutTime" label="签退时间" show-overflow-tooltip />
-				<el-table-column prop="businessMerchant" label="业务商户" show-overflow-tooltip />
-				<el-table-column prop="businessPhone" label="业务商户手机号" show-overflow-tooltip /> -->
+				<el-table-column prop="businessMerchant" label="业务联系人" show-overflow-tooltip />
+				<el-table-column prop="businessPhone" label="联系人手机号" show-overflow-tooltip /> -->
 				<el-table-column label="操作" width="250" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
@@ -134,7 +134,12 @@
 
 		<!-- 编辑、新增  -->
 		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
-		<Appoint ref="appointRef" list-url="/core/undertakerTask/getAssignUndertaker" save-url="/core/undertakerTask/determineAssignUndertaker" />
+		<Appoint
+			ref="appointRef"
+			@refresh="getDataList(false)"
+			list-url="/core/undertakerTask/getAssignUndertaker"
+			save-url="/core/undertakerTask/determineAssignUndertaker"
+		/>
 
 		<!-- 批量指派承接人-->
 		<uploadExcel

@@ -58,6 +58,7 @@ import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
 import FormView from '/@/components/Form-view.vue';
+const emit = defineEmits(['refresh']);
 
 const props = defineProps({
 	title: {
@@ -221,6 +222,7 @@ const onSubmit = async () => {
 		});
 		state.dialog.isShowDialog = false;
 		useMessage().success('指派成功');
+		emit('refresh');
 	} catch (e) {
 		console.log(e);
 	} finally {

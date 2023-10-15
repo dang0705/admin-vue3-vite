@@ -130,7 +130,7 @@ const params = computed(() => props.params);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
-	queryForm: props.queryForm,
+	...(props.queryForm ? { queryForm: props.queryForm } : {}),
 	pagination: {},
 	createdIsNeed: props.createdIsNeed,
 	...(props.isTab

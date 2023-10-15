@@ -9,7 +9,7 @@
 				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
-						<el-form-item label="客户" prop="merchantId">
+						<el-form-item label="商户" prop="merchantId">
 							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.merchantId">
 								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 							</el-select>
@@ -187,13 +187,13 @@
 					</el-col> -->
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="业务商户" prop="businessMerchant">
+						<el-form-item label="业务联系人" prop="businessMerchant">
 							<el-input :disabled="self_disabled" v-model="form.businessMerchant" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="业务商户手机号" prop="businessPhone">
+						<el-form-item label="联系人手机号" prop="businessPhone">
 							<el-input :disabled="self_disabled" v-model="form.businessPhone" />
 						</el-form-item>
 					</el-col>
@@ -201,7 +201,7 @@
 				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
 				<el-row v-if="curStep == 1 || curStep == 2 || self_disabled" :gutter="24">
 					<el-col :span="12" class="mb20">
-						<el-form-item label="性别" prop="taskRequireInfo.requiredSex">
+						<el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
 							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender" />
 							</el-select>
@@ -402,8 +402,8 @@ const dataRules = ref({
 	// checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
 	signInOrCheckOutTime: [{ required: true, message: '签到签退时间不能为空', trigger: 'blur' }],
 
-	businessMerchant: [{ required: true, message: '业务商户不能为空', trigger: 'blur' }],
-	businessPhone: [{ required: true, message: '业务商户手机号不能为空', trigger: 'blur' }],
+	businessMerchant: [{ required: true, message: '业务联系人不能为空', trigger: 'blur' }],
+	businessPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
 });
 
 // 重置表单数据

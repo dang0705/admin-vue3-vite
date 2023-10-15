@@ -66,8 +66,8 @@
 				labelWidth="120px"
 			>
 				<template #actions="{ row }">
-					<el-button icon="view" text type="primary"> 查看收款账号 </el-button>
-					<el-button icon="view" text type="primary"> 查看资金账户 </el-button>
+					<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
 				</template>
 				<template #top-bar="{ otherInfo }">
 					<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
@@ -75,7 +75,7 @@
 						<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
 						<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: ${form.serviceAmountTotal}元` : '无需充值' }}</div>
 					</div>
-					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
+					<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
 					<el-button
 						:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
 						@click="handlePayBillRecord(form.serviceBillRecord, 1)"
@@ -99,8 +99,8 @@
 				labelWidth="120px"
 			>
 				<template #actions="{ row }">
-					<el-button icon="view" text type="primary"> 查看收款账号 </el-button>
-					<el-button icon="view" text type="primary"> 查看资金账户 </el-button>
+					<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
 				</template>
 				<template #top-bar="{ otherInfo }">
 					<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
@@ -108,7 +108,7 @@
 						<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
 						<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: ${form.taskAmountTotal}元` : '无需充值' }}</div>
 					</div>
-					<el-button style="margin-right: 24px" type="primary" class="ml10"> 充值 </el-button>
+					<el-button @click="handleBtn" style="margin-right: 24px; margin-left: auto !important" type="primary" class="ml10"> 充值 </el-button>
 					<el-button
 						:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
 						@click="handlePayBillRecord(form.taskBillRecord, 2)"
@@ -122,12 +122,12 @@
 			</NewTable>
 		</template>
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary"> 查看关联协议 </el-button>
-			<el-button icon="view" text type="primary"> 查看支付凭证 </el-button>
+			<el-button @click="handleBtn" icon="view" text type="primary"> 查看关联协议 </el-button>
+			<el-button @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
-			<el-button style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-			<el-button style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
+			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
 		</template>
 	</NewTable>
 </template>
@@ -163,7 +163,7 @@ const topInfoForms = [
 	{
 		control: 'el-input',
 		key: 'merchantName',
-		label: '客户',
+		label: '商户',
 	},
 	{
 		control: 'el-input',
@@ -454,6 +454,9 @@ const handlePayBillRecord = (list = [], type: number) => {
 		.finally(() => {
 			loading.value = false;
 		});
+};
+const handleBtn = () => {
+	useMessage().wraning('功能正在开发, 请等待~');
 };
 </script>
 
