@@ -223,91 +223,91 @@ const indexThead = [
 	{
 		prop: 'merchantName',
 		label: '商户',
-		width: 100,
+		minWidth: 100,
 	},
 	{
 		prop: 'spName',
 		label: '服务商',
-		width: 100,
+		minWidth: 100,
 	},
 	{
 		prop: 'id',
 		label: '账单编号',
-		width: 100,
+		minWidth: 100,
 	},
 	{
 		prop: 'billName',
 		label: '账单名称',
-		width: 100,
+		minWidth: 100,
 	},
 
 	{
 		prop: 'taskId',
 		label: '任务编号',
-		width: 160,
+		minWidth: 160,
 	},
 	{
 		prop: 'paymentBankName',
 		label: '支付通道',
-		width: 100,
+		minWidth: 100,
 	},
 	{
 		prop: 'taskAmountTotal',
 		label: '任务金额(元)',
-		width: 150,
+		minWidth: 150,
 	},
 	{
 		prop: 'managementAmountTotal',
 		label: '管理费(元)',
-		width: 150,
+		minWidth: 150,
 	},
 	{
 		prop: 'serviceAmountTotal',
 		label: '服务费(元)',
-		width: 150,
+		minWidth: 150,
 	},
 	{
 		prop: 'billAmountTotal',
 		label: '结算总金额(元)',
-		width: 150,
+		minWidth: 150,
 	},
 
 	{
 		prop: 'taskUndertakerCount',
 		label: '任务承接数量',
-		width: 150,
+		minWidth: 150,
 	},
 	{
 		prop: 'createBillUser',
 		label: '账单创建人',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'billCreateTime',
 		label: '账单生成时间',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'billSettleTime',
 		label: '账单发放时间',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'statusDesc',
 		label: '状态',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'auditPostscript',
 		label: '驳回原因',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		label: '操作',
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		width: 300,
+		minWidth: 300,
 	},
 ];
 const handleAction = async (type: string, row: any) => {

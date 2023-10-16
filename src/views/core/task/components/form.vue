@@ -421,9 +421,6 @@ const onSubmit = async () => {
 	try {
 		loading.value = true;
 		form.areaDescDatas = chinaAreaRef.value.getCheckedNodes(true)[0].pathLabels.join(',');
-		if (route.query.taskId) {
-			delete form.taskId;
-		}
 		form.taskId ? await putObj(form) : await addObj(form);
 		// form.taskId ? await addObj(form) : await addObj(form);
 		// 您已成功创建指派任务"小白楼保洁服务"！
@@ -457,6 +454,10 @@ const gettaskData = () => {
 	getObj(route.query.taskId)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			if (route.query.taskId && route.query.copy == 1) {
+				form.taskId = '';
+				form.taskName = '';
+			}
 			getAgreeList();
 		})
 		.finally(() => {
