@@ -94,15 +94,7 @@
 							@click="openTask('edit', scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button
-							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
-							icon="edit-pen"
-							text
-							type="primary"
-							v-auth="'core_task_edit'"
-							@click="openTask('copy', scope.row.id)"
-							>克隆</el-button
-						>
+						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('copy', scope.row.id)">克隆</el-button>
 						<el-button
 							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
 							icon="edit-pen"
