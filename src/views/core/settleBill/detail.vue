@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NewTable
+		<TableView
 			:columns="indexThead"
 			module="core/settleBill.ts"
 			getListFnName="taskRecordItem"
@@ -55,10 +55,10 @@
 						</div>
 					</div>
 				</div>
-				<NewTable
+				<TableView
 					noPagination
 					style="margin-bottom: 28px"
-					ref="NewTableRef"
+					ref="TableViewRef"
 					noPadding
 					:tableData="form.serviceBillRecord"
 					:columns="newIndexThead"
@@ -94,11 +94,11 @@
 							付款
 						</el-button>
 					</template>
-				</NewTable>
-				<NewTable
+				</TableView>
+				<TableView
 					noPagination
 					style="margin-bottom: 28px"
-					ref="NewTableRef"
+					ref="TableViewRef"
 					noPadding
 					:tableData="form.taskBillRecord"
 					:columns="newIndexThead"
@@ -134,7 +134,7 @@
 							付款
 						</el-button>
 					</template>
-				</NewTable>
+				</TableView>
 			</template>
 			<template #actions="{ row }">
 				<el-button @click="handleBtn" icon="view" text type="primary"> 查看关联协议 </el-button>
@@ -144,7 +144,7 @@
 				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
 			</template>
-		</NewTable>
+		</TableView>
 		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" />
 	</div>
 </template>

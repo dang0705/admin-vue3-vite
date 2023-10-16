@@ -1,5 +1,5 @@
 <template>
-	<NewTable :columns="indexThead" module="core/batchUploadRecord.ts" :condition-forms="conditionForms">
+	<TableView :columns="indexThead" module="core/batchUploadRecord.ts" :condition-forms="conditionForms">
 		<template #batchType="{ row: { batchType } }">
 			<span v-text="batchMap?.batch_type[batchType]" />
 		</template>
@@ -39,10 +39,10 @@
 						<el-button @click="exportFile">导出</el-button>
 					</li>
 				</ul>
-				<NewTable :columns="failListHead" :params="failParams" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
+				<TableView :columns="failListHead" :params="failParams" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
 			</template>
 		</Dialog>
-	</NewTable>
+	</TableView>
 </template>
 
 <script setup lang="ts" name="导入批次">
@@ -126,6 +126,7 @@ enum Type {
 	'批量绑定银行卡' = '3',
 	'批量电子签署' = '4',
 	'批量指派承接人' = '5',
+	'批量导入结算' = '6',
 }
 
 enum State {
@@ -306,6 +307,29 @@ const forms = computed(() => {
 					label: '手机号',
 				},
 				...failListHeadStatic,
+			];
+			break;
+		case Type['批量导入结算']:
+			form = [
+				{
+					label: '账单名称',
+					control: 'el-input',
+					key: 'paramObject.billName',
+				},
+				{
+					label: '计算商户',
+					control: 'MerchantSelect',
+					key: 'paramObject.merchantId',
+				},
+				{
+					label: '服务商',
+					control: 'SpSelect',
+					key: 'paramObject.spId',
+				},
+				{
+					label: '结算任务',
+					control: '',
+				},
 			];
 			break;
 		default:

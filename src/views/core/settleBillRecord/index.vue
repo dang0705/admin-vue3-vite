@@ -1,9 +1,9 @@
 <template>
-	<NewTable :columns="columns" isTab module="core/settleBillRecord.ts" :condition-forms="conditionForms" labelWidth="120px">
+	<TableView :columns="columns" isTab module="core/settleBillRecord.ts" :condition-forms="conditionForms" labelWidth="120px">
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
-	</NewTable>
+	</TableView>
 </template>
 
 <script setup lang="ts" name="结算单">

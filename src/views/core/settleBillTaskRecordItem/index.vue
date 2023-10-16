@@ -1,5 +1,5 @@
 <template>
-	<NewTable :columns="columns" isTab module="core/settleBillTaskRecordItem.ts" :condition-forms="conditionForms" labelWidth="140px">
+	<TableView :columns="columns" isTab module="core/settleBillTaskRecordItem.ts" :condition-forms="conditionForms" labelWidth="140px">
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('exam', row)"> 查看关联协议 </el-button>
 			<!-- v-if="row.paymentStatus == 30" -->
@@ -8,7 +8,7 @@
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
-	</NewTable>
+	</TableView>
 </template>
 
 <script setup lang="ts" name="任务结算明细">

@@ -52,7 +52,7 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 const Mytab = defineAsyncComponent(() => import('./mytab.vue'));
 const emit = defineEmits(['update:modelValue']);

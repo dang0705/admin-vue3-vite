@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<NewTable ref="NewTableRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+		<TableView ref="TableViewRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 			<template #actions="{ row }">
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('view', row)"> 查看 </el-button>
 				<el-button v-if="row.status == 20" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('exam', row)">
@@ -25,7 +25,7 @@
 					<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
 				</div>
 			</template>
-		</NewTable>
+		</TableView>
 		<!-- 导入结算-->
 		<uploadExcel
 			ref="importBillRef"
@@ -90,7 +90,7 @@ const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const router = useRouter();
 const importBillRef = ref();
-const NewTableRef = ref();
+const TableViewRef = ref();
 const formAuditDialogRef = ref();
 const formInfo = reactive({
 	taskList: [],
@@ -372,7 +372,7 @@ getSpPaymentChannelListData1();
 const refreshDataList = () => {
 	formInfo.taskList = [];
 	formInfo.spPaymentChannelList = [];
-	NewTableRef?.value.resetQuery();
+	TableViewRef?.value.resetQuery();
 };
 // 获取数据
 getMerchantInfoList().then((res: any) => {
