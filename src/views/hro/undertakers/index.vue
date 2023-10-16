@@ -224,17 +224,11 @@ const conditionForms = ref([
 		control: 'YesOrNo',
 		key: 'isAuthentication',
 		label: t('undertakerInfo.isAuthentication'),
-		props: {
-			placeholder: t('undertakerInfo.inputIsAuthenticationTip'),
-		},
 	},
 	{
 		control: 'YesOrNo',
 		key: 'isSign',
 		label: t('undertakerInfo.isSign'),
-		props: {
-			placeholder: t('undertakerInfo.inputIsSignTip'),
-		},
 	},
 	{
 		control: 'SpSelect',

@@ -61,6 +61,7 @@
 				<el-table-column label="是否开启支付通道" width="300">
 					<template #default="scope">
 						<div v-if="scope.row.hasPaymentChannel === '1'">是</div>
+						<div v-else-if="scope.row.hasPaymentChannel === '0' && scope.row.statusDesc === '停用'">否</div>
 						<el-button v-else text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
 					</template>
 				</el-table-column>

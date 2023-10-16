@@ -117,6 +117,7 @@ watch(
 			class="h-fit max-w-[160px]"
 			:disabled="forceDisabled || gradual.length - 1 > index || disabled"
 			:min="index ? Number(gradual[index][props.itemField?.min]) + 1 : 0"
+			:max="10000000000"
 			:step="1000"
 			:precision="precisions[1]"
 			v-model="gradual[index][props.itemField?.max]"
