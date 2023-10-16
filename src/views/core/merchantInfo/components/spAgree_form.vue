@@ -29,15 +29,13 @@
 						</el-select>
 					</el-form-item>
 				</el-col>
-
 				<el-col :span="12" class="mb20">
-					<el-form-item label="服务费计算方式" prop="feeCalculationMethod">
-						<el-select :disabled="isDetail" clearable v-model="form.feeCalculationMethod">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
-						</el-select>
+					<el-form-item label="平台服务费比例" prop="platformFeeRate">
+						<el-input :disabled="isDetail" type="number" v-model.number="form.platformFeeRate">
+							<template #append>%</template>
+						</el-input>
 					</el-form-item>
 				</el-col>
-
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开票类目" prop="invoiceCategory">
 						<el-select multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
@@ -66,7 +64,7 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20">
+				<el-col :span="24" class="mb20">
 					<el-form-item label="企业上传附件" prop="uploadAttachment">
 						<UploadFile
 							:disabled="isDetail"
@@ -79,9 +77,15 @@
 						/>
 					</el-form-item>
 				</el-col>
-
+				<el-col :span="12" class="mb20">
+					<el-form-item label="管理费计算方式" prop="feeCalculationMethod">
+						<el-select :disabled="isDetail" clearable v-model="form.feeCalculationMethod">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
+						</el-select>
+					</el-form-item>
+				</el-col>
 				<el-col :span="24" class="mb20">
-					<el-form-item label="* 服务费比例" prop="feeRates">
+					<el-form-item label="管理费比例" prop="feeRates">
 						<IndividualTaxRatios :disabled="isDetail" v-model="form.feeRates" :texts="iTRTexts" />
 					</el-form-item>
 				</el-col>
@@ -127,6 +131,7 @@ let form = reactive({
 	spId: '',
 	serviceManager: '',
 	isUploadAchievement: '',
+	platformFeeRate: 0,
 	feeCalculationMethod: '',
 	invoiceCategory: '',
 	isElectronicSignature: '',
@@ -144,13 +149,14 @@ const dataRules = ref({
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
 	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
-	feeCalculationMethod: [{ required: true, message: '服务费计算方式不能为空', trigger: 'blur' }],
+	platformFeeRate: [{ required: true, message: '平台服务费比例不能为空', trigger: 'blur' }],
+	feeCalculationMethod: [{ required: true, message: '管理费计算方式不能为空', trigger: 'blur' }],
 	invoiceCategory: [{ required: true, message: '开票类目不能为空', trigger: 'blur' }],
 	isElectronicSignature: [{ required: true, message: '要求电子签署不能为空', trigger: 'blur' }],
 	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
 	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
 	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
-	feeRates: [{ required: true, message: '服务费比例不能为空', trigger: 'blur' }],
+	feeRates: [{ required: true, message: '管理费比例不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
 });
 

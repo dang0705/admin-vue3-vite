@@ -353,6 +353,7 @@ const form = reactive({
 	signInOrCheckOutTime: [],
 	businessMerchant: '',
 	businessPhone: '',
+	areaDescDatas: '',
 	taskRequireInfo: {
 		requiredSex: '',
 		requiredAgeMin: 0,
@@ -420,12 +421,18 @@ const onSubmit = async () => {
 	try {
 		loading.value = true;
 		form.areaDescDatas = chinaAreaRef.value.getCheckedNodes(true)[0].pathLabels.join(',');
+		if (route.query.taskId) {
+			delete form.taskId;
+		}
 		form.taskId ? await putObj(form) : await addObj(form);
 		// form.taskId ? await addObj(form) : await addObj(form);
 		// 您已成功创建指派任务"小白楼保洁服务"！
 		useMessage().success(form.taskId ? '修改成功' : '添加成功');
 		router.push({
 			path: '/core/task/index',
+			state: {
+				refresh: 1,
+			},
 		});
 	} catch (err: any) {
 	} finally {
@@ -444,10 +451,10 @@ const onPrev = async () => {
 };
 
 // 初始化表单数据
-const gettaskData = (taskId: string) => {
+const gettaskData = () => {
 	// 获取数据
 	loading.value = true;
-	getObj(taskId)
+	getObj(route.query.taskId)
 		.then((res: any) => {
 			Object.assign(form, res.data);
 			getAgreeList();
@@ -468,7 +475,7 @@ getSpInfoList().then((res: any) => {
 });
 
 if (route.query.taskId) {
-	gettaskData(route.query.taskId);
+	gettaskData();
 }
 
 const task_typeLevel_option = computed(() => {

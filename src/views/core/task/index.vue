@@ -99,6 +99,15 @@
 							icon="edit-pen"
 							text
 							type="primary"
+							v-auth="'core_task_edit'"
+							@click="openTask('copy', scope.row.id)"
+							>克隆</el-button
+						>
+						<el-button
+							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
+							icon="edit-pen"
+							text
+							type="primary"
 							v-auth="'core_task_exam'"
 							@click="formDialogRef.openDialog(scope.row.id)"
 							>审核</el-button
@@ -287,6 +296,18 @@ const openTask = (type: string, id: number) => {
 		case 'add':
 			router.push({
 				path: '/core/task/add',
+				state: {
+					refresh: 1,
+				},
+			});
+			break;
+		case 'copy':
+			router.push({
+				path: '/core/task/copy',
+				query: {
+					taskId: id,
+					copy: 1,
+				},
 				state: {
 					refresh: 1,
 				},
