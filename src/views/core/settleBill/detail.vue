@@ -126,7 +126,7 @@
 						</el-button>
 						<el-button
 							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
-							@click="handlePayBillRecord(form.taskBillRecord, 1)"
+							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"
 							class="ml10"
@@ -459,7 +459,7 @@ if (route.query.id) {
 }
 
 const handlePayBillRecord = (list = [], dialogType: number) => {
-	detailDialogRef.value?.openDialog(form.id, dialogType);
+	detailDialogRef.value?.openDialog(form.id, 1, dialogType);
 };
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
