@@ -117,15 +117,15 @@
 							>批量指派承接人</el-button
 						>
 						<!-- <el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量指派 </el-button> -->
-						<el-button
+						<!-- <el-button
 							v-if="scope.row.status == 20"
 							icon="edit-pen"
 							text
 							type="primary"
 							v-auth="'core_task_exam'"
-							@click="formDialogRef.openDialog(scope.row)"
+							@click="formDialogRef.openDialog(scope.row.id)"
 							>下架</el-button
-						>
+						> -->
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 					</template>
 				</el-table-column>

@@ -83,33 +83,33 @@ const indexThead = [
 	{
 		prop: 'batchNumber',
 		label: '批次编号',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'batchType',
 		label: '批次类型',
-		width: 200,
+		minWidth: 200,
 		slot: true,
 	},
 	{
 		prop: 'createTime',
 		label: '创建时间',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'doneTime',
 		label: '完成时间',
-		width: 200,
+		minWidth: 200,
 	},
 	{
 		prop: 'createBy',
 		label: '创建人',
-		width: 160,
+		minWidth: 160,
 	},
 	{
 		prop: 'batchState',
 		label: '状态',
-		width: 120,
+		minWidth: 120,
 		slot: true,
 	},
 	{
@@ -117,6 +117,7 @@ const indexThead = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
+		minWidth: 150,
 	},
 ];
 
