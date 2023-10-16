@@ -280,6 +280,7 @@ import { rule } from '/@/utils/validate';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 const businessType = uploadBusinessType.merchant;
+const chinaAreaRef = ref();
 // 定义字典
 const { task_type, task_unit, is_need, gender, education, experience, task_undertaking_type } = useDict(
 	'task_type',
@@ -418,6 +419,7 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
+		form.areaDescDatas = chinaAreaRef.value.getCheckedNodes(true)[0].pathLabels.join(',');
 		form.taskId ? await putObj(form) : await addObj(form);
 		// form.taskId ? await addObj(form) : await addObj(form);
 		// 您已成功创建指派任务"小白楼保洁服务"！

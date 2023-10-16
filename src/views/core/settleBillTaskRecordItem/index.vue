@@ -11,7 +11,7 @@
 	</NewTable>
 </template>
 
-<script setup lang="ts" name="systemSettleBillTaskRecordItem">
+<script setup lang="ts" name="任务结算明细">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 

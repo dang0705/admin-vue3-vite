@@ -6,7 +6,7 @@
 	</NewTable>
 </template>
 
-<script setup lang="ts" name="systemSettleBillRecord">
+<script setup lang="ts" name="结算单">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 

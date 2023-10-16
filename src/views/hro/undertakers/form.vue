@@ -80,7 +80,6 @@ import { getObj, addObj, putObj } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import { useI18n } from 'vue-i18n';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
-import { el } from 'element-plus/es/locale';
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();
 
