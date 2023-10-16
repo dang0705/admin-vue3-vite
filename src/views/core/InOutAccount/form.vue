@@ -4,30 +4,62 @@
       <el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="90px" v-loading="loading">
        <el-row :gutter="24">
     <el-col :span="12" class="mb20">
-      <el-form-item label="账单id" prop="settleBillId">
-        <el-input-number :min="1" :max="1000" v-model="form.settleBillId" placeholder="请输入账单id"></el-input-number>
+      <el-form-item label="商户id" prop="merchantId">
+        <el-input-number :min="1" :max="1000" v-model="form.merchantId" placeholder="请输入商户id"></el-input-number>
       </el-form-item>
     </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="账单名称" prop="settleBillName">
-        <el-input v-model="form.settleBillName" placeholder="请输入账单名称"/>
+      <el-form-item label="商户资金账户id" prop="accountId">
+        <el-input-number :min="1" :max="1000" v-model="form.accountId" placeholder="请输入商户资金账户id"></el-input-number>
       </el-form-item>
-      </el-col>
+    </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="结算单类别(10:服务结算单,20:任务结算单)" prop="settleBillType">
-            <el-radio-group v-model="form.settleBillType">
-           <el-radio label="结算单类别(10:服务结算单,20:任务结算单)" border>结算单类别(10:服务结算单,20:任务结算单)</el-radio>
+      <el-form-item label="状态（10：待审核，20：已驳回，30：待退款，40：退款成功，50：退款失败）" prop="status">
+            <el-radio-group v-model="form.status">
+           <el-radio label="状态（10：待审核，20：已驳回，30：待退款，40：退款成功，50：退款失败）" border>状态（10：待审核，20：已驳回，30：待退款，40：退款成功，50：退款失败）</el-radio>
             </el-radio-group>
         </el-form-item>
       </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="支付通道" prop="paymentBankId">
-        <el-input-number :min="1" :max="1000" v-model="form.paymentBankId" placeholder="请输入支付通道"></el-input-number>
+      <el-form-item label="退款金额" prop="receiptAmount">
+        <el-input v-model="form.receiptAmount" placeholder="请输入退款金额"/>
       </el-form-item>
-    </el-col>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="收款户名" prop="receiptAccountName">
+        <el-input v-model="form.receiptAccountName" placeholder="请输入收款户名"/>
+      </el-form-item>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="收款账号" prop="receiptAccountNumber">
+        <el-input v-model="form.receiptAccountNumber" placeholder="请输入收款账号"/>
+      </el-form-item>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="收款开户行" prop="receiptAccountBank">
+        <el-input v-model="form.receiptAccountBank" placeholder="请输入收款开户行"/>
+      </el-form-item>
+      </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="发起退款时间" prop="refundStartTime">
+            <el-date-picker type="datetime" placeholder="请选择发起退款时间" v-model="form.refundStartTime" :value-format="dateTimeStr"></el-date-picker>
+      </el-form-item>
+      </el-col>
+
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="到账时间" prop="accountingTime">
+            <el-date-picker type="datetime" placeholder="请选择到账时间" v-model="form.accountingTime" :value-format="dateTimeStr"></el-date-picker>
+      </el-form-item>
+      </el-col>
+
 
     <el-col :span="12" class="mb20">
       <el-form-item label="服务商id" prop="spId">
@@ -36,34 +68,26 @@
     </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="收款方银行账号" prop="bankAccountNumberRecipient">
-        <el-input v-model="form.bankAccountNumberRecipient" placeholder="请输入收款方银行账号"/>
+      <el-form-item label="支付通道id" prop="paymentBankId">
+        <el-input-number :min="1" :max="1000" v-model="form.paymentBankId" placeholder="请输入支付通道id"></el-input-number>
+      </el-form-item>
+    </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="审核人userId" prop="auditUserId">
+        <el-input-number :min="1" :max="1000" v-model="form.auditUserId" placeholder="请输入审核人userId"></el-input-number>
+      </el-form-item>
+    </el-col>
+
+    <el-col :span="12" class="mb20">
+      <el-form-item label="审核说明" prop="auditPostscript">
+        <el-input v-model="form.auditPostscript" placeholder="请输入审核说明"/>
       </el-form-item>
       </el-col>
 
     <el-col :span="12" class="mb20">
-      <el-form-item label="收款方户名" prop="accountNameRecipient">
-        <el-input v-model="form.accountNameRecipient" placeholder="请输入收款方户名"/>
-      </el-form-item>
-      </el-col>
-
-    <el-col :span="12" class="mb20">
-      <el-form-item label="结算金额(元)" prop="serviceAmount">
-        <el-input v-model="form.serviceAmount" placeholder="请输入结算金额(元)"/>
-      </el-form-item>
-      </el-col>
-
-    <el-col :span="12" class="mb20">
-      <el-form-item label="结算状态" prop="status">
-            <el-radio-group v-model="form.status">
-           <el-radio label="结算状态" border>结算状态</el-radio>
-            </el-radio-group>
-        </el-form-item>
-      </el-col>
-
-    <el-col :span="12" class="mb20">
-      <el-form-item label="付款时间" prop="payTime">
-            <el-date-picker type="datetime" placeholder="请选择付款时间" v-model="form.payTime" :value-format="dateTimeStr"></el-date-picker>
+      <el-form-item label="审核时间" prop="auditTime">
+            <el-date-picker type="datetime" placeholder="请选择审核时间" v-model="form.auditTime" :value-format="dateTimeStr"></el-date-picker>
       </el-form-item>
       </el-col>
 
@@ -79,10 +103,10 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts" name="SettleBillRecordDialog">
+<script setup lang="ts" name="MerchantRefundDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from "/@/hooks/message";
-import { getObj, addObj, putObj } from '/@/api/core/settleBillRecord'
+import { getObj, addObj, putObj } from '/@/api/finance/merchantRefund'
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
 
@@ -95,30 +119,38 @@ const loading = ref(false)
 // 提交表单数据
 const form = reactive({
 		id:'',
-		settleBillId: 0,
-	  settleBillName: '',
-	  settleBillType: '',
-		paymentBankId: 0,
-		spId: 0,
-	  bankAccountNumberRecipient: '',
-	  accountNameRecipient: '',
-	  serviceAmount: '',
+		merchantId: 0,
+		accountId: 0,
 	  status: '',
-	  payTime: '',
+	  receiptAmount: '',
+	  receiptAccountName: '',
+	  receiptAccountNumber: '',
+	  receiptAccountBank: '',
+	  refundStartTime: '',
+	  accountingTime: '',
+		spId: 0,
+		paymentBankId: 0,
+		auditUserId: 0,
+	  auditPostscript: '',
+	  auditTime: '',
 });
 
 // 定义校验规则
 const dataRules = ref({
-        settleBillId: [{required: true, message: '账单id不能为空', trigger: 'blur'}],
-        settleBillName: [{required: true, message: '账单名称不能为空', trigger: 'blur'}],
-        settleBillType: [{required: true, message: '结算单类别(10:服务结算单,20:任务结算单)不能为空', trigger: 'blur'}],
-        paymentBankId: [{required: true, message: '支付通道不能为空', trigger: 'blur'}],
+        merchantId: [{required: true, message: '商户id不能为空', trigger: 'blur'}],
+        accountId: [{required: true, message: '商户资金账户id不能为空', trigger: 'blur'}],
+        status: [{required: true, message: '状态（10：待审核，20：已驳回，30：待退款，40：退款成功，50：退款失败）不能为空', trigger: 'blur'}],
+        receiptAmount: [{required: true, message: '退款金额不能为空', trigger: 'blur'}],
+        receiptAccountName: [{required: true, message: '收款户名不能为空', trigger: 'blur'}],
+        receiptAccountNumber: [{required: true, message: '收款账号不能为空', trigger: 'blur'}],
+        receiptAccountBank: [{required: true, message: '收款开户行不能为空', trigger: 'blur'}],
+        refundStartTime: [{required: true, message: '发起退款时间不能为空', trigger: 'blur'}],
+        accountingTime: [{required: true, message: '到账时间不能为空', trigger: 'blur'}],
         spId: [{required: true, message: '服务商id不能为空', trigger: 'blur'}],
-        bankAccountNumberRecipient: [{required: true, message: '收款方银行账号不能为空', trigger: 'blur'}],
-        accountNameRecipient: [{required: true, message: '收款方户名不能为空', trigger: 'blur'}],
-        serviceAmount: [{required: true, message: '结算金额(元)不能为空', trigger: 'blur'}],
-        status: [{required: true, message: '结算状态不能为空', trigger: 'blur'}],
-        payTime: [{required: true, message: '付款时间不能为空', trigger: 'blur'}],
+        paymentBankId: [{required: true, message: '支付通道id不能为空', trigger: 'blur'}],
+        auditUserId: [{required: true, message: '审核人userId不能为空', trigger: 'blur'}],
+        auditPostscript: [{required: true, message: '审核说明不能为空', trigger: 'blur'}],
+        auditTime: [{required: true, message: '审核时间不能为空', trigger: 'blur'}],
 })
 
 // 打开弹窗
@@ -131,10 +163,10 @@ const openDialog = (id: string) => {
 		dataFormRef.value?.resetFields();
 	});
 
-  // 获取settleBillRecord信息
+  // 获取merchantRefund信息
   if (id) {
     form.id = id
-    getsettleBillRecordData(id)
+    getmerchantRefundData(id)
   }
 };
 
@@ -158,7 +190,7 @@ const onSubmit = async () => {
 
 
 // 初始化表单数据
-const getsettleBillRecordData = (id: string) => {
+const getmerchantRefundData = (id: string) => {
   // 获取数据
   loading.value = true
   getObj(id).then((res: any) => {
