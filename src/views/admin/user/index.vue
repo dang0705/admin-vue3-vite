@@ -86,12 +86,12 @@
 						<el-tag v-for="(item, index) in scope.row.roleList" :key="index">{{ item.roleName }}</el-tag>
 					</template>
 				</el-table-column>
+				<el-table-column :label="$t('sysuser.createTime')" prop="createTime" show-overflow-tooltip width="180" />
 				<el-table-column :label="$t('sysuser.lockFlag')" show-overflow-tooltip>
 					<template #default="scope">
 						<el-switch v-model="scope.row.lockFlag" @change="changeSwitch(scope.row)" active-value="0" inactive-value="9"></el-switch>
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('sysuser.createTime')" prop="createTime" show-overflow-tooltip width="180"></el-table-column>
 				<el-table-column :label="$t('common.action')" width="350" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'sys_user_edit'" icon="edit-pen" text type="primary" @click="userDialogRef.openDialog(scope.row.userId)">
@@ -111,7 +111,7 @@
 							<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
 								$t('sysuser.distributionSp')
 							}}</el-button>
-							<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
+							<!--							<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 								<span style="margin-left: 12px">
 									<el-button
 										icon="delete"
@@ -123,7 +123,7 @@
 										>{{ $t('common.delBtn') }}
 									</el-button>
 								</span>
-							</el-tooltip>
+							</el-tooltip>-->
 						</template>
 					</template>
 				</el-table-column>
