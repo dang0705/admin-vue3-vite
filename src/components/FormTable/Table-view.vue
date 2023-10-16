@@ -24,6 +24,9 @@
 				/>
 				<div class="top-bar h-8 flex items-center">
 					<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
+					<el-button v-if="downBlobFileUrl" @click="exportExcel" style="margin-right: 24px" icon="Upload" type="primary" class="ml10">
+						批量导出
+					</el-button>
 				</div>
 			</div>
 			<el-table
@@ -62,6 +65,10 @@ const props = defineProps({
 		required: true,
 	},
 	module: {
+		type: String,
+		default: '',
+	},
+	downBlobFileUrl: {
 		type: String,
 		default: '',
 	},
@@ -150,9 +157,18 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 		  }
 		: {}),
 });
-const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList } = useTable(state, params.value ? params : null, props.indexInfo);
+const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList, downBlobFile } = useTable(
+	state,
+	params.value ? params : null,
+	props.indexInfo
+);
+
 const selectObjs = ref([]) as any;
 
+// 导出excel
+const exportExcel = () => {
+	downBlobFile(props.downBlobFileUrl, Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+};
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合

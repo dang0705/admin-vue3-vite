@@ -6,13 +6,13 @@
 			:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
 			:condition-forms="conditionForms"
 			labelWidth="120px"
+			:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
 		>
 			<template #tableTop>
 				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button @click="batchAddTask" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导入银行交易流水 </el-button>
-				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 			</template>
 		</TableView>
 		<uploadExcel
@@ -178,7 +178,11 @@ const toggleTab = (item: object) => {
 		TableViewRef?.value.resetQuery();
 	});
 };
-
+// 导出excel
+const exportExcel = () => {
+	downBlobFile('/core/merchantRecharge/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+};
 const refreshDataList = () => {
 	formInfo.spPaymentChannelList = [];
 	nextTick(() => {
