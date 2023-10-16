@@ -149,7 +149,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="导入批次">
+<script setup lang="ts" name="账单详情">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
@@ -164,6 +164,7 @@ const loading = ref(false);
 const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
+	id: '',
 });
 
 const topInfoForms = [
@@ -468,6 +469,7 @@ const handleBtn = () => {
 const refreshDataList = () => {
 	getmerchantInfoData();
 };
+$refreshList(getmerchantInfoData);
 </script>
 
 <style lang="scss" scoped>

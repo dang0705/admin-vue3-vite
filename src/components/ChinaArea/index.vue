@@ -1,11 +1,12 @@
 <template>
-	<el-cascader :options="optionsData" :props="cascaderProps" v-model="selectedOptions" @change="handleChange" />
+	<el-cascader ref="chinaArea" :options="optionsData" :props="cascaderProps" v-model="selectedOptions" @change="handleChange" />
 </template>
 <script setup lang="ts" name="china-area">
 import { provinceAndCityData, provinceAndCityDataPlus, regionData, regionDataPlus } from '/@/utils/chinaArea';
 
 const emit = defineEmits(['update:modelValue', 'change']);
 const optionsData = ref();
+const chinaArea = ref();
 const props = defineProps({
 	// 当前的值
 	modelValue: String,
@@ -21,6 +22,9 @@ const props = defineProps({
 });
 const cascaderProps = {
 	expandTrigger: 'hover' as const,
+};
+const getCheckedNodes = (bool: boolean) => {
+	return chinaArea.value.getCheckedNodes(bool);
 };
 const selectedOptions = computed({
 	get: () => {
@@ -42,5 +46,9 @@ onMounted(() => {
 	} else {
 		optionsData.value = type === 2 ? provinceAndCityData : regionData;
 	}
+});
+// 暴露变量
+defineExpose({
+	getCheckedNodes,
 });
 </script>

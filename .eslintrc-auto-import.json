@@ -1,6 +1,7 @@
 {
   "globals": {
     "$bus": true,
+    "$refreshList": true,
     "EffectScope": true,
     "acceptHMRUpdate": true,
     "computed": true,
@@ -81,7 +82,6 @@
     "Ref": true,
     "VNode": true,
     "WritableComputedRef": true,
-    "toValue": true,
-    "$refreshList": true
+    "toValue": true
   }
 }

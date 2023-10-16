@@ -4,10 +4,10 @@
 			<el-row shadow="hover" v-show="showSearch" class="ml10">
 				<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 					<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-						<el-input clearable v-model="state.queryForm.merchantName" />
+						<el-input v-model="state.queryForm.merchantName" />
 					</el-form-item>
 					<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-						<el-input clearable v-model="state.queryForm.socialCreditCode" />
+						<el-input v-model="state.queryForm.socialCreditCode" />
 					</el-form-item>
 					<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
 						<sp-select v-model="state.queryForm.spId" />

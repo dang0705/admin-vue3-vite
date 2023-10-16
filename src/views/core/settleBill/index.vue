@@ -80,7 +80,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="导入批次">
+<script setup lang="ts" name="结算账单">
 import { fetchList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
@@ -317,6 +317,9 @@ const handleAction = async (type: string, row: any) => {
 				path: '/core/settleBill/detail',
 				query: {
 					id: row.id,
+				},
+				state: {
+					refresh: 1,
 				},
 			});
 			break;
