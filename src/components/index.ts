@@ -47,6 +47,6 @@ export const customComponents = [
 	},
 	{
 		name: 'TableView',
-		component: () => import('/@/components/FormTable/new-index.vue'),
+		component: () => import('/src/components/FormTable/Table-view.vue'),
 	},
 ];
