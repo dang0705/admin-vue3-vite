@@ -1,5 +1,5 @@
 <template>
-	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
+	<el-dialog fullscreen v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
@@ -28,8 +28,6 @@
 						:filter-method="filterMethod"
 						:props="{ key: 'id' }"
 						:render-content="renderFunc"
-						:left-default-checked="[2, 3]"
-						:right-default-checked="[1]"
 						:titles="titles"
 						:button-texts="buttonTexts"
 						:data="data"
@@ -40,7 +38,7 @@
 						<template #default="{ option }" v-if="!hasDefaultSlot">
 							<ul class="flex justify-between px-3">
 								<li class="mr-5">{{ option.values[0].value }}</li>
-								<li v-if="option.values[1]">{{ option.values[1].value }}</li>
+								<li class="truncate" v-if="option.values[1]" :title="option.values[1].value">{{ option.values[1].value }}</li>
 							</ul>
 						</template>
 					</el-transfer>
@@ -248,7 +246,7 @@ defineExpose({
 	}
 }
 ::v-deep(.el-transfer-panel) {
-	width: fit-content;
+	//width: fit-content;
 }
 ::v-deep(.el-checkbox) {
 	margin-right: 0;
