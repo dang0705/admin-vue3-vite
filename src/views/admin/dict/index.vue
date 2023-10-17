@@ -98,6 +98,7 @@ const handleRefreshCache = () => {
 // 点击树
 const handleNodeClick = (data: any) => {
 	dictItemDialogRef.value.open(data);
+	$bus.emit('dict-node-click', data);
 };
 
 // 刷新树
