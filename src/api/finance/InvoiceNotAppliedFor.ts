@@ -38,3 +38,11 @@ export function putObj(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function applyInvoice(obj?: Object) {
+	return request({
+		url: '/finance/invoiceRecord/applyInvoice',
+		method: 'post',
+		data: obj,
+	});
+}
