@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<TableView
+			ref="TableViewRef"
 			:columns="indexThead"
 			module="core/settleBill.ts"
 			getListFnName="taskRecordItem"
@@ -58,7 +59,6 @@
 				<TableView
 					noPagination
 					style="margin-bottom: 28px"
-					ref="TableViewRef"
 					noPadding
 					:tableData="form.serviceBillRecord"
 					:columns="newIndexThead"
@@ -67,14 +67,18 @@
 					labelWidth="120px"
 				>
 					<template #actions="{ row }">
-						<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+						<el-button @click="detailDialogRef.openDialog(form.id, 4, 1)" icon="view" text type="primary"> 查看收款账号 </el-button>
 						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
-							<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
+							{{
+								form.serviceBillRecord[0].serviceAmount > balanceInfo.platBalance
+									? `需要充值: ${form.serviceBillRecord[0].serviceAmount - balanceInfo.platBalance}元`
+									: '无需充值'
+							}}
 						</div>
 						<el-button
 							@click="detailDialogRef.openDialog(form.id, 3)"
@@ -98,7 +102,6 @@
 				<TableView
 					noPagination
 					style="margin-bottom: 28px"
-					ref="TableViewRef"
 					noPadding
 					:tableData="form.taskBillRecord"
 					:columns="newIndexThead"
@@ -107,14 +110,20 @@
 					labelWidth="120px"
 				>
 					<template #actions="{ row }">
-						<el-button @click="handleBtn" icon="view" text type="primary"> 查看收款账号 </el-button>
+						<el-button @click="detailDialogRef.openDialog(form.id, 4, 2)" icon="view" text type="primary"> 查看收款账号 </el-button>
 						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
-							<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
+							<div class="info_item">
+								{{
+									form.taskBillRecord[0].serviceAmount > balanceInfo.spBalance
+										? `需要充值: ${form.taskBillRecord[0].serviceAmount - balanceInfo.spBalance}元`
+										: '无需充值'
+								}}
+							</div>
 						</div>
 						<el-button
 							@click="detailDialogRef.openDialog(form.id, 3)"
@@ -142,20 +151,35 @@
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
+				<el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
 			</template>
 		</TableView>
 		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" />
+		<uploadExcel
+			ref="importBillRef"
+			@refreshDataList="refreshDataList"
+			guidance="在导入结算单之前，请确认与结算单相关的任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
+			upload-label="导入结算"
+			upload-url="core/settleBill/import"
+			temp-url="/files/任务承接明细表.xlsx"
+			template-on-front
+			title="导入结算"
+			label-width="178px"
+			submitButtonText="下一步"
+		>
+		</uploadExcel>
 	</div>
 </template>
 
 <script setup lang="ts" name="账单详情">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
+import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
-
 const route: any = useRoute();
 const detailDialogRef = ref();
+const importBillRef = ref();
+const TableViewRef = ref();
 
 // 定义变量内容
 const router = useRouter();
@@ -165,8 +189,11 @@ const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
 	id: '',
+	merchantId: '',
+	spSubAccountNum: '',
+	platSubAccountNum: '',
 });
-
+const balanceInfo = reactive({});
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
@@ -450,11 +477,24 @@ const getmerchantInfoData = () => {
 	getObj(route.query.id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			getQueryBalance();
 		})
 		.finally(() => {
 			loading.value = false;
 		});
 };
+const getQueryBalance = () => {
+	queryPlatSpBalance({
+		merchantId: form.merchantId,
+		spSubAccountNum: form.spSubAccountNum,
+		platSubAccountNum: form.platSubAccountNum,
+	})
+		.then((res: any) => {
+			Object.assign(balanceInfo, res.data);
+		})
+		.finally(() => {});
+};
+
 if (route.query.id) {
 	getmerchantInfoData();
 }
@@ -468,6 +508,7 @@ const handleBtn = () => {
 
 const refreshDataList = () => {
 	getmerchantInfoData();
+	TableViewRef.value.resetQuery();
 };
 $refreshList(getmerchantInfoData);
 </script>

@@ -3,6 +3,7 @@ import request from '/@/utils/request';
 import helper from '/@/utils/helpers';
 import { useDict } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view-props';
+
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
 
 const prop = defineProps({
@@ -32,9 +33,35 @@ const initForms = async (forms: [], formData: object) => {
 				const { [item.options]: dic } = useDict(item.options);
 				formOptions[item.key] = computed(() => dic.value);
 			} else if (item.optionUrl) {
-				formOptions[item.key] = await request.get(item.optionUrl);
+				formOptions[item.key] = (await request.get(item.optionUrl)).data;
 			} else {
-				formOptions[item.key] = item.options || [];
+				formOptions[item.key] = helper.isArray(item.options) ? item.options || [] : [];
+				if (!helper.isArray(item.options)) {
+					const {
+						url,
+						params: { keyFrom, keyTo },
+					} = item.options as any;
+					if (helper.isArray(keyFrom)) {
+						const params = {};
+						keyFrom.forEach((key: string) => {
+							watch(
+								() => formData[key as string],
+								async (value) => {
+									params[key] = value;
+									formOptions[item.key] = (await request.get(url, { params })).data;
+								}
+							);
+						});
+					} else {
+						watch(
+							() => formData[keyFrom as string],
+							async (value) => {
+								formData[item.key] = '';
+								formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
+							}
+						);
+					}
+				}
 			}
 		}
 	}
@@ -97,7 +124,11 @@ defineExpose({
 									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
 								</slot>
 							</el-col>
-							<el-col v-bind="dynamicColumns" :class="['mb-2', { 'mb-[14px]': vertical }]" v-show="!form.hidden">
+							<el-col
+								v-bind="form.column ? { span: form.column } : dynamicColumns"
+								:class="['mb-2', { 'mb-[14px]': vertical }]"
+								v-show="!form.hidden"
+							>
 								<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
 								<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 									<component
@@ -122,8 +153,8 @@ defineExpose({
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value || 'value']"
 												:label="item[form.props?.value || 'value']"
-												>{{ item[form.props?.label || 'label'] }}</el-radio
-											>
+												>{{ item[form.props?.label || 'label'] }}
+											</el-radio>
 										</template>
 									</component>
 								</el-form-item>
@@ -137,7 +168,7 @@ defineExpose({
 				<el-form-item v-if="showBtn" :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
 					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
 					<slot name="third-button" />
-					<el-button @click="cancel" v-if="showCancel">{{ cancelButtonText || $t('common.cancelButtonText') }}</el-button>
+					<el-button @click="cancel" v-if="showCancel">{{ cancelButtonText || $t('common.cancelButtonText') }} </el-button>
 				</el-form-item>
 			</div>
 		</el-form>
@@ -151,12 +182,14 @@ defineExpose({
 			vertical-align: top;
 		}
 	}
+
 	.actions {
 		&.horizontal {
 			:deep(.el-form-item__content) {
 				margin-left: 10px !important;
 			}
 		}
+
 		&.center {
 			:deep(.el-form-item__content) {
 				margin-left: 0 !important;

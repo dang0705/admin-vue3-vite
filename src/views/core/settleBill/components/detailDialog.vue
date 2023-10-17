@@ -1,7 +1,7 @@
 <template>
 	<el-dialog :close-on-click-modal="false" :title="title" width="600" draggable v-model="visible">
 		<el-form
-			v-if="dialogType === 1 || dialogType === 2"
+			v-if="dialogType === 1 || dialogType === 2 || dialogType === 4"
 			:model="form"
 			:rules="dataRules"
 			style="min-height: 150px"
@@ -11,18 +11,30 @@
 			v-loading="loading"
 		>
 			<template v-if="dialogType === 1">
-				<el-form-item label="资金账户可用余额">
-					{{ settleBillType == 1 ? form.serviceAmountTotal : form.taskAmountTotal }}
-				</el-form-item>
+				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
 				<el-form-item label="当前结算单金额">
-					{{ form.billAmountTotal }}
+					{{ settleBillType == 1 ? form.serviceBillRecord[0]?.serviceAmount : form.taskBillRecord[0]?.serviceAmount }}元
 				</el-form-item>
 			</template>
 			<template v-if="dialogType === 2">
-				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0].id : form.taskBillRecord[0].id }} 成功发起付款！
+				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0]?.id : form.taskBillRecord[0]?.id }} 成功发起付款！
+			</template>
+			<template v-if="dialogType === 4">
+				<el-form-item label="收款开户行">
+					{{ spPaymentChannelData.bankBranch }}
+					<el-button @click="copyText(spPaymentChannelData.bankBranch)" text type="primary"> 复制 </el-button>
+				</el-form-item>
+				<el-form-item label="收款账号">
+					{{ spPaymentChannelData.mainAccount }}
+					<el-button @click="copyText(spPaymentChannelData.mainAccount)" text type="primary"> 复制 </el-button>
+				</el-form-item>
+				<el-form-item label="收款户名">
+					{{ spPaymentChannelData.spName }}
+					<el-button @click="copyText(spPaymentChannelData.spName)" text type="primary"> 复制 </el-button>
+				</el-form-item>
 			</template>
 		</el-form>
-
+		<!-- spPaymentChannelData -->
 		<div>
 			<form-view
 				v-if="dialogType == 3"
@@ -60,7 +72,11 @@ import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
 import uploadBusinessType from '/@/enums/upload-business-type';
+import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 const businessType = uploadBusinessType.merchant;
+import spPaymentChannel from '/@/api/core/spPaymentChannel';
+import commonFunction from '/@/utils/commonFunction';
+const { copyText } = commonFunction();
 const route: any = useRoute();
 const title = ref('');
 const visible = ref(false);
@@ -70,7 +86,16 @@ const settleBillType = ref(0);
 const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
+	id: '',
+	merchantId: '',
+	spSubAccountNum: '',
+	platSubAccountNum: '',
 });
+const balanceInfo = reactive({
+	platBalance: 0,
+	spBalance: 0,
+});
+const spPaymentChannelData = reactive({});
 const formData = reactive({
 	xxx1: '',
 	xxx2: '',
@@ -146,11 +171,15 @@ const onCancel = () => {
 const openDialog = async (id: string, dType: number, billType: number) => {
 	dialogType.value = dType;
 	visible.value = true;
+	console.log('dialogType.value', dialogType.value);
+
 	settleBillType.value = billType;
 	if (dType === 1) {
 		title.value = '发起付款';
 	} else if (dType === 3) {
 		title.value = '发起充值';
+	} else if (dType === 4) {
+		title.value = '查看收款账号';
 	}
 	if (id) {
 		getmerchantInfoData();
@@ -164,10 +193,30 @@ const getmerchantInfoData = () => {
 		.then((res: any) => {
 			Object.assign(form, res.data);
 			console.log('form-1', form);
+			getQueryBalance();
+			const id = settleBillType.value == 1 ? form.serviceBillRecord[0].paymentBankId : form.taskBillRecord[0].paymentBankId;
+			if (dialogType.value === 4) {
+				spPaymentChannel
+					.getObj(id)
+					.then((res: any) => {
+						Object.assign(spPaymentChannelData, res.data);
+						// console.log('form-1', form);
+						// getQueryBalance();
+					})
+					.catch((err: any) => {
+						console.log(err, 'e');
+					})
+					.finally(() => {
+						loading.value = false;
+					});
+			}
 		})
 		.finally(() => {
 			loading.value = false;
 		});
+};
+const copy = (text) => {
+	console.log('copy', text);
 };
 // 提交授权数据
 const onSubmit = async () => {
@@ -197,7 +246,17 @@ const onSubmit = async () => {
 		useMessage().wraning('功能正在开发, 请等待~');
 	}
 };
-
+const getQueryBalance = () => {
+	queryPlatSpBalance({
+		merchantId: form.merchantId,
+		spSubAccountNum: form.spSubAccountNum,
+		platSubAccountNum: form.platSubAccountNum,
+	})
+		.then((res: any) => {
+			Object.assign(balanceInfo, res.data);
+		})
+		.finally(() => {});
+};
 // 暴露变量
 defineExpose({
 	openDialog,
