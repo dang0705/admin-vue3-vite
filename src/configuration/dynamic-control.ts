@@ -6,8 +6,9 @@
 interface PayChannel {
 	key?: string;
 	watch?: string | object;
+	fields?: string | [];
 }
-export const payChannel = ({ key = 'paymentBankId', watch = 'spId' }: PayChannel = {}) => ({
+export const payChannel = ({ key = 'paymentBankId', watch = 'spId', fields }: PayChannel = {}) => ({
 	label: '支付通道',
 	control: 'el-select',
 	key,
@@ -19,7 +20,7 @@ export const payChannel = ({ key = 'paymentBankId', watch = 'spId' }: PayChannel
 		url: '/core/spPaymentChannel/list',
 		params: {
 			keyFrom: watch,
-			keyTo: 'spId',
+			keyTo: fields || watch,
 		},
 	},
 });

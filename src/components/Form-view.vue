@@ -42,12 +42,13 @@ const initForms = async (forms: [], formData: object) => {
 						params: { keyFrom, keyTo },
 					} = item.options as any;
 					if (helper.isArray(keyFrom)) {
+						const params = {};
 						keyFrom.forEach((key: string) => {
 							watch(
 								() => formData[key as string],
 								async (value) => {
-									formData[item.key] = '';
-									formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
+									params[key] = value;
+									formOptions[item.key] = (await request.get(url, { params })).data;
 								}
 							);
 						});
