@@ -41,7 +41,7 @@ export const useUserInfo = defineStore('userInfo', {
 						resolve(res);
 					})
 					.catch((err) => {
-						useMessage().error(err?.msg || '系统异常请联系管理员');
+						// useMessage().error(err?.msg || '系统异常请联系管理员');
 						reject(err);
 					});
 			});

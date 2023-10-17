@@ -13,6 +13,9 @@
 	}
 	.el-input__wrapper {
 		@apply px-0;
+		:is(span.el-input__suffix) {
+			display: none;
+		}
 	}
 	.el-input-number {
 		&__decrease,
@@ -24,6 +27,11 @@
 	&.el-select {
 		:is(span.el-input__suffix) {
 			display: none;
+		}
+		.el-select__tags-text {
+			overflow: initial;
+			text-overflow: initial;
+			white-space: normal;
 		}
 	}
 

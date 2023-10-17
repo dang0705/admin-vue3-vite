@@ -311,6 +311,7 @@ const forms = computed(() => {
 			];
 			break;
 		case Type['批量导入结算']:
+			currentTitle.value = '批量导入结算';
 			form = [
 				{
 					label: '账单名称',
@@ -339,7 +340,7 @@ const forms = computed(() => {
 	return form;
 });
 let currentId = ''; // 主键
-const currentType = ref(-1); // 批次类型
+const currentType = ref(''); // 批次类型
 const currentState = ref(-1); // 批次状态
 const currentTitle = ref('');
 const show = ref(false);

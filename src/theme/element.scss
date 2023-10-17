@@ -459,25 +459,6 @@ svg {
 	}
 }
 
-[class^='el-'].is-disabled *,
-[class^='el-'][class$='--disabled'] * {
-	height: fit-content;
-	// .el-select .el-select__tags-text {
-	// 	overflow: initial !important;
-	// 	text-overflow: initial !important;
-	// 	white-space: normal !important;
-	// }
-}
-
-[class^='el-'].is-disabled,
-[class^='el-'][class$='--disabled'] {
-	.el-select__tags-text {
-		overflow: initial !important;
-		text-overflow: initial !important;
-		white-space: normal !important;
-	}
-}
-
 .el-dialog__body {
 	max-height: 80vh;
 }
