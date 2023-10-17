@@ -124,7 +124,11 @@ defineExpose({
 									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
 								</slot>
 							</el-col>
-							<el-col v-bind="dynamicColumns" :class="['mb-2', { 'mb-[14px]': vertical }]" v-show="!form.hidden">
+							<el-col
+								v-bind="form.column ? { span: form.column } : dynamicColumns"
+								:class="['mb-2', { 'mb-[14px]': vertical }]"
+								v-show="!form.hidden"
+							>
 								<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
 								<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
 									<component
