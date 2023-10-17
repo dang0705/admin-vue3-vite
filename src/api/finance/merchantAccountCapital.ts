@@ -47,10 +47,11 @@ export function queryBalance(obj?: Object) {
 	});
 }
 
-// export function queryBalance(obj?: Object) {
-// 	return request({
-// 		url: '/finance/spAccountCapital/queryBalance',
-// 		method: 'post',
-// 		data: obj,
-// 	});
-// }
+export function queryPlatSpBalance(obj?: Object) {
+	return request({
+		url: '/finance/merchantAccountCapital/queryPlatSpBalance',
+		// /queryPlatSpBalance
+		method: 'post',
+		data: obj,
+	});
+}
