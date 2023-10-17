@@ -41,13 +41,25 @@ const initForms = async (forms: [], formData: object) => {
 						url,
 						params: { keyFrom, keyTo },
 					} = item.options as any;
-					watch(
-						() => formData[keyFrom as string],
-						async (value) => {
-							formData[item.key] = '';
-							formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
-						}
-					);
+					if (helper.isArray(keyFrom)) {
+						keyFrom.forEach((key: string) => {
+							watch(
+								() => formData[key as string],
+								async (value) => {
+									formData[item.key] = '';
+									formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
+								}
+							);
+						});
+					} else {
+						watch(
+							() => formData[keyFrom as string],
+							async (value) => {
+								formData[item.key] = '';
+								formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
+							}
+						);
+					}
 				}
 			}
 		}
