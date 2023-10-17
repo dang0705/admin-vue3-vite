@@ -11,7 +11,7 @@
 			v-loading="loading"
 		>
 			<template v-if="dialogType === 1">
-				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.spBalance : balanceInfo.platBalance }}元 </el-form-item>
+				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
 				<el-form-item label="当前结算单金额">
 					{{ settleBillType == 1 ? form.serviceBillRecord[0]?.serviceAmount : form.taskBillRecord[0]?.serviceAmount }}元
 				</el-form-item>

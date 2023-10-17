@@ -73,10 +73,10 @@
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
 							{{
-								form.serviceBillRecord[0].serviceAmount > balanceInfo.spBalance
-									? `需要充值: ${form.serviceBillRecord[0].serviceAmount - balanceInfo.spBalance}元`
+								form.serviceBillRecord[0].serviceAmount > balanceInfo.platBalance
+									? `需要充值: ${form.serviceBillRecord[0].serviceAmount - balanceInfo.platBalance}元`
 									: '无需充值'
 							}}
 						</div>
@@ -116,11 +116,11 @@
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 							<div class="info_item">
 								{{
-									form.taskBillRecord[0].serviceAmount > balanceInfo.platBalance
-										? `需要充值: ${form.taskBillRecord[0].serviceAmount - balanceInfo.platBalance}元`
+									form.taskBillRecord[0].serviceAmount > balanceInfo.spBalance
+										? `需要充值: ${form.taskBillRecord[0].serviceAmount - balanceInfo.spBalance}元`
 										: '无需充值'
 								}}
 							</div>
