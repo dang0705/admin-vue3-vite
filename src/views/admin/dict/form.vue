@@ -9,6 +9,11 @@
 						</el-radio>
 					</el-radio-group>
 				</el-form-item>
+				<el-form-item label="数据类型" prop="dataType">
+					<el-select v-model="dataForm.dataType">
+						<el-option v-for="{ value, label } in dataTypeOptions" :key="label" :label="label" :value="value" />
+					</el-select>
+				</el-form-item>
 				<el-form-item :label="$t('sysdict.dictType')" prop="dictType">
 					<el-input :placeholder="$t('sysdict.inputDictTypeTip')" :disabled="dataForm.id !== ''" clearable v-model="dataForm.dictType"></el-input>
 				</el-form-item>
@@ -45,13 +50,27 @@ const dicDialogFormRef = ref();
 
 const visible = ref(false);
 const loading = ref(false);
-
+const dataTypeOptions = [
+	{
+		label: '字符串',
+		value: 'String',
+	},
+	{
+		label: '整型',
+		value: 'Integer',
+	},
+	{
+		label: '布尔',
+		value: 'Boolean',
+	},
+];
 const dataForm = reactive({
 	id: '',
 	dictType: '',
 	description: '',
 	systemFlag: '0',
 	remarks: '',
+	dataType: '',
 });
 
 const dataRules = reactive({

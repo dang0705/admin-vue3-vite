@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-padding-auto layout-padding-view">
 		<div class="mb8">
-			<el-button icon="folder-add" type="primary" class="ml10" @click="dictformRef.openDialog(null, state.queryForm)">
+			<el-button icon="folder-add" type="primary" class="ml10" @click="dictformRef.openDialog(parentData, state.queryForm)">
 				{{ $t('common.addBtn') }}
 			</el-button>
 			<right-toolbar :search="false" class="ml10" style="float: right; margin-right: 20px" @queryTable="getDataList"></right-toolbar>
@@ -71,6 +71,9 @@ const handleDelete = async (row: any) => {
 		useMessage().error(err.msg);
 	}
 };
+let parentData = {};
+$bus.on('dict-node-click', (data: any) => (parentData = data));
+
 const open = (row: any) => {
 	state.queryForm.dictId = row.id;
 	state.queryForm.dictType = row.dictType;

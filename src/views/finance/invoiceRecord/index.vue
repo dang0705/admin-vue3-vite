@@ -1,5 +1,5 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/invoiceRecord.ts">
+	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/invoiceRecord.ts" is-tab>
 		<template #actions> </template>
 	</Table-view>
 </template>

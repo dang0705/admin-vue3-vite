@@ -2,7 +2,7 @@
 	<div :class="{ 'layout-padding': !noPadding }">
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-			<Mytab v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp"></Mytab>
+			<Mytab v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" />
 			<div class="mb8" style="width: 100%">
 				<Form-view
 					v-if="conditionForms.length"
@@ -14,7 +14,11 @@
 					:forms="conditionForms"
 					:on-submit="getDataList"
 					:on-cancel="resetQuery"
-				/>
+				>
+					<template v-for="(_, slot) in $slots" #[slot]>
+						<slot :name="slot" v-bind="{ form: conditionForms, formData: state.queryForm }" />
+					</template>
+				</Form-view>
 				<right-toolbar
 					v-if="conditionForms.length"
 					v-model:showSearch="showSearch"
@@ -30,6 +34,7 @@
 				</div>
 			</div>
 			<el-table
+				border
 				v-loading="state.loading"
 				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
@@ -91,7 +96,7 @@ const props = defineProps({
 	},
 	selectMainKey: {
 		type: String,
-		default: '',
+		default: 'id',
 	},
 	modelValue: {
 		type: Array,
@@ -137,11 +142,7 @@ const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Reco
 const fetchList = ref('');
 watch(
 	() => props.module,
-	(value) => {
-		console.log('props.module', props.module);
-
-		fetchList.value = apis[`/src/api/${props.module}`][props.getListFnName];
-	},
+	(value) => (fetchList.value = apis[`/src/api/${value}`][props.getListFnName]),
 	{ immediate: true, deep: true }
 );
 const showSearch = ref(true);
@@ -150,7 +151,6 @@ const params = computed(() => props.params);
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
 	...(props.queryForm ? { queryForm: props.queryForm } : {}),
-	pagination: {},
 	createdIsNeed: props.createdIsNeed,
 	...(props.isTab
 		? {
@@ -161,11 +161,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 		  }
 		: {}),
 });
-const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList, downBlobFile } = useTable(
-	state,
-	params.value ? params : null,
-	props.indexInfo
-);
+const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList, downBlobFile } = useTable(state, params.value ? params : null);
 
 const selectObjs = ref([]) as any;
 
@@ -189,6 +185,7 @@ const resetQuery = () => {
 	getDataList();
 };
 
+provide('refresh', resetQuery);
 const toggleTab = (item: any) => {
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });

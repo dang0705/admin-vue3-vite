@@ -29,7 +29,6 @@
 		<!-- 导入结算-->
 		<uploadExcel
 			ref="importBillRef"
-			@refreshDataList="refreshDataList"
 			guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
 			upload-label="导入结算"
 			upload-url="core/settleBill/import"
@@ -85,6 +84,7 @@ import { fetchList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { submitObj } from '/@/api/core/settleBill';
+import { payChannel } from '/@/configuration/dynamic-control';
 
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -191,11 +191,7 @@ const conditionForms = [
 		key: 'taskNum',
 		label: '任务编号',
 	},
-	{
-		control: 'el-select',
-		key: 'channelId',
-		label: '支付通道',
-	},
+	payChannel({ key: 'channelId' }),
 	{
 		control: 'el-input',
 		key: 'createBillUser',
@@ -370,8 +366,8 @@ const getSpPaymentChannelListData1 = () => {
 getSpPaymentChannelListData1();
 
 const refreshDataList = () => {
-	formInfo.taskList = [];
-	formInfo.spPaymentChannelList = [];
+	// formInfo.taskList = [];
+	// formInfo.spPaymentChannelList = [];
 	TableViewRef?.value.resetQuery();
 };
 // 获取数据
