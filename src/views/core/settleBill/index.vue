@@ -85,6 +85,7 @@ import { fetchList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { submitObj } from '/@/api/core/settleBill';
+import { payChannel } from '/@/configuration/dynamic-control';
 
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -191,11 +192,7 @@ const conditionForms = [
 		key: 'taskNum',
 		label: '任务编号',
 	},
-	{
-		control: 'el-select',
-		key: 'channelId',
-		label: '支付通道',
-	},
+	payChannel({ key: 'channelId' }),
 	{
 		control: 'el-input',
 		key: 'createBillUser',
