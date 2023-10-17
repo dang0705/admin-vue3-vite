@@ -9,7 +9,7 @@ export interface FormOptions {
 	key: string; // 后端字段
 	props?: Props; // element ui 控件或自定义组件的props
 	optionUrl?: string; // 下拉/多选/单选组件的后端接口
-	options?: []; // 下拉/多选/单选组件的子元素数组
+	options?: [] | object; // 下拉/多选/单选组件的子元素数组
 	value?: unknown; // 组件默认数据
 	rules?: []; // 验证规则
 	slot?: boolean | string; //插槽,
