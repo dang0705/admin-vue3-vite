@@ -17,6 +17,10 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
+	width: {
+		type: [Number, String],
+		default: '640px',
+	},
 	...FormViewProps,
 });
 
@@ -42,7 +46,7 @@ const formValue = computed({
 </script>
 
 <template>
-	<el-dialog v-model="show" v-bind="$attrs" :title="title" :close-on-click-modal="closeOnClickModal">
+	<el-dialog v-model="show" v-bind="$attrs" :title="title" :width="width" :close-on-click-modal="closeOnClickModal">
 		<slot name="default-dialog-slot">
 			<Form-view v-bind="props" v-model="formValue" v-model:show="show">
 				<template v-for="(_, slot) in $slots" #[slot]>

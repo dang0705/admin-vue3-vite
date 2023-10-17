@@ -95,6 +95,7 @@ const { undertaking_status } = useDict('undertaking_status');
 // const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
 // 定义查询字典
+const route = useRoute();
 
 // 定义变量内容
 // const formDialogRef = ref();
@@ -171,7 +172,9 @@ const prop = defineProps({
 });
 
 const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {},
+	queryForm: {
+		taskId: route.query.taskId,
+	},
 	pageList: fetchList,
 });
 
@@ -180,7 +183,9 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
-	state.queryForm = {};
+	state.queryForm = {
+		taskId: route.query.taskId,
+	};
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选

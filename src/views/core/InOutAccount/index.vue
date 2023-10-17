@@ -7,6 +7,7 @@
 			:condition-forms="conditionForms"
 			labelWidth="120px"
 			:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
+			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 		>
 			<template #tableTop>
 				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>

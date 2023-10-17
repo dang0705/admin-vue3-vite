@@ -38,7 +38,7 @@
 				</el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item label="开票类目" prop="invoiceCategory">
-						<el-select multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
+						<el-select collapse-tags collapse-tags-tooltip multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
 						</el-select>
 					</el-form-item>
@@ -181,6 +181,9 @@ const openDialog = (id: string, type: any) => {
 		form.id = id;
 		getmerchantServiceAgreementData(id);
 	}
+
+	getSpInfoData();
+	getUserDropList();
 };
 
 // 提交
@@ -231,17 +234,13 @@ const getUserDropList = () => {
 	});
 };
 
-const getmerchantInfoData = () => {
+const getSpInfoData = () => {
 	// 获取数据
-	getSpInfoList().then((res: any) => {
+	getSpInfoList('').then((res: any) => {
 		spinfoList.value = res.data || [];
 	});
 };
 
-onMounted(() => {
-	getmerchantInfoData();
-	getUserDropList();
-});
 // 暴露变量
 defineExpose({
 	openDialog,

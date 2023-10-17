@@ -3,7 +3,7 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<!-- <task-detail :isDetail="true" /> -->
 			<el-tabs style="min-height: 300px" class="demo-tabs">
-				<el-tab-pane label="商户信息">
+				<el-tab-pane label="任务详情">
 					<task-detail :isDetail="true" />
 				</el-tab-pane>
 				<el-tab-pane lazy label="承接记录">

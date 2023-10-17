@@ -68,6 +68,10 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	downBlobFileName: {
+		type: String,
+		default: '',
+	},
 	downBlobFileUrl: {
 		type: String,
 		default: '',
@@ -167,7 +171,7 @@ const selectObjs = ref([]) as any;
 
 // 导出excel
 const exportExcel = () => {
-	downBlobFile(props.downBlobFileUrl, Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	downBlobFile(props.downBlobFileUrl, Object.assign(state.queryForm, { ids: selectObjs }), props.downBlobFileName);
 };
 /**
  * 选择表格行
