@@ -73,8 +73,12 @@
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ form.serviceAmountTotal }}元</div>
-							<div class="info_item">{{ form.serviceAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.balance }}元</div>
+							{{
+								form.serviceBillRecord[0].serviceAmount > balanceInfo.balance
+									? `需要充值: ${form.serviceBillRecord[0].serviceAmount - balanceInfo.balance}元`
+									: '无需充值'
+							}}
 						</div>
 						<el-button
 							@click="detailDialogRef.openDialog(form.id, 3)"
@@ -113,8 +117,14 @@
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
 						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ form.taskAmountTotal }}元</div>
-							<div class="info_item">{{ form.taskAmountTotal > 0 ? `需要充值: XXX元` : '无需充值' }}</div>
+							<div class="info_item">资金账户可用余额: {{ balanceInfo.balance }}元</div>
+							<div class="info_item">
+								{{
+									form.taskBillRecord[0].serviceAmount > balanceInfo.balance
+										? `需要充值: ${form.taskBillRecord[0].serviceAmount - balanceInfo.balance}元`
+										: '无需充值'
+								}}
+							</div>
 						</div>
 						<el-button
 							@click="detailDialogRef.openDialog(form.id, 3)"
@@ -151,6 +161,7 @@
 
 <script setup lang="ts" name="账单详情">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
+import { queryBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 
@@ -165,8 +176,11 @@ const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
 	id: '',
+	merchantId: '',
+	spSubAccountNum: '',
+	platSubAccountNum: '',
 });
-
+const balanceInfo = reactive({});
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
@@ -450,11 +464,25 @@ const getmerchantInfoData = () => {
 	getObj(route.query.id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			getQueryBalance();
 		})
 		.finally(() => {
 			loading.value = false;
 		});
 };
+const getQueryBalance = () => {
+	queryBalance({
+		merchantId: form.merchantId,
+		subAccountNum: form.spSubAccountNum,
+		// platSubAccountNum
+	})
+		.then((res: any) => {
+			Object.assign(balanceInfo, res.data);
+			console.log('balanceInfo', balanceInfo);
+		})
+		.finally(() => {});
+};
+
 if (route.query.id) {
 	getmerchantInfoData();
 }

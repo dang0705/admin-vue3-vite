@@ -12,10 +12,10 @@
 		>
 			<template v-if="dialogType === 1">
 				<el-form-item label="资金账户可用余额">
-					{{ settleBillType == 1 ? form.serviceAmountTotal : form.taskAmountTotal }}
+					{{ settleBillType == 1 ? balanceInfo.balance : balanceInfo.balance }}
 				</el-form-item>
 				<el-form-item label="当前结算单金额">
-					{{ form.billAmountTotal }}
+					{{ settleBillType == 1 ? form.serviceBillRecord[0].serviceAmount : form.taskBillRecord[0].serviceAmount }}
 				</el-form-item>
 			</template>
 			<template v-if="dialogType === 2">
@@ -60,6 +60,7 @@ import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
 import uploadBusinessType from '/@/enums/upload-business-type';
+import { queryBalance } from '/@/api/finance/merchantAccountCapital';
 const businessType = uploadBusinessType.merchant;
 const route: any = useRoute();
 const title = ref('');
@@ -70,7 +71,12 @@ const settleBillType = ref(0);
 const form = reactive({
 	serviceBillRecord: [],
 	taskBillRecord: [],
+	id: '',
+	merchantId: '',
+	spSubAccountNum: '',
+	platSubAccountNum: '',
 });
+const balanceInfo = reactive({});
 const formData = reactive({
 	xxx1: '',
 	xxx2: '',
@@ -164,6 +170,7 @@ const getmerchantInfoData = () => {
 		.then((res: any) => {
 			Object.assign(form, res.data);
 			console.log('form-1', form);
+			getQueryBalance();
 		})
 		.finally(() => {
 			loading.value = false;
@@ -197,7 +204,18 @@ const onSubmit = async () => {
 		useMessage().wraning('功能正在开发, 请等待~');
 	}
 };
-
+const getQueryBalance = () => {
+	queryBalance({
+		merchantId: form.merchantId,
+		subAccountNum: form.spSubAccountNum,
+		// platSubAccountNum
+	})
+		.then((res: any) => {
+			Object.assign(balanceInfo, res.data);
+			console.log('balanceInfo', balanceInfo);
+		})
+		.finally(() => {});
+};
 // 暴露变量
 defineExpose({
 	openDialog,
