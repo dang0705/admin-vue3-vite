@@ -142,11 +142,7 @@ const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Reco
 const fetchList = ref('');
 watch(
 	() => props.module,
-	(value) => {
-		console.log('props.module', props.module);
-
-		fetchList.value = apis[`/src/api/${props.module}`][props.getListFnName];
-	},
+	(value) => (fetchList.value = apis[`/src/api/${value}`][props.getListFnName]),
 	{ immediate: true, deep: true }
 );
 const showSearch = ref(true);
@@ -189,6 +185,7 @@ const resetQuery = () => {
 	getDataList();
 };
 
+provide('refresh', resetQuery);
 const toggleTab = (item: any) => {
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });

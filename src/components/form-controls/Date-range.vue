@@ -38,5 +38,3 @@ const value = computed({
 <template>
 	<el-date-picker v-bind="{ ...dateRangeDefaultProps({ startP, endP }), ...props }" :teleported="false" v-model="value" />
 </template>
-
-<style scoped lang="scss"></style>
