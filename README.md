@@ -2,6 +2,7 @@
 ```ts
 export interface FormOptions {
 	control: string; // 控件名称
+	columns?: number; // 控件栅格column
 	label: string; // 中文字
 	key: string; // 后端字段
 	props?: Props; // element ui 控件或自定义组件的props
