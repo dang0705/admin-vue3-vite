@@ -28,18 +28,18 @@
 				<div class="icon-selector-warp">
 					<div class="icon-selector-warp-title">{{ title }}</div>
 					<el-tabs v-model="state.fontIconTabActive" @tab-click="onIconClick">
-						<el-tab-pane lazy label="ali" name="ali">
+						<el-tab-pane lazy label="积木优工" name="jmyg">
 							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />
 						</el-tab-pane>
-						<el-tab-pane lazy label="积木优工" name="jmyg">
+						<el-tab-pane lazy label="ali" name="ali">
 							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />
 						</el-tab-pane>
 						<el-tab-pane lazy label="ele" name="ele">
 							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />
 						</el-tab-pane>
-						<el-tab-pane lazy label="awe" name="awe">
-							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />
-						</el-tab-pane>
+						<!--						<el-tab-pane lazy label="awe" name="awe">-->
+						<!--							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />-->
+						<!--						</el-tab-pane>-->
 						<el-tab-pane lazy label="local" name="local">
 							<IconList :list="fontIconSheetsFilterList" :empty="emptyDescription" :prefix="state.fontIconPrefix" @get-icon="onColClick" />
 						</el-tab-pane>
@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts" name="iconSelector">
-import { defineAsyncComponent, ref, reactive, onMounted, nextTick, computed, watch } from 'vue';
 import type { TabsPaneContext } from 'element-plus';
 import initIconfont from '/@/utils/getStyleSheets';
 import '/@/theme/iconSelector.scss';
