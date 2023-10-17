@@ -9,8 +9,18 @@ import { delObjs, getObj, addObj } from '/@/api/finance/invoiceRecord';
 
 const columns = [
 	{
-		prop: 'settleBillRecordId',
+		prop: 'id',
 		label: '申请编号',
+		'min-width': 150,
+	},
+	{
+		prop: 'settleBillRecordId',
+		label: '结算单编号',
+		'min-width': 150,
+	},
+	{
+		prop: 'createTime',
+		label: '申请时间',
 		'min-width': 150,
 	},
 	{
@@ -30,7 +40,7 @@ const columns = [
 	},
 	{
 		prop: 'spName',
-		label: '服务商名称',
+		label: '服务商',
 		'min-width': 150,
 	},
 	{
@@ -40,24 +50,13 @@ const columns = [
 	},
 	{
 		prop: 'reason',
-		label: '作废原因',
+		label: '原因',
 		'min-width': 150,
 	},
 
 	{
 		prop: 'invoicingCategories',
 		label: '开票类目',
-		'min-width': 150,
-	},
-
-	{
-		prop: 'invoiceNumber',
-		label: '发票编号',
-		'min-width': 150,
-	},
-	{
-		prop: 'invoiceFilePath',
-		label: '发票图片',
 		'min-width': 150,
 	},
 	{
