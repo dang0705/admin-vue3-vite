@@ -27,10 +27,10 @@ const emit = defineEmits(['update:modelValue']);
 const isArrayValue = computed(() => helpers.isArray(props.modelValue));
 const value = computed({
 	get() {
-		return isArrayValue.value ? props.modelValue : (props.modelValue as string).split(',');
+		return isArrayValue.value ? props.modelValue : (props.modelValue as string)?.split(',');
 	},
 	set(value: any) {
-		emit('update:modelValue', props.valueType === 'array' ? value : value.join(','));
+		emit('update:modelValue', props.valueType === 'array' ? value : value?.join(','));
 	},
 });
 </script>
