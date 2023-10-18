@@ -10,7 +10,6 @@ import ElementPlus, { ElSelect, ElInput, ElTimePicker } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
-import FormView from '/@/components/Form-view.vue';
 
 import {
 	ElementIcons,
@@ -28,7 +27,6 @@ import {
 } from '/@/components/index';
 import { parseTime, parseDate, dateTimeStr, dateStr, timeStr } from '/@/utils/formatTime';
 
-import Test from '/@/views/Test.vue';
 // 布局工具
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
@@ -66,7 +64,6 @@ app.component('RightToolbar', RightToolbar);
 app.component('UploadImg', UploadImg);
 app.component('Divider', Divider);
 
-app.component('FormView', FormView);
 customComponents.forEach(({ name, component }) => app.component(name, defineAsyncComponent(component)));
 
 // app.component(

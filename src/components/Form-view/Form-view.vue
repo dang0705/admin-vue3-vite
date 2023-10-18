@@ -2,11 +2,12 @@
 import request from '/@/utils/request';
 import helper from '/@/utils/helpers';
 import { useDict } from '/@/hooks/dict';
-import FormViewProps, { FormOptions } from '/@/components/Form-view-props';
+import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
+import Actions from '/@/components/Form-view/Actions.vue';
 
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
 const refresh = inject('refresh');
-
+const inDialog = inject('in-dialog', false);
 const prop = defineProps({
 	modelValue: {
 		type: Object,
@@ -25,11 +26,14 @@ const formData = computed({
 	},
 });
 const formOptions = reactive({} as any);
+
 interface OptionsParams {
 	keyFrom?: string | [];
 	keyTo?: string | [];
+
 	[k: string]: any;
 }
+
 const initForms = async (forms: [], formData: any) => {
 	for (let i = 0; i < forms.length; i++) {
 		const item = forms[i] as FormOptions;
@@ -116,6 +120,8 @@ const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, s
 // 暴露变量
 defineExpose({
 	reset,
+	submit,
+	cancel,
 });
 </script>
 
@@ -173,11 +179,7 @@ defineExpose({
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<el-form-item v-if="showBtn" :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
-					<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
-					<slot name="third-button" />
-					<el-button @click="cancel" v-if="showCancel">{{ cancelButtonText || $t('common.cancelButtonText') }} </el-button>
-				</el-form-item>
+				<Actions v-if="!inDialog" v-bind="$props" :submit="submit" :cancel="cancel" />
 			</div>
 		</el-form>
 	</div>
@@ -188,21 +190,6 @@ defineExpose({
 	&.el-form--inline {
 		:deep(.el-form-item) {
 			vertical-align: top;
-		}
-	}
-
-	.actions {
-		&.horizontal {
-			:deep(.el-form-item__content) {
-				margin-left: 10px !important;
-			}
-		}
-
-		&.center {
-			:deep(.el-form-item__content) {
-				margin-left: 0 !important;
-				justify-content: center;
-			}
 		}
 	}
 }

@@ -8,6 +8,7 @@ declare global {
   const $bus: typeof import('../../@/utils/mitt')['default']
   const $refreshList: typeof import('../../@/hooks/keep-alive-list-refresh')['default']
   const EffectScope: typeof import('vue')['EffectScope']
+  const __isDev: typeof import('../../@/configuration/env')['default']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']

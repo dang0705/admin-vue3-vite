@@ -2,7 +2,7 @@ import request from '/@/utils/request';
 
 export function fetchList(query?: Object) {
 	return request({
-		url: '/finance/invoiceRecord/page',
+		url: '/core/settleBillRecord/notInvoicedPage',
 		method: 'get',
 		params: query,
 	});
@@ -10,7 +10,7 @@ export function fetchList(query?: Object) {
 
 export function addObj(obj?: Object) {
 	return request({
-		url: '/finance/invoiceRecord',
+		url: '/core/settleBillRecord',
 		method: 'post',
 		data: obj,
 	});
@@ -18,14 +18,14 @@ export function addObj(obj?: Object) {
 
 export function getObj(id?: string) {
 	return request({
-		url: '/finance/invoiceRecord/' + id,
+		url: '/core/settleBillRecord/' + id,
 		method: 'get',
 	});
 }
 
 export function delObjs(ids?: Object) {
 	return request({
-		url: '/finance/invoiceRecord',
+		url: '/core/settleBillRecord',
 		method: 'delete',
 		data: ids,
 	});
@@ -33,23 +33,23 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
 	return request({
-		url: '/finance/invoiceRecord',
+		url: '/core/settleBillRecord',
 		method: 'put',
 		data: obj,
 	});
 }
 
-export function rejectInvoice(obj?: Object) {
+export function applyInvoice(obj?: Object) {
 	return request({
-		url: '/finance/invoiceRecord/rejectInvoice',
+		url: '/finance/invoiceRecord/applyInvoice',
 		method: 'post',
 		data: obj,
 	});
 }
 
-export function cancelInvoice(obj?: Object) {
+export function saveInvoice(obj?: Object) {
 	return request({
-		url: '/finance/invoiceRecord/cancelInvoice',
+		url: '/finance/invoiceRecord/saveInvoice',
 		method: 'post',
 		data: obj,
 	});

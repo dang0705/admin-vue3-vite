@@ -17,6 +17,30 @@ export interface FormOptions {
 	title?: string; // 表单区间的标题
 	hidden?: boolean; // 表单隐藏,但有表单数据
 }
+export const actionsParams = {
+	showBtn: {
+		type: Boolean,
+		default: true,
+	},
+	buttonPosition: {
+		type: String,
+		default: 'right',
+	},
+	submitButtonText: {
+		type: String,
+		default: '确定',
+	},
+	cancelButtonText: {
+		type: String,
+		default: '',
+	},
+	showCancel: {
+		type: Boolean,
+		default: true,
+	},
+	submit: { type: Function, default: null },
+	cancel: { type: Function, default: null },
+};
 export default {
 	forms: {
 		type: Array as () => FormOptions[],
@@ -38,26 +62,6 @@ export default {
 		type: Boolean,
 		default: false,
 	},
-	onSubmit: {
-		type: Function,
-		default: null,
-	},
-	onCancel: {
-		type: Function,
-		default: null,
-	},
-	showCancel: {
-		type: Boolean,
-		default: true,
-	},
-	submitButtonText: {
-		type: String,
-		default: '确定',
-	},
-	cancelButtonText: {
-		type: String,
-		default: '',
-	},
 	columns: {
 		type: Number,
 		default: 0,
@@ -65,10 +69,6 @@ export default {
 	vertical: {
 		type: Boolean,
 		default: false,
-	},
-	buttonPosition: {
-		type: String,
-		default: 'left',
 	},
 	formRules: {
 		type: Object,
@@ -78,8 +78,13 @@ export default {
 		type: Boolean,
 		default: false,
 	},
-	showBtn: {
-		type: Boolean,
-		default: true,
+	onSubmit: {
+		type: Function,
+		default: null,
 	},
+	onCancel: {
+		type: Function,
+		default: null,
+	},
+	...actionsParams,
 };

@@ -3,7 +3,7 @@
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
-		<FormView
+		<Form-view
 			v-if="state.dialog.isShowDialog"
 			v-model="formData"
 			v-model:show="state.dialog.isShowDialog"
@@ -47,7 +47,7 @@
 			<template #third-button>
 				<el-button @click="selected = [...selectedCache]">重置</el-button>
 			</template>
-		</FormView>
+		</Form-view>
 	</el-dialog>
 </template>
 
@@ -55,7 +55,6 @@
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
-import FormView from '/@/components/Form-view.vue';
 
 const props = defineProps({
 	title: {
