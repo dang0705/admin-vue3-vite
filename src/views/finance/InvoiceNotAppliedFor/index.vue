@@ -4,14 +4,14 @@
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
 		<template #actions="{ row: { id } }">
-			<el-button icon="folder-add" text type="primary" @click="applyfor(id)"> 申请开票 </el-button>
-			<el-button icon="folder-add" text type="primary"> 开票 </el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')"> 申请开票 </el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'open')"> 开票 </el-button>
 		</template>
 		<Dialog
 			vertical
 			button-position="center"
 			v-model="applyShow"
-			title="申请开票"
+			:title="financeType === 'applyfor' ? '申请开票' : '开具发票'"
 			submitButtonText="提交"
 			width="80%"
 			:label-width="160"
@@ -21,7 +21,7 @@
 			:onSubmit="onSubmit"
 		>
 			<template #address>
-				<el-form-item label="邮寄地址:" prop="address">
+				<el-form-item label="邮寄地址:" prop="address" v-if="financeType === 'applyfor'">
 					<el-radio-group v-model="dialogFormData.radioAddress" class="ml-4" @change="radioChange">
 						<el-radio :label="1" size="large">默认邮寄地址</el-radio>
 						<el-radio :label="0" size="large">手动填写</el-radio>
@@ -36,17 +36,17 @@
 				</el-form-item>
 				<el-form-item
 					label="收件人:"
-					prop="recipient"
+					prop="postUsername"
 					:rules="[{ required: dialogFormData.radioAddress === 0, message: '收件人不能为空', trigger: 'blur' }]"
 				>
-					<el-input v-model="dialogFormData.recipient" :disabled="dialogFormData.radioAddress === 1" />
+					<el-input v-model="dialogFormData.postUsername" :disabled="dialogFormData.radioAddress === 1" />
 				</el-form-item>
 				<el-form-item
 					label="收件人手机号:"
 					prop="postPhone"
 					:rules="[{ required: dialogFormData.radioAddress === 0, message: '收件人手机号不能为空', trigger: 'blur' }]"
 				>
-					<el-input v-model="dialogFormData.recipientMobile" :disabled="dialogFormData.radioAddress === 1" />
+					<el-input v-model="dialogFormData.postPhone" :disabled="dialogFormData.radioAddress === 1" />
 				</el-form-item>
 			</template>
 		</Dialog>
@@ -54,8 +54,8 @@
 </template>
 
 <script setup lang="ts" name="未申请发票">
-import { getObj, applyInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
-const emit = defineEmits(['refresh']);
+import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
+const financeType = ref(); // 进入方式 applyfor申请 open开票
 
 const columns = [
 	{
@@ -79,7 +79,7 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'settleBillType',
+		prop: 'settleBillTypeDesc',
 		label: '结算单类型',
 		'min-width': 150,
 	},
@@ -121,7 +121,7 @@ const conditionForms = [
 	{
 		label: '充值时间',
 		control: 'DateRange',
-		key: 'payTime',
+		key: 'payTimeFromTo',
 		props: {
 			valueType: 'string',
 		},
@@ -144,7 +144,7 @@ const conditionForms = [
 	},
 ];
 
-const forms = ref([
+const forms = computed(() => [
 	{
 		control: 'el-input',
 		key: 'merchantName',
@@ -156,7 +156,7 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'socialCreditCode',
+		key: 'unifiedSocialCreditIdentifier',
 		label: '统一社会信用代码',
 
 		props: {
@@ -165,7 +165,7 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'email',
+		key: 'enterpriseMailbox',
 		label: '企业邮箱',
 		props: {
 			disabled: true,
@@ -173,7 +173,7 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'address',
+		key: 'enterpriseAddress',
 		label: '企业地址',
 		props: {
 			disabled: true,
@@ -181,7 +181,7 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'phoneNumber',
+		key: 'enterprisePhone',
 		label: '企业电话',
 		props: {
 			disabled: true,
@@ -189,7 +189,7 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'taxBankName',
+		key: 'bankName',
 		label: '开户行',
 		props: {
 			disabled: true,
@@ -197,24 +197,8 @@ const forms = ref([
 	},
 	{
 		control: 'el-input',
-		key: 'taxBankNumber',
+		key: 'bankNo',
 		label: '银行账号',
-		props: {
-			disabled: true,
-		},
-	},
-	{
-		control: 'el-input',
-		key: 'id',
-		label: '结算单编号',
-		props: {
-			disabled: true,
-		},
-	},
-	{
-		control: 'el-input',
-		key: 'serviceAmount',
-		label: '结算金额',
 		props: {
 			disabled: true,
 		},
@@ -233,59 +217,123 @@ const forms = ref([
 		options: 'invoice_category',
 		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
 	},
+	...(financeType.value === 'applyfor'
+		? [
+				{
+					control: 'el-input',
+					key: 'settleBillRecordId',
+					label: '结算单编号',
+					props: {
+						disabled: true,
+					},
+				},
+				{
+					control: 'el-input',
+					key: 'serviceAmount',
+					label: '结算金额',
+					props: {
+						disabled: true,
+					},
+				},
+		  ]
+		: [
+				{
+					control: 'el-input',
+					key: 'invoiceNumber',
+					label: '发票编号',
+					rules: [{ required: true, message: '发票编号不能为空', trigger: 'blur' }],
+				},
+				{
+					control: 'el-input',
+					key: 'serviceAmount',
+					label: '开票金额',
+					props: {
+						disabled: true,
+					},
+				},
+				{
+					control: 'UploadFile',
+					key: 'invoiceFiles',
+					label: '发票图片',
+					column: 24,
+					props: {
+						type: '60',
+					},
+					rules: [{ type: 'array', required: true, message: '发票图片不能为空', trigger: 'change' }],
+				},
+		  ]),
 	{
 		slot: true,
 		key: 'address',
+		column: 24,
 	},
+	...(financeType.value === 'open'
+		? [
+				{
+					control: 'el-select',
+					key: 'postType',
+					label: '快递公司',
+					options: 'express_company',
+					rules: [{ required: true, message: '快递公司不能为空', trigger: 'change' }],
+				},
+				{
+					control: 'el-input',
+					key: 'postOrderNumber',
+					label: '快递单号',
+					rules: [{ required: true, message: '快递单号不能为空', trigger: 'blur' }],
+				},
+		  ]
+		: []),
 ]);
 
 const radioChange = () => {
 	if (dialogFormData.value.radioAddress === 1) {
 		dialogFormData.value.postAddress = addressInfo.value.postAddress;
-		dialogFormData.value.recipient = addressInfo.value.recipient;
-		dialogFormData.value.recipientMobile = addressInfo.value.recipientMobile;
+		dialogFormData.value.postUsername = addressInfo.value.postUsername;
+		dialogFormData.value.postPhone = addressInfo.value.postPhone;
 	} else {
 		dialogFormData.value.postAddress = '';
-		dialogFormData.value.recipient = '';
-		dialogFormData.value.recipientMobile = '';
+		dialogFormData.value.postUsername = '';
+		dialogFormData.value.postPhone = '';
 	}
 };
 
 let dialogFormData = ref({
+	id: '',
 	radioAddress: 1,
+	settleBillId: '',
 	settleBillRecordId: '',
 	postAddress: '',
-	recipient: '',
-	recipientMobile: '',
 	postUsername: '',
 	postPhone: '',
+	invoiceTitle: '',
+	merchantName: '',
 });
 
 let addressInfo = ref({
 	postAddress: '',
-	recipient: '',
-	recipientMobile: '',
+	postUsername: '',
+	postPhone: '',
 });
 const applyShow = ref(false);
 
-const applyfor = async (id: string) => {
+const applyfor = async (id: string, type: string) => {
+	financeType.value = type;
 	applyShow.value = true;
 	dialogFormData.value = (await getObj(id)).data;
 	dialogFormData.value.radioAddress = 1;
-	dialogFormData.value.settleBillRecordId = id;
+	dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 	addressInfo.value.postAddress = dialogFormData.value.postAddress;
-	addressInfo.value.recipient = dialogFormData.value.recipient;
-	addressInfo.value.recipientMobile = dialogFormData.value.recipientMobile;
+	addressInfo.value.postUsername = dialogFormData.value.postUsername;
+	addressInfo.value.postPhone = dialogFormData.value.postPhone;
 };
 
 // 提交
-const onSubmit = async () => {
+const onSubmit = async (refresh: any) => {
 	try {
-		dialogFormData.value.postUsername = addressInfo.value.recipient;
-		dialogFormData.value.postPhone = addressInfo.value.recipientMobile;
-		await applyInvoice({ ...dialogFormData.value });
+		financeType.value === 'applyfor' ? await applyInvoice({ ...dialogFormData.value }) : await saveInvoice({ ...dialogFormData.value });
 		applyShow.value = false;
-		emit('refresh');
+		refresh();
 	} catch (err: any) {
 	} finally {
 	}

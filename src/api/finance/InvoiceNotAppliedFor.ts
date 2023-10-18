@@ -46,3 +46,11 @@ export function applyInvoice(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function saveInvoice(obj?: Object) {
+	return request({
+		url: '/finance/invoiceRecord/saveInvoice',
+		method: 'post',
+		data: obj,
+	});
+}
