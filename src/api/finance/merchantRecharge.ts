@@ -8,7 +8,7 @@ export function fetchList(query?: Object) {
 	});
 }
 
-export function addObj(obj?: Object) {
+export function addMerchantRecharge(obj?: Object) {
 	return request({
 		url: '/finance/merchantRecharge',
 		method: 'post',

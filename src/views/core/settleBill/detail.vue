@@ -68,7 +68,7 @@
 				>
 					<template #actions="{ row }">
 						<el-button @click="detailDialogRef.openDialog(form.id, 4, 1)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
+						<el-button @click="handleAccountCapitalDetail" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
@@ -111,7 +111,7 @@
 				>
 					<template #actions="{ row }">
 						<el-button @click="detailDialogRef.openDialog(form.id, 4, 2)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleBtn" icon="view" text type="primary"> 查看资金账户 </el-button>
+						<el-button @click="handleAccountCapitalDetail" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
@@ -174,6 +174,7 @@
 <script setup lang="ts" name="账单详情">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
+
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 const route: any = useRoute();
@@ -475,7 +476,17 @@ const view = (row: any) => {
 		},
 	});
 };
-
+const handleAccountCapitalDetail = () => {
+	router.push({
+		path: '/finance/merchantAccountCapital/detail',
+		query: {
+			id: form.taskBillRecord[0]?.id, // 伪代码
+		},
+		state: {
+			refresh: 1,
+		},
+	});
+};
 // 初始化表单数据
 const getmerchantInfoData = () => {
 	// 获取数据
