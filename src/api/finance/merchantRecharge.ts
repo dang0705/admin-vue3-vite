@@ -40,7 +40,7 @@ export function putObj(obj?: Object) {
 }
 export function updateMerchantRechargeStatus(id?: string) {
 	return request({
-		url: '/finance/merchantRecharge/updateMerchantRechargeStatus' + id,
+		url: '/finance/merchantRecharge/updateMerchantRechargeStatus/' + id,
 		method: 'put',
 	});
 }

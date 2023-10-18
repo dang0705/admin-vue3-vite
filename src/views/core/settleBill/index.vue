@@ -3,10 +3,13 @@
 		<TableView ref="TableViewRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 			<template #actions="{ row }">
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('view', row)"> 查看 </el-button>
-				<el-button v-if="row.status == 20" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('exam', row)">
+				<el-button v-if="row.status == 10" icon="delete" text type="primary" v-auth="'core_settleBill_del'" @click="handleAction('del', row)">
+					删除
+				</el-button>
+				<el-button v-if="row.status == 20" icon="view" text type="primary" v-auth="'core_settleBill_audit'" @click="handleAction('exam', row)">
 					审核账单
 				</el-button>
-				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('toSubmit', row)">
+				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_submit'" @click="handleAction('toSubmit', row)">
 					提交账单
 				</el-button>
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 下载电子协议 </el-button>
@@ -85,7 +88,7 @@
 import { fetchList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
-import { submitObj } from '/@/api/core/settleBill';
+import { submitObj, delObjs } from '/@/api/core/settleBill';
 import { payChannel } from '/@/configuration/dynamic-control';
 
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
@@ -332,6 +335,13 @@ const handleAction = async (type: string, row: any) => {
 			});
 			refreshDataList();
 			useMessage().success('提交账单成功');
+			break;
+		case 'del':
+			// setStopObj()
+			await useMessageBox().confirm('此操作将永久删除');
+			await delObjs({ id: row.id });
+			TableViewRef?.value.resetQuery();
+			useMessage().success('删除成功');
 			break;
 	}
 };

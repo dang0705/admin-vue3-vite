@@ -9,34 +9,37 @@
 			labelWidth="140px"
 			downBlobFileUrl="/finance/merchantRecharge/export"
 		>
+			<template #status="{ row: { status } }">
+				<span v-text="batchMap?.merchant_recharge_status[status]" />
+			</template>
 			<template #tableTop="{ otherInfo }">
 				<div class="total_wrapper">
 					<div class="total_list">
 						<div class="total_item">
 							<div class="info">
+								<div class="info_label">账户余额</div>
 								<div class="price_box">
 									<div class="price">{{ form.totalAmount || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
-								<div class="info_label">账户余额</div>
 							</div>
 						</div>
 						<div class="total_item">
 							<div class="info">
+								<div class="info_label">冻结金额</div>
 								<div class="price_box">
 									<div class="price">{{ form.freeze || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
-								<div class="info_label">冻结金额</div>
 							</div>
 						</div>
 						<div class="total_item">
 							<div class="info">
+								<div class="info_label">可用余额</div>
 								<div class="price_box">
 									<div class="price">{{ form.balance || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
-								<div class="info_label">可用余额</div>
 							</div>
 						</div>
 					</div>
@@ -61,7 +64,7 @@
 				</div>
 			</template>
 			<template #actions="{ row }">
-				<el-button @click="handleRevoke(row.id)" icon="view" text type="primary"> 撤销 </el-button>
+				<el-button v-if="row.status != 30" @click="handleRevoke(row.id)" icon="view" text type="primary"> 撤销 </el-button>
 				<el-button @click="handleContractFile(row)" icon="view" text type="primary"> 查看转账凭证 </el-button>
 			</template>
 		</TableView>
@@ -74,6 +77,7 @@ import { addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import Array2Object from '/@/utils/array-2-object';
 const route: any = useRoute();
 const detailDialogRef = ref();
 const importBillRef = ref();
@@ -100,7 +104,7 @@ const indexThead = [
 		minWidth: 150,
 	},
 	{
-		prop: 'id',
+		prop: 'serialNumber',
 		label: '充值流水号',
 		minWidth: 150,
 	},
@@ -148,6 +152,7 @@ const indexThead = [
 		prop: 'status',
 		label: '状态',
 		minWidth: 150,
+		slot: true,
 	},
 	{
 		label: '操作',
@@ -171,60 +176,7 @@ const conditionForms = [
 const staticQuery = {
 	accountId: route.query.id,
 };
-const newIndexThead = [
-	{
-		prop: 'settleBillName',
-		label: '账单名称',
-		minWidth: 100,
-	},
-	{
-		prop: 'settleBillId',
-		label: '账单编号',
-		minWidth: 100,
-	},
-	{
-		prop: 'id',
-		label: '结算单编号',
-		minWidth: 100,
-	},
-	{
-		prop: 'paymentBankName',
-		label: '支付通道',
-		minWidth: 100,
-	},
-	{
-		prop: 'bankAccountNumberRecipient',
-		label: '收款方银行账号',
-		minWidth: 100,
-	},
-	{
-		prop: 'accountNameRecipient',
-		label: '收款方户名',
-		minWidth: 100,
-	},
-	{
-		prop: 'serviceAmount',
-		label: '结算金额(元)',
-		minWidth: 100,
-	},
-	{
-		prop: 'payTime',
-		label: '付款时间',
-		minWidth: 100,
-	},
-	{
-		prop: 'statusDesc',
-		label: '结算状态',
-		minWidth: 100,
-	},
-	{
-		label: '操作',
-		prop: 'actions',
-		fixed: 'right',
-		slot: true,
-		minWidth: 300,
-	},
-];
+
 const view = (row: any) => {
 	console.log(1111, row);
 	router.push({
@@ -276,6 +228,7 @@ const refreshDataList = () => {
 	TableViewRef.value.resetQuery();
 };
 
+const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);
 $refreshList(getmerchantInfoData);
 </script>
 
