@@ -49,4 +49,8 @@ export const customComponents = [
 		name: 'TableView',
 		component: () => import('/@/components/FormTable/Table-view.vue'),
 	},
+	{
+		name: 'FormView',
+		component: () => import('/@/components/Form-view/Form-view.vue'),
+	},
 ];

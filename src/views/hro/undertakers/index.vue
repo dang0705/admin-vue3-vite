@@ -185,7 +185,6 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
-import FormView from '/@/components/Form-view.vue';
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
