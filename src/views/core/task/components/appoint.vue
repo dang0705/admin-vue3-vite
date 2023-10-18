@@ -57,7 +57,6 @@
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
-import FormView from '/@/components/Form-view.vue';
 const emit = defineEmits(['refresh']);
 
 const props = defineProps({
