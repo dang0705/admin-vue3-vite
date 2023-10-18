@@ -16,6 +16,9 @@ export interface FormOptions {
 	slot?: boolean | string; //插槽,
 	title?: string; // 表单区间的标题
 	hidden?: boolean; // 表单隐藏,但有表单数据
+	onChange?: Function;
+	showBy?: string;
+	show?: Function;
 }
 export const actionsParams = {
 	showBtn: {
