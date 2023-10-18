@@ -21,7 +21,7 @@
 				</Form-view>
 
 				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
-					<div class="flex items-center">
+					<div class="flex items-center flex-grow">
 						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary"> 批量导出 </el-button>
 						<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo, query: state.queryForm }" />
 					</div>
@@ -97,7 +97,7 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
-	queryForm: {
+	staticQuery: {
 		type: Object,
 		default: () => {},
 	},
@@ -149,7 +149,7 @@ const params = computed(() => props.params);
 
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
-	...(props.queryForm ? { queryForm: props.queryForm } : {}),
+	...(props.staticQuery ? { queryForm: props.staticQuery } : {}),
 	createdIsNeed: props.createdIsNeed,
 	...(props.isTab
 		? {
@@ -179,7 +179,9 @@ const onSelectionChange = (item: []) => {
 
 //清空搜索条件;
 const resetQuery = () => {
-	state.queryForm = {};
+	state.queryForm = {
+		...props.staticQuery,
+	};
 	selectObjs.value = [];
 	getDataList();
 };

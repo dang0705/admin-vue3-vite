@@ -21,6 +21,8 @@
 				>
 					导入结算
 				</el-button>
+				<!-- <el-button @click="handleBtn" icon="view" text type="primary"> 批量导出账单 </el-button> -->
+				<!-- <el-button @click="handleBtn" icon="view" text type="primary"> 批量导出明细 </el-button> -->
 				<div class="info_list">
 					<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
 				</div>

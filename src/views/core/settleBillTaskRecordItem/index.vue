@@ -1,7 +1,7 @@
 <template>
 	<TableView :columns="columns" isTab module="core/settleBillTaskRecordItem.ts" :condition-forms="conditionForms" labelWidth="140px">
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('exam', row)"> 查看关联协议 </el-button>
+			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleContractFile(row)"> 查看关联协议 </el-button>
 			<!-- v-if="row.paymentStatus == 30" -->
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看支付凭证 </el-button>
 		</template>
@@ -13,6 +13,7 @@
 
 <script setup lang="ts" name="任务结算明细">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
+const { proxy } = getCurrentInstance();
 import { useMessage, useMessageBox } from '/@/hooks/message';
 
 const columns = [
@@ -203,5 +204,8 @@ const conditionForms = [
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+const handleContractFile = (row) => {
+	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
 </script>
