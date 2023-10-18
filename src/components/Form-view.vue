@@ -30,37 +30,44 @@ interface OptionsParams {
 	keyTo?: string | [];
 	[k: string]: any;
 }
-const initForms = async (forms: [], formData: object) => {
+const initForms = async (forms: [], formData: any) => {
 	for (let i = 0; i < forms.length; i++) {
 		const item = forms[i] as FormOptions;
 		item.value !== undefined && (formData[item.key] = item.value);
 		if (!item.options) continue;
-		if (helper.isString(item.options)) {
-			const { [item.options as string]: dic } = useDict(item.options as string);
+		const { options } = item;
+		if (helper.isString(options)) {
+			const { [options as string]: dic } = useDict(options as string);
 			formOptions[item.key] = computed(() => dic.value);
 		} else {
-			formOptions[item.key] = helper.isArray(item.options) ? item.options || [] : [];
-			if (!helper.isArray(item.options)) {
-				const { url, params: { keyFrom, keyTo } = {} } = item.options as any;
-				if (helper.isArray(keyFrom)) {
-					const params = {};
-					keyFrom.forEach((key: string) => {
+			if (helper.isArray(options)) {
+				formOptions[item.key] = options;
+			} else if (helper.isObject(options)) {
+				const { url, params } = options as { url: string; params: OptionsParams };
+				const { keyFrom, keyTo } = params;
+				if (keyFrom) {
+					if (helper.isArray(keyFrom)) {
+						const params = {};
+						(keyFrom as []).forEach((key: string) => {
+							watch(
+								() => formData[key as string],
+								async (value) => {
+									params[key] = value;
+									formOptions[item.key] = (await request.get(url, { params })).data;
+								}
+							);
+						});
+					} else {
 						watch(
-							() => formData[key as string],
+							() => formData[keyFrom as string],
 							async (value) => {
-								params[key] = value;
-								formOptions[item.key] = (await request.get(url, { params })).data;
+								formData[item.key] = '';
+								formOptions[item.key] = (await request.get(url, { params: { [keyTo as string]: value } })).data;
 							}
 						);
-					});
+					}
 				} else {
-					watch(
-						() => formData[keyFrom as string],
-						async (value) => {
-							formData[item.key] = '';
-							formOptions[item.key] = (await request.get(url, { params: { [keyTo]: value } })).data;
-						}
-					);
+					formOptions[item.key] = (await request.get(url, { params })).data;
 				}
 			}
 		}
@@ -97,7 +104,8 @@ const submit = async () => {
 	}
 	if (!valid) return;
 	emit('update:valid', valid);
-	prop.onSubmit ? prop.onSubmit(refresh) : emit('update:show', false);
+	prop.onSubmit && (await prop.onSubmit(refresh));
+	emit('update:show', false);
 };
 const cancel = () => {
 	resetFields();

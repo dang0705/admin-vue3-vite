@@ -28,6 +28,7 @@ export default [
 			{
 				'/@/utils/mitt': [['default', '$bus']],
 				'/@/hooks/keep-alive-list-refresh': [['default', '$refreshList']],
+				'/@/configuration/env': [['default', '__isDev']],
 			},
 		], // 自动导入的依赖库数组
 		dts: './auto-imports.d.ts', // 自动导入类型定义文件路径

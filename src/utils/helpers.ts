@@ -4,7 +4,6 @@ const getType = (data: unknown, type: string) => Object.prototype.toString.call(
  * __isDev__ is from vite.config.ts's property define
  * @private
  */
-export const isDev = __isDev__;
 /**
  * 获取数据类型
  * @type {{isBoolean: (function(*): *), isObject: (function(*): *), isFunction: (function(*): *), isNumber: (function(*): *), isEmpty: (function(*): *), isString: (function(*): *), isArray: (function(*): *)}}

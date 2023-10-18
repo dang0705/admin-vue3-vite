@@ -5,7 +5,7 @@
 			:columns="indexThead"
 			module="core/settleBill.ts"
 			getListFnName="taskRecordItem"
-			:queryForm="queryForm"
+			:staticQuery="staticQuery"
 			isTab
 			:condition-forms="conditionForms"
 			labelWidth="140px"
@@ -75,8 +75,8 @@
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
 							{{
-								form.serviceBillRecord[0].serviceAmount > balanceInfo.platBalance
-									? `需要充值: ${form.serviceBillRecord[0].serviceAmount - balanceInfo.platBalance}元`
+								form.serviceBillRecord[0]?.serviceAmount > balanceInfo.platBalance
+									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
 									: '无需充值'
 							}}
 						</div>
@@ -89,7 +89,7 @@
 							充值
 						</el-button>
 						<el-button
-							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0].status == 40)"
+							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40)"
 							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
 							style="margin-right: 24px"
 							type="primary"
@@ -119,8 +119,8 @@
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 							<div class="info_item">
 								{{
-									form.taskBillRecord[0].serviceAmount > balanceInfo.spBalance
-										? `需要充值: ${form.taskBillRecord[0].serviceAmount - balanceInfo.spBalance}元`
+									form.taskBillRecord[0]?.serviceAmount > balanceInfo.spBalance
+										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 										: '无需充值'
 								}}
 							</div>
@@ -134,7 +134,7 @@
 							充值
 						</el-button>
 						<el-button
-							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0].status == 40)"
+							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40)"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"
@@ -146,12 +146,12 @@
 				</TableView>
 			</template>
 			<template #actions="{ row }">
-				<el-button @click="handleBtn" icon="view" text type="primary"> 查看关联协议 </el-button>
+				<el-button @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
 				<el-button @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-				<el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button>
+				<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
 			</template>
 		</TableView>
 		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" />
@@ -180,6 +180,7 @@ const route: any = useRoute();
 const detailDialogRef = ref();
 const importBillRef = ref();
 const TableViewRef = ref();
+const { proxy } = getCurrentInstance();
 
 // 定义变量内容
 const router = useRouter();
@@ -395,6 +396,11 @@ const indexThead = [
 		label: '支付失败原因',
 		minWidth: 150,
 	},
+	// {
+	// 	prop: 'failureReason',
+	// 	label: '收款银行卡更新备注',
+	// 	minWidth: 150,
+	// },
 	{
 		label: '操作',
 		prop: 'actions',
@@ -403,7 +409,7 @@ const indexThead = [
 		minWidth: 300,
 	},
 ];
-const queryForm = {
+const staticQuery = {
 	settleBillId: route.query.id,
 };
 const newIndexThead = [
@@ -504,6 +510,9 @@ const handlePayBillRecord = (list = [], dialogType: number) => {
 };
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+const handleContractFile = (row) => {
+	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
 
 const refreshDataList = () => {

@@ -1,7 +1,7 @@
 <template>
 	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('exam', row)"> 查看关联协议 </el-button>
+			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('exam', row)"> 查看 </el-button>
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看收款账号 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
@@ -15,42 +15,42 @@ import { delObjs, getObj, addObj } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const columns = [
 	{
-		prop: 'xxx',
+		prop: 'id',
 		label: '资金账户',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'spName',
 		label: '服务商',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'bankAccountNumber',
 		label: '银行账号',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'paymentBankName',
 		label: '支付通道',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'merchantName',
 		label: '商户',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'balance',
 		label: '实时余额(元)',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'statusDesc',
 		label: '是否可用',
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'updateTime',
 		label: '更新时间',
 		'min-width': 150,
 	},
@@ -59,6 +59,7 @@ const columns = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
+		'min-width': 250,
 	},
 ];
 const conditionForms = [
