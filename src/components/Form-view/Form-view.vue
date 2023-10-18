@@ -39,6 +39,7 @@ const initForms = async (forms: [], formData: any) => {
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
 		const item = formConfigs.value[i] as FormOptions;
+		const itemRulesCache = [...(item.rules || [])];
 
 		item.hidden = false;
 		item.value !== undefined && (formData[item.key] = item.value);
@@ -52,7 +53,9 @@ const initForms = async (forms: [], formData: any) => {
 			watch(
 				() => formData[item.showBy as string],
 				() => {
-					item.hidden = !!item.show(formData);
+					const isShow = !!item.show(formData);
+					item.hidden = !isShow;
+					item.rules && (item.rules = isShow ? itemRulesCache : []);
 					formData[item.key] = null;
 				},
 				{ immediate: true }
@@ -120,6 +123,7 @@ const submit = async () => {
 	} catch (e) {
 		valid = false;
 	}
+	console.log(valid);
 	if (!valid) return;
 	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
@@ -169,7 +173,7 @@ defineExpose({
 											disabled: form.props?.disabled ?? prop.disabled,
 										}"
 									>
-										<template v-if="form.control === 'el-select'">
+										<template v-if="!form.hidden && form.control === 'el-select'">
 											<el-option
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value]"
@@ -177,7 +181,7 @@ defineExpose({
 												:label="item[form.props?.label || 'label']"
 											/>
 										</template>
-										<template v-if="form.control === 'el-radio-group'">
+										<template v-if="!form.hidden && form.control === 'el-radio-group'">
 											<el-radio
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value || 'value']"
