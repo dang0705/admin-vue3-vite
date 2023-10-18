@@ -168,8 +168,15 @@ const selectObjs = ref([]) as any;
 
 // 导出excel
 const exportExcel = () => {
-	downBlobFile(props.downBlobFileUrl, Object.assign(state.queryForm, { ids: selectObjs }), props.downBlobFileName);
+	downBlobFile(
+		props.downBlobFileUrl,
+		Object.assign(state.queryForm, {
+			ids: props.getFullSelection ? selectObjs.value.map(({ [props.selectMainKey]: id }: Record<string, string>) => id) : selectObjs,
+		}),
+		props.downBlobFileName
+	);
 };
+
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合

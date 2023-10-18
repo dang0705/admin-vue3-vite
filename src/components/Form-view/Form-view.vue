@@ -6,7 +6,7 @@ import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-pr
 import Actions from '/@/components/Form-view/Actions.vue';
 
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
-const refresh = inject('refresh');
+const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
 	modelValue: {
@@ -34,10 +34,29 @@ interface OptionsParams {
 	[k: string]: any;
 }
 
+const formConfigs = ref<any[]>([]);
 const initForms = async (forms: [], formData: any) => {
 	for (let i = 0; i < forms.length; i++) {
-		const item = forms[i] as FormOptions;
+		formConfigs.value.push(forms[i]);
+		const item = formConfigs.value[i] as FormOptions;
+
+		item.hidden = false;
 		item.value !== undefined && (formData[item.key] = item.value);
+		item.onChange &&
+			watch(
+				() => formData[item.key],
+				(value) => item.onChange(value, formData)
+			);
+		item.show &&
+			item.showBy &&
+			watch(
+				() => formData[item.showBy as string],
+				() => {
+					item.hidden = !!item.show(formData);
+					formData[item.key] = null;
+				},
+				{ immediate: true }
+			);
 		if (!item.options) continue;
 		const { options } = item;
 		if (helper.isString(options)) {
@@ -77,11 +96,6 @@ const initForms = async (forms: [], formData: any) => {
 		}
 	}
 };
-const dynamicForms = computed(() => {
-	const forms = <any>[];
-	prop.disabled && prop.forms?.forEach((item) => forms.push({ ...item, props: { ...item.props, disabled: true } }));
-	return prop.disabled ? forms : prop.forms;
-});
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
 const reset = () => form?.value?.resetFields();
 
@@ -132,7 +146,7 @@ defineExpose({
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<template v-for="form in dynamicForms" :key="form.key">
+						<template v-for="form in formConfigs" :key="form.key">
 							<el-col :span="24" v-if="form.title">
 								<slot :name="`title-before-${form.key}`">
 									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
@@ -150,8 +164,9 @@ defineExpose({
 										v-model="formData[form.key]"
 										v-bind="{
 											...form.props,
-											...(form.props?.clearable === undefined ? { clearable: true } : {}),
 											...(form.props?.disabled ? { placeholder: '--' } : {}),
+											clearable: form.props?.clearable ?? true,
+											disabled: form.props?.disabled ?? prop.disabled,
 										}"
 									>
 										<template v-if="form.control === 'el-select'">
