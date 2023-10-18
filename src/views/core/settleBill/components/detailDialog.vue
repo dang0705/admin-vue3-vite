@@ -125,7 +125,7 @@ const addUnderTakerForms = [
 	{
 		control: 'el-input',
 		key: 'xxx2',
-		label: '付付款账号款户名',
+		label: '付款账号',
 		rules: [
 			{
 				required: true,

@@ -139,6 +139,8 @@ const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Reco
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
 const fetchList = ref('');
+console.log('props.getListFnName', props.getListFnName);
+
 watch(
 	() => props.module,
 	(value) => (fetchList.value = apis[`/src/api/${value}`][props.getListFnName]),

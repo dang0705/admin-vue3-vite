@@ -1,7 +1,7 @@
 <template>
 	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('exam', row)"> 查看 </el-button>
+			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleDetail(row)"> 查看 </el-button>
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看收款账号 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
@@ -13,6 +13,7 @@
 <script setup lang="ts" name="systemMerchantAccountCapital">
 import { delObjs, getObj, addObj } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+const router = useRouter();
 const columns = [
 	{
 		prop: 'id',
@@ -86,5 +87,16 @@ const conditionForms = [
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+const handleDetail = (row: any) => {
+	router.push({
+		path: '/finance/merchantAccountCapital/detail',
+		query: {
+			id: row.id,
+		},
+		state: {
+			refresh: 1,
+		},
+	});
 };
 </script>
