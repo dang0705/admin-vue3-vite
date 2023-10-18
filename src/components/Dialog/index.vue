@@ -1,4 +1,4 @@
-<script setup lang="ts" name="CustomDialog">
+<script setup lang="ts" name="DialogView">
 import FormViewProps from '/@/components/Form-view-props';
 const props = defineProps({
 	modelValue: {

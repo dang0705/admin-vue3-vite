@@ -19,18 +19,13 @@
 						<slot :name="slot" v-bind="{ form: conditionForms, formData: state.queryForm }" />
 					</template>
 				</Form-view>
-				<right-toolbar
-					v-if="conditionForms.length"
-					v-model:showSearch="showSearch"
-					class="ml10 mr20"
-					style="float: right"
-					@queryTable="getDataList"
-				/>
-				<div class="top-bar h-8 flex items-center">
-					<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
-					<el-button v-if="downBlobFileUrl" @click="exportExcel" style="margin-right: 24px" icon="Upload" type="primary" class="ml10">
-						批量导出
-					</el-button>
+
+				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
+					<div class="flex items-center">
+						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary"> 批量导出 </el-button>
+						<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo, query: state.queryForm }" />
+					</div>
+					<right-toolbar v-if="conditionForms.length" v-model:showSearch="showSearch" style="float: right" @queryTable="getDataList" />
 				</div>
 			</div>
 			<el-table
@@ -63,7 +58,7 @@
 <script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 const Mytab = defineAsyncComponent(() => import('./mytab.vue'));
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 const props = defineProps({
 	columns: {
 		type: Array,
@@ -130,6 +125,10 @@ const props = defineProps({
 		type: String,
 		default: '90px',
 	},
+	getFullSelection: {
+		type: Boolean,
+		default: false,
+	},
 });
 /**
  * 获取api目录下所有的文件，并获取文件内容
@@ -174,7 +173,7 @@ const exportExcel = () => {
  * @param item  {Array}  选中每行的集合
  */
 const onSelectionChange = (item: []) => {
-	selectObjs.value = item.map(({ [props.selectMainKey]: id }: Record<string, string>) => id);
+	selectObjs.value = props.getFullSelection ? item : item.map(({ [props.selectMainKey]: id }: Record<string, string>) => id);
 	emit('update:modelValue', selectObjs.value);
 };
 
@@ -189,6 +188,7 @@ provide('refresh', resetQuery);
 const toggleTab = (item: any) => {
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });
+	emit('get-tab-label', item.label);
 	getDataList();
 };
 
