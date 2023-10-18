@@ -46,14 +46,13 @@ const initForms = async (forms: [], formData: any) => {
 		item.onChange &&
 			watch(
 				() => formData[item.key],
-				(value) => item.onChange(value, formData)
+				(value) => item.onChange && item.onChange(value, formData)
 			);
 		item.show &&
-			item.showBy &&
 			watch(
-				() => formData[item.showBy as string],
+				() => formData[item.show?.by as string],
 				() => {
-					const isShow = !!item.show(formData);
+					const isShow = item.show && !!item.show.fn(formData);
 					item.hidden = !isShow;
 					item.rules && (item.rules = isShow ? itemRulesCache : []);
 					formData[item.key] = null;
@@ -61,6 +60,8 @@ const initForms = async (forms: [], formData: any) => {
 				{ immediate: true }
 			);
 		if (!item.options) continue;
+
+		// 处理options数据源
 		const { options } = item;
 		if (helper.isString(options)) {
 			const { [options as string]: dic } = useDict(options as string);

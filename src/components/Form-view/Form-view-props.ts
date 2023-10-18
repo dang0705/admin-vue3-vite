@@ -5,6 +5,10 @@ interface Props {
 	label?: string;
 	[k: string]: any;
 }
+interface Show {
+	by: string;
+	fn: Function;
+}
 export interface FormOptions {
 	control: string; // 控件名称
 	label: string; // 中文字
@@ -17,9 +21,8 @@ export interface FormOptions {
 	slot?: boolean | string; //插槽,
 	title?: string; // 表单区间的标题
 	hidden?: boolean; // 表单隐藏,但有表单数据
-	onChange?: Function;
-	showBy?: string;
-	show?: Function;
+	onChange?: Function; // 控件值改变回调
+	show?: Show; // 控制表单(控件)动态显隐
 }
 export const actionsParams = {
 	showBtn: {
