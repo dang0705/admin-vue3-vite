@@ -135,7 +135,7 @@ const conditionForms = [
 	{
 		label: '申请编号',
 		control: 'el-input',
-		key: 'id',
+		key: 'idNum',
 	},
 	{
 		label: '发票类型',
@@ -161,7 +161,7 @@ const conditionForms = [
 	{
 		label: '发票状态',
 		control: 'el-select',
-		key: 'status',
+		key: 'invoiceStatus',
 		options: 'invoice_status',
 	},
 ];

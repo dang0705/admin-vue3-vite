@@ -129,18 +129,18 @@ const conditionForms = [
 	{
 		label: '结算单类型',
 		control: 'el-select',
-		key: 'settleBillType',
+		key: 'billType',
 		options: 'settle_bill_type',
 	},
 	{
 		label: '账单编号',
 		control: 'el-input',
-		key: 'settleBillId',
+		key: 'billNum',
 	},
 	{
 		label: '账单名称',
 		control: 'el-input',
-		key: 'settleBillName',
+		key: 'billName',
 	},
 ];
 
