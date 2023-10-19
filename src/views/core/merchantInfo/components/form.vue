@@ -78,8 +78,8 @@
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
-						<el-form-item label="企业邮箱" prop="xxx">
-							<el-input :disabled="isDetail" v-model="form.xxx" />
+						<el-form-item label="企业邮箱" prop="enterpriseMailbox">
+							<el-input :disabled="isDetail" v-model="form.enterpriseMailbox" />
 						</el-form-item>
 					</el-col>
 
@@ -302,7 +302,7 @@ const form = reactive({
 	district: '',
 	address: '',
 	entryDate: '',
-	xxx: '',
+	enterpriseMailbox: '',
 	businessLicense: [],
 	logo: [],
 	businessScope: '',
@@ -348,7 +348,7 @@ const dataRules = ref({
 	district: [{ required: true, message: '所在区不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '注册地址不能为空', trigger: 'blur' }],
 	entryDate: [{ required: true, message: '入驻日期不能为空', trigger: 'blur' }],
-	xxx: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
+	enterpriseMailbox: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
 	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
 	logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
