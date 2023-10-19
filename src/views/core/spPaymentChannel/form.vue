@@ -51,6 +51,9 @@ const conditionForms = ref([
 		key: 'spId',
 		label: '服务商:',
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
+		props: {
+			platform: true,
+		},
 	},
 	{
 		control: 'el-input',
