@@ -9,6 +9,7 @@
 		get-full-selection
 		down-blob-file-url="/finance/undertakerAgentPaying/export"
 		down-blob-file-name="任务支付流水.xlsx"
+		export-auth="finance_undertakerAgentPaying_export"
 		@get-tab-label="currentTab = $event"
 	>
 		<template #top-bar="{ refresh, query }" v-if="['支付失败', '待支付'].includes(currentTab)">
