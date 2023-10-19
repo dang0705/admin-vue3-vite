@@ -19,23 +19,73 @@ const forms = [
 		rules: [
 			{
 				required: true,
-				// validator: (value: number) => value !== undefined,
+				validator: (value: number) => value !== undefined,
+				trigger: 'change',
 			},
 		],
 		value: 1,
-		onChange: (val, formData) => {
-			console.log(val, formData);
-		},
+	},
+	{
+		control: 'el-radio-group',
+		key: 'test',
+		label: '是否',
+		options: [
+			{
+				label: '是',
+				value: 1,
+			},
+			{
+				label: '否',
+				value: 0,
+			},
+		],
+		rules: [
+			{
+				required: true,
+				validator: (value: number) => value !== undefined,
+				trigger: 'change',
+			},
+		],
+		value: 1,
 	},
 	{
 		control: 'el-input',
+		label: '输入框',
 		key: 'text',
-		label: '文本框',
 		showBy: 'isInventoryUser',
+		rules: [
+			{
+				required: true,
+				trigger: 'blur',
+			},
+		],
 		show: ({ isInventoryUser }) => isInventoryUser,
 	},
+	{
+		control: 'el-select',
+		label: '下拉',
+		key: 'select',
+		options: [
+			{
+				label: '选项一',
+				value: 1,
+			},
+			{
+				label: '选项一',
+				value: 2,
+			},
+		],
+		showBy: 'test',
+		show: ({ test }) => test,
+		rules: [
+			{
+				required: true,
+				trigger: 'change',
+			},
+		],
+	},
 ];
-const formData = reactive({});
+const formData = ref({});
 </script>
 
 <template>

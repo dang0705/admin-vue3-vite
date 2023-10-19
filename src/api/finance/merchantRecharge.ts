@@ -8,7 +8,7 @@ export function fetchList(query?: Object) {
 	});
 }
 
-export function addObj(obj?: Object) {
+export function addMerchantRecharge(obj?: Object) {
 	return request({
 		url: '/finance/merchantRecharge',
 		method: 'post',
@@ -40,7 +40,7 @@ export function putObj(obj?: Object) {
 }
 export function updateMerchantRechargeStatus(id?: string) {
 	return request({
-		url: '/finance/merchantRecharge/updateMerchantRechargeStatus' + id,
+		url: '/finance/merchantRecharge/updateMerchantRechargeStatus/' + id,
 		method: 'put',
 	});
 }
