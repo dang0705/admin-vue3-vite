@@ -1,11 +1,5 @@
 <template>
 	<TableView :columns="columns" module="core/batchUploadRecord.ts" :condition-forms="conditionForms">
-		<template #batchType="{ row: { batchType } }">
-			<span v-text="batchMap?.batch_type[batchType]" />
-		</template>
-		<template #batchState="{ row: { batchState } }">
-			<span v-text="batchMap?.batch_status[batchState]" />
-		</template>
 		<template #actions="{ row: { id, batchType, batchState } }">
 			<el-button icon="view" text type="primary" v-auth="'core_batchUploadRecord_view'" @click="view({ id, type: batchType, state: batchState })">
 				查看
@@ -68,7 +62,7 @@ let dialogFormData = ref({});
 const hasFail = computed(() => currentState.value !== State['进行中'] && currentState.value !== State['全部成功']);
 const forms = dynamicForms({ dialogFormLabelWidth, currentType, currentTitle, failListHead });
 let failParams = {};
-const view = async ({ id, type, state }) => {
+const view = async ({ id, type, state }: any) => {
 	show.value = true;
 	currentId = id;
 	currentType.value = type;

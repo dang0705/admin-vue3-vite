@@ -1,3 +1,16 @@
+import Array2Object from '/@/utils/array-2-object';
+
+const batchMap = Array2Object({ dic: ['batch_status', 'batch_type'] });
+interface BatchUploadRecordPage {
+	batchNumber: string;
+	batchState: string;
+	batchType: string;
+	createBy: string;
+	createTime: string;
+	doneTime: string;
+	id: string;
+}
+
 export default [
 	{
 		prop: 'batchNumber',
@@ -5,10 +18,9 @@ export default [
 		minWidth: 200,
 	},
 	{
-		prop: 'batchType',
 		label: '批次类型',
 		minWidth: 200,
-		slot: true,
+		value: ({ batchType }: BatchUploadRecordPage) => batchMap.value.batch_type[batchType],
 	},
 	{
 		prop: 'createTime',
@@ -26,10 +38,9 @@ export default [
 		minWidth: 160,
 	},
 	{
-		prop: 'batchState',
 		label: '状态',
 		minWidth: 120,
-		slot: true,
+		value: ({ batchState }: BatchUploadRecordPage) => batchMap.value.batch_status[batchState],
 	},
 	{
 		label: '操作',
