@@ -4,7 +4,7 @@
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
 		<template #actions="{ row: { id, status } }">
-			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')">查看</el-button>
+			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')">作废</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')">开票</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')">审核</el-button>
@@ -84,7 +84,7 @@ const columns = [
 	},
 	{
 		prop: 'invoicingAmount',
-		label: '开票金额',
+		label: '开票金额(元)',
 		'min-width': 150,
 	},
 	{
