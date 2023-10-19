@@ -86,18 +86,18 @@ export default [
 	{
 		prop: 'taskAmount',
 		label: '任务金额(元)',
-		'min-width': 150,
+		'min-width': 120,
 		align: 'right',
 	},
 	{
 		prop: 'taxWithheld',
 		label: '代扣税款(元)',
-		'min-width': 150,
+		'min-width': 120,
 	},
 	{
 		prop: 'paidAmount',
 		label: '实发金额(元)',
-		'min-width': 150,
+		'min-width': 120,
 	},
 
 	{
