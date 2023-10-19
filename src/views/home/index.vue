@@ -6,7 +6,8 @@
 					<div class="section" style="height: 220px; padding-bottom: 10px">
 						<h1 class="text-[20px] flex items-center"><img :src="icons.clap" alt="" class="w-[30px] mr-2" />欢迎回来，{{ userName }}</h1>
 						<hr class="text-grey my-[20px]" />
-						<ul class="flex">
+						<Favorite />
+						<!--						<ul class="flex">
 							<li
 								v-for="{ img, text, bg } in operationData"
 								:key="text"
@@ -17,7 +18,7 @@
 								</div>
 								<span v-text="text" class="text-[14px]" />
 							</li>
-						</ul>
+						</ul>-->
 					</div>
 					<div class="section" v-for="{ title, img, data } in dashboardData.groupLeft" :key="title">
 						<h2 class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
@@ -82,6 +83,7 @@
 <script setup lang="ts" name="home">
 import { nextTick } from 'vue';
 import { useUserInfo } from '/@/stores/userInfo';
+import Favorite from '/@/views/home/favorite.vue';
 import * as echarts from 'echarts';
 
 import clap from '/@/assets/dashboard/clap.webp';
