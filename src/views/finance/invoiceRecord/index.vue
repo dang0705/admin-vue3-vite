@@ -6,11 +6,6 @@
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="发票记录.xlsx"
 	>
-		<!-- <template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10" v-auth="'finance_invoiceRecord_export'">
-				批量导出
-			</el-button>
-		</template> -->
 		<template #actions="{ row: { id, status } }">
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')" v-auth="'finance_invoiceRecord_cancel'"
@@ -240,6 +235,23 @@ const forms = computed(() => [
 		},
 	},
 	{
+		control: 'el-input',
+		key: 'invoiceNumber',
+		label: '发票编号',
+		props: {
+			disabled: financeType.value === 'see',
+		},
+		rules: [{ required: financeType.value === 'open', message: '发票编号不能为空', trigger: 'blur' }],
+	},
+	{
+		control: 'el-input',
+		key: 'invoicingAmount',
+		label: '开票金额',
+		props: {
+			disabled: true,
+		},
+	},
+	{
 		control: 'el-select',
 		key: 'billingType',
 		label: '开票类型',
@@ -258,23 +270,6 @@ const forms = computed(() => [
 			disabled: financeType.value === 'see',
 		},
 		rules: [{ required: financeType.value === 'open', message: '开票类目不能为空', trigger: 'change' }],
-	},
-	{
-		control: 'el-input',
-		key: 'invoiceNumber',
-		label: '发票编号',
-		props: {
-			disabled: financeType.value === 'see',
-		},
-		rules: [{ required: financeType.value === 'open', message: '发票编号不能为空', trigger: 'blur' }],
-	},
-	{
-		control: 'el-input',
-		key: 'invoicingAmount',
-		label: '开票金额',
-		props: {
-			disabled: true,
-		},
 	},
 	{
 		control: 'UploadFile',
@@ -382,6 +377,7 @@ let dialogFormData = ref({
 	invoiceFiles: [],
 	invoiceTitle: '',
 	merchantName: '',
+	invoicingAmount: '',
 });
 
 const rejectShow = ref(false);
@@ -395,6 +391,7 @@ const applyfor = async (id: string, type: string) => {
 		applyShow.value = true;
 		dialogFormData.value = (await getObj(id)).data;
 		dialogFormData.value.radioAddress = 1;
+		dialogFormData.value.invoicingAmount = dialogFormData.value.invoicingAmount + '元';
 		dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 		dialogFormData.value.id = id;
 	} else {
@@ -407,6 +404,7 @@ const applyfor = async (id: string, type: string) => {
 const onSubmit = async (refresh: any) => {
 	try {
 		if (financeType.value === 'open') {
+			dialogFormData.value.invoicingAmount = dialogFormData.value.invoicingAmount.slice(0, -1);
 			await saveInvoice({ ...dialogFormData.value });
 			applyShow.value = false;
 		} else if (financeType.value === 'cancel') {
