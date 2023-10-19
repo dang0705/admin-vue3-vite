@@ -325,7 +325,7 @@ const rejectForms = computed(() => [
 					},
 					rules: [
 						{
-							required: rejectFormData.value.radioProcess !== 1,
+							required: true,
 							message: '作废原因不能为空',
 							trigger: 'blur',
 						},
@@ -358,7 +358,7 @@ const rejectForms = computed(() => [
 					},
 					rules: [
 						{
-							required: rejectFormData.value.radioProcess !== 1,
+							required: true,
 							message: '驳回原因不能为空',
 							trigger: 'blur',
 						},
