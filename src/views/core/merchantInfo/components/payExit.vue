@@ -21,7 +21,7 @@
 	</el-row>
 	<el-row>
 		<div class="mb8" style="width: 100%">
-			<el-button icon="folder-add" type="primary" class="ml10" @click="openPayExit('add')">
+			<el-button icon="folder-add" v-auth="'core_payExit_add'" type="primary" class="ml10" @click="openPayExit('add')">
 				{{ $t('merchantInfo.openPayExit') }}
 			</el-button>
 			<right-toolbar
@@ -51,7 +51,9 @@
 		<el-table-column prop="channelStatusDesc" label="状态" show-overflow-tooltip> </el-table-column>
 		<el-table-column label="操作" width="300" fixed="right">
 			<template #default="scope">
-				<el-button icon="view" @click="payExitDetailDialogRef.openDialog(scope.row.id)" text type="primary"> 查看 </el-button>
+				<el-button icon="view" v-auth="'core_payExit_view'" @click="payExitDetailDialogRef.openDialog(scope.row.id)" text type="primary">
+					查看
+				</el-button>
 			</template>
 		</el-table-column>
 	</el-table>

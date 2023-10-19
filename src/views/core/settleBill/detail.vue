@@ -81,6 +81,7 @@
 							}}
 						</div>
 						<el-button
+							v-auth="'core_settleBill_s_recharge'"
 							@click="detailDialogRef.openDialog(form.id, 3, 1)"
 							style="margin-right: 24px; margin-left: auto !important"
 							type="primary"
@@ -89,6 +90,7 @@
 							充值
 						</el-button>
 						<el-button
+							v-auth="'core_settleBill_s_pay'"
 							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40)"
 							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
 							style="margin-right: 24px"
@@ -126,6 +128,7 @@
 							</div>
 						</div>
 						<el-button
+							v-auth="'core_settleBill_t_recharge'"
 							@click="detailDialogRef.openDialog(form.id, 3, 2)"
 							style="margin-right: 24px; margin-left: auto !important"
 							type="primary"
@@ -134,6 +137,7 @@
 							充值
 						</el-button>
 						<el-button
+							v-auth="'core_settleBill_t_pay'"
 							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40)"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
@@ -146,11 +150,13 @@
 				</TableView>
 			</template>
 			<template #actions="{ row }">
-				<el-button @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
-				<el-button @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
+				<el-button v-auth="'core_settleBill_agree'" @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
+				<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
-				<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+				<el-button @click="handleBtn" v-auth="'core_settleBill_export'" style="margin-right: 24px" icon="Upload" type="primary" class="ml10">
+					批量导出
+				</el-button>
 				<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
 			</template>
 		</TableView>

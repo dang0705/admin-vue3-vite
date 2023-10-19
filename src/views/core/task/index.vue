@@ -94,7 +94,7 @@
 							@click="openTask('edit', scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_edit'" @click="openTask('copy', scope.row.id)">克隆</el-button>
+						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_copy'" @click="openTask('copy', scope.row.id)">克隆</el-button>
 						<el-button
 							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
 							icon="edit-pen"
@@ -109,24 +109,22 @@
 							icon="edit-pen"
 							text
 							type="primary"
-							v-auth="'core_task_exam'"
+							v-auth="'core_task_assign'"
 							@click="appointRef.openDialog(scope.row)"
 							>指派承接人</el-button
 						>
-						<el-button v-if="scope.row.status == 20" icon="edit-pen" text type="primary" v-auth="'core_task_exam'" @click="batchAddTask(scope.row)"
-							>批量指派承接人</el-button
-						>
-						<!-- <el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量指派 </el-button> -->
-						<!-- <el-button
+						<el-button
 							v-if="scope.row.status == 20"
 							icon="edit-pen"
 							text
 							type="primary"
-							v-auth="'core_task_exam'"
-							@click="formDialogRef.openDialog(scope.row.id)"
-							>下架</el-button
-						> -->
+							v-auth="'core_task_batch_assign'"
+							@click="batchAddTask(scope.row)"
+							>批量指派承接人</el-button
+						>
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button icon="delete" text type="primary" v-auth="'core_task_xiajia'">下家</el-button>
+						<!-- 伪代码 -->
 					</template>
 				</el-table-column>
 			</el-table>

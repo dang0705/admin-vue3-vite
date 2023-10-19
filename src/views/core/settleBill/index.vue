@@ -12,10 +12,11 @@
 				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_submit'" @click="handleAction('toSubmit', row)">
 					提交账单
 				</el-button>
-				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleContractFile(row)"> 下载电子协议 </el-button>
+				<el-button icon="view" text type="primary" v-auth="'core_settleBill_down'" @click="handleContractFile(row)"> 下载电子协议 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
+					v-auth="'core_settleBill_add'"
 					style="margin-right: 24px"
 					icon="Upload"
 					type="primary"
