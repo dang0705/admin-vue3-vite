@@ -13,7 +13,7 @@
 <script setup lang="ts" name="银行流水">
 import { delObjs, getObj, addObj } from '/@/api/finance/waterSpPaymentBank';
 import Array2Object from '/@/utils/array-2-object';
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
+const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 const tabType = ref(1);
 const TableViewRef = ref();
 const tabs = [
