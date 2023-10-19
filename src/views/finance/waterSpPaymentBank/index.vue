@@ -1,11 +1,15 @@
 <template>
 	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/waterSpPaymentBank.ts">
 		<template #actions="{ row: {} }"> </template>
+		<template #status="{ row: { status } }">
+			<span v-text="batchMap?.water_sp_payment_bank_status[status]" />
+		</template>
 	</Table-view>
 </template>
 
 <script setup lang="ts" name="systemWaterSpPaymentBank">
 import { delObjs, getObj, addObj } from '/@/api/finance/waterSpPaymentBank';
+import Array2Object from '/@/utils/array-2-object';
 
 const columns = [
 	{
@@ -18,17 +22,6 @@ const columns = [
 		label: '支付通道',
 		'min-width': 150,
 	},
-	// {
-	// 	prop: 'id',
-	// 	label: '银行流水号',
-	// 	'min-width': 150,
-	// },
-
-	// {
-	// 	prop: 'loanType',
-	// 	label: '借贷类型',
-	// 	'min-width': 150,
-	// },
 	{
 		prop: 'amount',
 		label: '入账金额(元)',
@@ -49,28 +42,28 @@ const columns = [
 		label: '交易时间',
 		'min-width': 150,
 	},
-	// {
-	// 	prop: 'reciprocalBank',
-	// 	label: '对方开户行',
-	// 	'min-width': 150,
-	// },
-	// {
-	// 	prop: 'dealPostscript',
-	// 	label: '附言',
-	// 	'min-width': 150,
-	// },
 	{
 		prop: 'status',
 		label: '状态',
 		'min-width': 150,
+		slot: true,
 	},
-	// {
-	// 	label: '操作',
-	// 	prop: 'actions',
-	// 	fixed: 'right',
-	// 	slot: true,
-	// },
 ];
 
-const conditionForms = [];
+const batchMap = computed(() => Array2Object({ dic: ['water_sp_payment_bank_status'] }).value);
+const conditionForms = [
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+	},
+	{
+		control: 'DateRange',
+		key: 'dealTimeRange',
+		label: '交易时间',
+		props: {
+			valueType: 'string',
+		},
+	},
+];
 </script>

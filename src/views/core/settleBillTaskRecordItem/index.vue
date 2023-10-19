@@ -139,8 +139,8 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'xxx',
-		label: '支付时间', // 伪代码
+		prop: 'paymentSuccessTime',
+		label: '支付时间',
 		minWidth: 150,
 	},
 	{

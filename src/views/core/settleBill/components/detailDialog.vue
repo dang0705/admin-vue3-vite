@@ -37,6 +37,7 @@
 		<!-- spPaymentChannelData -->
 		<div>
 			<form-view
+				ref="formViewRef"
 				v-if="dialogType == 3"
 				:on-cancel="onCancel"
 				:on-submit="onSubmit"
@@ -80,6 +81,7 @@ import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const route: any = useRoute();
 const title = ref('');
+const formViewRef = ref();
 const visible = ref(false);
 const loading = ref(false);
 const dialogType = ref(0);
@@ -106,7 +108,7 @@ const formData = reactive({
 });
 const addUnderTakerForms = [
 	{
-		control: 'Upload',
+		control: 'UploadFile',
 		key: 'transferVouchers',
 		label: '上传转账凭证',
 		// slot: true,
@@ -180,16 +182,7 @@ const openDialog = async (id: string, dType: number, billType: number) => {
 	dialogType.value = dType;
 	visible.value = true;
 	settleBillType.value = billType;
-	for (const key in form) {
-		delete form[key];
-	}
-	for (const key in formData) {
-		delete formData[key];
-	}
-	// Object.assign(form, {});
-	// Object.assign(formData, {});q
-	// form = {};
-	// formData = {};
+	formViewRef.value?.reset();
 	if (dType === 1) {
 		title.value = '发起付款';
 	} else if (dType === 3) {
@@ -258,7 +251,7 @@ const onSubmit = async () => {
 			});
 	} else if (dialogType.value === 3) {
 		addMerchantRecharge({
-			accountId: settleBillType.value == 1 ? form.serviceBillRecord[0]?.accountId : form.taskBillRecord[0]?.accountId, // 伪代码
+			accountId: settleBillType.value == 1 ? form.serviceBillRecord[0]?.accountId : form.taskBillRecord[0]?.accountId,
 			...formData,
 		})
 			.then((res: any) => {
