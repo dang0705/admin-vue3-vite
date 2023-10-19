@@ -180,8 +180,14 @@ const openDialog = async (id: string, dType: number, billType: number) => {
 	dialogType.value = dType;
 	visible.value = true;
 	settleBillType.value = billType;
-	Object.assign(form, {});
-	Object.assign(formData, {});
+	for (const key in form) {
+		delete form[key];
+	}
+	for (const key in formData) {
+		delete formData[key];
+	}
+	// Object.assign(form, {});
+	// Object.assign(formData, {});q
 	// form = {};
 	// formData = {};
 	if (dType === 1) {
