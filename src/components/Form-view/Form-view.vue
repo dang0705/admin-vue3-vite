@@ -89,7 +89,6 @@ const initForms = async (forms: []) => {
 						watch(
 							() => prop.modelValue[keyFrom as string],
 							async (value) => {
-								console.log(value);
 								formData.value[item.key] = '';
 								formOptions[item.key] = (await request.get(url, { params: { [keyTo as string]: value } })).data;
 							}
@@ -108,7 +107,7 @@ const reset = () => form?.value?.resetFields();
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
 watch(
 	() => prop.forms,
-	(forms) => initForms(forms as [], formData.value),
+	(forms) => initForms(forms as []),
 	{ immediate: true }
 );
 // 每次弹框关闭后,清空验证状态
