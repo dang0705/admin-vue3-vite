@@ -174,7 +174,8 @@
 <script setup lang="ts" name="账单详情">
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
-
+import Array2Object from '/@/utils/array-2-object';
+const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'undertaker_agent_paying_pay_status'] });
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 const route: any = useRoute();
@@ -182,7 +183,12 @@ const detailDialogRef = ref();
 const importBillRef = ref();
 const TableViewRef = ref();
 const { proxy } = getCurrentInstance();
-
+interface BatchUploadRecordPage {
+	isSignServiceContract: number;
+	isBankFourEssentialFactor: number;
+	billStatus: number;
+	paymentStatus: number;
+}
 // 定义变量内容
 const router = useRouter();
 const loading = ref(false);
@@ -370,16 +376,19 @@ const indexThead = [
 	{
 		prop: 'isSignServiceContract',
 		label: '是否签署协议',
+		value: ({ isSignServiceContract }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isSignServiceContract],
 		minWidth: 150,
 	},
 	{
 		prop: 'isBankFourEssentialFactor',
 		label: '是否银行四要素校验',
+		value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isBankFourEssentialFactor],
 		minWidth: 150,
 	},
 	{
 		prop: 'billStatus',
 		label: '结算状态',
+		value: ({ billStatus }: BatchUploadRecordPage) => batchMap.value.settle_status[billStatus],
 		minWidth: 100,
 	},
 	{
@@ -390,6 +399,7 @@ const indexThead = [
 	{
 		prop: 'paymentStatus',
 		label: '支付状态',
+		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.undertaker_agent_paying_pay_status[paymentStatus],
 		minWidth: 100,
 	},
 	{

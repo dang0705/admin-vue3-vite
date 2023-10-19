@@ -68,7 +68,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemSpPaymentChannel">
+<script setup lang="ts" name="支付通道">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/core/spPaymentChannel';
 import { useMessage, useMessageBox } from '/@/hooks/message';

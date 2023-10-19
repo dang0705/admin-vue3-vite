@@ -13,7 +13,13 @@ const failFormStatic = [
 		slot: true,
 	},
 ];
-const failListHeadStatic = [
+const failColumnsPrefix = [
+	{
+		type: 'selection',
+		width: 40,
+	},
+];
+const failColumnsSuffix = [
 	{
 		prop: 'errorMessage',
 		label: '失败原因',
@@ -21,7 +27,7 @@ const failListHeadStatic = [
 		fixed: 'right',
 	},
 ];
-export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead }: any) =>
+export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColumns }: any) =>
 	computed(() => {
 		let form: any[];
 		dialogFormLabelWidth.value = currentType.value === Type['批量导入结算'] ? 200 : 160;
@@ -55,7 +61,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 					},
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -68,7 +75,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'undertakerPhone',
 						label: '手机号',
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			case Type['批量绑定银行卡']:
@@ -84,7 +91,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 					},
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -101,7 +109,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'undertakerCard',
 						label: '开户行',
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			case Type['批量电子签署']:
@@ -120,7 +128,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 					},
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -137,7 +146,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'endTime',
 						label: '合同结束时间',
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			case Type['批量指派承接人']:
@@ -160,7 +169,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 					},
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -173,7 +183,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'undertakerPhone',
 						label: '手机号',
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			case Type['批量导入结算']:
@@ -221,7 +231,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 					},
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						label: '承接人姓名',
 						prop: 'undertakerName',
@@ -247,7 +258,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'undertaderEndTime',
 						minWidth: 200,
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			case Type['批量导入银行交易流水']:
@@ -267,7 +278,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 
 					...failFormStatic,
 				];
-				failListHead.value = [
+				failListColumns.value = [
+					...failColumnsPrefix,
 					{
 						label: '银行流水号',
 						prop: 'bankSerialNumber',
@@ -303,7 +315,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListHead 
 						prop: 'dealPostscript',
 						minWidth: 200,
 					},
-					...failListHeadStatic,
+					...failColumnsSuffix,
 				];
 				break;
 			default:

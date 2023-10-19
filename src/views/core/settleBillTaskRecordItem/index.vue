@@ -5,12 +5,12 @@
 			<!-- v-if="row.paymentStatus == 30" -->
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看支付凭证 </el-button>
 		</template>
-		<template #isBankFourEssentialFactor="{ row: { isBankFourEssentialFactor } }">
+		<!-- <template #isBankFourEssentialFactor="{ row: { isBankFourEssentialFactor } }">
 			<span v-text="batchMap?.yes_no_type[isBankFourEssentialFactor]" />
 		</template>
 		<template #isSignServiceContract="{ row: { isSignServiceContract } }">
 			<span v-text="batchMap?.yes_no_type[isSignServiceContract]" />
-		</template>
+		</template> -->
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
@@ -19,10 +19,16 @@
 
 <script setup lang="ts" name="任务结算明细">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
+const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'undertaker_agent_paying_pay_status'] });
 const { proxy } = getCurrentInstance();
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import Array2Object from '/@/utils/array-2-object';
-
+interface BatchUploadRecordPage {
+	isSignServiceContract: number;
+	isBankFourEssentialFactor: number;
+	billStatus: number;
+	paymentStatus: number;
+}
 const columns = [
 	{
 		prop: 'undertakerName',
@@ -133,20 +139,20 @@ const columns = [
 	{
 		prop: 'isSignServiceContract',
 		label: '是否签署协议',
+		value: ({ isSignServiceContract }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isSignServiceContract],
 		minWidth: 150,
-		slot: true,
 	},
 	{
 		prop: 'isBankFourEssentialFactor',
 		label: '是否银行四要素校验',
+		value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isBankFourEssentialFactor],
 		minWidth: 150,
-		slot: true,
 	},
 	{
-		prop: 'billStatusDesc',
+		prop: 'billStatus',
 		label: '结算状态',
-		minWidth: 150,
-		slot: true,
+		value: ({ billStatus }: BatchUploadRecordPage) => batchMap.value.settle_status[billStatus],
+		minWidth: 100,
 	},
 	{
 		prop: 'paymentSuccessTime',
@@ -154,8 +160,9 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'paymentStatusDesc',
+		prop: 'paymentStatus',
 		label: '支付状态',
+		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.undertaker_agent_paying_pay_status[paymentStatus],
 		minWidth: 150,
 	},
 	{
@@ -218,6 +225,5 @@ const handleBtn = () => {
 const handleContractFile = (row) => {
 	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
-const batchMap = computed(() => Array2Object({ dic: ['yes_no_type'] }).value);
 //
 </script>
