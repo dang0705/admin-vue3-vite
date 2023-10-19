@@ -2,7 +2,7 @@
 	<div :class="{ 'layout-padding': !noPadding }">
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-			<Mytab v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" />
+			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
 			<div class="mb8" style="width: 100%">
 				<Form-view
 					v-if="conditionForms.length"
@@ -22,7 +22,7 @@
 
 				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
 					<div class="flex items-center flex-grow">
-						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary"> 批量导出 </el-button>
+						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary" v-auth="exportAuth"> 批量导出 </el-button>
 						<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo, query: state.queryForm }" />
 					</div>
 					<right-toolbar v-if="conditionForms.length" v-model:showSearch="showSearch" style="float: right" @queryTable="getDataList" />
@@ -39,6 +39,7 @@
 				<el-table-column
 					v-for="column in columns"
 					:key="column.prop"
+					:formatter="tableCellFormatter"
 					v-bind="{
 						showOverflowTooltip: column.showOverflowTooltip || true,
 						...column,
@@ -59,7 +60,7 @@
 
 <script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-const Mytab = defineAsyncComponent(() => import('./mytab.vue'));
+const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 const props = defineProps({
 	columns: {
@@ -131,6 +132,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	exportAuth: {
+		type: String,
+		default: '',
+	},
 });
 /**
  * 获取api目录下所有的文件，并获取文件内容
@@ -149,7 +154,7 @@ watch(
 );
 const showSearch = ref(true);
 const params = computed(() => props.params);
-
+const currentTab = ref('');
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
 	...(props.staticQuery ? { queryForm: props.staticQuery } : {}),
@@ -197,13 +202,23 @@ const resetQuery = () => {
 };
 
 provide('refresh', resetQuery);
+watch(
+	() => currentTab.value,
+	(currentTab) => emit('get-tab-label', currentTab)
+);
 const toggleTab = (item: any) => {
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });
-	emit('get-tab-label', item.label);
 	getDataList();
 };
 
+const tableCellFormatter = (row, { label }, cellValue, index) => {
+	// console.log(row, label, cellValue, index);
+	if (label?.includes('(元)')) {
+		return '￥' + (+cellValue)?.toFixed(2);
+	}
+	return cellValue;
+};
 // 暴露变量
 defineExpose({
 	resetQuery,

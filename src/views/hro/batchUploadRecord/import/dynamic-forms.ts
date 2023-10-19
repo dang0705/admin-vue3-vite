@@ -13,12 +13,6 @@ const failFormStatic = [
 		slot: true,
 	},
 ];
-const failColumnsPrefix = [
-	{
-		type: 'selection',
-		width: 40,
-	},
-];
 const failColumnsSuffix = [
 	{
 		prop: 'errorMessage',
@@ -62,7 +56,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -92,7 +85,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -129,7 +121,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -170,7 +161,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						prop: 'undertakerName',
 						label: '姓名',
@@ -232,7 +222,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						label: '承接人姓名',
 						prop: 'undertakerName',
@@ -279,7 +268,6 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					...failFormStatic,
 				];
 				failListColumns.value = [
-					...failColumnsPrefix,
 					{
 						label: '银行流水号',
 						prop: 'bankSerialNumber',

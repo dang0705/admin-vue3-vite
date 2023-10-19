@@ -128,6 +128,9 @@ const conditionForms = [
 		label: '服务商',
 		control: 'SpSelect',
 		key: 'spId',
+		props: {
+			platform: true,
+		},
 	},
 	{
 		label: '充值时间',
