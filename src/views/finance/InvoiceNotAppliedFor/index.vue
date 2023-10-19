@@ -1,10 +1,12 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/InvoiceNotAppliedFor.ts" labelWidth="100px">
-		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10" v-auth="'finance_invoiceRecordNot_export'">
-				批量导出
-			</el-button>
-		</template>
+	<Table-view
+		:columns="columns"
+		:condition-forms="conditionForms"
+		module="finance/InvoiceNotAppliedFor.ts"
+		labelWidth="100px"
+		downBlobFileUrl="/finance/invoiceRecord/export"
+		downBlobFileName="未申请发票.xlsx"
+	>
 		<template #actions="{ row: { id } }">
 			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')" v-auth="'finance_invoiceRecordNot_applyfor'">
 				申请开票
@@ -62,6 +64,10 @@ import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppl
 const financeType = ref(); // 进入方式 applyfor申请 open开票
 
 const columns = [
+	{
+		type: 'selection',
+		width: '40',
+	},
 	{
 		prop: 'spName',
 		label: '服务商',
