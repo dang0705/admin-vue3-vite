@@ -134,7 +134,6 @@ const forms = [
 
 	{
 		control: 'el-input',
-		// 伪代码
 		key: 'enterpriseAcceptanceTime',
 		label: '企业验收时间',
 		title: '企业验收页',

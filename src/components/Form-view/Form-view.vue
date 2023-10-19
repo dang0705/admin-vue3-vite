@@ -35,7 +35,7 @@ interface OptionsParams {
 }
 
 const formConfigs = ref<any[]>([]);
-const initForms = async (forms: [], formData: any) => {
+const initForms = async (forms: []) => {
 	formConfigs.value = [];
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
@@ -43,20 +43,20 @@ const initForms = async (forms: [], formData: any) => {
 		const itemRulesCache = [...(item.rules || [])];
 
 		item.hidden = false;
-		item.value !== undefined && (formData[item.key] = item.value);
+		item.value !== undefined && (formData.value[item.key] = item.value);
 		item.onChange &&
 			watch(
-				() => formData[item.key],
-				(value) => item.onChange && item.onChange(value, formData)
+				() => prop.modelValue[item.key],
+				(value) => item.onChange && item.onChange(value, formData.value)
 			);
 		item.show &&
 			watch(
-				() => formData[item.show?.by as string],
+				() => prop.modelValue[item.show?.by as string],
 				() => {
-					const isShow = item.show && !!item.show.fn(formData);
+					const isShow = item.show && !!item.show.fn(formData.value);
 					item.hidden = !isShow;
 					item.rules && (item.rules = isShow ? itemRulesCache : []);
-					formData[item.key] = null;
+					formData.value[item.key] = null;
 				},
 				{ immediate: true }
 			);
@@ -78,7 +78,7 @@ const initForms = async (forms: [], formData: any) => {
 						const params = {};
 						(keyFrom as []).forEach((key: string) => {
 							watch(
-								() => formData[key as string],
+								() => prop.modelValue[key as string],
 								async (value) => {
 									params[key] = value;
 									formOptions[item.key] = (await request.get(url, { params })).data;
@@ -87,9 +87,9 @@ const initForms = async (forms: [], formData: any) => {
 						});
 					} else {
 						watch(
-							() => formData[keyFrom as string],
+							() => prop.modelValue[keyFrom as string],
 							async (value) => {
-								formData[item.key] = '';
+								formData.value[item.key] = '';
 								formOptions[item.key] = (await request.get(url, { params: { [keyTo as string]: value } })).data;
 							}
 						);
@@ -107,7 +107,7 @@ const reset = () => form?.value?.resetFields();
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
 watch(
 	() => prop.forms,
-	(forms) => initForms(forms as [], formData.value),
+	(forms) => initForms(forms as []),
 	{ immediate: true }
 );
 // 每次弹框关闭后,清空验证状态

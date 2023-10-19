@@ -364,7 +364,7 @@ const indexThead = [
 	},
 	{
 		prop: 'billSettleTime',
-		label: '付款时间', // 伪代码
+		label: '付款时间',
 		minWidth: 150,
 	},
 	{
@@ -480,8 +480,7 @@ const handleAccountCapitalDetail = () => {
 	router.push({
 		path: '/finance/merchantAccountCapital/detail',
 		query: {
-			// id: form.taskBillRecord[0]?.id, // 伪代码
-			id: '1714206494087450626', // 伪代码
+			id: form.taskBillRecord[0]?.accountId,
 		},
 		state: {
 			refresh: 1,
