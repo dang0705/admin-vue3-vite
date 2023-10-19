@@ -171,7 +171,7 @@ const selectObjs = ref([]) as any;
 const exportExcel = () => {
 	downBlobFile(
 		props.downBlobFileUrl,
-		Object.assign(state.queryForm, {
+		Object.assign(state.queryForm, props.params, {
 			ids: props.getFullSelection ? selectObjs.value.map(({ [props.selectMainKey]: id }: Record<string, string>) => id) : selectObjs,
 		}),
 		props.downBlobFileName
