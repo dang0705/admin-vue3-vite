@@ -1,10 +1,16 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/invoiceRecord.ts">
-		<template #top-bar="{ otherInfo }">
+	<Table-view
+		:columns="columns"
+		:condition-forms="conditionForms"
+		module="finance/invoiceRecord.ts"
+		downBlobFileUrl="/finance/invoiceRecord/export"
+		downBlobFileName="发票记录.xlsx"
+	>
+		<!-- <template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10" v-auth="'finance_invoiceRecord_export'">
 				批量导出
 			</el-button>
-		</template>
+		</template> -->
 		<template #actions="{ row: { id, status } }">
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')" v-auth="'finance_invoiceRecord_cancel'"
