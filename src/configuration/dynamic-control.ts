@@ -7,8 +7,9 @@ interface PayChannel {
 	key?: string;
 	watch?: string | object;
 	fields?: string | [];
+	[k: string]: unknown;
 }
-export const payChannel = ({ key = 'paymentBankId', watch = 'spId', fields }: PayChannel = {}) => ({
+export const payChannel = ({ key = 'paymentBankId', watch = 'spId', fields, ...others }: PayChannel = {}) => ({
 	label: '支付通道',
 	control: 'el-select',
 	key,
@@ -23,4 +24,5 @@ export const payChannel = ({ key = 'paymentBankId', watch = 'spId', fields }: Pa
 			keyTo: fields || watch,
 		},
 	},
+	...others,
 });

@@ -2,7 +2,7 @@
 	<div :class="{ 'layout-padding': !noPadding }">
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-			<Mytab v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" />
+			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
 			<div class="mb8" style="width: 100%">
 				<Form-view
 					v-if="conditionForms.length"
@@ -34,6 +34,7 @@
 				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
 				:header-cell-style="tableStyle.headerCellStyle"
+				:formatter="tableCellFormatter"
 				@selection-change="onSelectionChange"
 			>
 				<el-table-column
@@ -59,7 +60,7 @@
 
 <script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-const Mytab = defineAsyncComponent(() => import('./mytab.vue'));
+const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 const props = defineProps({
 	columns: {
@@ -149,7 +150,7 @@ watch(
 );
 const showSearch = ref(true);
 const params = computed(() => props.params);
-
+const currentTab = ref('');
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
 	...(props.staticQuery ? { queryForm: props.staticQuery } : {}),
@@ -197,13 +198,19 @@ const resetQuery = () => {
 };
 
 provide('refresh', resetQuery);
+watch(
+	() => currentTab.value,
+	(currentTab) => emit('get-tab-label', currentTab)
+);
 const toggleTab = (item: any) => {
 	let pro = item.attributeName;
 	Object.assign(state.queryForm, { [pro]: item.attributeVal });
-	emit('get-tab-label', item.label);
 	getDataList();
 };
 
+const tableCellFormatter = (row, column, cellValue, index) => {
+	console.log(row, column, cellValue, index);
+};
 // 暴露变量
 defineExpose({
 	resetQuery,

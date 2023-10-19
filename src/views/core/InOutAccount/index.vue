@@ -31,29 +31,15 @@
 			title="批量导入银行交易流水"
 			:forms="addUnderTakerForms"
 			submitButtonText="下一步"
-		>
-			<template #spId="{ formData }">
-				<el-form-item label="服务商" prop="spId" :rules="[{ required: true, message: '服务商不能为空', trigger: 'blur' }]">
-					<el-select @change="getSpPaymentChannelListData(formData)" clearable v-model="formData.spId">
-						<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in formInfo.spinfoList" />
-					</el-select>
-				</el-form-item>
-			</template>
-			<template #channelId="{ formData }">
-				<el-form-item prop="channelId" label="支付通道" :rules="[{ required: true, message: '支付通道不能为空', trigger: 'blur' }]">
-					<el-select placeholder="请选择" class="w100" clearable v-model="formData.channelId">
-						<el-option :key="item.id" :label="item.channelName" :value="item.id" v-for="item in formInfo.spPaymentChannelList" />
-					</el-select>
-				</el-form-item>
-			</template>
-		</uploadExcel>
+		/>
 	</div>
 </template>
 
 <script setup lang="ts" name="出入账管理">
 import { useMessage } from '/@/hooks/message';
 import { getSpPaymentChannelList, getSpInfoList } from '/@/api/core/merchantInfo';
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
+import { payChannel } from '/@/configuration/dynamic-control';
+const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import Array2Object from '/@/utils/array-2-object';
 const addUnderTakerRef = ref();
 const params = ref({});
@@ -68,14 +54,12 @@ const addUnderTakerForms = [
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
-		slot: true,
+		props: {
+			platform: true,
+		},
+		rules: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	},
-	{
-		control: 'el-select',
-		key: 'channelId',
-		label: '支付通道',
-		slot: true,
-	},
+	payChannel({ key: 'channelId', rules: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }] }),
 ];
 const columns1 = [
 	{
@@ -164,6 +148,9 @@ const conditionForms = [
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
+		props: {
+			platform: true,
+		},
 	},
 	{
 		control: 'DateRange',

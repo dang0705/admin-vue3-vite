@@ -7,7 +7,7 @@
 				</el-select>
 			</el-form-item> -->
 			<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
-				<sp-select v-model="state.queryForm.spId" />
+				<sp-select v-model="state.queryForm.spId" platform />
 			</el-form-item>
 			<el-form-item>
 				<div class="wr100">

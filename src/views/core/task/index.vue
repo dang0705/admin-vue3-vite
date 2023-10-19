@@ -165,7 +165,7 @@ import { useDict } from '/@/hooks/dict';
 // 引入组件
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
+const Mytab = defineAsyncComponent(() => import('/src/components/FormTable/Tab-view.vue'));
 // 定义查询字典
 
 const conditionForms = [

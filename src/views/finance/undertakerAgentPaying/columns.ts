@@ -87,6 +87,7 @@ export default [
 		prop: 'taskAmount',
 		label: '任务金额(元)',
 		'min-width': 150,
+		align: 'right',
 	},
 	{
 		prop: 'taxWithheld',

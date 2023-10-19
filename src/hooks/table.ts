@@ -244,12 +244,27 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 	 * 定义表格通用样式
 	 * @returns  css
 	 */
+	const initColumnAlign = (label: string) => {
+		let textAlign = '';
+		switch (true) {
+			case label?.includes('元'):
+				textAlign = 'right';
+				break;
+			default:
+				textAlign = 'center';
+		}
+		return {
+			textAlign,
+		};
+	};
 	const tableStyle: TableStyle = {
-		cellStyle: { textAlign: 'center' },
-		headerCellStyle: {
-			textAlign: 'center',
-			background: 'var(--el-table-row-hover-bg-color)',
-			color: 'var(--el-text-color-primary)',
+		cellStyle: ({ column: { label } }) => initColumnAlign(label),
+		headerCellStyle: ({ column: { label } }) => {
+			return {
+				...initColumnAlign(label),
+				background: 'var(--el-table-row-hover-bg-color)',
+				color: 'var(--el-text-color-primary)',
+			};
 		},
 	};
 
