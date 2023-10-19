@@ -13,6 +13,7 @@
 <script setup lang="ts" name="systemMerchantAccountCapital">
 import { delObjs, getObj, addObj } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const columns = [
 	{
@@ -66,7 +67,7 @@ const columns = [
 const conditionForms = [
 	{
 		control: 'el-input',
-		key: 'undertakerName',
+		key: 'id',
 		label: '资金账户',
 	},
 	{
@@ -79,11 +80,12 @@ const conditionForms = [
 		key: 'merchantId',
 		label: '商户',
 	},
-	{
-		control: 'el-select',
-		key: 'xxx',
-		label: '支付通道',
-	},
+	payChannel({ key: 'paymentBankId' }),
+	// {
+	// 	control: 'el-select',
+	// 	key: 'paymentBankId',
+	// 	label: '支付通道',
+	// },
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');

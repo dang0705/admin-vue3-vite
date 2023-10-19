@@ -9,6 +9,7 @@
 <script setup lang="ts" name="结算单">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import { payChannel } from '/@/configuration/dynamic-control';
 
 const columns = [
 	{
@@ -83,7 +84,6 @@ const columns = [
 	// 	slot: true,
 	// },
 ];
-
 const conditionForms = [
 	{
 		control: 'el-input',
@@ -122,7 +122,7 @@ const conditionForms = [
 	},
 	{
 		control: 'DateRange',
-		key: 'payTime',
+		key: 'payTimeFromTo',
 		label: '付款时间',
 		props: {
 			valueType: 'string',
@@ -133,11 +133,12 @@ const conditionForms = [
 		key: 'status',
 		label: '结算状态',
 	},
-	{
-		control: 'el-select',
-		key: 'channelId',
-		label: '支付通道',
-	},
+	payChannel({ key: 'paymentBankId' }),
+	// {
+	// 	control: 'el-select',
+	// 	key: 'paymentBankId',
+	// 	label: '支付通道',
+	// },
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');

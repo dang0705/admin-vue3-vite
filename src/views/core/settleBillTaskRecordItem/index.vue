@@ -134,7 +134,7 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'billStatus',
+		prop: 'billStatusDesc',
 		label: '结算状态',
 		minWidth: 150,
 	},
@@ -144,7 +144,7 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'paymentStatus',
+		prop: 'paymentStatusDesc',
 		label: '支付状态',
 		minWidth: 150,
 	},
@@ -190,12 +190,12 @@ const conditionForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'id',
+		key: 'billTaskRecordId',
 		label: '任务结算明细编号',
 	},
 	{
 		control: 'DateRange',
-		key: 'billSettleTime',
+		key: 'billSettleTimeFromTo',
 		label: '付款时间',
 		props: {
 			valueType: 'string',
