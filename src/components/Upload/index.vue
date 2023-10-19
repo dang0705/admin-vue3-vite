@@ -1,5 +1,5 @@
 <template>
-	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
+	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]" v-if="!hidden">
 		<div>
 			<el-upload
 				v-if="isImage || (!isImage && !disabled)"
@@ -171,6 +171,10 @@ const props = defineProps({
 		default: '',
 	},
 	showName: {
+		type: Boolean,
+		default: false,
+	},
+	hidden: {
 		type: Boolean,
 		default: false,
 	},

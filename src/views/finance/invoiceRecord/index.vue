@@ -5,6 +5,7 @@
 		module="finance/invoiceRecord.ts"
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="发票记录.xlsx"
+		auth="finance_invoiceRecord_export"
 	>
 		<template #actions="{ row: { id, status } }">
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>
@@ -279,6 +280,7 @@ const forms = computed(() => [
 		props: {
 			type: '60',
 			disabled: financeType.value === 'see',
+			hidden: financeType.value === 'see' && dialogFormData.value.invoiceFiles.length == 0,
 		},
 		rules: [{ type: 'array', required: financeType.value === 'open', message: '发票图片不能为空', trigger: 'change' }],
 	},
