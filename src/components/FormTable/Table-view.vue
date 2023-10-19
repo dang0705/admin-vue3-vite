@@ -22,7 +22,7 @@
 
 				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
 					<div class="flex items-center flex-grow">
-						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary"> 批量导出 </el-button>
+						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary" v-auth="exportAuth"> 批量导出 </el-button>
 						<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo, query: state.queryForm }" />
 					</div>
 					<right-toolbar v-if="conditionForms.length" v-model:showSearch="showSearch" style="float: right" @queryTable="getDataList" />
@@ -34,12 +34,12 @@
 				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
 				:header-cell-style="tableStyle.headerCellStyle"
-				:formatter="tableCellFormatter"
 				@selection-change="onSelectionChange"
 			>
 				<el-table-column
 					v-for="column in columns"
 					:key="column.prop"
+					:formatter="tableCellFormatter"
 					v-bind="{
 						showOverflowTooltip: column.showOverflowTooltip || true,
 						...column,
@@ -132,6 +132,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	exportAuth: {
+		type: String,
+		default: '',
+	},
 });
 /**
  * 获取api目录下所有的文件，并获取文件内容
@@ -208,8 +212,12 @@ const toggleTab = (item: any) => {
 	getDataList();
 };
 
-const tableCellFormatter = (row, column, cellValue, index) => {
-	console.log(row, column, cellValue, index);
+const tableCellFormatter = (row, { label }, cellValue, index) => {
+	// console.log(row, label, cellValue, index);
+	if (label?.includes('(元)')) {
+		return '￥' + (+cellValue)?.toFixed(2);
+	}
+	return cellValue;
 };
 // 暴露变量
 defineExpose({

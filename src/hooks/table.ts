@@ -247,7 +247,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 	const initColumnAlign = (label: string) => {
 		let textAlign = '';
 		switch (true) {
-			case label?.includes('元'):
+			case label?.includes('(元)'):
 				textAlign = 'right';
 				break;
 			default:
