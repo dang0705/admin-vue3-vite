@@ -12,7 +12,7 @@
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')" v-auth="'finance_invoiceRecord_cancel'"
 				>作废</el-button
 			>
-			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecord_open'"
+			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecord_add'"
 				>开票</el-button
 			>
 			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')" v-auth="'finance_invoiceRecord_audit'"
