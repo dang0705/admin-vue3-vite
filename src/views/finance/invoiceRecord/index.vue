@@ -7,7 +7,7 @@
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')">作废</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')">开票</el-button>
-			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'reject')">驳回</el-button>
+			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')">审核</el-button>
 		</template>
 		<Dialog
 			vertical
@@ -25,7 +25,7 @@
 		>
 			<template #address>
 				<el-form-item label="邮寄地址:" prop="address" v-if="false">
-					<el-radio-group v-model="dialogFormData.radioAddress" class="ml-4" @change="radioChange">
+					<el-radio-group v-model="dialogFormData.radioAddress" class="ml-4">
 						<el-radio :label="1" size="large">默认邮寄地址</el-radio>
 						<el-radio :label="0" size="large">手动填写</el-radio>
 					</el-radio-group>
@@ -45,7 +45,7 @@
 			vertical
 			button-position="center"
 			v-model="rejectShow"
-			:title="financeType === 'cancel' ? '发票作废' : '发票驳回'"
+			:title="financeType === 'cancel' ? '发票作废' : '发票审核'"
 			submitButtonText="确认"
 			:label-width="120"
 			:forms="rejectForms"
@@ -54,7 +54,13 @@
 			:onSubmit="onSubmit"
 		>
 			<template #rejectTitle>
-				<div class="text-[20px] text-center">您确定要{{ financeType === 'cancel' ? '作废' : '驳回' }}本发票吗？</div>
+				<div class="text-[20px] text-center" v-if="financeType === 'cancel'">您确定要作废本发票吗？</div>
+				<el-form-item label="发票审核:" prop="address" v-else>
+					<el-radio-group v-model="rejectFormData.radioProcess" class="ml-4">
+						<el-radio :label="1" size="large">审核通过</el-radio>
+						<el-radio :label="0" size="large">审核驳回</el-radio>
+					</el-radio-group>
+				</el-form-item>
 			</template>
 		</Dialog>
 	</Table-view>
@@ -66,6 +72,10 @@ import { saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 see查看 open开票 cancel作废 reject驳回
 
 const columns = [
+	{
+		type: 'selection',
+		width: '40',
+	},
 	{
 		prop: 'id',
 		label: '申请编号',
@@ -299,20 +309,63 @@ const forms = computed(() => [
 ]);
 
 const rejectForms = computed(() => [
-	{
-		slot: true,
-		key: 'rejectTitle',
-		column: 24,
-	},
-	{
-		control: 'el-input',
-		key: 'reason',
-		label: financeType.value === 'cancel' ? '作废原因' : '驳回原因',
-		props: {
-			type: 'textarea',
-		},
-		rules: [{ required: true, message: financeType.value === 'cancel' ? '作废原因' : '驳回原因' + '不能为空', trigger: 'blur' }],
-	},
+	// {
+	// 	slot: true,
+	// 	key: 'rejectTitle',
+	// 	column: 24,
+	// },
+	...(financeType.value === 'cancel'
+		? [
+				{
+					control: 'el-input',
+					key: 'reason',
+					label: '作废原因',
+					props: {
+						type: 'textarea',
+					},
+					rules: [
+						{
+							required: rejectFormData.value.radioProcess !== 1,
+							message: '作废原因不能为空',
+							trigger: 'blur',
+						},
+					],
+				},
+		  ]
+		: [
+				{
+					control: 'el-radio-group',
+					key: 'radio1',
+					label: '发票审核',
+					options: [
+						{
+							label: '审核通过',
+							value: 1,
+						},
+						{
+							label: '审核驳回',
+							value: 0,
+						},
+					],
+					value: 1,
+				},
+				{
+					control: 'el-input',
+					key: 'reason',
+					label: '驳回原因',
+					props: {
+						type: 'textarea',
+					},
+					rules: [
+						{
+							required: rejectFormData.value.radioProcess !== 1,
+							message: '驳回原因不能为空',
+							trigger: 'blur',
+						},
+					],
+					show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
+				},
+		  ]),
 ]);
 
 const applyShow = ref(false);
@@ -327,6 +380,7 @@ let dialogFormData = ref({
 const rejectShow = ref(false);
 let rejectFormData = ref({
 	id: '',
+	radioProcess: 1,
 });
 
 const applyfor = async (id: string, type: string) => {
