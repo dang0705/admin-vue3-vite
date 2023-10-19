@@ -4,8 +4,14 @@ NextLoading.done();
 const forms = [
 	{
 		control: 'el-radio-group',
-		key: 'isInventoryUser',
-		label: '是否存量用户',
+		title: {
+			html: '标题一定要大',
+			style: {
+				textAlign: 'center',
+			},
+		},
+		key: 'radio1',
+		label: '单选一',
 		options: [
 			{
 				label: '是',
@@ -27,8 +33,8 @@ const forms = [
 	},
 	{
 		control: 'el-radio-group',
-		key: 'test',
-		label: '是否',
+		key: 'radio2',
+		label: '单选二',
 		options: [
 			{
 				label: '是',
@@ -50,20 +56,19 @@ const forms = [
 	},
 	{
 		control: 'el-input',
-		label: '输入框',
+		label: '单选一对应的动态控件',
 		key: 'text',
-		showBy: 'isInventoryUser',
 		rules: [
 			{
 				required: true,
 				trigger: 'blur',
 			},
 		],
-		show: ({ isInventoryUser }) => isInventoryUser,
+		show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
 	},
 	{
 		control: 'el-select',
-		label: '下拉',
+		label: '单选二对应的动态控件',
 		key: 'select',
 		options: [
 			{
@@ -75,8 +80,10 @@ const forms = [
 				value: 2,
 			},
 		],
-		showBy: 'test',
-		show: ({ test }) => test,
+		show: {
+			by: 'radio2',
+			fn: ({ radio2 }) => radio2,
+		},
 		rules: [
 			{
 				required: true,
@@ -86,10 +93,12 @@ const forms = [
 	},
 ];
 const formData = ref({});
+const valid = ref(false);
 </script>
 
 <template>
-	<Form-view :forms="forms" v-model="formData" />
+	<Form-view vertical :forms="forms" v-model="formData" :columns="24" label-width="200" debug @get-validation="valid = $event" />
+	<div>表单校验是否通过：{{ valid ? '是' : '否' }}</div>
 </template>
 
 <style scoped lang="scss"></style>

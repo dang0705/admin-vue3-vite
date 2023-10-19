@@ -5,7 +5,7 @@ import { useDict } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
 
-const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
+const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation']);
 const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
@@ -124,7 +124,7 @@ const submit = async () => {
 	} catch (e) {
 		valid = false;
 	}
-	console.log(valid);
+	prop.debug && emit('get-validation', valid);
 	if (!valid) return;
 	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
@@ -154,7 +154,8 @@ defineExpose({
 						<template v-for="form in formConfigs" :key="form.key">
 							<el-col :span="24" v-if="form.title">
 								<slot :name="`title-before-${form.key}`">
-									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
+									<h1 v-if="helper.isString(form.title)" v-text="form.title" class="mb-[20px] text-lg font-bold" />
+									<h1 v-else v-html="form.title.html" :style="form.title.style" class="mb-[20px] text-lg font-bold" />
 								</slot>
 							</el-col>
 							<el-col

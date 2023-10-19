@@ -93,5 +93,9 @@ export default {
 		type: Function,
 		default: null,
 	},
+	debug: {
+		type: Boolean,
+		default: false,
+	},
 	...actionsParams,
 };
