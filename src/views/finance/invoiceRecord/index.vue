@@ -15,7 +15,7 @@
 			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecord_open'"
 				>开票</el-button
 			>
-			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')" v-auth="'finance_invoiceRecord_reject'"
+			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')" v-auth="'finance_invoiceRecord_audit'"
 				>审核</el-button
 			>
 		</template>
@@ -80,22 +80,22 @@ const columns = [
 	{
 		prop: 'id',
 		label: '申请编号',
-		'min-width': 150,
+		'min-width': 175,
 	},
 	{
 		prop: 'settleBillRecordId',
 		label: '结算单编号',
-		'min-width': 150,
+		'min-width': 175,
 	},
 	{
 		prop: 'createTime',
 		label: '申请时间',
-		'min-width': 150,
+		'min-width': 170,
 	},
 	{
 		prop: 'invoicingAmount',
 		label: '开票金额(元)',
-		'min-width': 150,
+		'min-width': 120,
 	},
 	{
 		prop: 'billingTypeDesc',
@@ -115,7 +115,7 @@ const columns = [
 	{
 		prop: 'statusDesc',
 		label: '发票状态',
-		'min-width': 150,
+		'min-width': 100,
 	},
 	{
 		prop: 'reason',
@@ -126,12 +126,12 @@ const columns = [
 	{
 		prop: 'invoicingCategoriesDesc',
 		label: '开票类目',
-		'min-width': 150,
+		'min-width': 180,
 	},
 	{
 		prop: 'postOrderNumber',
 		label: '快递单号',
-		'min-width': 150,
+		'min-width': 180,
 	},
 	{
 		label: '操作',

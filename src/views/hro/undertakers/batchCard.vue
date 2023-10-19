@@ -64,7 +64,7 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
-		await uploadUndertakerCard({ file: form.cardZip });
+		await uploadUndertakerCard({ file: 'https://jmyg-admin.zhidianjh.com:8443/api/' + form.cardZip });
 		useMessage().success('上传身份证成功');
 		visible.value = false;
 		emit('refresh');
