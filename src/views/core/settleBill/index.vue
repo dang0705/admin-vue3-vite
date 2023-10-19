@@ -12,7 +12,7 @@
 				<el-button v-if="row.status == 10" icon="view" text type="primary" v-auth="'core_settleBill_submit'" @click="handleAction('toSubmit', row)">
 					提交账单
 				</el-button>
-				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 下载电子协议 </el-button>
+				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleContractFile(row)"> 下载电子协议 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
@@ -24,8 +24,6 @@
 				>
 					导入结算
 				</el-button>
-				<!-- <el-button @click="handleBtn" icon="view" text type="primary"> 批量导出账单 </el-button> -->
-				<!-- <el-button @click="handleBtn" icon="view" text type="primary"> 批量导出明细 </el-button> -->
 				<div class="info_list">
 					<div class="info_item" v-for="(item, index) in otherInfo.sumResp" :key="index">{{ item.label }}:{{ item.value }}元</div>
 				</div>
@@ -97,6 +95,7 @@ const router = useRouter();
 const importBillRef = ref();
 const TableViewRef = ref();
 const formAuditDialogRef = ref();
+const { proxy } = getCurrentInstance();
 const formInfo = reactive({
 	taskList: [],
 	spPaymentChannelList: [],
@@ -308,9 +307,14 @@ const indexThead = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		minWidth: 300,
+		minWidth: 220,
 	},
 ];
+const handleContractFile = (row) => {
+	console.log('proxy.baseURL', proxy.baseURL);
+
+	window.open(`${proxy.baseURL}/${row.contractUrl}`);
+};
 const handleAction = async (type: string, row: any) => {
 	switch (type) {
 		case 'view':
@@ -344,9 +348,6 @@ const handleAction = async (type: string, row: any) => {
 			useMessage().success('删除成功');
 			break;
 	}
-};
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
 };
 // 初始化表单数据
 const getTaskList = (formData: any) => {

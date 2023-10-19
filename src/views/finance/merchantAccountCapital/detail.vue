@@ -12,6 +12,10 @@
 			<template #status="{ row: { status } }">
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
 			</template>
+			<template #top-bar="{ otherInfo }">
+				<el-button @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
+				<el-button @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
+			</template>
 			<template #tableTop="{ otherInfo }">
 				<div class="total_wrapper">
 					<div class="total_list">
@@ -68,24 +72,111 @@
 				<el-button @click="handleContractFile(row)" icon="view" text type="primary"> 查看转账凭证 </el-button>
 			</template>
 		</TableView>
+		<!-- <DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" /> -->
+		<Dialog
+			vertical
+			button-position="center"
+			v-model="show"
+			:title="reType == 1 ? '发起充值' : '申请退款'"
+			:show-cancel="false"
+			:forms="forms"
+			:columns="24"
+			v-model:form-data="dialogFormData"
+			:on-cancel="onCancel"
+			:on-submit="onSubmit"
+		>
+		</Dialog>
 	</div>
 </template>
 
 <script setup lang="ts" name="账单详情">
-// src\api\finance\merchantAccountCapital.ts
 import { addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import uploadBusinessType from '/@/enums/upload-business-type';
+const businessType = uploadBusinessType.merchant;
 import Array2Object from '/@/utils/array-2-object';
+const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
+import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
 const route: any = useRoute();
+const reType = ref(0);
 const detailDialogRef = ref();
 const importBillRef = ref();
+const show = ref(false);
 const TableViewRef = ref();
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const { proxy } = getCurrentInstance();
-
+let dialogFormData = ref({});
+// const forms = ref([]);
+let forms = [];
+const form1 = [
+	{
+		control: 'UploadFile',
+		key: 'transferVouchers',
+		label: '上传转账凭证',
+		rules: [
+			{
+				required: true,
+				message: '转账凭证不能为空',
+				trigger: 'blur',
+			},
+		],
+		props: {
+			type: businessType,
+		},
+	},
+	{
+		control: 'el-input',
+		key: 'payingAccountName',
+		label: '付款户名',
+		rules: [
+			{
+				required: true,
+				message: '付款户名不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'payingAccountNumber',
+		label: '付款账号',
+		rules: [
+			{
+				required: true,
+				message: '付款账号不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'payingBankName',
+		label: '开户行',
+		rules: [
+			{
+				required: true,
+				message: '开户行不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'el-input',
+		key: 'payingAmount',
+		label: '付款金额',
+		rules: [
+			{
+				required: true,
+				message: '付款金额不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+];
+// const form2 = [];
 // 定义变量内容
 const router = useRouter();
 const loading = ref(false);
@@ -205,11 +296,68 @@ if (route.query.id) {
 	getmerchantInfoData();
 }
 
-const handlePayBillRecord = (list = [], dialogType: number) => {
-	detailDialogRef.value?.openDialog(form.id, 1, dialogType);
+const handleRe = (type: number) => {
+	reType.value = type;
+	if (type === 1) {
+		forms = form1;
+	} else if (type === 2) {
+		forms = [
+			{
+				control: 'el-input',
+				key: 'totalAmount',
+				label: '账户可用余额',
+				value: form.totalAmount,
+				props: {
+					disabled: true,
+				},
+			},
+			{
+				control: 'el-input',
+				key: 'xxx',
+				label: '申请退款金额',
+				rules: [
+					{
+						required: true,
+						message: '申请退款金额不能为空',
+						trigger: 'blur',
+					},
+				],
+			},
+			{
+				control: 'el-input',
+				key: 'accountName',
+				label: '收款户名',
+				props: {
+					disabled: true,
+				},
+				value: form.accountName,
+			},
+			{
+				control: 'el-select',
+				key: 'xxx',
+				label: '收款账号',
+				rules: [
+					{
+						required: true,
+						message: '收款账号不能为空',
+						trigger: 'blur',
+					},
+				],
+			},
+			{
+				control: 'el-input',
+				key: 'xxx',
+				label: '开户行',
+				props: {
+					disabled: true,
+				},
+			},
+		];
+	}
+	show.value = true;
 };
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
+const handlePayBillRecord = (list = [], dialogType: number) => {
+	// detailDialogRef.value?.openDialog(form.id, 1, dialogType);
 };
 const handleContractFile = (row) => {
 	window.open(`${proxy.baseURL}/${row.transferVoucher}`);
@@ -222,7 +370,28 @@ const handleRevoke = async (id) => {
 		TableViewRef.value.resetQuery();
 	} catch (err: any) {}
 };
-
+// 提交授权数据
+const onSubmit = async () => {
+	if (reType.value === 1) {
+		addMerchantRecharge({
+			accountId: route.query.id,
+			...dialogFormData.value,
+		})
+			.then((res: any) => {
+				useMessage().success('充值成功');
+				show.value = false;
+				refreshDataList();
+			})
+			.finally(() => {
+				loading.value = false;
+			});
+	} else if (reType.value === 2) {
+		useMessage().wraning('功能正在开发, 请等待~');
+	}
+};
+const onCancel = () => {
+	show.value = false;
+};
 const refreshDataList = () => {
 	getmerchantInfoData();
 	TableViewRef.value.resetQuery();

@@ -175,7 +175,7 @@
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import Array2Object from '/@/utils/array-2-object';
-const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'undertaker_agent_paying_pay_status'] });
+const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 const route: any = useRoute();
@@ -399,7 +399,7 @@ const indexThead = [
 	{
 		prop: 'paymentStatus',
 		label: '支付状态',
-		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.undertaker_agent_paying_pay_status[paymentStatus],
+		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.payment_status[paymentStatus],
 		minWidth: 100,
 	},
 	{
@@ -533,6 +533,7 @@ const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
 };
 const handleContractFile = (row) => {
+	console.log('proxy.baseURL', proxy.baseURL);
 	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
 

@@ -5,12 +5,6 @@
 			<!-- v-if="row.paymentStatus == 30" -->
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看支付凭证 </el-button>
 		</template>
-		<!-- <template #isBankFourEssentialFactor="{ row: { isBankFourEssentialFactor } }">
-			<span v-text="batchMap?.yes_no_type[isBankFourEssentialFactor]" />
-		</template>
-		<template #isSignServiceContract="{ row: { isSignServiceContract } }">
-			<span v-text="batchMap?.yes_no_type[isSignServiceContract]" />
-		</template> -->
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
@@ -19,7 +13,7 @@
 
 <script setup lang="ts" name="任务结算明细">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
-const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'undertaker_agent_paying_pay_status'] });
+const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
 const { proxy } = getCurrentInstance();
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import Array2Object from '/@/utils/array-2-object';
@@ -162,7 +156,7 @@ const columns = [
 	{
 		prop: 'paymentStatus',
 		label: '支付状态',
-		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.undertaker_agent_paying_pay_status[paymentStatus],
+		value: ({ paymentStatus }: BatchUploadRecordPage) => batchMap.value.payment_status[paymentStatus],
 		minWidth: 150,
 	},
 	{

@@ -174,9 +174,6 @@ const conditionForms = [
 		},
 	},
 ];
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
-};
 const toggleTab = (item: object) => {
 	tabType.value = item.attributeVal;
 	nextTick(() => {
