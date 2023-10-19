@@ -53,21 +53,12 @@
 			v-model:form-data="rejectFormData"
 			:onSubmit="onSubmit"
 		>
-			<template #rejectTitle>
-				<div class="text-[20px] text-center" v-if="financeType === 'cancel'">您确定要作废本发票吗？</div>
-				<el-form-item label="发票审核:" prop="address" v-else>
-					<el-radio-group v-model="rejectFormData.radioProcess" class="ml-4">
-						<el-radio :label="1" size="large">审核通过</el-radio>
-						<el-radio :label="0" size="large">审核驳回</el-radio>
-					</el-radio-group>
-				</el-form-item>
-			</template>
 		</Dialog>
 	</Table-view>
 </template>
 
 <script setup lang="ts" name="发票记录">
-import { getObj, rejectInvoice, cancelInvoice } from '/@/api/finance/invoiceRecord';
+import { getObj, auditInvoice, cancelInvoice } from '/@/api/finance/invoiceRecord';
 import { saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 see查看 open开票 cancel作废 reject驳回
 
@@ -313,6 +304,12 @@ const rejectForms = computed(() =>
 		? [
 				{
 					control: 'el-input',
+					title: {
+						html: '您确定要作废本发票吗？',
+						style: {
+							textAlign: 'center',
+						},
+					},
 					key: 'reason',
 					label: '作废原因',
 					props: {
@@ -320,7 +317,7 @@ const rejectForms = computed(() =>
 					},
 					rules: [
 						{
-							required: rejectFormData.value.radioProcess !== 1,
+							required: true,
 							message: '作废原因不能为空',
 							trigger: 'blur',
 						},
@@ -330,19 +327,19 @@ const rejectForms = computed(() =>
 		: [
 				{
 					control: 'el-radio-group',
-					key: 'radio1',
+					key: 'auditPass',
 					label: '发票审核',
 					options: [
 						{
 							label: '审核通过',
-							value: 1,
+							value: true,
 						},
 						{
 							label: '审核驳回',
-							value: 0,
+							value: false,
 						},
 					],
-					value: 1,
+					value: true,
 				},
 				{
 					control: 'el-input',
@@ -353,18 +350,19 @@ const rejectForms = computed(() =>
 					},
 					rules: [
 						{
-							required: rejectFormData.value.radioProcess !== 1,
+							required: true,
 							message: '驳回原因不能为空',
 							trigger: 'blur',
 						},
 					],
-					show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
+					show: { by: 'auditPass', fn: ({ auditPass }) => !auditPass },
 				},
 		  ]
 );
 
 const applyShow = ref(false);
 let dialogFormData = ref({
+	id: '',
 	radioAddress: 1,
 	settleBillRecordId: '',
 	invoiceFiles: [],
@@ -375,7 +373,6 @@ let dialogFormData = ref({
 const rejectShow = ref(false);
 let rejectFormData = ref({
 	id: '',
-	radioProcess: 1,
 });
 
 const applyfor = async (id: string, type: string) => {
@@ -402,7 +399,7 @@ const onSubmit = async (refresh: any) => {
 			await cancelInvoice({ ...rejectFormData.value });
 			rejectShow.value = false;
 		} else {
-			await rejectInvoice({ ...rejectFormData.value });
+			await auditInvoice({ ...rejectFormData.value });
 			rejectShow.value = false;
 		}
 		refresh();

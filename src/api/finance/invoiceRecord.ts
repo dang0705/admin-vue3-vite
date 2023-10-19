@@ -39,9 +39,9 @@ export function putObj(obj?: Object) {
 	});
 }
 
-export function rejectInvoice(obj?: Object) {
+export function auditInvoice(obj?: Object) {
 	return request({
-		url: '/finance/invoiceRecord/rejectInvoice',
+		url: '/finance/invoiceRecord/auditInvoice',
 		method: 'post',
 		data: obj,
 	});
