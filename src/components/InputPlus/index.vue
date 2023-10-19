@@ -1,13 +1,19 @@
 <template>
-	<el-input>{{ title }}</el-input>
+	<div v-if="disabled"></div>
+	<el-input v-else v-model="form.contactPhone" />
 </template>
 
 <script setup lang="ts" name="divider">
 const props = defineProps({
-	title: {
-		type: String,
-		default: '',
+	disabled: {
+		type: Boolean,
+		default: false,
 	},
+	// modelValue: {
+	// 	type: Object,
+	// 	default: () => ({}),
+	// 	required: true,
+	// },
 });
 </script>
 

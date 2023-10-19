@@ -54,7 +54,7 @@
 	}
 }
 
-[class^='el-'].is-disabled:not(.el-input-number__decrease, .el-input-number__increase),
-[class^='el-'][class$='--disabled']:not(.el-input-number__decrease, .el-input-number__increase) {
+[class^='el-'].is-disabled:not(.el-input-number__decrease, .el-input-number__increase, .el-button),
+[class^='el-'][class$='--disabled']:not(.el-input-number__decrease, .el-input-number__increase, .el-button) {
 	width: 100% !important;
 }
