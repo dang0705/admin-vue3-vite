@@ -119,6 +119,9 @@ const addUnderTakerForms = [
 				trigger: 'blur',
 			},
 		],
+		props: {
+			type: businessType,
+		},
 	},
 	{
 		control: 'el-input',
