@@ -207,20 +207,6 @@ const forms = computed(() => [
 			disabled: true,
 		},
 	},
-	{
-		control: 'el-select',
-		key: 'billingType',
-		label: '开票类型',
-		options: 'invoice_type',
-		rules: [{ required: true, message: '开票类型不能为空', trigger: 'change' }],
-	},
-	{
-		control: 'el-select',
-		key: 'invoicingCategories',
-		label: '开票类目',
-		options: 'invoice_category',
-		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
-	},
 	...(financeType.value === 'applyfor'
 		? [
 				{
@@ -255,6 +241,23 @@ const forms = computed(() => [
 						disabled: true,
 					},
 				},
+		  ]),
+	{
+		control: 'el-select',
+		key: 'billingType',
+		label: '开票类型',
+		options: 'invoice_type',
+		rules: [{ required: true, message: '开票类型不能为空', trigger: 'change' }],
+	},
+	{
+		control: 'el-select',
+		key: 'invoicingCategories',
+		label: '开票类目',
+		options: 'invoice_category',
+		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
+	},
+	...(financeType.value === 'open'
+		? [
 				{
 					control: 'UploadFile',
 					key: 'invoiceFiles',
@@ -265,7 +268,8 @@ const forms = computed(() => [
 					},
 					rules: [{ type: 'array', required: true, message: '发票图片不能为空', trigger: 'change' }],
 				},
-		  ]),
+		  ]
+		: []),
 	{
 		slot: true,
 		key: 'address',
@@ -312,6 +316,7 @@ let dialogFormData = ref({
 	postPhone: '',
 	invoiceTitle: '',
 	merchantName: '',
+	serviceAmount: '',
 });
 
 let addressInfo = ref({
@@ -326,6 +331,7 @@ const applyfor = async (id: string, type: string) => {
 	applyShow.value = true;
 	dialogFormData.value = (await getObj(id)).data;
 	dialogFormData.value.radioAddress = 1;
+	dialogFormData.value.serviceAmount = dialogFormData.value.serviceAmount + '元';
 	dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 	addressInfo.value.postAddress = dialogFormData.value.postAddress;
 	addressInfo.value.postUsername = dialogFormData.value.postUsername;
