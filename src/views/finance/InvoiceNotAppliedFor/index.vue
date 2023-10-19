@@ -1,11 +1,17 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/InvoiceNotAppliedFor.ts" labelWidth="100px">
-		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-		</template>
+	<Table-view
+		:columns="columns"
+		:condition-forms="conditionForms"
+		module="finance/InvoiceNotAppliedFor.ts"
+		labelWidth="100px"
+		downBlobFileUrl="/finance/invoiceRecord/export"
+		downBlobFileName="未申请发票.xlsx"
+	>
 		<template #actions="{ row: { id } }">
-			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')"> 申请开票 </el-button>
-			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'open')"> 开票 </el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')" v-auth="'finance_invoiceRecordNot_applyfor'">
+				申请开票
+			</el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecordNot_open'"> 开票 </el-button>
 		</template>
 		<Dialog
 			vertical
@@ -58,6 +64,10 @@ import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppl
 const financeType = ref(); // 进入方式 applyfor申请 open开票
 
 const columns = [
+	{
+		type: 'selection',
+		width: '40',
+	},
 	{
 		prop: 'spName',
 		label: '服务商',
@@ -203,20 +213,6 @@ const forms = computed(() => [
 			disabled: true,
 		},
 	},
-	{
-		control: 'el-select',
-		key: 'billingType',
-		label: '开票类型',
-		options: 'invoice_type',
-		rules: [{ required: true, message: '开票类型不能为空', trigger: 'change' }],
-	},
-	{
-		control: 'el-select',
-		key: 'invoicingCategories',
-		label: '开票类目',
-		options: 'invoice_category',
-		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
-	},
 	...(financeType.value === 'applyfor'
 		? [
 				{
@@ -251,6 +247,23 @@ const forms = computed(() => [
 						disabled: true,
 					},
 				},
+		  ]),
+	{
+		control: 'el-select',
+		key: 'billingType',
+		label: '开票类型',
+		options: 'invoice_type',
+		rules: [{ required: true, message: '开票类型不能为空', trigger: 'change' }],
+	},
+	{
+		control: 'el-select',
+		key: 'invoicingCategories',
+		label: '开票类目',
+		options: 'invoice_category',
+		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
+	},
+	...(financeType.value === 'open'
+		? [
 				{
 					control: 'UploadFile',
 					key: 'invoiceFiles',
@@ -261,7 +274,8 @@ const forms = computed(() => [
 					},
 					rules: [{ type: 'array', required: true, message: '发票图片不能为空', trigger: 'change' }],
 				},
-		  ]),
+		  ]
+		: []),
 	{
 		slot: true,
 		key: 'address',
@@ -308,6 +322,7 @@ let dialogFormData = ref({
 	postPhone: '',
 	invoiceTitle: '',
 	merchantName: '',
+	serviceAmount: '',
 });
 
 let addressInfo = ref({
@@ -322,6 +337,7 @@ const applyfor = async (id: string, type: string) => {
 	applyShow.value = true;
 	dialogFormData.value = (await getObj(id)).data;
 	dialogFormData.value.radioAddress = 1;
+	dialogFormData.value.serviceAmount = dialogFormData.value.serviceAmount + '元';
 	dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 	addressInfo.value.postAddress = dialogFormData.value.postAddress;
 	addressInfo.value.postUsername = dialogFormData.value.postUsername;

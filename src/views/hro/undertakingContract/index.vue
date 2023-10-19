@@ -78,7 +78,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemUndertakingContract">
+<script setup lang="ts" name="合同签署">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';

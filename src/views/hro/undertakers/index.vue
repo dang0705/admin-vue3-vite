@@ -13,11 +13,19 @@
 			/>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()"> 批量上传身份证 </el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()"> 批量绑定银行卡 </el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="customersRef.openDialog()"> 发起批量签署 </el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()"> 批量导入承接人 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="exportExcel" v-auth="'hro_undertakerInfo_export'"> 批量导出 </el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()" v-auth="'hro_undertakerInfo_batchUploadCard'">
+						批量上传身份证
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()" v-auth="'hro_undertakerInfo_batchBind'">
+						批量绑定银行卡
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="customersRef.openDialog()" v-auth="'hro_undertakerInfo_batchSign'">
+						发起批量签署
+					</el-button>
+					<el-button icon="Upload" type="primary" class="ml10" @click="addUnderTakerRef.openDialog()" v-auth="'hro_undertakerInfo_batchImport'">
+						批量导入承接人
+					</el-button>
 					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakerInfo_add'">
 						添加承接人
 					</el-button>
@@ -42,7 +50,7 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<!-- <el-table-column type="selection" width="40" align="center" /> -->
+				<el-table-column type="selection" width="40" align="center" />
 				<!-- <el-table-column type="index" label="#" width="40" /> -->
 				<el-table-column prop="undertakerName" label="姓名" width="100" show-overflow-tooltip />
 				<el-table-column prop="undertakerCard" label="身份证号码" width="200" show-overflow-tooltip />
@@ -322,6 +330,7 @@ const exportExcel = () => {
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);
 	multiple.value = !objs.length;
+	console.log(selectObjs.value, 123123);
 };
 
 // 删除操作

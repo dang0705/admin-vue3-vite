@@ -29,11 +29,15 @@
 			<template #after-forms v-if="hasFail">
 				<ul class="flex justify-between">
 					<li class="mb-[20px] text-lg font-bold">失败记录表</li>
-					<li>
-						<el-button @click="exportFile">导出</el-button>
-					</li>
 				</ul>
-				<TableView :columns="failListHead" :params="failParams" module="core/batchUploadRecord.ts" get-list-fn-name="getFailList" />
+				<TableView
+					:columns="failListColumns"
+					:params="failParams"
+					:down-blob-file-name="`${currentTitle}-失败记录表.xlsx`"
+					down-blob-file-url="/core/batchFailDetails/export"
+					module="core/batchUploadRecord.ts"
+					get-list-fn-name="getFailList"
+				/>
 			</template>
 		</Dialog>
 	</TableView>
@@ -41,8 +45,6 @@
 
 <script setup lang="ts" name="导入批次">
 import { getObj } from '/@/api/core/batchUploadRecord';
-import Array2Object from '/@/utils/array-2-object';
-import { downBlobFile } from '/@/utils/other';
 import columns from '/@/views/hro/batchUploadRecord/import/columns';
 import conditionForms from '/@/views/hro/batchUploadRecord/import/condition-forms';
 import dynamicForms from '/@/views/hro/batchUploadRecord/import/dynamic-forms';
@@ -50,7 +52,7 @@ import { State } from '/@/views/hro/batchUploadRecord/import/enums';
 // 筛选表单
 
 const dialogFormLabelWidth = ref(160);
-const failListHead = ref<any[]>([]);
+const failListColumns = ref<any[]>([]);
 
 let currentId = ''; // 主键
 const currentType = ref(''); // 批次类型
@@ -60,7 +62,7 @@ const show = ref(false);
 let dialogFormData = ref({});
 
 const hasFail = computed(() => currentState.value !== State['进行中'] && currentState.value !== State['全部成功']);
-const forms = dynamicForms({ dialogFormLabelWidth, currentType, currentTitle, failListHead });
+const forms = dynamicForms({ dialogFormLabelWidth, currentType, currentTitle, failListColumns });
 let failParams = {};
 const view = async ({ id, type, state }: any) => {
 	show.value = true;
@@ -70,9 +72,4 @@ const view = async ({ id, type, state }: any) => {
 	dialogFormData.value = (await getObj(id)).data;
 	failParams = { batchId: currentId };
 };
-
-// 定义查询字典
-const batchMap = computed(() => Array2Object({ dic: ['batch_status', 'batch_type'] }).value);
-
-const exportFile = async () => await downBlobFile('/core/batchFailDetails/export', failParams, `${currentTitle.value}-失败记录表.xlsx`);
 </script>

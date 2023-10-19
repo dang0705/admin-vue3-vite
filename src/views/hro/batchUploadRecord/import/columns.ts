@@ -1,5 +1,5 @@
 import Array2Object from '/@/utils/array-2-object';
-
+// 查字典
 const batchMap = Array2Object({ dic: ['batch_status', 'batch_type'] });
 interface BatchUploadRecordPage {
 	batchNumber: string;
