@@ -54,8 +54,13 @@
 							<ChinaArea :disabled="isDetail" ref="chinaAreaRef" v-model="form.areaDatas" class="w100" />
 						</el-form-item>
 					</el-col>
-
 					<el-col :span="12" class="mb20">
+						<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
+							<el-input :disabled="isDetail" v-model="form.socialCreditCode" />
+						</el-form-item>
+					</el-col>
+
+					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.address')" prop="address">
 							<el-input :disabled="isDetail" v-model="form.address" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
@@ -72,10 +77,9 @@
 							></el-date-picker>
 						</el-form-item>
 					</el-col>
-
 					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-							<el-input :disabled="isDetail" v-model="form.socialCreditCode" />
+						<el-form-item label="企业邮箱" prop="xxx">
+							<el-input :disabled="isDetail" v-model="form.xxx" />
 						</el-form-item>
 					</el-col>
 
@@ -298,6 +302,7 @@ const form = reactive({
 	district: '',
 	address: '',
 	entryDate: '',
+	xxx: '',
 	businessLicense: [],
 	logo: [],
 	businessScope: '',
@@ -343,6 +348,7 @@ const dataRules = ref({
 	district: [{ required: true, message: '所在区不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '注册地址不能为空', trigger: 'blur' }],
 	entryDate: [{ required: true, message: '入驻日期不能为空', trigger: 'blur' }],
+	xxx: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
 	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
 	logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
