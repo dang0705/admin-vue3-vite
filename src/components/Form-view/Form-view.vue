@@ -5,7 +5,7 @@ import { useDict } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
 
-const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
+const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation']);
 const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
@@ -124,8 +124,9 @@ const submit = async () => {
 	} catch (e) {
 		valid = false;
 	}
-	console.log(valid);
+	prop.debug && emit('get-validation', valid);
 	if (!valid) return;
+	console.log(valid);
 	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
