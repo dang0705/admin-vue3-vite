@@ -308,13 +308,8 @@ const forms = computed(() => [
 	},
 ]);
 
-const rejectForms = computed(() => [
-	// {
-	// 	slot: true,
-	// 	key: 'rejectTitle',
-	// 	column: 24,
-	// },
-	...(financeType.value === 'cancel'
+const rejectForms = computed(() =>
+	financeType.value === 'cancel'
 		? [
 				{
 					control: 'el-input',
@@ -365,8 +360,8 @@ const rejectForms = computed(() => [
 					],
 					show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
 				},
-		  ]),
-]);
+		  ]
+);
 
 const applyShow = ref(false);
 let dialogFormData = ref({

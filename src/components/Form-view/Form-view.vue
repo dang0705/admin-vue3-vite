@@ -36,6 +36,7 @@ interface OptionsParams {
 
 const formConfigs = ref<any[]>([]);
 const initForms = async (forms: [], formData: any) => {
+	formConfigs.value = [];
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
 		const item = formConfigs.value[i] as FormOptions;
