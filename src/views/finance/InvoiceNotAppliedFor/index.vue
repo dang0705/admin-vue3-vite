@@ -82,7 +82,7 @@ const columns = [
 	{
 		prop: 'settleBillId',
 		label: '账单编号',
-		'min-width': 150,
+		'min-width': 175,
 	},
 	{
 		prop: 'settleBillName',
@@ -92,22 +92,22 @@ const columns = [
 	{
 		prop: 'settleBillTypeDesc',
 		label: '结算单类型',
-		'min-width': 150,
+		'min-width': 120,
 	},
 	{
 		prop: 'id',
 		label: '结算单编号',
-		'min-width': 150,
+		'min-width': 175,
 	},
 	{
 		prop: 'payTime',
 		label: '结算完成时间',
-		'min-width': 150,
+		'min-width': 170,
 	},
 	{
 		prop: 'serviceAmount',
 		label: '可开票全额(元)',
-		'min-width': 150,
+		'min-width': 100,
 	},
 	{
 		label: '操作',

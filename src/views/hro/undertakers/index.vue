@@ -330,7 +330,6 @@ const exportExcel = () => {
 const selectionChangHandle = (objs: { id: string }[]) => {
 	selectObjs.value = objs.map(({ id }) => id);
 	multiple.value = !objs.length;
-	console.log(selectObjs.value, 123123);
 };
 
 // 删除操作

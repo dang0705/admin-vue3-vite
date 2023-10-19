@@ -60,6 +60,7 @@
 
 <script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
+import thousandthDivision from '/@/utils/thousandth-division';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 const props = defineProps({
@@ -213,9 +214,8 @@ const toggleTab = (item: any) => {
 };
 
 const tableCellFormatter = (row, { label }, cellValue, index) => {
-	// console.log(row, label, cellValue, index);
 	if (label?.includes('(元)')) {
-		return '￥' + (+cellValue)?.toFixed(2);
+		return `￥${thousandthDivision(+cellValue)}`;
 	}
 	return cellValue;
 };

@@ -11,7 +11,6 @@
 			v-model="show"
 			disabled
 			:title="`【 ${currentTitle} 】 导入详情`"
-			v-bind="{ fullscreen: hasFail }"
 			:show-cancel="false"
 			:label-width="dialogFormLabelWidth"
 			:forms="forms"

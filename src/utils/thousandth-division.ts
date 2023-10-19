@@ -1,7 +1,9 @@
-export default function (number: number) {
-	if (number === 0) return '0';
+export default function (number: number, decimalPlaces: number = 2): string {
+	if (number === 0) {
+		return '0.00';
+	}
 
-	const str = number.toString();
+	const str = number.toFixed(decimalPlaces);
 	const parts = str.split('.');
 	const integerPart = parts[0];
 	const decimalPart = parts[1] ? '.' + parts[1] : '';

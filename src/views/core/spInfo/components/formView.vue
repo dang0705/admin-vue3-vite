@@ -53,8 +53,7 @@
 					</el-col>
 					<el-col :span="24" class="mb20">
 						<el-form-item label="经营范围:" prop="businessScope">
-							<div class="text-[#606266]" v-if="!!route.query.see">{{ form.businessScope }}</div>
-							<el-input type="textarea" v-model="form.businessScope" v-else />
+							<el-input type="textarea" v-model="form.businessScope" autosize :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
