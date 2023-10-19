@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Session } from '/@/utils/storage';
+import { Local, Session } from '/@/utils/storage';
 import { useMessageBox } from '/@/hooks/message';
 import qs from 'qs';
 import other from './other';
@@ -28,6 +28,11 @@ service.interceptors.request.use(
 			config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`;
 		}
 		config.headers.tenantId = 0;
+		if(Local.get('api-version')){
+			//just for testing so far
+			config.headers!['api-version'] = Local.get('api-version');
+		}
+		
 		// 请求报文加密
 		if (config.headers![CommonHeaderEnum.ENC_FLAG]) {
 			const enc = other.encryption(JSON.stringify(config.data), import.meta.env.VITE_PWD_ENC_KEY);
