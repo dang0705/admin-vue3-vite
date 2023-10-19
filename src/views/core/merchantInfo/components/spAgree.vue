@@ -2,17 +2,17 @@
 	<el-row shadow="hover" v-show="showSearch" class="ml10">
 		<el-form :inline="true" :model="state.queryForm" @keyup.enter="getDataList" ref="queryRef">
 			<el-form-item :label="$t('merchantInfo.spList')" prop="spId">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.spId">
+				<el-select clearable v-model="state.queryForm.spId">
 					<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 				</el-select>
 			</el-form-item>
 			<el-form-item :label="$t('merchantInfo.feeCalculationMethod')" prop="feeCalculationMethod">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.feeCalculationMethod">
+				<el-select clearable v-model="state.queryForm.feeCalculationMethod">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
 				</el-select>
 			</el-form-item>
 			<el-form-item :label="$t('merchantInfo.isUploadAchievement')" prop="isUploadAchievement">
-				<el-select :placeholder="$t('merchantInfo.inputSelect')" clearable v-model="state.queryForm.isUploadAchievement">
+				<el-select clearable v-model="state.queryForm.isUploadAchievement">
 					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 				</el-select>
 			</el-form-item>
@@ -52,8 +52,13 @@
 		<el-table-column prop="agreementName" min-width="140" label="服务协议名称" show-overflow-tooltip />
 		<el-table-column prop="spName" label="服务商" show-overflow-tooltip />
 		<!-- <el-table-column prop="serviceManager" label="服务负责人" show-overflow-tooltip /> -->
-		<el-table-column prop="feeCalculationMethodDesc" min-width="140" label="服务费计算方式" show-overflow-tooltip />
-		<el-table-column prop="feeRate" label="服务费率" min-width="100" show-overflow-tooltip />
+		<el-table-column prop="feeCalculationMethodDesc" min-width="140" label="管理费计算方式" show-overflow-tooltip />
+		<el-table-column prop="feeRate" label="管理费率" min-width="100" show-overflow-tooltip>
+			<template #default="scope">
+				{{ scope.row.feeRate + '%' }}
+			</template>
+		</el-table-column>
+
 		<el-table-column prop="isElectronicSignatureDesc" min-width="110" label="要求电子签署" show-overflow-tooltip />
 		<el-table-column prop="isUploadAchievementDesc" min-width="140" label="要求上传任务成果" show-overflow-tooltip />
 		<el-table-column prop="startTime" min-width="100" label="起始时间" show-overflow-tooltip />
@@ -121,6 +126,9 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 // 清空搜索条件
 const resetQuery = () => {
+	state.queryForm = {
+		merchantId: route.query.id,
+	};
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选
@@ -151,14 +159,12 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+	} catch (err: any) {}
 };
 
 const getmerchantInfoData = () => {
 	// 获取数据
-	getSpInfoList().then((res: any) => {
+	getSpInfoList('').then((res: any) => {
 		spinfoList.value = res.data || [];
 	});
 };

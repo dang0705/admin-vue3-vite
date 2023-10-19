@@ -8,7 +8,7 @@
 			<sub-item :chil="val.children" />
 		</el-sub-menu>
 		<template v-else>
-			<el-menu-item :index="val.path" :key="val.path">
+			<el-menu-item :index="val.path" :key="val.path" @click="$router.push({ path: val.path, state: { refresh: 1 } })">
 				<template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 					<SvgIcon :name="val.meta.icon" />
 					<span>{{ other.setMenuI18n(val) }}</span>

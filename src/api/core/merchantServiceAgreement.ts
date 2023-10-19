@@ -46,3 +46,11 @@ export function userDropList(query?: Object) {
 		params: query,
 	});
 }
+
+export function agreeList(query?: Object) {
+	return request({
+		url: '/core/merchantServiceAgreement/list',
+		method: 'get',
+		params: query,
+	});
+}

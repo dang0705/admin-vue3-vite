@@ -46,11 +46,10 @@ export function stopObj(ids?: Object) {
 		data: ids,
 	});
 }
-export function getSpInfoList(obj?: Object) {
+export function getSpInfoList(type: any) {
 	return request({
-		url: '/core/spInfo/list',
+		url: type === 'platform' ? '/core/spInfo/listAll' : '/core/spInfo/list',
 		method: 'get',
-		data: obj,
 	});
 }
 
@@ -59,5 +58,36 @@ export function getMerchantInfoList(obj?: Object) {
 		url: '/core/merchantInfo/list',
 		method: 'get',
 		data: obj,
+	});
+}
+
+export function putMerchantSubAccount(obj?: Object) {
+	return request({
+		url: '/core/merchantSubAccount',
+		method: 'post',
+		data: obj,
+	});
+}
+
+export function getMerchantSubAccountDetail(id?: string) {
+	return request({
+		url: '/core/merchantSubAccount/' + id,
+		method: 'get',
+	});
+}
+
+export function getMerchantSubAccountList(query?: Object) {
+	return request({
+		url: '/core/merchantSubAccount/page',
+		method: 'get',
+		params: query,
+	});
+}
+
+export function getSpPaymentChannelList(query?: Object) {
+	return request({
+		url: '/core/spPaymentChannel/list',
+		method: 'get',
+		params: query,
 	});
 }

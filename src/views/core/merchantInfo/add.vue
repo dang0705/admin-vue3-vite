@@ -6,6 +6,6 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="merchantAdd">
+<script setup lang="ts" name="添加商户">
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 </script>

@@ -65,3 +65,18 @@ export function updateMobile(obj?: Object) {
 		data: obj,
 	});
 }
+// 承接人加入服务商 服务商列表
+export function getSpInfoListId(id?: string) {
+	return request({
+		url: '/core/undertakerInfo/getSpInfoList/' + id,
+		method: 'get',
+	});
+}
+// 批量上传承接人身份证;
+export function uploadUndertakerCard(obj?: Object) {
+	return request({
+		url: '/core/undertakerInfo/uploadUndertakerCard',
+		method: 'post',
+		data: obj,
+	});
+}

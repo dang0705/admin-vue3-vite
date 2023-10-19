@@ -1,16 +1,16 @@
 <template>
 	<el-card class="!border-none" shadow="never">
-		<el-steps class="mb-8" :active="curStep" finish-status="success">
+		<el-steps v-if="!self_disabled || curStep == 2" class="mb-8" :active="curStep" finish-status="success">
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
 		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="140px" formDialogRef v-loading="loading">
 			<div>
-				<Divider v-if="curStep == 2" :title="stepList[0]" />
+				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
-						<el-form-item label="客户" prop="merchantId">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.merchantId">
+						<el-form-item label="商户" prop="merchantId">
+							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.merchantId">
 								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 							</el-select>
 						</el-form-item>
@@ -18,38 +18,40 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商" prop="spId">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.spId">
+							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.spId">
 								<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="服务协议" prop="serviceContract">
-							<el-input :disabled="self_disabled" v-model="form.serviceContract" placeholder="请输入服务协议" />
+						<el-form-item label="服务协议" prop="serviceContractId">
+							<el-select :disabled="self_disabled" clearable v-model="form.serviceContractId">
+								<el-option :key="item.agreementId" :label="item.agreementName" :value="item.agreementId" v-for="item in agree_list" />
+							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="任务承接方式" prop="undertakeType">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.undertakeType">
-								<el-option :key="item.id" :label="item.name" :value="item.id" v-for="item in undertakeTypeList" />
+							<el-select :disabled="self_disabled" clearable v-model="form.undertakeType">
+								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_undertaking_type" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="任务名称" prop="taskName">
-							<el-input :disabled="self_disabled" v-model="form.taskName" placeholder="请输入任务名称" />
+							<el-input :disabled="self_disabled" maxlength="100" v-model="form.taskName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 140px" class="com_label">任务类型</div>
+						<div style="min-width: 140px" class="com_label require">任务类型</div>
 						<el-form-item label-width="0" prop="taskTypeFirst">
 							<el-select
+								@change="form.taskTypeSecond = ''"
 								:disabled="self_disabled"
-								@change="handleTaskTypeLevel1"
 								placeholder="一级分类"
 								class="w100"
 								clearable
@@ -67,70 +69,78 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number :disabled="self_disabled" :min="1" :max="1000" v-model="form.userCount" placeholder="请输入需要人数"></el-input-number>
+							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
 							<ChinaArea :disabled="self_disabled" ref="chinaAreaRef" v-model="form.areaDatas" class="w100" />
-							<!-- <el-select :placeholder="$t('merchantInfo.inputProvinceTip')" class="w100" clearable v-model="form.province">
-									<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-								</el-select> -->
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="工作地址" prop="address">
-							<el-input
+							<el-input :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
+						</el-form-item>
+					</el-col>
+
+					<!-- <el-col :span="12" class="mb20">
+						<el-form-item label="工作开始时间" prop="startTime">
+							<el-date-picker
 								:disabled="self_disabled"
-								v-model="form.address"
-								:rows="2"
-								:placeholder="$t('merchantInfo.inputAddressTip')"
-								show-word-limit
-								type="textarea"
+								type="datetime"
+								placeholder="工作开始时间"
+								v-model="form.startTime"
+								:value-format="dateTimeStr"
+							></el-date-picker>
+						</el-form-item>
+					</el-col> -->
+
+					<el-col :span="12" class="mb20">
+						<el-form-item label="工作时间" prop="workTimeRange">
+							<!-- <el-date-picker
+								:disabled="self_disabled"
+								type="datetime"
+								placeholder="工作开始时间"
+								v-model="form.endTime"
+								:value-format="dateTimeStr"
+							></el-date-picker> -->
+
+							<el-time-picker
+								:disabled="self_disabled"
+								:value-format="dateTimeStr"
+								v-model="form.workTimeRange"
+								is-range
+								range-separator="至"
+								start-placeholder="工作开始时间"
+								end-placeholder="工作结束时间"
 							/>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="工作开始时间" prop="startTime">
-							<el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择工作开始时间"
-								v-model="form.startTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
-						</el-form-item>
-					</el-col>
-
-					<el-col :span="12" class="mb20">
-						<el-form-item label="工作结束时间" prop="endTime">
-							<el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择工作结束时间"
-								v-model="form.endTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
-						</el-form-item>
-					</el-col>
-
-					<el-col :span="12" class="mb20">
 						<el-form-item label="发包单价" prop="unitPrice">
-							<el-input :disabled="self_disabled" v-model="form.unitPrice" placeholder="请输入发包单价" />
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="0"
+								v-model="form.unitPrice"
+								:precision="2"
+								:step="0.1"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包数量" prop="count">
-							<el-input-number :disabled="self_disabled" :min="1" :max="1000" v-model="form.count" placeholder="请输入发包数量"></el-input-number>
+							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="计量单位" prop="measuringUnit">
-							<el-select :disabled="self_disabled" placeholder="请选择" class="w100" clearable v-model="form.measuringUnit">
+							<el-select :disabled="self_disabled" class="w100" clearable v-model="form.measuringUnit">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_unit" />
 							</el-select>
 						</el-form-item>
@@ -138,120 +148,124 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="任务描述" prop="taskDesc">
-							<el-input :disabled="self_disabled" v-model="form.taskDesc" :rows="2" placeholder="请输入" show-word-limit type="textarea" />
+							<el-input :disabled="self_disabled" maxlength="500" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label=" 是否要求打卡" prop="clockRequired">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.clockRequired">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
+							<el-select :disabled="self_disabled" clearable v-model="form.clockRequired">
+								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in options" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="打卡范围" prop="clockRank">
-							<el-input :disabled="self_disabled" v-model="form.clockRank" placeholder="请输入打卡范围" />
+							<el-input :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="签到时间" prop="signInTime">
-							<el-date-picker
+						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
+							<el-time-picker
 								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择签到时间"
-								v-model="form.signInTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
+								v-model="form.signInOrCheckOutTime"
+								is-range
+								range-separator="至"
+								start-placeholder="签到时间"
+								end-placeholder="签退时间"
+								:value-format="timeStr"
+							/>
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">
-							<el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="请选择签退时间"
-								v-model="form.checkOutTime"
-								:value-format="dateTimeStr"
-							></el-date-picker>
+							<el-time-picker v-model="form.checkOutTime" :value-format="timeStr" />
+						</el-form-item>
+					</el-col> -->
+
+					<el-col :span="12" class="mb20">
+						<el-form-item label="业务联系人" prop="businessMerchant">
+							<el-input :disabled="self_disabled" v-model="form.businessMerchant" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="业务商户" prop="businessMerchant">
-							<el-input :disabled="self_disabled" v-model="form.businessMerchant" placeholder="请输入业务商户" />
-						</el-form-item>
-					</el-col>
-
-					<el-col :span="12" class="mb20">
-						<el-form-item label="业务商户手机号" prop="businessPhone">
-							<el-input :disabled="self_disabled" v-model="form.businessPhone" placeholder="请输入业务商户手机号" />
+						<el-form-item label="联系人手机号" prop="businessPhone">
+							<el-input :disabled="self_disabled" v-model="form.businessPhone" />
 						</el-form-item>
 					</el-col>
 				</el-row>
-				<Divider v-if="curStep == 2" :title="stepList[1]" />
-				<el-row v-if="curStep == 1 || curStep == 2" :gutter="24">
+				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
+				<el-row v-if="curStep == 1 || curStep == 2 || self_disabled" :gutter="24">
 					<el-col :span="12" class="mb20">
-						<el-form-item label="性别" prop="merchantId">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.merchantId">
+						<el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
-						<el-form-item label="年龄要求" prop="yaoqiu1">
-							<el-input :disabled="self_disabled" v-model="form.yaoqiu1" placeholder="请输入" />
+						<div style="min-width: 140px" class="com_label">年龄要求</div>
+						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMin"
+							></el-input-number>
 						</el-form-item>
-						<el-form-item prop="yaoqiu2" style="margin-left: 12px">
-							<el-input :disabled="self_disabled" v-model="form.yaoqiu2" placeholder="请输入" />
+						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
+							<el-input-number
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="16"
+								:max="65"
+								v-model="form.taskRequireInfo.requiredAgeMax"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="学历要求" prop="edu">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.edu">
+						<el-form-item label="学历要求" prop="taskRequireInfo.educational">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.educational">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in education" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="经验要求" prop="experience">
-							<el-select :disabled="self_disabled" placeholder="请选择" clearable v-model="form.experience">
+						<el-form-item label="经验要求" prop="taskRequireInfo.experience">
+							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.experience">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in experience" />
 							</el-select>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
-						<el-form-item label="工作福利" prop="address">
-							<el-input
-								:disabled="self_disabled"
-								v-model="form.address"
-								:rows="2"
-								:placeholder="$t('merchantInfo.inputAddressTip')"
-								show-word-limit
-								type="textarea"
-							/>
+						<el-form-item label="工作福利" prop="taskRequireInfo.workFare">
+							<el-input :disabled="self_disabled" maxlength="500" v-model="form.taskRequireInfo.workFare" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="工作环境" prop="taxManagerPortrait">
-							<UploadFile :disabled="self_disabled" :type="businessType" v-model="form.taxManagerPortrait" />
+						<el-form-item label="工作环境" prop="taskRequireInfo.workEnvironment">
+							<UploadFile :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
 						</el-form-item>
 					</el-col>
 				</el-row>
 			</div>
 		</el-form>
-		<span class="flex justify-center items-center mt-5">
+		<span v-if="!self_disabled || curStep == 2" class="flex justify-center items-center mt-5">
 			<el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
 			<el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
-			<el-button v-if="curStep == stepList.length - 1 && !self_disabled" type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			<el-button v-if="curStep == stepList.length - 1" type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-card>
 </template>
@@ -260,35 +274,27 @@
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/task';
-import { getMerchantInfoList, getSpInfoList } from '/@/api/core/merchantInfo';
+import { agreeList } from '/@/api/core/merchantServiceAgreement';
+import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
-const emit = defineEmits(['refresh']);
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
 const businessType = uploadBusinessType.merchant;
+const chinaAreaRef = ref();
 // 定义字典
-const { task_type, task_unit, is_need, gender, education, experience } = useDict(
+const { task_type, task_unit, is_need, gender, education, experience, task_undertaking_type } = useDict(
 	'task_type',
 	'task_unit',
 	'is_need',
 	'gender',
 	'education',
-	'experience'
+	'experience',
+	'task_undertaking_type'
 );
 
 // 定义变量内容
 const merchantList = ref([]);
 const spinfoList = ref([]);
-const undertakeTypeList = ref([
-	{
-		name: '指派',
-		id: 1,
-	},
-	{
-		name: '抢单',
-		id: 2,
-	},
-]);
 
 const curStep = ref(0);
 const stepList = ref(['基本信息', '承揽要求', '完成']);
@@ -299,34 +305,44 @@ const props = defineProps({
 		default: false,
 	},
 });
-
+const options = ref([
+	{
+		label: '是',
+		value: true,
+	},
+	{
+		label: '否',
+		value: false,
+	},
+]);
 const dataFormRef = ref();
 const loading = ref(false);
+const agree_list = ref([]);
 const route = useRoute();
 const router = useRouter();
 // 定义字典
 
 // 提交表单数据
 const form = reactive({
-	id: '',
-	taskNo: '',
+	taskId: '',
 	taskName: '',
 	merchantId: '',
 	spId: '',
 	status: '',
-	auditStatus: '',
-	serviceContract: '',
+	serviceContractId: '',
 	undertakeType: '',
 	taskTypeFirst: '',
 	taskTypeSecond: '',
 	userCount: 0,
 	province: '',
 	city: '',
+	areaDatas: '',
 	county: '',
 	address: '',
-	startTime: '',
-	endTime: '',
-	unitPrice: '',
+	// startTime: '',
+	// endTime: '',
+	workTimeRange: [],
+	unitPrice: 0,
 	count: 0,
 	measuringUnit: '',
 	taskDesc: '',
@@ -334,47 +350,62 @@ const form = reactive({
 	clockRank: '',
 	signInTime: '',
 	checkOutTime: '',
+	signInOrCheckOutTime: [],
 	businessMerchant: '',
 	businessPhone: '',
-});
-
-const task_typeLevel_option = reactive({
-	task_typeLevel1_option: [],
-	task_typeLevel2_option: [],
+	areaDescDatas: '',
+	taskRequireInfo: {
+		requiredSex: '',
+		requiredAgeMin: 0,
+		requiredAgeMax: 0,
+		educational: '',
+		experience: '',
+		workFare: '',
+		// "workEnvironment": ""
+		workEnvironment: [],
+	},
 });
 
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 2 ? true : false));
+// const self_disabled = watch(() => (props.isDetail ? true : curStep.value === 2 ? true : false));
+// watch(
+// 	() => props.isDetail,
+// 	(val) => {
+// 		console.log('val-111', val);
+// 	}
+// );
 
 // 定义校验规则
 const dataRules = ref({
-	taskNo: [{ required: true, message: '任务编号不能为空', trigger: 'blur' }],
 	taskName: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
 	merchantId: [{ required: true, message: '客户不能为空', trigger: 'blur' }],
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '任务状态不能为空', trigger: 'blur' }],
-	auditStatus: [{ required: true, message: '审核状态不能为空', trigger: 'blur' }],
-	serviceContract: [{ required: true, message: '服务协议不能为空', trigger: 'blur' }],
+	serviceContractId: [{ required: true, message: '服务协议不能为空', trigger: 'blur' }],
 	undertakeType: [{ required: true, message: '任务承接方式不能为空', trigger: 'blur' }],
 	taskTypeFirst: [{ required: true, message: '一级分类不能为空', trigger: 'blur' }],
 	taskTypeSecond: [{ required: true, message: '二级分类不能为空', trigger: 'blur' }],
 	userCount: [{ required: true, message: '需要人数不能为空', trigger: 'blur' }],
 	province: [{ required: true, message: '省份不能为空', trigger: 'blur' }],
 	city: [{ required: true, message: '城市不能为空', trigger: 'blur' }],
+	areaDatas: [{ required: true, message: '所在地区不能为空', trigger: 'blur' }],
 	county: [{ required: true, message: '区县不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '工作地址不能为空', trigger: 'blur' }],
-	startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
-	endTime: [{ required: true, message: '工作结束时间不能为空', trigger: 'blur' }],
+	// startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
+	workTimeRange: [{ required: true, message: '工作时间不能为空', trigger: 'blur' }],
 	unitPrice: [{ required: true, message: '发包单价不能为空', trigger: 'blur' }],
 	count: [{ required: true, message: '发包数量不能为空', trigger: 'blur' }],
 	measuringUnit: [{ required: true, message: '计量单位不能为空', trigger: 'blur' }],
 	taskDesc: [{ required: true, message: '任务描述不能为空', trigger: 'blur' }],
 	clockRequired: [{ required: true, message: ' 是否要求打卡不能为空', trigger: 'blur' }],
 	clockRank: [{ required: true, message: '打卡范围不能为空', trigger: 'blur' }],
-	signInTime: [{ required: true, message: '签到时间不能为空', trigger: 'blur' }],
-	checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
-	businessMerchant: [{ required: true, message: '业务商户不能为空', trigger: 'blur' }],
-	businessPhone: [{ required: true, message: '业务商户手机号不能为空', trigger: 'blur' }],
+	// signInTime: [{ required: true, message: '签到时间不能为空', trigger: 'blur' }],
+	// checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
+	signInOrCheckOutTime: [{ required: true, message: '签到签退时间不能为空', trigger: 'blur' }],
+
+	businessMerchant: [{ required: true, message: '业务联系人不能为空', trigger: 'blur' }],
+	businessPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
 });
 
 // 重置表单数据
@@ -389,12 +420,18 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
-		form.id ? await putObj(form) : await addObj(form);
-		useMessage().success(form.id ? '修改成功' : '添加成功');
-		visible.value = false;
-		emit('refresh');
+		form.areaDescDatas = chinaAreaRef.value.getCheckedNodes(true)[0].pathLabels.join(',');
+		form.taskId ? await putObj(form) : await addObj(form);
+		// form.taskId ? await addObj(form) : await addObj(form);
+		// 您已成功创建指派任务"小白楼保洁服务"！
+		useMessage().success(form.taskId ? '修改成功' : '添加成功');
+		router.push({
+			path: '/core/task/index',
+			state: {
+				refresh: 1,
+			},
+		});
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}
@@ -411,12 +448,17 @@ const onPrev = async () => {
 };
 
 // 初始化表单数据
-const gettaskData = (id: string) => {
+const gettaskData = () => {
 	// 获取数据
 	loading.value = true;
-	getObj(id)
+	getObj(route.query.taskId)
 		.then((res: any) => {
 			Object.assign(form, res.data);
+			if (route.query.taskId && route.query.copy == 1) {
+				form.taskId = '';
+				form.taskName = '';
+			}
+			getAgreeList();
 		})
 		.finally(() => {
 			loading.value = false;
@@ -433,47 +475,42 @@ getSpInfoList().then((res: any) => {
 	spinfoList.value = res.data || [];
 });
 
-// setTimeout(() => {
-// 	task_type.value.forEach((item: object) => {
-// 		if (form.taskTypeFirst == item.parentValue) {
-// 			task_typeLevel_option.task_typeLevel1_option.push(item);
-// 			task_typeLevel_option.task_typeLevel2_option.push(item);
-// 		} else if (!item.parentValue) {
-// 			task_typeLevel_option.task_typeLevel1_option.push(item);
-// 		}
-// 	});
-// }, 500);
+if (route.query.taskId) {
+	gettaskData();
+}
 
-const handleTaskTypeLevel1 = () => {
-	form.taskTypeSecond = '';
-	task_typeLevel_option.task_typeLevel2_option = [];
-	task_type.value.forEach((item) => {
-		if (form.taskTypeFirst == item.parentValue) {
+const task_typeLevel_option = computed(() => {
+	let task_typeLevel_option = {
+		task_typeLevel1_option: [],
+		task_typeLevel2_option: [],
+	};
+	task_type.value.forEach((item: object) => {
+		if (!item.parentValue) {
+			task_typeLevel_option.task_typeLevel1_option.push(item);
+		}
+		if (form.taskTypeFirst == item.parentValue && form.taskTypeFirst) {
 			task_typeLevel_option.task_typeLevel2_option.push(item);
 		}
 	});
+	return task_typeLevel_option;
+});
+
+const setCurStep = (step: number) => {
+	curStep.value = step;
+};
+// 获取协议
+const getAgreeList = () => {
+	// 获取数据
+	agreeList({
+		merchantId: form.merchantId,
+		spId: form.spId,
+	}).then((res: any) => {
+		agree_list.value = res.data || [];
+	});
 };
 
-if (route.query.id) {
-	setTimeout(() => {
-		task_type.value.forEach((item: object) => {
-			if (form.taskTypeFirst == item.parentValue) {
-				task_typeLevel_option.task_typeLevel1_option.push(item);
-				task_typeLevel_option.task_typeLevel2_option.push(item);
-			} else if (!item.parentValue) {
-				task_typeLevel_option.task_typeLevel1_option.push(item);
-			}
-		});
-	}, 500);
-} else {
-	setTimeout(() => {
-		task_type.value.forEach((item: object) => {
-			if (!item.parentValue) {
-				task_typeLevel_option.task_typeLevel1_option.push(item);
-			}
-		});
-	}, 500);
-}
+// 接受外部强刷页面的钩子
+$refreshList(setCurStep, 0);
 </script>
 
 <style scoped lang="scss"></style>

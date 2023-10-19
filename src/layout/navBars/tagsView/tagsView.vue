@@ -227,7 +227,7 @@ const refreshCurrentTagsView = async (fullPath: string) => {
 	state.tagsViewList.forEach((v: RouteItem) => {
 		v.transUrl = transUrlParams(v);
 		if (v.transUrl) {
-			if (v.transUrl === transUrlParams(v)) item = v;
+			if (v.transUrl === decodeURIPath) item = v;
 		} else {
 			if (v.path === decodeURIPath) item = v;
 		}
@@ -551,6 +551,9 @@ onBeforeMount(() => {
 			});
 		}
 	});
+	mittBus.on('refresh', (e: any) => {
+		refreshCurrentTagsView(e);
+	});
 });
 // 页面卸载时
 onUnmounted(() => {
@@ -560,6 +563,8 @@ onUnmounted(() => {
 	mittBus.off('openOrCloseSortable', () => {});
 	// 取消监听布局配置开启 TagsView 共用
 	mittBus.off('openShareTagsView', () => {});
+	// 取消监听刷新
+	mittBus.off('refresh', () => {});
 	// 取消窗口 resize 监听
 	window.removeEventListener('resize', onSortableResize);
 });

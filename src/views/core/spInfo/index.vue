@@ -4,10 +4,10 @@
 			<el-row class="ml10" v-show="showSearch">
 				<el-form :inline="true" :model="state.queryForm" ref="queryRef">
 					<el-form-item :label="$t('spInfo.spName')" prop="spName">
-						<el-input :placeholder="$t('spInfo.inputSpNameTip')" style="max-width: 180px" v-model="state.queryForm.spName" />
+						<el-input style="max-width: 180px" v-model="state.queryForm.spName" />
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
-						<el-select :placeholder="t('spInfo.inputStatusTip')" v-model="state.queryForm.status">
+						<el-select v-model="state.queryForm.status">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in sp_status"></el-option>
 						</el-select>
 					</el-form-item>
@@ -38,7 +38,7 @@
 				</div>
 			</el-row>
 			<el-table
-				:data="state.dataList"
+				:data="state.dataList.filter((v) => v.isPlatform !== '1')"
 				v-loading="state.loading"
 				border
 				:cell-style="tableStyle.cellStyle"
@@ -48,8 +48,9 @@
 				style="width: 100%"
 			>
 				<!-- <el-table-column type="selection" width="100" align="center" /> -->
-				<el-table-column type="index" label="#" width="200" />
+				<!-- <el-table-column type="index" label="#" width="200" /> -->
 				<el-table-column prop="spName" label="服务商名称" width="200" show-overflow-tooltip />
+				<el-table-column prop="socialCreditCode" label="社会统一信用代码" width="200" show-overflow-tooltip />
 				<el-table-column prop="legalPersonName" label="法人姓名" width="200" show-overflow-tooltip />
 				<el-table-column prop="legalPersonMobile" label="法人手机号" width="250" show-overflow-tooltip />
 				<el-table-column label="状态" width="200">
@@ -60,6 +61,7 @@
 				<el-table-column label="是否开启支付通道" width="300">
 					<template #default="scope">
 						<div v-if="scope.row.hasPaymentChannel === '1'">是</div>
+						<div v-else-if="scope.row.hasPaymentChannel === '0' && scope.row.statusDesc === '停用'">否</div>
 						<el-button v-else text type="primary" @click="formDialogRef.openDialog(scope.row.id)">否，立即前往开通</el-button>
 					</template>
 				</el-table-column>
@@ -111,7 +113,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemSpInfo">
+<script setup lang="ts" name="服务商">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -145,12 +147,12 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 
 // 清空搜索条件
-const resetQuery = () => {
+const resetQuery = async () => {
 	// 清空搜索条件
 	queryRef.value?.resetFields();
 	// 清空多选
 	selectObjs.value = [];
-	getDataList();
+	await getDataList();
 };
 
 // 导出excel
@@ -175,6 +177,10 @@ const deactivateShow = (id: string, spName: string, status: string) => {
 		handleDeactivate();
 	}
 };
+const clearCache = async () => {
+	const { useSpStore } = await import('/@/stores/sp');
+	useSpStore().$patch((state) => (state.sp = state.spAll = []));
+};
 const handleDeactivate = async () => {
 	try {
 		await switchStatus({
@@ -184,9 +190,8 @@ const handleDeactivate = async () => {
 		getDataList();
 		useMessage().success(deactivateInfo.value.status === '1' ? '停用成功' : '启用成功');
 		deactivateVisible.value = false;
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+		clearCache();
+	} catch (err: any) {}
 };
 
 // 删除操作
@@ -196,13 +201,13 @@ const handleDelete = async (ids: string[]) => {
 	} catch {
 		return;
 	}
-
 	try {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
+		clearCache();
+	} catch (err: any) {}
 };
+
+$refreshList(resetQuery);
 </script>

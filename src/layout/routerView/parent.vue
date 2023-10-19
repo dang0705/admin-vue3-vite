@@ -2,7 +2,7 @@
 	<div class="layout-parent">
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
-				<keep-alive>
+				<keep-alive :include="getKeepAliveNames">
 					<component :is="Component" :key="state.refreshRouterViewKey" class="w100" v-show="!isIframePage" v-if="route.meta.isKeepAlive" />
 				</keep-alive>
 			</transition>
@@ -43,7 +43,8 @@ const state = reactive<ParentViewState>({
 const setTransitionName = computed(() => {
 	return themeConfig.value.animation;
 });
-
+// 获取组件缓存列表(name值)
+const getKeepAliveNames = computed(() => (themeConfig.value.isTagsview ? cachedViews.value : state.keepAliveNameList));
 // 设置 iframe 显示/隐藏
 const isIframePage = computed(() => {
 	return route.meta.isIframe;
@@ -75,6 +76,9 @@ onBeforeMount(() => {
 // 页面加载时
 onMounted(() => {
 	getIframeListRoutes();
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
+	// https://gitee.com/lyt-top/vue-next-admin/pulls/40
 	nextTick(() => {
 		setTimeout(() => {
 			if (themeConfig.value.isCacheTagsView) {

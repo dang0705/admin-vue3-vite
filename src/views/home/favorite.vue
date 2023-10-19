@@ -1,10 +1,16 @@
 <template>
-	<el-card class="box-card" style="height: 100%">
-		<template #header>
+	<el-row :gutter="10" v-if="favoriteRoutes.length > 0">
+		<el-col class="shortcutCard" v-bind="{ xl: 6, lg: 8, sm: 12 }" :key="shortcut.id" v-for="shortcut in favoriteRoutes">
+			<SvgIcon name="ele-Close" :size="12" class="shortcutCardClose" @click="handleCloseFavorite(shortcut)" />
+			<shortcutCard :icon="shortcut.meta?.icon" :label="shortcut.name" @click="handleRoute(shortcut.path)" />
+		</el-col>
+	</el-row>
+	<!--	<el-card class="box-card" style="height: 100%">
+		&lt;!&ndash;		<template #header>
 			<div class="card-header">
 				<span>{{ $t('home.quickNavigationToolsTip') }}</span>
 			</div>
-		</template>
+		</template>&ndash;&gt;
 		<el-row :gutter="10" v-if="favoriteRoutes.length > 0">
 			<el-col class="shortcutCard" :span="6" :key="shortcut.id" v-for="shortcut in favoriteRoutes">
 				<SvgIcon name="ele-Close" :size="12" class="shortcutCardClose" @click="handleCloseFavorite(shortcut)" />
@@ -12,7 +18,7 @@
 			</el-col>
 		</el-row>
 		<el-empty :description="$t('home.addFavoriteRoutesTip')" v-else />
-	</el-card>
+	</el-card>-->
 </template>
 
 <script setup lang="ts" name="SysFavoriteDashboard">

@@ -1,38 +1,53 @@
 <template>
-	<el-dialog v-model="isOpen" class="w-full" :close-on-click-modal="false" draggable>
+	<el-dialog fullscreen v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
-		<el-transfer
-			class="w-full flex justify-between items-center"
-			v-model="selected"
-			filterable
-			:filter-method="filterMethod"
-			:props="{ key: 'id' }"
-			:render-content="renderFunc"
-			:left-default-checked="[2, 3]"
-			:right-default-checked="[1]"
-			:titles="titles"
-			:button-texts="buttonTexts"
-			:data="data"
+		<Form-view
+			v-if="state.dialog.isShowDialog"
+			v-model="formData"
+			v-model:show="state.dialog.isShowDialog"
+			:columns="24"
+			:forms="forms"
+			:on-submit="onSubmit"
+			button-position="center"
+			vertical
 		>
-			<template v-for="(_, slot) in $slots" #[slot]="option">
-				<slot :name="slot" v-bind="option" />
+			<template v-for="(_, slot) in $slots" #[slot]>
+				<slot :name="slot" v-bind="{ formData }" />
 			</template>
-			<template #default="{ option }" v-if="!hasDefaultSlot">
-				<ul class="flex justify-between px-3">
-					<li>{{ option.values[0].value }}</li>
-					<li v-if="option.values[1]">{{ option.values[1].value }}</li>
-				</ul>
+			<template #after-forms>
+				<el-form-item :prop="mainField" :class="{ 'no-label': !mainLabel }">
+					<template #label v-if="mainLabel">
+						<label v-text="`${mainLabel}：`" />
+					</template>
+					<el-transfer
+						class="w-full flex justify-between items-center"
+						v-model="selected"
+						filterable
+						:filter-method="filterMethod"
+						:props="{ key: 'id' }"
+						:render-content="renderFunc"
+						:titles="titles"
+						:button-texts="buttonTexts"
+						:data="data"
+					>
+						<template v-for="(_, slot) in $slots" #[slot]="option">
+							<slot :name="slot" v-bind="option" />
+						</template>
+						<template #default="{ option }" v-if="!hasDefaultSlot">
+							<ul class="flex justify-between px-3">
+								<li class="mr-5">{{ option.values[0].value }}</li>
+								<li class="truncate" v-if="option.values[1]" :title="option.values[1].value">{{ option.values[1].value }}</li>
+							</ul>
+						</template>
+					</el-transfer>
+				</el-form-item>
 			</template>
-		</el-transfer>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
+			<template #third-button>
 				<el-button @click="selected = [...selectedCache]">重置</el-button>
-				<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
-			</span>
-		</template>
+			</template>
+		</Form-view>
 	</el-dialog>
 </template>
 
@@ -85,6 +100,35 @@ const props = defineProps({
 		type: Function,
 		default: (query: string, item: Data) => item.values.some(({ value }) => value?.includes(query.toLowerCase())),
 	},
+	forms: {
+		type: Array,
+		default: () => [],
+	},
+	mainField: {
+		type: String,
+		default: '',
+	},
+	mainLabel: {
+		type: String,
+		default: '',
+	},
+	dialogWidth: {
+		type: String,
+		default: '50%',
+	},
+	watchField: {
+		type: String,
+		default: '',
+	},
+	saveMethod: {
+		type: String,
+		default: 'put', // 表格行间保存使用put 表格顶部批量操作使用post
+	},
+	idsField: {
+		// 不同业务对应的id字段名
+		type: String,
+		default: 'allocationIds',
+	},
 });
 
 interface Data {
@@ -102,6 +146,13 @@ const data = ref<Data[]>([]);
 const selectedCache = ref<(string | number)[]>([]);
 const selected = ref<(string | number)[]>([]);
 const hasDefaultSlot = !!useSlots().default;
+
+const formData = ref({});
+props.watchField &&
+	watch(
+		() => formData.value[props.watchField],
+		(value) => openDialog()
+	);
 
 const { t } = useI18n();
 
@@ -130,7 +181,7 @@ const isOpen = computed({
 
 // 打开弹窗
 const openDialog = async (row: any) => {
-	state.roleId = row[props.idFiled];
+	state.roleId = row?.[props.idFiled];
 	loading.value = true;
 	selected.value = selectedCache.value = [];
 	// console.log(request);
@@ -141,7 +192,8 @@ const openDialog = async (row: any) => {
 			params: {
 				current: 1,
 				size: 9999,
-				[props.idFiled]: state.roleId,
+				...(props.watchField ? { [props.watchField]: formData.value[props.watchField] } : {}),
+				...(state.roleId ? { [props.idFiled]: state.roleId } : {}),
 			},
 		});
 	}
@@ -157,9 +209,10 @@ const onSubmit = async () => {
 	// const menuIds = menuTree.value.getCheckedKeys().join(',').concat(',').concat(menuTree.value.getHalfCheckedKeys().join(','));
 	loading.value = true;
 	try {
-		await request.put(props.saveUrl, {
+		await request[props.saveMethod](props.saveUrl, {
 			assignTo: state.roleId,
-			allocationIds: selected.value,
+			[props.idsField]: selected.value,
+			...formData.value,
 		});
 		state.dialog.isShowDialog = false;
 		useMessage().success(t('common.editSuccessText'));
@@ -168,14 +221,6 @@ const onSubmit = async () => {
 	} finally {
 		loading.value = false;
 	}
-	/*	permissionUpd(state.roleId, menuIds)
-		.then(() => {
-			state.dialog.isShowDialog = false;
-			useMessage().success(t('common.editSuccessText'));
-		})
-		.finally(() => {
-			loading.value = false;
-		});*/
 };
 
 // 暴露变量
@@ -193,5 +238,16 @@ defineExpose({
 		margin: 10px 0 0 0;
 		width: 100%;
 	}
+}
+::v-deep(.no-label) {
+	.el-form-item__content {
+		margin-left: 0 !important;
+	}
+}
+::v-deep(.el-transfer-panel) {
+	//width: fit-content;
+}
+::v-deep(.el-checkbox) {
+	margin-right: 0;
 }
 </style>

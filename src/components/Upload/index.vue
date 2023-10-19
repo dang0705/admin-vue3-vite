@@ -2,6 +2,7 @@
 	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
 		<div>
 			<el-upload
+				v-if="isImage || (!isImage && !disabled)"
 				action="#"
 				drag
 				:id="uuid"
@@ -12,13 +13,12 @@
 				:show-file-list="false"
 				:http-request="handleHttpUpload"
 				:before-upload="beforeUpload"
-				:on-success="uploadSuccess"
 				:on-error="uploadError"
 				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-				<template v-if="realImages.length && !multiple">
-					<img :src="realImages[0]" class="upload-image" />
+				<template v-if="isImage && prefixedUrls.length && !multiple">
+					<img :src="prefixedUrls[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
 						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
 							<el-icon :size="iconSize">
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 				</template>
-				<div class="upload-empty" v-else-if="!realImages.length || multiple">
+				<div class="upload-empty" v-else-if="self_disabled ? false : props.fileType !== 'image' || !prefixedUrls.length || multiple">
 					<slot name="empty">
 						<el-icon>
 							<Plus />
@@ -48,20 +48,43 @@
 						<span>单击上传<br />或拖拽到此处</span>
 					</slot>
 				</div>
-				<template #tip>
+				<template #tip v-if="!self_disabled">
 					<!-- accept.length ? accept.join(',') : new_accept.join(',') -->
 					<span class="text-[#999] text-[14px]"
 						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
 					>
+					<!--          upload file loading-->
+					<template v-if="!isImage">
+						<ul>
+							<li v-for="(name, index) in fileNames" :key="name">
+								<el-progress v-if="fileLoading[name]?.loading" :percentage="fileLoading[name].progress" />
+								<div v-else class="flex items-center">
+									<el-icon class="cursor-pointer mr-2" @click="deleteImg(index)" v-if="multiple"><Delete /></el-icon>
+									<span v-text="name.split('^')[0]" class="text-primary mr-2" />
+									<el-icon class="ml-auto" color="green"><Select /></el-icon>
+								</div>
+							</li>
+						</ul>
+					</template>
 				</template>
 			</el-upload>
+			<template v-if="disabled && !isImage">
+				<a
+					class="color-primary hover:underline"
+					v-for="(url, index) in prefixedUrls"
+					:key="url"
+					:download="url"
+					:href="url"
+					v-text="`附件${index + 1}`"
+				/>
+			</template>
 			<div class="el-upload__tip">
-				<slot name="tip"></slot>
+				<slot name="tip" />
 			</div>
 		</div>
 		<ul class="flex flex-warp" v-if="multiple">
-			<li v-for="(image, index) in realImages" :key="image">
-				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="realImages" fit="cover" />
+			<li v-for="(image, index) in prefixedUrls" :key="image">
+				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
 				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
 					<el-icon :size="iconSize" class="ml-auto">
 						<Delete />
@@ -70,7 +93,7 @@
 				</div>
 			</li>
 		</ul>
-		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="realImages" />
+		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="prefixedUrls" />
 	</div>
 </template>
 
@@ -79,6 +102,8 @@ import { ElNotification, formContextKey, formItemContextKey } from 'element-plus
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
+import { IMAGE_TYPES, FILE_TYPES, LIMIT, COMPRESSION } from '/@/configuration/upload-rules';
+import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility';
 
 // 接受父组件参数
 const props = defineProps({
@@ -103,10 +128,12 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	// 大小约束
 	fileSize: {
 		type: [Number, String],
-		default: 5,
+		default: 0,
 	},
+	// 数量约束
 	limit: {
 		type: [Number, String],
 		default: 0,
@@ -143,18 +170,29 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+	showName: {
+		type: Boolean,
+		default: false,
+	},
 });
+let fileNames = ref([]);
+const isImage = props.fileType === 'image';
+
+const { isInDialog, isDialogShow } = useDialogVisibility();
+
+watch(
+	() => isDialogShow?.value as boolean,
+	(value) => isInDialog && !value && (fileNames.value = []),
+	{ immediate: true }
+);
+
 const { proxy } = getCurrentInstance();
 
-const fileTypeText = props.fileType === 'image' ? '图片' : '文件';
+const fileTypeText = isImage ? '图片' : '文件';
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
 
-const new_accept = ref(
-	props.fileType == 'image'
-		? ['image/jpeg', 'image/png', 'image/gif']
-		: ['png', 'jpg', 'jpeg', 'doc', 'xls', 'ppt', 'txt', 'pdf', 'docx', 'xlsx', 'pptx']
-);
+const new_accept = computed(() => (props.accept.length ? props.accept : props.fileType == 'image' ? IMAGE_TYPES : FILE_TYPES));
 
 // 查看图片
 const imgViewVisible = ref(false);
@@ -164,6 +202,7 @@ const formContext = inject(formContextKey, void 0);
 const formItemContext = inject(formItemContextKey, void 0);
 // 判断是否禁用上传和删除
 const self_disabled = computed(() => props.disabled || formContext?.disabled);
+// 文件名称
 
 /**
  * @description 图片上传
@@ -174,8 +213,13 @@ interface UploadEmits {
 }
 
 const emit = defineEmits<UploadEmits>();
+const fileLoading = reactive({} as any);
 const upload = async (options: UploadRequestOptions) => {
 	let formData = new FormData();
+	const { name, uid } = options.file;
+	const fileName = `${name}^${uid}`;
+	fileLoading[fileName] = {};
+	fileLoading[fileName].loading = true;
 	formData.append('file', options.file);
 	formData.append('businessType', props.type);
 	try {
@@ -186,29 +230,36 @@ const upload = async (options: UploadRequestOptions) => {
 				'Content-Type': 'multipart/form-data',
 			},
 			data: formData,
+			onUploadProgress: (progressEvent) => {
+				fileLoading[fileName].progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+			},
 		});
 		// 调用 el-form 内部的校验方法（可自动校验）
 		return Promise.resolve(data.url);
 	} catch (error) {
 		options.onError(error as any);
+	} finally {
+		fileLoading[fileName].loading = false;
 	}
 };
 
-const images = ref<string[]>([]);
-const realImages = ref<string[]>([]);
+const urls = ref<string[]>([]);
+const prefixedUrls = ref<string[]>([]);
+
+// props.fileType === 'image' &&
 watch(
 	() => props.modelValue as [],
 	(value: []) => {
-		images.value = value;
-		realImages.value = images.value.map((image) => `${proxy.baseURL}/${image}`);
+		urls.value = value;
+		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
 	},
 	{ immediate: true }
 );
 
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
-	props.multiple ? images.value.push(image) : (images.value = [image]);
-	emit('update:modelValue', images.value);
+	props.multiple ? urls.value.push(image) : (urls.value = [image]);
+	emit('update:modelValue', urls.value);
 	await nextTick();
 	formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
@@ -218,8 +269,8 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
  * */
 const deleteImg = (index: number) => {
 	// (images.value as []).splice(index, 1);
-	props.multiple ? images.value.splice(index, 1) : (images.value = []);
-	emit('update:modelValue', images.value);
+	props.multiple ? urls.value.splice(index, 1) && fileNames.value.splice(index, 1) : (urls.value = []);
+	emit('update:modelValue', urls.value);
 };
 
 /**
@@ -234,17 +285,19 @@ const editImg = () => {
  * @description 文件上传之前判断
  * @param rawFile 选择的文件
  * */
-const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
-	const imgSize = rawFile.size / 1024 / 1024 < props.fileSize;
-	let imgType =
-		props.fileType !== 'image' ? true : (props.accept.length ? props.accept : new_accept.value).includes(rawFile.type as File.ImageMimeType);
+const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
+	const suffix = name.slice(name.lastIndexOf('.'));
+	const limit = IMAGE_TYPES.includes(suffix) ? LIMIT.image : COMPRESSION.includes(suffix) ? LIMIT.compression : LIMIT.file;
+	const sizeValid = size / 1024 / 1024 < (props.fileSize || limit);
+	let imgType = (props.accept.length ? props.accept : new_accept.value).includes(suffix);
+
 	if (!imgType)
 		ElNotification({
 			title: '温馨提示',
 			message: `上传${fileTypeText}不符合所需的格式！`,
 			type: 'warning',
 		});
-	if (!imgSize)
+	if (!sizeValid)
 		setTimeout(() => {
 			ElNotification({
 				title: '温馨提示',
@@ -252,18 +305,12 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 				type: 'warning',
 			});
 		}, 0);
-	return imgType && imgSize;
-};
 
-/**
- * @description 图片上传成功
- * */
-const uploadSuccess = () => {
-	ElNotification({
-		title: '温馨提示',
-		message: `${fileTypeText}上传成功！`,
-		type: 'success',
-	});
+	if (imgType && sizeValid) {
+		props.multiple ? fileNames.value.push(`${name}^${uid}`) : (fileNames.value = [`${name}^${uid}`]);
+	}
+
+	return imgType && sizeValid;
 };
 
 /**

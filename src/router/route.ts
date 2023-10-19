@@ -76,6 +76,15 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 		component: () => import('/@/views/theme-config.vue'),
 		meta: {},
 	},
+	...(__isDev
+		? [
+				{
+					path: '/test',
+					name: 'test',
+					component: () => import('/@/views/Test.vue'),
+				},
+		  ]
+		: []),
 ];
 
 /**

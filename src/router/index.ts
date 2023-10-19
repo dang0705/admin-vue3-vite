@@ -79,7 +79,6 @@ export function formatTwoStageRoutes(arr: any) {
 			}
 		}
 	});
-	console.log(newArr);
 	return newArr;
 }
 

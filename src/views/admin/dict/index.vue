@@ -98,6 +98,7 @@ const handleRefreshCache = () => {
 // 点击树
 const handleNodeClick = (data: any) => {
 	dictItemDialogRef.value.open(data);
+	$bus.emit('dict-node-click', data);
 };
 
 // 刷新树
@@ -105,6 +106,10 @@ const handleRefreshTree = async (data: any) => {
 	await dictTreeRef.value.getdeptTree();
 	// 选择当前编辑、新增的节点
 	handleNodeClick(data);
+};
+const clearCache = async () => {
+	const { dict } = await import('/@/stores/dict');
+	dict().$patch((state) => (state.dict = []));
 };
 
 // 删除操作
@@ -118,6 +123,7 @@ const handleDelete = async (ids: string[]) => {
 	try {
 		await delObj(ids);
 		useMessage().success(t('common.delSuccessText'));
+		clearCache();
 		dictTreeRef.value.getdeptTree();
 	} catch (err: any) {
 		useMessage().error(err.msg);

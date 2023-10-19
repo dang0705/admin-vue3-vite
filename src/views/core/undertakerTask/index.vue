@@ -1,0 +1,11 @@
+<template>
+	<div class="layout-padding">
+		<div class="layout-padding-auto layout-padding-view">
+			<undertaking-records />
+		</div>
+	</div>
+</template>
+
+<script setup lang="ts" name="systemUndertakerTask">
+const UndertakingRecords = defineAsyncComponent(() => import('./components/undertakingRecords.vue'));
+</script>

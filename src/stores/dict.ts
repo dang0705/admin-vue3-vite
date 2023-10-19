@@ -35,7 +35,11 @@ export const dict = defineStore('dict', {
 			if (!key || typeof key !== 'string') {
 				return;
 			}
-			this.dict.push({ key, value });
+			function isKeyUnique(arr: [], key: string) {
+				return arr.every((item: unknown | object) => item.key !== key);
+			}
+			const item = { key, value };
+			isKeyUnique(this.dict as [], item.key) && this.dict.push(item);
 		},
 
 		/**
