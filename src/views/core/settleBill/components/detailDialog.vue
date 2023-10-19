@@ -48,9 +48,9 @@
 				v-model="formData"
 				:forms="addUnderTakerForms"
 			>
-				<template #xxx5="{ form }">
-					<el-form-item label="上传转账凭证" prop="xxx5">
-						<UploadFile :type="businessType" v-model="formData.xxx5" />
+				<template #transferVouchers="{ form }">
+					<el-form-item label="上传转账凭证" prop="transferVouchers">
+						<UploadFile :type="businessType" v-model="formData.transferVouchers" />
 					</el-form-item>
 				</template>
 			</form-view>
@@ -73,6 +73,7 @@ import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
 import uploadBusinessType from '/@/enums/upload-business-type';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
+import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
 const businessType = uploadBusinessType.merchant;
 import spPaymentChannel from '/@/api/core/spPaymentChannel';
 import commonFunction from '/@/utils/commonFunction';
@@ -97,22 +98,22 @@ const balanceInfo = reactive({
 });
 const spPaymentChannelData = reactive({});
 const formData = reactive({
-	xxx1: '',
-	xxx2: '',
-	xxx3: '',
-	xxx4: '',
-	xxx5: [],
+	payingAccountName: '',
+	payingAccountNumber: '',
+	payingBankName: '',
+	payingAmount: '',
+	transferVouchers: [],
 });
 const addUnderTakerForms = [
 	{
 		control: 'Upload',
-		key: 'xxx5',
+		key: 'transferVouchers',
 		label: '上传转账凭证',
 		slot: true,
 	},
 	{
 		control: 'el-input',
-		key: 'xxx1',
+		key: 'payingAccountName',
 		label: '付款户名',
 		rules: [
 			{
@@ -124,8 +125,8 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx2',
-		label: '付付款账号款户名',
+		key: 'payingAccountNumber',
+		label: '付款账号',
 		rules: [
 			{
 				required: true,
@@ -136,7 +137,7 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx3',
+		key: 'payingBankName',
 		label: '开户行',
 		rules: [
 			{
@@ -148,7 +149,7 @@ const addUnderTakerForms = [
 	},
 	{
 		control: 'el-input',
-		key: 'xxx4',
+		key: 'payingAmount',
 		label: '付款金额',
 		rules: [
 			{
@@ -235,7 +236,6 @@ const onSubmit = async () => {
 				}
 				dialogType.value = 2;
 				title.value = '发起付款成功';
-				// visible.value = false;
 				emit('refresh');
 			})
 			.finally(() => {
@@ -243,7 +243,18 @@ const onSubmit = async () => {
 			});
 	} else if (dialogType.value === 3) {
 		console.log('xxx', formData);
-		useMessage().wraning('功能正在开发, 请等待~');
+		addMerchantRecharge({
+			accountId: '1714206494087450626', // 伪代码
+			...formData,
+		})
+			.then((res: any) => {
+				useMessage().success('充值成功');
+				visible.value = false;
+				emit('refresh');
+			})
+			.finally(() => {
+				loading.value = false;
+			});
 	}
 };
 const getQueryBalance = () => {

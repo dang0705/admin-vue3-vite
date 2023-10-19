@@ -12,7 +12,7 @@ module.exports = {
 		sourceType: 'module',
 	},
 	globals: {
-		__isDev__: true,
+		_isDev_: true,
 	},
 	extends: ['plugin:vue/vue3-essential', 'plugin:vue/essential', 'eslint:recommended'],
 	plugins: ['vue', '@typescript-eslint'],

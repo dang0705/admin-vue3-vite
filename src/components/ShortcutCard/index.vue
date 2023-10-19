@@ -16,7 +16,7 @@ const props = defineProps({
 	},
 	label: {
 		type: String,
-		default: () => '快捷方式',
+		default: () => '',
 		required: false,
 	},
 	color: {

@@ -93,7 +93,7 @@ const state = reactive({
 		path: '',
 		sortOrder: 0,
 		menuType: '1',
-		keepAlive: '0',
+		keepAlive: '1',
 		visible: '1',
 		embedded: '0',
 	},

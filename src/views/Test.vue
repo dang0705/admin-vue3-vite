@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { UploadExcel } from '/@/components';
+import { NextLoading } from '/@/utils/loading';
+NextLoading.done();
 const forms = [
 	{
 		control: 'el-radio-group',
-		key: 'isInventoryUser',
-		label: '是否存量用户',
+		key: 'radio1',
+		label: '单选一',
 		options: [
 			{
 				label: '是',
@@ -18,25 +19,80 @@ const forms = [
 		rules: [
 			{
 				required: true,
-				// validator: (value: number) => value !== undefined,
+				validator: (value: number) => value !== undefined,
+				trigger: 'change',
 			},
 		],
 		value: 1,
 	},
+	{
+		control: 'el-radio-group',
+		key: 'radio2',
+		label: '单选二',
+		options: [
+			{
+				label: '是',
+				value: 1,
+			},
+			{
+				label: '否',
+				value: 0,
+			},
+		],
+		rules: [
+			{
+				required: true,
+				validator: (value: number) => value !== undefined,
+				trigger: 'change',
+			},
+		],
+		value: 1,
+	},
+	{
+		control: 'el-input',
+		label: '单选一对应的动态控件',
+		key: 'text',
+		rules: [
+			{
+				required: true,
+				trigger: 'blur',
+			},
+		],
+		show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
+	},
+	{
+		control: 'el-select',
+		label: '单选二对应的动态控件',
+		key: 'select',
+		options: [
+			{
+				label: '选项一',
+				value: 1,
+			},
+			{
+				label: '选项一',
+				value: 2,
+			},
+		],
+		show: {
+			by: 'radio2',
+			fn: ({ radio2 }) => radio2,
+		},
+		rules: [
+			{
+				required: true,
+				trigger: 'change',
+			},
+		],
+	},
 ];
+const formData = ref({});
+const valid = ref(false);
 </script>
 
 <template>
-	<UploadExcel
-		force-open
-		guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
-		upload-label="待签署用户名单"
-		upload-url="core/undertakerInfo/import"
-		temp-url="/files/合同批量签署模板.xlsx"
-		template-on-front
-		title="批量导入承接人"
-		:forms="forms"
-	/>
+	<Form-view vertical :forms="forms" v-model="formData" :columns="24" label-width="200" debug @get-validation="valid = $event" />
+	<div>表单校验是否通过：{{ valid ? '是' : '否' }}</div>
 </template>
 
 <style scoped lang="scss"></style>

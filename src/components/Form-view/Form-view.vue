@@ -5,8 +5,8 @@ import { useDict } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
 
-const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show']);
-const refresh = inject('refresh');
+const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation']);
+const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
 	modelValue: {
@@ -34,11 +34,34 @@ interface OptionsParams {
 	[k: string]: any;
 }
 
+const formConfigs = ref<any[]>([]);
 const initForms = async (forms: [], formData: any) => {
 	for (let i = 0; i < forms.length; i++) {
-		const item = forms[i] as FormOptions;
+		formConfigs.value.push(forms[i]);
+		const item = formConfigs.value[i] as FormOptions;
+		const itemRulesCache = [...(item.rules || [])];
+
+		item.hidden = false;
 		item.value !== undefined && (formData[item.key] = item.value);
+		item.onChange &&
+			watch(
+				() => formData[item.key],
+				(value) => item.onChange && item.onChange(value, formData)
+			);
+		item.show &&
+			watch(
+				() => formData[item.show?.by as string],
+				() => {
+					const isShow = item.show && !!item.show.fn(formData);
+					item.hidden = !isShow;
+					item.rules && (item.rules = isShow ? itemRulesCache : []);
+					formData[item.key] = null;
+				},
+				{ immediate: true }
+			);
 		if (!item.options) continue;
+
+		// 处理options数据源
 		const { options } = item;
 		if (helper.isString(options)) {
 			const { [options as string]: dic } = useDict(options as string);
@@ -77,11 +100,6 @@ const initForms = async (forms: [], formData: any) => {
 		}
 	}
 };
-const dynamicForms = computed(() => {
-	const forms = <any>[];
-	prop.disabled && prop.forms?.forEach((item) => forms.push({ ...item, props: { ...item.props, disabled: true } }));
-	return prop.disabled ? forms : prop.forms;
-});
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
 const reset = () => form?.value?.resetFields();
 
@@ -106,7 +124,9 @@ const submit = async () => {
 	} catch (e) {
 		valid = false;
 	}
+	prop.debug && emit('get-validation', valid);
 	if (!valid) return;
+	console.log(valid);
 	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
@@ -132,7 +152,7 @@ defineExpose({
 				<el-row :gutter="10" class="w-full">
 					<slot name="before-forms" />
 					<slot name="forms">
-						<template v-for="form in dynamicForms" :key="form.key">
+						<template v-for="form in formConfigs" :key="form.key">
 							<el-col :span="24" v-if="form.title">
 								<slot :name="`title-before-${form.key}`">
 									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
@@ -150,11 +170,12 @@ defineExpose({
 										v-model="formData[form.key]"
 										v-bind="{
 											...form.props,
-											...(form.props?.clearable === undefined ? { clearable: true } : {}),
 											...(form.props?.disabled ? { placeholder: '--' } : {}),
+											clearable: form.props?.clearable ?? true,
+											disabled: form.props?.disabled ?? prop.disabled,
 										}"
 									>
-										<template v-if="form.control === 'el-select'">
+										<template v-if="!form.hidden && form.control === 'el-select'">
 											<el-option
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value]"
@@ -162,7 +183,7 @@ defineExpose({
 												:label="item[form.props?.label || 'label']"
 											/>
 										</template>
-										<template v-if="form.control === 'el-radio-group'">
+										<template v-if="!form.hidden && form.control === 'el-radio-group'">
 											<el-radio
 												v-for="item in formOptions[form.key]"
 												:key="item[form.props?.value || 'value']"

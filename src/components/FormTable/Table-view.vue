@@ -139,6 +139,8 @@ const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Reco
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
 const fetchList = ref('');
+console.log('props.getListFnName', props.getListFnName);
+
 watch(
 	() => props.module,
 	(value) => (fetchList.value = apis[`/src/api/${value}`][props.getListFnName]),
@@ -166,8 +168,15 @@ const selectObjs = ref([]) as any;
 
 // 导出excel
 const exportExcel = () => {
-	downBlobFile(props.downBlobFileUrl, Object.assign(state.queryForm, { ids: selectObjs }), props.downBlobFileName);
+	downBlobFile(
+		props.downBlobFileUrl,
+		Object.assign(state.queryForm, {
+			ids: props.getFullSelection ? selectObjs.value.map(({ [props.selectMainKey]: id }: Record<string, string>) => id) : selectObjs,
+		}),
+		props.downBlobFileName
+	);
 };
+
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
