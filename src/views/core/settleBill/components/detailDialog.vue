@@ -242,7 +242,6 @@ const onSubmit = async () => {
 				loading.value = false;
 			});
 	} else if (dialogType.value === 3) {
-		console.log('xxx', formData);
 		addMerchantRecharge({
 			accountId: '1714206494087450626', // 伪代码
 			...formData,

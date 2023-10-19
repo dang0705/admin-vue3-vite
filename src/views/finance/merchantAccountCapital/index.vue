@@ -17,7 +17,7 @@ import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const columns = [
 	{
-		prop: 'id',
+		prop: 'subAccountNum',
 		label: '资金账户',
 		'min-width': 150,
 	},
@@ -67,7 +67,7 @@ const columns = [
 const conditionForms = [
 	{
 		control: 'el-input',
-		key: 'id',
+		key: 'subAccountNum',
 		label: '资金账户',
 	},
 	{
