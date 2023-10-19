@@ -7,7 +7,7 @@
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')">作废</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')">开票</el-button>
-			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'reject')">审核</el-button>
+			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')">审核</el-button>
 		</template>
 		<Dialog
 			vertical
@@ -309,27 +309,63 @@ const forms = computed(() => [
 ]);
 
 const rejectForms = computed(() => [
-	{
-		slot: true,
-		key: 'rejectTitle',
-		column: 24,
-	},
-	{
-		control: 'el-input',
-		key: 'reason',
-		label: financeType.value === 'cancel' ? '作废原因' : '驳回原因',
-		props: {
-			type: 'textarea',
-		},
-		rules: [
-			{
-				required: rejectFormData.value.radioProcess !== 1,
-				message: financeType.value === 'cancel' ? '作废原因' : '驳回原因' + '不能为空',
-				trigger: 'blur',
-			},
-		],
-		hidden: rejectFormData.value.radioProcess === 1,
-	},
+	// {
+	// 	slot: true,
+	// 	key: 'rejectTitle',
+	// 	column: 24,
+	// },
+	...(financeType.value === 'cancel'
+		? [
+				{
+					control: 'el-input',
+					key: 'reason',
+					label: '作废原因',
+					props: {
+						type: 'textarea',
+					},
+					rules: [
+						{
+							required: rejectFormData.value.radioProcess !== 1,
+							message: '作废原因不能为空',
+							trigger: 'blur',
+						},
+					],
+				},
+		  ]
+		: [
+				{
+					control: 'el-radio-group',
+					key: 'radio1',
+					label: '发票审核',
+					options: [
+						{
+							label: '审核通过',
+							value: 1,
+						},
+						{
+							label: '审核驳回',
+							value: 0,
+						},
+					],
+					value: 1,
+				},
+				{
+					control: 'el-input',
+					key: 'reason',
+					label: '驳回原因',
+					props: {
+						type: 'textarea',
+					},
+					rules: [
+						{
+							required: rejectFormData.value.radioProcess !== 1,
+							message: '驳回原因不能为空',
+							trigger: 'blur',
+						},
+					],
+					show: { by: 'radio1', fn: ({ radio1 }) => radio1 },
+				},
+		  ]),
 ]);
 
 const applyShow = ref(false);
