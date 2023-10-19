@@ -404,8 +404,8 @@ const dataRules = ref({
 	// checkOutTime: [{ required: true, message: '签退时间不能为空', trigger: 'blur' }],
 	signInOrCheckOutTime: [{ required: true, message: '签到签退时间不能为空', trigger: 'blur' }],
 
-	businessMerchant: [{ required: true, message: '业务联系人不能为空', trigger: 'blur' }],
-	businessPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
+	// businessMerchant: [{ required: true, message: '业务联系人不能为空', trigger: 'blur' }],
+	// businessPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
 });
 
 // 重置表单数据
