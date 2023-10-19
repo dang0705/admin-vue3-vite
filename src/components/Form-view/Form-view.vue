@@ -126,7 +126,6 @@ const submit = async () => {
 	}
 	prop.debug && emit('get-validation', valid);
 	if (!valid) return;
-	console.log(valid);
 	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
@@ -155,7 +154,8 @@ defineExpose({
 						<template v-for="form in formConfigs" :key="form.key">
 							<el-col :span="24" v-if="form.title">
 								<slot :name="`title-before-${form.key}`">
-									<h1 v-text="form.title" class="mb-[20px] text-lg font-bold" />
+									<h1 v-if="helper.isString(form.title)" v-text="form.title" class="mb-[20px] text-lg font-bold" />
+									<h1 v-else v-html="form.title.html" :style="form.title.style" class="mb-[20px] text-lg font-bold" />
 								</slot>
 							</el-col>
 							<el-col

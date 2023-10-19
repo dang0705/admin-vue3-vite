@@ -1,11 +1,11 @@
 {
-	"name": "pig-ui",
+	"name": "jmyg",
 	"version": "3.7.1",
-	"description": "PIGCLOUD微服务开发平台",
-	"author": "pig4cloud",
-	"license": "Apache-2.0",
+	"description": "积木优工",
+	"author": "gmoregalaxy",
+	"license": "gmoregalaxy",
 	"scripts": {
-		"dev:uat": "vite --force dev",
+		"dev": "vite --force dev",
 		"build-uat": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode development",
 		"build:docker-uat": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/ --mode development",
 		"dev-test": "vite --force --mode test dev",

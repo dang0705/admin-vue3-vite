@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Session } from '/@/utils/storage';
+import { Local, Session } from '/@/utils/storage';
 import { useMessageBox } from '/@/hooks/message';
 import qs from 'qs';
 import other from './other';
@@ -28,6 +28,11 @@ service.interceptors.request.use(
 			config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`;
 		}
 		config.headers.tenantId = 0;
+		if(Local.get('api-version')){
+			//just for testing so far
+			config.headers!['api-version'] = Local.get('api-version');
+		}
+		
 		// 请求报文加密
 		if (config.headers![CommonHeaderEnum.ENC_FLAG]) {
 			const enc = other.encryption(JSON.stringify(config.data), import.meta.env.VITE_PWD_ENC_KEY);
@@ -88,7 +93,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 	const status = Number(error.response.status) || 200;
 	if (status === 424) {
 		useMessageBox()
-			.confirm('令牌状态已过期，请点击重新登录')
+			.confirm('您的登录已过期，请点击重新登录')
 			.then(() => {
 				Session.clear(); // 清除浏览器全部临时缓存
 				window.location.href = '/'; // 去登录页
