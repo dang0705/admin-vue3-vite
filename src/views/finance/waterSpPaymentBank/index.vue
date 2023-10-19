@@ -7,7 +7,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="systemWaterSpPaymentBank">
+<script setup lang="ts" name="银行流水">
 import { delObjs, getObj, addObj } from '/@/api/finance/waterSpPaymentBank';
 import Array2Object from '/@/utils/array-2-object';
 

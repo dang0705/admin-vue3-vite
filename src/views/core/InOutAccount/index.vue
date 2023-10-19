@@ -50,9 +50,8 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="结算单">
-import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
-import { useMessage, useMessageBox } from '/@/hooks/message';
+<script setup lang="ts" name="出入账管理">
+import { useMessage } from '/@/hooks/message';
 import { getSpPaymentChannelList, getSpInfoList } from '/@/api/core/merchantInfo';
 const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
 import Array2Object from '/@/utils/array-2-object';
