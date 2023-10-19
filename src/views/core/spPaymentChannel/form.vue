@@ -50,6 +50,9 @@ const conditionForms = ref([
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商:',
+		props: {
+			platform: true,
+		},
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 	},
 	{
