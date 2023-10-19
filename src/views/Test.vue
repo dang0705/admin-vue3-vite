@@ -4,6 +4,12 @@ NextLoading.done();
 const forms = [
 	{
 		control: 'el-radio-group',
+		title: {
+			html: '标题一定要大',
+			style: {
+				textAlign: 'center',
+			},
+		},
 		key: 'radio1',
 		label: '单选一',
 		options: [
