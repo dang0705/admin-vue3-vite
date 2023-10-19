@@ -19,7 +19,7 @@
 			:title="`【 ${currentTitle} 】 导入详情`"
 			v-bind="{ fullscreen: hasFail }"
 			:show-cancel="false"
-			:label-width="160"
+			:label-width="dialogFormLabelWidth"
 			:forms="forms"
 			:columns="24"
 			v-model:form-data="dialogFormData"
@@ -136,7 +136,7 @@ enum State {
 	'部分成功' = '103',
 	'全部失败' = '104',
 }
-
+const dialogFormLabelWidth = ref(160);
 const failListHead = ref<any[]>([]);
 const failFormStatic = [
 	{
@@ -155,10 +155,13 @@ const failListHeadStatic = [
 	{
 		prop: 'errorMessage',
 		label: '失败原因',
+		minWidth: 300,
+		fixed: 'right',
 	},
 ];
 const forms = computed(() => {
 	let form: any[];
+	dialogFormLabelWidth.value = currentType.value === Type['批量导入结算'] ? 200 : 160;
 	switch (currentType.value) {
 		case Type['批量导入承接人']:
 			currentTitle.value = '批量导入承接人';
@@ -319,19 +322,69 @@ const forms = computed(() => {
 					key: 'paramObject.billName',
 				},
 				{
-					label: '计算商户',
+					label: '结算商户',
 					control: 'MerchantSelect',
 					key: 'paramObject.merchantId',
 				},
 				{
 					label: '服务商',
-					control: 'SpSelect',
-					key: 'paramObject.spId',
+					control: 'el-input',
+					key: 'paramObject.spName',
 				},
 				{
 					label: '结算任务',
-					control: '',
+					control: 'el-input',
+					key: 'paramObject.taskName',
 				},
+				{
+					label: '支付通道',
+					control: 'el-input',
+					key: 'paramObject.paymentBankName',
+				},
+				{
+					label: '是否发送结算成功短信',
+					control: 'el-select',
+					key: 'paramObject.isSendMsg',
+					options: [
+						{
+							label: '是',
+							value: true,
+						},
+						{
+							label: '否',
+							value: false,
+						},
+					],
+				},
+				...failFormStatic,
+			];
+			failListHead.value = [
+				{
+					label: '承接人姓名',
+					prop: 'undertakerName',
+					minWidth: 200,
+				},
+				{
+					label: '承接人证件号码',
+					prop: 'undertakerCard',
+					minWidth: 200,
+				},
+				{
+					label: '任务金额(元)',
+					prop: 'taskAmount',
+					minWidth: 200,
+				},
+				{
+					label: '任务开始日期',
+					prop: 'undertaderStartTime',
+					minWidth: 200,
+				},
+				{
+					label: '任务结束日期',
+					prop: 'undertaderEndTime',
+					minWidth: 200,
+				},
+				...failListHeadStatic,
 			];
 			break;
 		default:

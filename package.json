@@ -5,9 +5,12 @@
 	"author": "pig4cloud",
 	"license": "Apache-2.0",
 	"scripts": {
-		"dev": "vite --force",
-		"build": "NODE_OPTIONS=--max-old-space-size=4096 vite build",
-		"build:docker": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/",
+		"dev:uat": "vite --force dev",
+		"build-uat": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode development",
+		"build:docker-uat": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/ --mode development",
+		"dev-test": "vite --force --mode test dev",
+		"build-test": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode test",
+		"build:docker-test": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/ --mode test",
 		"lint:eslint": "eslint --fix --ext .js,.ts,.vue ./src",
 		"prettier": "prettier --write .",
 		"preview": "vite preview"

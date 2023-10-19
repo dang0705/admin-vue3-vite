@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { UploadExcel } from '/@/components';
+import { NextLoading } from '/@/utils/loading';
+NextLoading.done();
 const forms = [
 	{
 		control: 'el-radio-group',
@@ -22,21 +23,23 @@ const forms = [
 			},
 		],
 		value: 1,
+		onChange: (val, formData) => {
+			console.log(val, formData);
+		},
+	},
+	{
+		control: 'el-input',
+		key: 'text',
+		label: '文本框',
+		showBy: 'isInventoryUser',
+		show: ({ isInventoryUser }) => isInventoryUser,
 	},
 ];
+const formData = reactive({});
 </script>
 
 <template>
-	<UploadExcel
-		force-open
-		guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
-		upload-label="待签署用户名单"
-		upload-url="core/undertakerInfo/import"
-		temp-url="/files/合同批量签署模板.xlsx"
-		template-on-front
-		title="批量导入承接人"
-		:forms="forms"
-	/>
+	<Form-view :forms="forms" v-model="formData" />
 </template>
 
 <style scoped lang="scss"></style>
