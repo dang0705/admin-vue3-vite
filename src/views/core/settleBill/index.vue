@@ -196,7 +196,7 @@ const conditionForms = [
 		key: 'taskNum',
 		label: '任务编号',
 	},
-	payChannel({ key: 'channelId' }),
+	payChannel({ key: 'paymentBankId' }),
 	{
 		control: 'el-input',
 		key: 'createBillUser',
