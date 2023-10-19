@@ -1,11 +1,15 @@
 <template>
 	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/InvoiceNotAppliedFor.ts" labelWidth="100px">
 		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10" v-auth="'finance_invoiceRecordNot_export'">
+				批量导出
+			</el-button>
 		</template>
 		<template #actions="{ row: { id } }">
-			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')"> 申请开票 </el-button>
-			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'open')"> 开票 </el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')" v-auth="'finance_invoiceRecordNot_applyfor'">
+				申请开票
+			</el-button>
+			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecordNot_open'"> 开票 </el-button>
 		</template>
 		<Dialog
 			vertical
