@@ -54,7 +54,7 @@ const columns = [
 	{
 		prop: 'updateTime',
 		label: '更新时间',
-		'min-width': 150,
+		'min-width': 180,
 	},
 	{
 		label: '操作',

@@ -237,7 +237,7 @@ const indexThead = [
 	{
 		prop: 'updateTime',
 		label: '更新时间',
-		minWidth: 150,
+		minWidth: 180,
 	},
 	{
 		prop: 'status',

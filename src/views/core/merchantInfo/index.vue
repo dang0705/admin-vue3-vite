@@ -53,9 +53,9 @@
 			>
 				<el-table-column prop="merchantName" min-width="100" :label="$t('merchantInfo.merchantName')" show-overflow-tooltip />
 				<el-table-column prop="socialCreditCode" min-width="140" :label="$t('merchantInfo.socialCreditCode')" show-overflow-tooltip />
-				<el-table-column prop="spList" :label="$t('merchantInfo.spList')" show-overflow-tooltip />
-				<el-table-column prop="contactName" :label="$t('merchantInfo.contactName')" show-overflow-tooltip />
-				<el-table-column prop="contactPhone" min-width="120" :label="$t('merchantInfo.contactPhone')" show-overflow-tooltip />
+				<el-table-column prop="spList" min-width="150" :label="$t('merchantInfo.spList')" show-overflow-tooltip />
+				<el-table-column prop="contactName" min-width="180" :label="$t('merchantInfo.contactName')" show-overflow-tooltip />
+				<el-table-column prop="contactPhone" min-width="150" :label="$t('merchantInfo.contactPhone')" show-overflow-tooltip />
 				<el-table-column prop="createBy" :label="$t('merchantInfo.createBy')" show-overflow-tooltip />
 				<el-table-column prop="createTime" min-width="160" :label="$t('merchantInfo.createTime')" show-overflow-tooltip />
 

@@ -50,7 +50,7 @@
 		@sort-change="sortChangeHandle"
 	>
 		<el-table-column prop="agreementName" min-width="140" label="服务协议名称" show-overflow-tooltip />
-		<el-table-column prop="spName" label="服务商" show-overflow-tooltip />
+		<el-table-column prop="spName" min-width="150" label="服务商" show-overflow-tooltip />
 		<!-- <el-table-column prop="serviceManager" label="服务负责人" show-overflow-tooltip /> -->
 		<el-table-column prop="feeCalculationMethodDesc" min-width="140" label="管理费计算方式" show-overflow-tooltip />
 		<el-table-column prop="feeRate" label="管理费率" min-width="100" show-overflow-tooltip>

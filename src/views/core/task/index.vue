@@ -57,13 +57,13 @@
 				<el-table-column width="150px" prop="id" label="任务编号" show-overflow-tooltip />
 				<el-table-column width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
 				<el-table-column prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
-				<el-table-column prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
+				<el-table-column min-width="150" prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
 				<!-- taskTypeSecond -->
 				<el-table-column width="170px" prop="startTime" label="开始时间" show-overflow-tooltip />
 				<el-table-column width="170px" prop="endTime" label="结束时间" show-overflow-tooltip />
 				<el-table-column width="120px" prop="spName" label="服务商" show-overflow-tooltip />
 				<el-table-column width="120px" prop="merchantName" label="商户" show-overflow-tooltip />
-				<el-table-column prop="province" label="工作地区" show-overflow-tooltip />
+				<el-table-column width="170px" prop="areaDescDatas" label="工作地区" show-overflow-tooltip />
 				<!-- <el-table-column prop="city" label="城市" show-overflow-tooltip /> -->
 				<!-- <el-table-column prop="county" label="区县" show-overflow-tooltip /> -->
 				<el-table-column prop="unitPrice" label="发包单价" show-overflow-tooltip />
