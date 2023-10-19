@@ -68,7 +68,7 @@
 				>
 					<template #actions="{ row }">
 						<el-button @click="detailDialogRef.openDialog(form.id, 4, 1)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleAccountCapitalDetail" icon="view" text type="primary"> 查看资金账户 </el-button>
+						<el-button @click="handleAccountCapitalDetail(1)" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
@@ -81,7 +81,7 @@
 							}}
 						</div>
 						<el-button
-							@click="detailDialogRef.openDialog(form.id, 3)"
+							@click="detailDialogRef.openDialog(form.id, 3, 1)"
 							style="margin-right: 24px; margin-left: auto !important"
 							type="primary"
 							class="ml10"
@@ -111,7 +111,7 @@
 				>
 					<template #actions="{ row }">
 						<el-button @click="detailDialogRef.openDialog(form.id, 4, 2)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleAccountCapitalDetail" icon="view" text type="primary"> 查看资金账户 </el-button>
+						<el-button @click="handleAccountCapitalDetail(2)" icon="view" text type="primary"> 查看资金账户 </el-button>
 					</template>
 					<template #top-bar="{ otherInfo }">
 						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
@@ -126,7 +126,7 @@
 							</div>
 						</div>
 						<el-button
-							@click="detailDialogRef.openDialog(form.id, 3)"
+							@click="detailDialogRef.openDialog(form.id, 3, 2)"
 							style="margin-right: 24px; margin-left: auto !important"
 							type="primary"
 							class="ml10"
@@ -476,11 +476,11 @@ const view = (row: any) => {
 		},
 	});
 };
-const handleAccountCapitalDetail = () => {
+const handleAccountCapitalDetail = (type) => {
 	router.push({
 		path: '/finance/merchantAccountCapital/detail',
 		query: {
-			id: form.taskBillRecord[0]?.accountId,
+			id: type == 1 ? form.serviceBillRecord[0]?.accountId : form.taskBillRecord[0]?.accountId,
 		},
 		state: {
 			refresh: 1,
@@ -516,8 +516,8 @@ if (route.query.id) {
 	getmerchantInfoData();
 }
 
-const handlePayBillRecord = (list = [], dialogType: number) => {
-	detailDialogRef.value?.openDialog(form.id, 1, dialogType);
+const handlePayBillRecord = (list = [], billType: number) => {
+	detailDialogRef.value?.openDialog(form.id, 1, billType);
 };
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');

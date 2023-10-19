@@ -48,11 +48,11 @@
 				v-model="formData"
 				:forms="addUnderTakerForms"
 			>
-				<template #transferVouchers="{ form }">
+				<!-- <template #transferVouchers="{ form }">
 					<el-form-item label="上传转账凭证" prop="transferVouchers">
 						<UploadFile :type="businessType" v-model="formData.transferVouchers" />
 					</el-form-item>
-				</template>
+				</template> -->
 			</form-view>
 		</div>
 		<template #footer>
@@ -109,7 +109,14 @@ const addUnderTakerForms = [
 		control: 'Upload',
 		key: 'transferVouchers',
 		label: '上传转账凭证',
-		slot: true,
+		// slot: true,
+		rules: [
+			{
+				required: true,
+				message: '转账凭证不能为空',
+				trigger: 'blur',
+			},
+		],
 	},
 	{
 		control: 'el-input',
@@ -172,9 +179,11 @@ const onCancel = () => {
 const openDialog = async (id: string, dType: number, billType: number) => {
 	dialogType.value = dType;
 	visible.value = true;
-	console.log('dialogType.value', dialogType.value);
-
 	settleBillType.value = billType;
+	Object.assign(form, {});
+	Object.assign(formData, {});
+	// form = {};
+	// formData = {};
 	if (dType === 1) {
 		title.value = '发起付款';
 	} else if (dType === 3) {
@@ -243,7 +252,7 @@ const onSubmit = async () => {
 			});
 	} else if (dialogType.value === 3) {
 		addMerchantRecharge({
-			accountId: '1714206494087450626', // 伪代码
+			accountId: settleBillType.value == 1 ? form.serviceBillRecord[0]?.accountId : form.taskBillRecord[0]?.accountId, // 伪代码
 			...formData,
 		})
 			.then((res: any) => {
