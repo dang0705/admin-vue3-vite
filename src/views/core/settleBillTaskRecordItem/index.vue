@@ -5,6 +5,12 @@
 			<!-- v-if="row.paymentStatus == 30" -->
 			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看支付凭证 </el-button>
 		</template>
+		<template #isBankFourEssentialFactor="{ row: { isBankFourEssentialFactor } }">
+			<span v-text="batchMap?.yes_no_type[isBankFourEssentialFactor]" />
+		</template>
+		<template #isSignServiceContract="{ row: { isSignServiceContract } }">
+			<span v-text="batchMap?.yes_no_type[isSignServiceContract]" />
+		</template>
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
@@ -15,6 +21,7 @@
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
 const { proxy } = getCurrentInstance();
 import { useMessage, useMessageBox } from '/@/hooks/message';
+import Array2Object from '/@/utils/array-2-object';
 
 const columns = [
 	{
@@ -127,20 +134,23 @@ const columns = [
 		prop: 'isSignServiceContract',
 		label: '是否签署协议',
 		minWidth: 150,
+		slot: true,
 	},
 	{
 		prop: 'isBankFourEssentialFactor',
 		label: '是否银行四要素校验',
 		minWidth: 150,
+		slot: true,
 	},
 	{
 		prop: 'billStatusDesc',
 		label: '结算状态',
 		minWidth: 150,
+		slot: true,
 	},
 	{
-		prop: 'xxx',
-		label: '支付时间', // 伪代码
+		prop: 'paymentSuccessTime',
+		label: '支付时间',
 		minWidth: 150,
 	},
 	{
@@ -208,4 +218,6 @@ const handleBtn = () => {
 const handleContractFile = (row) => {
 	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
+const batchMap = computed(() => Array2Object({ dic: ['yes_no_type'] }).value);
+//
 </script>

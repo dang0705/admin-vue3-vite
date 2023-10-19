@@ -44,8 +44,10 @@
 						...column,
 					}"
 				>
-					<template v-if="column.slot" v-slot="{ row }">
-						<slot :name="column.prop" :row="row" />
+					<template v-if="column.slot || column.value" v-slot="{ row }">
+						<slot :name="column.prop" :row="row">
+							<template v-if="column.value">{{ column.value(row) }}</template>
+						</slot>
 					</template>
 				</el-table-column>
 			</el-table>

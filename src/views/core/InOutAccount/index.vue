@@ -9,6 +9,9 @@
 			:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
 			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 		>
+			<template #status="{ row: { status } }">
+				<span v-text="batchMap?.merchant_recharge_status[status]" />
+			</template>
 			<template #tableTop>
 				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
 			</template>
@@ -52,6 +55,7 @@ import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { getSpPaymentChannelList, getSpInfoList } from '/@/api/core/merchantInfo';
 const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/mytab.vue'));
+import Array2Object from '/@/utils/array-2-object';
 const addUnderTakerRef = ref();
 const params = ref({});
 const tabType = ref(1);
@@ -109,6 +113,7 @@ const columns1 = [
 		prop: 'status',
 		label: '状态',
 		minWidth: 150,
+		slot: true,
 	},
 ];
 const columns2 = [
@@ -180,10 +185,10 @@ const toggleTab = (item: object) => {
 	});
 };
 // 导出excel
-const exportExcel = () => {
-	downBlobFile('/core/merchantRecharge/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
-	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
-};
+// const exportExcel = () => {
+// 	downBlobFile('/core/merchantRecharge/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+// 	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+// };
 const refreshDataList = () => {
 	formInfo.spPaymentChannelList = [];
 	nextTick(() => {
@@ -201,6 +206,7 @@ const getSpPaymentChannelListData = (formData: any) => {
 		formInfo.spPaymentChannelList = res.data || [];
 	});
 };
+const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);
 getSpInfoList('').then((res: any) => {
 	formInfo.spinfoList = res.data || [];
 });

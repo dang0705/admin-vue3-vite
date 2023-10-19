@@ -132,6 +132,7 @@ const conditionForms = [
 		control: 'el-select',
 		key: 'status',
 		label: '结算状态',
+		options: 'invoice_status', // 伪代码
 	},
 	payChannel({ key: 'paymentBankId' }),
 	// {
