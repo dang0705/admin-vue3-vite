@@ -5,14 +5,14 @@
 		module="finance/invoiceRecord.ts"
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="发票记录.xlsx"
-		auth="finance_invoiceRecord_export"
+		exportAuth="finance_invoiceRecord_export"
 	>
 		<template #actions="{ row: { id, status } }">
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>
 			<el-button icon="edit" text type="primary" v-if="status === '20'" @click="applyfor(id, 'cancel')" v-auth="'finance_invoiceRecord_cancel'"
 				>作废</el-button
 			>
-			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecord_open'"
+			<el-button icon="edit" text type="primary" v-if="status === '10'" @click="applyfor(id, 'open')" v-auth="'finance_invoiceRecord_add'"
 				>开票</el-button
 			>
 			<el-button icon="edit" text type="primary" v-if="status === '00'" @click="applyfor(id, 'reject')" v-auth="'finance_invoiceRecord_audit'"

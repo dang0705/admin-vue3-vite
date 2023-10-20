@@ -78,5 +78,8 @@ export function uploadUndertakerCard(obj?: Object) {
 		url: '/core/undertakerInfo/uploadUndertakerCard',
 		method: 'post',
 		data: obj,
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
 	});
 }
