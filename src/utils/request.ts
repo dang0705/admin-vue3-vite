@@ -28,11 +28,11 @@ service.interceptors.request.use(
 			config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`;
 		}
 		config.headers.tenantId = 0;
-		if(Local.get('api-version')){
+		if (Local.get('api-version')) {
 			//just for testing so far
 			config.headers!['api-version'] = Local.get('api-version');
 		}
-		
+
 		// 请求报文加密
 		if (config.headers![CommonHeaderEnum.ENC_FLAG]) {
 			const enc = other.encryption(JSON.stringify(config.data), import.meta.env.VITE_PWD_ENC_KEY);
@@ -90,8 +90,10 @@ const handleResponse = (response: AxiosResponse<any>) => {
  * 添加 Axios 的响应拦截器，用于全局响应结果处理
  */
 service.interceptors.response.use(handleResponse, (error) => {
-	const status = Number(error.response.status) || 200;
-	if (status === 424) {
+	const {
+		response: { status, data: { msg } = {} },
+	} = error;
+	if (Number(status) === 424) {
 		useMessageBox()
 			.confirm('您的登录已过期，请点击重新登录')
 			.then(() => {
@@ -100,7 +102,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 				return;
 			});
 	} else {
-		useMessageBox().error(`服务内部错误${status}`);
+		useMessageBox().error(status > 499 ? `服务内部错误${status}` : msg || '未知错误');
 	}
 
 	return Promise.reject(error.response.data);
