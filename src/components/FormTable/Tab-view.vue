@@ -9,13 +9,13 @@
 	<!--	</div>-->
 	<el-tabs v-model="value">
 		<template #addIcon>
-			<span>1122</span>
+			<span></span>
 		</template>
 		<el-tab-pane v-for="{ label, value, attributeName, attributeVal } in tabs" :key="label" :name="label">
 			<template #label>
 				<ul class="flex items-center" @click="onTabClick(label, { attributeName, attributeVal })">
 					<li v-text="label" />
-					<li v-text="value" class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]" style="padding: 0 10px 0" />
+					<li v-if="value" v-text="value" class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]" style="padding: 0 10px 0" />
 				</ul>
 			</template>
 		</el-tab-pane>
