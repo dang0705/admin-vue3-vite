@@ -56,8 +56,8 @@
 				<el-table-column prop="undertakerCard" label="身份证号码" width="200" show-overflow-tooltip />
 				<el-table-column prop="undertakerPhone" label="手机号码" width="120" show-overflow-tooltip />
 				<el-table-column label="性别" width="60" show-overflow-tooltip>
-					<template #default="scope">
-						<div>{{ scope.row.undertakerSex == 1 ? '男' : scope.row.undertakerSex == 1 ? '女' : '未知' }}</div>
+					<template #default="{ row: { undertakerSex } }">
+						<div>{{ batchMap?.gender[undertakerSex] }}</div>
 					</template>
 				</el-table-column>
 				<el-table-column prop="undertakerAge" label="年龄" width="60" show-overflow-tooltip />
@@ -193,6 +193,8 @@ import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
+import Array2Object from '/@/utils/array-2-object';
+const batchMap = Array2Object({ dic: ['gender'] });
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
@@ -201,7 +203,6 @@ const EditDialog = defineAsyncComponent(() => import('./edit.vue'));
 const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'));
 const Distribution = defineAsyncComponent(() => import('/@/components/Distribution/index.vue'));
 const { t } = useI18n();
-const { yes_no_type } = useDict('yes_no_type');
 const conditionForms = ref([
 	{
 		control: 'el-input',

@@ -28,7 +28,7 @@
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="民族:" prop="undertakerClan">
-						<el-select placeholder="请输入民族" v-model="form.undertakerClan">
+						<el-select placeholder="请选择" v-model="form.undertakerClan">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in nation"></el-option>
 						</el-select>
 					</el-form-item>
@@ -36,7 +36,7 @@
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="学历:" prop="undertakerEducation">
-						<el-select placeholder="请输入学历" v-model="form.undertakerEducation">
+						<el-select placeholder="请选择" v-model="form.undertakerEducation">
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in education"></el-option>
 						</el-select>
 					</el-form-item>
@@ -50,7 +50,7 @@
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商:" class="ml2" prop="spId">
-						<el-select placeholder="请输入服务商" v-model="form.spId">
+						<el-select placeholder="请选择" v-model="form.spId">
 							<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList"></el-option>
 						</el-select>
 					</el-form-item>
