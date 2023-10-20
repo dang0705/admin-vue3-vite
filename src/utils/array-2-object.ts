@@ -36,3 +36,11 @@ export default ({ array, dic }: Params) => {
 	}
 	return transfer(array as []);
 };
+
+export const valueAsLabel = (object: any) => {
+	const revertedObj: any = {};
+	for (const key in object) {
+		revertedObj[object[key]] = /^\d+$/.test(key) ? parseInt(key) : (revertedObj[object[key]] = key);
+	}
+	return revertedObj;
+};
