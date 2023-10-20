@@ -40,6 +40,8 @@
 					<el-button v-auth="'sys_user_add'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()">
 						{{ $t('common.addBtn') }}
 					</el-button>
+					<!--					<el-button v-auth="'sys_user_switch'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()"> 启用 </el-button>-->
+					<!--					<el-button v-auth="'sys_user_switch'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()"> 停用 </el-button>-->
 					<!--					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
 						{{ $t('common.importBtn') }}
 					</el-button>-->
@@ -89,7 +91,7 @@
 				<el-table-column :label="$t('sysuser.createTime')" prop="createTime" show-overflow-tooltip width="180" />
 				<el-table-column :label="$t('sysuser.lockFlag')" show-overflow-tooltip>
 					<template #default="scope">
-						<el-switch v-model="scope.row.lockFlag" @change="changeSwitch(scope.row)" active-value="0" inactive-value="9"></el-switch>
+						<span v-text="scope.row.lockFlag === '9' ? '停用' : '启用'" />
 					</template>
 				</el-table-column>
 				<el-table-column :label="$t('common.action')" width="350" fixed="right">
@@ -101,6 +103,7 @@
 							<!--            10 means all-->
 							<el-button
 								v-if="scope.row.merchantAuthScope !== '10'"
+								v-auth="`sys_user_merchant`"
 								text
 								type="primary"
 								icon="turn-off"
@@ -108,9 +111,16 @@
 								>{{ $t('sysuser.distributionMerchant') }}</el-button
 							>
 							<!--            10 means all-->
-							<el-button v-if="scope.row.spAuthScope !== '10'" text type="primary" icon="turn-off" @click="providerRef.openDialog(scope.row)">{{
-								$t('sysuser.distributionSp')
-							}}</el-button>
+							<el-button
+								v-if="scope.row.spAuthScope !== '10'"
+								v-auth="`sys_user_sp`"
+								text
+								type="primary"
+								icon="turn-off"
+								@click="providerRef.openDialog(scope.row)"
+							>
+								{{ $t('sysuser.distributionSp') }}
+							</el-button>
 							<!--							<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
 								<span style="margin-left: 12px">
 									<el-button
@@ -125,6 +135,11 @@
 								</span>
 							</el-tooltip>-->
 						</template>
+
+						<el-button v-auth="`sys_user_switch`" icon="turn-off" text type="primary" @click="changeSwitch(scope.row)">
+							{{ scope.row.lockFlag === '9' ? '启用' : '停用' }}
+						</el-button>
+						<!--						<el-switch v-model="scope.row.lockFlag" @change="changeSwitch(scope.row)" active-value="0" inactive-value="9" />-->
 					</template>
 				</el-table-column>
 			</el-table>
@@ -149,13 +164,13 @@
 			save-url="core/userMgrSp/assignSP"
 			title="批量分配服务商"
 		/>
-		<upload-excel
+		<!--		<upload-excel
 			ref="excelUploadRef"
 			:title="$t('sysuser.importUserTip')"
 			temp-url="/docs/sys-file/local/file/user.xlsx"
 			url="/admin/user/import"
 			@refreshDataList="getDataList"
-		/>
+		/>-->
 	</div>
 </template>
 
@@ -260,8 +275,7 @@ const handleDelete = async (ids: string[]) => {
 
 //表格内开关 (用户状态)
 const changeSwitch = async (row: object) => {
-	await putObj(row);
-	// useMessage().success(t('common.optSuccessText'));
+	await putObj({ ...row, lockFlag: row.lockFlag === '9' ? '0' : '9' });
 	getDataList();
 };
 </script>

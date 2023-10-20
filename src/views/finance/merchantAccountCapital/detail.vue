@@ -13,8 +13,8 @@
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
 			</template>
 			<template #top-bar="{ otherInfo }">
-				<el-button @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
-				<el-button @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
+				<el-button v-auth="'core_merchantAccountCapital_refund'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
+				<el-button v-auth="'core_merchantAccountCapital_recharge'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
 			</template>
 			<template #tableTop="{ otherInfo }">
 				<div class="total_wrapper">
@@ -68,8 +68,19 @@
 				</div>
 			</template>
 			<template #actions="{ row }">
-				<el-button v-if="row.status != 30" @click="handleRevoke(row.id)" icon="view" text type="primary"> 撤销 </el-button>
-				<el-button @click="handleContractFile(row)" icon="view" text type="primary"> 查看转账凭证 </el-button>
+				<el-button
+					v-auth="'core_merchantAccountCapital_revoke'"
+					v-if="row.status != 30"
+					@click="handleRevoke(row.id)"
+					icon="view"
+					text
+					type="primary"
+				>
+					撤销
+				</el-button>
+				<el-button v-auth="'core_merchantAccountCapital_view_voucher'" @click="handleContractFile(row)" icon="view" text type="primary">
+					查看转账凭证
+				</el-button>
 			</template>
 		</TableView>
 		<!-- <DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" /> -->

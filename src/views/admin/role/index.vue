@@ -22,7 +22,7 @@
 					<!--					<el-button plain icon="upload-filled" type="primary" class="ml10" @click="excelUploadRef.show()" v-auth="'sys_user_add'">
 						{{ $t('common.importBtn') }}
 					</el-button>-->
-					<el-button plain :disabled="multiple" icon="Delete" type="primary" class="ml10" v-auth="'sys_user_del'" @click="handleDelete(selectObjs)">
+					<el-button plain :disabled="multiple" icon="Delete" type="primary" class="ml10" v-auth="'sys_role_del'" @click="handleDelete(selectObjs)">
 						{{ $t('common.delBtn') }}
 					</el-button>
 					<right-toolbar
@@ -32,7 +32,7 @@
 						class="ml10"
 						style="float: right; margin-right: 20px"
 						@queryTable="getDataList"
-					></right-toolbar>
+					/>
 				</div>
 			</el-row>
 			<el-table
@@ -62,10 +62,11 @@
 							>{{ $t('common.editBtn') }}
 						</el-button>
 
-						<el-button text type="primary" icon="turn-off" v-auth="'sys_role_del'" @click="permessionRef.openDialog(scope.row)"
-							>{{ $t('sysrole.permissionTip') }}
-						</el-button>
+						<el-button text type="primary" icon="turn-off" @click="permessionRef.openDialog(scope.row)">{{ $t('sysrole.permissionTip') }} </el-button>
 						<el-button text type="primary" icon="turn-off" @click="distributionRef.openDialog(scope.row)">{{ $t('common.distribution') }} </el-button>
+						<el-button v-auth="`sys_role_switch`" icon="turn-off" text type="primary" @click="changeSwitch(scope.row)">
+							{{ scope.row.enabled ? '停用' : '启用' }}
+						</el-button>
 						<el-tooltip :content="$t('sysrole.deleteDisabledTip')" :disabled="scope.row.roleId !== '1'" placement="top">
 							<span style="margin-left: 12px">
 								<el-button
@@ -103,7 +104,7 @@
 
 <script setup lang="ts" name="systemRole">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { delObj, pageList } from '/@/api/admin/role';
+import { delObj, pageList, putObj } from '/@/api/admin/role';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
@@ -173,5 +174,9 @@ const handleDelete = async (ids: string[]) => {
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}
+};
+const changeSwitch = async (row: object) => {
+	await putObj({ ...row, enabled: !row.enabled });
+	getDataList();
 };
 </script>

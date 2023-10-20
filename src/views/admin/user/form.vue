@@ -128,7 +128,7 @@ const postOptions = [
 		value: '20',
 	},
 	{
-		label: '客户账户',
+		label: '商户账户',
 		value: '30',
 	},
 ];

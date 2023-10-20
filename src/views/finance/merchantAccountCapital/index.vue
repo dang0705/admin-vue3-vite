@@ -1,8 +1,15 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view
+		:columns="columns"
+		exportAuth="core_merchantAccountCapital_export"
+		:condition-forms="conditionForms"
+		module="finance/merchantAccountCapital.ts"
+	>
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleDetail(row)"> 查看 </el-button>
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看收款账号 </el-button>
+			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleDetail(row)"> 查看 </el-button>
+			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view_account'" @click="handleBtn('toSubmit', row)">
+				查看收款账号
+			</el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>

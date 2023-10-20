@@ -203,7 +203,7 @@
 					<el-col :span="12" class="mb20">
 						<el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
 							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender" />
+								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender_requirement" />
 							</el-select>
 						</el-form-item>
 					</el-col>
@@ -282,11 +282,11 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 const businessType = uploadBusinessType.merchant;
 const chinaAreaRef = ref();
 // 定义字典
-const { task_type, task_unit, is_need, gender, education, experience, task_undertaking_type } = useDict(
+const { task_type, task_unit, is_need, gender_requirement, education, experience, task_undertaking_type } = useDict(
 	'task_type',
 	'task_unit',
 	'is_need',
-	'gender',
+	'gender_requirement',
 	'education',
 	'experience',
 	'task_undertaking_type'
@@ -484,7 +484,7 @@ const task_typeLevel_option = computed(() => {
 		task_typeLevel1_option: [],
 		task_typeLevel2_option: [],
 	};
-	task_type.value.forEach((item: object) => {
+	task_type.value.forEach((item: any) => {
 		if (!item.parentValue) {
 			task_typeLevel_option.task_typeLevel1_option.push(item);
 		}

@@ -46,3 +46,10 @@ export function putAuditTask(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function taskDown(id?: string) {
+	return request({
+		url: '/core/task/takeDown/' + id,
+		method: 'put',
+	});
+}
