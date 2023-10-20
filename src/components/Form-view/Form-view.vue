@@ -146,7 +146,7 @@ defineExpose({
 </script>
 
 <template>
-	<div>
+	<div class="form-view">
 		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form" :rules="formRules">
 			<div :class="['flex', 'w-full', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
 				<el-row :gutter="10" class="w-full">
