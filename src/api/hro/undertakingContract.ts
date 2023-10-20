@@ -38,3 +38,10 @@ export function putObj(obj?: Object) {
 		data: obj,
 	});
 }
+export function termination(data: Object) {
+	return request({
+		url: '/core/undertakingContract/terminateContract',
+		method: 'put',
+		data,
+	});
+}

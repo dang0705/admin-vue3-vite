@@ -49,13 +49,22 @@
 					<template #default="{ row: { state } }"><span v-text="contractMap?.contract_status[state]" /></template>
 				</el-table-column>
 				<el-table-column label="操作" width="150" fixed="right">
-					<template #default="scope">
-						<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakingContract_view'" @click="formDialogRef.openDialog(scope.row.id)">
-							查看
-						</el-button>
-						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([scope.row.id])">
-							删除
-						</el-button>
+					<template #default="{ row: { id, state } }">
+						<el-button icon="edit-pen" text type="primary" v-auth="'停止'" @click="formDialogRef.openDialog(id)"> 查看 </el-button>
+						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([id])"> 删除 </el-button>
+						<el-popconfirm
+							v-if="state !== valueAsLabel(contractMap?.contract_status)['已终止']"
+							width="220"
+							confirm-button-text="确认"
+							cancel-button-text="取消"
+							title="是否终止合同?"
+							@confirm="handleTermination(id)"
+						>
+							<template #reference>
+								<el-button v-auth="`hro_undertakingContract_termination`" icon="Remove" text type="primary">终止</el-button>
+							</template>
+						</el-popconfirm>
+						<!--						<el-button  text type="primary" v-auth="`hro_undertakingContract_termination`"> 终止 </el-button>-->
 					</template>
 				</el-table-column>
 			</el-table>
@@ -80,10 +89,10 @@
 
 <script setup lang="ts" name="合同签署">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { delObjs, fetchList } from '/@/api/hro/undertakingContract';
+import { delObjs, fetchList, termination } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
-import Array2Object from '/@/utils/array-2-object';
+import Array2Object, { valueAsLabel } from '/@/utils/array-2-object';
 
 const { t } = useI18n();
 const input = 'el-input';
@@ -92,7 +101,7 @@ const i18 = (str = '', key = 'label') => ({ [key]: t(`undertakingContract.${str}
 const conditionForms = [
 	{
 		control: input,
-		key: 'name',
+		key: 'undertakerName',
 		...i18('name'),
 	},
 	{
@@ -112,7 +121,7 @@ const conditionForms = [
 	},
 	{
 		control: 'SpSelect',
-		key: 'spName',
+		key: 'spId',
 		label: '签约服务商',
 	},
 	{
@@ -123,7 +132,7 @@ const conditionForms = [
 	},
 ];
 // 合同类型、状态枚举
-const contractMap = computed(() => Array2Object({ dic: ['contract_type', 'contract_status'] }).value);
+const contractMap = Array2Object({ dic: ['contract_type', 'contract_status'] });
 
 const batchElectronicSignRef = ref();
 // 批量电子签署控件与数据
@@ -207,6 +216,11 @@ const handleDelete = async (ids: string[]) => {
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}
+};
+const handleTermination = async (id) => {
+	await termination({ id });
+	useMessage().success('该合同已终止');
+	getDataList();
 };
 $refreshList(resetQuery);
 </script>
