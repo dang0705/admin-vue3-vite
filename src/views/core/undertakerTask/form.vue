@@ -10,25 +10,25 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="任务编号" prop="taskNumber">
-						<el-input v-model="form.taskNumber" />
+						<InputPlus v-model="form.taskNumber" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="任务名称" prop="taskName">
-						<el-input v-model="form.taskName" />
+						<InputPlus v-model="form.taskName" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="任务金额" prop="taskMoney">
-						<el-input v-model="form.taskMoney" />
+						<InputPlus v-model="form.taskMoney" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务费金额" prop="serviceFeeAmount">
-						<el-input v-model="form.serviceFeeAmount" />
+						<InputPlus v-model="form.serviceFeeAmount" />
 					</el-form-item>
 				</el-col>
 
@@ -40,25 +40,25 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="承接编号" prop="undertakerNumber">
-						<el-input v-model="form.undertakerNumber" />
+						<InputPlus v-model="form.undertakerNumber" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="承接人名称" prop="undertakerName">
-						<el-input v-model="form.undertakerName" />
+						<InputPlus v-model="form.undertakerName" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="承接人证件号码" prop="undertakerCard">
-						<el-input v-model="form.undertakerCard" />
+						<InputPlus v-model="form.undertakerCard" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="承接人手机号" prop="undertakerPhone">
-						<el-input v-model="form.undertakerPhone" />
+						<InputPlus v-model="form.undertakerPhone" />
 					</el-form-item>
 				</el-col>
 
@@ -94,7 +94,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="驳回原因" prop="rejectReason">
-						<el-input v-model="form.rejectReason" />
+						<InputPlus v-model="form.rejectReason" />
 					</el-form-item>
 				</el-col>
 
@@ -106,7 +106,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务商名称" prop="spName">
-						<el-input v-model="form.spName" />
+						<InputPlus v-model="form.spName" />
 					</el-form-item>
 				</el-col>
 
@@ -118,7 +118,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="商户名称(客户)" prop="merchantName">
-						<el-input v-model="form.merchantName" />
+						<InputPlus v-model="form.merchantName" />
 					</el-form-item>
 				</el-col>
 
@@ -130,7 +130,7 @@
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="企业验收金额" prop="enterpriseAcceptanceMoney">
-						<el-input v-model="form.enterpriseAcceptanceMoney" />
+						<InputPlus v-model="form.enterpriseAcceptanceMoney" />
 					</el-form-item>
 				</el-col>
 			</el-row>

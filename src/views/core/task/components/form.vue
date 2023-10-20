@@ -42,7 +42,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="任务名称" prop="taskName">
-							<el-input :disabled="self_disabled" maxlength="100" v-model="form.taskName" />
+							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.taskName" />
 						</el-form-item>
 					</el-col>
 
@@ -80,7 +80,7 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="工作地址" prop="address">
-							<el-input :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
+							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -148,7 +148,7 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="任务描述" prop="taskDesc">
-							<el-input :disabled="self_disabled" maxlength="500" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
+							<InputPlus :disabled="self_disabled" maxlength="500" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -162,7 +162,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="打卡范围" prop="clockRank">
-							<el-input :disabled="self_disabled" v-model="form.clockRank" />
+							<InputPlus :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
 					</el-col>
 
@@ -188,13 +188,13 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="业务联系人" prop="businessMerchant">
-							<el-input :disabled="self_disabled" v-model="form.businessMerchant" />
+							<InputPlus :disabled="self_disabled" v-model="form.businessMerchant" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="联系人手机号" prop="businessPhone">
-							<el-input :disabled="self_disabled" v-model="form.businessPhone" />
+							<InputPlus :disabled="self_disabled" v-model="form.businessPhone" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -250,7 +250,14 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="工作福利" prop="taskRequireInfo.workFare">
-							<el-input :disabled="self_disabled" maxlength="500" v-model="form.taskRequireInfo.workFare" :rows="2" show-word-limit type="textarea" />
+							<InputPlus
+								:disabled="self_disabled"
+								maxlength="500"
+								v-model="form.taskRequireInfo.workFare"
+								:rows="2"
+								show-word-limit
+								type="textarea"
+							/>
 						</el-form-item>
 					</el-col>
 

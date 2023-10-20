@@ -78,7 +78,9 @@
 				<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 					>查看</el-button
 				>
-				<!-- <el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'">审核</el-button> -->
+				<el-button @click="handleBtn" v-if="scope.row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'"
+					>审核</el-button
+				>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -110,12 +112,12 @@ const selectObjs = ref([]) as any;
 const multiple = ref(true);
 const conditionForms_task = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerNumber',
 		label: '承接编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 		label: '承接人',
 	},
@@ -127,12 +129,12 @@ const conditionForms_task = [
 ];
 const conditionForms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerNumber',
 		label: '承接编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 		label: '承接人',
 	},
@@ -145,12 +147,12 @@ const conditionForms = [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskNumber',
 		label: '任务编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskName',
 		label: '任务名称',
 	},
@@ -179,7 +181,9 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 	},
 	pageList: fetchList,
 });
-
+const handleBtn = () => {
+	useMessage().wraning('功能正在开发, 请等待~');
+};
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 

@@ -72,7 +72,7 @@ const columns = [
 ];
 const conditionForms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'subAccountNum',
 		label: '资金账户',
 	},

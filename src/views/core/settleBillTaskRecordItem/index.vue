@@ -171,12 +171,12 @@ const columns = [
 
 const conditionForms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 		label: '承接人',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerCard',
 		label: '承接人证件号码',
 	},
@@ -191,17 +191,17 @@ const conditionForms = [
 		label: '商户',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billName',
 		label: '账单名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'settleBillId',
 		label: '账单编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billTaskRecordId',
 		label: '任务结算明细编号',
 	},

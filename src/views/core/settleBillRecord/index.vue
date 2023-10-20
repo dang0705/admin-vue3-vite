@@ -86,12 +86,12 @@ const columns = [
 ];
 const conditionForms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskName',
 		label: '任务名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskId',
 		label: '任务编号',
 	},
@@ -106,17 +106,17 @@ const conditionForms = [
 		label: '商户',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'settleBillName',
 		label: '账单名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'settleBillId',
 		label: '账单编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'id',
 		label: '结算单编号',
 	},

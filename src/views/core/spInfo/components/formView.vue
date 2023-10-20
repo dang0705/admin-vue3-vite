@@ -6,7 +6,7 @@
 					<Divider title="基本信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商名称:" prop="spName">
-							<el-input v-model="form.spName" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.spName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -19,31 +19,31 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="银行账户:" prop="bankNumber">
-							<el-input v-model="form.bankNumber" @input="inputVal" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.bankNumber" @input="inputVal" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="企业邮箱:" prop="email">
-							<el-input v-model="form.email" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.email" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="开户地:" prop="bankArea">
-							<el-input v-model="form.bankArea" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.bankArea" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="开户行:" prop="bankName">
-							<el-input v-model="form.bankName" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.bankName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="社会统一信用代码:" prop="socialCreditCode">
-							<el-input v-model="form.socialCreditCode" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.socialCreditCode" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -53,7 +53,7 @@
 					</el-col>
 					<el-col :span="24" class="mb20">
 						<el-form-item label="经营范围:" prop="businessScope">
-							<el-input type="textarea" v-model="form.businessScope" autosize :disabled="!!route.query.see" />
+							<InputPlus type="textarea" v-model="form.businessScope" autosize :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -87,19 +87,19 @@
 					<Divider title="法人信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人姓名:" prop="legalPersonName">
-							<el-input v-model="form.legalPersonName" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.legalPersonName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人手机号:" prop="legalPersonMobile">
-							<el-input v-model="form.legalPersonMobile" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.legalPersonMobile" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="法人身份证号:" prop="legalPersonIdCard">
-							<el-input v-model="form.legalPersonIdCard" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.legalPersonIdCard" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -120,19 +120,19 @@
 					<Divider title="办税人信息" />
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人姓名:" prop="taxManagerName">
-							<el-input v-model="form.taxManagerName" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.taxManagerName" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人手机号:" prop="taxManagerMobile">
-							<el-input v-model="form.taxManagerMobile" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.taxManagerMobile" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="办税人身份证号:" prop="taxManagerIdCard">
-							<el-input v-model="form.taxManagerIdCard" :disabled="!!route.query.see" />
+							<InputPlus v-model="form.taxManagerIdCard" :disabled="!!route.query.see" />
 						</el-form-item>
 					</el-col>
 
@@ -159,7 +159,7 @@
 									:prop="`qualifications[${index}].qualificationName`"
 									:rules="[{ required: route.query.see ? false : _.filePath.length != 0, message: '资质名称不能为空', trigger: 'blur' }]"
 								>
-									<el-input v-model="_.qualificationName" :disabled="!!route.query.see" :placeholder="!!route.query.see ? '' : '请输入'" />
+									<InputPlus v-model="_.qualificationName" :disabled="!!route.query.see" :placeholder="!!route.query.see ? '' : '请输入'" />
 								</el-form-item>
 							</el-col>
 

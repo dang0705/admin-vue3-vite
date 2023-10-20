@@ -117,7 +117,7 @@ const addUnderTakerForms = [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAccountName',
 		label: '付款户名',
 		rules: [
@@ -129,7 +129,7 @@ const addUnderTakerForms = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAccountNumber',
 		label: '付款账号',
 		rules: [
@@ -141,7 +141,7 @@ const addUnderTakerForms = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingBankName',
 		label: '开户行',
 		rules: [
@@ -153,7 +153,7 @@ const addUnderTakerForms = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAmount',
 		label: '付款金额',
 		rules: [

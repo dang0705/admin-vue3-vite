@@ -147,9 +147,9 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 						title: '参数信息',
 						label: '任务编码',
 						key: 'paramObject.taskNumber',
-						control: 'el-input',
+						control: 'InputPlus',
 					},
-					{ label: '任务名称', key: 'paramObject.taskName', control: 'el-input' },
+					{ label: '任务名称', key: 'paramObject.taskName', control: 'InputPlus' },
 					{
 						label: '承接人名单',
 						key: 'paramObject.fileUrl',
@@ -181,7 +181,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 				form = [
 					{
 						label: '账单名称',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.billName',
 					},
 					{
@@ -191,17 +191,17 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					},
 					{
 						label: '服务商',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.spName',
 					},
 					{
 						label: '结算任务',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.taskName',
 					},
 					{
 						label: '支付通道',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.paymentBankName',
 					},
 					{
@@ -255,13 +255,13 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 				form = [
 					{
 						label: '服务商',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.spName',
 					},
 
 					{
 						label: '支付通道',
-						control: 'el-input',
+						control: 'InputPlus',
 						key: 'paramObject.paymentBankName',
 					},
 

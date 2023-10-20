@@ -2,12 +2,12 @@ import { payChannel } from '/@/configuration/dynamic-control';
 export default [
 	{
 		label: '承接人',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 	},
 	{
 		label: '承接人证件号码',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerCard',
 	},
 	{
@@ -22,17 +22,17 @@ export default [
 	},
 	{
 		label: '账单名称',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billName',
 	},
 	{
 		label: '账单编号',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billId',
 	},
 	{
 		label: '任务结算明细编号',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'paySourceId',
 	},
 	{

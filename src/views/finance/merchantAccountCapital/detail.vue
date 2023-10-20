@@ -138,7 +138,7 @@ const form1 = [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAccountName',
 		label: '付款户名',
 		rules: [
@@ -150,7 +150,7 @@ const form1 = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAccountNumber',
 		label: '付款账号',
 		rules: [
@@ -162,7 +162,7 @@ const form1 = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingBankName',
 		label: '开户行',
 		rules: [
@@ -174,7 +174,7 @@ const form1 = [
 		],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'payingAmount',
 		label: '付款金额',
 		rules: [
@@ -313,7 +313,7 @@ const handleRe = (type: number) => {
 	} else if (type === 2) {
 		forms = [
 			{
-				control: 'el-input',
+				control: 'InputPlus',
 				key: 'totalAmount',
 				label: '账户可用余额',
 				value: form.totalAmount,
@@ -322,7 +322,7 @@ const handleRe = (type: number) => {
 				},
 			},
 			{
-				control: 'el-input',
+				control: 'InputPlus',
 				key: 'xxx',
 				label: '申请退款金额',
 				rules: [
@@ -334,7 +334,7 @@ const handleRe = (type: number) => {
 				],
 			},
 			{
-				control: 'el-input',
+				control: 'InputPlus',
 				key: 'accountName',
 				label: '收款户名',
 				props: {
@@ -355,7 +355,7 @@ const handleRe = (type: number) => {
 				],
 			},
 			{
-				control: 'el-input',
+				control: 'InputPlus',
 				key: 'xxx',
 				label: '开户行',
 				props: {

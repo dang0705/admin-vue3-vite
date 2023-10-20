@@ -8,7 +8,7 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.merchantName')" prop="merchantName">
-							<el-input :disabled="isDetail" v-model="form.merchantName" />
+							<InputPlus :disabled="isDetail" v-model="form.merchantName" />
 						</el-form-item>
 					</el-col>
 
@@ -56,13 +56,13 @@
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.socialCreditCode')" prop="socialCreditCode">
-							<el-input :disabled="isDetail" v-model="form.socialCreditCode" />
+							<InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.address')" prop="address">
-							<el-input :disabled="isDetail" v-model="form.address" :rows="3" show-word-limit type="textarea" />
+							<InputPlus :disabled="isDetail" v-model="form.address" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
@@ -79,7 +79,7 @@
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item label="企业邮箱" prop="enterpriseMailbox">
-							<el-input :disabled="isDetail" v-model="form.enterpriseMailbox" />
+							<InputPlus :disabled="isDetail" v-model="form.enterpriseMailbox" />
 						</el-form-item>
 					</el-col>
 
@@ -97,18 +97,18 @@
 
 					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.businessScope')" prop="businessScope">
-							<el-input :disabled="isDetail" v-model="form.businessScope" :rows="3" show-word-limit type="textarea" />
+							<InputPlus :disabled="isDetail" v-model="form.businessScope" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.contactName')" prop="contactName">
-							<el-input :disabled="isDetail" v-model="form.contactName" />
+							<InputPlus :disabled="isDetail" v-model="form.contactName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.contactPhone')" prop="contactPhone">
-							<el-input :disabled="isDetail" v-model="form.contactPhone" />
+							<InputPlus :disabled="isDetail" v-model="form.contactPhone" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -116,7 +116,7 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxRegistrationNumber')" prop="taxRegistrationNumber">
-							<el-input readonly v-model="form.socialCreditCode" />
+							<InputPlus readonly v-model="form.socialCreditCode" />
 							<!-- <span>{{ form.socialCreditCode }}</span> -->
 						</el-form-item>
 					</el-col>
@@ -131,31 +131,30 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankNumber')" prop="taxBankNumber">
-							<el-input :disabled="isDetail" v-model="form.taxBankNumber" />
-							<!-- <el-input-number class="inputNumber" :controls="false" :disabled="isDetail" v-model="form.taxBankNumber"></el-input-number> -->
+							<InputPlus :disabled="isDetail" v-model="form.taxBankNumber" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankName')" prop="taxBankName">
-							<el-input :disabled="isDetail" v-model="form.taxBankName" />
+							<InputPlus :disabled="isDetail" v-model="form.taxBankName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxBankArea')" prop="taxBankArea">
-							<el-input :disabled="isDetail" v-model="form.taxBankArea" :rows="3" show-word-limit type="textarea" />
+							<InputPlus :disabled="isDetail" v-model="form.taxBankArea" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20 formBox">
 						<div style="min-width: 160px" class="com_label require">企业电话</div>
 						<el-form-item label-width="0px" prop="areaCode">
-							<el-input :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
+							<InputPlus :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
 						</el-form-item>
 						&nbsp;&nbsp;-&nbsp;&nbsp;
 						<el-form-item prop="phoneNumber" label-width="0px" style="flex-shrink: 1">
-							<el-input :disabled="isDetail" v-model="form.phoneNumber" placeholder="电话号码" />
+							<InputPlus :disabled="isDetail" v-model="form.phoneNumber" placeholder="电话号码" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -163,19 +162,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonName')" prop="legalPersonName">
-							<el-input :disabled="isDetail" v-model="form.legalPersonName" />
+							<InputPlus :disabled="isDetail" v-model="form.legalPersonName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonMobile')" prop="legalPersonMobile">
-							<el-input :disabled="isDetail" v-model="form.legalPersonMobile" />
+							<InputPlus :disabled="isDetail" v-model="form.legalPersonMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.legalPersonIdCard')" prop="legalPersonIdCard">
-							<el-input :disabled="isDetail" v-model="form.legalPersonIdCard" />
+							<InputPlus :disabled="isDetail" v-model="form.legalPersonIdCard" />
 						</el-form-item>
 					</el-col>
 					<!-- 占位 -->
@@ -195,19 +194,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerName')" prop="taxManagerName">
-							<el-input :disabled="isDetail" v-model="form.taxManagerName" />
+							<InputPlus :disabled="isDetail" v-model="form.taxManagerName" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerMobile')" prop="taxManagerMobile">
-							<el-input :disabled="isDetail" v-model="form.taxManagerMobile" />
+							<InputPlus :disabled="isDetail" v-model="form.taxManagerMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('merchantInfo.taxManagerIdCard')" prop="taxManagerIdCard">
-							<el-input :disabled="isDetail" v-model="form.taxManagerIdCard" />
+							<InputPlus :disabled="isDetail" v-model="form.taxManagerIdCard" />
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20"> </el-col>
@@ -227,19 +226,19 @@
 				<el-row class="paddcus" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="收件人" prop="recipient">
-							<el-input :disabled="isDetail" v-model="form.recipient" />
+							<InputPlus :disabled="isDetail" v-model="form.recipient" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="收件人手机号" prop="recipientMobile">
-							<el-input :disabled="isDetail" v-model="form.recipientMobile" />
+							<InputPlus :disabled="isDetail" v-model="form.recipientMobile" />
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="24" class="mb20">
 						<el-form-item label="邮寄地址" prop="postAddress">
-							<el-input :disabled="isDetail" v-model="form.postAddress" :rows="3" show-word-limit type="textarea" />
+							<InputPlus :disabled="isDetail" v-model="form.postAddress" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 				</el-row>

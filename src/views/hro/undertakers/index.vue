@@ -205,7 +205,7 @@ const Distribution = defineAsyncComponent(() => import('/@/components/Distributi
 const { t } = useI18n();
 const conditionForms = ref([
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 		label: t('undertakerInfo.undertakerName'),
 		props: {
@@ -213,7 +213,7 @@ const conditionForms = ref([
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerCard',
 		label: t('undertakerInfo.undertakerCard'),
 		props: {
@@ -221,7 +221,7 @@ const conditionForms = ref([
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerPhone',
 		label: t('undertakerInfo.undertakerPhone'),
 		props: {

@@ -71,53 +71,53 @@ const dataRules = ref({
 
 const forms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerName',
 		label: '承接人',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerCard',
 		label: '身份证号码',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'undertakerPhone',
 		label: '手机号码',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskName',
 		label: '任务名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'createTime',
 		label: '起始时间',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'orderReceivingTime',
 		label: '接单时间',
 		title: '个人承接页',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'startTime',
 		label: '开始时间',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'doneTime',
 		label: '完成时间',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'workload',
 		label: '确认工作量',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'confirmMoney',
 		label: '承接人确认金额',
 	},
@@ -133,23 +133,23 @@ const forms = [
 	},
 
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAcceptanceTime',
 		label: '企业验收时间',
 		title: '企业验收页',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAcceptanceWorkload',
 		label: '企业验收工作量',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAcceptanceMoney',
 		label: '企业验收金额',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAcceptanceImages',
 		label: '验收上传图片',
 	},

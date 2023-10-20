@@ -8,7 +8,7 @@
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item v-if="form.auditPass === false" label="驳回原因" prop="auditPostscript">
-				<el-input v-model="form.auditPostscript" :rows="3" placeholder="请输入" show-word-limit type="textarea" />
+				<InputPlus v-model="form.auditPostscript" :rows="3" placeholder="请输入" show-word-limit type="textarea" />
 			</el-form-item>
 		</el-form>
 		<template #footer>

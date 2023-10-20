@@ -41,13 +41,13 @@
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="邮寄地址:" prop="postAddress">
-					<el-input v-model="dialogFormData.postAddress" disabled />
+					<InputPlus v-model="dialogFormData.postAddress" disabled />
 				</el-form-item>
 				<el-form-item label="收件人:" prop="postUsername">
-					<el-input v-model="dialogFormData.postUsername" disabled />
+					<InputPlus v-model="dialogFormData.postUsername" disabled />
 				</el-form-item>
 				<el-form-item label="收件人手机号:" prop="postPhone">
-					<el-input v-model="dialogFormData.postPhone" disabled />
+					<InputPlus v-model="dialogFormData.postPhone" disabled />
 				</el-form-item>
 			</template>
 		</Dialog>
@@ -145,7 +145,7 @@ const columns = [
 const conditionForms = [
 	{
 		label: '申请编号',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'idNum',
 	},
 	{
@@ -182,7 +182,7 @@ const conditionForms = [
 
 const forms = computed(() => [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'merchantName',
 		label: '开票抬头',
 		column: 24,
@@ -191,7 +191,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'unifiedSocialCreditIdentifier',
 		label: '统一社会信用代码',
 		props: {
@@ -199,7 +199,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseMailbox',
 		label: '企业邮箱',
 		props: {
@@ -207,7 +207,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAddress',
 		label: '企业地址',
 		props: {
@@ -215,7 +215,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterprisePhone',
 		label: '企业电话',
 		props: {
@@ -223,7 +223,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankName',
 		label: '开户行',
 		props: {
@@ -231,7 +231,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankNo',
 		label: '银行账号',
 		props: {
@@ -239,7 +239,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'invoiceNumber',
 		label: '发票编号',
 		props: {
@@ -248,7 +248,7 @@ const forms = computed(() => [
 		rules: [{ required: financeType.value === 'open', message: '发票编号不能为空', trigger: 'blur' }],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'invoicingAmount',
 		label: '开票金额',
 		props: {
@@ -303,7 +303,7 @@ const forms = computed(() => [
 		rules: [{ required: financeType.value === 'open', message: '快递公司不能为空', trigger: 'change' }],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'postOrderNumber',
 		label: '快递单号',
 		props: {
@@ -317,7 +317,7 @@ const rejectForms = computed(() =>
 	financeType.value === 'cancel'
 		? [
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					title: {
 						html: '您确定要作废本发票吗？',
 						style: {
@@ -356,7 +356,7 @@ const rejectForms = computed(() =>
 					value: true,
 				},
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'reason',
 					label: '驳回原因',
 					props: {
