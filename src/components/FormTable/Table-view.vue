@@ -41,7 +41,7 @@
 					:key="column.prop"
 					:formatter="tableCellFormatter"
 					v-bind="{
-						showOverflowTooltip: column.showOverflowTooltip || true,
+						showOverflowTooltip: column.showOverflowTooltip || column.label === '操作' ? false : true,
 						...column,
 					}"
 				>

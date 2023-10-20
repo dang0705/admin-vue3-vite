@@ -308,7 +308,7 @@ const indexThead = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		minWidth: 220,
+		minWidth: 250,
 	},
 ];
 const handleContractFile = (row) => {

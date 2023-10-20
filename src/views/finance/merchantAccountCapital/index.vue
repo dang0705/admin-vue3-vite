@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts" name="商户资金账户">
-import { delObjs, getObj, addObj } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
