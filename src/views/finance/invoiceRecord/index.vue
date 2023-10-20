@@ -5,7 +5,7 @@
 		module="finance/invoiceRecord.ts"
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="发票记录.xlsx"
-		auth="finance_invoiceRecord_export"
+		exportAuth="finance_invoiceRecord_export"
 	>
 		<template #actions="{ row: { id, status } }">
 			<el-button icon="view" text type="primary" @click="applyfor(id, 'see')" v-auth="'finance_invoiceRecord_view'">查看</el-button>

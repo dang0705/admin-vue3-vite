@@ -6,7 +6,7 @@
 		labelWidth="100px"
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="未申请发票.xlsx"
-		auth="finance_invoiceRecordNot_export"
+		exportAuth="finance_invoiceRecordNot_export"
 	>
 		<template #actions="{ row: { id } }">
 			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')" v-auth="'finance_invoiceRecordNot_applyfor'">
