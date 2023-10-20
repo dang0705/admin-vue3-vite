@@ -8,7 +8,7 @@
 		module="finance/waterSpPaymentBank.ts"
 	>
 		<template #tableTop>
-			<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
+			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 		</template>
 		<template #top-bar="{ otherInfo }">
 			<el-button v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts" name="银行流水">
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
 	status: string;

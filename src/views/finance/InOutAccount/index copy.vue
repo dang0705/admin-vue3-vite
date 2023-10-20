@@ -14,7 +14,7 @@
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
 			</template>
 			<template #tableTop>
-				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
+				<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
@@ -49,7 +49,7 @@
 import { useMessage } from '/@/hooks/message';
 import { getSpPaymentChannelList, getSpInfoList } from '/@/api/core/merchantInfo';
 import { payChannel } from '/@/configuration/dynamic-control';
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import Array2Object from '/@/utils/array-2-object';
 const addUnderTakerRef = ref();
 const params = ref({});

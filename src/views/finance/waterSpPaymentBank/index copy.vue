@@ -12,7 +12,7 @@
 			<span v-text="batchMap?.water_sp_payment_bank_status[status]" />
 		</template>
 		<template #tableTop>
-			<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
+			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 		</template>
 		<template #top-bar="{ otherInfo }">
 			<el-button
@@ -44,7 +44,7 @@
 <script setup lang="ts" name="银行流水">
 import Array2Object from '/@/utils/array-2-object';
 import { payChannel } from '/@/configuration/dynamic-control';
-const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 const tabType = ref(1);
 const waterSpPaymentBankRef = ref();
 const addUnderTakerForms = [
