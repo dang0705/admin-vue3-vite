@@ -2,14 +2,10 @@
 	<div v-if="disabled" class="textBox">
 		<div class="text">{{ modelValue }}</div>
 	</div>
-	<el-input v-else v-model="form.contactPhone" />
+	<el-input v-else v-model="value" />
 </template>
 
 <script setup lang="ts" name="divider">
-interface Options {
-	label: string;
-	value: string;
-}
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({

@@ -220,42 +220,42 @@ const topInfoForms = [
 		label: '账单名称',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'spName',
 		label: '服务商',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'merchantName',
 		label: '商户',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'taskId',
 		label: '任务编号',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'taskName',
 		label: '任务名称',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'taskUndertakerCount',
 		label: '任务承接数量',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'paymentBankName',
 		label: '支付通道',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'platformBankName',
 		label: '平台支付通道',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'billCreateTime',
 		label: '生成时间',
 	},
@@ -265,7 +265,7 @@ const topInfoForms = [
 		label: '管理费计算方式',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'createBillUser',
 		label: '创建人',
 	},
@@ -273,12 +273,12 @@ const topInfoForms = [
 // 筛选表单
 const conditionForms = [
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'id',
 		label: '承接人',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'billName',
 		label: '承接人证件号码',
 	},
