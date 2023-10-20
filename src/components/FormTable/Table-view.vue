@@ -41,14 +41,17 @@
 					:key="column.prop"
 					:formatter="tableCellFormatter"
 					v-bind="{
-						showOverflowTooltip: column.showOverflowTooltip || column.label === '操作' ? false : true,
+						showOverflowTooltip: !(column.showOverflowTooltip || column.label === '操作'),
 						...column,
+						// ...(column.label === '操作' ? { renderHeader } : null),
 					}"
 				>
 					<template v-if="column.slot || column.value" v-slot="{ row }">
-						<slot :name="column.prop" :row="row">
-							<template v-if="column.value">{{ column.value(row) }}</template>
-						</slot>
+						<div class="optionDiv whitespace-nowrap inline-block">
+							<slot :name="column.prop" :row="row">
+								<template v-if="column.value">{{ column.value(row) }}</template>
+							</slot>
+						</div>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -169,7 +172,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 		  }
 		: {}),
 });
-const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList, downBlobFile } = useTable(state, params.value ? params : null);
+const { currentChangeHandle, sizeChangeHandle, tableStyle, getDataList, downBlobFile, renderHeader } = useTable(state, params.value ? params : null);
 
 const selectObjs = ref([]) as any;
 

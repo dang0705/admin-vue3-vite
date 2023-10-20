@@ -13,8 +13,8 @@
 		@get-tab-label="currentTab = $event"
 	>
 		<template #top-bar="{ refresh, query }" v-if="['支付失败', '待支付'].includes(currentTab)">
-			<el-button type="primary" @click="confirmToPay"> 批量支付 </el-button>
-			<el-button type="primary" @click="entirelyPay(refresh, query)"> 全部支付 </el-button>
+			<el-button type="primary" v-auth="`finance_undertakerAgentPaying_pay`" @click="confirmToPay"> 批量支付 </el-button>
+			<el-button type="primary" v-auth="`finance_undertakerAgentPaying_pay`" @click="entirelyPay(refresh, query)"> 全部支付 </el-button>
 		</template>
 		<template #payStatus="{ row: { payStatus } }">
 			{{ playStatusMapping['undertaker_agent_paying_pay_status'][payStatus] }}
@@ -22,7 +22,7 @@
 		<template #actions="{ row }">
 			<el-button
 				v-if="['待支付', '支付失败'].includes(playStatusMapping['undertaker_agent_paying_pay_status'][row.payStatus])"
-				v-auth="`finance_undertaker_agent_paying_pay`"
+				v-auth="`finance_undertakerAgentPaying_pay`"
 				type="text"
 				@click="confirmToPay('pay', row)"
 				>支付</el-button
