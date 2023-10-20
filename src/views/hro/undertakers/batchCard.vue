@@ -20,6 +20,13 @@
 			<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-dialog>
+	<el-dialog :title="title" v-model="state.successVisible">
+		<p v-text="state.upload.data" />
+		<template #footer>
+			<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
+			<el-button @click="handleCancel">{{ $t('common.cancelButtonText') }}</el-button>
+		</template>
+	</el-dialog>
 </template>
 
 <script setup lang="ts" name="UndertakerInfoDialog">
@@ -28,6 +35,7 @@ import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import { uploadUndertakerCard } from '/@/api/hro/undertakerInfo';
+import { useRouter } from 'vue-router';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
@@ -35,6 +43,18 @@ const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
 const businessType = uploadBusinessType.hro;
+
+const state = reactive({
+	successVisible: false,
+	dialog: {
+		title: '',
+	},
+	upload: {
+		open: false,
+		isUploading: false,
+		data: '',
+	},
+});
 // 定义字典
 
 // 提交表单数据
@@ -57,6 +77,13 @@ const openDialog = () => {
 	});
 };
 
+const router = useRouter();
+const goToBatchManagement = () => router.push({ name: '导入批次', state: { refresh: 1 } });
+
+const handleCancel = () => {
+	state.successVisible = false;
+	emit('refresh');
+};
 // 提交
 const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
@@ -64,10 +91,10 @@ const onSubmit = async () => {
 
 	try {
 		loading.value = true;
-		await uploadUndertakerCard({ file: 'https://jmyg-admin.zhidianjh.com:8443/api/' + form.cardZip });
-		useMessage().success('上传身份证成功');
+		const { data } = await uploadUndertakerCard({ file: 'https://jmyg-admin.zhidianjh.com:8443/api/' + form.cardZip });
+		state.upload.data = data;
+		state.successVisible = true;
 		visible.value = false;
-		emit('refresh');
 	} catch (err: any) {
 	} finally {
 		loading.value = false;
