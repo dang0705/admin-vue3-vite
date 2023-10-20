@@ -53,4 +53,8 @@ export const customComponents = [
 		name: 'FormView',
 		component: () => import('/@/components/Form-view/Form-view.vue'),
 	},
+	{
+		name: 'InputPlus',
+		component: () => import('/@/components/InputPlus/index.vue'),
+	},
 ];

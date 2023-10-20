@@ -1,30 +1,41 @@
 <template>
-	<div v-if="disabled"></div>
+	<div v-if="disabled" class="textBox">
+		<div class="text">{{ modelValue }}</div>
+	</div>
 	<el-input v-else v-model="form.contactPhone" />
 </template>
 
 <script setup lang="ts" name="divider">
+interface Options {
+	label: string;
+	value: string;
+}
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
+	modelValue: {
+		type: String,
+		default: '',
+	},
 	disabled: {
 		type: Boolean,
 		default: false,
 	},
-	// modelValue: {
-	// 	type: Object,
-	// 	default: () => ({}),
-	// 	required: true,
-	// },
+});
+const value = computed({
+	get: () => props.modelValue,
+	set: (value: string) => {
+		emit('update:modelValue', value);
+	},
 });
 </script>
 
 <style scoped lang="scss">
-.el-divider--horizontal {
-	margin: 24px 0 30px;
-	:deep(.el-divider__text) {
-		font-family: PingFangSC-Medium;
-		font-weight: 600;
-		font-size: 16px;
-		color: #000000;
+.textBox {
+	color: var(--el-text-color-regular);
+	padding: 5px 0;
+	.text {
+		line-height: 22px;
 	}
 }
 </style>

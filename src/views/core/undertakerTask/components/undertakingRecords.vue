@@ -39,19 +39,19 @@
 		<el-table-column width="160px" prop="undertakerCard" label="承接人证件号码" show-overflow-tooltip />
 		<el-table-column width="120px" prop="undertakerPhone" label="承接人手机号" show-overflow-tooltip />
 		<el-table-column width="120px" prop="taskName" label="任务名称" show-overflow-tooltip />
-		<el-table-column width="120px" prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip />
-		<el-table-column prop="taskMoney" label="任务金额(元)" show-overflow-tooltip />
-		<el-table-column prop="startTime" label="承接开始时间" show-overflow-tooltip />
-		<el-table-column prop="doneTime" label="承接完成时间" show-overflow-tooltip />
-		<el-table-column prop="spName" label="服务商名称" show-overflow-tooltip />
-		<el-table-column prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
-		<el-table-column prop="isSign" label="是否签署协议" show-overflow-tooltip>
+		<el-table-column width="150px" prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
+		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />
+		<el-table-column width="120px" prop="spName" label="服务商名称" show-overflow-tooltip />
+		<el-table-column width="120px" prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="isSign" label="是否签署协议" show-overflow-tooltip>
 			<template #default="scope">
 				<span v-if="scope.row.isSign == 1">是</span>
 				<span v-if="scope.row.isSign == 0">否</span>
 			</template>
 		</el-table-column>
-		<el-table-column prop="isBankFourEssentialFactor" label="是否银行四要素校验" show-overflow-tooltip>
+		<el-table-column width="120px" prop="isBankFourEssentialFactor" label="是否银行四要素校验" show-overflow-tooltip>
 			<template #default="scope">
 				<span v-if="scope.row.isSign == 1">是</span>
 				<span v-if="scope.row.isSign == 0">否</span>
@@ -78,7 +78,7 @@
 				<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 					>查看</el-button
 				>
-				<el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'">审核</el-button>
+				<!-- <el-button icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'">审核</el-button> -->
 			</template>
 		</el-table-column>
 	</el-table>

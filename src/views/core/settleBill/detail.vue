@@ -260,7 +260,7 @@ const topInfoForms = [
 		label: '生成时间',
 	},
 	{
-		control: 'el-input',
+		control: 'inputPlus',
 		key: 'feeCalculationMethodDesc',
 		label: '管理费计算方式',
 	},
