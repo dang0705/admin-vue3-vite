@@ -63,7 +63,7 @@
 						</el-button>
 
 						<el-button text type="primary" icon="turn-off" @click="permessionRef.openDialog(scope.row)">{{ $t('sysrole.permissionTip') }} </el-button>
-						<el-button text type="primary" icon="turn-off" @click="distributionRef.openDialog(scope.row)">{{ $t('common.distribution') }} </el-button>
+						<el-button text type="primary" icon="Switch" @click="distributionRef.openDialog(scope.row)">{{ $t('common.distribution') }} </el-button>
 						<el-button v-auth="`sys_role_switch`" icon="turn-off" text type="primary" @click="changeSwitch(scope.row)">
 							{{ scope.row.enabled ? '停用' : '启用' }}
 						</el-button>

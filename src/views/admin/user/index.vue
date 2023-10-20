@@ -106,7 +106,7 @@
 								v-auth="`sys_user_merchant`"
 								text
 								type="primary"
-								icon="turn-off"
+								icon="Switch"
 								@click="customersRef.openDialog(scope.row)"
 								>{{ $t('sysuser.distributionMerchant') }}</el-button
 							>
@@ -116,7 +116,7 @@
 								v-auth="`sys_user_sp`"
 								text
 								type="primary"
-								icon="turn-off"
+								icon="Switch"
 								@click="providerRef.openDialog(scope.row)"
 							>
 								{{ $t('sysuser.distributionSp') }}
@@ -159,6 +159,7 @@
 		/>
 		<Distribution
 			ref="providerRef"
+			:titles="['未分配服务商', '已分配服务商']"
 			id-filed="userId"
 			list-url="core/userMgrSp/assignSpPage"
 			save-url="core/userMgrSp/assignSP"

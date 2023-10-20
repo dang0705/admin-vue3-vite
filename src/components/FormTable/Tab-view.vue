@@ -1,12 +1,4 @@
 <template>
-	<!--	<div class="tabs_wrapper">-->
-	<!--		<div class="tabs_list">-->
-	<!--			<div class="tabs_item" @click="handleTabs(item, index)" :class="curIndex == index ? 'active' : ''" v-for="(item, index) in tabs" :key="index">-->
-	<!--				{{ item.label }}-->
-	<!--				<div v-if="item.value != ''" class="num">{{ item.value }}</div>-->
-	<!--			</div>-->
-	<!--		</div>-->
-	<!--	</div>-->
 	<el-tabs v-model="value">
 		<template #addIcon>
 			<span></span>

@@ -250,8 +250,11 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 			case label?.includes('(元)'):
 				textAlign = 'right';
 				break;
-			default:
+			case label?.includes('操作'):
 				textAlign = 'center';
+				break;
+			default:
+				textAlign = 'left';
 		}
 		return {
 			textAlign,
@@ -267,8 +270,18 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 			};
 		},
 	};
+	const renderHeader = async ({ column }) => {
+		await nextTick();
+		const opts = document.querySelectorAll('.optionDiv');
+		let widthArr: any[] = [];
+		Array.prototype.forEach.call(opts, (item) => item.innerText && widthArr.push(item.offsetWidth));
+		// 重新设置列标题及宽度属性
+		column.width = widthArr.length ? Math.max(...widthArr) + 20 : 0;
 
+		return h('div', { innerText: column.label });
+	};
 	return {
+		renderHeader,
 		tableStyle,
 		getDataList,
 		sizeChangeHandle,
