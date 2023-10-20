@@ -11,9 +11,9 @@
 		<template #status="{ row: { status } }">
 			<span v-text="batchMap?.water_sp_payment_bank_status[status]" />
 		</template>
-		<!-- <template #tableTop>
+		<template #tableTop>
 			<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
-		</template> -->
+		</template>
 		<template #top-bar="{ otherInfo }">
 			<el-button
 				v-auth="'finance_waterSpPaymentBank_import'"
@@ -110,6 +110,7 @@ const columns = [
 		slot: true,
 	},
 ];
+
 const batchAddTask = (row: any) => {
 	addUnderTakerRef.value.openDialog(row);
 };
@@ -139,10 +140,10 @@ const refreshDataList = () => {
 		waterSpPaymentBankRef?.value.resetQuery();
 	});
 };
-// const toggleTab = (item: any) => {
-// 	tabType.value = item.attributeVal;
-// 	nextTick(() => {
-// 		waterSpPaymentBankRef?.value.resetQuery();
-// 	});
-// };
+const toggleTab = (item: any) => {
+	tabType.value = item.attributeVal;
+	nextTick(() => {
+		waterSpPaymentBankRef?.value.resetQuery();
+	});
+};
 </script>

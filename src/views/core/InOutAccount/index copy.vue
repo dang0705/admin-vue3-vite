@@ -13,15 +13,46 @@
 			<template #status="{ row: { status } }">
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
 			</template>
+			<template #tableTop>
+				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
+			</template>
+			<template #top-bar="{ otherInfo }">
+				<el-button
+					v-auth="'finance_waterSpPaymentBank_import'"
+					@click="batchAddTask"
+					style="margin-right: 24px"
+					icon="Upload"
+					type="primary"
+					class="ml10"
+				>
+					批量导入银行交易流水
+				</el-button>
+			</template>
 		</TableView>
+		<uploadExcel
+			@refreshDataList="refreshDataList"
+			ref="addUnderTakerRef"
+			guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。"
+			upload-label="批量导入银行交易流水"
+			upload-url="core/excel/importWaterSpPaymentBank"
+			temp-url="/files/银行交易流水模版.xlsx"
+			template-on-front
+			:params="params"
+			title="批量导入银行交易流水"
+			:forms="addUnderTakerForms"
+			submitButtonText="下一步"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts" name="出入账管理">
+import { useMessage } from '/@/hooks/message';
+import { getSpPaymentChannelList, getSpInfoList } from '/@/api/core/merchantInfo';
 import { payChannel } from '/@/configuration/dynamic-control';
 const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import Array2Object from '/@/utils/array-2-object';
 const addUnderTakerRef = ref();
+const params = ref({});
 const tabType = ref(1);
 const InOutAccountRef = ref();
 const formInfo = reactive({
@@ -146,6 +177,11 @@ const toggleTab = (item: object) => {
 		InOutAccountRef?.value.resetQuery();
 	});
 };
+// 导出excel
+// const exportExcel = () => {
+// 	downBlobFile('/core/merchantRecharge/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+// 	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+// };
 const refreshDataList = () => {
 	formInfo.spPaymentChannelList = [];
 	nextTick(() => {
@@ -153,8 +189,18 @@ const refreshDataList = () => {
 	});
 };
 const batchAddTask = (row: any) => {
+	// params.value.taskId = row.id;
 	addUnderTakerRef.value.openDialog(row);
 };
-
+const getSpPaymentChannelListData = (formData: any) => {
+	getSpPaymentChannelList({
+		spId: formData.spId,
+	}).then((res: any) => {
+		formInfo.spPaymentChannelList = res.data || [];
+	});
+};
 const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);
+getSpInfoList('').then((res: any) => {
+	formInfo.spinfoList = res.data || [];
+});
 </script>
