@@ -10,20 +10,19 @@
 			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 			:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		>
-			<template #status="{ row: { status } }">
+			<!-- <template #status="{ row: { status } }">
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
-			</template>
+			</template> -->
 			<template #tableTop>
 				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
 			</template>
 			<template #top-bar="{ otherInfo }">
 				<el-button
 					v-auth="'finance_waterSpPaymentBank_import'"
-					@click="inOutAccountAddFormsRef.value.openDialog()"
+					@click="inOutAccountAddFormsRef.openDialog()"
 					style="margin-right: 24px"
 					icon="Upload"
 					type="primary"
-					class="ml10"
 				>
 					批量导入银行交易流水
 				</el-button>
@@ -48,7 +47,10 @@
 const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
-const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);
+interface BatchUploadRecordPage {
+	status: string;
+}
+const batchMap = Array2Object({ dic: ['merchant_recharge_status'] });
 const inOutAccountAddFormsRef = ref();
 const tabType = ref(1);
 const InOutAccountRef = ref();
@@ -99,7 +101,7 @@ const columns1 = ref([
 		prop: 'status',
 		label: '状态',
 		minWidth: 150,
-		slot: true,
+		value: ({ status }: BatchUploadRecordPage) => batchMap.value.merchant_recharge_status[status],
 	},
 ]);
 const columns2 = ref([
