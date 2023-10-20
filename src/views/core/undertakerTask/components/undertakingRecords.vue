@@ -75,7 +75,7 @@
 				<el-table-column prop="enterpriseAcceptanceMoney" label="企业验收金额" show-overflow-tooltip /> -->
 		<el-table-column label="操作" width="150" fixed="right">
 			<template #default="scope">
-				<el-button icon="view" text type="primary" v-auth="'hro_undertakerInfo_view'" @click="detailDialogRef.openDialog(scope.row.id)"
+				<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 					>查看</el-button
 				>
 				<el-button @click="handleBtn" v-if="scope.row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'"
