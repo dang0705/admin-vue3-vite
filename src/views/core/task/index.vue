@@ -123,8 +123,15 @@
 							>批量指派承接人</el-button
 						>
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
-						<el-button icon="delete" text type="primary" v-auth="'core_task_xiajia'">下家</el-button>
-						<!-- 伪代码 -->
+						<el-button
+							v-if="scope.row.status == 20 && scope.row.auditStatus == 20"
+							icon="turn-off"
+							text
+							type="primary"
+							@click="handleTaskDown(scope.row.id)"
+							v-auth="'core_task_xiajia'"
+							>下架</el-button
+						>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -158,7 +165,7 @@
 
 <script setup lang="ts" name="任务记录">
 import { BasicTableProps, useTable } from '/@/hooks/table';
-import { fetchList, delObjs, putAuditTask } from '/@/api/core/task';
+import { fetchList, delObjs, putAuditTask, taskDown } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
@@ -324,6 +331,19 @@ const handleDelete = async (ids: string[]) => {
 		await delObjs(ids);
 		getDataList();
 		useMessage().success('删除成功');
+	} catch (err: any) {}
+};
+const handleTaskDown = async (id: string) => {
+	try {
+		await useMessageBox().confirm('您确定将下架该任务吗？');
+	} catch {
+		return;
+	}
+
+	try {
+		await taskDown(id);
+		getDataList();
+		useMessage().success('下架任务成功');
 	} catch (err: any) {}
 };
 

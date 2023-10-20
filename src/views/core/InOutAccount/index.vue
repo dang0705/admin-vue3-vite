@@ -8,6 +8,7 @@
 			labelWidth="120px"
 			:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
 			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
+			:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		>
 			<template #status="{ row: { status } }">
 				<span v-text="batchMap?.merchant_recharge_status[status]" />
@@ -16,7 +17,16 @@
 				<Mytab style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></Mytab>
 			</template>
 			<template #top-bar="{ otherInfo }">
-				<el-button @click="batchAddTask" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导入银行交易流水 </el-button>
+				<el-button
+					v-auth="'finance_waterSpPaymentBank_import'"
+					@click="batchAddTask"
+					style="margin-right: 24px"
+					icon="Upload"
+					type="primary"
+					class="ml10"
+				>
+					批量导入银行交易流水
+				</el-button>
 			</template>
 		</TableView>
 		<uploadExcel

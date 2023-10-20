@@ -8,6 +8,8 @@
 		:columns="24"
 		:label-width="140"
 		:on-submit="onSubmit"
+		:showCancel="false"
+		submitButtonText="复制信息"
 		vertical
 	>
 	</Dialog>
@@ -20,33 +22,21 @@ import { getMerchantSubAccountDetail } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 const emit = defineEmits(['refresh']);
-
+import commonFunction from '/@/utils/commonFunction';
+const { copyText } = commonFunction();
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);
-const loading = ref(false);
 const businessType = uploadBusinessType.hro;
 // 定义字典
 const { yes_no_type, gender, education } = useDict('yes_no_type', 'gender', 'education');
 // 提交表单数据
 const formData = reactive({
 	id: '',
-	undertakerName: '',
-	undertakerCard: '',
-	undertakerPhone: '',
-	undertakerSex: '',
-	undertakerAddress: '',
-	undertakerClan: '',
-	undertakerClanName: '',
-	undertakerEducation: '',
-	workTime: '',
-	undertakerPortrait: [],
-	undertakerNationalEmblem: [],
-	isAuthentication: '',
-	bankNumber: '',
-	bankName: '',
-	bankAddress: '',
-	isBankFourEssentialFactor: '',
+	merchantName: '',
+	spName: '',
+	mainAccount: '',
+	bankBranch: '',
 });
 
 const forms = [
@@ -88,27 +78,29 @@ const openDialog = (id: string) => {
 	}
 };
 // 提交
-const onSubmit = async () => {
-	try {
-		loading.value = true;
-		visible.value = false;
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	} finally {
-		loading.value = false;
-	}
+const onSubmit = () => {
+	const text =
+		'商户名称:' +
+		formData.merchantName +
+		'\n' +
+		'收款户名:' +
+		formData.spName +
+		'\n' +
+		'收款账号:' +
+		formData.mainAccount +
+		'\n' +
+		'收款开户行:' +
+		formData.bankBranch;
+	copyText(text);
 };
 // 初始化表单数据
 const getundertakerInfoData = (id: string) => {
 	// 获取数据
-	loading.value = true;
 	getMerchantSubAccountDetail(id)
 		.then((res: any) => {
 			Object.assign(formData, res.data);
 		})
-		.finally(() => {
-			loading.value = false;
-		});
+		.finally(() => {});
 };
 
 // 暴露变量

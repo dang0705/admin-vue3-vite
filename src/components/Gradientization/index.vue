@@ -104,9 +104,9 @@ watch(
 </script>
 
 <template>
-	<div :class="['flex', 'flex-wrap', 'items-center', { mt10: index }]" v-for="(_, index) in gradual" :key="index">
+	<div :class="['flex', 'flex-wrap', 'items-center', 'w100', { mt10: index }]" v-for="(_, index) in gradual" :key="index">
 		<el-input-number
-			class="h-fit max-w-[160px]"
+			class="h-fit max-w-[80px]"
 			:min="0"
 			:step="steps[0]"
 			disabled
