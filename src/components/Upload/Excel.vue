@@ -269,7 +269,10 @@ const upload = async () => {
 	}
 };
 const router = useRouter();
-const goToBatchManagement = () => router.push({ name: '导入批次', state: { refresh: 1 } });
+const goToBatchManagement = () => {
+	router.push({ name: '导入批次', state: { refresh: 1 } });
+	handleCancel();
+};
 
 const handleCancel = () => {
 	state.successVisible = false;
