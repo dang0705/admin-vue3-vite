@@ -34,7 +34,6 @@
 				</el-form-item>
 			</template>
 		</el-form>
-		<!-- spPaymentChannelData -->
 		<div>
 			<form-view
 				ref="formViewRef"
@@ -49,11 +48,6 @@
 				v-model="formData"
 				:forms="addUnderTakerForms"
 			>
-				<!-- <template #transferVouchers="{ form }">
-					<el-form-item label="上传转账凭证" prop="transferVouchers">
-						<UploadFile :type="businessType" v-model="formData.transferVouchers" />
-					</el-form-item>
-				</template> -->
 			</form-view>
 		</div>
 		<template #footer>
@@ -111,7 +105,6 @@ const addUnderTakerForms = [
 		control: 'UploadFile',
 		key: 'transferVouchers',
 		label: '上传转账凭证',
-		// slot: true,
 		rules: [
 			{
 				required: true,

@@ -7,7 +7,8 @@
 			:forms="conditionForms"
 			:on-submit="onSubmit"
 			:onCancel="() => (visible = false)"
-			submit-button-text="确认"
+			:submit-button-text="self_disabled ? '关闭' : '确认'"
+			:showCancel="self_disabled ? false : true"
 			:columns="12"
 			vertical
 			:labelWidth="140"
