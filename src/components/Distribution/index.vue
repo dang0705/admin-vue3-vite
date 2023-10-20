@@ -1,5 +1,5 @@
 <template>
-	<el-dialog fullscreen v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
+	<el-dialog v-model="state.dialog.isShowDialog" class="w-full" :close-on-click-modal="false" draggable :width="dialogWidth">
 		<template #header>
 			<p class="text-xl my-2">{{ title }}</p>
 		</template>
