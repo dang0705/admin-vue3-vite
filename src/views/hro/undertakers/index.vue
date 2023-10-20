@@ -61,12 +61,16 @@
 					</template>
 				</el-table-column>
 				<el-table-column prop="undertakerAge" label="年龄" width="60" show-overflow-tooltip />
-				<el-table-column prop="undertakerEducationName" label="学历" width="60" show-overflow-tooltip />
+				<el-table-column prop="undertakerEducationName" label="学历" width="60" show-overflow-tooltip>
+					<template #default="{ row: { undertakerEducation } }">
+						<div>{{ batchMap?.education[undertakerEducation] }}</div>
+					</template>
+				</el-table-column>
 				<el-table-column prop="bankName" label="开户行" width="150" show-overflow-tooltip />
 				<el-table-column prop="bankNumber" label="银行卡号" width="200" show-overflow-tooltip />
-				<el-table-column label="服务商" width="150" show-overflow-tooltip>
+				<el-table-column label="服务商" width="180" show-overflow-tooltip>
 					<template #default="scope">
-						<div v-for="(_, i) in scope.row.spList" :key="i">{{ _.spName }}</div>
+						<div class="overflow-hidden text-ellipsis" v-for="(_, i) in scope.row.spList" :key="i">{{ _.spName }}</div>
 					</template>
 				</el-table-column>
 				<el-table-column label="是否签署协议" width="150" show-overflow-tooltip>
@@ -194,7 +198,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 import Array2Object from '/@/utils/array-2-object';
-const batchMap = Array2Object({ dic: ['gender'] });
+const batchMap = Array2Object({ dic: ['gender', 'education'] });
 
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
