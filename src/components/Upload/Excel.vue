@@ -62,7 +62,7 @@
 		</el-dialog>
 
 		<!--校验失败错误数据-->
-		<el-dialog :title="title" v-model="state.successVisible" v-if="toBatch">
+		<el-dialog :title="title" v-model="state.successVisible" @close="handleClose" v-if="toBatch">
 			<p v-text="state.upload.data" />
 			<template #footer>
 				<el-button type="primary" @click="goToBatchManagement">{{ $t('common.goToBatchManagement') }}</el-button>
@@ -276,6 +276,9 @@ const goToBatchManagement = () => {
 
 const handleCancel = () => {
 	state.successVisible = false;
+};
+
+const handleClose = () => {
 	emit?.('refreshDataList');
 };
 /**

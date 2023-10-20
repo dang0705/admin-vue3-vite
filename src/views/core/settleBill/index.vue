@@ -25,6 +25,7 @@
 		</TableView>
 		<!-- 导入结算-->
 		<uploadExcel
+			@refreshDataList="refreshDataList"
 			ref="importBillRef"
 			guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
 			upload-label="导入结算"
