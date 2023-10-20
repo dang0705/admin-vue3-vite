@@ -55,7 +55,7 @@ const forms = [
 		value: 1,
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		label: '单选一对应的动态控件',
 		key: 'text',
 		rules: [

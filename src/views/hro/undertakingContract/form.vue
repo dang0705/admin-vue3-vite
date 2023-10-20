@@ -69,7 +69,7 @@ watch(
 
 const forms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		label: '合同名称',
 		key: 'contractName',
 	},

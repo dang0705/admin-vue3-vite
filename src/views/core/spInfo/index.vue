@@ -4,7 +4,7 @@
 			<el-row class="ml10" v-show="showSearch">
 				<el-form :inline="true" :model="state.queryForm" ref="queryRef">
 					<el-form-item :label="$t('spInfo.spName')" prop="spName">
-						<el-input style="max-width: 180px" v-model="state.queryForm.spName" />
+						<InputPlus style="max-width: 180px" v-model="state.queryForm.spName" />
 					</el-form-item>
 					<el-form-item :label="t('spInfo.status')" class="ml2" prop="status">
 						<el-select v-model="state.queryForm.status">

@@ -52,7 +52,7 @@ const conditionForms = ref([
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'channelName',
 		label: '支付通道名称:',
 		props: {
@@ -68,7 +68,7 @@ const conditionForms = ref([
 		rules: [{ required: true, message: '账号类别不能为空', trigger: 'change' }],
 	},
 	// {
-	// 	control: 'el-input',
+	// 	control: 'InputPlus',
 	// 	key: 'bankNumber',
 	// 	label: '网关地址:',
 	// 	props: {
@@ -77,7 +77,7 @@ const conditionForms = ref([
 	// 	rules: [{ required: true, message: '网关地址不能为空', trigger: 'blur' }],
 	// },
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankBranch',
 		label: '开户行:',
 		props: {
@@ -86,7 +86,7 @@ const conditionForms = ref([
 		rules: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankArea',
 		label: '开户地:',
 		props: {
@@ -95,7 +95,7 @@ const conditionForms = ref([
 		rules: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'interbankNumber',
 		label: '开户行联行号:',
 		props: {
@@ -104,7 +104,7 @@ const conditionForms = ref([
 		rules: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'mainAccount',
 		label: '主账号:',
 		props: {

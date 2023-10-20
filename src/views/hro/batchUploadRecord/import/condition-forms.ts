@@ -20,7 +20,7 @@ export default [
 		options: 'batch_status',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'createBy',
 		label: '创建人',
 	},

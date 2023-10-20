@@ -39,21 +39,21 @@
 					prop="postAddress"
 					:rules="[{ required: dialogFormData.radioAddress === 0, message: '邮寄地址不能为空', trigger: 'blur' }]"
 				>
-					<el-input v-model="dialogFormData.postAddress" :disabled="dialogFormData.radioAddress === 1" />
+					<InputPlus v-model="dialogFormData.postAddress" :disabled="dialogFormData.radioAddress === 1" />
 				</el-form-item>
 				<el-form-item
 					label="收件人:"
 					prop="postUsername"
 					:rules="[{ required: dialogFormData.radioAddress === 0, message: '收件人不能为空', trigger: 'blur' }]"
 				>
-					<el-input v-model="dialogFormData.postUsername" :disabled="dialogFormData.radioAddress === 1" />
+					<InputPlus v-model="dialogFormData.postUsername" :disabled="dialogFormData.radioAddress === 1" />
 				</el-form-item>
 				<el-form-item
 					label="收件人手机号:"
 					prop="postPhone"
 					:rules="[{ required: dialogFormData.radioAddress === 0, message: '收件人手机号不能为空', trigger: 'blur' }]"
 				>
-					<el-input v-model="dialogFormData.postPhone" :disabled="dialogFormData.radioAddress === 1" />
+					<InputPlus v-model="dialogFormData.postPhone" :disabled="dialogFormData.radioAddress === 1" />
 				</el-form-item>
 			</template>
 		</Dialog>
@@ -148,19 +148,19 @@ const conditionForms = [
 	},
 	{
 		label: '账单编号',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billNum',
 	},
 	{
 		label: '账单名称',
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billName',
 	},
 ];
 
 const forms = computed(() => [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'merchantName',
 		label: '开票抬头',
 		column: 24,
@@ -169,7 +169,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'unifiedSocialCreditIdentifier',
 		label: '统一社会信用代码',
 
@@ -178,7 +178,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseMailbox',
 		label: '企业邮箱',
 		props: {
@@ -186,7 +186,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterpriseAddress',
 		label: '企业地址',
 		props: {
@@ -194,7 +194,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'enterprisePhone',
 		label: '企业电话',
 		props: {
@@ -202,7 +202,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankName',
 		label: '开户行',
 		props: {
@@ -210,7 +210,7 @@ const forms = computed(() => [
 		},
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankNo',
 		label: '银行账号',
 		props: {
@@ -220,7 +220,7 @@ const forms = computed(() => [
 	...(financeType.value === 'applyfor'
 		? [
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'settleBillRecordId',
 					label: '结算单编号',
 					props: {
@@ -228,7 +228,7 @@ const forms = computed(() => [
 					},
 				},
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'serviceAmount',
 					label: '结算金额',
 					props: {
@@ -238,13 +238,13 @@ const forms = computed(() => [
 		  ]
 		: [
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'invoiceNumber',
 					label: '发票编号',
 					rules: [{ required: true, message: '发票编号不能为空', trigger: 'blur' }],
 				},
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'serviceAmount',
 					label: '开票金额',
 					props: {
@@ -295,7 +295,7 @@ const forms = computed(() => [
 					rules: [{ required: true, message: '快递公司不能为空', trigger: 'change' }],
 				},
 				{
-					control: 'el-input',
+					control: 'InputPlus',
 					key: 'postOrderNumber',
 					label: '快递单号',
 					rules: [{ required: true, message: '快递单号不能为空', trigger: 'blur' }],

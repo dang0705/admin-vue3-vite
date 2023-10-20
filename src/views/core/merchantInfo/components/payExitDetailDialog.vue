@@ -41,22 +41,22 @@ const formData = reactive({
 
 const forms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'merchantName',
 		label: '商户名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'spName',
 		label: '收款户名',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'mainAccount',
 		label: '收款账号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'bankBranch',
 		label: '收款开户行',
 	},

@@ -99,7 +99,7 @@ const formInfo = reactive({
 });
 const addUnderTakerForms = [
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billName',
 		label: '账单名称',
 		rules: [
@@ -175,23 +175,23 @@ const conditionForms = [
 		label: '服务商',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billNum',
 		label: '账单编号',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'billName',
 		label: '账单名称',
 	},
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'taskNum',
 		label: '任务编号',
 	},
 	payChannel({ key: 'paymentBankId' }),
 	{
-		control: 'el-input',
+		control: 'InputPlus',
 		key: 'createBillUser',
 		label: '创建人',
 	},

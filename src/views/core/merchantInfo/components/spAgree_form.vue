@@ -4,7 +4,7 @@
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务协议名称" prop="agreementName">
-						<el-input :disabled="isDetail" v-model="form.agreementName" />
+						<InputPlus :disabled="isDetail" v-model="form.agreementName" />
 					</el-form-item>
 				</el-col>
 
@@ -31,9 +31,9 @@
 				</el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item label="平台服务费比例" prop="platformFeeRate">
-						<el-input :disabled="isDetail" type="number" v-model.number="form.platformFeeRate">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.platformFeeRate">
 							<template #append>%</template>
-						</el-input>
+						</InputPlus>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
