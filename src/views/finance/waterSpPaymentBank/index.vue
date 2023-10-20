@@ -51,7 +51,10 @@ const addUnderTakerForms = ref([
 		},
 		rules: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	},
-	payChannel({ key: 'channelId', rules: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }] }),
+	payChannel({
+		key: 'channelId',
+		rules: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }],
+	}),
 ]);
 const tabs = ref([
 	{
@@ -108,6 +111,9 @@ const conditionForms = ref([
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
+		props: {
+			platform: true,
+		},
 	},
 	{
 		control: 'DateRange',
