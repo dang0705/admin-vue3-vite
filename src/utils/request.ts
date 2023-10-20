@@ -105,7 +105,7 @@ service.interceptors.response.use(handleResponse, (error) => {
 		useMessageBox().error(status > 499 ? `服务内部错误${status}` : msg || '未知错误');
 	}
 
-	return Promise.reject(error.response.data);
+	return Promise.reject(msg);
 });
 
 // 常用header
