@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<TableView
-			ref="TableViewRef"
+			ref="merchantAccountCapitalRef"
 			:columns="indexThead"
 			module="finance/merchantRecharge.ts"
 			:staticQuery="staticQuery"
@@ -115,12 +115,11 @@ const reType = ref(0);
 const detailDialogRef = ref();
 const importBillRef = ref();
 const show = ref(false);
-const TableViewRef = ref();
+const merchantAccountCapitalRef = ref();
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const { proxy } = getCurrentInstance();
 let dialogFormData = ref({});
-// const forms = ref([]);
 let forms = [];
 const form1 = [
 	{
@@ -378,7 +377,7 @@ const handleRevoke = async (id) => {
 		await useMessageBox().confirm('您确定撤销吗？');
 		await updateMerchantRechargeStatus(id);
 		useMessage().success('撤销成功');
-		TableViewRef.value.resetQuery();
+		merchantAccountCapitalRef.value.resetQuery();
 	} catch (err: any) {}
 };
 // 提交授权数据
@@ -405,7 +404,7 @@ const onCancel = () => {
 };
 const refreshDataList = () => {
 	getmerchantInfoData();
-	TableViewRef.value.resetQuery();
+	merchantAccountCapitalRef.value.resetQuery();
 };
 
 const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);

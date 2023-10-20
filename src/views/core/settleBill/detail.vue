@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<TableView
-			ref="TableViewRef"
+			ref="settleBillDetailRef"
 			:columns="indexThead"
 			module="core/settleBill.ts"
 			getListFnName="taskRecordItem"
@@ -187,7 +187,7 @@ const DetailDialog = defineAsyncComponent(() => import('./components/detailDialo
 const route: any = useRoute();
 const detailDialogRef = ref();
 const importBillRef = ref();
-const TableViewRef = ref();
+const settleBillDetailRef = ref();
 const { proxy } = getCurrentInstance();
 interface BatchUploadRecordPage {
 	isSignServiceContract: number;
@@ -545,7 +545,7 @@ const handleContractFile = (row) => {
 
 const refreshDataList = () => {
 	getmerchantInfoData();
-	TableViewRef.value.resetQuery();
+	settleBillDetailRef.value.resetQuery();
 };
 $refreshList(getmerchantInfoData);
 </script>

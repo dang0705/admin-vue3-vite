@@ -1,6 +1,6 @@
 <template>
 	<Table-view
-		ref="TableViewRef"
+		ref="waterSpPaymentBankRef"
 		:columns="columns"
 		label-width="110px"
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
@@ -42,12 +42,11 @@
 </template>
 
 <script setup lang="ts" name="银行流水">
-import { delObjs, getObj, addObj } from '/@/api/finance/waterSpPaymentBank';
 import Array2Object from '/@/utils/array-2-object';
 import { payChannel } from '/@/configuration/dynamic-control';
 const Mytab = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 const tabType = ref(1);
-const TableViewRef = ref();
+const waterSpPaymentBankRef = ref();
 const addUnderTakerForms = [
 	{
 		control: 'SpSelect',
@@ -113,7 +112,6 @@ const columns = [
 ];
 
 const batchAddTask = (row: any) => {
-	// params.value.taskId = row.id;
 	addUnderTakerRef.value.openDialog(row);
 };
 const batchMap = computed(() => Array2Object({ dic: ['water_sp_payment_bank_status'] }).value);
@@ -139,13 +137,13 @@ const conditionForms = [
 ];
 const refreshDataList = () => {
 	nextTick(() => {
-		TableViewRef?.value.resetQuery();
+		waterSpPaymentBankRef?.value.resetQuery();
 	});
 };
 const toggleTab = (item: any) => {
 	tabType.value = item.attributeVal;
 	nextTick(() => {
-		TableViewRef?.value.resetQuery();
+		waterSpPaymentBankRef?.value.resetQuery();
 	});
 };
 </script>

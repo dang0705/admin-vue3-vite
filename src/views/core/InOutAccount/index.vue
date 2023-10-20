@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<TableView
-			ref="TableViewRef"
+			ref="InOutAccountRef"
 			:columns="tabType == 1 ? columns1 : columns2"
 			:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
 			:condition-forms="conditionForms"
@@ -54,7 +54,7 @@ import Array2Object from '/@/utils/array-2-object';
 const addUnderTakerRef = ref();
 const params = ref({});
 const tabType = ref(1);
-const TableViewRef = ref();
+const InOutAccountRef = ref();
 const formInfo = reactive({
 	spPaymentChannelList: [],
 	spinfoList: [],
@@ -174,7 +174,7 @@ const conditionForms = [
 const toggleTab = (item: object) => {
 	tabType.value = item.attributeVal;
 	nextTick(() => {
-		TableViewRef?.value.resetQuery();
+		InOutAccountRef?.value.resetQuery();
 	});
 };
 // 导出excel
@@ -185,7 +185,7 @@ const toggleTab = (item: object) => {
 const refreshDataList = () => {
 	formInfo.spPaymentChannelList = [];
 	nextTick(() => {
-		TableViewRef?.value.resetQuery();
+		InOutAccountRef?.value.resetQuery();
 	});
 };
 const batchAddTask = (row: any) => {

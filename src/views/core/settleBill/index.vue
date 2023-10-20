@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<TableView ref="TableViewRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
+		<TableView ref="settleBillRef" :columns="indexThead" module="core/settleBill.ts" isTab :condition-forms="conditionForms" labelWidth="120px">
 			<template #actions="{ row }">
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleAction('view', row)"> 查看 </el-button>
 				<el-button v-if="row.status == 10" icon="delete" text type="primary" v-auth="'core_settleBill_del'" @click="handleAction('del', row)">
@@ -15,14 +15,7 @@
 				<el-button icon="view" text type="primary" v-auth="'core_settleBill_down'" @click="handleContractFile(row)"> 下载电子协议 </el-button>
 			</template>
 			<template #top-bar="{ otherInfo }">
-				<el-button
-					v-auth="'core_settleBill_add'"
-					style="margin-right: 24px"
-					icon="Upload"
-					type="primary"
-					class="ml10"
-					@click="importBillRef.openDialog(), (formInfo.taskList = []), (formInfo.spPaymentChannelList = [])"
-				>
+				<el-button v-auth="'core_settleBill_add'" style="margin-right: 24px" icon="Upload" type="primary" class="ml10" @click="openDialog()">
 					导入结算
 				</el-button>
 				<div class="info_list">
@@ -89,12 +82,11 @@ import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { submitObj, delObjs } from '/@/api/core/settleBill';
 import { payChannel } from '/@/configuration/dynamic-control';
-
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const router = useRouter();
 const importBillRef = ref();
-const TableViewRef = ref();
+const settleBillRef = ref();
 const formAuditDialogRef = ref();
 const { proxy } = getCurrentInstance();
 const formInfo = reactive({
@@ -312,9 +304,15 @@ const indexThead = [
 	},
 ];
 const handleContractFile = (row) => {
-	console.log('proxy.baseURL', proxy.baseURL);
-
 	window.open(`${proxy.baseURL}/${row.contractUrl}`);
+};
+const openDialog = () => {
+	formInfo.taskList = [];
+	formInfo.spPaymentChannelList = [];
+	getMerchantInfoData();
+	getSpInfoData();
+	getSpPaymentChannelListData1();
+	importBillRef.value.openDialog();
 };
 const handleAction = async (type: string, row: any) => {
 	switch (type) {
@@ -345,7 +343,7 @@ const handleAction = async (type: string, row: any) => {
 			// setStopObj()
 			await useMessageBox().confirm('此操作将永久删除');
 			await delObjs({ id: row.id });
-			TableViewRef?.value.resetQuery();
+			settleBillRef?.value.resetQuery();
 			useMessage().success('删除成功');
 			break;
 	}
@@ -361,7 +359,6 @@ const getTaskList = (formData: any) => {
 		})
 		.finally(() => {});
 };
-
 const getSpPaymentChannelListData = (formData: any) => {
 	getSpPaymentChannelList({
 		spId: formData.spId,
@@ -369,29 +366,32 @@ const getSpPaymentChannelListData = (formData: any) => {
 		formInfo.spPaymentChannelList = res.data || [];
 	});
 };
-
 const getSpPaymentChannelListData1 = () => {
 	getSpPaymentChannelList({
-		spId: 3,
+		isPlatform: 1,
 	}).then((res: any) => {
 		formInfo.spPaymentChannelList1 = res.data || [];
 	});
 };
-getSpPaymentChannelListData1();
-
 const refreshDataList = () => {
 	// formInfo.taskList = [];
 	// formInfo.spPaymentChannelList = [];
-	TableViewRef?.value.resetQuery();
+	settleBillRef?.value.resetQuery();
 };
 // 获取数据
-getMerchantInfoList().then((res: any) => {
-	formInfo.merchantList = res.data || [];
-	console.log('formInfo.merchantList', formInfo.merchantList);
-});
-getSpInfoList('').then((res: any) => {
-	formInfo.spinfoList = res.data || [];
-});
+const getMerchantInfoData = () => {
+	getMerchantInfoList().then((res: any) => {
+		formInfo.merchantList = res.data || [];
+		console.log('formInfo.merchantList', formInfo.merchantList);
+	});
+};
+const getSpInfoData = () => {
+	getSpInfoList('').then((res: any) => {
+		formInfo.spinfoList = res.data || [];
+	});
+};
+getMerchantInfoData();
+getSpInfoData();
 </script>
 
 <style lang="scss" scoped>
