@@ -91,7 +91,7 @@
 				</el-col>
 			</el-row>
 		</el-form>
-		<template #footer>
+		<template #footer v-if="!isDetail">
 			<span class="dialog-footer">
 				<el-button @click="visible = false">取消</el-button>
 				<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
