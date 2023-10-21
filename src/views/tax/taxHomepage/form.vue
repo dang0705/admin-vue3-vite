@@ -48,7 +48,7 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="MerchantAccountCapitalDialog">
+<script setup lang="ts" name="taxHomepageDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/finance/merchantAccountCapital';
