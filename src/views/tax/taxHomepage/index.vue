@@ -60,9 +60,6 @@
 		<template #xxx5>
 			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看完税凭证 </el-button>
 		</template>
-		<!-- <template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
-		</template> -->
 	</Table-view>
 </template>
 
@@ -167,7 +164,7 @@ const handleDetail = (row: any) => {
 	background: #fafafa;
 	display: flex;
 	flex: 1;
-	margin-right: 36px;
+	// margin-right: 36px;
 	padding: 30px 0;
 	.total_item {
 		width: 33.33%;

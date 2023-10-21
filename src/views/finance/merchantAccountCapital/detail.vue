@@ -108,6 +108,10 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import uploadBusinessType from '/@/enums/upload-business-type';
 const businessType = uploadBusinessType.merchant;
 import Array2Object from '/@/utils/array-2-object';
+interface BatchUploadRecordPage {
+	status: string;
+}
+const batchMap = Array2Object({ dic: ['merchant_recharge_status'] });
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
 const route: any = useRoute();
@@ -258,7 +262,7 @@ const indexThead = [
 		prop: 'status',
 		label: '状态',
 		minWidth: 150,
-		slot: true,
+		value: ({ status }: BatchUploadRecordPage) => batchMap.value.merchant_recharge_status[status],
 	},
 	{
 		label: '操作',
@@ -412,7 +416,6 @@ const refreshDataList = () => {
 	merchantAccountCapitalRef.value.resetQuery();
 };
 
-const batchMap = computed(() => Array2Object({ dic: ['merchant_recharge_status'] }).value);
 $refreshList(getmerchantInfoData);
 </script>
 

@@ -128,12 +128,18 @@ const openDialog = (type: string, row?: any) => {
 	nextTick(() => {
 		menuDialogFormRef.value?.resetFields();
 	});
+	console.log('row', row);
+	console.log('type', type);
 
 	if (row?.id && type === 'edit') {
-		state.ruleForm.parentId = row?.id || '-1';
-		state.ruleForm.menuId = row.id;
+		// state.ruleForm.parentId = row?.id || '-1';
+		// state.ruleForm.menuId = row.id;
 		// 获取当前节点菜单信息
 		getMenuDetail(row.id);
+	} else if (row?.id && type === 'add') {
+		console.log(123);
+		state.ruleForm.parentId = row?.id || '-1';
+		state.ruleForm.menuType = '0';
 	}
 	// 渲染上级菜单列表树
 	getAllMenuData();
@@ -143,6 +149,7 @@ const openDialog = (type: string, row?: any) => {
 const getMenuDetail = (id: string) => {
 	info(id).then((res) => {
 		Object.assign(state.ruleForm, res.data);
+		console.log('state.ruleForm', state.ruleForm);
 	});
 };
 

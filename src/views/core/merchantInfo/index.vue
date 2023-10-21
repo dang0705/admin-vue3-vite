@@ -79,7 +79,7 @@
 						>
 						<el-button
 							v-if="scope.row.status == 1"
-							icon="turn-off"
+							icon="Remove"
 							text
 							type="primary"
 							v-auth="'core_merchantInfo_stop'"

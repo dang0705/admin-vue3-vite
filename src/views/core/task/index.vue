@@ -125,7 +125,7 @@
 						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
 						<el-button
 							v-if="scope.row.status == 20 && scope.row.auditStatus == 20"
-							icon="turn-off"
+							icon="Remove"
 							text
 							type="primary"
 							@click="handleTaskDown(scope.row.id)"

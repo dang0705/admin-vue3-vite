@@ -7,7 +7,7 @@
 			<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+			<el-button @click="handleBtn" style="margin-right: 24px" icon="download" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
 	</TableView>
 </template>

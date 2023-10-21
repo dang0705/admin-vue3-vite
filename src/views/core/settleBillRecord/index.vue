@@ -1,7 +1,7 @@
 <template>
 	<TableView :columns="columns" isTab module="core/settleBillRecord.ts" :condition-forms="conditionForms" labelWidth="120px">
 		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 批量导出 </el-button>
+			<el-button @click="handleBtn" style="margin-right: 24px" icon="download" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
 	</TableView>
 </template>

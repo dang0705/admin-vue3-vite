@@ -12,7 +12,7 @@
 	/>
 	<el-row>
 		<div class="mb8" style="width: 100%">
-			<el-button icon="Upload" v-auth="'hro_undertakerTask_export'" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
+			<el-button icon="download" v-auth="'hro_undertakerTask_export'" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
 			<right-toolbar
 				v-model:showSearch="showSearch"
 				:export="'hro_undertakerTask_export'"
