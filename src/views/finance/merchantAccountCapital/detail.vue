@@ -191,7 +191,12 @@ const form1 = [
 const router = useRouter();
 const loading = ref(false);
 // 提交表单数据
-const form = reactive({});
+const form = reactive({
+	bankBranch: '',
+	bankAccountNumber: '',
+	totalAmount: '',
+	accountName: '',
+});
 const balanceInfo = reactive({});
 const indexThead = [
 	{
@@ -295,7 +300,6 @@ const getmerchantInfoData = () => {
 	getObj(route.query.id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
-			console.log('form-1', form);
 		})
 		.finally(() => {
 			loading.value = false;
@@ -323,7 +327,7 @@ const handleRe = (type: number) => {
 			},
 			{
 				control: 'InputPlus',
-				key: 'xxx',
+				key: 'receiptAmount',
 				label: '申请退款金额',
 				rules: [
 					{
@@ -332,6 +336,9 @@ const handleRe = (type: number) => {
 						trigger: 'blur',
 					},
 				],
+				props: {
+					type: 'number',
+				},
 			},
 			{
 				control: 'InputPlus',
@@ -344,7 +351,7 @@ const handleRe = (type: number) => {
 			},
 			{
 				control: 'el-select',
-				key: 'xxx',
+				key: 'receiptAccountNumber',
 				label: '收款账号',
 				rules: [
 					{
@@ -366,9 +373,7 @@ const handleRe = (type: number) => {
 	}
 	show.value = true;
 };
-const handlePayBillRecord = (list = [], dialogType: number) => {
-	// detailDialogRef.value?.openDialog(form.id, 1, dialogType);
-};
+const handlePayBillRecord = (list = [], dialogType: number) => {};
 const handleContractFile = (row) => {
 	window.open(`${proxy.baseURL}/${row.transferVoucher}`);
 };
