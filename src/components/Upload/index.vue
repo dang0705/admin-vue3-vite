@@ -67,6 +67,7 @@
 						</ul>
 					</template>
 				</template>
+				<el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" />
 			</el-upload>
 			<template v-if="disabled && !isImage">
 				<a

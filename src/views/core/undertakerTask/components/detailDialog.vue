@@ -10,6 +10,7 @@
 		:form-rules="dataRules"
 		:on-submit="onSubmit"
 		vertical
+		:showBtn="false"
 	>
 	</Dialog>
 </template>
