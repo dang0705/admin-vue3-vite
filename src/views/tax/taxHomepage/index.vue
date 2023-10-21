@@ -35,7 +35,7 @@
 							<div class="info_label">开票总额</div>
 							<div class="price_box">
 								<div class="price">{{ form.balance || '0' }}</div>
-								<div class="unit"></div>
+								<div class="unit">元</div>
 							</div>
 						</div>
 					</div>
