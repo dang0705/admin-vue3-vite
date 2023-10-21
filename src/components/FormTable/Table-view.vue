@@ -19,7 +19,7 @@
 						<slot :name="slot" v-bind="{ form: conditionForms, formData: state.queryForm }" />
 					</template>
 				</Form-view>
-
+				<slot name="tableTopTwo" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
 				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
 					<div class="flex items-center flex-grow">
 						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="Download" type="primary" v-auth="exportAuth"> 批量导出 </el-button>
