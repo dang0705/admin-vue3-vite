@@ -216,9 +216,9 @@ const toggleTab = (item: any) => {
 	getDataList();
 };
 
-const tableCellFormatter = (row, { label }, cellValue, index) => {
-	if (label?.includes('(元)')) {
-		return `￥${thousandthDivision(+cellValue)}`;
+const tableCellFormatter = (row, column, cellValue, index) => {
+	if (column.label?.includes('(元)')) {
+		return `￥${thousandthDivision({ number: cellValue })}`;
 	}
 	return cellValue;
 };

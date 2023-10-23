@@ -94,7 +94,7 @@ const confirmToPay = async (type = 'batch', { id, undertakerName, undertakerCard
 					label: '批量支付总金额(元)',
 					control: 'InputPlus',
 					key: 'paidAmount',
-					value: `${thousandthDivision(+summary.toFixed(2))}`,
+					value: summary,
 				},
 				{
 					label: '批量支付总笔数',

@@ -1,9 +1,9 @@
-export default function (number: number, decimalPlaces: number = 2): string {
-	if (number === 0) {
-		return '0.00';
-	}
+import helper from '/@/utils/helpers';
+export default function ({ number, decimalPlaces = 2 }: Record<string, number | string>): string {
+	number = helper.isNumber(number) ? number : +number;
+	if (number === 0) return '0.00';
 
-	const str = number.toFixed(decimalPlaces);
+	const str = (number as number).toFixed(decimalPlaces as number);
 	const parts = str.split('.');
 	const integerPart = parts[0];
 	const decimalPart = parts[1] ? '.' + parts[1] : '';
