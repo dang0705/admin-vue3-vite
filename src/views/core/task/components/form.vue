@@ -105,8 +105,15 @@
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
 							></el-date-picker> -->
-
-							<el-time-picker
+							<el-date-picker
+								:disabled="self_disabled"
+								v-model="form.workTimeRange"
+								type="datetimerange"
+								start-placeholder="工作开始时间"
+								end-placeholder="工作结束时间"
+								:value-format="dateTimeStr"
+							/>
+							<!-- <el-time-picker
 								:disabled="self_disabled"
 								:value-format="dateTimeStr"
 								v-model="form.workTimeRange"
@@ -114,7 +121,7 @@
 								range-separator="至"
 								start-placeholder="工作开始时间"
 								end-placeholder="工作结束时间"
-							/>
+							/> -->
 						</el-form-item>
 					</el-col>
 
@@ -152,21 +159,21 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label=" 是否要求打卡" prop="clockRequired">
 							<el-select :disabled="self_disabled" clearable v-model="form.clockRequired">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in options" />
 							</el-select>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="打卡范围" prop="clockRank">
 							<InputPlus :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 
-					<el-col :span="12" class="mb20">
+					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
 							<el-time-picker
 								:disabled="self_disabled"
@@ -178,7 +185,7 @@
 								:value-format="timeStr"
 							/>
 						</el-form-item>
-					</el-col>
+					</el-col> -->
 
 					<!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">

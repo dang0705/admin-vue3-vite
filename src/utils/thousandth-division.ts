@@ -1,5 +1,5 @@
 import helper from '/@/utils/helpers';
-export default function ({ number, decimalPlaces = 2 }: Record<string, number | string>): string {
+export default ({ number, decimalPlaces = 2 }: Record<string, number | string>): string => {
 	number = helper.isNumber(number) ? number : +number;
 	if (number === 0) return '0.00';
 
@@ -21,4 +21,4 @@ export default function ({ number, decimalPlaces = 2 }: Record<string, number | 
 	}
 
 	return result + decimalPart;
-}
+};
