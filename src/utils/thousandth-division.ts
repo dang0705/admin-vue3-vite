@@ -6,7 +6,7 @@ import helper from '/@/utils/helpers';
  * @param decimals      {number}         小数位数
  */
 export default function ({ number, decimals = 2 }: Record<string, number | string>): string {
-	number = helper.isNumber(number) ? number : +number;
+	number = helper.isNumber(number) ? number : helper.isString(number) ? +number : number;
 	if (number === 0) return '0.00';
 
 	const str = (number as number).toFixed(decimals as number);
