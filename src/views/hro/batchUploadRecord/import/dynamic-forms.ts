@@ -128,14 +128,17 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					{
 						prop: 'undertakerCard',
 						label: '身份证号',
+						minWidth: 150,
 					},
 					{
 						prop: 'startTime',
 						label: '合同开始时间',
+						minWidth: 180,
 					},
 					{
 						prop: 'endTime',
 						label: '合同结束时间',
+						minWidth: 180,
 					},
 					...failColumnsSuffix,
 				];
@@ -262,7 +265,7 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					{
 						label: '支付通道',
 						control: 'InputPlus',
-						key: 'paramObject.paymentBankName',
+						key: 'paramObject.channelName',
 					},
 
 					...failFormStatic,

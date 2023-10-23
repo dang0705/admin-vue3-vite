@@ -17,7 +17,7 @@
 			:columns="24"
 			v-model:form-data="dialogFormData"
 		>
-			<template #status v-if="hasFail">
+			<template #status>
 				<el-form-item label="状态明细：">
 					<ul class="flex">
 						<li class="mr20">成功 <span v-text="dialogFormData.success" class="text-success" /> 条</li>
