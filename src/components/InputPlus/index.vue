@@ -1,6 +1,10 @@
 <template>
 	<div v-if="disabled" class="textBox">
 		<div class="text">{{ modelValue }}</div>
+		<template v-for="(_, slot) in $slots">
+			<slot :name="slot" />
+		</template>
+		<!-- <slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot> -->
 	</div>
 	<el-input v-else v-bind="$props" v-model="value">
 		<template v-for="(_, slot) in $slots" #[slot]>
@@ -34,6 +38,9 @@ const value = computed({
 .textBox {
 	color: var(--el-text-color-regular);
 	padding: 5px 0;
+	display: flex;
+	align-items: center;
+	line-height: 22px;
 	.text {
 		line-height: 22px;
 		word-break: break-all;
