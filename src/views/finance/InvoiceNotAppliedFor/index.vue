@@ -107,7 +107,7 @@ const columns = [
 	{
 		prop: 'serviceAmount',
 		label: '可开票全额(元)',
-		'min-width': 100,
+		'min-width': 120,
 	},
 	{
 		label: '操作',
