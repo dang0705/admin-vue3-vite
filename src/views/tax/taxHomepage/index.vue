@@ -43,22 +43,22 @@
 			</div>
 		</template>
 		<template #xxx1>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看商户协议 </el-button>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看个人承揽协议 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看商户协议 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看个人承揽协议 </el-button>
 		</template>
 		<template #xxx2>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看任务记录 </el-button>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看承揽记录 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看任务记录 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看承揽记录 </el-button>
 		</template>
 		<template #xxx3>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 企业转账凭证 </el-button>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 个人结算凭证 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 企业转账凭证 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 个人结算凭证 </el-button>
 		</template>
 		<template #xxx4>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看发票 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看发票 </el-button>
 		</template>
 		<template #xxx5>
-			<el-button icon="view" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 查看完税凭证 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看完税凭证 </el-button>
 		</template>
 	</Table-view>
 </template>

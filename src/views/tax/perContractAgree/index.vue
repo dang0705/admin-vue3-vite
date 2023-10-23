@@ -1,7 +1,7 @@
 <template>
 	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" v-auth="'core_merchantAccountCapital_view'" @click="handleBtn(row)"> 下载 </el-button>
+			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 下载 </el-button>
 		</template>
 	</Table-view>
 </template>
