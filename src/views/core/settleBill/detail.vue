@@ -343,22 +343,22 @@ const indexThead = [
 	{
 		prop: 'taskAmount',
 		label: '任务金额(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'taxWithheld',
 		label: '代扣税款(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'paidAmount',
 		label: '实发金额(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'commissionAmount',
 		label: '管理费(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'undertaderStartTime',
@@ -464,7 +464,7 @@ const newIndexThead = [
 	{
 		prop: 'serviceAmount',
 		label: '结算金额(元)',
-		minWidth: 100,
+		minWidth: 120,
 	},
 	{
 		prop: 'payTime',

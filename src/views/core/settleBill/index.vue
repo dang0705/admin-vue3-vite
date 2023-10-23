@@ -248,22 +248,22 @@ const indexThead = [
 	{
 		prop: 'taskAmountTotal',
 		label: '任务金额(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'managementAmountTotal',
 		label: '管理费(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'serviceAmountTotal',
 		label: '服务费(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 	{
 		prop: 'billAmountTotal',
 		label: '结算总金额(元)',
-		minWidth: 150,
+		minWidth: 120,
 	},
 
 	{
