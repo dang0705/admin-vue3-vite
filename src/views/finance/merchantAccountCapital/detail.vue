@@ -23,7 +23,8 @@
 							<div class="info">
 								<div class="info_label">账户余额</div>
 								<div class="price_box">
-									<div class="price">{{ form.totalAmount || '0.00' }}</div>
+									<!-- value: thousandthDivision(+form.totalAmount), -->
+									<div class="price">{{ thousandthDivision(+form.totalAmount) || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>
@@ -32,7 +33,8 @@
 							<div class="info">
 								<div class="info_label">冻结金额</div>
 								<div class="price_box">
-									<div class="price">{{ form.freeze || '0.00' }}</div>
+									<!-- <div class="price">{{ form.freeze || '0.00' }}</div> -->
+									<div class="price">{{ thousandthDivision(+form.freeze) || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>
@@ -41,7 +43,8 @@
 							<div class="info">
 								<div class="info_label">可用余额</div>
 								<div class="price_box">
-									<div class="price">{{ form.balance || '0.00' }}</div>
+									<!-- <div class="price">{{ form.balance || '0.00' }}</div> -->
+									<div class="price">{{ thousandthDivision(+form.balance) || '0.00' }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>
@@ -106,6 +109,7 @@ import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import uploadBusinessType from '/@/enums/upload-business-type';
+import thousandthDivision from '/@/utils/thousandth-division';
 const businessType = uploadBusinessType.merchant;
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
@@ -220,7 +224,7 @@ const indexThead = [
 	},
 	{
 		prop: 'amount',
-		label: '充值金额（元）',
+		label: '充值金额(元)',
 		minWidth: 150,
 	},
 	{
@@ -324,7 +328,7 @@ const handleRe = (type: number) => {
 				control: 'InputPlus',
 				key: 'totalAmount',
 				label: '账户可用余额',
-				value: form.totalAmount,
+				value: thousandthDivision(+form.totalAmount) + '元',
 				props: {
 					disabled: true,
 				},
