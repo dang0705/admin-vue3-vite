@@ -41,7 +41,7 @@
 		<el-table-column width="120px" prop="taskName" label="任务名称" show-overflow-tooltip />
 		<!-- <el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip /> -->
 		<el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip>
-			<template #default="scope"> ￥{{ thousandthDivision({ number: scope.row.taskMoney }) }} </template>
+			<template #default="scope"> {{ scope.row.taskMoney !== null ? '￥' : '' }}{{ thousandthDivision({ number: scope.row.taskMoney }) }} </template>
 		</el-table-column>
 		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />
