@@ -7,7 +7,7 @@
 						<div class="info">
 							<div class="info_label">发放笔数</div>
 							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.totalAmount }) }}</div>
+								<div class="price">{{ form.totalAmount }}</div>
 								<div class="unit"></div>
 							</div>
 						</div>
@@ -25,7 +25,7 @@
 						<div class="info">
 							<div class="info_label">商户数量</div>
 							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
+								<div class="price">{{ form.totalAmount }}</div>
 								<div class="unit"></div>
 							</div>
 						</div>
