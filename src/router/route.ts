@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
+import { homePageRouteName } from '/@/configuration/routes';
 
 /**
  * 建议：路由 path 路径与文件夹名称相同，找文件可浏览器地址找，方便定位文件位置
@@ -37,7 +38,7 @@ declare module 'vue-router' {
 export const dynamicRoutes: Array<RouteRecordRaw> = [
 	{
 		path: '/home',
-		name: 'router.home',
+		name: homePageRouteName,
 		component: () => import('/@/views/home/index.vue'),
 		meta: {
 			isLink: '',
@@ -48,14 +49,14 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 			icon: 'iconfont icon-shouye',
 		},
 	},
-	{
+	/*	{
 		path: '/personal',
 		name: 'router.personal',
 		component: () => import('/@/views/admin/user/personal.vue'),
 		meta: {
 			isHide: true,
 		},
-	},
+	},*/
 ];
 
 /**

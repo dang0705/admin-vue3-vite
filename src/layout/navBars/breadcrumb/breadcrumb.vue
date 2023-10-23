@@ -31,6 +31,7 @@ import other from '/@/utils/other';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useRoutesList } from '/@/stores/routesList';
+import { homePageRouteName } from '/@/configuration/routes';
 
 // 定义变量内容
 const stores = useRoutesList();
@@ -93,7 +94,7 @@ const initRouteSplit = (path: string) => {
 	getBreadcrumbList(routesList.value);
 	state.breadcrumbList.push(route);
 	// 首页或异常页只显示第一个
-	if (route.name === 'router.home' || (route.name === 'staticRoutes.notFound' && state.breadcrumbList.length > 1)) {
+	if (route.name === homePageRouteName || (route.name === 'staticRoutes.notFound' && state.breadcrumbList.length > 1)) {
 		state.breadcrumbList.splice(0, state.breadcrumbList.length - 1);
 	} else if (state.breadcrumbList.length > 0) {
 		state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setMenuI18n(<RouteToFrom>route);
