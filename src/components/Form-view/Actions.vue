@@ -1,13 +1,37 @@
 <script setup lang="ts">
 import { actionsParams } from '/@/components/Form-view/Form-view-props';
-defineProps({ ...actionsParams, vertical: { type: Boolean, default: false } });
+const props = defineProps({
+	...actionsParams,
+	vertical: { type: Boolean, default: false },
+	modelValue: {
+		type: Number,
+		default: 1,
+	},
+});
+const formView = inject('formView', null);
+const emit = defineEmits(['update:modelValue']);
+
+const page = props.pagination ? computed({ get: () => props.modelValue, set: (value) => emit('update:modelValue', value) }) : 0;
+const next = async () => {
+	let valid: boolean;
+	try {
+		valid = await formView?.$refs?.form.validate();
+	} catch (e) {
+		valid = false;
+	}
+	valid && page.value++;
+};
 </script>
 
 <template>
 	<el-form-item v-if="showBtn" :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
-		<el-button type="primary" @click="submit">{{ submitButtonText }}</el-button>
+		<template v-if="pagination">
+			<el-button plain v-if="page" @click="page--">{{ prevButtonText }}</el-button>
+			<el-button type="primary" v-if="!isLastPage" @click="next">{{ nextButtonText }}</el-button>
+		</template>
+		<el-button type="primary" @click="submit" v-if="pagination ? isLastPage : true">{{ submitButtonText }}</el-button>
 		<slot name="third-button" />
-		<el-button @click="cancel" v-if="showCancel">{{ cancelButtonText || $t('common.cancelButtonText') }} </el-button>
+		<el-button @click="cancel" v-if="showCancel && !pagination">{{ cancelButtonText || $t('common.cancelButtonText') }} </el-button>
 	</el-form-item>
 </template>
 <style scoped>

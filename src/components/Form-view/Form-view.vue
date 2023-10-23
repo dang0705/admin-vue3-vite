@@ -5,7 +5,8 @@ import { useDict } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
 
-const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation']);
+provide('formView', getCurrentInstance()?.ctx);
+const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page']);
 const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
@@ -35,31 +36,37 @@ interface OptionsParams {
 }
 
 const formConfigs = ref<any[]>([]);
+let stopWatchShow: unknown = null;
+const rulesCache: any = {};
 const initForms = async (forms: []) => {
 	formConfigs.value = [];
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
 		const item = formConfigs.value[i] as FormOptions;
-		const itemRulesCache = [...(item.rules || [])];
+		!rulesCache[item.key]?.length && (rulesCache[item.key] = [...(item.rules || [])]);
 
 		item.hidden = item.hidden ?? false;
-		item.value !== undefined && (formData.value[item.key] = item.value);
+		if (pagination.value ? formData.value[item.key] === null || formData.value[item.key] === undefined : true) {
+			formData.value[item.key] = item.value ?? '';
+		}
+
 		item.onChange &&
 			watch(
 				() => prop.modelValue[item.key],
 				(value) => item.onChange && item.onChange(value, formData.value)
 			);
+		stopWatchShow && stopWatchShow();
 		item.show &&
-			watch(
+			(stopWatchShow = watch(
 				() => prop.modelValue[item.show?.by as string],
 				() => {
 					const isShow = item.show && !!item.show.fn(formData.value);
 					item.hidden = !isShow;
-					item.rules && (item.rules = isShow ? itemRulesCache : []);
-					formData.value[item.key] = null;
+					item.rules && (item.rules = isShow ? rulesCache[item.key as string] : []);
+					!isShow && (formData.value[item.key] = null);
 				},
 				{ immediate: true }
-			);
+			));
 		if (!item.options) continue;
 
 		// 处理options数据源
@@ -104,10 +111,26 @@ const initForms = async (forms: []) => {
 const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
 const reset = () => form?.value?.resetFields();
 
+const page = ref(0);
+const isLastPage = computed(() => (pagination.value ? page.value === prop.forms?.length - 1 : null));
+const pagination = computed(() => helper.isArray(prop.forms?.[0]));
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
+
+pagination.value &&
+	watch(
+		() => page.value,
+		async (page: number) => {
+			await initForms(prop.forms[page]);
+			emit('get-page', page);
+		}
+	);
 watch(
-	() => prop.forms,
-	(forms) => initForms(forms as []),
+	() => prop.forms as [],
+	(forms: any[]) => {
+		if (forms.length) {
+			helper.isArray(forms[0]) ? initForms(forms[0]) : initForms(forms as []);
+		}
+	},
 	{ immediate: true }
 );
 // 每次弹框关闭后,清空验证状态
@@ -201,7 +224,15 @@ defineExpose({
 						<slot name="after-forms" />
 					</el-col>
 				</el-row>
-				<Actions v-if="!inDialog" v-bind="$props" :submit="submit" :cancel="cancel" />
+				<Actions
+					v-if="!inDialog"
+					v-bind="$props"
+					v-model="page"
+					:submit="submit"
+					:cancel="cancel"
+					:pagination="pagination"
+					:is-last-page="isLastPage"
+				/>
 			</div>
 		</el-form>
 	</div>
