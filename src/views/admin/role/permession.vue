@@ -2,15 +2,13 @@
 	<div class="system-role-dialog-container">
 		<el-dialog width="30%" v-model="state.dialog.isShowDialog" :close-on-click-modal="false" draggable>
 			<template #header>
-				<div class="flex items-center justify-between">
-					<div>{{ state.dialog.title }}</div>
-					<div class="flex mr-16">
-						<el-checkbox label="展开/折叠" @change="handleExpand" />
-						<el-checkbox label="全选/不全选" @change="handleSelectAll" />
-					</div>
+				<div class="text-[16px]">{{ state.dialog.title }}</div>
+				<div class="flex mr-16">
+					<el-checkbox label="展开/折叠" @change="handleExpand" />
+					<el-checkbox label="全选/不全选" @change="handleSelectAll" />
 				</div>
 			</template>
-			<el-scrollbar class="h-[400px] sm:h-[600px]" style="max-height: 80vh; overflow-y: auto">
+			<div class="h-fit overscroll-y-auto" style="max-height: 80vh">
 				<el-tree
 					v-loading="loading"
 					ref="menuTree"
@@ -18,12 +16,13 @@
 					:default-checked-keys="state.checkedKeys"
 					:check-strictly="!checkStrictly"
 					:props="state.defaultProps"
+					:render-content="renderContent"
 					class="filter-tree"
 					node-key="id"
 					highlight-current
 					show-checkbox
 				/>
-			</el-scrollbar>
+			</div>
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
@@ -116,6 +115,20 @@ const onSubmit = () => {
 		.finally(() => {
 			loading.value = false;
 		});
+};
+const renderContent = (h, { node, data, store }) => {
+	const isButton = data.menuType === '1';
+
+	return h('div', { class: ['flex', 'items-center'] }, [
+		h(
+			'i',
+			{
+				class: ['text-xs', 'not-italic', 'mr-[10px]', 'px-[4px]', 'rounded-[4px]', 'text-white', isButton ? 'bg-green-500' : 'bg-yellow-500'],
+			},
+			isButton ? '按钮' : '菜单'
+		),
+		h('span', data.name),
+	]);
 };
 
 // 暴露变量
