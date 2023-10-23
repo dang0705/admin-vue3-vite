@@ -250,11 +250,8 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 			case label?.includes('(元)'):
 				textAlign = 'right';
 				break;
-			case label?.includes('操作'):
-				textAlign = 'center';
-				break;
 			default:
-				textAlign = 'left';
+				textAlign = 'center';
 		}
 		return {
 			textAlign,
@@ -264,7 +261,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 		cellStyle: ({ column: { label } }) => initColumnAlign(label),
 		headerCellStyle: ({ column: { label } }) => {
 			return {
-				...initColumnAlign(label),
+				textAlign: 'center',
 				background: 'var(--el-table-row-hover-bg-color)',
 				color: 'var(--el-text-color-primary)',
 			};

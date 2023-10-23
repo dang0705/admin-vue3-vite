@@ -47,11 +47,11 @@
 					}"
 				>
 					<template v-if="column.slot || column.value" v-slot="{ row }">
-						<div class="optionDiv whitespace-nowrap inline-block">
-							<slot :name="column.prop" :row="row">
-								<template v-if="column.value">{{ column.value(row) }}</template>
-							</slot>
-						</div>
+						<!--						<div class="optionDiv whitespace-nowrap inline-block">-->
+						<slot :name="column.prop" :row="row">
+							<template v-if="column.value">{{ column.value(row) }}</template>
+						</slot>
+						<!--						</div>-->
 					</template>
 				</el-table-column>
 			</el-table>
