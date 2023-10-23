@@ -1,36 +1,107 @@
 <template>
-	<Table-view
-		ref="undertakingRecordsRef"
-		:columns="columns"
-		exportAuth="hro_undertakerTask_export"
-		:condition-forms="route.query.taskId ? conditionForms_task : conditionForms"
-		:params="params"
-		module="core/undertakerTask.ts"
+	<Form-view
+		v-show="showSearch"
+		label-width="90"
+		v-model="state.queryForm"
+		submit-button-text="查询"
+		cancel-button-text="重置"
+		:forms="taskId ? conditionForms_task : conditionForms"
+		:on-submit="getDataList"
+		:on-cancel="resetQuery"
+		auth="hro_undertakerTask_export"
+	/>
+	<el-row>
+		<div class="mb8" style="width: 100%">
+			<el-button icon="download" v-auth="'hro_undertakerTask_export'" type="primary" class="ml10" @click="exportExcel"> 批量导出 </el-button>
+			<right-toolbar
+				v-model:showSearch="showSearch"
+				:export="'hro_undertakerTask_export'"
+				@exportExcel="exportExcel"
+				class="ml10 mr20"
+				style="float: right"
+				@queryTable="getDataList"
+			></right-toolbar>
+		</div>
+	</el-row>
+	<el-table
+		:data="state.dataList"
+		v-loading="state.loading"
+		border
+		:cell-style="tableStyle.cellStyle"
+		:header-cell-style="tableStyle.headerCellStyle"
+		@selection-change="selectionChangHandle"
+		@sort-change="sortChangeHandle"
 	>
-		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(row.id)">查看</el-button>
-			<el-button @click="handleBtn" v-if="row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'">审核</el-button>
-		</template>
-		<detail-dialog ref="detailDialogRef" @refresh="refreshDataList" />
-	</Table-view>
+		<el-table-column width="120px" prop="undertakerNumber" label="承接编号" show-overflow-tooltip />
+		<el-table-column width="120px" prop="undertakerName" label="承接人" show-overflow-tooltip />
+		<el-table-column width="170px" prop="createTime" label="生成时间" show-overflow-tooltip />
+		<el-table-column width="160px" prop="taskNumber" label="任务编号" show-overflow-tooltip />
+		<el-table-column width="160px" prop="undertakerCard" label="承接人证件号码" show-overflow-tooltip />
+		<el-table-column width="120px" prop="undertakerPhone" label="承接人手机号" show-overflow-tooltip />
+		<el-table-column width="120px" prop="taskName" label="任务名称" show-overflow-tooltip />
+		<!-- <el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip /> -->
+		<el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip>
+			<template #default="scope"> ￥{{ thousandthDivision({ number: scope.row.taskMoney }) }} </template>
+		</el-table-column>
+		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
+		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />
+		<el-table-column width="120px" prop="spName" label="服务商名称" show-overflow-tooltip />
+		<el-table-column width="120px" prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="isSign" label="是否签署协议" show-overflow-tooltip>
+			<template #default="scope">
+				<span v-if="scope.row.isSign == 1">是</span>
+				<span v-if="scope.row.isSign == 0">否</span>
+			</template>
+		</el-table-column>
+		<el-table-column width="120px" prop="isBankFourEssentialFactor" label="是否银行四要素校验" show-overflow-tooltip>
+			<template #default="scope">
+				<span v-if="scope.row.isSign == 1">是</span>
+				<span v-if="scope.row.isSign == 0">否</span>
+			</template>
+		</el-table-column>
+		<el-table-column prop="state" label="状态" show-overflow-tooltip>
+			<template #default="scope">
+				<span>{{ undertaking_status.find((item) => item.value == scope.row.state).label }}</span>
+			</template>
+		</el-table-column>
+		<el-table-column label="操作" width="150" fixed="right">
+			<template #default="scope">
+				<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(scope.row.id)"
+					>查看</el-button
+				>
+				<el-button @click="handleBtn" v-if="scope.row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'"
+					>审核</el-button
+				>
+			</template>
+		</el-table-column>
+	</el-table>
+	<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
+	<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
 </template>
 
-<script setup lang="ts" name="承接记录">
+<script setup lang="ts" name="systemUndertakerTask">
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { fetchList, delObjs } from '/@/api/core/undertakerTask';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-const route = useRoute();
-import Array2Object from '/@/utils/array-2-object';
-interface BatchUploadRecordPage {
-	state: string;
-	isSign: string;
-	isBankFourEssentialFactor: string;
-}
-const params = {
-	taskId: route.query.taskId,
-};
-const batchMap = Array2Object({ dic: ['undertaking_status', 'yes_no_type'] });
+import { useDict } from '/@/hooks/dict';
+import thousandthDivision from '/@/utils/thousandth-division';
+
+const { undertaking_status } = useDict('undertaking_status');
+// 引入组件
+// const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
+// 定义查询字典
+const route = useRoute();
+
+// 定义变量内容
+// const formDialogRef = ref();
+// 搜索变量
 const detailDialogRef = ref();
-const undertakingRecordsRef = ref();
+const queryRef = ref();
+const showSearch = ref(true);
+// 多选变量
+const selectObjs = ref([]) as any;
+const multiple = ref(true);
 const conditionForms_task = [
 	{
 		control: 'InputPlus',
@@ -88,99 +159,63 @@ const conditionForms = [
 		label: '商户',
 	},
 ];
-const columns = [
-	{
-		prop: 'undertakerNumber',
-		label: '承接编号',
-		'min-width': 150,
+
+const prop = defineProps({
+	taskId: {
+		type: String,
+		default: '',
 	},
-	{
-		prop: 'undertakerName',
-		label: '承接人',
-		'min-width': 150,
+});
+
+const state: BasicTableProps = reactive<BasicTableProps>({
+	queryForm: {
+		taskId: route.query.taskId,
 	},
-	{
-		prop: 'createTime',
-		label: '生成时间',
-		'min-width': 180,
-	},
-	{
-		prop: 'taskNumber',
-		label: '任务编号',
-		'min-width': 180,
-	},
-	{
-		prop: 'undertakerCard',
-		label: '承接人证件号码',
-		'min-width': 180,
-	},
-	{
-		prop: 'undertakerPhone',
-		label: '承接人手机号',
-		'min-width': 180,
-	},
-	{
-		prop: 'taskName',
-		label: '任务名称',
-		'min-width': 180,
-	},
-	{
-		prop: 'taskMoney',
-		label: '任务金额(元)',
-		'min-width': 180,
-	},
-	{
-		prop: 'startTime',
-		label: '承接开始时间',
-		'min-width': 180,
-	},
-	{
-		prop: 'doneTime',
-		label: '承接完成时间',
-		'min-width': 180,
-	},
-	{
-		prop: 'spName',
-		label: '服务商名称',
-		'min-width': 180,
-	},
-	{
-		prop: 'merchantName',
-		label: '商户名称(客户)',
-		'min-width': 180,
-	},
-	{
-		prop: 'isSign',
-		label: '是否签署协议',
-		'min-width': 180,
-		value: ({ isSign }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isSign],
-	},
-	{
-		prop: 'isBankFourEssentialFactor',
-		label: '是否银行四要素校验',
-		'min-width': 180,
-		value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isBankFourEssentialFactor],
-	},
-	{
-		prop: 'state',
-		label: '状态',
-		'min-width': 180,
-		value: ({ state }: BatchUploadRecordPage) => batchMap.value.undertaking_status[state],
-	},
-	{
-		label: '操作',
-		prop: 'actions',
-		fixed: 'right',
-		slot: true,
-		'min-width': 100,
-	},
-];
+	pageList: fetchList,
+});
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
 };
-const refreshDataList = () => {
-	nextTick(() => {
-		undertakingRecordsRef?.value.resetQuery();
-	});
+//  table hook
+const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
+
+// 清空搜索条件
+const resetQuery = () => {
+	state.queryForm = {
+		taskId: route.query.taskId,
+	};
+	// 清空搜索条件
+	queryRef.value?.resetFields();
+	// 清空多选
+	selectObjs.value = [];
+	getDataList();
 };
+
+// 导出excel
+const exportExcel = () => {
+	downBlobFile('/core/undertakerTask/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerTask.xlsx');
+	// downBlobFile('/core/undertakerInfo/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakerInfo.xlsx');
+};
+
+// 多选事件
+const selectionChangHandle = (objs: { id: string }[]) => {
+	selectObjs.value = objs.map(({ id }) => id);
+	multiple.value = !objs.length;
+};
+
+// 删除操作
+const handleDelete = async (ids: string[]) => {
+	try {
+		await useMessageBox().confirm('此操作将永久删除');
+	} catch {
+		return;
+	}
+
+	try {
+		await delObjs(ids);
+		getDataList();
+		useMessage().success('删除成功');
+	} catch (err: any) {}
+};
+$refreshList(resetQuery);
 </script>
