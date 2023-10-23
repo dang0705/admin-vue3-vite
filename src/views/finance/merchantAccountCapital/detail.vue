@@ -23,8 +23,7 @@
 							<div class="info">
 								<div class="info_label">账户余额</div>
 								<div class="price_box">
-									<!-- value: thousandthDivision(+form.totalAmount), -->
-									<div class="price">{{ thousandthDivision(+form.totalAmount) || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.totalAmount }) }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>
@@ -33,8 +32,7 @@
 							<div class="info">
 								<div class="info_label">冻结金额</div>
 								<div class="price_box">
-									<!-- <div class="price">{{ form.freeze || '0.00' }}</div> -->
-									<div class="price">{{ thousandthDivision(+form.freeze) || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>
@@ -43,8 +41,7 @@
 							<div class="info">
 								<div class="info_label">可用余额</div>
 								<div class="price_box">
-									<!-- <div class="price">{{ form.balance || '0.00' }}</div> -->
-									<div class="price">{{ thousandthDivision(+form.balance) || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
 									<div class="unit">元</div>
 								</div>
 							</div>

@@ -39,7 +39,7 @@
 		<el-table-column width="160px" prop="undertakerCard" label="承接人证件号码" show-overflow-tooltip />
 		<el-table-column width="120px" prop="undertakerPhone" label="承接人手机号" show-overflow-tooltip />
 		<el-table-column width="120px" prop="taskName" label="任务名称" show-overflow-tooltip />
-		<el-table-column width="150px" prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip />
+		<!-- <el-table-column width="150px" prop="estimatedTaskAmount" label="预计任务金额(元)" show-overflow-tooltip /> -->
 		<el-table-column width="120px" prop="taskMoney" label="任务金额(元)" show-overflow-tooltip />
 		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />

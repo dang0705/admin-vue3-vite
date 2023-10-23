@@ -7,7 +7,7 @@
 						<div class="info">
 							<div class="info_label">发放笔数</div>
 							<div class="price_box">
-								<div class="price">{{ form.totalAmount || '0' }}</div>
+								<div class="price">{{ thousandthDivision({ number: form.totalAmount }) }}</div>
 								<div class="unit"></div>
 							</div>
 						</div>
@@ -16,7 +16,7 @@
 						<div class="info">
 							<div class="info_label">发放总额</div>
 							<div class="price_box">
-								<div class="price">{{ form.freeze || '0' }}</div>
+								<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
 								<div class="unit">元</div>
 							</div>
 						</div>
@@ -25,7 +25,7 @@
 						<div class="info">
 							<div class="info_label">商户数量</div>
 							<div class="price_box">
-								<div class="price">{{ form.balance || '0' }}</div>
+								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
 								<div class="unit"></div>
 							</div>
 						</div>
@@ -34,7 +34,7 @@
 						<div class="info">
 							<div class="info_label">开票总额</div>
 							<div class="price_box">
-								<div class="price">{{ form.balance || '0' }}</div>
+								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
 								<div class="unit">元</div>
 							</div>
 						</div>
@@ -66,8 +66,13 @@
 <script setup lang="ts" name="税务监管-首页">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
+import thousandthDivision from '/@/utils/thousandth-division';
 const router = useRouter();
-const form = reactive({});
+const form = reactive({
+	totalAmount: 0,
+	freeze: 0,
+	balance: 0,
+});
 const columns = [
 	{
 		prop: 'spName',

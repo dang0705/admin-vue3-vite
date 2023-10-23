@@ -18,7 +18,7 @@
 							<img src="/src/assets/images/total_1.png" class="icon" alt="" />
 							<div class="info">
 								<div class="price_box">
-									<div class="price">{{ form.billAmountTotal || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.billAmountTotal }) }}</div>
 									<div class="unit">元</div>
 								</div>
 								<div class="info_label">结算总金额</div>
@@ -28,7 +28,7 @@
 							<img src="/src/assets/images/total_3.png" class="icon" alt="" />
 							<div class="info">
 								<div class="price_box">
-									<div class="price">{{ form.taskAmountTotal || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.taskAmountTotal }) }}</div>
 									<div class="unit">元</div>
 								</div>
 								<div class="info_label">任务金额</div>
@@ -38,7 +38,7 @@
 							<img src="/src/assets/images/total_6.png" class="icon" alt="" />
 							<div class="info">
 								<div class="price_box">
-									<div class="price">{{ form.managementAmountTotal || '0.00' }}</div>
+									<div class="price">{{ thousandthDivision({ number: form.managementAmountTotal }) }}</div>
 									<div class="unit">元</div>
 								</div>
 								<div class="info_label">管理费</div>
@@ -182,6 +182,7 @@ import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
+import thousandthDivision from '/@/utils/thousandth-division';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 const route: any = useRoute();
