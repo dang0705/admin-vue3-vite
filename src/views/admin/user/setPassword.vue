@@ -9,7 +9,7 @@
 			</el-form-item>
 			<el-form-item label="验证码:" class="login-animation2" prop="checkCode">
 				<el-col :span="15">
-					<el-input text maxlength="6" :placeholder="$t('mobile.placeholder2')" v-model="form.checkCode" clearable autocomplete="off">
+					<el-input text maxlength="6" :placeholder="$t('mobile.placeholder2')" v-model="form.checkCode" clearable autocomplete="new-password">
 						<template #prefix>
 							<img class="w-[1em] h-[1em]" :src="code" alt="" />
 						</template>
@@ -24,7 +24,7 @@
 				<strength-meter
 					:placeholder="$t('password.accountPlaceholder2')"
 					v-model="form.newPassword"
-					autocomplete="off"
+					autocomplete="new-password"
 					:maxLength="20"
 					:minLength="6"
 					@score="handlePassScore"
