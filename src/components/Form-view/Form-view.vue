@@ -42,7 +42,7 @@ const initForms = async (forms: []) => {
 		const item = formConfigs.value[i] as FormOptions;
 		const itemRulesCache = [...(item.rules || [])];
 
-		item.hidden = false;
+		item.hidden = item.hidden ?? false;
 		item.value !== undefined && (formData.value[item.key] = item.value);
 		item.onChange &&
 			watch(
