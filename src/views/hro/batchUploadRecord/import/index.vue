@@ -33,6 +33,7 @@
 					:columns="failListColumns"
 					:params="failParams"
 					:down-blob-file-name="`${currentTitle}-失败记录表.xlsx`"
+					export-auth="core_batchUploadRecord_export"
 					down-blob-file-url="/core/batchFailDetails/export"
 					module="core/batchUploadRecord.ts"
 					get-list-fn-name="getFailList"
