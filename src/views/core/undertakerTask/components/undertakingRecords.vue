@@ -1,10 +1,10 @@
 <template>
-	<!-- :forms="taskId ? conditionForms_task : conditionForms" -->
 	<Table-view
 		ref="undertakingRecordsRef"
 		:columns="columns"
 		exportAuth="hro_undertakerTask_export"
-		:condition-forms="taskId ? conditionForms_task : conditionForms"
+		:condition-forms="route.query.taskId ? conditionForms_task : conditionForms"
+		:params="params"
 		module="core/undertakerTask.ts"
 	>
 		<template #actions="{ row }">
@@ -17,15 +17,18 @@
 
 <script setup lang="ts" name="承接记录">
 import { useMessage, useMessageBox } from '/@/hooks/message';
+const route = useRoute();
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
 	state: string;
 	isSign: string;
 	isBankFourEssentialFactor: string;
 }
+const params = {
+	taskId: route.query.taskId,
+};
 const batchMap = Array2Object({ dic: ['undertaking_status', 'yes_no_type'] });
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
-// 搜索变量
 const detailDialogRef = ref();
 const undertakingRecordsRef = ref();
 const conditionForms_task = [

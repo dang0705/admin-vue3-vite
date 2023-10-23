@@ -1,16 +1,18 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view ref="taskRecordRef" :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 下载 </el-button>
+			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>
 	</Table-view>
 </template>
 
 <script setup lang="ts" name="税务监管-首页">
 import { useMessage, useMessageBox } from '/@/hooks/message';
+const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const form = reactive({});
+const taskRecordRef = ref();
 const columns = [
 	{
 		prop: 'spName',
@@ -24,12 +26,48 @@ const columns = [
 	},
 	{
 		prop: 'xxx',
-		label: '合同协议',
+		label: '任务名称',
+		'min-width': 180,
+	},
+
+	{
+		prop: 'xxx',
+		label: '发包单价(元)',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
-		label: '合同到期',
+		prop: 'xxx',
+		label: '计量单位',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '承接数量',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '发布时间',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '结束时间',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '审核人',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '审核时间',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx',
+		label: '状态',
 		'min-width': 180,
 	},
 	{
@@ -51,6 +89,19 @@ const conditionForms = [
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+	},
+	{
+		control: 'InputPlus',
+		key: 'taskName',
+		label: '任务名称',
+	},
+	{
+		control: 'DateRange',
+		key: 'dealTimeRange',
+		label: '发布时间',
+		props: {
+			valueType: 'string',
+		},
 	},
 ];
 const handleBtn = () => {
