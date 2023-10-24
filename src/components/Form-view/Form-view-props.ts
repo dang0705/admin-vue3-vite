@@ -37,6 +37,14 @@ export const actionsParams = {
 		type: String,
 		default: '确定',
 	},
+	prevButtonText: {
+		type: String,
+		default: '上一步',
+	},
+	nextButtonText: {
+		type: String,
+		default: '下一步',
+	},
 	cancelButtonText: {
 		type: String,
 		default: '',
@@ -44,6 +52,14 @@ export const actionsParams = {
 	showCancel: {
 		type: Boolean,
 		default: true,
+	},
+	pagination: {
+		type: Boolean,
+		default: false,
+	},
+	isLastPage: {
+		type: Boolean,
+		default: false,
 	},
 	submit: { type: Function, default: null },
 	cancel: { type: Function, default: null },
