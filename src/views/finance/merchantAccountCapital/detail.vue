@@ -9,14 +9,11 @@
 			labelWidth="140px"
 			downBlobFileUrl="/finance/merchantRecharge/export"
 		>
-			<template #status="{ row: { status } }">
-				<span v-text="batchMap?.merchant_recharge_status[status]" />
-			</template>
-			<template #top-bar="{ otherInfo }">
+			<template #top-bar>
 				<el-button v-auth="'core_merchantAccountCapital_refund'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
 				<el-button v-auth="'core_merchantAccountCapital_recharge'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
 			</template>
-			<template #tableTop="{ otherInfo }">
+			<template #tableTopTwo>
 				<div class="total_wrapper">
 					<div class="total_list">
 						<div class="total_item">
@@ -82,26 +79,25 @@
 					查看转账凭证
 				</el-button>
 			</template>
+			<Dialog
+				vertical
+				button-position="center"
+				v-model="show"
+				:title="reType == 1 ? '发起充值' : '申请退款'"
+				:show-cancel="false"
+				:forms="forms"
+				:columns="24"
+				v-model:form-data="dialogFormData"
+				:on-cancel="onCancel"
+				:on-submit="onSubmit"
+			>
+			</Dialog>
 		</TableView>
 		<!-- <DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" /> -->
-		<Dialog
-			vertical
-			button-position="center"
-			v-model="show"
-			:title="reType == 1 ? '发起充值' : '申请退款'"
-			:show-cancel="false"
-			:forms="forms"
-			:columns="24"
-			v-model:form-data="dialogFormData"
-			:on-cancel="onCancel"
-			:on-submit="onSubmit"
-		>
-		</Dialog>
 	</div>
 </template>
 
-<script setup lang="ts" name="账单详情">
-import { addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
+<script setup lang="ts" name="商户资金账户详情">
 import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -199,8 +195,10 @@ const loading = ref(false);
 const form = reactive({
 	bankBranch: '',
 	bankAccountNumber: '',
-	totalAmount: '',
 	accountName: '',
+	totalAmount: 0,
+	freeze: 0,
+	balance: 0,
 });
 const balanceInfo = reactive({});
 const indexThead = [
@@ -325,7 +323,7 @@ const handleRe = (type: number) => {
 				control: 'InputPlus',
 				key: 'totalAmount',
 				label: '账户可用余额',
-				value: thousandthDivision(+form.totalAmount) + '元',
+				value: thousandthDivision({ number: form.totalAmount }) + '元',
 				props: {
 					disabled: true,
 				},
@@ -379,10 +377,10 @@ const handleRe = (type: number) => {
 	show.value = true;
 };
 const handlePayBillRecord = (list = [], dialogType: number) => {};
-const handleContractFile = (row) => {
+const handleContractFile = (row: any) => {
 	window.open(`${proxy.baseURL}/${row.transferVoucher}`);
 };
-const handleRevoke = async (id) => {
+const handleRevoke = async (id: string) => {
 	try {
 		await useMessageBox().confirm('您确定撤销吗？');
 		await updateMerchantRechargeStatus(id);

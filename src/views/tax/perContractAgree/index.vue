@@ -6,7 +6,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务监管-首页">
+<script setup lang="ts" name="税务-个人承揽协议">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();

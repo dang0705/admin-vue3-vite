@@ -10,9 +10,6 @@
 			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 			:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		>
-			<!-- <template #status="{ row: { status } }">
-				<span v-text="batchMap?.merchant_recharge_status[status]" />
-			</template> -->
 			<template #tableTop>
 				<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 			</template>
