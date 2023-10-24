@@ -38,7 +38,7 @@ interface OptionsParams {
 const formConfigs = ref<any[]>([]);
 let stopWatchShow: unknown = null;
 const rulesCache: any = {};
-const initForms = async (forms: []) => {
+const initForms = async (forms: FormOptions[]) => {
 	formConfigs.value = [];
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
@@ -46,8 +46,9 @@ const initForms = async (forms: []) => {
 		!rulesCache[item.key]?.length && (rulesCache[item.key] = [...(item.rules || [])]);
 
 		item.hidden = item.hidden ?? false;
-		if (pagination.value ? formData.value[item.key] === null || formData.value[item.key] === undefined : true) {
-			formData.value[item.key] = item.value ?? '';
+		// 如果forms的item有默认值，给formData对应的key赋值
+		if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
+			formData.value[item.key] = item.value;
 		}
 
 		item.onChange &&

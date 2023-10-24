@@ -99,6 +99,7 @@
 </template>
 
 <script setup lang="ts" name="UploadFile">
+import helper from '/@/utils/helpers';
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus';
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
 import { generateUUID } from '/@/utils/other';
@@ -250,10 +251,11 @@ const upload = async (options: UploadRequestOptions) => {
 
 const urls = ref<string[]>([]);
 const prefixedUrls = ref<string[]>([]);
+const value = computed(() => (helper.isString(props.modelValue) ? [] : props.modelValue));
 
 // props.fileType === 'image' &&
 watch(
-	() => props.modelValue as [],
+	() => value.value as [],
 	(value: []) => {
 		urls.value = value;
 		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
