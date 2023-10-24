@@ -283,7 +283,7 @@ const forms = computed(() => [
 		props: {
 			type: '60',
 			disabled: financeType.value === 'see',
-			hidden: financeType.value === 'see' && dialogFormData.value.invoiceFiles.length == 0,
+			hidden: financeType.value === 'see' && dialogFormData.value.invoiceFiles?.length == 0,
 		},
 		rules: [{ type: 'array', required: financeType.value === 'open', message: '发票图片不能为空', trigger: 'change' }],
 	},
