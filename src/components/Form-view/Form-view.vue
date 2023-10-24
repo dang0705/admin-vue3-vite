@@ -161,6 +161,12 @@ const cancel = () => {
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
+const stepsData = computed(() => {
+	const steps: string[] = [];
+	if (!pagination.value) return [];
+	prop.forms?.forEach((_, index: number) => (steps[index] = (prop.steps[index] as string) || `第${index + 1}步`));
+	return steps;
+});
 // 暴露变量
 defineExpose({
 	reset,
@@ -170,72 +176,83 @@ defineExpose({
 </script>
 
 <template>
-	<div class="form-view">
-		<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form" :rules="formRules">
-			<div :class="['flex', 'w-full', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
-				<el-row :gutter="10" class="w-full">
-					<slot name="before-forms" />
-					<slot name="forms">
-						<template v-for="form in formConfigs" :key="form.key">
-							<el-col :span="24" v-if="form.title">
-								<slot :name="`title-before-${form.key}`">
-									<h1 v-if="helper.isString(form.title)" v-text="form.title" class="mb-[20px] text-lg font-bold" />
-									<h1 v-else v-html="form.title.html" :style="form.title.style" class="mb-[20px] text-lg font-bold" />
-								</slot>
-							</el-col>
-							<el-col
-								v-bind="form.column ? { span: form.column } : dynamicColumns"
-								:class="['mb-2', { 'mb-[14px]': vertical }]"
-								v-show="!form.hidden"
-							>
-								<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
-								<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
-									<component
-										:is="!form.hidden ? form.control : 'template'"
-										v-model="formData[form.key]"
-										v-bind="{
-											...form.props,
-											...(form.props?.disabled ? { placeholder: '--' } : {}),
-											clearable: form.props?.clearable ?? true,
-											disabled: form.props?.disabled ?? prop.disabled,
-										}"
-									>
-										<template v-if="!form.hidden && form.control === 'el-select'">
-											<el-option
-												v-for="item in formOptions[form.key]"
-												:key="item[form.props?.value]"
-												:value="item[form.props?.value || 'value']"
-												:label="item[form.props?.label || 'label']"
-											/>
-										</template>
-										<template v-if="!form.hidden && form.control === 'el-radio-group'">
-											<el-radio
-												v-for="item in formOptions[form.key]"
-												:key="item[form.props?.value || 'value']"
-												:label="item[form.props?.value || 'value']"
-												>{{ item[form.props?.label || 'label'] }}
-											</el-radio>
-										</template>
-									</component>
-								</el-form-item>
-							</el-col>
-						</template>
-					</slot>
-					<el-col v-bind="dynamicColumns" class="my-2">
-						<slot name="after-forms" />
-					</el-col>
-				</el-row>
-				<Actions
-					v-if="!inDialog"
-					v-bind="$props"
-					v-model="page"
-					:submit="submit"
-					:cancel="cancel"
-					:pagination="pagination"
-					:is-last-page="isLastPage"
-				/>
-			</div>
-		</el-form>
+	<div :class="['flex', stepDir === 'horizontal' ? 'flex-col' : 'flex-row']">
+		<el-steps
+			:direction="stepDir"
+			:active="page"
+			v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }"
+			process-status="finish"
+			finish-status="success"
+		>
+			<el-step v-for="step in stepsData" :key="step" :title="step" />
+		</el-steps>
+		<div class="form-view">
+			<el-form :inline="inline" :label-width="labelWidth" :model="formData" ref="form" :rules="formRules">
+				<div :class="['flex', 'w-full', 'flex-col', ...(vertical ? [] : ['md:flex-row'])]">
+					<el-row :gutter="10" class="w-full">
+						<slot name="before-forms" />
+						<slot name="forms">
+							<template v-for="form in formConfigs" :key="form.key">
+								<el-col :span="24" v-if="form.title">
+									<slot :name="`title-before-${form.key}`">
+										<h1 v-if="helper.isString(form.title)" v-text="form.title" class="mb-[20px] text-lg font-bold" />
+										<h1 v-else v-html="form.title.html" :style="form.title.style" class="mb-[20px] text-lg font-bold" />
+									</slot>
+								</el-col>
+								<el-col
+									v-bind="form.column ? { span: form.column } : dynamicColumns"
+									:class="['mb-2', { 'mb-[14px]': vertical }]"
+									v-show="!form.hidden"
+								>
+									<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
+									<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+										<component
+											:is="!form.hidden ? form.control : 'template'"
+											v-model="formData[form.key]"
+											v-bind="{
+												...form.props,
+												...(form.props?.disabled ? { placeholder: '--' } : {}),
+												clearable: form.props?.clearable ?? true,
+												disabled: form.props?.disabled ?? prop.disabled,
+											}"
+										>
+											<template v-if="!form.hidden && form.control === 'el-select'">
+												<el-option
+													v-for="item in formOptions[form.key]"
+													:key="item[form.props?.value]"
+													:value="item[form.props?.value || 'value']"
+													:label="item[form.props?.label || 'label']"
+												/>
+											</template>
+											<template v-if="!form.hidden && form.control === 'el-radio-group'">
+												<el-radio
+													v-for="item in formOptions[form.key]"
+													:key="item[form.props?.value || 'value']"
+													:label="item[form.props?.value || 'value']"
+													>{{ item[form.props?.label || 'label'] }}
+												</el-radio>
+											</template>
+										</component>
+									</el-form-item>
+								</el-col>
+							</template>
+						</slot>
+						<el-col v-bind="dynamicColumns" class="my-2">
+							<slot name="after-forms" />
+						</el-col>
+					</el-row>
+					<Actions
+						v-if="!inDialog"
+						v-bind="$props"
+						v-model="page"
+						:submit="submit"
+						:cancel="cancel"
+						:pagination="pagination"
+						:is-last-page="isLastPage"
+					/>
+				</div>
+			</el-form>
+		</div>
 	</div>
 </template>
 
