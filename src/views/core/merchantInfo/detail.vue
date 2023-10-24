@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-padding w100 overflow-auto">
+	<div class="layout-padding w100 overflow-auto form-view">
 		<div class="layout-padding-auto layout-padding-view">
 			<el-tabs style="min-height: 300px" class="demo-tabs">
 				<el-tab-pane label="商户信息">

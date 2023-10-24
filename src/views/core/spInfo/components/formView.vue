@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-padding overflow-auto" style="height: auto">
+	<div class="layout-padding overflow-auto form-view" style="height: auto">
 		<div :class="['layout-padding-auto layout-padding-view !border-none', { detailDisabled: !!route.query.see }]">
 			<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="160px" v-loading="loading">
 				<el-row class="pr-[48px] pl-[24px]" :gutter="24">

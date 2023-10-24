@@ -1,6 +1,6 @@
 <template>
 	<el-dialog title="承接人详情" v-model="visible" :close-on-click-modal="false" draggable width="60%">
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules && false" formDialogRef label-width="120px" v-loading="loading">
+		<el-form class="form-view" ref="dataFormRef" :model="form" :rules="dataRules && false" formDialogRef label-width="120px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="姓名:" prop="undertakerName">
