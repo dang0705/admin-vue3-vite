@@ -69,6 +69,18 @@ export default {
 		type: Array as () => FormOptions[],
 		required: true,
 	},
+	steps: {
+		type: Array,
+		default: [],
+	},
+	stepDir: {
+		type: String,
+		default: 'horizontal',
+	},
+	stepSpace: {
+		type: [Number, String],
+		default: 0,
+	},
 	inline: {
 		type: Boolean,
 		default: false,

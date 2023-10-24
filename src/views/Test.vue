@@ -159,7 +159,9 @@ const page = ref(0);
 <template>
 	<Form-view
 		vertical
+		step-dir="vertical"
 		:forms="formsPagination"
+		:step-space="200"
 		v-model="formData"
 		:columns="24"
 		label-width="200"
