@@ -37,3 +37,11 @@ export function putObj(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function putTaskAcceptance(obj?: Object) {
+	return request({
+		url: '/core/undertakerTask/taskAcceptance',
+		method: 'put',
+		data: obj,
+	});
+}

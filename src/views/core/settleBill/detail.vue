@@ -74,11 +74,14 @@
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
-							{{ isNeedRecharge.service ? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元` : '无需充值' }}
+							{{
+								isNeedRecharge.service && (form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40
+									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
+									: '无需充值'
+							}}
 						</div>
 						<div class="flex items-center ml-auto">
 							<el-button
-								v-if="isNeedRecharge.service"
 								v-auth="'core_settleBill_s_recharge'"
 								@click="detailDialogRef.openDialog(form.id, 3, 1)"
 								style="margin-right: 24px; margin-left: auto !important"
@@ -119,12 +122,15 @@
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 							<div class="info_item">
-								{{ isNeedRecharge.task ? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元` : '无需充值' }}
+								{{
+									isNeedRecharge.task && (form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40
+										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
+										: '无需充值'
+								}}
 							</div>
 						</div>
 						<div class="flex items-center ml-auto">
 							<el-button
-								v-if="isNeedRecharge.task"
 								v-auth="'core_settleBill_t_recharge'"
 								@click="detailDialogRef.openDialog(form.id, 3, 2)"
 								style="margin-right: 24px; margin-left: auto !important"

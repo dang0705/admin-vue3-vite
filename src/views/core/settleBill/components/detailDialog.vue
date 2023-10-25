@@ -66,10 +66,8 @@
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
-import uploadBusinessType from '/@/enums/upload-business-type';
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
-const businessType = uploadBusinessType.merchant;
 import spPaymentChannel from '/@/api/core/spPaymentChannel';
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
@@ -113,7 +111,7 @@ const addUnderTakerForms = [
 			},
 		],
 		props: {
-			type: businessType,
+			type: '60',
 		},
 	},
 	{

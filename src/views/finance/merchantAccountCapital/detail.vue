@@ -101,9 +101,7 @@
 import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
-import uploadBusinessType from '/@/enums/upload-business-type';
 import thousandthDivision from '/@/utils/thousandth-division';
-const businessType = uploadBusinessType.merchant;
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
 	status: string;
@@ -135,7 +133,7 @@ const form1 = [
 			},
 		],
 		props: {
-			type: businessType,
+			type: '60',
 		},
 	},
 	{

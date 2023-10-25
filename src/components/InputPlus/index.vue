@@ -1,6 +1,6 @@
 <template>
 	<div v-if="disabled" class="textBox">
-		<div class="text">{{ modelValue }}</div>
+		<div class="text">{{ modelValue || '--' }}</div>
 		<template v-for="(_, slot) in $slots">
 			<slot :name="slot" />
 		</template>

@@ -3,14 +3,13 @@
 		v-model="visible"
 		v-model:formData="formData"
 		title="承接纪录详情"
-		:disabled="!!formData.id"
 		:forms="forms"
 		:columns="12"
 		:label-width="140"
 		:form-rules="dataRules"
 		:on-submit="onSubmit"
 		vertical
-		:showBtn="false"
+		:showBtn="showBtn"
 	>
 	</Dialog>
 </template>
@@ -18,15 +17,19 @@
 <script setup lang="ts" name="UndertakerInfoDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
-import { getObj } from '/@/api/core/undertakerTask';
+import { getObj, putTaskAcceptance } from '/@/api/core/undertakerTask';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
+import dynamicForms from '/@/views/core/undertakerTask/components/dynamic-forms';
+// import dynamicForms from '/@/views/hro/batchUploadRecord/import/dynamic-forms';
 const emit = defineEmits(['refresh']);
-
+const route = useRoute();
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);
 const loading = ref(false);
+const showBtn = ref(true);
+const currentType = ref(1);
 const businessType = uploadBusinessType.hro;
 // 定义字典
 const { yes_no_type, gender, education } = useDict('yes_no_type', 'gender', 'education');
@@ -70,96 +73,22 @@ const dataRules = ref({
 	isBankFourEssentialFactor: [{ required: true, message: '是否验证银行四要素不能为空', trigger: 'blur' }],
 });
 
-const forms = [
-	{
-		control: 'InputPlus',
-		key: 'undertakerName',
-		label: '承接人',
-	},
-	{
-		control: 'InputPlus',
-		key: 'undertakerCard',
-		label: '身份证号码',
-	},
-	{
-		control: 'InputPlus',
-		key: 'undertakerPhone',
-		label: '手机号码',
-	},
-	{
-		control: 'InputPlus',
-		key: 'taskName',
-		label: '任务名称',
-	},
-	{
-		control: 'InputPlus',
-		key: 'createTime',
-		label: '起始时间',
-	},
-	{
-		control: 'InputPlus',
-		key: 'orderReceivingTime',
-		label: '接单时间',
-		title: '个人承接页',
-	},
-	{
-		control: 'InputPlus',
-		key: 'startTime',
-		label: '开始时间',
-	},
-	{
-		control: 'InputPlus',
-		key: 'doneTime',
-		label: '完成时间',
-	},
-	{
-		control: 'InputPlus',
-		key: 'workload',
-		label: '确认工作量',
-	},
-	{
-		control: 'InputPlus',
-		key: 'confirmMoney',
-		label: '承接人确认金额',
-	},
-	{
-		control: 'UploadFile',
-		key: 'startImages',
-		label: '开始前上传图片',
-	},
-	{
-		control: 'UploadFile',
-		key: 'doneImages',
-		label: '完成成果图片',
-	},
-
-	{
-		control: 'InputPlus',
-		key: 'enterpriseAcceptanceTime',
-		label: '企业验收时间',
-		title: '企业验收页',
-	},
-	{
-		control: 'InputPlus',
-		key: 'enterpriseAcceptanceWorkload',
-		label: '企业验收工作量',
-	},
-	{
-		control: 'InputPlus',
-		key: 'enterpriseAcceptanceMoney',
-		label: '企业验收金额',
-	},
-	{
-		control: 'InputPlus',
-		key: 'enterpriseAcceptanceImages',
-		label: '验收上传图片',
-	},
-];
+let forms;
 
 // 打开弹窗
-const openDialog = (id: string) => {
+const openDialog = (id: string, type: number = 1) => {
 	visible.value = true;
 	formData.id = '';
+	currentType.value = type;
+	if (type === 2) {
+		showBtn.value = true;
+		forms = dynamicForms({ type: 2 });
+	} else {
+		showBtn.value = false;
+		forms = dynamicForms({ type: 1 });
+	}
+	console.log('forms', forms, type);
+
 	// 重置表单数据
 	nextTick(() => {
 		dataFormRef.value?.resetFields();
@@ -175,7 +104,19 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	try {
 		loading.value = true;
-		visible.value = false;
+		if (currentType.value === 2) {
+			loading.value = true;
+			await putTaskAcceptance({
+				...formData,
+				taskId: route.query.taskId,
+				undertakerId: formData.id,
+			});
+			useMessage().success('验收成功');
+			visible.value = false;
+			emit('refresh');
+		} else {
+			visible.value = false;
+		}
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {

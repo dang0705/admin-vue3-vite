@@ -93,7 +93,7 @@ const forms = [
 		props: {
 			fileType: 'file',
 			accept: ['.pdf'],
-			type: '10',
+			type: '30',
 			showName: true,
 		},
 	},
