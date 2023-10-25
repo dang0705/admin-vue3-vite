@@ -37,6 +37,14 @@ export const actionsParams = {
 		type: String,
 		default: '确定',
 	},
+	prevButtonText: {
+		type: String,
+		default: '上一步',
+	},
+	nextButtonText: {
+		type: String,
+		default: '下一步',
+	},
 	cancelButtonText: {
 		type: String,
 		default: '',
@@ -45,6 +53,14 @@ export const actionsParams = {
 		type: Boolean,
 		default: true,
 	},
+	pagination: {
+		type: Boolean,
+		default: false,
+	},
+	isLastPage: {
+		type: Boolean,
+		default: false,
+	},
 	submit: { type: Function, default: null },
 	cancel: { type: Function, default: null },
 };
@@ -52,6 +68,18 @@ export default {
 	forms: {
 		type: Array as () => FormOptions[],
 		required: true,
+	},
+	steps: {
+		type: Array,
+		default: [],
+	},
+	stepDir: {
+		type: String,
+		default: 'horizontal',
+	},
+	stepSpace: {
+		type: [Number, String],
+		default: 0,
 	},
 	inline: {
 		type: Boolean,

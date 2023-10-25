@@ -5,9 +5,10 @@ import helper from '/@/utils/helpers';
  * @param number        {number|string}  源数字
  * @param decimals      {number}         小数位数
  */
-export default function ({ number, decimals = 2 }: Record<string, number | string>): string {
-	number = helper.isNumber(number) ? number : +number;
-	if (number === 0) return '0.00';
+export default function ({ number, decimals = 2 }: Record<string, number | string>): string | null {
+	number = helper.isNumber(number) ? number : helper.isString(number) ? +number : number;
+	if (number === null) return '--';
+	if (number === 0 || number === undefined) return '0.00';
 
 	const str = (number as number).toFixed(decimals as number);
 	const parts = str.split('.');

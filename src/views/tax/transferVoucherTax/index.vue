@@ -6,7 +6,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务-商户协议">
+<script setup lang="ts" name="税务-商户转款凭证">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
@@ -24,12 +24,27 @@ const columns = [
 	},
 	{
 		prop: 'xxx',
-		label: '合同协议',
+		label: '充值交易号',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '合同到期',
+		label: '充值方式',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '充值金额(元)',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '充值时间',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '备注',
 		'min-width': 180,
 	},
 	{
@@ -51,6 +66,14 @@ const conditionForms = [
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+	},
+	{
+		control: 'DateRange',
+		key: 'dealTimeRange',
+		label: '充值时间',
+		props: {
+			valueType: 'string',
+		},
 	},
 ];
 const handleBtn = () => {

@@ -1,18 +1,16 @@
 <template>
-	<div v-if="disabled" class="textBox">
+	<div class="textBox">
 		<div class="text">{{ modelValue }}</div>
 		<template v-for="(_, slot) in $slots">
 			<slot :name="slot" />
 		</template>
+		<el-button @click="copyText(modelValue)" text type="primary"> 复制 </el-button>
 	</div>
-	<el-input v-else v-bind="$props" v-model="value">
-		<template v-for="(_, slot) in $slots" #[slot]>
-			<slot :name="slot" />
-		</template>
-	</el-input>
 </template>
 
 <script setup lang="ts" name="divider">
+import commonFunction from '/@/utils/commonFunction';
+const { copyText } = commonFunction();
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -36,7 +34,6 @@ const value = computed({
 <style scoped lang="scss">
 .textBox {
 	color: var(--el-text-color-regular);
-	padding: 5px 0;
 	display: flex;
 	align-items: center;
 	line-height: 22px;

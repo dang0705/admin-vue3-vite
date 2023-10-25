@@ -6,11 +6,12 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务-商户协议">
+<script setup lang="ts" name="税务-承接记录">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const form = reactive({});
+
 const columns = [
 	{
 		prop: 'spName',
@@ -24,12 +25,37 @@ const columns = [
 	},
 	{
 		prop: 'xxx',
-		label: '合同协议',
+		label: '任务名称',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '合同到期',
+		label: '承接人',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '证件号码',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '承揽电子协议',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '任务金额(元)',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '开始日期',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '完成日期',
 		'min-width': 180,
 	},
 	{
@@ -51,6 +77,24 @@ const conditionForms = [
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+	},
+	{
+		control: 'InputPlus',
+		key: 'xxx1',
+		label: '承接人',
+	},
+	{
+		control: 'InputPlus',
+		key: 'xxx2',
+		label: '证件号码',
+	},
+	{
+		control: 'DateRange',
+		key: 'dealTimeRange',
+		label: '开始时间',
+		props: {
+			valueType: 'string',
+		},
 	},
 ];
 const handleBtn = () => {

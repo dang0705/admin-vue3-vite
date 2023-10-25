@@ -6,7 +6,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务监管-首页">
+<script setup lang="ts" name="税务-任务记录">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';

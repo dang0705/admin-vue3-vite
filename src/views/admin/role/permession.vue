@@ -8,7 +8,7 @@
 					<el-checkbox label="全选/不全选" @change="handleSelectAll" />
 				</div>
 			</template>
-			<div class="h-fit overscroll-y-auto" style="max-height: 80vh">
+			<div class="h-fit overscroll-y-auto">
 				<el-tree
 					v-loading="loading"
 					ref="menuTree"
