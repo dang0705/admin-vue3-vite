@@ -50,9 +50,9 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column type="selection" width="40" align="center" />
+				<el-table-column type="selection" width="40" align="center" fixed="left" />
 				<!-- <el-table-column type="index" label="#" width="40" /> -->
-				<el-table-column prop="undertakerName" label="姓名" width="100" show-overflow-tooltip />
+				<el-table-column prop="undertakerName" label="姓名" width="100" show-overflow-tooltip fixed="left" />
 				<el-table-column prop="undertakerCard" label="身份证号码" width="200" show-overflow-tooltip />
 				<el-table-column prop="undertakerPhone" label="手机号码" width="120" show-overflow-tooltip />
 				<el-table-column label="性别" width="60" show-overflow-tooltip>
