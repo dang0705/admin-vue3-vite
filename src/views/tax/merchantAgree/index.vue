@@ -37,7 +37,7 @@ const columns = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		'min-width': 250,
+		'min-width': 120,
 	},
 ];
 const conditionForms = [

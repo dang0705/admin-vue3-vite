@@ -11,6 +11,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const form = reactive({});
+
 const columns = [
 	{
 		prop: 'spName',
@@ -24,27 +25,17 @@ const columns = [
 	},
 	{
 		prop: 'xxx',
-		label: '充值交易号',
+		label: '发票类目',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '充值方式',
+		label: '发票金额(元)',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '充值金额(元)',
-		'min-width': 180,
-	},
-	{
-		prop: 'xxx2',
-		label: '充值时间',
-		'min-width': 180,
-	},
-	{
-		prop: 'xxx2',
-		label: '备注',
+		label: '开票时间',
 		'min-width': 180,
 	},
 	{
@@ -70,7 +61,7 @@ const conditionForms = [
 	{
 		control: 'DateRange',
 		key: 'dealTimeRange',
-		label: '充值时间',
+		label: '开票时间',
 		props: {
 			valueType: 'string',
 		},

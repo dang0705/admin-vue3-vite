@@ -3,10 +3,17 @@
 		<template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="download" type="primary" class="ml10"> 批量导出 </el-button>
 		</template>
+		<template #settleBillName="{ row }">
+			<a @click="handleAction('view', row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.settleBillName }}</a>
+		</template>
+		<template #settleBillId="{ row }">
+			<a @click="handleAction('view', row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.settleBillId }}</a>
+		</template>
 	</TableView>
 </template>
 
 <script setup lang="ts" name="结算单">
+const router = useRouter();
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
@@ -23,14 +30,16 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'settleBillId',
-		label: '账单id',
-		minWidth: 150,
-	},
-	{
 		prop: 'settleBillName',
 		label: '账单名称',
 		minWidth: 150,
+		slot: true,
+	},
+	{
+		prop: 'settleBillId',
+		label: '账单编号',
+		minWidth: 150,
+		slot: true,
 	},
 	{
 		prop: 'id',
@@ -143,5 +152,21 @@ const conditionForms = [
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+
+const handleAction = async (type: string, row: any) => {
+	switch (type) {
+		case 'view':
+			router.push({
+				path: '/core/settleBill/detail',
+				query: {
+					id: row.settleBillId,
+				},
+				state: {
+					refresh: 1,
+				},
+			});
+			break;
+	}
 };
 </script>

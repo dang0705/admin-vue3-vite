@@ -24,27 +24,42 @@ const columns = [
 	},
 	{
 		prop: 'xxx',
-		label: '充值交易号',
+		label: '任务名称',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '充值方式',
+		label: '承接人',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '充值金额(元)',
+		label: '证件号码',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '充值时间',
+		label: '承揽电子协议',
 		'min-width': 180,
 	},
 	{
 		prop: 'xxx2',
-		label: '备注',
+		label: '发放时间',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '任务金额(元)',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '代扣税款(元)',
+		'min-width': 180,
+	},
+	{
+		prop: 'xxx2',
+		label: '实发金额(元)',
 		'min-width': 180,
 	},
 	{
@@ -68,9 +83,19 @@ const conditionForms = [
 		label: '商户',
 	},
 	{
+		control: 'InputPlus',
+		key: 'xxx1',
+		label: '承接人',
+	},
+	{
+		control: 'InputPlus',
+		key: 'xxx2',
+		label: '证件号码',
+	},
+	{
 		control: 'DateRange',
 		key: 'dealTimeRange',
-		label: '充值时间',
+		label: '发放时间',
 		props: {
 			valueType: 'string',
 		},

@@ -101,6 +101,12 @@ watch(
 	},
 	{ immediate: true, deep: true }
 );
+
+const changeNumber = (data: any, key: string) => {
+	if (data[key] === null || data[key] === undefined || data[key] === '') {
+		data[key] = 0;
+	}
+};
 </script>
 
 <template>
@@ -122,6 +128,7 @@ watch(
 			:max="10000000000"
 			:step="1000"
 			:precision="precisions[1]"
+			@blur="changeNumber(gradual[index], [props.itemField?.max])"
 			v-model="gradual[index][props.itemField?.max]"
 		/>&nbsp;<span v-html="texts[1]" />&nbsp;
 		<el-input-number
@@ -131,6 +138,7 @@ watch(
 			:precision="precisions[2]"
 			v-model="gradual[index].ratio"
 			:disabled="forceDisabled || disabled"
+			@blur="changeNumber(gradual[index], 'ratio')"
 		/>&nbsp;
 		<span v-html="texts[2]" />
 		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!forceDisabled && index === gradual.length - 1 && !disabled">

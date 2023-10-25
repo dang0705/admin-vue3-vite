@@ -71,7 +71,7 @@
 				>
 				<el-button
 					@click="detailDialogRef.openDialog(scope.row.id, 2)"
-					v-if="scope.row.state == 10"
+					v-if="scope.row.state == 60"
 					icon="edit-pen"
 					text
 					type="primary"

@@ -1,7 +1,7 @@
 <template>
 	<Table-view ref="taskRecordRef" :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
+			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -75,7 +75,7 @@ const columns = [
 		prop: 'actions',
 		fixed: 'right',
 		slot: true,
-		'min-width': 250,
+		'min-width': 120,
 	},
 ];
 const conditionForms = [
