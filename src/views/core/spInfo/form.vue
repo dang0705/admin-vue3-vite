@@ -122,7 +122,7 @@ const openDialog = (id: string) => {
 
 	// 重置表单数据
 	nextTick(() => {
-		dataFormRef.value?.resetFields();
+		dataFormRef.value?.reset();
 	});
 };
 
