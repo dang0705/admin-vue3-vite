@@ -17,7 +17,7 @@
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
 	modelValue: {
-		type: String,
+		type: [String, Number],
 		default: '',
 	},
 	disabled: {
@@ -26,7 +26,7 @@ const props = defineProps({
 	},
 });
 const value = computed({
-	get: () => props.modelValue,
+	get: () => props.modelValue as string,
 	set: (value: string) => {
 		emit('update:modelValue', value);
 	},

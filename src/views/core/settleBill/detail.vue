@@ -74,31 +74,30 @@
 						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
-							{{
-								form.serviceBillRecord[0]?.serviceAmount > balanceInfo.platBalance
-									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
-									: '无需充值'
-							}}
+							{{ isNeedRecharge.service ? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元` : '无需充值' }}
 						</div>
-						<el-button
-							v-auth="'core_settleBill_s_recharge'"
-							@click="detailDialogRef.openDialog(form.id, 3, 1)"
-							style="margin-right: 24px; margin-left: auto !important"
-							type="primary"
-							class="ml10"
-						>
-							充值
-						</el-button>
-						<el-button
-							v-auth="'core_settleBill_s_pay'"
-							:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40)"
-							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
-							style="margin-right: 24px"
-							type="primary"
-							class="ml10"
-						>
-							付款
-						</el-button>
+						<div class="flex items-center ml-auto">
+							<el-button
+								v-if="isNeedRecharge.service"
+								v-auth="'core_settleBill_s_recharge'"
+								@click="detailDialogRef.openDialog(form.id, 3, 1)"
+								style="margin-right: 24px; margin-left: auto !important"
+								type="primary"
+								class="ml10"
+							>
+								充值
+							</el-button>
+							<el-button
+								v-auth="'core_settleBill_s_pay'"
+								:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40)"
+								@click="handlePayBillRecord(form.serviceBillRecord, 1)"
+								style="margin-right: 24px"
+								type="primary"
+								class="ml10"
+							>
+								付款
+							</el-button>
+						</div>
 					</template>
 				</TableView>
 				<TableView
@@ -120,32 +119,31 @@
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 							<div class="info_item">
-								{{
-									form.taskBillRecord[0]?.serviceAmount > balanceInfo.spBalance
-										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
-										: '无需充值'
-								}}
+								{{ isNeedRecharge.task ? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元` : '无需充值' }}
 							</div>
 						</div>
-						<el-button
-							v-auth="'core_settleBill_t_recharge'"
-							@click="detailDialogRef.openDialog(form.id, 3, 2)"
-							style="margin-right: 24px; margin-left: auto !important"
-							type="primary"
-							class="ml10"
-						>
-							充值
-						</el-button>
-						<el-button
-							v-auth="'core_settleBill_t_pay'"
-							:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40)"
-							@click="handlePayBillRecord(form.taskBillRecord, 2)"
-							style="margin-right: 24px"
-							type="primary"
-							class="ml10"
-						>
-							付款
-						</el-button>
+						<div class="flex items-center ml-auto">
+							<el-button
+								v-if="isNeedRecharge.task"
+								v-auth="'core_settleBill_t_recharge'"
+								@click="detailDialogRef.openDialog(form.id, 3, 2)"
+								style="margin-right: 24px; margin-left: auto !important"
+								type="primary"
+								class="ml10"
+							>
+								充值
+							</el-button>
+							<el-button
+								v-auth="'core_settleBill_t_pay'"
+								:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40)"
+								@click="handlePayBillRecord(form.taskBillRecord, 2)"
+								style="margin-right: 24px"
+								type="primary"
+								class="ml10"
+							>
+								付款
+							</el-button>
+						</div>
 					</template>
 				</TableView>
 			</template>
@@ -196,19 +194,57 @@ interface BatchUploadRecordPage {
 	billStatus: number;
 	paymentStatus: number;
 }
+export interface BillRecordOptions {
+	serviceAmount: number;
+	accountId: string;
+	status: string;
+}
+
+const isNeedRecharge = computed(() => {
+	return {
+		service: form.serviceBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
+		task: form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
+	};
+});
+// const serviceBillInfo = computed(() => {
+// 	return {
+// 		serviceAmount: form.serviceBillRecord[0].serviceAmount,
+// 		accountId: form.serviceBillRecord[0].accountId,
+// 		status: form.serviceBillRecord[0].status,
+// 	};
+// });
+// const taskBillInfo = computed(() => {
+// 	return form.taskBillRecord[0];
+// });
+
 // 定义变量内容
 const router = useRouter();
 const loading = ref(false);
 // 提交表单数据
 const form = reactive({
-	serviceBillRecord: [],
-	taskBillRecord: [],
+	serviceBillRecord: [
+		{
+			serviceAmount: 0,
+			accountId: '',
+			status: '',
+		},
+	],
+	taskBillRecord: [
+		{
+			serviceAmount: 0,
+			accountId: '',
+			status: '',
+		},
+	],
 	id: '',
 	merchantId: '',
 	spSubAccountNum: '',
 	platSubAccountNum: '',
 });
-const balanceInfo = reactive({});
+const balanceInfo = reactive({
+	platBalance: 0,
+	spBalance: 0,
+});
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
@@ -493,7 +529,7 @@ const view = (row: any) => {
 		},
 	});
 };
-const handleAccountCapitalDetail = (type) => {
+const handleAccountCapitalDetail = (type: number) => {
 	router.push({
 		path: '/finance/merchantAccountCapital/detail',
 		query: {
