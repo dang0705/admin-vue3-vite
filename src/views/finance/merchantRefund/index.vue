@@ -32,15 +32,58 @@
 			putUrl="/finance/merchantRefund/auditRefund"
 			@refresh="refreshDataList()"
 		/>
+
+		<Dialog
+			vertical
+			button-position="center"
+			v-model="show"
+			title="发起退款"
+			:show-cancel="false"
+			:forms="forms"
+			:columns="24"
+			v-model:form-data="dialogFormData"
+			:on-cancel="
+				() => {
+					show.value = false;
+				}
+			"
+			:on-submit="onSubmit"
+		>
+			<template #receiptAccountNumber>
+				<el-form-item label="收款账号:" prop="receiptAccountNumber">
+					<el-select
+						@change="handleFilter(dialogFormData.receiptAccountNumber)"
+						placeholder="请选择"
+						class="w100"
+						v-model="dialogFormData.receiptAccountNumber"
+					>
+						<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in receiptAccountOptions" />
+					</el-select>
+				</el-form-item>
+			</template>
+			<template #receiptAccountBank>
+				<el-form-item label="收款账号:" prop="receiptAccountBank">
+					<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
+				</el-form-item>
+			</template>
+		</Dialog>
 	</Table-view>
 </template>
 
 <script setup lang="ts" name="systemMerchantRefund">
-import { delObjs, getObj, addObj } from '/@/api/finance/merchantRefund';
+import { delObjs, getObj, addExecuteRefund } from '/@/api/finance/merchantRefund';
 import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['refund_status'] });
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
+import { useMessage, useMessageBox } from '/@/hooks/message';
+import thousandthDivision from '/@/utils/thousandth-division';
+const show = ref(false);
+const loading = ref(false);
 const router = useRouter();
+let dialogFormData = reactive({
+	id: '',
+});
+let forms = [];
 interface BatchUploadRecordPage {
 	status: number;
 }
@@ -130,21 +173,104 @@ const conditionForms = [
 
 const handleAction = async (type: string, row: any) => {
 	switch (type) {
-		case 'view':
-			router.push({
-				path: '/core/settleBill/detail',
-				query: {
-					id: row.id,
+		case 'tui':
+			dialogFormData.id = row.id;
+			show.value = true;
+			forms = [
+				{
+					control: 'el-select',
+					key: 'operateMode',
+					label: '操作方式',
+					rules: [
+						{
+							required: true,
+							message: '操作方式不能为空',
+							trigger: 'blur',
+						},
+					],
+					options: [
+						{
+							label: '线下退款',
+							value: '1',
+						},
+						{
+							label: '线上退款',
+							value: '2',
+						},
+					],
 				},
-				state: {
-					refresh: 1,
+				{
+					control: 'UploadFile',
+					key: 'transferVouchers',
+					label: '上传转账凭证',
+					rules: [
+						{
+							required: true,
+							message: '上传转账凭证不能为空',
+							trigger: 'blur',
+						},
+					],
+					props: {
+						type: '60',
+					},
 				},
-			});
+				{
+					control: 'InputPlus',
+					key: 'receiptAccountName',
+					label: '对方户名',
+					props: {
+						disabled: true,
+					},
+					value: row.receiptAccountName,
+				},
+				{
+					control: 'InputPlus',
+					key: 'receiptAccountBank',
+					label: '对方开户行',
+					props: {
+						disabled: true,
+					},
+					value: row.receiptAccountBank,
+				},
+				{
+					control: 'InputPlus',
+					key: 'receiptAccountNumber',
+					label: '对方银行账号',
+					props: {
+						disabled: true,
+					},
+					value: row.receiptAccountNumber,
+				},
+				{
+					control: 'InputPlus',
+					key: 'receiptAmount',
+					label: '退款金额',
+					value: thousandthDivision({ number: row.receiptAmount }) + '元',
+					props: {
+						disabled: true,
+					},
+				},
+			];
 			break;
 		case 'exam':
 			formAuditDialogRef?.value.openDialog(row.id);
 			break;
 	}
+};
+
+// 提交授权数据
+const onSubmit = async () => {
+	addExecuteRefund({
+		...dialogFormData,
+	})
+		.then((res: any) => {
+			useMessage().success('退款成功');
+			show.value = false;
+			refreshDataList();
+		})
+		.finally(() => {
+			loading.value = false;
+		});
 };
 
 const refreshDataList = () => {
