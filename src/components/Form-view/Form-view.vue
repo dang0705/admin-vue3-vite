@@ -15,6 +15,10 @@ const prop = defineProps({
 		default: () => ({}),
 		required: true,
 	},
+	persistent: {
+		type: Array,
+		default: () => [],
+	},
 	...FormViewProps,
 });
 const form = ref();
@@ -109,8 +113,19 @@ const initForms = async (forms: FormOptions[]) => {
 		}
 	}
 };
-const resetFields = () => prop.submitButtonText === '重置' && form?.value?.resetFields();
-const reset = () => form?.value?.resetFields();
+const resetFields = () => {
+	prop.submitButtonText === '重置' && form?.value?.resetFields();
+	// console.log('formData.value1', formData.value[]);
+	// persistent
+	prop.persistent.forEach((item) => {
+		formData.value[item.key] = item.value;
+	});
+	console.log('formData.value1', formData.value);
+};
+const reset = () => {
+	form?.value?.resetFields();
+	console.log('formData.value', formData.value);
+};
 
 const page = ref(0);
 const isLastPage = computed(() => (pagination.value ? page.value === prop.forms?.length - 1 : null));
