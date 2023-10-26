@@ -10,8 +10,8 @@
 			downBlobFileUrl="/finance/merchantRecharge/export"
 		>
 			<template #top-bar>
-				<el-button v-auth="'core_merchantAccountCapital_refund'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
-				<el-button v-auth="'core_merchantAccountCapital_recharge'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
+				<el-button v-auth="'finance_merchantRefund_add'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
+				<el-button v-auth="'finance_merchantRecharge_add'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
 			</template>
 			<template #tableTopTwo>
 				<div class="total_wrapper">
@@ -65,17 +65,10 @@
 				</div>
 			</template>
 			<template #actions="{ row }">
-				<el-button
-					v-auth="'core_merchantAccountCapital_revoke'"
-					v-if="row.status != 30"
-					@click="handleRevoke(row.id)"
-					icon="view"
-					text
-					type="primary"
-				>
+				<el-button v-auth="'finance_merchantRecharge_edit'" v-if="row.status != 30" @click="handleRevoke(row.id)" icon="view" text type="primary">
 					撤销
 				</el-button>
-				<el-button v-auth="'core_merchantAccountCapital_view_voucher'" @click="handleContractFile(row)" icon="view" text type="primary">
+				<el-button v-auth="'finance_merchantAccountCapital_view_voucher'" @click="handleContractFile(row)" icon="view" text type="primary">
 					查看转账凭证
 				</el-button>
 			</template>
@@ -91,6 +84,23 @@
 				:on-cancel="onCancel"
 				:on-submit="onSubmit"
 			>
+				<template #receiptAccountNumber="{ formData }">
+					<el-form-item label="收款账号:" prop="receiptAccountNumber">
+						<el-select
+							@change="handleFilter(dialogFormData.receiptAccountNumber)"
+							placeholder="请选择"
+							class="w100"
+							v-model="dialogFormData.receiptAccountNumber"
+						>
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in receiptAccountOptions" />
+						</el-select>
+					</el-form-item>
+				</template>
+				<template #receiptAccountBank="{ formData }">
+					<el-form-item label="收款账号:" prop="receiptAccountBank">
+						<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
+					</el-form-item>
+				</template>
 			</Dialog>
 		</TableView>
 		<!-- <DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" /> -->
@@ -99,6 +109,7 @@
 
 <script setup lang="ts" name="商户资金账户详情">
 import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
+import { getSelectReceiptAccount, addObj } from '/@/api/finance/merchantRefund';
 import { getObj, queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import thousandthDivision from '/@/utils/thousandth-division';
@@ -118,7 +129,7 @@ const merchantAccountCapitalRef = ref();
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const { proxy } = getCurrentInstance();
-let dialogFormData = ref({});
+let dialogFormData = reactive({});
 let forms = [];
 const form1 = [
 	{
@@ -185,6 +196,7 @@ const form1 = [
 		],
 	},
 ];
+const receiptAccountOptions = ref([]);
 // const form2 = [];
 // 定义变量内容
 const router = useRouter();
@@ -192,6 +204,7 @@ const loading = ref(false);
 // 提交表单数据
 const form = reactive({
 	bankBranch: '',
+	merchantId: '',
 	bankAccountNumber: '',
 	accountName: '',
 	totalAmount: 0,
@@ -311,11 +324,27 @@ if (route.query.id) {
 	getmerchantInfoData();
 }
 
-const handleRe = (type: number) => {
+const handleFilter = (value) => {
+	const obj = receiptAccountOptions.value.find((item) => {
+		return item.value == value;
+	});
+	dialogFormData.receiptAccountBank = obj.receiptAccountBank;
+};
+
+const handleRe = async (type: number) => {
 	reType.value = type;
 	if (type === 1) {
 		forms = form1;
 	} else if (type === 2) {
+		const res = await getSelectReceiptAccount({
+			merchantId: form.merchantId,
+		});
+		receiptAccountOptions.value = res.data || [];
+		receiptAccountOptions.value.forEach((item: any) => {
+			item.label = item.receiptAccountNumber;
+			item.value = item.receiptAccountNumber;
+		});
+		console.log('res', res);
 		forms = [
 			{
 				control: 'InputPlus',
@@ -343,7 +372,7 @@ const handleRe = (type: number) => {
 			},
 			{
 				control: 'InputPlus',
-				key: 'accountName',
+				key: 'receiptAccountName',
 				label: '收款户名',
 				props: {
 					disabled: true,
@@ -361,14 +390,17 @@ const handleRe = (type: number) => {
 						trigger: 'blur',
 					},
 				],
+				// options: receiptAccountOptions.value,
+				slot: true,
 			},
 			{
 				control: 'InputPlus',
-				key: 'xxx',
+				key: 'receiptAccountBank',
 				label: '开户行',
 				props: {
 					disabled: true,
 				},
+				slot: true,
 			},
 		];
 	}
@@ -391,7 +423,7 @@ const onSubmit = async () => {
 	if (reType.value === 1) {
 		addMerchantRecharge({
 			accountId: route.query.id,
-			...dialogFormData.value,
+			...dialogFormData,
 		})
 			.then((res: any) => {
 				useMessage().success('充值成功');
@@ -402,7 +434,18 @@ const onSubmit = async () => {
 				loading.value = false;
 			});
 	} else if (reType.value === 2) {
-		useMessage().wraning('功能正在开发, 请等待~');
+		addObj({
+			accountId: route.query.id,
+			...dialogFormData,
+		})
+			.then((res: any) => {
+				useMessage().success('申请退款成功');
+				show.value = false;
+				refreshDataList();
+			})
+			.finally(() => {
+				loading.value = false;
+			});
 	}
 };
 const onCancel = () => {
