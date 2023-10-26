@@ -191,17 +191,16 @@
 				<el-button type="primary" @click="onSubmit" :disabled="loading">提交</el-button>
 			</span>
 		</div>
+		<el-dialog v-model="visible" title="" width="30%" center :close-on-click-modal="false" :close-on-press-escape="false" @close="visible = false">
+			<div class="text-center">您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？</div>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="goSpList()">谢谢，不用了</el-button>
+					<el-button type="primary" @click="goSpList('pay')">开通支付通道</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
-
-	<el-dialog v-model="visible" title="" width="30%" center :close-on-click-modal="false" :close-on-press-escape="false" @close="goSpList()">
-		<div>您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？</div>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="goSpList()">谢谢，不用了</el-button>
-				<el-button type="primary" @click="router.push({ name: '支付通道', state: { refresh: 1 } })">开通支付通道</el-button>
-			</span>
-		</template>
-	</el-dialog>
 </template>
 
 <script setup lang="ts" name="SpInfoDetail">
@@ -327,10 +326,11 @@ const resetForm = (formEl: any) => {
 	formEl.resetFields();
 };
 
-const goSpList = async () => {
-	router.push({ name: '服务商', state: { refresh: 1 } });
+const goSpList = async (type?: string) => {
+	type === 'pay' ? router.push({ name: '支付通道', state: { refresh: 1 } }) : router.push({ name: '服务商', state: { refresh: 1 } });
 	const { useSpStore } = await import('/@/stores/sp');
 	useSpStore().$patch((state) => (state.sp = state.spAll = []));
+	visible.value = false;
 };
 
 // 提交
@@ -343,9 +343,7 @@ const onSubmit = async () => {
 		if (form.id) {
 			await putObj(form);
 			useMessage().success('修改成功');
-			router.push({ name: '服务商', state: { refresh: 1 } });
-			const { useSpStore } = await import('/@/stores/sp');
-			useSpStore().$patch((state) => (state.sp = state.spAll = []));
+			goSpList();
 		} else {
 			await addObj(form);
 			visible.value = true;
