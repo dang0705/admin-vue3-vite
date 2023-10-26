@@ -247,11 +247,6 @@ const conditionForms = ref([
 		key: 'spId',
 		label: t('undertakerInfo.spName'),
 	},
-	{
-		control: 'MerchantSelect',
-		key: 'merchantId',
-		label: t('undertakerInfo.merchantName'),
-	},
 ]);
 const conditionForms2 = ref([
 	{
