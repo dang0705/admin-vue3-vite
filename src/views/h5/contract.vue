@@ -6,10 +6,15 @@
 	></iframe>
 </template>
 
-<script>
-export default {
-
-}
+<script setup lang="ts">
+window.top.addEventListener(
+	'popstate',
+	function (e) {
+		history.go(-2);
+		console.log('我监听到了浏览器的返回按钮事件');
+	},
+	false
+);
 </script>
 
 <style>
