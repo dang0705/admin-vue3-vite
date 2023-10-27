@@ -86,6 +86,11 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 				},
 		  ]
 		: []),
+	{
+		path: '/h5-contract',
+		name: 'h5-contract',
+		component: () => import('/@/views/h5/contract.vue'),
+	},
 ];
 
 /**
