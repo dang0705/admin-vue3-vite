@@ -227,6 +227,7 @@
 								v-model="form.taskRequireInfo.requiredAgeMin"
 							></el-input-number>
 						</el-form-item>
+						<div style="margin-left: 12px">-</div>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
 							<el-input-number
 								class="inputNumber"

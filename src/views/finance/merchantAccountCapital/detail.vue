@@ -84,7 +84,24 @@
 				:on-cancel="onCancel"
 				:on-submit="onSubmit"
 			>
-				<template #receiptAccountNumber="{ formData }">
+				<template #payingAmount="{ formData }">
+					<el-form-item
+						label="付款金额"
+						prop="payingAmount"
+						:rules="[
+							{
+								required: true,
+								message: '付款金额不能为空',
+								trigger: 'blur',
+							},
+						]"
+					>
+						<InputPlus v-model="dialogFormData.payingAmount">
+							<template #append>元</template>
+						</InputPlus>
+					</el-form-item>
+				</template>
+				<template #receiptAccountNumber>
 					<el-form-item label="收款账号:" prop="receiptAccountNumber">
 						<el-select
 							@change="handleFilter(dialogFormData.receiptAccountNumber)"
@@ -96,8 +113,8 @@
 						</el-select>
 					</el-form-item>
 				</template>
-				<template #receiptAccountBank="{ formData }">
-					<el-form-item label="收款账号:" prop="receiptAccountBank">
+				<template #receiptAccountBank>
+					<el-form-item label="开户行:" prop="receiptAccountBank">
 						<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
 					</el-form-item>
 				</template>
@@ -129,7 +146,11 @@ const merchantAccountCapitalRef = ref();
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const { proxy } = getCurrentInstance();
-let dialogFormData = reactive({});
+let dialogFormData = reactive({
+	receiptAccountBank: '',
+	payingAmount: undefined,
+	receiptAccountNumber: '',
+});
 let forms = [];
 const form1 = [
 	{
@@ -194,6 +215,7 @@ const form1 = [
 				trigger: 'blur',
 			},
 		],
+		slot: true,
 	},
 ];
 const receiptAccountOptions = ref([]);

@@ -122,7 +122,15 @@
 							@click="batchAddTask(scope.row)"
 							>批量指派承接人</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button
+							v-if="scope.row.status === '10' && (scope.row.auditStatus === '10' || scope.row.auditStatus === '30')"
+							icon="delete"
+							text
+							type="primary"
+							v-auth="'core_task_del'"
+							@click="handleDelete([scope.row.id])"
+							>删除</el-button
+						>
 						<el-button
 							v-if="scope.row.status == 20 && scope.row.auditStatus == 20"
 							icon="Remove"
@@ -139,10 +147,10 @@
 		</div>
 
 		<!-- 编辑、新增  -->
-		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
+		<form-audit ref="formDialogRef" @refresh="getDataList(true)" />
 		<Appoint
 			ref="appointRef"
-			@refresh="getDataList(false)"
+			@refresh="getDataList(true)"
 			list-url="/core/undertakerTask/getAssignUndertaker"
 			save-url="/core/undertakerTask/determineAssignUndertaker"
 		/>

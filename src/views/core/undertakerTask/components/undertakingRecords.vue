@@ -1,7 +1,7 @@
 <template>
 	<Form-view
 		v-show="showSearch"
-		label-width="90"
+		label-width="130"
 		v-model="state.queryForm"
 		submit-button-text="查询"
 		cancel-button-text="重置"
@@ -137,13 +137,11 @@ const conditionForms = [
 		label: '承接人',
 	},
 	{
-		control: 'DateRange',
-		key: 'timeRange',
-		label: '生成时间',
-		props: {
-			valueType: 'string',
-		},
+		control: 'InputPlus',
+		key: 'undertakerCard',
+		label: '承接人证件号码',
 	},
+
 	{
 		control: 'InputPlus',
 		key: 'taskNumber',
@@ -163,6 +161,14 @@ const conditionForms = [
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+	},
+	{
+		control: 'DateRange',
+		key: 'timeRange',
+		label: '生成时间',
+		props: {
+			valueType: 'string',
+		},
 	},
 ];
 
