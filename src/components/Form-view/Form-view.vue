@@ -114,18 +114,11 @@ const initForms = async (forms: FormOptions[]) => {
 		}
 	}
 };
+
 const resetFields = () => {
-	prop.submitButtonText === '重置' && form?.value?.resetFields();
-	let obj: any = {};
-	prop.persistent.forEach((item: any) => {
-		obj[item.key] = item.value;
-	});
-	Object.assign(formData.value, obj);
-	emit('update:modelValue', obj);
+	prop.submitButtonText === '重置' && reset();
 };
-const reset = () => {
-	form?.value?.resetFields();
-};
+const reset = () => form?.value?.resetFields();
 
 const page = ref(0);
 const isLastPage = computed(() => (pagination.value ? page.value === prop.forms?.length - 1 : null));
@@ -167,9 +160,15 @@ const submit = async () => {
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
 };
+
+const rewriteByPersist = () => {
+	prop.persistent.forEach(({ key, value }) => (formData.value[key] = value));
+	emit('update:modelValue', formData.value);
+};
 const cancel = () => {
 	resetFields();
 	prop.onCancel ? prop.onCancel() : emit('update:show', false);
+	rewriteByPersist();
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };

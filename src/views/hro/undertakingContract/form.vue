@@ -46,7 +46,7 @@ const visible = ref(false);
 const loading = ref(false);
 
 // 提交表单数据
-const formData = reactive({
+const formData = ref({
 	id: '',
 	contractName: '',
 	spId: '',
