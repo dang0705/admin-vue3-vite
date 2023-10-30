@@ -79,17 +79,17 @@
 					</el-col>
 
 					<el-col :span="24" class="mb20">
-						<el-form-item label="工作地址" prop="address">
+						<el-form-item label="任务地址" prop="address">
 							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<!-- <el-col :span="12" class="mb20">
-						<el-form-item label="工作开始时间" prop="startTime">
+						<el-form-item label="任务开始时间" prop="startTime">
 							<el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="工作开始时间"
+								placeholder="任务开始时间"
 								v-model="form.startTime"
 								:value-format="dateTimeStr"
 							></el-date-picker>
@@ -97,11 +97,11 @@
 					</el-col> -->
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="工作时间" prop="workTimeRange">
+						<el-form-item label="任务时间" prop="workTimeRange">
 							<!-- <el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="工作开始时间"
+								placeholder="任务开始时间"
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
 							></el-date-picker> -->
@@ -109,8 +109,8 @@
 								:disabled="self_disabled"
 								v-model="form.workTimeRange"
 								type="datetimerange"
-								start-placeholder="工作开始时间"
-								end-placeholder="工作结束时间"
+								start-placeholder="任务开始时间"
+								end-placeholder="任务结束时间"
 								:value-format="dateTimeStr"
 							/>
 							<!-- <el-time-picker
@@ -119,8 +119,8 @@
 								v-model="form.workTimeRange"
 								is-range
 								range-separator="至"
-								start-placeholder="工作开始时间"
-								end-placeholder="工作结束时间"
+								start-placeholder="任务开始时间"
+								end-placeholder="任务结束时间"
 							/> -->
 						</el-form-item>
 					</el-col>
@@ -406,9 +406,9 @@ const dataRules = ref({
 	city: [{ required: true, message: '城市不能为空', trigger: 'blur' }],
 	areaDatas: [{ required: true, message: '所在地区不能为空', trigger: 'blur' }],
 	county: [{ required: true, message: '区县不能为空', trigger: 'blur' }],
-	address: [{ required: true, message: '工作地址不能为空', trigger: 'blur' }],
-	// startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
-	workTimeRange: [{ required: true, message: '工作时间不能为空', trigger: 'blur' }],
+	address: [{ required: true, message: '任务地址不能为空', trigger: 'blur' }],
+	// startTime: [{ required: true, message: '任务开始时间不能为空', trigger: 'blur' }],
+	workTimeRange: [{ required: true, message: '任务时间不能为空', trigger: 'blur' }],
 	unitPrice: [{ required: true, message: '发包单价不能为空', trigger: 'blur' }],
 	count: [{ required: true, message: '发包数量不能为空', trigger: 'blur' }],
 	measuringUnit: [{ required: true, message: '计量单位不能为空', trigger: 'blur' }],
