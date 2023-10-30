@@ -1,5 +1,5 @@
 <template>
-	<Table-view ref="taskRecordRef" :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view ref="taskRecordRef" :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>

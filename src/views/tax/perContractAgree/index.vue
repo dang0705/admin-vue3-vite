@@ -1,7 +1,7 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" getListFnName="taxUndertakingContract" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 下载 </el-button>
+			<el-button icon="download" text type="primary" @click="handleContractFile(row)"> 下载 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -9,6 +9,7 @@
 <script setup lang="ts" name="税务-个人承揽协议">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
+const { proxy } = getCurrentInstance();
 const router = useRouter();
 const form = reactive({});
 const columns = [
@@ -23,22 +24,22 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'undertakerName',
 		label: '姓名',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'undertakerIdCard',
 		label: '身份证号',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx3',
+		prop: 'startTime',
 		label: '签署日期',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx4',
+		prop: 'endTime',
 		label: '到期日期',
 		'min-width': 180,
 	},
@@ -64,7 +65,7 @@ const conditionForms = [
 	},
 	{
 		control: 'DateRange',
-		key: 'dealTimeRange',
+		key: 'queryTimeRange',
 		label: '签署时间',
 		props: {
 			valueType: 'string',
@@ -72,15 +73,18 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'xxx1',
+		key: 'undertakerName',
 		label: '姓名',
 	},
 	{
 		control: 'InputPlus',
-		key: 'xxx2',
+		key: 'undertakerIdCard',
 		label: '身份证号',
 	},
 ];
+const handleContractFile = (row: any) => {
+	window.open(`${proxy.baseURL}/${row.contractFile}`);
+};
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
 };

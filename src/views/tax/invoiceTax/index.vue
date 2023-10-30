@@ -1,5 +1,5 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #actions="{ row }">
 			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 下载凭证 </el-button>
 		</template>

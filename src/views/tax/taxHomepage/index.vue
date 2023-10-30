@@ -1,5 +1,5 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
 		<template #tableTopTwo="{ otherInfo }">
 			<div class="total_wrapper">
 				<div class="total_list">

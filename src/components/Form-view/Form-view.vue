@@ -181,8 +181,8 @@ const submit = async () => {
 	emit('update:show', false);
 };
 const cancel = () => {
-	resetFields();
 	prop.onCancel ? prop.onCancel() : emit('update:show', false);
+	resetFields();
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };

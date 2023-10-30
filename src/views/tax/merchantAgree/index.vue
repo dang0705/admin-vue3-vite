@@ -1,7 +1,7 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" getListFnName="taxSupervisionAgreement" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleBtn(row)"> 下载 </el-button>
+			<el-button icon="download" text type="primary" @click="handleContractFile(row)"> 下载 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -9,6 +9,7 @@
 <script setup lang="ts" name="税务-商户协议">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
+const { proxy } = getCurrentInstance();
 const router = useRouter();
 const form = reactive({});
 const columns = [
@@ -23,12 +24,12 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'agreementName',
 		label: '合同协议',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'endTime',
 		label: '合同到期',
 		'min-width': 180,
 	},
@@ -53,8 +54,8 @@ const conditionForms = [
 		label: '商户',
 	},
 ];
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
+const handleContractFile = (row: any) => {
+	window.open(`${proxy.baseURL}/${row.uploadAttachment}`);
 };
 const handleDetail = (row: any) => {
 	router.push({
