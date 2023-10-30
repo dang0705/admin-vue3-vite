@@ -54,7 +54,7 @@
 			<template #taskId="{ formData }">
 				<el-form-item prop="taskId" label="结算任务" :rules="[{ required: true, message: '结算任务不能为空', trigger: 'blur' }]">
 					<el-select placeholder="请选择" class="w100" clearable v-model="formData.taskId">
-						<el-option :key="item.id" :label="item.taskName" :value="item.id" v-for="item in formInfo.taskList" />
+						<el-option :key="item.taskId" :label="item.taskName" :value="item.taskId" v-for="item in formInfo.taskList" />
 					</el-select>
 				</el-form-item>
 			</template>
@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts" name="结算账单">
-import { fetchList } from '/@/api/core/task';
+import { taskDropList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { submitObj, delObjs } from '/@/api/core/settleBill';
@@ -351,12 +351,13 @@ const handleAction = async (type: string, row: any) => {
 };
 // 初始化表单数据
 const getTaskList = (formData: any) => {
-	fetchList({
+	taskDropList({
 		spId: formData.spId,
 		merchantId: formData.merchantId,
+		waitSettle: 1,
 	})
 		.then((res: any) => {
-			formInfo.taskList = res.data.list.records || [];
+			formInfo.taskList = res.data || [];
 		})
 		.finally(() => {});
 };
