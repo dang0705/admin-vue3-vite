@@ -6,6 +6,7 @@
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		:condition-forms="conditionForms"
 		:persistent="persistent"
+		:staticQuery="staticQuery"
 		module="finance/waterSpPaymentBank.ts"
 	>
 		<template #tableTop>
@@ -44,6 +45,9 @@ import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
 	status: string;
 }
+const staticQuery = {
+	typeOfIncomingAndOutgoingAccounts: 10,
+};
 const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] });
 import { payChannel } from '/@/configuration/dynamic-control';
 const tabType = ref(1);

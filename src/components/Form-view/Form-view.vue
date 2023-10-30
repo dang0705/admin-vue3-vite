@@ -116,28 +116,15 @@ const initForms = async (forms: FormOptions[]) => {
 };
 const resetFields = () => {
 	prop.submitButtonText === '重置' && form?.value?.resetFields();
-	// console.log('formData.value1', formData.value[]);
-	// persistent
-	console.log('prop.persistent', prop.persistent);
-	console.log('formData.value2', formData.value);
 	let obj: any = {};
 	prop.persistent.forEach((item: any) => {
 		obj[item.key] = item.value;
-		//  const newAgeRef = toRef(newState, "age");
-		// formData.value[item.key] = toRef(item.value);
-		// formData.value = toRef({
-		// 	[item.key]: item.value,
-		// });
 	});
 	Object.assign(formData.value, obj);
 	emit('update:modelValue', obj);
-
-	console.log('formData.value1', formData.value);
-	console.log('obj-1', obj);
 };
 const reset = () => {
 	form?.value?.resetFields();
-	console.log('formData.value', formData.value);
 };
 
 const page = ref(0);
@@ -181,8 +168,8 @@ const submit = async () => {
 	emit('update:show', false);
 };
 const cancel = () => {
-	prop.onCancel ? prop.onCancel() : emit('update:show', false);
 	resetFields();
+	prop.onCancel ? prop.onCancel() : emit('update:show', false);
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
