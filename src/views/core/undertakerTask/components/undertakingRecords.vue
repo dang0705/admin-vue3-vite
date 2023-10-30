@@ -45,7 +45,7 @@ const batchMap = Array2Object({ dic: ['undertaking_status', 'yes_no_type'] });
 interface BatchUploadRecordPage {
 	state: number;
 	isBankFourEssentialFactor: number;
-	isSign: number;
+	isEffectiveContract: number;
 }
 // 搜索变量
 const detailDialogRef = ref();
@@ -179,10 +179,10 @@ const columns = [
 		'min-width': 180,
 	},
 	{
-		prop: 'isSign',
+		prop: 'isEffectiveContract',
 		label: '是否存在生效协议',
 		'min-width': 180,
-		value: ({ isSign }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isSign],
+		value: ({ isEffectiveContract }: BatchUploadRecordPage) => batchMap.value.yes_no_type[isEffectiveContract],
 	},
 	{
 		prop: 'isBankFourEssentialFactor',
