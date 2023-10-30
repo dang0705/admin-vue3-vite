@@ -210,6 +210,7 @@ const form = reactive({
 	totalAmount: 0,
 	freeze: 0,
 	balance: 0,
+	merchantName: '',
 });
 const balanceInfo = reactive({});
 const indexThead = [
@@ -377,7 +378,7 @@ const handleRe = async (type: number) => {
 				props: {
 					disabled: true,
 				},
-				value: form.accountName,
+				value: form.merchantName,
 			},
 			{
 				control: 'el-select',

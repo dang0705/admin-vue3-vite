@@ -118,10 +118,22 @@ const resetFields = () => {
 	prop.submitButtonText === '重置' && form?.value?.resetFields();
 	// console.log('formData.value1', formData.value[]);
 	// persistent
-	prop.persistent.forEach((item) => {
-		formData.value[item.key] = item.value;
+	console.log('prop.persistent', prop.persistent);
+	console.log('formData.value2', formData.value);
+	let obj: any = {};
+	prop.persistent.forEach((item: any) => {
+		obj[item.key] = item.value;
+		//  const newAgeRef = toRef(newState, "age");
+		// formData.value[item.key] = toRef(item.value);
+		// formData.value = toRef({
+		// 	[item.key]: item.value,
+		// });
 	});
+	Object.assign(formData.value, obj);
+	emit('update:modelValue', obj);
+
 	console.log('formData.value1', formData.value);
+	console.log('obj-1', obj);
 };
 const reset = () => {
 	form?.value?.resetFields();
