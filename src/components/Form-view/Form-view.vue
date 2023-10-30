@@ -51,9 +51,10 @@ const initForms = async (forms: FormOptions[]) => {
 
 		item.hidden = item.hidden ?? false;
 		// 如果forms的item有默认值，给formData对应的key赋值
-		if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
-			formData.value[item.key] = item.value;
-		}
+		// todo 以下if判断会在动态forms中无法重新赋值, 后续优化
+		// if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
+		formData.value[item.key] = item.value;
+		// }
 
 		item.onChange &&
 			watch(
@@ -152,10 +153,7 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
 	() => prop.show,
-	async (show) => {
-		await nextTick();
-		show && form.value.resetFields();
-	}
+	(show) => show && form.value.resetFields()
 );
 const submit = async () => {
 	let valid: boolean;
