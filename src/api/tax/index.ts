@@ -15,3 +15,11 @@ export function taxUndertakingContract(query?: Object) {
 		params: query,
 	});
 }
+
+export function taxSettleRecordItem(query?: Object) {
+	return request({
+		url: '/core/taxSupervision/settleRecordItem/page',
+		method: 'get',
+		params: query,
+	});
+}

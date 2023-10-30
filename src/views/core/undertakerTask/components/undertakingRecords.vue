@@ -170,12 +170,12 @@ const columns = [
 	},
 	{
 		prop: 'spName',
-		label: '服务商名称',
+		label: '服务商',
 		'min-width': 180,
 	},
 	{
 		prop: 'merchantName',
-		label: '商户名称(客户)',
+		label: '商户',
 		'min-width': 180,
 	},
 	{
