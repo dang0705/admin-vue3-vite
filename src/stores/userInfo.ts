@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { Session } from '/@/utils/storage';
 import { getUserInfo, login, loginByMobile, loginBySocial, refreshTokenApi } from '/@/api/login/index';
-import other from '/@/utils/other';
 import { useMessage } from '/@/hooks/message';
 
 /**
@@ -17,6 +16,7 @@ export const useUserInfo = defineStore('userInfo', {
 			roles: [],
 			authBtnList: [],
 			user: {},
+			permissionMap: {},
 		},
 	}),
 
@@ -123,14 +123,16 @@ export const useUserInfo = defineStore('userInfo', {
 		 * @async
 		 */
 		async setUserInfos() {
-			getUserInfo().then((res) => {
-				const userInfo: any = {
-					user: res.data.sysUser,
+			const permissionMap: any = {};
+			getUserInfo().then(({ data: { sysUser, roles, permissions } }) => {
+				permissions.forEach((item: any) => (permissionMap[item] = item));
+				this.userInfos = {
+					user: sysUser,
 					time: new Date().getTime(),
-					roles: res.data.roles,
-					authBtnList: res.data.permissions,
+					roles: roles,
+					authBtnList: permissions,
+					permissionMap,
 				};
-				this.userInfos = userInfo;
 			});
 		},
 	},
