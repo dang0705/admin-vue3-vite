@@ -71,13 +71,15 @@ const comForms = [
 		props: {
 			disabled: true,
 		},
+		slot: true,
 	},
 	{
 		control: 'InputPlus',
-		key: 'confirmMoney',
+		key: 'undertakerConfirmAmount',
 		label: '承接人确认金额',
 		props: {
 			disabled: true,
+			unit: '元',
 		},
 	},
 	{
@@ -129,6 +131,7 @@ export default ({ type }: any) =>
 						label: '企业验收金额',
 						props: {
 							disabled: true,
+							unit: '元',
 						},
 					},
 					{

@@ -54,8 +54,8 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column width="150px" prop="id" label="任务编号" show-overflow-tooltip />
-				<el-table-column width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
+				<el-table-column fixed="left" width="150px" prop="id" label="任务编号" show-overflow-tooltip />
+				<el-table-column fixed="left" width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
 				<el-table-column min-width="120px" prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
 				<el-table-column min-width="150" prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
 				<!-- taskTypeSecond -->
@@ -82,7 +82,7 @@
 				<el-table-column prop="checkOutTime" label="签退时间" show-overflow-tooltip />
 				<el-table-column prop="businessMerchant" label="业务联系人" show-overflow-tooltip />
 				<el-table-column prop="businessPhone" label="联系人手机号" show-overflow-tooltip /> -->
-				<el-table-column label="操作" width="250" fixed="right">
+				<el-table-column label="操作" width="210" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
 						<el-button

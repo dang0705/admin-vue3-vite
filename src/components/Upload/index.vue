@@ -67,7 +67,7 @@
 						</ul>
 					</template>
 				</template>
-				<el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" />
+				<!-- <el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" /> -->
 			</el-upload>
 			<template v-if="disabled && !isImage">
 				<a
@@ -472,6 +472,13 @@ const uploadError = (err: any) => {
 	.el-upload__tip {
 		line-height: 18px;
 		text-align: center;
+	}
+}
+
+.upload.disabled {
+	:deep(.el-upload-dragger) {
+		background-color: #fff !important;
+		border: none !important;
 	}
 }
 </style>

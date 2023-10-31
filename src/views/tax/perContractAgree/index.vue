@@ -18,11 +18,11 @@ const columns = [
 		label: '服务商',
 		'min-width': 150,
 	},
-	{
-		prop: 'merchantName',
-		label: '商户',
-		'min-width': 150,
-	},
+	// {
+	// 	prop: 'merchantName',
+	// 	label: '商户',
+	// 	'min-width': 150,
+	// },
 	{
 		prop: 'undertakerName',
 		label: '姓名',

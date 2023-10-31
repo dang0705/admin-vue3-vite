@@ -11,6 +11,11 @@
 		vertical
 		:showBtn="showBtn"
 	>
+		<template #workload>
+			<el-form-item label="确认工作量:" prop="workload">
+				<InputPlus disabled :unit="formData.measuringUnit" :modelValue="formData.workload"></InputPlus>
+			</el-form-item>
+		</template>
 	</Dialog>
 </template>
 
