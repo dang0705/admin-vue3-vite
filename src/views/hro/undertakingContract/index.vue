@@ -51,7 +51,16 @@
 				<el-table-column label="操作" width="150" fixed="right">
 					<template #default="{ row: { id, state } }">
 						<el-button icon="edit-pen" text type="primary" v-auth="'停止'" @click="formDialogRef.openDialog(id)"> 查看 </el-button>
-						<el-button icon="delete" text type="primary" v-auth="'hro_undertakingContract_del'" @click="handleDelete([id])"> 删除 </el-button>
+						<el-button
+							icon="delete"
+							text
+							type="primary"
+							v-if="state === valueAsLabel(contractMap?.contract_status)['已终止'] || state === valueAsLabel(contractMap?.contract_status)['已失效']"
+							v-auth="'hro_undertakingContract_del'"
+							@click="handleDelete([id])"
+						>
+							删除
+						</el-button>
 						<el-popconfirm
 							v-if="state !== valueAsLabel(contractMap?.contract_status)['已终止']"
 							width="220"
