@@ -36,6 +36,7 @@
 <script setup lang="ts" name="UndertakingContractDialog">
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj } from '/@/api/hro/undertakingContract';
+import { underTakers } from '/@/configuration/dynamic-control';
 import request from '/@/utils/request';
 
 const emit = defineEmits(['refresh']);
@@ -78,14 +79,7 @@ const forms = [
 		label: '服务商',
 		key: 'spId',
 	},
-	{
-		key: 'undertakerId',
-		slot: true,
-	},
-	{
-		key: 'contractTimeRange',
-		slot: true,
-	},
+	underTakers(),
 	{
 		control: 'UploadFile',
 		key: 'contractFiles',

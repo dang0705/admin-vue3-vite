@@ -154,13 +154,8 @@ const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Reco
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
-const fetchList = ref('');
+const fetchList = computed(() => apis[`/src/api/${props.module}`][props.getListFnName]);
 
-watch(
-	() => props.module,
-	(value) => (fetchList.value = apis[`/src/api/${value}`][props.getListFnName]),
-	{ immediate: true, deep: true }
-);
 const showSearch = ref(true);
 const params = computed(() => props.params);
 const currentTab = ref('');

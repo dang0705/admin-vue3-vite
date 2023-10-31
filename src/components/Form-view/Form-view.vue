@@ -161,14 +161,9 @@ const submit = async () => {
 	emit('update:show', false);
 };
 
-const rewriteByPersist = () => {
-	prop.persistent.forEach(({ key, value }) => (formData.value[key] = value));
-	emit('update:modelValue', formData.value);
-};
 const cancel = () => {
 	resetFields();
 	prop.onCancel ? prop.onCancel() : emit('update:show', false);
-	rewriteByPersist();
 };
 
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
