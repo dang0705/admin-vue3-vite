@@ -1,7 +1,7 @@
 <template>
-	<Table-view ref="taskRecordRef" :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view isTab :columns="columns" getListFnName="taxTaskPage" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView(row.taskId)"> 查看 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -12,7 +12,6 @@ const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-v
 import { payChannel } from '/@/configuration/dynamic-control';
 const router = useRouter();
 const form = reactive({});
-const taskRecordRef = ref();
 const columns = [
 	{
 		prop: 'spName',
@@ -25,48 +24,48 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'taskName',
 		label: '任务名称',
 		'min-width': 180,
 	},
 
 	{
-		prop: 'xxx',
+		prop: 'unitPrice',
 		label: '发包单价(元)',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'measuringUnitDesc',
 		label: '计量单位',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'count',
 		label: '承接数量',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'startTime',
 		label: '发布时间',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'endTime',
 		label: '结束时间',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'auditUserName',
 		label: '审核人',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'auditTime',
 		label: '审核时间',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx',
+		prop: 'statusDesc',
 		label: '状态',
 		'min-width': 180,
 	},
@@ -97,14 +96,22 @@ const conditionForms = [
 	},
 	{
 		control: 'DateRange',
-		key: 'dealTimeRange',
+		key: 'queryTimeRange',
 		label: '发布时间',
 		props: {
 			valueType: 'string',
 		},
 	},
 ];
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
+const handleView = (taskId: string) => {
+	router.push({
+		path: '/core/task/detail',
+		query: {
+			taskId: taskId,
+		},
+		state: {
+			refresh: 1,
+		},
+	});
 };
 </script>

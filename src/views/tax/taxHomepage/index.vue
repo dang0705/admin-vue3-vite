@@ -1,41 +1,14 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" getListFnName="taxFrontPage" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #tableTopTwo="{ otherInfo }">
 			<div class="total_wrapper">
-				<div class="total_list">
-					<div class="total_item">
+				<div class="total_list" v-if="otherInfo.countResp?.length">
+					<div class="total_item" v-for="(item, index) in otherInfo.countResp" :key="index">
 						<div class="info">
-							<div class="info_label">发放笔数</div>
+							<div class="info_label">{{ item.label }}</div>
 							<div class="price_box">
-								<div class="price">{{ form.totalAmount }}</div>
-								<div class="unit"></div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">发放总额</div>
-							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
-								<div class="unit">元</div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">商户数量</div>
-							<div class="price_box">
-								<div class="price">{{ form.totalAmount }}</div>
-								<div class="unit"></div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">开票总额</div>
-							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
-								<div class="unit">元</div>
+								<div class="price">{{ item.value }}</div>
+								<div class="unit" v-if="unitMaps[item.label]">{{ unitMaps[item.label] }}</div>
 							</div>
 						</div>
 					</div>
@@ -73,6 +46,10 @@ const form = reactive({
 	freeze: 0,
 	balance: 0,
 });
+const unitMaps = {
+	发放总额: '元',
+	开票总额: '元',
+};
 const columns = [
 	{
 		prop: 'spName',

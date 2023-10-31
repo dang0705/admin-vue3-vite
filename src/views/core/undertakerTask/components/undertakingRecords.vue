@@ -1,6 +1,7 @@
 <template>
 	<Table-view
 		isTab
+		noPadding
 		ref="undertakingRecordsRef"
 		:columns="columns"
 		label-width="130"
