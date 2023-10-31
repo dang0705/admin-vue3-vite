@@ -19,7 +19,7 @@
 			</el-form-item>
 		</template>
 		<template #top-bar="{ otherInfo }">
-			<el-button v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
+			<el-button v-if="tabType == 1" v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
 				批量导入银行交易流水
 			</el-button>
 		</template>

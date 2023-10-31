@@ -85,7 +85,4 @@ const conditionForms = [
 const handleContractFile = (row: any) => {
 	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
-};
 </script>
