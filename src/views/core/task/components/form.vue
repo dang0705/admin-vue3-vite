@@ -69,7 +69,14 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
+							<el-input-number
+								:max="10000000000"
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="1"
+								v-model="form.userCount"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -129,6 +136,7 @@
 						<el-form-item label="发包单价" prop="unitPrice">
 							<el-input-number
 								class="inputNumber"
+								:max="10000000000"
 								:controls="false"
 								:disabled="self_disabled"
 								:min="0"
@@ -141,7 +149,14 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包数量" prop="count">
-							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
+							<el-input-number
+								class="inputNumber"
+								:max="10000000000"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="1"
+								v-model="form.count"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 

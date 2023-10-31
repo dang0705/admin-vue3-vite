@@ -185,9 +185,12 @@ const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-v
 
 const conditionForms = [
 	{
-		control: 'InputPlus',
+		control: 'el-input-number',
 		key: 'id',
 		label: '任务编号',
+		props: {
+			controls: false,
+		},
 	},
 	{
 		control: 'InputPlus',
