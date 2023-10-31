@@ -57,15 +57,4 @@ const conditionForms = [
 const handleContractFile = (row: any) => {
 	window.open(`${proxy.baseURL}/${row.uploadAttachment}`);
 };
-const handleDetail = (row: any) => {
-	router.push({
-		path: '/finance/merchantAccountCapital/detail',
-		query: {
-			id: row.id,
-		},
-		state: {
-			refresh: 1,
-		},
-	});
-};
 </script>

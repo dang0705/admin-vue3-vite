@@ -70,15 +70,4 @@ const conditionForms = [
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
 };
-const handleDetail = (row: any) => {
-	router.push({
-		path: '/finance/merchantAccountCapital/detail',
-		query: {
-			id: row.id,
-		},
-		state: {
-			refresh: 1,
-		},
-	});
-};
 </script>
