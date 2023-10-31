@@ -52,7 +52,6 @@ const formData = ref({
 	contractName: '',
 	spId: '',
 	undertakerId: '',
-	contractTimeRange: [],
 	contractFiles: [],
 });
 const underTackers = ref([]);
@@ -64,7 +63,7 @@ const getUndertakerFromSpId = async (spId: string) => {
 	underTackers.value = data;
 };
 watch(
-	() => formData.spId,
+	() => formData.value.spId,
 	(spId) => spId && getUndertakerFromSpId(spId)
 );
 
@@ -106,10 +105,10 @@ const dataRules = ref({
 // 打开弹窗
 const openDialog = (id: string) => {
 	visible.value = true;
-	formData.id = undefined;
+	formData.value.id = undefined;
 	// 获取undertakingContract信息
 	if (id) {
-		formData.id = id;
+		formData.value.id = id;
 		getundertakingContractData(id);
 	}
 };
@@ -118,14 +117,13 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	try {
 		loading.value = true;
-		if (!formData.id) {
-			await addObj(formData);
+		if (!formData.value.id) {
+			await addObj(formData.value);
 			useMessage().success('添加成功');
 			emit('refresh');
 		}
 		visible.value = false;
 	} catch (err: any) {
-		useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}
@@ -137,7 +135,7 @@ const getundertakingContractData = (id: string) => {
 	loading.value = true;
 	getObj(id)
 		.then((res: any) => {
-			Object.assign(formData, res.data);
+			Object.assign(formData.value, res.data);
 		})
 		.finally(() => {
 			loading.value = false;
