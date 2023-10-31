@@ -86,18 +86,23 @@ const comForms = [
 		control: 'UploadFile',
 		key: 'startImages',
 		label: '开始前上传图片',
+		column: 24,
 		props: {
 			type: '40',
 			disabled: true,
+			multiple: true,
+			limit: 3,
 		},
 	},
 	{
 		control: 'UploadFile',
 		key: 'doneImages',
 		label: '完成成果图片',
+		column: 24,
 		props: {
 			type: '40',
 			disabled: true,
+			multiple: true,
 		},
 	},
 ];
@@ -138,6 +143,7 @@ export default ({ type }: any) =>
 						control: 'UploadFile',
 						key: 'enterpriseAcceptanceImages',
 						label: '验收上传图片',
+						column: 24,
 						props: {
 							type: '40',
 							disabled: true,
@@ -179,6 +185,7 @@ export default ({ type }: any) =>
 						control: 'UploadFile',
 						key: 'enterpriseAcceptanceImages',
 						label: '验收上传图片',
+						column: 24,
 						props: {
 							type: '40',
 							multiple: true,
