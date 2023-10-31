@@ -5,7 +5,6 @@
 			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
 			<div class="mb8" style="width: 100%">
 				<Form-view
-					:persistent="persistent"
 					v-if="conditionForms.length"
 					:label-width="labelWidth"
 					v-model="state.queryForm"
@@ -71,10 +70,6 @@ const props = defineProps({
 	columns: {
 		type: Array,
 		required: true,
-	},
-	persistent: {
-		type: Array,
-		default: () => [],
 	},
 	module: {
 		type: String,

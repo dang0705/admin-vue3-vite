@@ -15,10 +15,6 @@ const prop = defineProps({
 		default: () => ({}),
 		required: true,
 	},
-	persistent: {
-		type: Array,
-		default: () => [],
-	},
 	...FormViewProps,
 });
 const form = ref();

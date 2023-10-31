@@ -5,7 +5,6 @@
 		label-width="110px"
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		:condition-forms="conditionForms"
-		:persistent="persistent"
 		:staticQuery="staticQuery"
 		module="finance/waterSpPaymentBank.ts"
 	>
