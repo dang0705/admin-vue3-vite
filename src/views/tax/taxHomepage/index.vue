@@ -15,22 +15,22 @@
 				</div>
 			</div>
 		</template>
-		<template #xxx1>
+		<template #agreement>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看商户协议 </el-button>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看个人承揽协议 </el-button>
 		</template>
-		<template #xxx2>
+		<template #task>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看任务记录 </el-button>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看承揽记录 </el-button>
 		</template>
-		<template #xxx3>
+		<template #transfer>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 企业转账凭证 </el-button>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 个人结算凭证 </el-button>
 		</template>
-		<template #xxx4>
+		<template #invoice>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看发票 </el-button>
 		</template>
-		<template #xxx5>
+		<template #tax>
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看完税凭证 </el-button>
 		</template>
 	</Table-view>
@@ -67,31 +67,31 @@ const columns = [
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx1',
+		prop: 'agreement',
 		label: '签约协议',
 		'min-width': 275,
 		slot: true,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'task',
 		label: '任务内容',
 		'min-width': 250,
 		slot: true,
 	},
 	{
-		prop: 'xxx3',
+		prop: 'transfer',
 		label: '转账凭证',
 		'min-width': 250,
 		slot: true,
 	},
 	{
-		prop: 'xxx4',
+		prop: 'invoice',
 		label: '发票信息',
 		'min-width': 108,
 		slot: true,
 	},
 	{
-		prop: 'xxx5',
+		prop: 'tax',
 		label: '完税凭证',
 		'min-width': 138,
 		slot: true,

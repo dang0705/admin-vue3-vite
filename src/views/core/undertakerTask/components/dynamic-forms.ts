@@ -141,6 +141,8 @@ export default ({ type }: any) =>
 						props: {
 							type: '40',
 							disabled: true,
+							multiple: true,
+							limit: 3,
 						},
 					},
 				];
@@ -179,6 +181,8 @@ export default ({ type }: any) =>
 						label: '验收上传图片',
 						props: {
 							type: '40',
+							multiple: true,
+							limit: 3,
 						},
 						rules: [
 							{

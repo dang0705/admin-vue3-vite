@@ -1,5 +1,5 @@
 <template>
-	<Table-view :columns="columns" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view isTab :columns="columns" getListFnName="taxUndertakerTask" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>
@@ -24,37 +24,37 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'xxx',
+		prop: 'taskName',
 		label: '任务名称',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'undertakerName',
 		label: '承接人',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'undertakerCard',
 		label: '证件号码',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'contractName',
 		label: '承揽电子协议',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'taskMoney',
 		label: '任务金额(元)',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'startTime',
 		label: '开始日期',
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'doneTime',
 		label: '完成日期',
 		'min-width': 180,
 	},
@@ -80,17 +80,17 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'xxx1',
+		key: 'undertakerName',
 		label: '承接人',
 	},
 	{
 		control: 'InputPlus',
-		key: 'xxx2',
+		key: 'undertakerCard',
 		label: '证件号码',
 	},
 	{
 		control: 'DateRange',
-		key: 'dealTimeRange',
+		key: 'queryTimeRange',
 		label: '开始时间',
 		props: {
 			valueType: 'string',

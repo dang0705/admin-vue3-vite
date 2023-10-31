@@ -13,9 +13,10 @@
 	>
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(row.id)">查看</el-button>
+
 			<el-button
-				@click="detailDialogRef.openDialog(row.id, 2)"
 				v-if="row.state == 60"
+				@click="detailDialogRef.openDialog(row.id, 2)"
 				icon="edit-pen"
 				text
 				type="primary"
