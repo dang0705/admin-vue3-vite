@@ -75,7 +75,7 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 150,
 	},
@@ -195,7 +195,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'settleBillId',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{

@@ -54,7 +54,7 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column fixed="left" width="150px" prop="id" label="任务编号" show-overflow-tooltip />
+				<el-table-column fixed="left" width="150px" prop="taskNo" label="任务编号" show-overflow-tooltip />
 				<el-table-column fixed="left" width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
 				<el-table-column min-width="120px" prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
 				<el-table-column min-width="150" prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
@@ -185,7 +185,7 @@ const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-v
 
 const conditionForms = [
 	{
-		control: 'el-input-number',
+		control: 'el-input',
 		key: 'taskNo',
 		label: '任务编号',
 		props: {

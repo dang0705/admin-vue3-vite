@@ -176,7 +176,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'billNum',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{
@@ -186,7 +186,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'taskNum',
+		key: 'taskNo',
 		label: '任务编号',
 	},
 	payChannel({ key: 'paymentBankId' }),
@@ -225,7 +225,7 @@ const indexThead = [
 		minWidth: 100,
 	},
 	{
-		prop: 'id',
+		prop: 'billNumber',
 		label: '账单编号',
 		minWidth: 100,
 	},
@@ -236,7 +236,7 @@ const indexThead = [
 	},
 
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 160,
 	},

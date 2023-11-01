@@ -260,7 +260,7 @@ const balanceInfo = reactive({
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
-		key: 'id',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{
@@ -280,7 +280,7 @@ const topInfoForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'taskId',
+		key: 'taskNo',
 		label: '任务编号',
 	},
 	{
@@ -374,7 +374,7 @@ const indexThead = [
 		minWidth: 150,
 	},
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 100,
 	},
@@ -485,12 +485,12 @@ const newIndexThead = [
 		minWidth: 100,
 	},
 	{
-		prop: 'settleBillId',
+		prop: 'billNumber',
 		label: '账单编号',
 		minWidth: 100,
 	},
 	{
-		prop: 'id',
+		prop: 'billRecordNum',
 		label: '结算单编号',
 		minWidth: 100,
 	},

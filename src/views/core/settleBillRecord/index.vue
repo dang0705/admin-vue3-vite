@@ -6,8 +6,8 @@
 		<template #settleBillName="{ row }">
 			<a @click="handleAction('view', row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.settleBillName }}</a>
 		</template>
-		<template #settleBillId="{ row }">
-			<a @click="handleAction('view', row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.settleBillId }}</a>
+		<template #billNumber="{ row }">
+			<a @click="handleAction('view', row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.billNumber }}</a>
 		</template>
 	</TableView>
 </template>
@@ -25,7 +25,7 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 150,
 	},
@@ -36,7 +36,7 @@ const columns = [
 		slot: true,
 	},
 	{
-		prop: 'settleBillId',
+		prop: 'billNumber',
 		label: '账单编号',
 		minWidth: 150,
 		slot: true,
@@ -101,7 +101,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'taskId',
+		key: 'taskNo',
 		label: '任务编号',
 	},
 	{
@@ -121,7 +121,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'settleBillId',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{
