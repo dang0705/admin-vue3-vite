@@ -189,7 +189,7 @@ export default ({ type }: any) =>
 						props: {
 							type: '40',
 							multiple: true,
-							// limit: 3,
+							limit: 3,
 						},
 						rules: [
 							{
