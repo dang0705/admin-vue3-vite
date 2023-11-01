@@ -126,7 +126,9 @@ const onSubmit = async () => {
 			visible.value = false;
 		}
 	} catch (err: any) {
-		useMessage().error(err.msg);
+		console.log('err', err);
+
+		// useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

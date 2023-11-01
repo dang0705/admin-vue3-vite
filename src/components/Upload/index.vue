@@ -1,13 +1,38 @@
 <template>
 	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]" v-if="!hidden">
-		<div>
+		<div class="flex">
+			<ul class="flex flex-warp" v-if="multiple">
+				<li v-for="(image, index) in prefixedUrls" :key="image" class="imgBoxItem">
+					<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
+					<div class="upload-handle" @click.stop>
+						<div class="handle-icon" @click="editImg(index)" v-if="!self_disabled">
+							<el-icon :size="iconSize">
+								<Edit />
+							</el-icon>
+							<span v-if="!iconSize">编辑</span>
+						</div>
+						<div class="handle-icon" @click="showViewVisible(index)">
+							<el-icon :size="iconSize">
+								<ZoomIn />
+							</el-icon>
+							<span v-if="!iconSize">查看</span>
+						</div>
+						<div class="handle-icon" @click="deleteImg(index)" v-if="!self_disabled">
+							<el-icon :size="iconSize">
+								<Delete />
+							</el-icon>
+							<span v-if="!iconSize">删除</span>
+						</div>
+					</div>
+				</li>
+			</ul>
 			<el-upload
 				v-if="isImage || (!isImage && !disabled)"
 				action="#"
 				drag
 				:id="uuid"
 				:limit="limit"
-				:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
+				:class="['upload', 'flex-shrink-0', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
 				:multiple="multiple"
 				:disabled="self_disabled"
 				:show-file-list="false"
@@ -20,13 +45,13 @@
 				<template v-if="isImage && prefixedUrls.length && !multiple">
 					<img :src="prefixedUrls[0]" class="upload-image" />
 					<div class="upload-handle" @click.stop>
-						<div class="handle-icon" @click="editImg" v-if="!self_disabled">
+						<div class="handle-icon" @click="editImg(0)" v-if="!self_disabled">
 							<el-icon :size="iconSize">
 								<Edit />
 							</el-icon>
 							<span v-if="!iconSize">编辑</span>
 						</div>
-						<div class="handle-icon" @click="imgViewVisible = true">
+						<div class="handle-icon" @click="showViewVisible(0)">
 							<el-icon :size="iconSize">
 								<ZoomIn />
 							</el-icon>
@@ -83,18 +108,13 @@
 				<slot name="tip" />
 			</div>
 		</div>
-		<ul class="flex flex-warp" v-if="multiple">
-			<li v-for="(image, index) in prefixedUrls" :key="image">
-				<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
-				<div class="handle-icon cursor-pointer flex items-center" @click="deleteImg(index)" v-if="!self_disabled">
-					<el-icon :size="iconSize" class="ml-auto">
-						<Delete />
-					</el-icon>
-					<span v-if="!iconSize">删除</span>
-				</div>
-			</li>
-		</ul>
-		<el-image-viewer :teleported="true" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="prefixedUrls" />
+		<el-image-viewer
+			:teleported="true"
+			:initial-index="initialIndex"
+			v-if="imgViewVisible"
+			@close="imgViewVisible = false"
+			:url-list="prefixedUrls"
+		/>
 	</div>
 </template>
 
@@ -202,6 +222,8 @@ const new_accept = computed(() => (props.accept.length ? props.accept : props.fi
 
 // 查看图片
 const imgViewVisible = ref(false);
+const initialIndex = ref(0);
+const isEditUpload = ref(false);
 // 获取 el-form 组件上下文
 const formContext = inject(formContextKey, void 0);
 // 获取 el-form-item 组件上下文
@@ -257,16 +279,27 @@ const value = computed(() => (helper.isString(props.modelValue) ? [] : props.mod
 watch(
 	() => value.value as [],
 	(value: []) => {
+		// console.log('watch-value', value);
 		urls.value = value;
 		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
 	},
-	{ immediate: true }
+	{ immediate: true, deep: props.multiple }
 );
 
 const handleHttpUpload = async (options: UploadRequestOptions) => {
 	const image = await upload(options);
-	props.multiple ? urls.value.push(image) : (urls.value = [image]);
+	// props.multiple ? urls.value.push(image) : (urls.value = [image]);
+	if (props.multiple) {
+		if (isEditUpload.value) {
+			urls.value.splice(initialIndex.value, 1, image);
+		} else {
+			urls.value.push(image);
+		}
+	} else {
+		urls.value = [image];
+	}
 	emit('update:modelValue', urls.value);
+	isEditUpload.value = false;
 	await nextTick();
 	formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
@@ -280,10 +313,17 @@ const deleteImg = (index: number) => {
 	emit('update:modelValue', urls.value);
 };
 
+const showViewVisible = (index: number) => {
+	imgViewVisible.value = true;
+	initialIndex.value = index;
+};
+
 /**
  * @description 编辑图片
  * */
-const editImg = () => {
+const editImg = (index: number) => {
+	initialIndex.value = index;
+	isEditUpload.value = true;
 	const dom = document.querySelector(`#${uuid.value} .el-upload__input`);
 	dom && dom.dispatchEvent(new MouseEvent('click'));
 };
@@ -314,7 +354,18 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
 		}, 0);
 
 	if (imgType && sizeValid) {
-		props.multiple ? fileNames.value.push(`${name}^${uid}`) : (fileNames.value = [`${name}^${uid}`]);
+		if (props.multiple) {
+			if (isEditUpload.value) {
+				// fileNames.value
+				// fileNames.value.replace('Microsoft', 'W3School1');
+				fileNames.value.splice(initialIndex.value, 1, `${name}^${uid}`);
+			} else {
+				fileNames.value.push(`${name}^${uid}`);
+			}
+		} else {
+			fileNames.value = [`${name}^${uid}`];
+		}
+		// props.multiple ? fileNames.value.push(`${name}^${uid}`) : (fileNames.value = [`${name}^${uid}`]);
 	}
 
 	return imgType && sizeValid;
@@ -370,9 +421,9 @@ const uploadError = (err: any) => {
 			position: relative;
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			width: v-bind(width);
-			height: v-bind(height);
+			justify-content: flex-start;
+			// width: v-bind(width);
+			// height: v-bind(height);
 			overflow: hidden;
 			border: 1px dashed var(--el-border-color-darker);
 			border-radius: v-bind(borderRadius);
@@ -389,9 +440,11 @@ const uploadError = (err: any) => {
 			.el-upload-dragger {
 				display: flex;
 				align-items: center;
-				justify-content: center;
-				width: 100%;
-				height: 100%;
+				// justify-content: center;
+				// width: 100%;
+				// height: 100%;
+				// width: v-bind(width);
+				// height: v-bind(height);
 				padding: 0;
 				overflow: hidden;
 				background-color: transparent;
@@ -416,6 +469,8 @@ const uploadError = (err: any) => {
 			}
 
 			.upload-empty {
+				width: v-bind(width);
+				height: v-bind(height);
 				position: relative;
 				display: flex;
 				flex-direction: column;
@@ -479,6 +534,56 @@ const uploadError = (err: any) => {
 	:deep(.el-upload-dragger) {
 		background-color: #fff !important;
 		border: none !important;
+	}
+}
+
+.imgBoxItem {
+	width: v-bind(width);
+	height: v-bind(height);
+	position: relative;
+	margin-right: 8px;
+	margin-bottom: 8px;
+	&:hover {
+		border-color: var(--el-color-primary);
+
+		.upload-handle {
+			opacity: 1;
+		}
+	}
+}
+.upload-handle {
+	position: absolute;
+	top: 0;
+	right: 0;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background: rgb(0 0 0 / 60%);
+	opacity: 0;
+	transition: var(--el-transition-duration-fast);
+
+	.handle-icon {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 0 6%;
+		color: aliceblue;
+
+		.el-icon {
+			margin-bottom: 40%;
+			font-size: 130%;
+			line-height: 130%;
+		}
+
+		span {
+			font-size: 85%;
+			line-height: 85%;
+		}
 	}
 }
 </style>
