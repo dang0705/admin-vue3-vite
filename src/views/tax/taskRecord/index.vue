@@ -114,7 +114,7 @@ const conditionForms = [
 ];
 const handleView = (taskId: string) => {
 	router.push({
-		path: '/core/task/detail',
+		path: '/tax/taskRecord/detail',
 		query: {
 			taskId: taskId,
 		},

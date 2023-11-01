@@ -20,7 +20,7 @@
 					</template>
 				</Form-view>
 				<slot name="tableTopTwo" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
-				<div class="top-bar h-8 my-[10px] flex items-center justify-between">
+				<div v-if="isShowTopBar" class="top-bar h-8 my-[10px] flex items-center justify-between">
 					<div class="flex items-center flex-grow">
 						<el-button v-if="downBlobFileUrl" @click="exportExcel" icon="download" type="primary" v-auth="exportAuth"> 批量导出 </el-button>
 						<slot name="top-bar" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo, query: state.queryForm }" />
@@ -139,6 +139,11 @@ const props = defineProps({
 	exportAuth: {
 		type: String,
 		default: '',
+	},
+	// 是否展示topBar, 默认展示
+	isShowTopBar: {
+		type: Boolean,
+		default: true,
 	},
 });
 /**

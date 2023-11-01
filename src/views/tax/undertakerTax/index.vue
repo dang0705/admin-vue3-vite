@@ -1,12 +1,17 @@
 <template>
 	<Table-view
 		:staticQuery="staticQuery"
-		isTab
+		:isTab="!isTaskDetail"
+		:isShowTopBar="!isTaskDetail"
+		:noPadding="isTaskDetail"
 		:columns="columns"
 		getListFnName="taxUndertakerTask"
-		:condition-forms="conditionForms"
+		:condition-forms="isTaskDetail ? [] : conditionForms"
 		module="tax/index.ts"
 	>
+		<template #contractName="{ row }">
+			<a @click="handleContractFile(row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.contractName }}</a>
+		</template>
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>
@@ -16,10 +21,9 @@
 <script setup lang="ts" name="税务-承接记录">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
+const { proxy } = getCurrentInstance();
 const route: any = useRoute();
 const router = useRouter();
-const form = reactive({});
-
 const staticQuery = computed(() => {
 	return {
 		spId: route.query.spId,
@@ -56,6 +60,7 @@ const columns = [
 		prop: 'contractName',
 		label: '承揽电子协议',
 		'min-width': 180,
+		slot: true,
 	},
 	{
 		prop: 'taskMoney',
@@ -80,6 +85,11 @@ const columns = [
 		'min-width': 120,
 	},
 ];
+const isTaskDetail = computed(() => {
+	console.log('route.query.taskId-1', route.query.taskId);
+
+	return route.query.taskId ? true : false;
+});
 const conditionForms = [
 	{
 		control: 'SpSelect',
@@ -115,5 +125,8 @@ const conditionForms = [
 ];
 const handleBtn = () => {
 	useMessage().wraning('功能正在开发, 请等待~');
+};
+const handleContractFile = (row: any) => {
+	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
 </script>
