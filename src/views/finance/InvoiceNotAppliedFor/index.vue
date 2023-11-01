@@ -80,7 +80,7 @@ const columns = [
 		'min-width': 150,
 	},
 	{
-		prop: 'settleBillId',
+		prop: 'billNumber',
 		label: '账单编号',
 		'min-width': 175,
 	},
@@ -149,7 +149,7 @@ const conditionForms = [
 	{
 		label: '账单编号',
 		control: 'InputPlus',
-		key: 'billNum',
+		key: 'billNumber',
 	},
 	{
 		label: '账单名称',
@@ -319,7 +319,7 @@ const radioChange = () => {
 let dialogFormData = ref({
 	id: '',
 	radioAddress: 1,
-	settleBillId: '',
+	billNumber: '',
 	settleBillRecordId: '',
 	postAddress: '',
 	postUsername: '',

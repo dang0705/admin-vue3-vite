@@ -29,9 +29,10 @@
 			<el-upload
 				v-if="isImage || (!isImage && !disabled)"
 				action="#"
+				ref="uploadRef"
 				drag
 				:id="uuid"
-				:limit="limit"
+				:limit="maxOnceUploadLimit"
 				:class="['upload', 'flex-shrink-0', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
 				:multiple="multiple"
 				:disabled="self_disabled"
@@ -39,6 +40,7 @@
 				:http-request="handleHttpUpload"
 				:before-upload="beforeUpload"
 				:on-error="uploadError"
+				:on-success="handleAvatarSuccess"
 				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
 			>
 				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
@@ -220,7 +222,7 @@ const { proxy } = getCurrentInstance();
 const fileTypeText = isImage ? '图片' : '文件';
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID());
-
+const uploadRef = ref();
 const new_accept = computed(() => (props.accept.length ? props.accept : props.fileType == 'image' ? IMAGE_TYPES : FILE_TYPES));
 
 // 查看图片
@@ -282,9 +284,11 @@ const value = computed(() => (helper.isString(props.modelValue) ? [] : props.mod
 watch(
 	() => value.value as [],
 	(value: []) => {
-		// console.log('watch-value', value);
+		console.log('watch-value', value);
 		urls.value = value;
 		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
+		console.log('urls.value-1', urls.value);
+		console.log('prefixedUrls.value-1', prefixedUrls.value);
 	},
 	{ immediate: true, deep: props.multiple }
 );
@@ -296,16 +300,28 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
 		if (isEditUpload.value) {
 			urls.value.splice(initialIndex.value, 1, image);
 		} else {
-			urls.value.push(image);
+			urls.value.length < 5 && urls.value.push(image);
 		}
 	} else {
 		urls.value = [image];
 	}
+	console.log('urls.value-1', urls.value);
+
 	emit('update:modelValue', urls.value);
 	isEditUpload.value = false;
 	await nextTick();
 	formItemContext?.prop && formContext?.validateField([formItemContext.prop as string]);
 };
+
+const handleAvatarSuccess = () => {
+	uploadRef.value.clearFiles(); //上传成功之后清除历史记录
+};
+
+const maxOnceUploadLimit = computed(() => {
+	console.log('urls.value.length - Number(props.limit)', urls.value.length - Number(props.limit));
+
+	return Number(props.limit) - urls.value.length;
+});
 
 /**
  * @description 删除图片
@@ -314,6 +330,7 @@ const deleteImg = (index: number) => {
 	// (images.value as []).splice(index, 1);
 	props.multiple ? urls.value.splice(index, 1) && fileNames.value.splice(index, 1) : (urls.value = []);
 	emit('update:modelValue', urls.value);
+	console.log('urls.value-22222', urls.value);
 };
 
 const showViewVisible = (index: number) => {
@@ -363,7 +380,7 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
 				// fileNames.value.replace('Microsoft', 'W3School1');
 				fileNames.value.splice(initialIndex.value, 1, `${name}^${uid}`);
 			} else {
-				fileNames.value.push(`${name}^${uid}`);
+				fileNames.value.length < 5 && fileNames.value.push(`${name}^${uid}`);
 			}
 		} else {
 			fileNames.value = [`${name}^${uid}`];
