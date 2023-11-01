@@ -141,12 +141,16 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 				let list = [];
 				let total = 0;
 				// res.data有两种场景数据结构, 如果有list, 说明是有tab切换场景或者统计场景,  如果没有list则就是单纯的表格数据
-				if (res.data.list) {
-					list = res.data.list.records || [];
-					total = res.data.list.total;
+				if (state.isPage) {
+					if (res.data.list) {
+						list = res.data.list.records || [];
+						total = res.data.list.total;
+					} else if (res.data.records) {
+						list = res.data.records || [];
+						total = res.data.total;
+					}
 				} else {
-					list = res.data.records || [];
-					total = res.data.total;
+					list = res.data || [];
 				}
 				state.dataList = list;
 				state.pagination!.total = total;
