@@ -1,41 +1,17 @@
 <template>
-	<Table-view
-		ref="waterSpPaymentBankRef"
-		:columns="columns"
-		label-width="110px"
-		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
-		:condition-forms="conditionForms"
-		:staticQuery="staticQuery"
-		module="finance/waterSpPaymentBank.ts"
-	>
-		<template #tableTop>
-			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
-		</template>
-		<template #typeOfIncomingAndOutgoingAccounts="{ formData }">
-			<el-form-item label="出入账状态:" prop="typeOfIncomingAndOutgoingAccounts">
-				<el-select @change="handleFilter(formData)" v-model="formData.typeOfIncomingAndOutgoingAccounts" placeholder="请选择" class="w100">
-					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in typeOfIncomingAndOutgoingOptions" />
-				</el-select>
-			</el-form-item>
-		</template>
-		<template #top-bar="{ otherInfo }">
-			<el-button v-if="tabType == 1" v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
-				批量导入银行交易流水
-			</el-button>
-		</template>
-		<uploadExcel
-			@refreshDataList="refreshDataList"
-			ref="addUnderTakerRef"
-			guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。"
-			upload-label="批量导入银行交易流水"
-			upload-url="core/excel/importWaterSpPaymentBank"
-			temp-url="/files/银行交易流水模版.xlsx"
-			template-on-front
-			title="批量导入银行交易流水"
-			:forms="addUnderTakerForms"
-			submitButtonText="下一步"
-		/>
-	</Table-view>
+	<div>
+		<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
+		<Table-view
+			ref="waterSpPaymentBankRef"
+			:columns="columns"
+			label-width="110px"
+			:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
+			:condition-forms="conditionForms"
+			:staticQuery="staticQuery"
+			module="finance/waterSpPaymentBank.ts"
+		>
+		</Table-view>
+	</div>
 </template>
 
 <script setup lang="ts" name="银行流水">
@@ -85,52 +61,69 @@ const addUnderTakerForms = ref([
 ]);
 const tabs = ref([
 	{
-		label: '手动维护',
+		label: '任务信息',
 		value: '',
 		attributeVal: 1,
 	},
 	{
-		label: '银企直联',
+		label: '承接列表',
 		value: '',
 		attributeVal: 2,
 	},
 ]);
 const columns = ref([
+	//
+	// 任务名称
+	// 承接人
+	// 证件号码
+	// 承揽电子协议
+	// 开始日期
+	// 完成日期
+	// 发放凭证
 	{
 		prop: 'spName',
 		label: '服务商',
 		'min-width': 150,
 	},
 	{
-		prop: 'paymentBankName',
-		label: '支付通道',
+		prop: 'xxx',
+		label: '商户',
 		'min-width': 150,
 	},
 	{
-		prop: 'amount',
-		label: '入账金额(元)',
+		prop: 'xxx',
+		label: 'xxx',
 		'min-width': 150,
 	},
 	{
-		prop: 'reciprocalAccountName',
-		label: '对方户名',
+		prop: 'xxx',
+		label: 'xxx',
 		'min-width': 150,
 	},
 	{
-		prop: 'reciprocalAccountNumber',
-		label: '对方银行账号',
+		prop: 'xxx',
+		label: 'xxx',
 		'min-width': 150,
 	},
 	{
-		prop: 'dealTime',
-		label: '交易时间',
+		prop: 'xxx',
+		label: 'xxx',
 		'min-width': 150,
 	},
 	{
-		prop: 'status',
-		label: '状态',
+		prop: 'xxx',
+		label: 'xxx',
 		'min-width': 150,
-		value: ({ status }: BatchUploadRecordPage) => batchMap.value.water_sp_payment_bank_status[status],
+	},
+	{
+		prop: 'xxx',
+		label: 'xxx',
+		'min-width': 150,
+	},
+	{
+		prop: 'xxx',
+		label: 'xxx',
+		'min-width': 150,
 	},
 ]);
 const conditionForms = ref([

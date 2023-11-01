@@ -336,7 +336,7 @@ const form = reactive({
 // });
 // 定义校验规则
 const dataRules = ref({
-	merchantName: [{ required: true, message: '客户名称不能为空', trigger: 'blur' }, limitText({ title: '客户名称', min: 1 })],
+	merchantName: [{ required: true, message: '商户名称不能为空', trigger: 'blur' }, limitText({ title: '商户名称', min: 1 })],
 	socialCreditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
 	industryLevel1: [{ required: true, message: '行业一级不能为空', trigger: 'blur' }],
 	industryLevel2: [{ required: true, message: '行业二级不能为空', trigger: 'blur' }],

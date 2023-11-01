@@ -1,9 +1,14 @@
 <template>
 	<div v-if="disabled" class="textBox">
 		<div class="text">{{ modelValue || '--' }}</div>
-		<template v-for="(_, slot) in $slots">
-			<slot :name="slot" />
-		</template>
+		<div v-if="$slots && $slots.length > 0">
+			<template v-for="(_, slot) in $slots">
+				<slot :name="slot" />
+			</template>
+		</div>
+		<div v-if="modelValue && unit">
+			{{ unit }}
+		</div>
 	</div>
 	<el-input v-else v-bind="$props" v-model="value">
 		<template v-for="(_, slot) in $slots" #[slot]>
@@ -23,6 +28,10 @@ const props = defineProps({
 	disabled: {
 		type: Boolean,
 		default: false,
+	},
+	unit: {
+		type: String,
+		default: '',
 	},
 });
 const value = computed({

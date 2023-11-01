@@ -226,7 +226,6 @@ const getmerchantServiceAgreementData = (id: string) => {
 
 // 获取用户列表
 const getUserDropList = () => {
-	// levelType 用户类型（10：平台级，20：租户级，30：客户级）
 	userDropList({
 		levelType: 20,
 	}).then((res: any) => {

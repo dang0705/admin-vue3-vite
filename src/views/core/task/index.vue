@@ -54,21 +54,21 @@
 				@selection-change="selectionChangHandle"
 				@sort-change="sortChangeHandle"
 			>
-				<el-table-column width="150px" prop="id" label="任务编号" show-overflow-tooltip />
-				<el-table-column width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
-				<el-table-column prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
+				<el-table-column fixed="left" width="150px" prop="taskNo" label="任务编号" show-overflow-tooltip />
+				<el-table-column fixed="left" width="150px" prop="taskName" label="任务名称" show-overflow-tooltip />
+				<el-table-column min-width="120px" prop="undertakeTypeStr" label="任务承接方式" show-overflow-tooltip />
 				<el-table-column min-width="150" prop="taskTypeDesc" label="任务类型" show-overflow-tooltip />
 				<!-- taskTypeSecond -->
 				<el-table-column width="170px" prop="startTime" label="开始时间" show-overflow-tooltip />
 				<el-table-column width="170px" prop="endTime" label="结束时间" show-overflow-tooltip />
 				<el-table-column width="120px" prop="spName" label="服务商" show-overflow-tooltip />
 				<el-table-column width="120px" prop="merchantName" label="商户" show-overflow-tooltip />
-				<el-table-column width="170px" prop="areaDescDatas" label="工作地区" show-overflow-tooltip />
+				<el-table-column width="170px" prop="areaDescDatas" label="任务地区" show-overflow-tooltip />
 				<!-- <el-table-column prop="city" label="城市" show-overflow-tooltip /> -->
 				<!-- <el-table-column prop="county" label="区县" show-overflow-tooltip /> -->
-				<el-table-column prop="unitPrice" label="发包单价" show-overflow-tooltip />
-				<el-table-column prop="measuringUnitStr" label="计量单位" show-overflow-tooltip />
-				<el-table-column prop="userCount" label="需要人数" show-overflow-tooltip />
+				<el-table-column min-width="120px" prop="unitPrice" label="发包单价(元)" show-overflow-tooltip />
+				<el-table-column min-width="100px" prop="measuringUnitStr" label="计量单位" show-overflow-tooltip />
+				<el-table-column min-width="100px" prop="userCount" label="需要人数" show-overflow-tooltip />
 
 				<el-table-column prop="statusStr" min-width="100px" label="状态" show-overflow-tooltip />
 				<!-- <el-table-column prop="auditStatus" label="审核状态" show-overflow-tooltip />
@@ -82,7 +82,7 @@
 				<el-table-column prop="checkOutTime" label="签退时间" show-overflow-tooltip />
 				<el-table-column prop="businessMerchant" label="业务联系人" show-overflow-tooltip />
 				<el-table-column prop="businessPhone" label="联系人手机号" show-overflow-tooltip /> -->
-				<el-table-column label="操作" width="250" fixed="right">
+				<el-table-column label="操作" width="210" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
 						<el-button
@@ -122,7 +122,15 @@
 							@click="batchAddTask(scope.row)"
 							>批量指派承接人</el-button
 						>
-						<el-button icon="delete" text type="primary" v-auth="'core_task_del'" @click="handleDelete([scope.row.id])">删除</el-button>
+						<el-button
+							v-if="scope.row.status === '10' && (scope.row.auditStatus === '10' || scope.row.auditStatus === '30')"
+							icon="delete"
+							text
+							type="primary"
+							v-auth="'core_task_del'"
+							@click="handleDelete([scope.row.id])"
+							>删除</el-button
+						>
 						<el-button
 							v-if="scope.row.status == 20 && scope.row.auditStatus == 20"
 							icon="Remove"
@@ -139,10 +147,10 @@
 		</div>
 
 		<!-- 编辑、新增  -->
-		<form-audit ref="formDialogRef" @refresh="getDataList(false)" />
+		<form-audit ref="formDialogRef" @refresh="getDataList(true)" />
 		<Appoint
 			ref="appointRef"
-			@refresh="getDataList(false)"
+			@refresh="getDataList(true)"
 			list-url="/core/undertakerTask/getAssignUndertaker"
 			save-url="/core/undertakerTask/determineAssignUndertaker"
 		/>
@@ -177,9 +185,12 @@ const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-v
 
 const conditionForms = [
 	{
-		control: 'InputPlus',
-		key: 'id',
+		control: 'el-input',
+		key: 'taskNo',
 		label: '任务编号',
+		props: {
+			controls: false,
+		},
 	},
 	{
 		control: 'InputPlus',

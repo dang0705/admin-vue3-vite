@@ -86,7 +86,7 @@
 	<PayExitDetailDialog ref="payExitDetailDialogRef"></PayExitDetailDialog>
 </template>
 
-<script setup lang="ts" name="systemMerchantInfo">
+<script setup lang="ts" name="payExit">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { getMerchantSubAccountList, getSpPaymentChannelList, putMerchantSubAccount } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';

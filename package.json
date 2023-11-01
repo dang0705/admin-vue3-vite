@@ -7,6 +7,7 @@
 	"scripts": {
 		"dev": "vite --force --mode test dev",
 		"build": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode test",
+		"build:prod": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode prod",
 		"build:docker": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/ --mode test",
 		"dev-prd": "vite --force --mode prd dev",
 		"build-prd": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode prd",

@@ -71,31 +71,39 @@ const comForms = [
 		props: {
 			disabled: true,
 		},
+		slot: true,
 	},
 	{
 		control: 'InputPlus',
-		key: 'confirmMoney',
+		key: 'undertakerConfirmAmount',
 		label: '承接人确认金额',
 		props: {
 			disabled: true,
+			unit: '元',
 		},
 	},
 	{
 		control: 'UploadFile',
 		key: 'startImages',
 		label: '开始前上传图片',
+		column: 24,
 		props: {
 			type: '40',
 			disabled: true,
+			multiple: true,
+			limit: 3,
 		},
 	},
 	{
 		control: 'UploadFile',
 		key: 'doneImages',
 		label: '完成成果图片',
+		column: 24,
 		props: {
 			type: '40',
 			disabled: true,
+			multiple: true,
+			limit: 3,
 		},
 	},
 ];
@@ -129,15 +137,19 @@ export default ({ type }: any) =>
 						label: '企业验收金额',
 						props: {
 							disabled: true,
+							unit: '元',
 						},
 					},
 					{
 						control: 'UploadFile',
 						key: 'enterpriseAcceptanceImages',
 						label: '验收上传图片',
+						column: 24,
 						props: {
 							type: '40',
 							disabled: true,
+							multiple: true,
+							limit: 3,
 						},
 					},
 				];
@@ -173,9 +185,12 @@ export default ({ type }: any) =>
 					{
 						control: 'UploadFile',
 						key: 'enterpriseAcceptanceImages',
-						label: '验收上传图片',
+						label: '验收上传图片1',
+						column: 24,
 						props: {
 							type: '40',
+							multiple: true,
+							limit: 3,
 						},
 						rules: [
 							{

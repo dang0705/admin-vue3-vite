@@ -15,10 +15,6 @@ const prop = defineProps({
 		default: () => ({}),
 		required: true,
 	},
-	persistent: {
-		type: Array,
-		default: () => [],
-	},
 	...FormViewProps,
 });
 const form = ref();
@@ -51,9 +47,10 @@ const initForms = async (forms: FormOptions[]) => {
 
 		item.hidden = item.hidden ?? false;
 		// 如果forms的item有默认值，给formData对应的key赋值
-		if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
-			formData.value[item.key] = item.value;
-		}
+		// todo 以下if判断会在动态forms中无法重新赋值, 后续优化
+		// if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
+		formData.value[item.key] = item.value;
+		// }
 
 		item.onChange &&
 			watch(
@@ -113,19 +110,11 @@ const initForms = async (forms: FormOptions[]) => {
 		}
 	}
 };
+
 const resetFields = () => {
-	prop.submitButtonText === '重置' && form?.value?.resetFields();
-	// console.log('formData.value1', formData.value[]);
-	// persistent
-	prop.persistent.forEach((item) => {
-		formData.value[item.key] = item.value;
-	});
-	console.log('formData.value1', formData.value);
+	prop.submitButtonText === '重置' && reset();
 };
-const reset = () => {
-	form?.value?.resetFields();
-	console.log('formData.value', formData.value);
-};
+const reset = () => form?.value?.resetFields();
 
 const page = ref(0);
 const isLastPage = computed(() => (pagination.value ? page.value === prop.forms?.length - 1 : null));
@@ -152,10 +141,7 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
 	() => prop.show,
-	async (show) => {
-		await nextTick();
-		show && form.value.resetFields();
-	}
+	(show) => show && form.value.resetFields()
 );
 const submit = async () => {
 	let valid: boolean;
@@ -170,6 +156,7 @@ const submit = async () => {
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
 };
+
 const cancel = () => {
 	resetFields();
 	prop.onCancel ? prop.onCancel() : emit('update:show', false);

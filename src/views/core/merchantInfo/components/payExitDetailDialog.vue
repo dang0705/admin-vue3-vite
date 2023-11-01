@@ -15,7 +15,7 @@
 	</Dialog>
 </template>
 
-<script setup lang="ts" name="UndertakerInfoDialog">
+<script setup lang="ts" name="payExitDetailDialog">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getMerchantSubAccountDetail } from '/@/api/core/merchantInfo';

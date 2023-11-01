@@ -43,7 +43,7 @@
 		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="spName" label="服务商名称" show-overflow-tooltip />
-		<el-table-column width="120px" prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="merchantName" label="商户名称(商户)" show-overflow-tooltip />
 		<el-table-column width="120px" prop="isSign" label="是否签署协议" show-overflow-tooltip>
 			<template #default="scope">
 				<span v-if="scope.row.isSign == 1">是</span>
@@ -66,9 +66,7 @@
 				<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(scope.row.id)"
 					>查看</el-button
 				>
-				<el-button @click="handleBtn" v-if="scope.row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'"
-					>审核</el-button
-				>
+				<el-button v-if="scope.row.state == 10" icon="edit-pen" text type="primary" v-auth="'hro_undertakerTask_review'">审核</el-button>
 			</template>
 		</el-table-column>
 	</el-table>
@@ -169,9 +167,6 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 	},
 	pageList: fetchList,
 });
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
-};
 //  table hook
 const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
 

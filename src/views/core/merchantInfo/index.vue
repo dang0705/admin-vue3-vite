@@ -69,7 +69,7 @@
 							>编辑</el-button
 						>
 						<el-button
-							v-if="scope.row.status == 0 || scope.row.status == 2"
+							v-if="scope.row.status == 0"
 							icon="delete"
 							text
 							type="primary"

@@ -1,8 +1,6 @@
 <template>
 	<TableView :columns="columns" isTab module="core/settleBillTaskRecordItem.ts" :condition-forms="conditionForms" labelWidth="140px">
 		<template #actions="{ row }">
-			<!-- <el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleContractFile(row)"> 查看关联协议 </el-button>
-			<el-button icon="view" text type="primary" v-auth="'core_settleBill_view'" @click="handleBtn('toSubmit', row)"> 查看支付凭证 </el-button> -->
 			<el-button v-auth="'core_settleBill_agree'" @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
 			<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 		</template>
@@ -77,7 +75,7 @@ const columns = [
 		minWidth: 150,
 	},
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 150,
 	},
@@ -197,7 +195,7 @@ const conditionForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'settleBillId',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{

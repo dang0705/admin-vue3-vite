@@ -78,12 +78,12 @@ const columns = [
 		width: '40',
 	},
 	{
-		prop: 'id',
+		prop: 'applyNumber',
 		label: '申请编号',
 		'min-width': 175,
 	},
 	{
-		prop: 'settleBillRecordId',
+		prop: 'billRecordNum',
 		label: '结算单编号',
 		'min-width': 175,
 	},
@@ -146,7 +146,7 @@ const conditionForms = [
 	{
 		label: '申请编号',
 		control: 'InputPlus',
-		key: 'idNum',
+		key: 'applyNumber',
 	},
 	{
 		label: '发票类型',
@@ -378,7 +378,7 @@ const applyShow = ref(false);
 let dialogFormData = ref({
 	id: '',
 	radioAddress: 1,
-	settleBillRecordId: '',
+	billRecordNum: '',
 	invoiceFiles: [],
 	invoiceTitle: '',
 	merchantName: '',

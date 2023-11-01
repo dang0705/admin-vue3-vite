@@ -70,7 +70,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="systemMerchantRefund">
+<script setup lang="ts" name="充值退款">
 import { delObjs, getObj, addExecuteRefund } from '/@/api/finance/merchantRefund';
 import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['refund_status'] });

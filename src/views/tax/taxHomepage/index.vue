@@ -1,64 +1,37 @@
 <template>
-	<Table-view :columns="columns" exportAuth="xxx" :condition-forms="conditionForms" module="finance/merchantAccountCapital.ts">
+	<Table-view :columns="columns" getListFnName="taxFrontPage" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #tableTopTwo="{ otherInfo }">
 			<div class="total_wrapper">
-				<div class="total_list">
-					<div class="total_item">
+				<div class="total_list" v-if="otherInfo.countResp?.length">
+					<div class="total_item" v-for="(item, index) in otherInfo.countResp" :key="index">
 						<div class="info">
-							<div class="info_label">发放笔数</div>
+							<div class="info_label">{{ item.label }}</div>
 							<div class="price_box">
-								<div class="price">{{ form.totalAmount }}</div>
-								<div class="unit"></div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">发放总额</div>
-							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
-								<div class="unit">元</div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">商户数量</div>
-							<div class="price_box">
-								<div class="price">{{ form.totalAmount }}</div>
-								<div class="unit"></div>
-							</div>
-						</div>
-					</div>
-					<div class="total_item">
-						<div class="info">
-							<div class="info_label">开票总额</div>
-							<div class="price_box">
-								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
-								<div class="unit">元</div>
+								<div class="price">{{ item.value }}</div>
+								<div class="unit" v-if="unitMaps[item.label]">{{ unitMaps[item.label] }}</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</template>
-		<template #xxx1>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看商户协议 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看个人承揽协议 </el-button>
+		<template #agreement="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('merchantAgree', row)"> 查看商户协议 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('perContractAgree', row)"> 查看个人承揽协议 </el-button>
 		</template>
-		<template #xxx2>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看任务记录 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看承揽记录 </el-button>
+		<template #task="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('taskRecord', row)"> 查看任务记录 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('undertakerTax', row)"> 查看承揽记录 </el-button>
 		</template>
-		<template #xxx3>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 企业转账凭证 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 个人结算凭证 </el-button>
+		<template #transfer="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('transferVoucherTax', row)"> 企业转账凭证 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('perVoucherTax', row)"> 个人结算凭证 </el-button>
 		</template>
-		<template #xxx4>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看发票 </el-button>
+		<template #invoice="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('invoiceTax', row)"> 查看发票 </el-button>
 		</template>
-		<template #xxx5>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看完税凭证 </el-button>
+		<template #tax="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView(row)"> 查看完税凭证 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -67,12 +40,17 @@
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 import thousandthDivision from '/@/utils/thousandth-division';
+const route: any = useRoute();
 const router = useRouter();
 const form = reactive({
 	totalAmount: 0,
 	freeze: 0,
 	balance: 0,
 });
+const unitMaps = {
+	发放总额: '元',
+	开票总额: '元',
+};
 const columns = [
 	{
 		prop: 'spName',
@@ -90,31 +68,31 @@ const columns = [
 		'min-width': 180,
 	},
 	{
-		prop: 'xxx1',
+		prop: 'agreement',
 		label: '签约协议',
 		'min-width': 275,
 		slot: true,
 	},
 	{
-		prop: 'xxx2',
+		prop: 'task',
 		label: '任务内容',
 		'min-width': 250,
 		slot: true,
 	},
 	{
-		prop: 'xxx3',
+		prop: 'transfer',
 		label: '转账凭证',
 		'min-width': 250,
 		slot: true,
 	},
 	{
-		prop: 'xxx4',
+		prop: 'invoice',
 		label: '发票信息',
 		'min-width': 108,
 		slot: true,
 	},
 	{
-		prop: 'xxx5',
+		prop: 'tax',
 		label: '完税凭证',
 		'min-width': 138,
 		slot: true,
@@ -133,11 +111,13 @@ const conditionForms = [
 		key: 'spId',
 		label: '服务商',
 		props: { platform: true },
+		value: route.query.spId,
 	},
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+		value: route.query.merchantId,
 	},
 	{
 		control: 'DateRange',
@@ -148,14 +128,13 @@ const conditionForms = [
 		},
 	},
 ];
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
-};
-const handleDetail = (row: any) => {
+const handleView = (type: string, row: any) => {
+	// useMessage().wraning('功能正在开发, 请等待~');
 	router.push({
-		path: '/finance/merchantAccountCapital/detail',
+		path: `/tax/${type}/index`,
 		query: {
-			id: row.id,
+			spId: row.spId,
+			merchantId: row.merchantId,
 		},
 		state: {
 			refresh: 1,
@@ -186,7 +165,7 @@ const handleDetail = (row: any) => {
 	}
 	.price_box {
 		font-size: 30px;
-		text-align: center;
+		text-align: left;
 	}
 	.price {
 		color: rgba(0, 0, 0, 0.8);

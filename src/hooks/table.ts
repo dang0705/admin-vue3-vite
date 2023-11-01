@@ -135,9 +135,25 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 				});
 
 				// 设置表格展示的数据数组
-				state.dataList = state.isPage ? eval('res.data.' + state.props.item) : res.data;
+				// state.dataList = state.isPage ? eval('res.data.' + state.props.item) : res.data;
 				// 设置分页信息中的总数据条数
-				state.pagination!.total = state.isPage ? eval('res.data.' + state.props.totalCount) : 0;
+				// state.pagination!.total = state.isPage ? eval('res.data.' + state.props.totalCount) : 0;
+				let list = [];
+				let total = 0;
+				// res.data有两种场景数据结构, 如果有list, 说明是有tab切换场景或者统计场景,  如果没有list则就是单纯的表格数据
+				if (state.isPage) {
+					if (res.data.list) {
+						list = res.data.list.records || [];
+						total = res.data.list.total;
+					} else if (res.data.records) {
+						list = res.data.records || [];
+						total = res.data.total;
+					}
+				} else {
+					list = res.data || [];
+				}
+				state.dataList = list;
+				state.pagination!.total = total;
 				state.countResp = state.isPage ? res.data.countResp : [];
 				state.otherInfo = state.isPage ? res.data : {};
 			} catch (err: any) {

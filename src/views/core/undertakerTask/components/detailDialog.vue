@@ -2,7 +2,7 @@
 	<Dialog
 		v-model="visible"
 		v-model:formData="formData"
-		title="承接纪录详情"
+		title="承接记录详情"
 		:forms="forms"
 		:columns="12"
 		:label-width="140"
@@ -11,6 +11,12 @@
 		vertical
 		:showBtn="showBtn"
 	>
+		<template #workload>
+			<el-form-item label="确认工作量:" prop="workload">
+				<InputPlus disabled :modelValue="formData.workload"></InputPlus>
+				<div v-if="formData.workload && formData.measuringUnit">{{ batchMap?.task_unit[formData.measuringUnit] }}</div>
+			</el-form-item>
+		</template>
 	</Dialog>
 </template>
 
@@ -23,6 +29,8 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 import dynamicForms from '/@/views/core/undertakerTask/components/dynamic-forms';
 // import dynamicForms from '/@/views/hro/batchUploadRecord/import/dynamic-forms';
 const emit = defineEmits(['refresh']);
+import Array2Object from '/@/utils/array-2-object';
+const batchMap = Array2Object({ dic: ['task_unit'] });
 const route = useRoute();
 // 定义变量内容
 const dataFormRef = ref();
@@ -118,7 +126,9 @@ const onSubmit = async () => {
 			visible.value = false;
 		}
 	} catch (err: any) {
-		useMessage().error(err.msg);
+		console.log('err', err);
+
+		// useMessage().error(err.msg);
 	} finally {
 		loading.value = false;
 	}

@@ -69,7 +69,14 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
+							<el-input-number
+								:max="10000000000"
+								class="inputNumber"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="1"
+								v-model="form.userCount"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 					<el-col :span="12" class="mb20">
@@ -79,17 +86,17 @@
 					</el-col>
 
 					<el-col :span="24" class="mb20">
-						<el-form-item label="工作地址" prop="address">
+						<el-form-item label="任务地址" prop="address">
 							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 
 					<!-- <el-col :span="12" class="mb20">
-						<el-form-item label="工作开始时间" prop="startTime">
+						<el-form-item label="任务开始时间" prop="startTime">
 							<el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="工作开始时间"
+								placeholder="任务开始时间"
 								v-model="form.startTime"
 								:value-format="dateTimeStr"
 							></el-date-picker>
@@ -97,11 +104,11 @@
 					</el-col> -->
 
 					<el-col :span="12" class="mb20">
-						<el-form-item label="工作时间" prop="workTimeRange">
+						<el-form-item label="任务时间" prop="workTimeRange">
 							<!-- <el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
-								placeholder="工作开始时间"
+								placeholder="任务开始时间"
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
 							></el-date-picker> -->
@@ -109,8 +116,8 @@
 								:disabled="self_disabled"
 								v-model="form.workTimeRange"
 								type="datetimerange"
-								start-placeholder="工作开始时间"
-								end-placeholder="工作结束时间"
+								start-placeholder="任务开始时间"
+								end-placeholder="任务结束时间"
 								:value-format="dateTimeStr"
 							/>
 							<!-- <el-time-picker
@@ -119,8 +126,8 @@
 								v-model="form.workTimeRange"
 								is-range
 								range-separator="至"
-								start-placeholder="工作开始时间"
-								end-placeholder="工作结束时间"
+								start-placeholder="任务开始时间"
+								end-placeholder="任务结束时间"
 							/> -->
 						</el-form-item>
 					</el-col>
@@ -129,6 +136,7 @@
 						<el-form-item label="发包单价" prop="unitPrice">
 							<el-input-number
 								class="inputNumber"
+								:max="10000000000"
 								:controls="false"
 								:disabled="self_disabled"
 								:min="0"
@@ -141,7 +149,14 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="发包数量" prop="count">
-							<el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
+							<el-input-number
+								class="inputNumber"
+								:max="10000000000"
+								:controls="false"
+								:disabled="self_disabled"
+								:min="1"
+								v-model="form.count"
+							></el-input-number>
 						</el-form-item>
 					</el-col>
 
@@ -227,6 +242,7 @@
 								v-model="form.taskRequireInfo.requiredAgeMin"
 							></el-input-number>
 						</el-form-item>
+						<div style="margin-left: 12px">-</div>
 						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
 							<el-input-number
 								class="inputNumber"
@@ -268,9 +284,9 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<el-col :span="24" class="mb20">
 						<el-form-item label="工作环境" prop="taskRequireInfo.workEnvironment">
-							<UploadFile :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
+							<UploadFile multiple :limit="5" :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -393,7 +409,7 @@ const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 
 // 定义校验规则
 const dataRules = ref({
 	taskName: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
-	merchantId: [{ required: true, message: '客户不能为空', trigger: 'blur' }],
+	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '任务状态不能为空', trigger: 'blur' }],
 	serviceContractId: [{ required: true, message: '服务协议不能为空', trigger: 'blur' }],
@@ -405,9 +421,9 @@ const dataRules = ref({
 	city: [{ required: true, message: '城市不能为空', trigger: 'blur' }],
 	areaDatas: [{ required: true, message: '所在地区不能为空', trigger: 'blur' }],
 	county: [{ required: true, message: '区县不能为空', trigger: 'blur' }],
-	address: [{ required: true, message: '工作地址不能为空', trigger: 'blur' }],
-	// startTime: [{ required: true, message: '工作开始时间不能为空', trigger: 'blur' }],
-	workTimeRange: [{ required: true, message: '工作时间不能为空', trigger: 'blur' }],
+	address: [{ required: true, message: '任务地址不能为空', trigger: 'blur' }],
+	// startTime: [{ required: true, message: '任务开始时间不能为空', trigger: 'blur' }],
+	workTimeRange: [{ required: true, message: '任务时间不能为空', trigger: 'blur' }],
 	unitPrice: [{ required: true, message: '发包单价不能为空', trigger: 'blur' }],
 	count: [{ required: true, message: '发包数量不能为空', trigger: 'blur' }],
 	measuringUnit: [{ required: true, message: '计量单位不能为空', trigger: 'blur' }],

@@ -75,7 +75,10 @@
 						<div class="info_list">
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
 							{{
-								isNeedRecharge.service && (form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40
+								isNeedRecharge.service &&
+								(form.status == 40 || form.status == 50) &&
+								form.serviceBillRecord[0]?.status == 40 &&
+								form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance
 									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
 									: '无需充值'
 							}}
@@ -123,7 +126,10 @@
 							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 							<div class="info_item">
 								{{
-									isNeedRecharge.task && (form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40
+									isNeedRecharge.task &&
+									(form.status == 40 || form.status == 50) &&
+									form.taskBillRecord[0]?.status == 40 &&
+									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance
 										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 										: '无需充值'
 								}}
@@ -254,7 +260,7 @@ const balanceInfo = reactive({
 const topInfoForms = [
 	{
 		control: 'MerchantSelect',
-		key: 'id',
+		key: 'billNumber',
 		label: '账单编号',
 	},
 	{
@@ -274,7 +280,7 @@ const topInfoForms = [
 	},
 	{
 		control: 'InputPlus',
-		key: 'taskId',
+		key: 'taskNo',
 		label: '任务编号',
 	},
 	{
@@ -368,7 +374,7 @@ const indexThead = [
 		minWidth: 150,
 	},
 	{
-		prop: 'taskId',
+		prop: 'taskNo',
 		label: '任务编号',
 		minWidth: 100,
 	},
@@ -479,12 +485,12 @@ const newIndexThead = [
 		minWidth: 100,
 	},
 	{
-		prop: 'settleBillId',
+		prop: 'billNumber',
 		label: '账单编号',
 		minWidth: 100,
 	},
 	{
-		prop: 'id',
+		prop: 'billRecordNum',
 		label: '结算单编号',
 		minWidth: 100,
 	},

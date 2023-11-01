@@ -53,3 +53,11 @@ export function taskDown(id?: string) {
 		method: 'put',
 	});
 }
+
+export function taskDropList(query?: Object) {
+	return request({
+		url: '/core/task/dropList',
+		method: 'get',
+		params: query,
+	});
+}

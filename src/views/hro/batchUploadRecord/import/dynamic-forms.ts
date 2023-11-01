@@ -88,18 +88,22 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					{
 						prop: 'undertakerName',
 						label: '姓名',
+						minWidth: 120,
 					},
 					{
 						prop: 'undertakerCard',
 						label: '身份证号',
+						minWidth: 180,
 					},
 					{
 						prop: 'undertakerCard',
 						label: '银行卡号码',
+						minWidth: 180,
 					},
 					{
 						prop: 'undertakerCard',
 						label: '开户行',
+						minWidth: 180,
 					},
 					...failColumnsSuffix,
 				];

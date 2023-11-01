@@ -7,15 +7,15 @@
 </template>
 
 <script setup lang="ts">
-window.top.addEventListener(
-	'popstate',
-	function (e) {
-		history.go(-2);
-		console.log('我监听到了浏览器的返回按钮事件');
-	},
-	false
-);
+// window.top.addEventListener(
+// 	'popstate',
+// 	function (e) {
+// 		history.go(-2);
+// 		console.log('我监听到了浏览器的返回按钮事件');
+// 	},
+// 	false
+// );
+onMounted(() => wx.miniProgram.navigateTo({ url: 'pages/my/index' }));
 </script>
 
-<style>
-</style>
+<style></style>
