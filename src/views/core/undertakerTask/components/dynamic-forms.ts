@@ -103,6 +103,7 @@ const comForms = [
 			type: '40',
 			disabled: true,
 			multiple: true,
+			limit: 3,
 		},
 	},
 ];
@@ -184,7 +185,7 @@ export default ({ type }: any) =>
 					{
 						control: 'UploadFile',
 						key: 'enterpriseAcceptanceImages',
-						label: '验收上传图片',
+						label: '验收上传图片1',
 						column: 24,
 						props: {
 							type: '40',

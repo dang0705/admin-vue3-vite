@@ -43,7 +43,7 @@
 		<el-table-column width="120px" prop="startTime" label="承接开始时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="doneTime" label="承接完成时间" show-overflow-tooltip />
 		<el-table-column width="120px" prop="spName" label="服务商名称" show-overflow-tooltip />
-		<el-table-column width="120px" prop="merchantName" label="商户名称(客户)" show-overflow-tooltip />
+		<el-table-column width="120px" prop="merchantName" label="商户名称(商户)" show-overflow-tooltip />
 		<el-table-column width="120px" prop="isSign" label="是否签署协议" show-overflow-tooltip>
 			<template #default="scope">
 				<span v-if="scope.row.isSign == 1">是</span>

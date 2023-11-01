@@ -2,7 +2,7 @@
 	<Dialog
 		v-model="visible"
 		v-model:formData="formData"
-		title="承接纪录详情"
+		title="承接记录详情"
 		:forms="forms"
 		:columns="12"
 		:label-width="140"

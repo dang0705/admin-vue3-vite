@@ -284,9 +284,9 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20">
+					<el-col :span="24" class="mb20">
 						<el-form-item label="工作环境" prop="taskRequireInfo.workEnvironment">
-							<UploadFile :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
+							<UploadFile multiple :limit="5" :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -409,7 +409,7 @@ const self_disabled = computed(() => (props.isDetail ? true : curStep.value === 
 // 定义校验规则
 const dataRules = ref({
 	taskName: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
-	merchantId: [{ required: true, message: '客户不能为空', trigger: 'blur' }],
+	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	status: [{ required: true, message: '任务状态不能为空', trigger: 'blur' }],
 	serviceContractId: [{ required: true, message: '服务协议不能为空', trigger: 'blur' }],
