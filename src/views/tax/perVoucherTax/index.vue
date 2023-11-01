@@ -1,5 +1,11 @@
 <template>
-	<Table-view :columns="columns" getListFnName="taxSettleRecordItem" :condition-forms="conditionForms" module="tax/index.ts">
+	<Table-view
+		:staticQuery="staticQuery"
+		:columns="columns"
+		getListFnName="taxSettleRecordItem"
+		:condition-forms="conditionForms"
+		module="tax/index.ts"
+	>
 		<template #actions="{ row }">
 			<el-button icon="download" text type="primary" @click="handleContractFile(row)"> 下载凭证 </el-button>
 		</template>
@@ -10,6 +16,7 @@
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const { proxy } = getCurrentInstance();
+const route: any = useRoute();
 const router = useRouter();
 const form = reactive({});
 const columns = [
@@ -71,17 +78,25 @@ const columns = [
 		'min-width': 120,
 	},
 ];
+const staticQuery = computed(() => {
+	return {
+		spId: route.query.spId,
+		merchantId: route.query.merchantId,
+	};
+});
 const conditionForms = [
 	{
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
 		props: { platform: true },
+		value: route.query.spId,
 	},
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+		value: route.query.merchantId,
 	},
 	{
 		control: 'InputPlus',

@@ -15,23 +15,23 @@
 				</div>
 			</div>
 		</template>
-		<template #agreement>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看商户协议 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看个人承揽协议 </el-button>
+		<template #agreement="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('merchantAgree', row)"> 查看商户协议 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('perContractAgree', row)"> 查看个人承揽协议 </el-button>
 		</template>
-		<template #task>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看任务记录 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看承揽记录 </el-button>
+		<template #task="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('taskRecord', row)"> 查看任务记录 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('undertakerTax', row)"> 查看承揽记录 </el-button>
 		</template>
-		<template #transfer>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 企业转账凭证 </el-button>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 个人结算凭证 </el-button>
+		<template #transfer="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('transferVoucherTax', row)"> 企业转账凭证 </el-button>
+			<el-button icon="view" text type="primary" @click="handleView('perVoucherTax', row)"> 个人结算凭证 </el-button>
 		</template>
-		<template #invoice>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看发票 </el-button>
+		<template #invoice="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView('invoiceTax', row)"> 查看发票 </el-button>
 		</template>
-		<template #tax>
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看完税凭证 </el-button>
+		<template #tax="{ row }">
+			<el-button icon="view" text type="primary" @click="handleView(row)"> 查看完税凭证 </el-button>
 		</template>
 	</Table-view>
 </template>
@@ -40,6 +40,7 @@
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 import thousandthDivision from '/@/utils/thousandth-division';
+const route: any = useRoute();
 const router = useRouter();
 const form = reactive({
 	totalAmount: 0,
@@ -110,11 +111,13 @@ const conditionForms = [
 		key: 'spId',
 		label: '服务商',
 		props: { platform: true },
+		value: route.query.spId,
 	},
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+		value: route.query.merchantId,
 	},
 	{
 		control: 'DateRange',
@@ -125,8 +128,18 @@ const conditionForms = [
 		},
 	},
 ];
-const handleBtn = () => {
-	useMessage().wraning('功能正在开发, 请等待~');
+const handleView = (type: string, row: any) => {
+	// useMessage().wraning('功能正在开发, 请等待~');
+	router.push({
+		path: `/tax/${type}/index`,
+		query: {
+			spId: row.spId,
+			merchantId: row.merchantId,
+		},
+		state: {
+			refresh: 1,
+		},
+	});
 };
 </script>
 
@@ -152,7 +165,7 @@ const handleBtn = () => {
 	}
 	.price_box {
 		font-size: 30px;
-		text-align: center;
+		text-align: left;
 	}
 	.price {
 		color: rgba(0, 0, 0, 0.8);

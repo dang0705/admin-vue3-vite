@@ -1,5 +1,5 @@
 <template>
-	<Table-view isTab :columns="columns" getListFnName="taxTaskPage" :condition-forms="conditionForms" module="tax/index.ts">
+	<Table-view :staticQuery="staticQuery" isTab :columns="columns" getListFnName="taxTaskPage" :condition-forms="conditionForms" module="tax/index.ts">
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" @click="handleView(row.taskId)"> 查看 </el-button>
 		</template>
@@ -10,6 +10,7 @@
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
+const route: any = useRoute();
 const router = useRouter();
 const form = reactive({});
 const columns = [
@@ -77,17 +78,25 @@ const columns = [
 		'min-width': 120,
 	},
 ];
+const staticQuery = computed(() => {
+	return {
+		spId: route.query.spId,
+		merchantId: route.query.merchantId,
+	};
+});
 const conditionForms = [
 	{
 		control: 'SpSelect',
 		key: 'spId',
 		label: '服务商',
 		props: { platform: true },
+		value: route.query.spId,
 	},
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+		value: route.query.merchantId,
 	},
 	{
 		control: 'InputPlus',

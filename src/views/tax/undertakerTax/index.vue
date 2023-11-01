@@ -1,5 +1,12 @@
 <template>
-	<Table-view isTab :columns="columns" getListFnName="taxUndertakerTask" :condition-forms="conditionForms" module="tax/index.ts">
+	<Table-view
+		:staticQuery="staticQuery"
+		isTab
+		:columns="columns"
+		getListFnName="taxUndertakerTask"
+		:condition-forms="conditionForms"
+		module="tax/index.ts"
+	>
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
 		</template>
@@ -9,9 +16,16 @@
 <script setup lang="ts" name="税务-承接记录">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
+const route: any = useRoute();
 const router = useRouter();
 const form = reactive({});
 
+const staticQuery = computed(() => {
+	return {
+		spId: route.query.spId,
+		merchantId: route.query.merchantId,
+	};
+});
 const columns = [
 	{
 		prop: 'spName',
@@ -72,11 +86,13 @@ const conditionForms = [
 		key: 'spId',
 		label: '服务商',
 		props: { platform: true },
+		value: route.query.spId,
 	},
 	{
 		control: 'MerchantSelect',
 		key: 'merchantId',
 		label: '商户',
+		value: route.query.merchantId,
 	},
 	{
 		control: 'InputPlus',
