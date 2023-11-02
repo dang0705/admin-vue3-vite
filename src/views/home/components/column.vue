@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import '/@/api';
-
 const props = defineProps({
 	item: {
 		type: Object,
