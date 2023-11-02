@@ -7,72 +7,46 @@
 						<h1 class="text-[20px] flex items-center"><img :src="icons.clap" alt="" class="w-[30px] mr-2" />欢迎回来，{{ userName }}</h1>
 						<hr class="text-grey my-[20px]" />
 						<Favorite />
-						<!--						<ul class="flex">
-							<li
-								v-for="{ img, text, bg } in operationData"
-								:key="text"
-								class="flex flex-col lg:flex-row justify-center items-center bg-grey-bg px-[20px] py-[14px] mr-[12px] rounded-normal"
-							>
-								<div :style="{ backgroundColor: bg }" class="p-[9.5px] rounded-normal mr-0 lg:mr-[2vw] cursor-pointer">
-									<img :src="icons[img]" class="w-[28px]" />
-								</div>
-								<span v-text="text" class="text-[14px]" />
-							</li>
-						</ul>-->
 					</div>
-					<div class="section" v-for="{ title, img, data } in dashboardData.groupLeft" :key="title">
-						<h2 class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</h2>
-						<ul class="flex">
-							<li
-								v-for="({ text, value, status }, index) in data"
-								:class="['flex', 'flex-col', 'items-center', 'flex-shrink-0', 'item-data', { 'border-left': index }]"
-								:key="text"
-								:style="{ color: statusMap[status], width: `calc(100% / ${data.length})` }"
-							>
-								<span v-text="text" class="text-[14px] leading-10" />
-								<span v-text="value" class="text-[28px] leading-[1] cursor-pointer hover:underline" />
-							</li>
-						</ul>
-					</div>
+					<Column v-auth.authStatus="item.auth" v-for="item in dashboardData.groupLeft" :key="item.title" :item="item">
+						<h2 class="flex items-center text-[18px] font-bold">
+							<img :src="icons[item.img]" class="w-[20px] mr-[5px]" alt="" />
+							{{ item.title }}
+						</h2>
+					</Column>
 				</div>
 			</el-col>
 			<el-col :span="8">
 				<div class="flex flex-col">
-					<div
-						class="section"
-						v-for="({ title, img, data, showMore, vertical, charts }, groupIndex) in dashboardData.groupRight"
-						:style="groupIndex ? {} : { height: '220px' }"
-						:key="title"
-					>
-						<h2 :class="['flex', 'items-center', 'justify-between', { 'mb-5': showMore }]">
-							<p class="flex items-center text-[18px] font-bold"><img :src="icons[img]" class="w-[20px] mr-[5px]" alt="" />{{ title }}</p>
-							<router-link v-if="showMore" to="" class="">更多</router-link>
+					<div class="section h-[220px]">
+						<h2 class="flex items-center justify-between mb-5">
+							<p class="flex items-center text-[18px] font-bold"><img :src="remind" class="w-[20px] mr-[5px]" alt="" />待办提醒</p>
+							<router-link to="" class="">更多</router-link>
 						</h2>
-						<div v-if="charts" ref="commandChartRef" id="charts" class="h-[300px] w-full" />
-						<ul v-else :class="['flex', { 'flex-col': vertical }]">
-							<li
-								:class="[
-									'flex',
-									'items-center',
-									'flex-shrink-0',
-									'item-data',
-									{ 'border-left': index && !vertical, 'flex-col': !vertical, 'mb-5': vertical },
-								]"
-								v-for="({ text, value, status, tag }, index) in data"
-								:key="text"
-								:style="vertical ? {} : { color: statusMap[status], width: `calc(100% / ${data.length})` }"
-							>
+						<ul class="flex flex-col h-full">
+							<li class="flex items-center flex-shrink-0 item-data mb-5" v-for="({ label, value, status, tag }, index) in remainData" :key="label">
 								<span
-									v-if="tag"
 									v-text="tag"
-									:style="{ backgroundColor: statusBgMap[status], color: statusMap[status] }"
 									class="flex-shrink-0 rounded-small px-[6px] mr-[10px] truncate"
+									:style="{ backgroundColor: statusBgMap[status].bg, color: statusBgMap[status].color }"
 								/>
-								<span v-text="text" :class="['text-[14px]', 'flex-grow', 'truncate', { 'leading-10': !vertical }]" />
-								<span v-if="!vertical" v-text="value" class="text-[28px] leading-[1] cursor-pointer hover:underline" />
-								<router-link to="" v-if="vertical" class="flex-shrink-0 text-xs">详情 &nbsp; &gt;</router-link>
+								<span v-text="label" class="text-[14px] flex-grow truncate" />
+								<router-link to="" class="flex-shrink-0 text-xs">详情 &nbsp; &gt;</router-link>
 							</li>
 						</ul>
+					</div>
+					<Column v-auth.authStatus="item.auth" v-for="item in dashboardData.groupRight" :key="item.title" :item="item">
+						<h2 class="flex items-center text-[18px] font-bold">
+							<img :src="icons[item.img]" class="w-[20px] mr-[5px]" alt="" />
+							{{ item.title }}
+						</h2>
+					</Column>
+					<div class="section">
+						<h2 class="flex items-center text-[18px] font-bold">
+							<img :src="customerProportion" class="w-[20px] mr-[5px]" alt="" />
+							客户占比
+						</h2>
+						<div ref="commandChartRef" id="charts" class="h-[300px] w-full" />
 					</div>
 				</div>
 			</el-col>
@@ -83,6 +57,7 @@
 <script setup lang="ts" name="home">
 import { nextTick } from 'vue';
 import { useUserInfo } from '/@/stores/userInfo';
+import Column from '/@/views/home/components/column.vue';
 import Favorite from '/@/views/home/favorite.vue';
 import * as echarts from 'echarts';
 
@@ -97,7 +72,6 @@ import remind from '/@/assets/dashboard/remind.webp';
 import merchant from '/@/assets/dashboard/merchant.webp';
 import undertaker from '/@/assets/dashboard/undertaker.webp';
 import customerProportion from '/@/assets/dashboard/customerProportion.webp';
-
 const commandChartRef = ref();
 const commandCharOption = {
 	title: {
@@ -129,7 +103,40 @@ const commandCharOption = {
 		},
 	],
 };
-
+const statusBgMap = {
+	0: {
+		bg: '#FEE8E2',
+		color: '#FF6826',
+	},
+	4: {
+		bg: '#FEE3E3',
+		color: '#FF0000',
+	},
+	1: {
+		bg: '#DBEAFF',
+		color: '#0065FF',
+	},
+};
+const remainData = [
+	{
+		status: 0,
+		tag: '订单提醒',
+		label: '一张灵活用工订单需要处理',
+		showDetails: true,
+	},
+	{
+		status: 4,
+		tag: '合同预警',
+		label: 'XXX公司的服务将于30天后到期，请及时处理',
+		showDetails: true,
+	},
+	{
+		status: 1,
+		tag: '开票提醒',
+		label: 'XXX公司提交了发票申请，请及时处理',
+		showDetails: true,
+	},
+];
 const icons = {
 	clap,
 	publish,
@@ -146,163 +153,78 @@ const icons = {
 const { userInfos } = storeToRefs(useUserInfo());
 const userName = userInfos.value.user.name;
 
-const operationData = [
-	{ img: 'publish', text: '发布任务', bg: '#DBE4F9' },
-	{ img: 'invoice', text: '发票管理', bg: '#EBEAFF' },
-	{ img: 'balance', text: '结算管理', bg: '#E4F9D8' },
-];
-
-/**
- * status(对应设计稿) -- 0.橘 1.蓝 2.绿 3.黑 4.红
- */
-const statusMap = {
-	0: '#FF6826',
-	1: '#2C80FF',
-	2: '#00D700',
-	3: '#1D2129',
-	4: '#FF4D45',
-};
-const statusBgMap = {
-	0: '#FFE8E0',
-	1: '#DDE8FE',
-	4: '#FBE5E7',
-};
 const dashboardData = {
 	groupLeft: [
 		{
 			title: '任务',
 			img: 'task',
-			data: [
-				{
-					text: '待审核',
-					value: 10,
-					status: 0,
-				},
-				{
-					text: '待发布',
-					value: 10,
-					status: 1,
-				},
-				{
-					text: '已发布',
-					value: 10,
-					status: 2,
-				},
-				{
-					text: '已下架',
-					value: 10,
-					status: 3,
-				},
-			],
+			auth: 'home_task_statistics',
+			url: '/core/homePage/countTask',
+			route: '/core/task/index',
+			statusMap: {
+				10: '#FF6826', //任务待审核
+				50: '#2C80FF',
+				30: '#00D700',
+				60: '#1D2129',
+				4: '#FF4D45',
+			},
 		},
 		{
 			title: '结算账单',
 			img: 'account',
-			data: [
-				{
-					text: '待结算',
-					value: 10,
-					status: 0,
-				},
-				{
-					text: '结算中',
-					value: 10,
-					status: 1,
-				},
-				{
-					text: '成功结算',
-					value: 10,
-					status: 2,
-				},
-				{
-					text: '失败结算',
-					value: 10,
-					status: 4,
-				},
-			],
+			url: '/core/homePage/settleBillStatistics',
+			statusMap: {
+				40: '#FF6826', //任务待审核
+				50: '#2C80FF',
+				60: '#1D2129',
+			},
 		},
 		{
 			title: '发票记录',
 			img: 'invoiceRecords',
-			data: [
-				{
-					text: '待开票',
-					value: 10,
-					status: 0,
-				},
-				{
-					text: '已开票',
-					value: 10,
-					status: 3,
-				},
-			],
+			url: '/core/homePage/invoiceStatistics',
+			statusMap: {
+				10: '#2C80FF',
+				20: '#1D2129',
+			},
 		},
 	],
 	groupRight: [
 		{
-			title: '待办提醒',
-			img: 'remind',
-			vertical: true,
-			showMore: true,
-			data: [
-				{
-					status: 0,
-					tag: '订单提醒',
-					text: '一张灵活用工订单需要处理',
-					showDetails: true,
-				},
-				{
-					status: 4,
-					tag: '合同预警',
-					text: 'XXX公司的服务将于30天后到期，请及时处理',
-					showDetails: true,
-				},
-				{
-					status: 1,
-					tag: '开票提醒',
-					text: 'XXX公司提交了发票申请，请及时处理',
-					showDetails: true,
-				},
-			],
-		},
-		{
-			title: '商户',
+			title: '公司',
 			img: 'merchant',
-			data: [
-				{
-					text: '服务商',
-					value: 10,
-					status: 3,
-				},
-				{
-					text: '商户',
-					value: 10,
-					status: 3,
-				},
-			],
+			url: '/core/homePage/companyStatistics',
+			statusMap: {
+				10: '#2C80FF',
+				20: '#1D2129',
+			},
 		},
 		{
 			title: '承接人',
 			img: 'undertaker',
 			data: [
 				{
-					text: '承接人',
+					label: '承接人',
 					value: 10,
 					status: 3,
 				},
 				{
-					text: '任务承接记录',
+					label: '任务承接记录',
 					value: 10,
 					status: 3,
 				},
 			],
+			statusMap: {
+				10: '#2C80FF',
+				20: '#1D2129',
+			},
 		},
-		{
+		/*	{
 			title: '客户占比',
 			img: 'customerProportion',
 			charts: true,
 			data: [],
-		},
+		},*/
 	],
 };
 onMounted(async () => {
