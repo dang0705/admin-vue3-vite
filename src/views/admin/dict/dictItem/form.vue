@@ -22,6 +22,12 @@
 				<el-form-item :label="$t('dictItem.sortOrder')" prop="sortOrder">
 					<el-input-number v-model="dataForm.sortOrder" :placeholder="$t('dictItem.inputSortOrderTip')" clearable></el-input-number>
 				</el-form-item>
+				<el-form-item label="状态" prop="enabled">
+					<el-radio-group v-model="dataForm.enabled">
+						<el-radio :label="true" border>启用</el-radio>
+						<el-radio :label="false" border>停用</el-radio>
+					</el-radio-group>
+				</el-form-item>
 				<el-form-item :label="$t('dictItem.remarks')" prop="remarks">
 					<el-input v-model="dataForm.remarks" type="textarea" rows="3" :placeholder="$t('dictItem.inputRemarksTip')" maxlength="150"></el-input>
 				</el-form-item>
@@ -74,6 +80,7 @@ const dataForm = reactive({
 	sortOrder: 0,
 	remarks: '',
 	dataType: '',
+	enabled: true,
 });
 
 const dataRules = reactive({

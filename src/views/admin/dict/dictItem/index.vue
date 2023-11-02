@@ -21,7 +21,11 @@
 			<el-table-column prop="sortOrder" :label="$t('dictItem.sortOrder')" show-overflow-tooltip></el-table-column>
 			<el-table-column prop="remarks" :label="$t('dictItem.remarks')" show-overflow-tooltip></el-table-column>
 			<el-table-column prop="createTime" :label="$t('dictItem.createTime')" show-overflow-tooltip></el-table-column>
-
+			<el-table-column prop="enabled" label="停启用" show-overflow-tooltip>
+				<template #default="{ row: { enabled } }">
+					{{ enabled ? '启用' : '停用' }}
+				</template>
+			</el-table-column>
 			<el-table-column :label="$t('common.action')" width="150">
 				<template #default="scope">
 					<el-button icon="edit-pen" text type="primary" @click="dictformRef.openDialog(scope.row)"> {{ $t('common.editBtn') }} </el-button>
