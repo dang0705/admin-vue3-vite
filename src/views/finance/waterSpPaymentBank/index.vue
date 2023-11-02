@@ -6,6 +6,8 @@
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 		:condition-forms="conditionForms"
 		:staticQuery="staticQuery"
+		:down-blob-file-url="tabType == 2 ? '/finance/waterBankCorporateLinkage/export' : ''"
+		:down-blob-file-name="tabType == 2 ? '银企直联银行流水.xlsx' : ''"
 		:getListFnName="tabType == 1 ? 'fetchList' : 'waterBankPage'"
 		module="finance/waterSpPaymentBank.ts"
 	>

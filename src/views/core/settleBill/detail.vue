@@ -259,12 +259,12 @@ const balanceInfo = reactive({
 });
 const topInfoForms = [
 	{
-		control: 'MerchantSelect',
+		control: 'InputPlus',
 		key: 'billNumber',
 		label: '账单编号',
 	},
 	{
-		control: 'SpSelect',
+		control: 'InputPlus',
 		key: 'billName',
 		label: '账单名称',
 	},
