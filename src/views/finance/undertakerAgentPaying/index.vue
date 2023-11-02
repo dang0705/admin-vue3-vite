@@ -33,12 +33,12 @@
 			vertical
 			button-position="center"
 			disabled
+			label-width="180"
 			v-model="dialog.show"
 			v-model:form-data="dialog.data"
-			label-width="180"
+			:forms="dialog.forms"
 			:title="dialog.title"
 			:show-cancel="false"
-			:forms="dialog.forms"
 			:columns="24"
 			:on-submit="submit"
 		/>

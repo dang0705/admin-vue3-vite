@@ -61,3 +61,6 @@ export function taskDropList(query?: Object) {
 		params: query,
 	});
 }
+export default {
+    statistics: '/core/task/countTask',
+};

@@ -27,6 +27,7 @@ export default [
 			'pinia',
 			{
 				'/@/utils/mitt': [['default', '$bus']],
+				'/@/utils/request': ['$http'],
 				'/@/hooks/keep-alive-list-refresh': [['default', '$refreshList']],
 				'/@/configuration/env': [['default', '__isDev']],
 			},
