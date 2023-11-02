@@ -230,7 +230,6 @@ const gettaskData = () => {
 	getObj(route.query.taskId)
 		.then((res: any) => {
 			Object.assign(formData, res.data, res.data.taskRequireInfo);
-			console.log('formData', formData);
 		})
 		.finally(() => {});
 };
