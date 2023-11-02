@@ -47,7 +47,7 @@ const conditionForms = ref([
 	},
 	{
 		control: 'SpSelect',
-		key: 'spName',
+		key: 'spId',
 		label: '服务商',
 	},
 	{
@@ -63,7 +63,14 @@ const conditionForms = ref([
 	{
 		control: 'el-select',
 		key: 'taskTypeFirst',
-		label: '任务类型',
+		label: '一级分类',
+		options: 'task_type',
+	},
+	{
+		control: 'el-select',
+		key: 'taskTypeSecond',
+		label: '二级分类',
+		options: 'task_type',
 	},
 	{
 		control: 'InputPlus',
@@ -101,9 +108,10 @@ const conditionForms = ref([
 		label: '发包数量',
 	},
 	{
-		control: 'InputPlus',
+		control: 'el-select',
 		key: 'measuringUnit',
 		label: '计量单位',
+		options: 'task_unit',
 	},
 	{
 		control: 'InputPlus',
@@ -121,35 +129,39 @@ const conditionForms = ref([
 		label: '业务商户手机号',
 	},
 	{
-		control: 'InputPlus',
-		key: 'taskRequireInfo.requiredSex',
+		control: 'el-select',
+		key: 'requiredSex',
 		label: '性别要求',
 		title: '承揽要求',
+		options: 'gender_requirement',
 	},
 	{
 		control: 'InputPlus',
-		key: 'askRequireInfo.requiredAgeMin',
+		key: 'requiredAgeMin',
 		label: '年龄要求',
 	},
 	{
-		control: 'InputPlus',
-		key: 'taskRequireInfo.educational',
+		control: 'el-select',
+		key: 'educational',
 		label: '学历要求',
+		options: 'education',
 	},
 	{
-		control: 'InputPlus',
-		key: 'taskRequireInfo.experience',
+		control: 'el-select',
+		key: 'experience',
 		label: '经验要求',
+		options: 'experience',
 	},
 	{
 		control: 'InputPlus',
-		key: 'taskRequireInfo.workFare',
+		key: 'workFare',
 		label: '项目福利',
 	},
 	{
 		control: 'UploadFile',
-		key: 'taskRequireInfo.workEnvironment',
+		key: 'workEnvironment',
 		label: '服务环境',
+		column: 24,
 	},
 ]);
 const columns = [
@@ -209,12 +221,16 @@ const columns = [
 ];
 const toggleTab = (item: any) => {
 	tabType.value = item.attributeVal;
+	if (tabType.value === 1) {
+		gettaskData();
+	}
 };
 // 初始化表单数据
 const gettaskData = () => {
 	getObj(route.query.taskId)
 		.then((res: any) => {
-			Object.assign(formData, res.data);
+			Object.assign(formData, res.data, res.data.taskRequireInfo);
+			console.log('formData', formData);
 		})
 		.finally(() => {});
 };

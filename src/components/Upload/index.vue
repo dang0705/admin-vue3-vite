@@ -32,7 +32,7 @@
 				ref="uploadRef"
 				drag
 				:id="uuid"
-				:limit="maxOnceUploadLimit"
+				:limit="limit"
 				:class="['upload', 'flex-shrink-0', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
 				:multiple="multiple"
 				:disabled="self_disabled"
@@ -284,11 +284,11 @@ const value = computed(() => (helper.isString(props.modelValue) ? [] : props.mod
 watch(
 	() => value.value as [],
 	(value: []) => {
-		console.log('watch-value', value);
+		// console.log('watch-value', value);
 		urls.value = value;
 		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
-		console.log('urls.value-1', urls.value);
-		console.log('prefixedUrls.value-1', prefixedUrls.value);
+		// console.log('urls.value-1', urls.value);
+		// console.log('prefixedUrls.value-1', prefixedUrls.value);
 	},
 	{ immediate: true, deep: props.multiple }
 );
@@ -305,8 +305,7 @@ const handleHttpUpload = async (options: UploadRequestOptions) => {
 	} else {
 		urls.value = [image];
 	}
-	console.log('urls.value-1', urls.value);
-
+	// console.log('urls.value-1', urls.value);
 	emit('update:modelValue', urls.value);
 	isEditUpload.value = false;
 	await nextTick();
@@ -318,8 +317,7 @@ const handleAvatarSuccess = () => {
 };
 
 const maxOnceUploadLimit = computed(() => {
-	console.log('urls.value.length - Number(props.limit)', urls.value.length - Number(props.limit));
-
+	// console.log('urls.value.length - Number(props.limit)', urls.value.length - Number(props.limit));
 	return Number(props.limit) - urls.value.length;
 });
 
@@ -330,7 +328,7 @@ const deleteImg = (index: number) => {
 	// (images.value as []).splice(index, 1);
 	props.multiple ? urls.value.splice(index, 1) && fileNames.value.splice(index, 1) : (urls.value = []);
 	emit('update:modelValue', urls.value);
-	console.log('urls.value-22222', urls.value);
+	// console.log('urls.value-22222', urls.value);
 };
 
 const showViewVisible = (index: number) => {
@@ -483,9 +481,11 @@ const uploadError = (err: any) => {
 			}
 
 			.upload-image {
-				width: 100%;
-				height: 100%;
+				// width: 100%;
+				// height: 100%;
 				object-fit: contain;
+				width: v-bind(width);
+				height: v-bind(height);
 			}
 
 			.upload-empty {
