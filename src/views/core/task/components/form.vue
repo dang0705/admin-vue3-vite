@@ -525,9 +525,7 @@ const task_typeLevel_option = computed(() => {
 	return task_typeLevel_option;
 });
 
-const setCurStep = (step: number) => {
-	curStep.value = step;
-};
+const setCurStep = () => (curStep.value = 0);
 // 获取协议
 const getAgreeList = () => {
 	// 获取数据
@@ -540,7 +538,7 @@ const getAgreeList = () => {
 };
 
 // 接受外部强刷页面的钩子
-$refreshList(setCurStep, 0);
+$refreshList(setCurStep);
 </script>
 
 <style scoped lang="scss"></style>

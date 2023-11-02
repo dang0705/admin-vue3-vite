@@ -11,9 +11,13 @@ import { judementSameArr } from '/@/utils/arrayOperation';
 export function authDirective(app: App) {
 	// 单个权限验证（v-auth="xxx"）
 	app.directive('auth', {
-		mounted(el, binding) {
+		mounted(el, binding, VNode) {
 			const stores = useUserInfo();
-			if (!stores.userInfos.permissionMap[binding.value]) el.parentNode.removeChild(el);
+			if (binding.value && !stores.userInfos.permissionMap[binding.value]) {
+				el?.parentNode?.removeChild(el);
+			} else {
+				binding.modifiers.authStatus && (VNode.ctx.props.item.hasAuth = true);
+			}
 		},
 	});
 	// 多个权限验证，满足一个则显示（v-auths="[xxx,xxx]"）

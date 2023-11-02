@@ -83,6 +83,7 @@
     "VNode": true,
     "WritableComputedRef": true,
     "toValue": true,
-    "__isDev": true
+    "__isDev": true,
+    "$http": true
   }
 }

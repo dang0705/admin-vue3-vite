@@ -114,6 +114,7 @@ export enum CommonHeaderEnum {
 	'ENC_FLAG' = 'Enc-Flag',
 	'AUTHORIZATION' = 'Authorization',
 }
+export const $http = service;
 
 // 导出 axios 实例
 export default service;
