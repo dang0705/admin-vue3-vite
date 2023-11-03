@@ -19,18 +19,16 @@
 						{{ $t('common.addBtn') }}
 					</el-button>
 					<el-button @click="handleExpand"> {{ $t('common.expandBtn') }} </el-button>
-					<right-toolbar
-						v-model:showSearch="showSearch"
-						class="ml10"
-						style="float: right; margin-right: 20px"
-						@queryTable="getDataList"
-					></right-toolbar>
+					<el-switch inline-prompt class="ml-[12px]" v-model="showButton" active-text="按钮显示" inactive-text="按钮隐藏" />
+
+					<right-toolbar v-model:showSearch="showSearch" class="ml10" style="float: right; margin-right: 20px" @queryTable="getDataList">
+					</right-toolbar>
 				</div>
 			</el-row>
 			<el-table
 				ref="tableRef"
-				:data="state.dataList"
-				:tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+				:data="treeData"
+				:tree-props="{ children: 'children' }"
 				row-key="path"
 				style="width: 100%"
 				v-loading="state.loading"
@@ -118,7 +116,18 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 });
 
 const { getDataList, tableStyle } = useTable(state);
-
+const showButton = ref(true);
+function filterTreeData(data: []) {
+	if (!data || !Array.isArray(data)) {
+		return [];
+	}
+	const filteredData = JSON.parse(JSON.stringify(data));
+	return filteredData.filter((item) => {
+		item.children?.length > 0 && (item.children = filterTreeData(item.children));
+		return item.menuType !== '1';
+	});
+}
+const treeData = computed(() => (showButton.value ? state.dataList : filterTreeData(state.dataList as [])));
 // 打开新增菜单弹窗
 const onOpenAddMenu = (type?: string, row?: any) => {
 	menuDialogRef.value.openDialog(type, row);
