@@ -78,3 +78,26 @@ interface BatchUploadRecordPage {
 		minWidth: 150,
 	},
 ];
+```
+
+### 自定义指令
+
+#### v-debounce
+
+#### usage:  
+```vue
+<!--简单用例-->
+<div
+    v-debounce="clickFunction"
+/>
+
+<!--传参用例 delay 延时时间     params 参数-->
+<div
+    v-debounce:[option]="clickFunction"
+/>
+
+<script setup>
+  const option = {delay: 600, params: {id: 1}}
+</script>
+
+```

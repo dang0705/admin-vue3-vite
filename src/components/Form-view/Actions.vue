@@ -29,9 +29,11 @@ const next = async () => {
 			<el-button plain v-if="page" @click="page--">{{ prevButtonText }}</el-button>
 			<el-button type="primary" v-if="!isLastPage" @click="next">{{ nextButtonText }}</el-button>
 		</template>
-		<el-button type="primary" @click="submit" v-if="pagination ? isLastPage : true">{{ submitButtonText }}</el-button>
+		<el-button type="primary" v-debounce="submit" v-if="pagination ? isLastPage : true">{{ submitButtonText }}</el-button>
 		<slot name="third-button" />
-		<el-button @click="cancel" v-if="showCancel && !pagination">{{ cancelButtonText || $t('common.cancelButtonText') }} </el-button>
+		<el-button v-debounce="cancel" v-if="showCancel && !pagination">
+			{{ cancelButtonText || $t('common.cancelButtonText') }}
+		</el-button>
 	</el-form-item>
 </template>
 <style scoped>
