@@ -78,7 +78,7 @@
 								isNeedRecharge.service &&
 								(form.status == 40 || form.status == 50) &&
 								form.serviceBillRecord[0]?.status == 40 &&
-								form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance
+								form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
 									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
 									: '无需充值'
 							}}
@@ -129,7 +129,7 @@
 									isNeedRecharge.task &&
 									(form.status == 40 || form.status == 50) &&
 									form.taskBillRecord[0]?.status == 40 &&
-									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance
+									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0
 										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 										: '无需充值'
 								}}
