@@ -1,6 +1,7 @@
 <template>
 	<div class="top-right-btn" :style="style">
 		<el-row>
+			<slot />
 			<!-- 搜索框控制 -->
 			<el-tooltip
 				class="item"
