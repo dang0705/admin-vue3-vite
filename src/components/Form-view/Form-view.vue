@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import request from '/@/utils/request';
 import helper from '/@/utils/helpers';
-import { useDict } from '/@/hooks/dict';
+import { useDict, dictCache } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
+import { dict } from '/@/stores/dict';
 
 provide('formView', getCurrentInstance()?.ctx);
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page']);
@@ -76,6 +77,13 @@ const initForms = async (forms: FormOptions[]) => {
 		// 处理options数据源
 		const { options } = item;
 		if (helper.isString(options)) {
+			if (item.forceOptions) {
+				const { dict } = await import('/@/stores/dict');
+				const $dictStore = dict();
+				const dictCacheIndex = $dictStore.dict.findIndex(({ key }) => key === item.options);
+				delete dictCache[item.options];
+				$dictStore.dict.splice(dictCacheIndex, 1);
+			}
 			const { [options as string]: dic } = useDict(options as string);
 			formOptions[item.key] = computed(() => dic.value);
 		} else {
