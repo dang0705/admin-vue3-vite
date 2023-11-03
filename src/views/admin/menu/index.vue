@@ -33,23 +33,22 @@
 				style="width: 100%"
 				v-loading="state.loading"
 				border
-				:cell-style="{ textAlign: 'left', paddingLeft: '12px' }"
+				:cell-style="{ textAlign: 'left' }"
 				:header-cell-style="{
 					textAlign: 'left',
 					background: 'var(--el-table-row-hover-bg-color)',
 					color: 'var(--el-text-color-primary)',
-					paddingLeft: '12px',
 				}"
 			>
-				<el-table-column :label="$t('sysmenu.name')" fixed prop="name" show-overflow-tooltip></el-table-column>
-				<el-table-column :label="$t('sysmenu.sortOrder')" prop="sortOrder" show-overflow-tooltip></el-table-column>
+				<el-table-column :label="$t('sysmenu.name')" fixed prop="name" min-width="300" show-overflow-tooltip></el-table-column>
+				<el-table-column :label="$t('sysmenu.sortOrder')" min-width="80" prop="sortOrder" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('sysmenu.icon')" prop="icon" show-overflow-tooltip>
 					<template #default="scope">
 						<SvgIcon :name="scope.row.meta.icon" />
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('sysmenu.path')" prop="path" show-overflow-tooltip></el-table-column>
-				<el-table-column :label="$t('sysmenu.menuType')" show-overflow-tooltip>
+				<el-table-column :label="$t('sysmenu.path')" prop="path" min-width="300" show-overflow-tooltip></el-table-column>
+				<el-table-column :label="$t('sysmenu.menuType')" align="center" min-width="100" show-overflow-tooltip>
 					<template #default="scope">
 						<el-tag v-if="scope.row.menuType === '0'">左菜单</el-tag>
 						<el-tag v-if="scope.row.menuType === '2'">顶菜单</el-tag>
@@ -62,8 +61,8 @@
 						<el-tag type="info" v-else>关闭</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column :label="$t('sysmenu.permission')" :show-overflow-tooltip="true" prop="permission"></el-table-column>
-				<el-table-column :label="$t('common.action')" show-overflow-tooltip width="250">
+				<el-table-column :label="$t('sysmenu.permission')" min-width="300" :show-overflow-tooltip="true" prop="permission"></el-table-column>
+				<el-table-column :label="$t('common.action')" show-overflow-tooltip width="250" fixed="right">
 					<template #default="scope">
 						<el-button icon="folder-add" @click="onOpenAddMenu('add', scope.row)" text type="primary" v-auth="'sys_menu_add'">
 							{{ $t('common.addBtn') }}
