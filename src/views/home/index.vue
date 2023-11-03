@@ -56,7 +56,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="home">
+<script setup lang="ts" name="router.home">
 import { nextTick } from 'vue';
 import { useUserInfo } from '/@/stores/userInfo';
 import Column from '/@/views/home/components/column.vue';
