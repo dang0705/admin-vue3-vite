@@ -187,8 +187,8 @@
 				</el-row>
 			</el-form>
 			<span class="dialog-footer m-auto" v-if="!route.query.see">
-				<el-button @click="resetForm(dataFormRef)">重置</el-button>
-				<el-button type="primary" @click="onSubmit" :disabled="loading">提交</el-button>
+				<el-button v-debounce="resetForm">重置</el-button>
+				<el-button type="primary" v-debounce="onSubmit" :disabled="loading">提交</el-button>
 			</span>
 		</div>
 		<el-dialog v-model="visible" title="" width="30%" center :close-on-click-modal="false" :close-on-press-escape="false" @close="visible = false">
@@ -321,9 +321,9 @@ const addQualifications = () => {
 const removeQualifications = (index: number) => form.qualifications.splice(index, 1);
 
 // 重置
-const resetForm = (formEl: any) => {
-	if (!formEl) return;
-	formEl.resetFields();
+const resetForm = () => {
+	if (!dataFormRef.value) return;
+	dataFormRef.value.resetFields();
 };
 
 const goSpList = async (type?: string) => {

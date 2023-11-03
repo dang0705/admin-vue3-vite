@@ -17,7 +17,7 @@
 		</el-form>
 		<span class="flex justify-center items-center">
 			<el-button @click="visible = false">取消</el-button>
-			<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			<el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-dialog>
 	<el-dialog :title="title" v-model="state.successVisible">
@@ -41,7 +41,6 @@ const emit = defineEmits(['refresh']);
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);
-const loading = ref(false);
 const businessType = uploadBusinessType.hro;
 
 const state = reactive({
@@ -93,15 +92,11 @@ const onSubmit = async () => {
 	if (!valid) return false;
 
 	try {
-		loading.value = true;
 		const { data } = await uploadUndertakerCard({ file: 'https://jmyg-admin.zhidianjh.com:8443/api/' + form.cardZip });
 		state.upload.data = data;
 		state.successVisible = true;
 		visible.value = false;
-	} catch (err: any) {
-	} finally {
-		loading.value = false;
-	}
+	} catch (err: any) {}
 };
 
 // 暴露变量

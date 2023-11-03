@@ -12,10 +12,10 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="getDataList" formDialogRef icon="search" type="primary">
+						<el-button v-debounce="getDataList" formDialogRef icon="search" type="primary">
 							{{ $t('common.queryBtn') }}
 						</el-button>
-						<el-button @click="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
+						<el-button v-debounce="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>
@@ -106,7 +106,7 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="deactivateVisible = false">取消</el-button>
-					<el-button type="primary" @click="handleDeactivate()">确定</el-button>
+					<el-button type="primary" v-debounce="handleDeactivate">确定</el-button>
 				</span>
 			</template>
 		</el-dialog>

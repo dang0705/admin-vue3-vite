@@ -40,7 +40,7 @@
 		</el-form>
 		<span class="flex justify-center items-center">
 			<el-button @click="visible = false">取消</el-button>
-			<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			<el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-dialog>
 </template>

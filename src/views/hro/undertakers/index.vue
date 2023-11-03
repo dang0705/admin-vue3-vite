@@ -14,7 +14,7 @@
 			/>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button icon="download" type="primary" class="ml10" @click="exportExcel" v-auth="'hro_undertakerInfo_export'"> 批量导出 </el-button>
+					<el-button icon="download" type="primary" class="ml10" v-debounce="exportExcel" v-auth="'hro_undertakerInfo_export'"> 批量导出 </el-button>
 					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()" v-auth="'hro_undertakerInfo_batchUploadCard'">
 						批量上传身份证
 					</el-button>
