@@ -153,6 +153,7 @@ const batchElectronicSignForms = [
 		rules: [
 			{
 				required: true,
+				message: '服务商必填',
 			},
 		],
 	},
@@ -164,6 +165,7 @@ const batchElectronicSignForms = [
 		rules: [
 			{
 				required: true,
+				message: '合同模板必填',
 			},
 		],
 	},
