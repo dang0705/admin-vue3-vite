@@ -67,7 +67,21 @@ watch(
 			</Form-view>
 		</slot>
 		<template #footer>
-			<Actions v-bind="$props" :submit="handleSubmit" :cancel="handleCancel" />
+			<Actions
+				v-bind="{
+					buttonPosition,
+					cancelButtonText,
+					isLastPage,
+					nextButtonText,
+					prevButtonText,
+					pagination,
+					showBtn,
+					showCancel,
+					vertical,
+					submit: handleSubmit,
+					cancel: handleCancel,
+				}"
+			/>
 		</template>
 	</el-dialog>
 </template>
