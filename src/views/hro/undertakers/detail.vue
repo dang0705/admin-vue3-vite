@@ -77,6 +77,12 @@
 				</el-col>
 
 				<el-col :span="24" class="mb20">
+					<el-form-item label="参加工作时间:" prop="workTime">
+						<el-input v-model="form.workTime" placeholder="" disabled />
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商:" prop="spName">
 						<span v-for="(_, i) in form.spList" :key="i"
 							>{{ _.spName }}
