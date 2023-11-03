@@ -30,8 +30,8 @@
 						<el-input v-model="state.queryForm.phone" :placeholder="$t('sysuser.inputPhoneTip')" clearable />
 					</el-form-item>
 					<el-form-item>
-						<el-button icon="Search" type="primary" @click="getDataList">{{ $t('common.queryBtn') }}</el-button>
-						<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
+						<el-button icon="Search" type="primary" v-debounce="getDataList">{{ $t('common.queryBtn') }}</el-button>
+						<el-button icon="Refresh" v-debounce="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>

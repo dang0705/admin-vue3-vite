@@ -1,6 +1,7 @@
 <template>
 	<el-dialog title="添加支付通道" v-model="visible" :close-on-click-modal="false" draggable width="60%">
 		<form-view
+			v-if="visible"
 			ref="dataFormRef"
 			v-model="form"
 			:forms="conditionForms"
@@ -63,6 +64,7 @@ const conditionForms = ref([
 	{
 		control: 'el-select',
 		options: 'bank_name',
+		forceOptions: true,
 		key: 'bankName',
 		label: '账号类别:',
 		rules: [{ required: true, message: '账号类别不能为空', trigger: 'change' }],

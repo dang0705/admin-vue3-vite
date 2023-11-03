@@ -177,6 +177,7 @@ const onSubmit = async () => {
 	try {
 		state.ruleForm.menuId ? await putObj(state.ruleForm) : await addObj(state.ruleForm);
 		useMessage().success(t(state.ruleForm.menuId ? 'common.editSuccessText' : 'common.addSuccessText'));
+		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);

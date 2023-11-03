@@ -7,7 +7,7 @@
 						<el-input :placeholder="$t('sysdept.inputdeptNameTip')" style="max-width: 180px" v-model="state.queryForm.deptName"> </el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button icon="search" type="primary" @click="getDataList">
+						<el-button icon="search" type="primary" v-debounce="getDataList">
 							{{ $t('common.queryBtn') }}
 						</el-button>
 					</el-form-item>
