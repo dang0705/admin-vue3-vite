@@ -21,7 +21,15 @@
 			</el-col>
 		</el-form-item>
 		<el-form-item class="login-animation3">
-			<el-button type="primary" color="#FF6826" v-waves class="login-content-submit" @click="handleLogin" :loading="loading">
+			<el-button
+				type="primary"
+				color="#FF6826"
+				v-waves
+				class="login-content-submit"
+				@click="handleLogin"
+				:loading="loading"
+				:disabled="loginDisabled"
+			>
 				<span class="text-[white]">{{ $t('mobile.btnText') }}</span>
 			</el-button>
 		</el-form-item>
@@ -42,6 +50,7 @@ const emit = defineEmits(['signInSuccess']);
 // 创建一个 ref 对象，并将其初始化为 null
 const loginFormRef = ref();
 const loading = ref(false);
+const loginDisabled = ref(true);
 
 // 定义响应式对象
 const loginForm = reactive({
@@ -72,8 +81,8 @@ const handleSendCode = async () => {
 	if (response.data) {
 		useMessage().success('验证码发送成功');
 		timeCacl();
+		loginDisabled.value = false;
 	} else {
-		useMessage().error(response.msg);
 	}
 };
 
