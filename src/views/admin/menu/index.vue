@@ -29,7 +29,7 @@
 				ref="tableRef"
 				:data="treeData"
 				:tree-props="{ children: 'children' }"
-				row-key="path"
+				row-key="id"
 				style="width: 100%"
 				v-loading="state.loading"
 				border
@@ -117,6 +117,11 @@ const state: BasicTableProps = reactive<BasicTableProps>({
 
 const { getDataList, tableStyle } = useTable(state);
 const showButton = ref(true);
+const noButtonList = ref([]);
+watch(
+	() => state.dataList as [],
+	(data: []) => data.length && (noButtonList.value = filterTreeData(data))
+);
 function filterTreeData(data: []) {
 	if (!data || !Array.isArray(data)) {
 		return [];
@@ -127,7 +132,7 @@ function filterTreeData(data: []) {
 		return item.menuType !== '1';
 	});
 }
-const treeData = computed(() => (showButton.value ? state.dataList : filterTreeData(state.dataList as [])));
+const treeData = computed(() => (showButton.value ? state.dataList : noButtonList.value));
 // 打开新增菜单弹窗
 const onOpenAddMenu = (type?: string, row?: any) => {
 	menuDialogRef.value.openDialog(type, row);
