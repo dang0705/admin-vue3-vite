@@ -40,7 +40,7 @@
 					color: 'var(--el-text-color-primary)',
 				}"
 			>
-				<el-table-column :label="$t('sysmenu.name')" fixed prop="name" min-width="300" show-overflow-tooltip></el-table-column>
+				<el-table-column :label="$t('sysmenu.name')" fixed prop="name" min-width="250" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('sysmenu.sortOrder')" min-width="80" prop="sortOrder" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('sysmenu.icon')" prop="icon" show-overflow-tooltip>
 					<template #default="scope">
