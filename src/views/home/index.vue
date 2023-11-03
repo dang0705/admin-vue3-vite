@@ -6,7 +6,9 @@
 					<div class="section" style="height: 220px; padding-bottom: 10px">
 						<h1 class="text-[20px] flex items-center"><img :src="icons.clap" alt="" class="w-[30px] mr-2" />欢迎回来，{{ userName }}</h1>
 						<hr class="text-grey my-[20px]" />
-						<Favorite />
+						<div class="overflow-y-auto overflow-x-hidden h-[120px]">
+							<Favorite />
+						</div>
 					</div>
 					<Column v-auth.authStatus="item.auth" v-for="item in dashboardData.groupLeft" :key="item.title" :item="item">
 						<h2 class="flex items-center text-[18px] font-bold">
@@ -41,13 +43,13 @@
 							{{ item.title }}
 						</h2>
 					</Column>
-					<div class="section">
+					<!--					<div class="section">
 						<h2 class="flex items-center text-[18px] font-bold">
 							<img :src="customerProportion" class="w-[20px] mr-[5px]" alt="" />
 							客户占比
 						</h2>
 						<div ref="commandChartRef" id="charts" class="h-[300px] w-full" />
-					</div>
+					</div>-->
 				</div>
 			</el-col>
 		</el-row>
