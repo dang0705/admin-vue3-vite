@@ -1,6 +1,6 @@
 <template>
 	<el-dialog title="承接人详情" v-model="visible" :close-on-click-modal="false" draggable width="60%">
-		<el-form class="form-view" ref="dataFormRef" :model="form" :rules="dataRules && false" formDialogRef label-width="120px" v-loading="loading">
+		<el-form class="form-view" ref="dataFormRef" :model="form" :rules="dataRules && false" formDialogRef label-width="150px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="姓名:" prop="undertakerName">
@@ -32,9 +32,17 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20">
+				<!-- <el-col :span="12" class="mb20">
 					<el-form-item label="是否实名认证:" prop="isAuthentication">
 						<el-select placeholder="" v-model="form.isAuthentication" disabled>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col> -->
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="是否银行四要素验证:" prop="isBankFourEssentialFactor">
+						<el-select placeholder="" v-model="form.isBankFourEssentialFactor" disabled>
 							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
 						</el-select>
 					</el-form-item>
@@ -62,7 +70,11 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20"></el-col>
+				<el-col :span="12" class="mb20">
+					<el-form-item label="民族:" prop="undertakerClanName">
+						<el-input v-model="form.undertakerClanName" placeholder="" disabled />
+					</el-form-item>
+				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务商:" prop="spName">
@@ -74,6 +86,14 @@
 				</el-col>
 
 				<el-col :span="12" class="mb20"></el-col>
+
+				<el-col :span="24" class="mb20">
+					<el-form-item label="是否存在生效协议:" prop="isBankFourEssentialFactor">
+						<el-select placeholder="" v-model="form.isBankFourEssentialFactor" disabled>
+							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
+						</el-select>
+					</el-form-item>
+				</el-col>
 
 				<el-col :span="12" class="mb20">
 					<el-form-item label="身份证正面:" prop="undertakerPortrait">

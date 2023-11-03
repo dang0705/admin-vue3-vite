@@ -21,10 +21,22 @@
 				</el-col>
 
 				<el-col :span="24" class="mb20">
+					<el-form-item label="开户行:" prop="bankName">
+						<el-input v-model="form.bankName" placeholder="请输入开户行" />
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="24" class="mb20">
+					<el-form-item label="银行卡号:" prop="bankNumber">
+						<el-input v-model="form.bankNumber" placeholder="请输入银行卡号" />
+					</el-form-item>
+				</el-col>
+
+				<!-- <el-col :span="24" class="mb20">
 					<el-form-item label="家庭住址:" prop="undertakerAddress">
 						<el-input v-model="form.undertakerAddress" placeholder="请输入家庭住址" />
 					</el-form-item>
-				</el-col>
+				</el-col> -->
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="民族:" prop="undertakerClan">
@@ -59,7 +71,7 @@
 		</el-form>
 		<span class="flex justify-center items-center">
 			<el-button @click="visible = false">取消</el-button>
-			<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			<el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-dialog>
 	<!-- 成功 已存在提示 -->
@@ -98,6 +110,8 @@ const form = reactive({
 	undertakerName: '',
 	undertakerCard: '',
 	undertakerPhone: '',
+	bankName: '',
+	bankNumber: '',
 	undertakerAddress: '',
 	undertakerClan: '',
 	undertakerEducation: '',
@@ -110,11 +124,13 @@ const dataRules = ref({
 	undertakerName: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
 	undertakerCard: [{ required: true, message: '身份证号码不能为空', trigger: 'blur' }],
 	undertakerPhone: [{ required: true, message: '手机号不能为空', trigger: 'blur' }],
+	bankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
+	bankNumber: [{ required: true, message: '银行卡号不能为空', trigger: 'blur' }],
 	// undertakerAddress: [{ required: true, message: '承接人家庭住址不能为空', trigger: 'blur' }],
 	// undertakerClan: [{ required: true, message: '民族不能为空', trigger: 'blur' }],
 	// undertakerEducation: [{ required: true, message: '学历不能为空', trigger: 'blur' }],
 	// workTime: [{ required: true, message: '参加工作日期不能为空', trigger: 'blur' }],
-	// spId: [{ required: true, message: '服务商名称不能为空', trigger: 'blur' }],
+	spId: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 });
 
 // 打开弹窗
