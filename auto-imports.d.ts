@@ -9,6 +9,7 @@ declare global {
   const $http: typeof import('../../@/utils/request')['$http']
   const $refreshList: typeof import('../../@/hooks/keep-alive-list-refresh')['default']
   const EffectScope: typeof import('vue')['EffectScope']
+  const HOST: typeof import('../../@/configuration/host')['default']
   const __isDev: typeof import('../../@/configuration/env')['default']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']
