@@ -35,8 +35,13 @@
 				style="width: 100%"
 				v-loading="state.loading"
 				border
-				:cell-style="tableStyle.cellStyle"
-				:header-cell-style="tableStyle?.headerCellStyle"
+				:cell-style="{ textAlign: 'left', paddingLeft: '12px' }"
+				:header-cell-style="{
+					textAlign: 'left',
+					background: 'var(--el-table-row-hover-bg-color)',
+					color: 'var(--el-text-color-primary)',
+					paddingLeft: '12px',
+				}"
 			>
 				<el-table-column :label="$t('sysmenu.name')" fixed prop="name" show-overflow-tooltip></el-table-column>
 				<el-table-column :label="$t('sysmenu.sortOrder')" prop="sortOrder" show-overflow-tooltip></el-table-column>
