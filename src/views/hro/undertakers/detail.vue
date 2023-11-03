@@ -76,7 +76,7 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20">
+				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商:" prop="spName">
 						<span v-for="(_, i) in form.spList" :key="i"
 							>{{ _.spName }}
@@ -85,13 +85,12 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20"></el-col>
-
 				<el-col :span="24" class="mb20">
-					<el-form-item label="是否存在生效协议:" prop="isBankFourEssentialFactor">
-						<el-select placeholder="" v-model="form.isBankFourEssentialFactor" disabled>
-							<el-option :key="index" :label="item.label" :value="item.value" v-for="(item, index) in yes_no_type"></el-option>
-						</el-select>
+					<el-form-item label="是否存在生效协议:" prop="spName">
+						<span v-for="(_, i) in form.spList" :key="i"
+							>{{ _.isEffectiveContract === '1' ? '是' : '否' }}
+							<span v-if="i != form.spList.length - 1">,</span>
+						</span>
 					</el-form-item>
 				</el-col>
 

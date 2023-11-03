@@ -116,13 +116,14 @@ const conditionForms = ref([
 
 // 打开弹窗
 const openDialog = (id: string) => {
-	visible.value = true;
-	form.id = id;
-	form.spId = id;
+	// console.log(useDict('bank_name'), 123123);
 
+	visible.value = true;
 	// 重置表单数据
 	nextTick(() => {
 		dataFormRef.value?.reset();
+		form.id = id;
+		form.spId = id;
 	});
 };
 
