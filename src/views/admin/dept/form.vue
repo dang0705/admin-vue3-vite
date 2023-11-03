@@ -88,6 +88,7 @@ const onSubmit = async () => {
 	try {
 		dataForm.deptId ? await putObj(dataForm) : await addObj(dataForm);
 		useMessage().success(t(dataForm.deptId ? 'common.editSuccessText' : 'common.addSuccessText'));
+		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);

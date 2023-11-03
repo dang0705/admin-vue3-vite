@@ -144,6 +144,7 @@ const onSubmit = async () => {
 	try {
 		form.id ? await putObj(form) : await addObj(form);
 		useMessage().success(t(form.id ? 'common.editSuccessText' : 'common.addSuccessText'));
+		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);
