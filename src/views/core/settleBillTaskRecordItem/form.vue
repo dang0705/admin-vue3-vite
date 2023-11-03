@@ -150,7 +150,7 @@
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="visible = false">取消</el-button>
-				<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+				<el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 			</span>
 		</template>
 	</el-dialog>

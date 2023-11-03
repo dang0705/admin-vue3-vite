@@ -60,7 +60,7 @@
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
-				<el-button type="primary" @click="onSubmit" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
+				<el-button type="primary" v-debounce="onSubmit" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -175,15 +175,11 @@ const onSubmit = async () => {
 	if (!valid) return false;
 
 	try {
-		loading.value = true;
 		state.ruleForm.menuId ? await putObj(state.ruleForm) : await addObj(state.ruleForm);
 		useMessage().success(t(state.ruleForm.menuId ? 'common.editSuccessText' : 'common.addSuccessText'));
-		visible.value = false;
 		emit('refresh');
 	} catch (err: any) {
 		useMessage().error(err.msg);
-	} finally {
-		loading.value = false;
 	}
 };
 

@@ -103,7 +103,7 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
-					<el-button @click="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
+					<el-button v-debounce="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -254,13 +254,11 @@ const onSubmit = async () => {
 			if (phone?.includes('*')) dataForm.phone = undefined;
 			if (password?.includes('******')) dataForm.password = undefined;
 
-			loading.value = true;
 			await putObj(dataForm);
 			useMessage().success(t('common.editSuccessText'));
 			visible.value = false; // 关闭弹窗
 			emit('refresh');
 		} else {
-			loading.value = true;
 			await addObj(dataForm);
 			useMessage().success(t('common.addSuccessText'));
 			visible.value = false; // 关闭弹窗
@@ -269,7 +267,6 @@ const onSubmit = async () => {
 	} catch (error: any) {
 		useMessage().error(error.msg);
 	} finally {
-		loading.value = false;
 	}
 };
 
@@ -282,7 +279,6 @@ const onSubmit = async () => {
  */
 const getUserData = async (id: string) => {
 	try {
-		loading.value = true;
 		const { data } = await getObj(id);
 		Object.assign(dataForm, data);
 		if (data.roleList) {
@@ -293,8 +289,6 @@ const getUserData = async (id: string) => {
 		}
 	} catch (err: any) {
 		useMessage().error(err.msg);
-	} finally {
-		loading.value = false;
 	}
 };
 
