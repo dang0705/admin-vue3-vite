@@ -2,6 +2,11 @@ const getFileExt = (name: string) => name.substring(name.lastIndexOf('.') + 1);
 export default {
 	outDir: 'dist', // 打包输出目录
 	chunkSizeWarningLimit: 1500, // 代码分包阈值
+	terserOptions: {
+		compress: {
+			drop_console: true,
+		},
+	},
 	rollupOptions: {
 		// external: ['element-plus'],
 		output: {
