@@ -13,7 +13,7 @@ interface Dictionary {
 interface DictCache {
 	[key: string]: Dictionary[];
 }
-const dictCache: DictCache = {}; // 创建一个字典缓存对象
+export const dictCache: DictCache = {}; // 创建一个字典缓存对象
 const res = ref<{ [key: string]: Ref<Dictionary[]> }>({});
 
 /**
