@@ -7,10 +7,10 @@
 						<el-input :placeholder="$t('sysrole.inputRoleNameTip')" v-model="state.queryForm.roleName" />
 					</el-form-item>
 					<el-form-item>
-						<el-button icon="search" type="primary" @click="getDataList">
+						<el-button icon="search" type="primary" v-debounce="getDataList">
 							{{ $t('common.queryBtn') }}
 						</el-button>
-						<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
+						<el-button icon="Refresh" v-debounce="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>

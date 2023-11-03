@@ -7,7 +7,7 @@
 						<el-input :placeholder="$t('sysmenu.inputNameTip')" clearable style="max-width: 180px" v-model="state.queryForm.menuName" />
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="getDataList" class="ml10" icon="search" type="primary">
+						<el-button v-debounce="getDataList" class="ml10" icon="search" type="primary">
 							{{ $t('common.queryBtn') }}
 						</el-button>
 					</el-form-item>

@@ -10,10 +10,10 @@
 						<el-input :placeholder="$t('client.clientSecret')" style="max-width: 180px" v-model="state.queryForm.clientSecret" />
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="getDataList" icon="search" type="primary">
+						<el-button v-debounce="getDataList" icon="search" type="primary">
 							{{ $t('common.queryBtn') }}
 						</el-button>
-						<el-button @click="resetQuery" icon="Refresh">{{ $t('common.resetBtn') }}</el-button>
+						<el-button v-debounce="resetQuery" icon="Refresh">{{ $t('common.resetBtn') }}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>

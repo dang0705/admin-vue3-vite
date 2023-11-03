@@ -15,10 +15,10 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="getDataList" formDialogRef icon="search" type="primary">
+						<el-button v-debounce="getDataList" formDialogRef icon="search" type="primary">
 							{{ $t('common.queryBtn') }}
 						</el-button>
-						<el-button @click="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
+						<el-button v-debounce="resetQuery" formDialogRef icon="Refresh">{{ $t('common.resetBtn') }} </el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>

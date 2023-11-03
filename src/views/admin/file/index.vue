@@ -7,8 +7,8 @@
 						<el-input v-model="state.queryForm.original" :placeholder="$t('file.inputoriginalTip')" clearable @keyup.enter="getDataList" />
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" icon="Search" @click="getDataList">{{ $t('common.queryBtn') }}</el-button>
-						<el-button icon="Refresh" @click="resetQuery">{{ $t('common.resetBtn') }}</el-button>
+						<el-button type="primary" icon="Search" v-debounce="getDataList">{{ $t('common.queryBtn') }}</el-button>
+						<el-button icon="Refresh" v-debounce="resetQuery">{{ $t('common.resetBtn') }}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>
