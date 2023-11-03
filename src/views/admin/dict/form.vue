@@ -27,7 +27,7 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
-					<el-button @click="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
+					<el-button v-debounce="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -107,9 +107,7 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	const valid = await dicDialogFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
-
 	try {
-		loading.value = true;
 		const result = dataForm.id ? await putObj(dataForm) : await addObj(dataForm);
 		useMessage().success(t(dataForm.id ? 'common.editSuccessText' : 'common.addSuccessText'));
 		visible.value = false;
@@ -119,7 +117,6 @@ const onSubmit = async () => {
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	} finally {
-		loading.value = false;
 	}
 };
 

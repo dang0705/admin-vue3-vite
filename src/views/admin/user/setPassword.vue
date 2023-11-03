@@ -39,7 +39,7 @@
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
-				<el-button @click="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
+				<el-button v-debounce="onSubmit" type="primary" :disabled="loading">{{ $t('common.confirmButtonText') }}</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -177,7 +177,6 @@ const onSubmit = async () => {
 	if (!valid) return false;
 
 	try {
-		loading.value = true;
 		password(form)
 			.then(async () => {
 				await logout();
@@ -192,12 +191,8 @@ const onSubmit = async () => {
 				useMessage().error(err.msg);
 			});
 		console.log(form, 123);
-
-		visible.value = false;
 	} catch (err: any) {
 		useMessage().error(err.msg);
-	} finally {
-		loading.value = false;
 	}
 };
 

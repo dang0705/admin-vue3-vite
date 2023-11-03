@@ -26,7 +26,7 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="state.dialog.isShowDialog = false">取 消</el-button>
-					<el-button type="primary" @click="onSubmit">{{ state.dialog.submitTxt }}</el-button>
+					<el-button type="primary" v-debounce="onSubmit">{{ state.dialog.submitTxt }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -106,15 +106,10 @@ const handleSelectAll = (check: CheckboxValueType) => {
 // 提交授权数据
 const onSubmit = () => {
 	const menuIds = menuTree.value.getCheckedKeys().join(',').concat(',').concat(menuTree.value.getHalfCheckedKeys().join(','));
-	loading.value = true;
-	permissionUpd(state.roleId, menuIds)
-		.then(() => {
-			state.dialog.isShowDialog = false;
-			useMessage().success(t('common.editSuccessText'));
-		})
-		.finally(() => {
-			loading.value = false;
-		});
+	permissionUpd(state.roleId, menuIds).then(() => {
+		state.dialog.isShowDialog = false;
+		useMessage().success(t('common.editSuccessText'));
+	});
 };
 const renderContent = (h, { node, data, store }) => {
 	const isButton = data.menuType === '1';
