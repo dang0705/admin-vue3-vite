@@ -6,14 +6,15 @@
 			<div class="mb8" style="width: 100%">
 				<Form-view
 					v-if="conditionForms.length"
-					:label-width="labelWidth"
 					v-model="state.queryForm"
 					v-show="showSearch"
-					submit-button-text="查询"
-					cancel-button-text="重置"
+					:label-width="labelWidth"
 					:forms="conditionForms"
 					:on-submit="getDataList"
 					:on-cancel="resetQuery"
+					:validate="false"
+					submit-button-text="查询"
+					cancel-button-text="重置"
 				>
 					<template v-for="(_, slot) in $slots" #[slot]>
 						<slot :name="slot" v-bind="{ form: conditionForms, formData: state.queryForm }" />

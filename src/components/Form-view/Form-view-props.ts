@@ -90,13 +90,13 @@ export default {
 		type: [String, Number],
 		default: 120,
 	},
-	valid: {
-		type: Boolean,
-		default: false,
-	},
 	show: {
 		type: Boolean,
-		default: false,
+		default: null,
+	},
+	validate: {
+		type: Boolean,
+		default: true,
 	},
 	columns: {
 		type: Number,

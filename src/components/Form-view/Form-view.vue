@@ -156,14 +156,16 @@ watch(
 );
 const submit = async () => {
 	let valid: boolean;
-	try {
-		valid = !prop.disabled ? await form.value.validate() : true;
-	} catch (e) {
-		valid = false;
+	if (prop.validate) {
+		try {
+			valid = !prop.disabled ? await form.value.validate() : true;
+		} catch (e) {
+			valid = false;
+		}
+		prop.debug && emit('get-validation', valid);
+		if (!valid) return;
+		emit('update:valid', valid);
 	}
-	prop.debug && emit('get-validation', valid);
-	if (!valid) return;
-	emit('update:valid', valid);
 	prop.onSubmit && (await prop.onSubmit(refresh));
 	emit('update:show', false);
 };
