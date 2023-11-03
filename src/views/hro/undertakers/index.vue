@@ -3,6 +3,7 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<form-view
 				ref="queryRef"
+				label-width="160"
 				v-show="showSearch"
 				v-model="state.queryForm"
 				:forms="conditionForms"
@@ -17,9 +18,9 @@
 					<el-button icon="Upload" type="primary" class="ml10" @click="batchCardDialogRef.openDialog()" v-auth="'hro_undertakerInfo_batchUploadCard'">
 						批量上传身份证
 					</el-button>
-					<el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()" v-auth="'hro_undertakerInfo_batchBind'">
+					<!-- <el-button icon="Upload" type="primary" class="ml10" @click="bindBankRef.openDialog()" v-auth="'hro_undertakerInfo_batchBind'">
 						批量绑定银行卡
-					</el-button>
+					</el-button> -->
 					<el-button icon="Upload" type="primary" class="ml10" @click="customersRef.openDialog()" v-auth="'hro_undertakerInfo_batchSign'">
 						发起批量签署
 					</el-button>
@@ -73,9 +74,9 @@
 						<div class="overflow-hidden text-ellipsis" v-for="(_, i) in scope.row.spList" :key="i">{{ _.spName }}</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="是否签署协议" width="150" show-overflow-tooltip>
+				<el-table-column label="是否存在生效协议" width="150" show-overflow-tooltip>
 					<template #default="scope">
-						<div v-for="(_, i) in scope.row.spList" :key="i">{{ _.isSign == 0 ? '否' : '是' }}</div>
+						<div v-for="(_, i) in scope.row.spList" :key="i">{{ _.isEffectiveContract === '0' ? '否' : '是' }}</div>
 					</template>
 				</el-table-column>
 				<el-table-column label="是否银行四要素验证" width="160" show-overflow-tooltip>
@@ -234,13 +235,13 @@ const conditionForms = ref([
 	},
 	{
 		control: 'YesOrNo',
-		key: 'isAuthentication',
+		key: 'isBankFourEssentialFactor',
 		label: t('undertakerInfo.isAuthentication'),
 	},
 	{
 		control: 'YesOrNo',
-		key: 'isSign',
-		label: t('undertakerInfo.isSign'),
+		key: 'isEffectiveContract',
+		label: t('undertakerInfo.isEffectiveContract'),
 	},
 	{
 		control: 'SpSelect',
