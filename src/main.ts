@@ -79,12 +79,16 @@ app.component('DelWrap', DelWrap);
 app.component('Splitpanes', Splitpanes);
 app.component('Pane', Pane);
 // 全局方法挂载
-app.config.globalProperties.parseTime = parseTime;
-app.config.globalProperties.parseDate = parseDate;
-app.config.globalProperties.dateTimeStr = dateTimeStr;
-app.config.globalProperties.dateStr = dateStr;
-app.config.globalProperties.timeStr = timeStr;
-app.config.globalProperties.baseURL = import.meta.env.VITE_API_URL;
+app.config.globalProperties = {
+	...app.config.globalProperties,
+	parseDate,
+	dateTimeStr,
+	dateStr,
+	timeStr,
+	parseTime,
+	HOST,
+	baseURL: import.meta.env.VITE_API_URL,
+};
 
 directive(app);
 other.elSvg(app);

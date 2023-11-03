@@ -3,14 +3,41 @@
 		<Logo v-if="setIsShowLogo" />
 		<Breadcrumb />
 		<Horizontal :menuList="state.menuList" v-if="isLayoutTransverse" />
-		<User />
+		<User>
+			<template #top-slot-1>
+				<div @click="qrCode">
+					<SvgIcon name="iconfont icon_yaoqingma" />
+					邀请码
+				</div>
+			</template>
+		</User>
 	</div>
+	<el-dialog v-model="showQrCode">
+		<template #title> 二维码下载 </template>
+		<el-form v-model="qrCodeForm">
+			<el-form-item label="请选择服务商：" prop="id">
+				<SpSelect v-model="qrCodeForm.id" />
+			</el-form-item>
+		</el-form>
+		<div class="flex justify-center mt-6 h-[200px]">
+			<img v-show="qrCodeUrl && qrCodeUrl !== '1'" class="w-[200px]" :src="qrCodeUrl" />
+			<span v-if="!qrCodeUrl">选择服务商后，可查看二维码</span>
+		</div>
+		<template #footer>
+			<el-button type="primary" :disabled="!qrCodeUrl">
+				<component :is="qrCodeUrl ? 'a' : 'span'" :href="qrCodeUrl" download>下载二维码</component></el-button
+			>
+			<el-button @click="showQrCode = false">关闭</el-button>
+		</template>
+	</el-dialog>
 </template>
 
 <script setup lang="ts" name="layoutBreadcrumbIndex">
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import spInfo from '/@/api/core/spInfo';
 import mittBus from '/@/utils/mitt';
+import baseUrl from '/@/configuration/base-url';
 
 // 引入组件
 const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
@@ -27,6 +54,25 @@ const route = useRoute();
 const state = reactive({
 	menuList: [] as RouteItems,
 });
+const qrCodeForm = ref({ id: '' });
+const showQrCode = ref(false);
+const qrCodeUrl = ref('');
+const qrCode = async () => {
+	showQrCode.value = true;
+};
+watch(
+	() => showQrCode.value,
+	(showQrcode) => !showQrcode && (qrCodeForm.value = { id: '' }) && (qrCodeUrl.value = '')
+);
+watch(
+	() => qrCodeForm.value.id,
+	async (id) => {
+		if (!id) return;
+		qrCodeUrl.value = '1';
+		const { data } = await $http.post(spInfo.qrCode, { id });
+		qrCodeUrl.value = `${HOST}${baseUrl}/${data}`;
+	}
+);
 
 // 设置 logo 显示/隐藏
 const setIsShowLogo = computed(() => {
