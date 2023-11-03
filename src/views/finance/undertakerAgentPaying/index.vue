@@ -13,7 +13,7 @@
 		@get-tab-label="currentTab = $event"
 	>
 		<template #top-bar="{ refresh, query }" v-if="['支付失败', '待支付'].includes(currentTab)">
-			<el-button type="primary" v-auth="`finance_undertakerAgentPaying_pay`" @click="confirmToPay"> 批量支付 </el-button>
+			<el-button type="primary" v-auth="`finance_undertakerAgentPaying_pay`" @click="confirmToPay('batch', query)"> 批量支付 </el-button>
 			<el-button type="primary" v-auth="`finance_undertakerAgentPaying_pay`" @click="entirelyPay(refresh, query)"> 全部支付 </el-button>
 		</template>
 		<template #payStatus="{ row: { payStatus } }">
@@ -66,7 +66,10 @@ const dialog = ref({
 const selectedRows = ref<any[]>([]);
 const playStatusMapping = Array2Object({ dic: ['undertaker_agent_paying_pay_status'] });
 // 批量支付
-const confirmToPay = async (type = 'batch', { id, undertakerName, undertakerCard, undertakerBankName, undertakerBankNumber, paidAmount }: any) => {
+const confirmToPay = async (
+	type = 'batch',
+	{ id, undertakerName, undertakerCard, undertakerBankName, undertakerBankNumber, paidAmount }: any = {}
+) => {
 	if (type === 'batch') {
 		let summary = 0;
 		let ids: string[] = [];
