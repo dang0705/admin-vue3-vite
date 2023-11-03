@@ -198,7 +198,7 @@ const columns2 = computed(() => {
 	];
 });
 
-const conditionForms = ref([
+const conditionForms = [
 	{
 		control: 'SpSelect',
 		key: 'spId',
@@ -235,7 +235,7 @@ const conditionForms = ref([
 		//   disabled: true
 		// }
 	},
-]);
+];
 const refreshDataList = () => {
 	nextTick(() => {
 		waterSpPaymentBankRef?.value.resetQuery();

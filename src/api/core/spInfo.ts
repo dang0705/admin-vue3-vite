@@ -54,3 +54,6 @@ export function spPaymentChannel(obj?: Object) {
 		data: obj,
 	});
 }
+export default {
+	qrCode: '/core/spInfo/generateQRCode',
+};

@@ -92,7 +92,7 @@ const initForms = async (forms: FormOptions[]) => {
 								() => prop.modelValue[key as string],
 								async (value) => {
 									params[key] = value;
-									formOptions[item.key] = (await request.get(url, { params })).data;
+									(value !== '' || value !== undefined) && (formOptions[item.key] = (await request.get(url, { params })).data);
 								}
 							);
 						});
@@ -101,7 +101,8 @@ const initForms = async (forms: FormOptions[]) => {
 							() => prop.modelValue[keyFrom as string],
 							async (value) => {
 								formData.value[item.key] = '';
-								formOptions[item.key] = (await request.get(url, { params: { [keyTo as string]: value } })).data;
+								(value !== '' || value !== undefined) &&
+									(formOptions[item.key] = (await request.get(url, { params: { [keyTo as string]: value } })).data);
 							}
 						);
 					}

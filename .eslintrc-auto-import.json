@@ -84,6 +84,7 @@
     "WritableComputedRef": true,
     "toValue": true,
     "__isDev": true,
-    "$http": true
+    "$http": true,
+    "HOST": true
   }
 }

@@ -161,7 +161,13 @@ const params = computed(() => props.params);
 const currentTab = ref('');
 const state: BasicTableProps = reactive<BasicTableProps>({
 	pageList: fetchList,
-	...(props.staticQuery ? { queryForm: props.staticQuery } : {}),
+	...(props.staticQuery
+		? {
+				queryForm: {
+					...props.staticQuery,
+				},
+		  }
+		: {}),
 	createdIsNeed: props.createdIsNeed,
 	// ...(props.isTab
 	// 	? {

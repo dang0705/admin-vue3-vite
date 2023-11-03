@@ -10,6 +10,7 @@ import ElementPlus, { ElSelect, ElInput, ElTimePicker } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
+import debounce from '/@/directive/debounce';
 
 import {
 	ElementIcons,
@@ -58,33 +59,35 @@ ElTimePicker.props.placeholder = {
 };
 
 // 导入通用自定义组件
-app.component('DictTag', DictTag);
-app.component('Pagination', Pagination);
-app.component('RightToolbar', RightToolbar);
-app.component('UploadImg', UploadImg);
-app.component('Divider', Divider);
+app
+	.component('DictTag', DictTag)
+	.component('Pagination', Pagination)
+	.component('RightToolbar', RightToolbar)
+	.component('UploadImg', UploadImg)
+	.component('Divider', Divider);
+
+app.directive(debounce.name, debounce.directive);
 
 customComponents.forEach(({ name, component }) => app.component(name, defineAsyncComponent(component)));
 
-// app.component(
-// 	'Divider',
-// 	defineAsyncComponent(() => import('/@/components/Divider/index.vue'))
-// );
-// const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
-
-app.component('Editor', Editor);
-app.component('Tip', Tip);
-app.component('DelWrap', DelWrap);
-// 导入布局插件
-app.component('Splitpanes', Splitpanes);
-app.component('Pane', Pane);
+app
+	.component('Editor', Editor)
+	.component('Tip', Tip)
+	.component('DelWrap', DelWrap)
+	// 导入布局插件
+	.component('Splitpanes', Splitpanes)
+	.component('Pane', Pane);
 // 全局方法挂载
-app.config.globalProperties.parseTime = parseTime;
-app.config.globalProperties.parseDate = parseDate;
-app.config.globalProperties.dateTimeStr = dateTimeStr;
-app.config.globalProperties.dateStr = dateStr;
-app.config.globalProperties.timeStr = timeStr;
-app.config.globalProperties.baseURL = import.meta.env.VITE_API_URL;
+app.config.globalProperties = {
+	...app.config.globalProperties,
+	parseDate,
+	dateTimeStr,
+	dateStr,
+	timeStr,
+	parseTime,
+	HOST,
+	baseURL: import.meta.env.VITE_API_URL,
+};
 
 directive(app);
 other.elSvg(app);

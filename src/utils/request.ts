@@ -12,7 +12,11 @@ const service: AxiosInstance = axios.create({
 	timeout: 50000, // 全局超时时间
 	paramsSerializer: (params: any) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
-
+interface Config extends AxiosRequestConfig {
+	// 是否mock
+	actionLoading?: boolean;
+}
+const ACTION_REQUEST = ['put', 'post', 'delete'];
 /**
  * Axios请求拦截器，对请求进行处理
  * 1. 序列化get请求参数
@@ -21,7 +25,11 @@ const service: AxiosInstance = axios.create({
  * @param config AxiosRequestConfig对象，包含请求配置信息
  */
 service.interceptors.request.use(
-	(config: AxiosRequestConfig) => {
+	(config: Config) => {
+		// 操作接口添加遮罩
+		if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
+			$bus.emit('on-action-loading');
+		}
 		// 统一增加Authorization请求头, skipToken 跳过增加token
 		const token = Session.getToken();
 		if (token && !config.headers?.skipToken) {
@@ -68,6 +76,9 @@ const downloadUrlRegex = /^\/gen\/generator\/download/;
 const exportUrlRegex = /export/;
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
+	if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
+		$bus.emit('off-action-loading');
+	}
 	if (
 		!excludeUrl.includes(config.url as string) &&
 		response.data.code !== STATUS.success &&
@@ -91,8 +102,11 @@ const handleResponse = (response: AxiosResponse<any>) => {
  */
 service.interceptors.response.use(handleResponse, (error) => {
 	const {
-		response: { status, data: { msg } = {} },
+		response: { status, data: { msg } = {}, config },
 	} = error;
+	if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
+		$bus.emit('off-action-loading');
+	}
 	if (Number(status) === 424) {
 		useMessageBox()
 			.confirm('您的登录已过期，请点击重新登录')

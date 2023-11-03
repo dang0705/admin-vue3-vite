@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb-user pr15" :style="{ flex: layoutUserFlexNum }">
+	<div class="layout-navbars-breadcrumb-user pr15 items-center" :style="{ flex: layoutUserFlexNum }">
 		<!--		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont" :class="state.disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('user.title1')"></i>
@@ -16,6 +16,9 @@
 				<ele-Lock />
 			</el-icon>
 		</div>-->
+		<div class="layout-navbars-breadcrumb-user-icon">
+			<slot name="top-slot-1" />
+		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<el-icon :title="$t('user.title2')">
 				<ele-Search />
@@ -62,6 +65,7 @@
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
+
 		<Search ref="searchRef" />
 		<global-websocket uri="/admin/ws/info" v-if="websocketEnable" @rollback="rollback" />
 		<personal-drawer ref="personalDrawerRef"></personal-drawer>
