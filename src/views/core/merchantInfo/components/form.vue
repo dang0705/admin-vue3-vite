@@ -245,7 +245,7 @@
 
 				<span class="flex justify-center items-center" v-if="!isDetail">
 					<el-button @click="resetFields">重置</el-button>
-					<el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+					<el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 				</span>
 			</div>
 		</el-form>

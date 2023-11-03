@@ -295,7 +295,7 @@
 		<span v-if="!self_disabled || curStep == 2" class="flex justify-center items-center mt-5">
 			<el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
 			<el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
-			<el-button v-if="curStep == stepList.length - 1" type="primary" @click="onSubmit" :disabled="loading">确认</el-button>
+			<el-button v-if="curStep == stepList.length - 1" type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
 		</span>
 	</el-card>
 </template>
