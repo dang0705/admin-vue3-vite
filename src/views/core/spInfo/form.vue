@@ -118,8 +118,6 @@ const conditionForms = ref([
 
 // 打开弹窗
 const openDialog = (id: string) => {
-	// console.log(useDict('bank_name'), 123123);
-
 	visible.value = true;
 	// 重置表单数据
 	nextTick(() => {
