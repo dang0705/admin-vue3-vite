@@ -46,18 +46,18 @@ export function stopObj(ids?: Object) {
 		data: ids,
 	});
 }
-export function getSpInfoList(type: any) {
+export function getSpInfoList(type: any, obj?: Object) {
 	return request({
 		url: type === 'platform' ? '/core/spInfo/listAll' : '/core/spInfo/list',
 		method: 'get',
+		params: obj,
 	});
 }
 
-export function getMerchantInfoList(obj?: Object) {
+export function getMerchantInfoList() {
 	return request({
 		url: '/core/merchantInfo/list',
 		method: 'get',
-		data: obj,
 	});
 }
 

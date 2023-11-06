@@ -10,7 +10,7 @@
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
 					<el-col :span="12" class="mb20">
 						<el-form-item label="商户" prop="merchantId">
-							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.merchantId">
+							<el-select @change="handleChangeMerchantId(), handleChangeSpId()" :disabled="self_disabled" clearable v-model="form.merchantId">
 								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
 							</el-select>
 						</el-form-item>
@@ -18,7 +18,7 @@
 
 					<el-col :span="12" class="mb20">
 						<el-form-item label="服务商" prop="spId">
-							<el-select @change="getAgreeList(), (form.serviceContractId = '')" :disabled="self_disabled" clearable v-model="form.spId">
+							<el-select @change="handleChangeMerchantId" :disabled="self_disabled" clearable v-model="form.spId">
 								<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
 							</el-select>
 						</el-form-item>
@@ -495,19 +495,36 @@ const gettaskData = () => {
 		});
 };
 
+const handleChangeMerchantId = () => {
+	getAgreeList();
+	form.serviceContractId = '';
+};
+
+const handleChangeSpId = () => {
+	getSpInfoData();
+	form.spId = '';
+};
+
 // 获取数据
 getMerchantInfoList().then((res: any) => {
 	merchantList.value = res.data || [];
 });
 
 // 获取数据
-getSpInfoList().then((res: any) => {
-	spinfoList.value = res.data || [];
-});
+const getSpInfoData = () => {
+	getSpInfoList('', {
+		merchantId: form.merchantId,
+	}).then((res: any) => {
+		spinfoList.value = res.data || [];
+	});
+};
 
-if (route.query.taskId) {
-	gettaskData();
-}
+onMounted(() => {
+	getSpInfoData();
+	if (route.query.taskId) {
+		gettaskData();
+	}
+});
 
 const task_typeLevel_option = computed(() => {
 	let task_typeLevel_option = {
