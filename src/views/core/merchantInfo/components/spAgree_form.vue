@@ -1,6 +1,6 @@
 <template>
 	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="150px" v-loading="loading">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务协议名称" prop="agreementName">
@@ -15,6 +15,7 @@
 						</el-select>
 					</el-form-item>
 				</el-col>
+
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务负责人" prop="serviceManager">
 						<el-select :disabled="isDetail" clearable v-model="form.serviceManager">
@@ -23,23 +24,16 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
-					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
-						<el-select :disabled="isDetail" clearable v-model="form.isUploadAchievement">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
+					<el-form-item label="协议类型" prop="agreementType">
+						<el-select :disabled="isDetail" clearable v-model="form.agreementType">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in agreementTypeOptions" />
 						</el-select>
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
-					<el-form-item label="平台服务费比例" prop="platformFeeRate">
-						<InputPlus :disabled="isDetail" type="number" v-model.number="form.platformFeeRate">
-							<template #append>%</template>
-						</InputPlus>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12" class="mb20">
-					<el-form-item label="开票类目" prop="invoiceCategory">
-						<el-select collapse-tags collapse-tags-tooltip multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
+					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
+						<el-select :disabled="isDetail" clearable v-model="form.isUploadAchievement">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
 				</el-col>
@@ -51,7 +45,14 @@
 						</el-select>
 					</el-form-item>
 				</el-col>
-
+				<el-col :span="12" class="mb20">
+					<el-form-item label="要求先款后票" prop="paymentBeforeInvoice">
+						<el-select :disabled="isDetail" clearable v-model="form.paymentBeforeInvoice">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12" class="mb20"> </el-col>
 				<el-col :span="12" class="mb20">
 					<el-form-item label="起始时间" prop="startTime">
 						<el-date-picker :disabled="isDetail" type="date" placeholder="起始时间" v-model="form.startTime" :value-format="dateStr"></el-date-picker>
@@ -78,17 +79,80 @@
 					</el-form-item>
 				</el-col>
 				<el-col :span="12" class="mb20">
-					<el-form-item label="管理费计算方式" prop="feeCalculationMethod">
+					<el-form-item label="平台服务费计算方式" prop="feeCalculationMethod">
 						<el-select :disabled="isDetail" clearable v-model="form.feeCalculationMethod">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in service_fee_method" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12" class="mb20">
+					<el-form-item label="平台服务费开票类目" prop="platformInvoiceCategory">
+						<el-select collapse-tags collapse-tags-tooltip multiple :disabled="isDetail" clearable v-model="form.platformInvoiceCategory">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col v-if="form.feeCalculationMethod == 1" :span="12" class="mb20">
+					<el-form-item label="平台服务费比例" prop="platformFeeRate">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.platformFeeRate">
+							<template #append>%</template>
+						</InputPlus>
+					</el-form-item>
+				</el-col>
+				<el-col v-if="form.feeCalculationMethod == 2" :span="12" class="mb20">
+					<el-form-item label="平台服务费固定值" prop="platformFeeFixed">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.platformFeeFixed">
+							<template #append>元</template>
+						</InputPlus>
+					</el-form-item>
+				</el-col>
+
+				<el-col :span="12" class="mb20"> </el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="管理费计算方式" prop="managementFeeMethod">
+						<el-select :disabled="isDetail" clearable v-model="form.managementFeeMethod">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in fee_calculation_method" />
 						</el-select>
 					</el-form-item>
 				</el-col>
-				<el-col :span="24" class="mb20">
+				<el-col :span="12" class="mb20">
+					<el-form-item label="业务费开票类目" prop="invoiceCategory">
+						<el-select collapse-tags collapse-tags-tooltip multiple :disabled="isDetail" clearable v-model="form.invoiceCategory">
+							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in invoice_category" />
+						</el-select>
+					</el-form-item>
+				</el-col>
+				<el-col v-if="form.managementFeeMethod == 1 || form.managementFeeMethod == 3" :span="12" class="mb20">
+					<el-form-item label="管理费比例" prop="managementFeeRate">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.managementFeeRate">
+							<template #append>%</template>
+						</InputPlus>
+					</el-form-item>
+				</el-col>
+				<el-col v-if="form.managementFeeMethod == 2 || form.managementFeeMethod == 3" :span="12" class="mb20">
+					<el-form-item label="管理费固定值" prop="managementFeeFixed">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.managementFeeFixed">
+							<template #append>元</template>
+						</InputPlus>
+					</el-form-item>
+				</el-col>
+
+				<el-col v-if="form.managementFeeMethod == 1 || form.managementFeeMethod == 2" :span="12" class="mb20"> </el-col>
+
+				<el-col :span="12" class="mb20">
+					<el-form-item label="商业保险费" prop="businessInsurance">
+						<InputPlus :disabled="isDetail" type="number" v-model.number="form.businessInsurance">
+							<template #append>元</template>
+						</InputPlus>
+					</el-form-item>
+				</el-col>
+
+				<!-- <el-col :span="24" class="mb20">
 					<el-form-item label="管理费比例" prop="feeRates">
 						<IndividualTaxRatios :disabled="isDetail" v-model="form.feeRates" :texts="iTRTexts" />
 					</el-form-item>
-				</el-col>
+				</el-col> -->
 			</el-row>
 		</el-form>
 		<template #footer v-if="!isDetail">
@@ -107,9 +171,14 @@ import { getObj, addObj, putObj, userDropList } from '/@/api/core/merchantServic
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
-const { is_need, fee_calculation_method, invoice_category } = useDict('is_need', 'fee_calculation_method', 'invoice_category');
+const { is_need, fee_calculation_method, invoice_category, service_fee_method } = useDict(
+	'is_need',
+	'fee_calculation_method',
+	'invoice_category',
+	'service_fee_method'
+);
 import uploadBusinessType from '/@/enums/upload-business-type';
-import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
+// import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 const businessType = uploadBusinessType.merchant;
 const route = useRoute();
 
@@ -121,43 +190,72 @@ const visible = ref(false);
 const loading = ref(false);
 const spinfoList = ref([]) as array;
 const userList = reactive([]);
+const agreementTypeOptions = ref([
+	{
+		label: '三方协议',
+		value: 3,
+	},
+	{
+		label: '两方协议',
+		value: 2,
+	},
+]);
 // 定义字典
 
 // 提交表单数据
 let form = reactive({
-	id: '',
 	merchantId: '',
+
 	agreementName: '',
 	spId: '',
 	serviceManager: '',
+	agreementType: '',
 	isUploadAchievement: '',
-	platformFeeRate: 0,
-	feeCalculationMethod: '',
-	invoiceCategory: '',
 	isElectronicSignature: '',
+	paymentBeforeInvoice: '',
 	startTime: '',
 	endTime: '',
 	uploadAttachment: [],
-	feeRates: [],
-	status: '',
+
+	feeCalculationMethod: '',
+	platformInvoiceCategory: '',
+	platformFeeRate: 0,
+	platformFeeFixed: '',
+
+	managementFeeMethod: '',
+	invoiceCategory: '',
+	managementFeeRate: 0,
+	managementFeeFixed: '',
+	businessInsurance: '',
+
+	// feeRates: [],
 });
 
 // 定义校验规则
 const dataRules = ref({
-	merchantId: [{ required: true, message: '商户不能为空', trigger: 'blur' }],
 	agreementName: [{ required: true, message: '服务协议名称不能为空', trigger: 'blur' }],
 	spId: [{ required: true, message: '服务商不能为空', trigger: 'blur' }],
 	serviceManager: [{ required: true, message: '服务负责人不能为空', trigger: 'blur' }],
+	agreementType: [{ required: true, message: '协议类型不能为空', trigger: 'blur' }],
 	isUploadAchievement: [{ required: true, message: '要求上传任务成果不能为空', trigger: 'blur' }],
-	platformFeeRate: [{ required: true, message: '平台服务费比例不能为空', trigger: 'blur' }],
-	feeCalculationMethod: [{ required: true, message: '管理费计算方式不能为空', trigger: 'blur' }],
-	invoiceCategory: [{ required: true, message: '开票类目不能为空', trigger: 'blur' }],
 	isElectronicSignature: [{ required: true, message: '要求电子签署不能为空', trigger: 'blur' }],
+	paymentBeforeInvoice: [{ required: true, message: '要求先款后票不能为空', trigger: 'blur' }],
 	startTime: [{ required: true, message: '起始时间不能为空', trigger: 'blur' }],
 	endTime: [{ required: true, message: '终止时间不能为空', trigger: 'blur' }],
 	uploadAttachment: [{ required: true, message: '企业上传附件不能为空', trigger: 'blur' }],
+
+	feeCalculationMethod: [{ required: true, message: '平台服务费计算方式不能为空', trigger: 'blur' }],
+	platformInvoiceCategory: [{ required: true, message: '平台服务费开票类目不能为空', trigger: 'blur' }],
+	platformFeeRate: [{ required: true, message: '平台服务费比例不能为空', trigger: 'blur' }],
+	platformFeeFixed: [{ required: true, message: '平台服务费固定值不能为空', trigger: 'blur' }],
+
+	managementFeeMethod: [{ required: true, message: '管理费计算方式不能为空', trigger: 'blur' }],
+	invoiceCategory: [{ required: true, message: '业务费开票类目不能为空', trigger: 'blur' }],
+	managementFeeRate: [{ required: true, message: '管理费比例不能为空', trigger: 'blur' }],
+	managementFeeFixed: [{ required: true, message: '管理费固定值不能为空', trigger: 'blur' }],
+	businessInsurance: [{ required: true, message: '商业保险费不能为空', trigger: 'blur' }],
+
 	feeRates: [{ required: true, message: '管理费比例不能为空', trigger: 'blur' }],
-	status: [{ required: true, message: '状态（进行中，已过期）不能为空', trigger: 'blur' }],
 });
 
 // 打开弹窗
@@ -172,7 +270,6 @@ const openDialog = (id: string, type: any) => {
 
 	// 重置表单数据
 	nextTick(() => {
-		console.log('form-11111', form);
 		dataFormRef.value?.resetFields();
 	});
 
@@ -191,9 +288,9 @@ const onSubmit = async () => {
 	const valid = await dataFormRef.value.validate().catch(() => {});
 	if (!valid) return false;
 	form.merchantId = route.query.id;
-	form.feeRates.forEach((item) => {
-		delete item.id;
-	});
+	// form.feeRates.forEach((item) => {
+	// 	delete item.id;
+	// });
 	try {
 		loading.value = true;
 		form.id ? await putObj(form) : await addObj(form);
@@ -213,11 +310,6 @@ const getmerchantServiceAgreementData = (id: string) => {
 	getObj(id)
 		.then((res: any) => {
 			Object.assign(form, res.data);
-			console.log('form', form);
-			// if (!form.feeRates) {
-			// 	form.feeRates = [];
-			// }
-			// console.log('form.feeRates-1', form.feeRates);
 		})
 		.finally(() => {
 			loading.value = false;

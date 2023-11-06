@@ -147,13 +147,13 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 160px" class="com_label require">企业电话</div>
-						<el-form-item label-width="0px" prop="areaCode">
+					<el-col :span="12" class="mb20">
+						<!-- <div style="min-width: 160px" class="com_label require">企业电话</div> -->
+						<!-- <el-form-item label-width="0px" prop="areaCode">
 							<InputPlus :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
 						</el-form-item>
-						&nbsp;&nbsp;-&nbsp;&nbsp;
-						<el-form-item prop="phoneNumber" label-width="0px" style="flex-shrink: 1">
+						&nbsp;&nbsp;-&nbsp;&nbsp; -->
+						<el-form-item prop="phoneNumber" label="企业电话">
 							<InputPlus :disabled="isDetail" v-model="form.phoneNumber" placeholder="电话号码" />
 						</el-form-item>
 					</el-col>
@@ -340,7 +340,7 @@ const dataRules = ref({
 	socialCreditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
 	industryLevel1: [{ required: true, message: '行业一级不能为空', trigger: 'blur' }],
 	industryLevel2: [{ required: true, message: '行业二级不能为空', trigger: 'blur' }],
-	enterpriseType: [{ required: true, message: '企业性质(1:私营企业，2：国有企业)不能为空', trigger: 'blur' }],
+	enterpriseType: [{ required: true, message: '企业性质不能为空', trigger: 'blur' }],
 	enterpriseScale: [{ required: true, message: '企业规模不能为空', trigger: 'blur' }],
 	province: [{ required: true, message: '所在省不能为空', trigger: 'blur' }],
 	city: [{ required: true, message: '所在市不能为空', trigger: 'blur' }],
@@ -349,12 +349,12 @@ const dataRules = ref({
 	entryDate: [{ required: true, message: '入驻日期不能为空', trigger: 'blur' }],
 	enterpriseMailbox: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
 	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
-	logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
+	// logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
 	contactName: [{ required: true, message: '联系人不能为空', trigger: 'blur' }],
 	contactPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
 	// taxRegistrationNumber: [{ required: true, message: '纳税人识别号不能为空', trigger: 'blur' }],
-	taxType: [{ required: true, message: '纳税人类型(1:小规模纳税人，2：一般纳税人)不能为空', trigger: 'blur' }],
+	taxType: [{ required: true, message: '纳税人类型不能为空', trigger: 'blur' }],
 	taxBankNumber: [
 		{ required: true, message: '银行账户不能为空', trigger: 'blur' },
 		{ message: '请输入正确的银行账户', pattern: /(^[1-9]\d*$)/, max: 30 },
