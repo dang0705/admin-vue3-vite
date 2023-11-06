@@ -95,7 +95,10 @@
 							</el-button>
 							<el-button
 								v-auth="'core_settleBill_s_pay'"
-								:disabled="!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40)"
+								:disabled="
+									!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) &&
+									form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
+								"
 								@click="handlePayBillRecord(form.serviceBillRecord, 1)"
 								style="margin-right: 24px"
 								type="primary"
@@ -147,7 +150,10 @@
 							</el-button>
 							<el-button
 								v-auth="'core_settleBill_t_pay'"
-								:disabled="!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40)"
+								:disabled="
+									!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) &&
+									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0
+								"
 								@click="handlePayBillRecord(form.taskBillRecord, 2)"
 								style="margin-right: 24px"
 								type="primary"
