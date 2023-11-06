@@ -33,8 +33,8 @@
 				<el-table-column prop="undertakerName" label="姓名" show-overflow-tooltip width="100" />
 				<el-table-column prop="undertakerCard" label="证件号码" show-overflow-tooltip width="180" />
 				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip width="120" />
-				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100" />
-				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip width="100" />
+				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="200" />
+				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip width="210" />
 				<el-table-column prop="createTime" label="发起签约时间" show-overflow-tooltip width="180" />
 				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip width="180" />
 				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip width="180" />
@@ -44,7 +44,7 @@
 						<span v-text="contractMap?.contract_type[contractType]" />
 					</template>
 				</el-table-column>
-				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="100" />
+				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="140" />
 				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="140">
 					<template #default="{ row: { state } }"><span v-text="contractMap?.contract_status[state]" /></template>
 				</el-table-column>
