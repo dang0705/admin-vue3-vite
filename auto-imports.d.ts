@@ -8,6 +8,7 @@ declare global {
   const $bus: typeof import('../../@/utils/mitt')['default']
   const $http: typeof import('../../@/utils/request')['$http']
   const $refreshList: typeof import('../../@/hooks/keep-alive-list-refresh')['default']
+  const BASE: typeof import('../../@/configuration/base-url')['default']
   const EffectScope: typeof import('vue')['EffectScope']
   const HOST: typeof import('../../@/configuration/host')['default']
   const __isDev: typeof import('../../@/configuration/env')['default']

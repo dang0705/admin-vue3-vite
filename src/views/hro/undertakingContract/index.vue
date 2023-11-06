@@ -49,7 +49,7 @@
 					<template #default="{ row: { state } }"><span v-text="contractMap?.contract_status[state]" /></template>
 				</el-table-column>
 				<el-table-column label="操作" width="150" fixed="right">
-					<template #default="{ row: { id, state } }">
+					<template #default="{ row: { id, state, contractFile } }">
 						<el-button icon="edit-pen" text type="primary" v-auth="'停止'" @click="formDialogRef.openDialog(id)"> 查看 </el-button>
 						<el-button
 							icon="delete"
@@ -61,18 +61,28 @@
 						>
 							删除
 						</el-button>
-						<el-popconfirm
-							v-if="state !== valueAsLabel(contractMap?.contract_status)['已终止']"
-							width="220"
-							confirm-button-text="确认"
-							cancel-button-text="取消"
-							title="是否终止合同?"
-							@confirm="handleTermination(id)"
+						<el-button
+							v-if="state !== valueAsLabel(contractMap?.contract_status)['待签署']"
+							icon="view"
+							text
+							type="primary"
+							v-auth="`hro_undertakingContract_view`"
+							@click="previewFile({ url: contractFile })"
 						>
-							<template #reference>
-								<el-button v-auth="`hro_undertakingContract_termination`" icon="Remove" text type="primary">终止</el-button>
-							</template>
-						</el-popconfirm>
+							查看
+							<!--							<a :href="`${BASE}/${contractFile}`" :download="false" target="_blank">查看</a>-->
+						</el-button>
+
+						<el-button
+							v-if="state !== valueAsLabel(contractMap?.contract_status)['已终止']"
+							@click="handleTermination(id)"
+							v-auth="`hro_undertakingContract_termination`"
+							icon="Remove"
+							text
+							type="primary"
+							>终止</el-button
+						>
+
 						<!--						<el-button  text type="primary" v-auth="`hro_undertakingContract_termination`"> 终止 </el-button>-->
 					</template>
 				</el-table-column>
@@ -101,6 +111,7 @@ import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObjs, fetchList, termination } from '/@/api/hro/undertakingContract';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
+import { previewFile } from '/@/utils/other';
 import Array2Object, { valueAsLabel } from '/@/utils/array-2-object';
 
 const { t } = useI18n();
@@ -228,10 +239,19 @@ const handleDelete = async (ids: string[]) => {
 		useMessage().error(err.msg);
 	}
 };
-const handleTermination = async (id) => {
-	await termination({ id });
-	useMessage().success('该合同已终止');
-	getDataList();
+const handleTermination = async (id: any) => {
+	try {
+		await useMessageBox().confirm('是否终止合同');
+	} catch {
+		return;
+	}
+	try {
+		await termination({ id });
+		getDataList();
+		useMessage().success('该合同已终止');
+	} catch (err: any) {
+		Promise.reject(err);
+	}
 };
 $refreshList(resetQuery);
 </script>

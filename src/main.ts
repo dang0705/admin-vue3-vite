@@ -86,6 +86,7 @@ app.config.globalProperties = {
 	timeStr,
 	parseTime,
 	HOST,
+	BASE,
 	baseURL: import.meta.env.VITE_API_URL,
 };
 

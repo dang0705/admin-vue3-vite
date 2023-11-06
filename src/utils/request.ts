@@ -79,11 +79,13 @@ const handleResponse = (response: AxiosResponse<any>) => {
 	if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
 		$bus.emit('off-action-loading');
 	}
+
 	if (
 		!excludeUrl.includes(config.url as string) &&
 		response.data.code !== STATUS.success &&
 		!downloadUrlRegex.test(config.url as string) &&
-		!exportUrlRegex.test(config.url as string)
+		!exportUrlRegex.test(config.url as string) &&
+		config.responseType?.toLowerCase() !== 'blob'
 	) {
 		useMessageBox().error(response.data.msg);
 		return Promise.reject(response.data.msg);

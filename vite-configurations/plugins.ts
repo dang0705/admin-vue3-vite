@@ -31,6 +31,7 @@ export default [
 				'/@/hooks/keep-alive-list-refresh': [['default', '$refreshList']],
 				'/@/configuration/env': [['default', '__isDev']],
 				'/@/configuration/host': [['default', 'HOST']],
+				'/@/configuration/base-url': [['default', 'BASE']],
 			},
 		], // 自动导入的依赖库数组
 		dts: './auto-imports.d.ts', // 自动导入类型定义文件路径

@@ -81,6 +81,11 @@ const forms = [
 	},
 	underTakers(),
 	{
+		control: 'DateRange',
+		label: '合同起止时间',
+		key: 'contractTimeRange',
+	},
+	{
 		control: 'UploadFile',
 		key: 'contractFiles',
 		label: '上传合同扫描件',
