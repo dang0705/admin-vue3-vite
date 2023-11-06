@@ -27,7 +27,7 @@ const ACTION_REQUEST = ['put', 'post', 'delete'];
 service.interceptors.request.use(
 	(config: Config) => {
 		// 操作接口添加遮罩
-		if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
+		if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) || config.responseType?.toLowerCase() === 'blob') {
 			$bus.emit('on-action-loading');
 		}
 		// 统一增加Authorization请求头, skipToken 跳过增加token
@@ -76,7 +76,8 @@ const downloadUrlRegex = /^\/gen\/generator\/download/;
 const exportUrlRegex = /export/;
 const handleResponse = (response: AxiosResponse<any>) => {
 	const { config } = response;
-	if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
+	const isBlob = config.responseType?.toLowerCase() === 'blob';
+	if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) || isBlob) {
 		$bus.emit('off-action-loading');
 	}
 
@@ -85,7 +86,7 @@ const handleResponse = (response: AxiosResponse<any>) => {
 		response.data.code !== STATUS.success &&
 		!downloadUrlRegex.test(config.url as string) &&
 		!exportUrlRegex.test(config.url as string) &&
-		config.responseType?.toLowerCase() !== 'blob'
+		!isBlob
 	) {
 		useMessageBox().error(response.data.msg);
 		return Promise.reject(response.data.msg);
