@@ -7,7 +7,7 @@ import Actions from '/@/components/Form-view/Actions.vue';
 import { dict } from '/@/stores/dict';
 
 provide('formView', getCurrentInstance()?.ctx);
-const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page']);
+const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page', 'submit-and-cancel']);
 const refresh = inject('refresh', null);
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
@@ -174,7 +174,7 @@ const cancel = () => {
 	resetFields();
 	prop.onCancel ? prop.onCancel() : emit('update:show', false);
 };
-
+emit('submit-and-cancel', { submit, cancel });
 const dynamicColumns = prop.columns ? { span: prop.columns } : { xl: 6, lg: 8, sm: 12 };
 const stepsData = computed(() => {
 	const steps: string[] = [];

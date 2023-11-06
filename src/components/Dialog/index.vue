@@ -44,23 +44,18 @@ const formValue = computed({
 		emit('update:formData', value);
 	},
 });
-const formView = ref();
 let handleSubmit = ref(null);
 let handleCancel = ref(null);
-watch(
-	() => show.value,
-	async () => {
-		await nextTick();
-		handleSubmit.value = formView.value.submit;
-		handleCancel.value = formView.value.cancel;
-	}
-);
+const getSubmitAndCancel = ({ submit, cancel }: any) => {
+	handleSubmit.value = submit;
+	handleCancel.value = cancel;
+};
 </script>
 
 <template>
 	<el-dialog v-model="show" v-bind="$attrs" :title="title" :width="width" :close-on-click-modal="closeOnClickModal">
 		<slot name="default-dialog-slot">
-			<Form-view v-bind="props" v-model="formValue" v-model:show="show" ref="formView">
+			<Form-view v-bind="props" v-model="formValue" v-model:show="show" @submit-and-cancel="getSubmitAndCancel">
 				<template v-for="(_, slot) in $slots" #[slot]>
 					<slot :name="slot" />
 				</template>

@@ -3,7 +3,9 @@ import defaultDelay from '/@/configuration/form-view-action-debounce-delay';
 
 const debounce = ({ el, value, delay, params }: any) => {
 	const clickCallback = throttle(value, delay || defaultDelay);
-	el.onclick = !value ? console.error('v-debounce should give your click callback') : clickCallback.bind(this, params);
+	el.onclick = () => {
+		!value ? console.error('v-debounce should give your click callback') : clickCallback(params);
+	};
 };
 export default {
 	name: 'debounce',
