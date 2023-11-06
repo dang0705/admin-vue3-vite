@@ -12,9 +12,10 @@
 		>
 			<template v-if="dialogType === 1">
 				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
-				<el-form-item label="当前结算单金额">
+				<el-form-item v-if="payInFull" label="当前结算单金额">
 					{{ settleBillType == 1 ? form.serviceBillRecord[0]?.serviceAmount : form.taskBillRecord[0]?.serviceAmount }}元
 				</el-form-item>
+				<el-form-item v-if="settleBillType == 2 && !payInFull" label="当前任务承揽费金额"> {{ form.taskBillRecord[0]?.taskAmount }}元 </el-form-item>
 			</template>
 			<template v-if="dialogType === 2">
 				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0]?.id : form.taskBillRecord[0]?.id }} 成功发起付款！
@@ -89,6 +90,13 @@ const form = reactive({
 const balanceInfo = reactive({
 	platBalance: 0,
 	spBalance: 0,
+});
+
+const props = defineProps({
+	payInFull: {
+		type: Boolean,
+		default: true,
+	},
 });
 const spPaymentChannelData = reactive({});
 const formData = reactive({
@@ -224,11 +232,12 @@ const copy = (text) => {
 // 提交授权数据
 const onSubmit = async () => {
 	if (dialogType.value === 1) {
-		let obj = settleBillType.value == 1 ? form.serviceBillRecord[0] : form.taskBillRecord[0] || {};
+		let obj: any = settleBillType.value == 1 ? form.serviceBillRecord[0] : form.taskBillRecord[0] || {};
 		loading.value = true;
 		payBillRecord({
 			billId: form.id,
 			settleRecordId: obj.id,
+			payInFull: props.payInFull,
 		})
 			.then((res: any) => {
 				if (settleBillType.value === 1) {

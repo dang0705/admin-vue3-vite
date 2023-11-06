@@ -96,7 +96,7 @@
 							<el-button
 								v-auth="'core_settleBill_s_pay'"
 								:disabled="
-									!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) &&
+									!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) ||
 									form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
 								"
 								@click="handlePayBillRecord(form.serviceBillRecord, 1)"
@@ -132,12 +132,17 @@
 									isNeedRecharge.task &&
 									(form.status == 40 || form.status == 50) &&
 									form.taskBillRecord[0]?.status == 40 &&
-									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0
+									((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
+										(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))
 										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 										: '无需充值'
 								}}
 							</div>
 						</div>
+						<el-radio-group v-model="payInFull" class="ml-4">
+							<el-radio :label="true" size="large">全额付款</el-radio>
+							<el-radio :label="false" size="large">只付任务承揽费</el-radio>
+						</el-radio-group>
 						<div class="flex items-center ml-auto">
 							<el-button
 								v-auth="'core_settleBill_t_recharge'"
@@ -151,8 +156,9 @@
 							<el-button
 								v-auth="'core_settleBill_t_pay'"
 								:disabled="
-									!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) &&
-									form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0
+									!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) ||
+									(payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
+									(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0)
 								"
 								@click="handlePayBillRecord(form.taskBillRecord, 2)"
 								style="margin-right: 24px"
@@ -176,7 +182,7 @@
 				<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
 			</template>
 		</TableView>
-		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" />
+		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" :payInFull="payInFull" />
 		<uploadExcel
 			ref="importBillRef"
 			@refreshDataList="refreshDataList"
@@ -217,6 +223,7 @@ export interface BillRecordOptions {
 	accountId: string;
 	status: string;
 }
+const payInFull = ref(true);
 
 const isNeedRecharge = computed(() => {
 	return {
