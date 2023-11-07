@@ -266,6 +266,7 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 // 定义变量内容
 const dataFormRef = ref();
 const loading = ref(false);
+import closeTagView from '/@/utils/close-tag-view';
 
 // 定义父组件传过来的值
 const props = defineProps({
@@ -389,6 +390,7 @@ const onSubmit = async () => {
 		loading.value = true;
 		form.id ? await putObj(form) : await addObj(form);
 		useMessage().success(form.id ? '修改成功' : '添加成功');
+		closeTagView(route.meta.title as string);
 		router.push({
 			path: '/core/merchantInfo/index',
 		});

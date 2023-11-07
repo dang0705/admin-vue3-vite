@@ -321,7 +321,7 @@ const { task_type, task_unit, is_need, gender_requirement, education, experience
 	'experience',
 	'task_undertaking_type'
 );
-
+import closeTagView from '/@/utils/close-tag-view';
 // 定义变量内容
 const merchantList = ref([]);
 const spinfoList = ref([]);
@@ -455,6 +455,8 @@ const onSubmit = async () => {
 		// form.taskId ? await addObj(form) : await addObj(form);
 		// 您已成功创建指派任务"小白楼保洁服务"！
 		useMessage().success(form.taskId ? '修改成功' : '添加成功');
+		// $bus.emit('close-tag', route.meta.title);
+		closeTagView(route.meta.title as string);
 		router.push({
 			path: '/core/task/index',
 			state: {
