@@ -27,9 +27,10 @@ interface Edit {
 }
 interface Dialog {
 	title?: string;
-	forms?: [];
-	edit?: Edit; // 回显需要配置
-	action?: DialogAction;
+	forms: []; // From-View的表单配置
+	action: DialogAction; // 该配置不在Dialog组件, 属于为此处特别注入的属性
+	edit?: Edit; // 回显配置，说明同上
+	// ..... others Dialog component props
 }
 interface Actions {
 	label: string; // 按钮文案
