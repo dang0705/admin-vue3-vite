@@ -23,13 +23,13 @@
 						</el-select>
 					</el-form-item>
 				</el-col>
-				<el-col :span="12" class="mb20">
+				<!-- <el-col :span="12" class="mb20">
 					<el-form-item label="协议类型" prop="agreementType">
 						<el-select :disabled="isDetail" clearable v-model="form.agreementType">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in agreementTypeOptions" />
 						</el-select>
 					</el-form-item>
-				</el-col>
+				</el-col> -->
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求上传任务成果" prop="isUploadAchievement">
 						<el-select :disabled="isDetail" clearable v-model="form.isUploadAchievement">
@@ -38,13 +38,13 @@
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="12" class="mb20">
+				<!-- <el-col :span="12" class="mb20">
 					<el-form-item label="要求电子签署" prop="isElectronicSignature">
 						<el-select :disabled="isDetail" clearable v-model="form.isElectronicSignature">
 							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in is_need" />
 						</el-select>
 					</el-form-item>
-				</el-col>
+				</el-col> -->
 				<el-col :span="12" class="mb20">
 					<el-form-item label="要求先款后票" prop="paymentBeforeInvoice">
 						<el-select :disabled="isDetail" clearable v-model="form.paymentBeforeInvoice">

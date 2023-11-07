@@ -6,12 +6,11 @@ import router from './router';
 import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
-import ElementPlus, { ElSelect, ElInput, ElTimePicker } from 'element-plus';
+import ElementPlus, { ElSelect, ElInput, ElTimePicker, ElDatePicker } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 import debounce from '/@/directive/debounce';
-
 import {
 	ElementIcons,
 	Pagination,
@@ -54,6 +53,10 @@ ElSelect.props = {
 };
 
 ElTimePicker.props.placeholder = {
+	type: String,
+	default: '请选择',
+};
+ElDatePicker.props.placeholder = {
 	type: String,
 	default: '请选择',
 };
