@@ -24,7 +24,17 @@ const next = async () => {
 </script>
 
 <template>
-	<el-form-item v-if="showBtn" :class="['flex', 'actions', 'h-fit', 'flex-shrink-0', { horizontal: !vertical, [buttonPosition]: true }]">
+	<div
+		v-if="showBtn"
+		:class="[
+			'flex',
+			'actions',
+			'h-fit',
+			'flex-shrink-0',
+			`justify-${buttonPosition === 'right' ? 'end' : buttonPosition === 'center' ? 'center' : 'start'}`,
+			{ horizontal: !vertical },
+		]"
+	>
 		<template v-if="pagination">
 			<el-button plain v-if="page" @click="page--">{{ prevButtonText }}</el-button>
 			<el-button type="primary" v-if="!isLastPage" @click="next">{{ nextButtonText }}</el-button>
@@ -34,7 +44,7 @@ const next = async () => {
 		<el-button v-debounce="cancel" v-if="showCancel && !pagination">
 			{{ cancelButtonText || $t('common.cancelButtonText') }}
 		</el-button>
-	</el-form-item>
+	</div>
 </template>
 <style scoped>
 .actions {

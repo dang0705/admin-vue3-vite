@@ -8,7 +8,7 @@ import { dict } from '/@/stores/dict';
 
 provide('formView', getCurrentInstance()?.ctx);
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page', 'submit-and-cancel']);
-const refresh = inject('refresh', null);
+const refresh = inject('refresh', () => {});
 const inDialog = inject('in-dialog', false);
 const prop = defineProps({
 	modelValue: {
@@ -166,8 +166,14 @@ const submit = async () => {
 		if (!valid) return;
 		emit('update:valid', valid);
 	}
-	prop.onSubmit && (await prop.onSubmit(refresh));
-	emit('update:show', false);
+	try {
+		prop.onSubmit && (await prop.onSubmit(refresh));
+		emit('update:show', false);
+		// If FormView use in condition, validate will be false, so it won't refresh
+		prop.validate && refresh && refresh();
+	} catch (e) {
+		Promise.reject(e);
+	}
 };
 
 const cancel = () => {
@@ -256,17 +262,17 @@ defineExpose({
 							<slot name="after-forms" />
 						</el-col>
 					</el-row>
-					<Actions
-						v-if="!inDialog"
-						v-bind="$props"
-						v-model="page"
-						:submit="submit"
-						:cancel="cancel"
-						:pagination="pagination"
-						:is-last-page="isLastPage"
-					/>
 				</div>
 			</el-form>
+			<Actions
+				v-if="!inDialog"
+				v-bind="$props"
+				v-model="page"
+				:submit="submit"
+				:cancel="cancel"
+				:pagination="pagination"
+				:is-last-page="isLastPage"
+			/>
 		</div>
 	</div>
 </template>

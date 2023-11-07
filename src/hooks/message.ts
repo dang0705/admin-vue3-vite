@@ -5,8 +5,11 @@ const { t } = i18n.global;
 
 interface MessageImplements {
 	info(title: string): void;
+
 	wraning(title: string): void;
+
 	success(title: string): void;
+
 	error(title: string): void;
 }
 
@@ -59,13 +62,16 @@ export function useMessageBox() {
 		}
 
 		// 确认窗体
-		confirm(msg: string) {
+		confirm(msg: string, type = 'warning', icon?: any) {
+			// @ts-ignore
 			return ElMessageBox.confirm(msg, t('message.box.title'), {
 				confirmButtonText: t('common.confirmButtonText'),
 				cancelButtonText: t('common.cancelButtonText'),
-				type: 'warning',
+				type,
+				...(icon ? { icon } : {}),
 			});
 		}
+
 		// 提交内容
 		prompt(msg: string) {
 			return ElMessageBox.prompt(msg, t('message.box.title'), {

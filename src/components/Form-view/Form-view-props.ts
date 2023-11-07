@@ -32,7 +32,7 @@ export const actionsParams = {
 	},
 	buttonPosition: {
 		type: String,
-		default: 'right',
+		default: 'center',
 	},
 	submitButtonText: {
 		type: String,
