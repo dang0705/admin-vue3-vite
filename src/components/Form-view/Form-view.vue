@@ -262,17 +262,18 @@ defineExpose({
 							<slot name="after-forms" />
 						</el-col>
 					</el-row>
+					<Actions
+						v-if="!inDialog"
+						v-bind="$props"
+						v-model="page"
+						:submit="submit"
+						:cancel="cancel"
+						:pagination="pagination"
+						:is-last-page="isLastPage"
+						class="ml-2"
+					/>
 				</div>
 			</el-form>
-			<Actions
-				v-if="!inDialog"
-				v-bind="$props"
-				v-model="page"
-				:submit="submit"
-				:cancel="cancel"
-				:pagination="pagination"
-				:is-last-page="isLastPage"
-			/>
 		</div>
 	</div>
 </template>
