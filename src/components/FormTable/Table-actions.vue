@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import helpers from '/@/utils/helpers';
+import { RouteItems } from '/@/types/global';
+
+const $router = useRouter();
+const emit = defineEmits(['get-dialog-data']);
 
 interface Action {
 	handler: Function;
@@ -9,15 +13,36 @@ interface Preview {
 	url: string;
 	mime?: string;
 }
+interface Confirm {
+	ask?: string;
+	done?: string;
+}
+interface DialogAction {
+	name?: string;
+	params?: unknown;
+}
+interface Edit {
+	name?: string; // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
+	params?: unknown; // 回显的参数
+}
+interface Dialog {
+	title?: string;
+	forms?: [];
+	edit?: Edit; // 回显需要配置
+	action?: DialogAction;
+}
 interface Actions {
-	label: string;
-	body?: string;
-	content?: string;
-	auth?: string;
-	show?: Function;
-	action?: Action;
-	type?: string;
-	preview?: Preview;
+	label: string; // 按钮文案
+	body?: string; // 确认弹框 的 内容 主体 比如 '是否要删除合同' body为合同
+	download?: string; // 下载路径
+	dialog?: Dialog; // 弹框内的表单
+	auth?: string; // 权限标识
+	show?: Function; // 按钮显示逻辑
+	action?: Action; // 按钮操作
+	type?: string; // 按钮类型, 目前只有delete(删除)一种, 传入delete 便无需关心action
+	preview?: Preview; // 预览文件
+	to?: RouteItems; // 跳转
+	confirm?: boolean | Confirm; // 是否唤起确认
 }
 
 const props = defineProps({
@@ -43,13 +68,36 @@ const props = defineProps({
 	},
 });
 const refresh = inject('refresh', null);
-
 const actions = computed(() =>
 	(helpers.isFunction(props.actionsOrigin) ? (props.actionsOrigin as Function)(props.row) : props.actionsOrigin).filter(
 		({ show }: Actions) => (show && show()) || show === undefined
 	)
 );
-const handleAction = async ({ label, confirm, handler, params, type, body, preview }: any) => {
+
+const handleAction = async ({
+	label,
+	confirm,
+	action: { params, handler } = {},
+	type,
+	body = props.actionBody,
+	preview,
+	dialog,
+	download,
+	to,
+}: Actions) => {
+	if (to) {
+		$router.push(to);
+		return;
+	}
+	if (dialog) {
+		emit('get-dialog-data', dialog);
+		return;
+	}
+	if (download) {
+		window.open(`${BASE}/${download}`);
+		return;
+	}
+
 	const isDelete = type === 'delete';
 	const { useMessage, useMessageBox } = await import('/@/hooks/message');
 	if (confirm || isDelete) {
@@ -57,11 +105,11 @@ const handleAction = async ({ label, confirm, handler, params, type, body, previ
 			const { markRaw } = await import('vue');
 			const { Delete } = await import('@element-plus/icons-vue');
 			await useMessageBox().confirm(
-				'是否' + (isDelete ? '删除' : confirm.ask || label) + `当前${body}？`,
+				(confirm as Confirm).ask || '是否' + (isDelete ? '删除' : label) + `当前${body}？`,
 				'warning',
 				isDelete ? markRaw(Delete) : ''
 			);
-		} catch {
+		} catch (e) {
 			return;
 		}
 	}
@@ -69,12 +117,11 @@ const handleAction = async ({ label, confirm, handler, params, type, body, previ
 		const { previewFile } = await import('/@/utils/other');
 		return previewFile({ url: preview.url, ...(preview.mime ? { mime: preview.mime } : {}) });
 	}
-
 	try {
 		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...params) : await handler(params);
 		if (!preview) {
 			refresh && refresh();
-			useMessage().success(body + (isDelete ? '删除' : confirm?.done || label) + '成功！');
+			useMessage().success((confirm as Confirm).done || body + (isDelete ? '删除' : label) + '成功！');
 		}
 	} catch (err: any) {
 		Promise.reject(err);
@@ -85,12 +132,12 @@ const handleAction = async ({ label, confirm, handler, params, type, body, previ
 <template>
 	<ul class="flex flex-wrap justify-center">
 		<li
-			v-for="({ label, confirm, body = props.actionBody, type, auth, action: { handler, params } = {}, preview }, index) in actions"
-			v-auth="`${auth || ''}`"
-			v-text="label"
-			:key="label"
+			v-for="(action, index) in actions"
+			v-auth="`${action.auth || ''}`"
+			v-text="action.label"
+			:key="action.label"
 			:class="['text-primary', 'cursor-pointer', { 'mr-[12px]': actions.length > 1 && index < actions.length - 1 }]"
-			@click="handleAction({ label, confirm, handler, params, type, body, preview })"
+			@click="handleAction(action)"
 		/>
 	</ul>
 </template>

@@ -161,6 +161,7 @@ const submit = async () => {
 			valid = !prop.disabled ? await form.value.validate() : true;
 		} catch (e) {
 			valid = false;
+			Promise.reject(e);
 		}
 		prop.debug && emit('get-validation', valid);
 		if (!valid) return;

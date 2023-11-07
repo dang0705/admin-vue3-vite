@@ -58,6 +58,7 @@
 							:del-fn-name="delObj"
 							:actionsOrigin="actions"
 							:main-key="selectMainKey"
+							@get-dialog-data="getDialogData"
 						/>
 					</template>
 				</el-table-column>
@@ -66,6 +67,8 @@
 		</div>
 		<slot />
 	</div>
+	<!--  Action dialog-->
+	<Dialog v-model="showDialog" v-model:form-data="dialogFormData" v-bind="_dialog" :columns="24" :on-submit="onDialogSubmit" />
 </template>
 
 <script setup lang="ts" name="TableView">
@@ -167,6 +170,23 @@ const props = defineProps({
 		default: true,
 	},
 });
+
+const showDialog = ref(false);
+const _dialog = ref({});
+const dialogFormData = ref({});
+const onDialogSubmit = async () => {
+	const action = apis[`/src/api/${props.module}`][_dialog.value.action?.name];
+	action && (await action({ ...dialogFormData.value, ...(_dialog.value.action?.params || {}) }));
+};
+const getDialogData = async (dialog) => {
+	showDialog.value = true;
+	_dialog.value = dialog;
+	if (dialog.edit) {
+		const { name, params } = dialog.edit;
+		const edit = apis[`/src/api/${props.module}`][name || 'getObj'];
+		edit && (dialogFormData.value = (await edit(params)).data);
+	}
+};
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法

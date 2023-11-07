@@ -48,6 +48,7 @@ declare type RouteItem<T = any> = {
 	children: T[];
 	query?: { [key: string]: T };
 	params?: { [key: string]: T };
+	state?: { [key: string]: T };
 	contextMenuClickId?: string | number;
 	commonUrl?: string;
 	isFnClick?: boolean;

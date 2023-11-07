@@ -102,3 +102,61 @@ interface BatchUploadRecordPage {
 </script>
 
 ```
+
+### Table-view 的 actions配置
+```ts
+import { RouteItems } from '/@/types/global';
+// 主配置
+interface Actions {
+    label: string; // 按钮文案
+    body?: string; // 确认弹框的内容主体，如：'是否要删除【合同】'，合同为body，其他文案会依上下文自动拼接
+    download?: string; // 下载路径，传入后便为下载功能
+    dialog?: Dialog; // 弹框内的表单，传入后唤起弹框
+    auth?: string; // 权限标识
+    show?: Function; // 按钮显示逻辑
+    action?: Action; // 按钮操作
+    type?: string; // 按钮类型, 目前只有delete(删除)一种, 传入delete 便无需关心action
+    preview?: Preview; // 预览文件
+    to?: RouteItems; // 跳转
+    confirm?: boolean | Confirm; // 传入后唤起确认
+}
+
+// 其他子项配置
+
+interface Action {
+	handler: Function;     // 方法名
+	params?: unknown;      // 方法所需参数
+}
+interface Preview {
+	url: string;           // 预览url
+	mime?: string;         // 预览文件mime类型, 默认pdf
+}
+interface Confirm {
+	ask?: string;          // 询问的自定义文案
+	done?: string;         // 成功后的自定义文案
+}
+
+
+// 弹框相关配置
+interface Dialog {
+    title?: string;
+    forms?: [];
+    edit?: Edit; // 回显配置
+    
+    // ..... others Dialog component props
+
+    // action原本不在Dialog组件, 属于为此处特别注入的属性
+    action?: DialogAction;
+}
+
+interface Edit {
+    name?: string; // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
+    params?: unknown; // 回显的参数
+}
+interface DialogAction {
+	name?: string;          // api路径下 该模块 ts文件的对应方法名
+	params?: unknown|object;// 接口所需参数
+}
+
+
+```
