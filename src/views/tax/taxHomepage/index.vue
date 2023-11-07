@@ -36,7 +36,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务监管-首页">
+<script setup lang="ts">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 import thousandthDivision from '/@/utils/thousandth-division';
@@ -142,7 +142,13 @@ const handleView = (type: string, row: any) => {
 	});
 };
 </script>
-
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
+</script>
 <style lang="scss" scoped>
 .total_list {
 	background: #fafafa;

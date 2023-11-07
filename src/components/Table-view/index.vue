@@ -66,18 +66,18 @@
 			<pagination v-if="!noPagination" @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
 		<slot />
+		<Dialog v-model="showDialog" v-model:form-data="dialogFormData" v-bind="_dialog" :columns="24" :on-submit="onDialogSubmit" />
 	</div>
-	<!--  Action dialog-->
-	<Dialog v-model="showDialog" v-model:form-data="dialogFormData" v-bind="_dialog" :columns="24" :on-submit="onDialogSubmit" />
 </template>
 
-<script setup lang="ts" name="TableView">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import thousandthDivision from '/@/utils/thousandth-division';
-import TableActions from '/@/components/FormTable/Table-actions.vue';
+import TableActions from '/src/components/Table-view/Table-actions.vue';
 import apis from '/@/api';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
+defineOptions({ name: 'TableView' });
 const props = defineProps({
 	columns: {
 		type: Array,

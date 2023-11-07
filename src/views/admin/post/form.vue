@@ -23,11 +23,11 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="systemPostDialog">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, validatePostCode, validatePostName } from '/@/api/admin/post';
 import { useI18n } from 'vue-i18n';
-
+defineOptions({ name: 'systemPostDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 

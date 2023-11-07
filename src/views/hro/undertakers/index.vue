@@ -191,7 +191,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="承接人名册">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/hro/undertakerInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
@@ -351,4 +351,11 @@ const handleDelete = async (ids: string[]) => {
 };
 
 $refreshList(resetQuery);
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

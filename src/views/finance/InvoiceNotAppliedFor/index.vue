@@ -60,7 +60,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="未申请发票">
+<script setup lang="ts">
 import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 applyfor申请 open开票
 
@@ -357,5 +357,12 @@ const onSubmit = async (refresh: any) => {
 	} catch (err: any) {
 	} finally {
 	}
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

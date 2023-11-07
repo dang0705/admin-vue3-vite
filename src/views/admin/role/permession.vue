@@ -33,7 +33,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="role-permession">
+<script setup lang="ts">
 import { fetchRoleTree, permissionUpd } from '/@/api/admin/role';
 import { pageList } from '/@/api/admin/menu';
 import { useMessage } from '/@/hooks/message';
@@ -42,6 +42,7 @@ import { useI18n } from 'vue-i18n';
 import other from '/@/utils/other';
 import { CheckboxValueType } from 'element-plus';
 
+defineOptions({ name: 'role-permession' });
 const { t } = useI18n();
 
 const menuTree = ref();

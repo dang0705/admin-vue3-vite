@@ -16,7 +16,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="支付通道">
+<script setup lang="ts">
 import { delObjs } from '/@/api/core/spPaymentChannel';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
@@ -91,5 +91,12 @@ const handleDelete = async (ids: string[]) => {
 	} catch (err: any) {
 		useMessage().error(err.msg);
 	}
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

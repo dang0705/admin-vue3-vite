@@ -56,7 +56,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="router.home">
+<script setup lang="ts">
 import { nextTick } from 'vue';
 import { useUserInfo } from '/@/stores/userInfo';
 import Column from '/@/views/home/components/column.vue';
@@ -74,6 +74,8 @@ import remind from '/@/assets/dashboard/remind.webp';
 import merchant from '/@/assets/dashboard/merchant.webp';
 import undertaker from '/@/assets/dashboard/undertaker.webp';
 import customerProportion from '/@/assets/dashboard/customerProportion.webp';
+
+defineOptions({ name: 'router.home' });
 const commandChartRef = ref();
 const commandCharOption = {
 	title: {
@@ -235,6 +237,7 @@ onMounted(async () => {
 	commandChart.setOption(commandCharOption);
 });
 </script>
+
 <style scoped lang="scss">
 a {
 	color: #0065ff;

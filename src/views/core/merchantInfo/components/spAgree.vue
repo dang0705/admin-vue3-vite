@@ -89,12 +89,13 @@
 	<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
 </template>
 
-<script setup lang="ts" name="systemMerchantServiceAgreement">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/core/merchantServiceAgreement';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+defineOptions({ name: 'systemMerchantServiceAgreement' });
 const route = useRoute();
 
 const { is_need, fee_calculation_method } = useDict('is_need', 'fee_calculation_method');

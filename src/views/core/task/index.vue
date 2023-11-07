@@ -171,7 +171,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="任务记录">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, putAuditTask, taskDown } from '/@/api/core/task';
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -180,7 +180,7 @@ import { useDict } from '/@/hooks/dict';
 // 引入组件
 const FormAudit = defineAsyncComponent(() => import('./components/audit.vue'));
 const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 // 定义查询字典
 
 const conditionForms = [
@@ -381,4 +381,11 @@ const task_typeLevel_option = computed(() => {
 	return task_typeLevel_option;
 });
 $refreshList(resetQuery);
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

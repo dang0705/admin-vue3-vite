@@ -12,7 +12,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务-商户转款凭证">
+<script setup lang="ts">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 const { proxy } = getCurrentInstance();
@@ -85,5 +85,12 @@ const conditionForms = [
 ];
 const handleContractFile = (row: any) => {
 	window.open(`${proxy.baseURL}/${row.invoiceFilePath}`);
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

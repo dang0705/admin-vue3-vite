@@ -10,7 +10,7 @@
 	</TableView>
 </template>
 
-<script setup lang="ts" name="任务结算明细">
+<script setup lang="ts">
 import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
 const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
 const { proxy } = getCurrentInstance();
@@ -219,4 +219,11 @@ const handleContractFile = (row) => {
 	window.open(`${proxy.baseURL}/${row.contractFile}`);
 };
 //
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

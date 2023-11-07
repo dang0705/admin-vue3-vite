@@ -102,12 +102,13 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemRole">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObj, pageList, putObj } from '/@/api/admin/role';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
+defineOptions({ name: 'systemRole' });
 // 引入组件
 const RoleDialog = defineAsyncComponent(() => import('./form.vue'));
 const Permession = defineAsyncComponent(() => import('./permession.vue'));

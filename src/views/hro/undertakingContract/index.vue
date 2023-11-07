@@ -32,7 +32,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="合同签署">
+<script setup lang="ts">
 import { termination } from '/@/api/hro/undertakingContract';
 import { useI18n } from 'vue-i18n';
 import Array2Object, { valueAsLabel } from '/@/utils/array-2-object';
@@ -177,4 +177,11 @@ const batchElectronicSignForms = [
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 // 定义变量内容
 const formDialogRef = ref();
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

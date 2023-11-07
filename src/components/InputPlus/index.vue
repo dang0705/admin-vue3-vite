@@ -17,7 +17,8 @@
 	</el-input>
 </template>
 
-<script setup lang="ts" name="divider">
+<script setup lang="ts">
+defineOptions({ name: 'Input-plus' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({

@@ -20,7 +20,7 @@
 
 <script setup lang="ts" name="税务-任务详情">
 import { getObj, addObj, putObj } from '/@/api/core/task';
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 const UndertakerTaxComponents = defineAsyncComponent(() => import('/@/views/tax/undertakerTax/index.vue'));
 const route: any = useRoute();
 const tabType = ref(1);

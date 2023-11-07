@@ -1,6 +1,7 @@
-<script setup lang="ts" name="DialogView">
+<script setup lang="ts">
 import FormViewProps from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
+defineOptions({ name: 'Dialog-view' });
 const props = defineProps({
 	modelValue: {
 		type: Boolean,

@@ -31,7 +31,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="商户资金账户">
+<script setup lang="ts">
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 import spPaymentChannel from '/@/api/core/spPaymentChannel';
@@ -163,5 +163,12 @@ const handleDetail = (row: any) => {
 			refresh: 1,
 		},
 	});
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

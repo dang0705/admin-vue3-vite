@@ -57,13 +57,13 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemDic" setup>
+<script lang="ts" setup>
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { delObj, fetchList, refreshCache } from '/@/api/admin/dict';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import { downBlobFile } from '/@/utils/other';
-
+defineOptions({ name: 'systemDic' });
 // 引入组件
 const DicDialog = defineAsyncComponent(() => import('./form.vue'));
 const DictItemDialog = defineAsyncComponent(() => import('./dictItem/index.vue'));

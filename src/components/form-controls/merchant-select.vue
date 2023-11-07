@@ -1,5 +1,6 @@
-<script setup lang="ts" name="MerchantSelect">
+<script setup lang="ts">
 import { getMerchantInfoList } from '/@/api/core/merchantInfo';
+defineOptions({ name: 'MerchantSelect' });
 const props = defineProps({
 	modelValue: {
 		type: String,

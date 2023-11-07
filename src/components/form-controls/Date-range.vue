@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import dateRangeDefaultProps from '/@/configuration/date-range-default-props';
 import helpers from '/@/utils/helpers';
+defineOptions({ name: 'Date-range' });
 const props = defineProps({
 	startP: {
 		type: String,

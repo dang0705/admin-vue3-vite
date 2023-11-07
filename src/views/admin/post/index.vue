@@ -78,12 +78,13 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemPost" setup>
+<script lang="ts" setup>
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObj, fetchList } from '/@/api/admin/post';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
+defineOptions({ name: 'systemPost' });
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();

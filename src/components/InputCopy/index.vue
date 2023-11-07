@@ -8,8 +8,9 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="divider">
+<script setup lang="ts">
 import commonFunction from '/@/utils/commonFunction';
+defineOptions({ name: 'Input-copy' });
 const { copyText } = commonFunction();
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:modelValue']);

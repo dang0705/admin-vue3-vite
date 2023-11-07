@@ -136,7 +136,13 @@ const getSpInfoData = () => {
 getMerchantInfoData();
 getSpInfoData();
 </script>
-
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
+</script>
 <style lang="scss" scoped>
 .info_list {
 	display: flex;

@@ -34,13 +34,13 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemDicDialog" setup>
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { addObj, getObj, putObj, validateDictType } from '/@/api/admin/dict';
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
-
+defineOptions({ name: 'systemDicDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 const { dict_type } = useDict('dict_type');

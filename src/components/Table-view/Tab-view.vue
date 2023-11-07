@@ -14,7 +14,8 @@
 	</el-tabs>
 </template>
 
-<script setup lang="ts" name="TabView">
+<script setup lang="ts">
+defineOptions({ name: 'Tab-view' });
 interface Options {
 	label: string;
 	value: string;

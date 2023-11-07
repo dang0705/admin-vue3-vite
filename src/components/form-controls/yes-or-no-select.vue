@@ -1,5 +1,6 @@
-<script setup lang="ts" name="YesOrNo">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
+defineOptions({ name: 'YesOrNo' });
 const { yes_no_type } = useDict('yes_no_type');
 
 const props = defineProps({

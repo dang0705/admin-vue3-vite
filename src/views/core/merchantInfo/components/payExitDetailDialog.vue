@@ -15,7 +15,7 @@
 	</Dialog>
 </template>
 
-<script setup lang="ts" name="payExitDetailDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getMerchantSubAccountDetail } from '/@/api/core/merchantInfo';
@@ -24,6 +24,7 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 const emit = defineEmits(['refresh']);
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
+defineOptions({ name: 'payExitDetailDialog' });
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);

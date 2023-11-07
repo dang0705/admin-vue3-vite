@@ -67,7 +67,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="发票记录">
+<script setup lang="ts">
 import { getObj, auditInvoice, cancelInvoice } from '/@/api/finance/invoiceRecord';
 import { saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 see查看 open开票 cancel作废 reject驳回
@@ -423,5 +423,12 @@ const onSubmit = async (refresh: any) => {
 	} catch (err: any) {
 	} finally {
 	}
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

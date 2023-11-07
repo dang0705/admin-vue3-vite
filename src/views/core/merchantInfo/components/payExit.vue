@@ -86,11 +86,12 @@
 	<PayExitDetailDialog ref="payExitDetailDialogRef"></PayExitDetailDialog>
 </template>
 
-<script setup lang="ts" name="payExit">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { getMerchantSubAccountList, getSpPaymentChannelList, putMerchantSubAccount } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
+defineOptions({ name: 'payExit' });
 const route = useRoute();
 // import SpSelect from '/@/components/form-controls/sp-select.vue';
 const PayExitDetailDialog = defineAsyncComponent(() => import('./payExitDetailDialog.vue'));

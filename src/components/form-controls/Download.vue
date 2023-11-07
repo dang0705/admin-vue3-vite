@@ -1,5 +1,6 @@
 <script setup>
 import baseUrl from '/@/configuration/base-url';
+defineOptions({ name: 'Download-file' });
 const DownloadComponent = {
 	props: {
 		modelValue: {

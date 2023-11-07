@@ -66,11 +66,12 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="systemMenuDialog">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { info, pageList, putObj, addObj } from '/@/api/admin/menu';
 import { useMessage } from '/@/hooks/message';
 
+defineOptions({ name: 'systemMenuDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();

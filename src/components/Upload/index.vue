@@ -123,7 +123,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="UploadFile">
+<script setup lang="ts">
 import helper from '/@/utils/helpers';
 import { ElNotification, formContextKey, formItemContextKey } from 'element-plus';
 import type { UploadProps, UploadRequestOptions } from 'element-plus';
@@ -131,7 +131,7 @@ import { generateUUID } from '/@/utils/other';
 import request from '/@/utils/request';
 import { IMAGE_TYPES, FILE_TYPES, LIMIT, COMPRESSION } from '/@/configuration/upload-rules';
 import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility';
-
+defineOptions({ name: 'Upload-file' });
 // 接受父组件参数
 const props = defineProps({
 	modelValue: {
