@@ -148,7 +148,6 @@ const handleView = (type: string, row: any) => {
 	background: #fafafa;
 	display: flex;
 	flex: 1;
-	// margin-right: 36px;
 	padding: 30px 0;
 	.total_item {
 		width: 33.33%;
