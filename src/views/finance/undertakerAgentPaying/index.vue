@@ -164,10 +164,7 @@ const confirmToPay = async (
 		};
 	}
 };
-const submit = async (refresh: Function) => {
-	await batchPayment(dialog.value.data);
-	refresh();
-};
+const submit = () => batchPayment(dialog.value.data);
 const entirelyPay = async (refresh: Function, data: any) => {
 	await wholePayment(data);
 	// todo 等tab组件更新

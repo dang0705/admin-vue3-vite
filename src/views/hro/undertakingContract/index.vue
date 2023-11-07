@@ -1,98 +1,23 @@
 <template>
-	<div class="layout-padding">
-		<div class="layout-padding-auto layout-padding-view">
-			<form-view
-				v-show="showSearch"
-				v-model="state.queryForm"
-				:forms="conditionForms"
-				:on-cancel="resetQuery"
-				:on-submit="getDataList"
-				submit-button-text="查询"
-				cancel-button-text="重置"
-			/>
-			<el-row>
-				<div class="mb8" style="width: 100%">
-					<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
-						手动上传合同
-					</el-button>
-					<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'" @click="batchElectronicSignRef.openDialog()">
-						批量电子签署
-					</el-button>
-					<right-toolbar v-model:showSearch="showSearch" class="ml10 mr20" style="float: right" @queryTable="getDataList" />
-				</div>
-			</el-row>
-			<el-table
-				:data="state.dataList"
-				v-loading="state.loading"
-				border
-				:cell-style="tableStyle.cellStyle"
-				:header-cell-style="tableStyle.headerCellStyle"
-				@selection-change="selectionChangHandle"
-				@sort-change="sortChangeHandle"
-			>
-				<el-table-column prop="undertakerName" label="姓名" show-overflow-tooltip width="100" />
-				<el-table-column prop="undertakerCard" label="证件号码" show-overflow-tooltip width="180" />
-				<el-table-column prop="undertakerPhone" label="手机号码" show-overflow-tooltip width="120" />
-				<el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="200" />
-				<el-table-column prop="contractNumber" label="签约编号" show-overflow-tooltip width="210" />
-				<el-table-column prop="createTime" label="发起签约时间" show-overflow-tooltip width="180" />
-				<el-table-column prop="startTime" label="合同开始时间" show-overflow-tooltip width="180" />
-				<el-table-column prop="endTime" label="合同结束时间" show-overflow-tooltip width="180" />
-				<el-table-column prop="contractEndTime" label="合同终止时间" show-overflow-tooltip width="180" />
-				<el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100">
-					<template #default="{ row: { contractType } }">
-						<span v-text="contractMap?.contract_type[contractType]" />
-					</template>
-				</el-table-column>
-				<el-table-column prop="spName" label="签约服务商" show-overflow-tooltip width="140" />
-				<el-table-column prop="state" label="签约状态" show-overflow-tooltip width="140">
-					<template #default="{ row: { state } }"><span v-text="contractMap?.contract_status[state]" /></template>
-				</el-table-column>
-				<el-table-column label="操作" width="150" fixed="right">
-					<template #default="{ row: { id, state, contractFile } }">
-						<el-button icon="edit-pen" text type="primary" v-auth="'停止'" @click="formDialogRef.openDialog(id)"> 查看 </el-button>
-						<el-button
-							icon="delete"
-							text
-							type="primary"
-							v-if="state === valueAsLabel(contractMap?.contract_status)['已终止'] || state === valueAsLabel(contractMap?.contract_status)['已失效']"
-							v-auth="'hro_undertakingContract_del'"
-							@click="handleDelete([id])"
-						>
-							删除
-						</el-button>
-						<el-button
-							v-if="state !== valueAsLabel(contractMap?.contract_status)['待签署']"
-							icon="view"
-							text
-							type="primary"
-							v-auth="`hro_undertakingContract_view`"
-							@click="previewFile({ url: contractFile })"
-						>
-							查看
-							<!--							<a :href="`${BASE}/${contractFile}`" :download="false" target="_blank">查看</a>-->
-						</el-button>
-
-						<el-button
-							v-if="state !== valueAsLabel(contractMap?.contract_status)['已终止']"
-							@click="handleTermination(id)"
-							v-auth="`hro_undertakingContract_termination`"
-							icon="Remove"
-							text
-							type="primary"
-							>终止</el-button
-						>
-
-						<!--						<el-button  text type="primary" v-auth="`hro_undertakingContract_termination`"> 终止 </el-button>-->
-					</template>
-				</el-table-column>
-			</el-table>
-			<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
-		</div>
-
-		<!-- 编辑、新增  -->
-		<form-dialog ref="formDialogRef" @refresh="getDataList(false)" />
+	<Table-View
+		:columns="columns"
+		:condition-forms="conditionForms"
+		:actions="actions"
+		action-body="合同"
+		module="hro/undertakingContract.ts"
+		label-width="140"
+	>
+		<template #top-bar>
+			<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
+				手动上传合同
+			</el-button>
+			<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'" @click="batchElectronicSignRef.openDialog()">
+				批量电子签署
+			</el-button>
+		</template>
+		<form-dialog ref="formDialogRef" />
 		<uploadExcel
+			:forms="batchElectronicSignForms"
 			ref="batchElectronicSignRef"
 			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
 			main-label="待签署用户名单"
@@ -100,22 +25,82 @@
 			temp-url="/files/合同批量签署模板.xlsx"
 			template-on-front
 			title="添加合同签署"
-			:forms="batchElectronicSignForms"
 			submitButtonText="下一步"
 		/>
-	</div>
+	</Table-View>
 </template>
 
 <script setup lang="ts" name="合同签署">
-import { BasicTableProps, useTable } from '/@/hooks/table';
-import { delObjs, fetchList, termination } from '/@/api/hro/undertakingContract';
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { termination } from '/@/api/hro/undertakingContract';
 import { useI18n } from 'vue-i18n';
-import { previewFile } from '/@/utils/other';
 import Array2Object, { valueAsLabel } from '/@/utils/array-2-object';
+
+// 定义查询字典
+const contractMap = Array2Object({ dic: ['contract_type', 'contract_status'] });
 
 const { t } = useI18n();
 const input = 'el-input';
+const columns = [
+	{ label: '姓名', prop: 'undertakerName', width: '100' },
+	{ label: '证件号码', prop: 'undertakerCard', width: '180' },
+	{ label: '手机号码', prop: 'undertakerPhone', width: '120' },
+	{ label: '合同名称', prop: 'contractName', width: '200' },
+	{ label: '签约编号', prop: 'contractNumber', width: '210' },
+	{ label: '发起签约时间', prop: 'createTime', width: '180' },
+	{ label: '合同开始时间', prop: 'startTime', width: '180' },
+	{ label: '合同结束时间', prop: 'endTime', width: '180' },
+	{ label: '合同终止时间', prop: 'contractEndTime', width: '180' },
+	{
+		label: '合同类型',
+		prop: 'contractType',
+		width: '100',
+		value: ({ contractType }) => contractMap.value.contract_type[contractType],
+	},
+	{ label: '签约服务商', prop: 'spName', width: '140' },
+	{
+		label: '签约状态',
+		prop: 'state',
+		width: '140',
+		value: ({ state }) => contractMap.value.contract_status[state],
+	},
+	{
+		label: '操作',
+		prop: 'actions',
+		slot: true,
+		width: '150',
+		fixed: 'right',
+	},
+];
+const actions = ({ id, state, contractFile }: any) => {
+	const labelMapping = valueAsLabel(contractMap.value.contract_status);
+	const auth = (auth: string) => `hro_undertakingContract_${auth}`;
+	return [
+		{
+			label: '查看',
+			preview: {
+				url: contractFile,
+			},
+			auth: auth('view'),
+			show: () => state !== labelMapping['待签署'],
+		},
+		{
+			label: '终止',
+			auth: auth('termination'),
+			show: () => state !== labelMapping['已终止'],
+			confirm: true,
+			action: {
+				handler: termination,
+				params: { id },
+			},
+		},
+		{
+			label: '删除',
+			auth: auth('del'),
+			type: 'delete',
+			show: () => ['已终止', '已失效'].includes(contractMap.value.contract_status[state]),
+		},
+	];
+};
 const i18 = (str = '', key = 'label') => ({ [key]: t(`undertakingContract.${str}`) });
 // 筛选条件控件与数据
 const conditionForms = [
@@ -150,10 +135,14 @@ const conditionForms = [
 		label: '合同类型',
 		options: 'contract_type',
 	},
+	{
+		control: 'el-select',
+		key: 'state',
+		label: '合同状态',
+		options: 'contract_status',
+	},
 ];
 // 合同类型、状态枚举
-const contractMap = Array2Object({ dic: ['contract_type', 'contract_status'] });
-
 const batchElectronicSignRef = ref();
 // 批量电子签署控件与数据
 const batchElectronicSignForms = [
@@ -183,75 +172,6 @@ const batchElectronicSignForms = [
 ];
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
-// 定义查询字典
-
 // 定义变量内容
 const formDialogRef = ref();
-// 搜索变量
-const queryRef = ref();
-const showSearch = ref(true);
-// 多选变量
-const selectObjs = ref([]) as any;
-const multiple = ref(true);
-
-const state: BasicTableProps = reactive<BasicTableProps>({
-	queryForm: {},
-	pageList: fetchList,
-});
-
-//  table hook
-const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } = useTable(state);
-
-// 清空搜索条件
-const resetQuery = () => {
-	// 清空搜索条件
-	queryRef.value?.resetFields();
-	// 清空多选
-	selectObjs.value = [];
-	state.queryForm = {};
-	getDataList();
-};
-
-// 导出excel
-const exportExcel = () => {
-	downBlobFile('/hro/undertakingContract/export', Object.assign(state.queryForm, { ids: selectObjs }), 'undertakingContract.xlsx');
-};
-
-// 多选事件
-const selectionChangHandle = (objs: { id: string }[]) => {
-	selectObjs.value = objs.map(({ id }) => id);
-	multiple.value = !objs.length;
-};
-
-// 删除操作
-const handleDelete = async (ids: string[]) => {
-	try {
-		await useMessageBox().confirm('此操作将永久删除');
-	} catch {
-		return;
-	}
-
-	try {
-		await delObjs(ids);
-		getDataList();
-		useMessage().success('删除成功');
-	} catch (err: any) {
-		useMessage().error(err.msg);
-	}
-};
-const handleTermination = async (id: any) => {
-	try {
-		await useMessageBox().confirm('是否终止合同');
-	} catch {
-		return;
-	}
-	try {
-		await termination({ id });
-		getDataList();
-		useMessage().success('该合同已终止');
-	} catch (err: any) {
-		Promise.reject(err);
-	}
-};
-$refreshList(resetQuery);
 </script>

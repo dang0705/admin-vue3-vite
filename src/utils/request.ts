@@ -17,6 +17,7 @@ interface Config extends AxiosRequestConfig {
 	actionLoading?: boolean;
 }
 const ACTION_REQUEST = ['put', 'post', 'delete'];
+const NO_LADING_ACTIONS = ['/docs/sys-file/upload'];
 /**
  * Axios请求拦截器，对请求进行处理
  * 1. 序列化get请求参数
@@ -27,7 +28,10 @@ const ACTION_REQUEST = ['put', 'post', 'delete'];
 service.interceptors.request.use(
 	(config: Config) => {
 		// 操作接口添加遮罩
-		if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) || config.responseType?.toLowerCase() === 'blob') {
+		if (
+			!NO_LADING_ACTIONS.includes(config.url as string) &&
+			(ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) || config.responseType?.toLowerCase() === 'blob')
+		) {
 			$bus.emit('on-action-loading');
 		}
 		// 统一增加Authorization请求头, skipToken 跳过增加token

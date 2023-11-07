@@ -67,6 +67,7 @@ const getSubmitAndCancel = ({ submit, cancel }: any) => {
 					buttonPosition,
 					cancelButtonText,
 					isLastPage,
+					labelWidth,
 					nextButtonText,
 					prevButtonText,
 					pagination,

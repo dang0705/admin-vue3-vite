@@ -53,6 +53,7 @@ const formData = ref({
 	contractName: '',
 	spId: '',
 	undertakerId: '',
+	contractTimeRange: [],
 	contractFiles: [],
 });
 const underTackers = ref([]);
@@ -121,18 +122,8 @@ const openDialog = (id: string) => {
 
 // 提交
 const onSubmit = async () => {
-	try {
-		loading.value = true;
-		if (!formData.value.id) {
-			await addObj(formData.value);
-			useMessage().success('添加成功');
-			emit('refresh');
-		}
-		visible.value = false;
-	} catch (err: any) {
-	} finally {
-		loading.value = false;
-	}
+	await addObj(formData.value);
+	useMessage().success('添加成功');
 };
 
 // 初始化表单数据

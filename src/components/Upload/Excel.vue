@@ -190,7 +190,6 @@ const state = reactive({
 });
 const accept = ['.xlsx', '.xls'];
 const formData = ref({ ...prop.params });
-const overallRules = computed(() => [...prop.rules, ...excelRules.value]);
 const excelRules = ref([
 	{
 		required: prop.required,
