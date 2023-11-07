@@ -19,7 +19,7 @@
 				<SpSelect v-model="qrCodeForm.id" />
 			</el-form-item>
 		</el-form>
-		<div class="flex justify-center flex-col items-center mt-6 h-[200px]" v-loading="loading">
+		<div class="flex justify-center flex-col items-center mt-6 h-[200px]">
 			<img v-show="qrCodeUrl && qrCodeUrl !== '1'" class="w-[200px]" :src="qrCodeUrl" />
 			<span v-if="!qrCodeUrl">选择服务商后，可查看二维码</span>
 		</div>
@@ -60,7 +60,6 @@ const qrCodeUrl = ref('');
 const qrCode = async () => {
 	showQrCode.value = true;
 };
-let loading = false;
 watch(
 	() => showQrCode.value,
 	(showQrcode) => !showQrcode && (qrCodeForm.value = { id: '' }) && (qrCodeUrl.value = '')
@@ -71,12 +70,10 @@ watch(
 		if (!id) return;
 		qrCodeUrl.value = '1';
 		try {
-			loading = true;
 			const { data } = await $http.post(spInfo.qrCode, { id });
 			qrCodeUrl.value = `${HOST}${baseUrl}/${data}`;
 		} catch (e) {
-		} finally {
-			loading = false;
+			console.log(e);
 		}
 	}
 );
