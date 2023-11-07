@@ -71,8 +71,9 @@ const columns = [
 		fixed: 'right',
 	},
 ];
+
+const labelMapping = valueAsLabel(contractMap.value.contract_status);
 const actions = ({ id, state, contractFile }: any) => {
-	const labelMapping = valueAsLabel(contractMap.value.contract_status);
 	const auth = (auth: string) => `hro_undertakingContract_${auth}`;
 	return [
 		{

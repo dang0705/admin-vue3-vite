@@ -48,11 +48,17 @@
 					}"
 				>
 					<template v-if="column.slot || column.value" v-slot="{ row }">
-						<!--						<div class="optionDiv whitespace-nowrap inline-block">-->
-						<slot :name="column.prop" :row="row">
+						<slot :name="column.prop" :row="row" :confirm="confirm">
 							<template v-if="column.value">{{ column.value(row) }}</template>
 						</slot>
-						<!--						</div>-->
+						<TableActions
+							v-if="column.prop === 'actions' && actions.length"
+							:row="row"
+							:action-body="actionBody"
+							:del-fn-name="delObj"
+							:actionsOrigin="actions"
+							:main-key="selectMainKey"
+						/>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -65,6 +71,8 @@
 <script setup lang="ts" name="TableView">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import thousandthDivision from '/@/utils/thousandth-division';
+import TableActions from '/@/components/FormTable/Table-actions.vue';
+import apis from '/@/api';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 const props = defineProps({
@@ -73,6 +81,14 @@ const props = defineProps({
 		required: true,
 	},
 	module: {
+		type: String,
+		default: '',
+	},
+	actions: {
+		type: [Array, Function],
+		default: () => [],
+	},
+	actionBody: {
 		type: String,
 		default: '',
 	},
@@ -87,6 +103,10 @@ const props = defineProps({
 	getListFnName: {
 		type: String,
 		default: 'fetchList',
+	},
+	delFnName: {
+		type: String,
+		default: 'delObjs',
 	},
 	// 额外的参数
 	params: {
@@ -147,15 +167,12 @@ const props = defineProps({
 		default: true,
 	},
 });
-/**
- * 获取api目录下所有的文件，并获取文件内容
- */
-const apis = import.meta.glob('/src/api/**/*.@(js|ts)', { eager: true }) as Record<string, any>;
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
 const fetchList: any = computed(() => apis[`/src/api/${props.module}`][props.getListFnName]);
+const delObj: any = computed(() => apis[`/src/api/${props.module}`][props.delFnName]);
 
 const showSearch = ref(true);
 const params = computed(() => props.params);
@@ -228,6 +245,29 @@ const tableCellFormatter = (row, column, cellValue, index) => {
 		return `￥${thousandthDivision({ number: cellValue })}`;
 	}
 	return cellValue;
+};
+
+/**
+ * @description  确认弹框
+ * @param confirm {string}    确认文案
+ * @param success {string}    成功文案
+ * @param fn      {function}  实际操作方法
+ * @param params  {object}    参数
+ */
+const confirm = async ({ text: { confirm, success }, handler: { fn, params } }) => {
+	const { useMessage, useMessageBox } = await import('/@/hooks/message');
+	try {
+		await useMessageBox().confirm(confirm);
+	} catch {
+		return;
+	}
+	try {
+		await fn(params);
+		getDataList();
+		useMessage().success(success);
+	} catch (err: any) {
+		Promise.reject(err);
+	}
 };
 // 暴露变量
 defineExpose({

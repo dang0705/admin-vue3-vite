@@ -57,7 +57,7 @@ const handleAction = async ({ label, confirm, handler, params, type, body, previ
 			const { markRaw } = await import('vue');
 			const { Delete } = await import('@element-plus/icons-vue');
 			await useMessageBox().confirm(
-				'是否' + (isDelete ? '确认删除' : confirm.ask || label) + `当前${body}？`,
+				'是否' + (isDelete ? '删除' : confirm.ask || label) + `当前${body}？`,
 				'warning',
 				isDelete ? markRaw(Delete) : ''
 			);
@@ -65,15 +65,17 @@ const handleAction = async ({ label, confirm, handler, params, type, body, previ
 			return;
 		}
 	}
-	if (preview) {
+	if (preview?.url) {
 		const { previewFile } = await import('/@/utils/other');
 		return previewFile({ url: preview.url, ...(preview.mime ? { mime: preview.mime } : {}) });
 	}
 
 	try {
-		isDelete ? await props.delFnName([props.row[props.mainKey]]) : await handler(params);
-		refresh && refresh();
-		useMessage().success(body + (isDelete ? '删除' : confirm.done || label) + '成功！');
+		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...params) : await handler(params);
+		if (!preview) {
+			refresh && refresh();
+			useMessage().success(body + (isDelete ? '删除' : confirm?.done || label) + '成功！');
+		}
 	} catch (err: any) {
 		Promise.reject(err);
 	}
