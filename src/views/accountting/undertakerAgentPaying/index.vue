@@ -46,13 +46,13 @@
 </template>
 
 <script setup lang="ts">
-import { batchPayment, wholePayment } from '/@/api/finance/undertakerAgentPaying';
-import Array2Object from '/@/utils/array-2-object';
-import isArrayItemSame from '/@/utils/is-array-item-same';
-import { useMessageBox } from '/@/hooks/message';
-import thousandthDivision from '/@/utils/thousandth-division';
-import columns from '/@/views/finance/undertakerAgentPaying/columns';
-import conditionForms from '/@/views/finance/undertakerAgentPaying/conditionForms';
+import { batchPayment, wholePayment } from '/src/api/finance/undertakerAgentPaying';
+import Array2Object from '/src/utils/array-2-object';
+import isArrayItemSame from '/src/utils/is-array-item-same';
+import { useMessageBox } from '/src/hooks/message';
+import thousandthDivision from '/src/utils/thousandth-division';
+import columns from '/src/views/accountting/undertakerAgentPaying/columns';
+import conditionForms from '/src/views/accountting/undertakerAgentPaying/conditionForms';
 // 当前tab选中的中文
 const currentTab = ref('');
 // 付款弹框

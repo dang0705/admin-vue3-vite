@@ -1,4 +1,4 @@
-import { submitObj } from '/@/api/core/settleBill';
+import { submitObj } from '/src/api/core/settleBill';
 
 const auth = (auth: string) => `core_settleBill_${auth}`;
 

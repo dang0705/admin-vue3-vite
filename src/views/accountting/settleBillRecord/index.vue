@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 const router = useRouter();
-import { useMessage, useMessageBox } from '/@/hooks/message';
-import { payChannel } from '/@/configuration/dynamic-control';
+import { useMessage, useMessageBox } from '/src/hooks/message';
+import { payChannel } from '/src/configuration/dynamic-control';
 
 const columns = [
 	{

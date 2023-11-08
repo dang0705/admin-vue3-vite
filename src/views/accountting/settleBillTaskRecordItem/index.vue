@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import { delObjs, getObj, addObj } from '/@/api/core/settleBillTaskRecordItem';
+import { delObjs, getObj, addObj } from '/src/api/core/settleBillTaskRecordItem';
 const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
 const { proxy } = getCurrentInstance();
-import { useMessage, useMessageBox } from '/@/hooks/message';
-import Array2Object from '/@/utils/array-2-object';
+import { useMessage, useMessageBox } from '/src/hooks/message';
+import Array2Object from '/src/utils/array-2-object';
 interface BatchUploadRecordPage {
 	isSignServiceContract: number;
 	isBankFourEssentialFactor: number;

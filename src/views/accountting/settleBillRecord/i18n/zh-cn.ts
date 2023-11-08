@@ -1,0 +1,28 @@
+export default {
+   settleBillRecord: {
+        index: '#',
+        importsettleBillRecordTip: '导入结算单',
+        id: ' id',
+        settleBillId: '账单id',
+        settleBillName: '账单名称',
+        settleBillType: '结算单类别(10:服务结算单,20:任务结算单)',
+        paymentBankId: '支付通道',
+        spId: '服务商id',
+        bankAccountNumberRecipient: '收款方银行账号',
+        accountNameRecipient: '收款方户名',
+        serviceAmount: '结算金额(元)',
+        status: '结算状态',
+        payTime: '付款时间',
+        inputIdTip: '请输入 id',
+        inputSettleBillIdTip: '请输入账单id',
+        inputSettleBillNameTip: '请输入账单名称',
+        inputSettleBillTypeTip: '请输入结算单类别(10:服务结算单,20:任务结算单)',
+        inputPaymentBankIdTip: '请输入支付通道',
+        inputSpIdTip: '请输入服务商id',
+        inputBankAccountNumberRecipientTip: '请输入收款方银行账号',
+        inputAccountNameRecipientTip: '请输入收款方户名',
+        inputServiceAmountTip: '请输入结算金额(元)',
+        inputStatusTip: '请输入结算状态',
+        inputPayTimeTip: '请输入付款时间',
+    }
+}
