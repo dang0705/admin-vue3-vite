@@ -9,7 +9,7 @@ import DelWrap from '/@/components/DelWrap/index.vue';
 import Editor from '/@/components/Editor/index.vue';
 import Tip from '/@/components/Tip/index.vue';
 
-export { DelWrap, ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, UploadImg, Divider, Editor, Tip };
+export { DelWrap, ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, Divider, Editor, Tip };
 
 export const customComponents = [
 	{
