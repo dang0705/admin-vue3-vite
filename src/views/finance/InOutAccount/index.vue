@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/@/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {

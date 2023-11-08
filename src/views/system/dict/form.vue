@@ -36,10 +36,10 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
-import { addObj, getObj, putObj, validateDictType } from '/src/api/admin/dict';
-import { useDict } from '/src/hooks/dict';
-import { useMessage } from '/src/hooks/message';
-import { rule } from '/src/utils/validate';
+import { addObj, getObj, putObj, validateDictType } from '/@/api/admin/dict';
+import { useDict } from '/@/hooks/dict';
+import { useMessage } from '/@/hooks/message';
+import { rule } from '/@/utils/validate';
 defineOptions({ name: 'systemDicDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
@@ -112,7 +112,7 @@ const onSubmit = async () => {
 		useMessage().success(t(dataForm.id ? 'common.editSuccessText' : 'common.addSuccessText'));
 		visible.value = false;
 		emit('refresh', result.data);
-		const { dict } = await import('/src/stores/dict');
+		const { dict } = await import('/@/stores/dict');
 		dict().$patch((state) => (state.dict = []));
 	} catch (err: any) {
 		useMessage().error(err.msg);

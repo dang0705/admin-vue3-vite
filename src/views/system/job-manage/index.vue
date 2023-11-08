@@ -120,10 +120,10 @@
 </template>
 
 <script lang="ts" name="systemSysJob" setup>
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { delObj, fetchList, runJobRa, shutDownJobRa, startJobRa } from '/src/api/daemon/job';
-import { useMessage, useMessageBox } from '/src/hooks/message';
-import { useDict } from '/src/hooks/dict';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { delObj, fetchList, runJobRa, shutDownJobRa, startJobRa } from '/@/api/daemon/job';
+import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 
 // 引入组件

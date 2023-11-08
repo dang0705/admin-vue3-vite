@@ -62,11 +62,11 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { fetchList, delObj } from '/src/api/admin/file';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { fetchList, delObj } from '/@/api/admin/file';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
-import { downBlobFile } from '/src/utils/other';
+import { downBlobFile } from '/@/utils/other';
 
 defineOptions({ name: 'systemSysFile' });
 // 引入组件

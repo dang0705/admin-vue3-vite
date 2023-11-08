@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { useMessage, useMessageBox } from '/@/hooks/message';
-const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/@/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 const route: any = useRoute();
 const router = useRouter();

@@ -41,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { fetchItemList, delItemObj } from '/src/api/admin/dict';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { fetchItemList, delItemObj } from '/@/api/admin/dict';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
 defineOptions({ name: 'dict-item' });

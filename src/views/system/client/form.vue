@@ -48,11 +48,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useDict } from '/src/hooks/dict';
-import { useMessage } from '/src/hooks/message';
-import { addObj, getObj, putObj, validateclientId } from '/src/api/admin/client';
+import { useDict } from '/@/hooks/dict';
+import { useMessage } from '/@/hooks/message';
+import { addObj, getObj, putObj, validateclientId } from '/@/api/admin/client';
 import { useI18n } from 'vue-i18n';
-import { rule } from '/src/utils/validate';
+import { rule } from '/@/utils/validate';
 defineOptions({ name: 'SysOauthClientDetailsDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);

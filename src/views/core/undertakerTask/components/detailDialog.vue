@@ -27,7 +27,7 @@ import { getObj, putTaskAcceptance } from '/@/api/core/undertakerTask';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import dynamicForms from '/@/views/core/undertakerTask/components/dynamic-forms';
-// import dynamicForms from '/@/views/hro/batchUploadRecord/import/dynamic-forms';
+// import dynamicForms from '/@/views/batch/import/dynamic-forms';
 const emit = defineEmits(['refresh']);
 import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['task_unit'] });

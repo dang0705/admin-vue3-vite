@@ -46,11 +46,11 @@
 
 <script lang="ts" setup>
 // 定义子组件向父组件传值/事件
-import { useDict } from '/src/hooks/dict';
-import { useMessage } from '/src/hooks/message';
-import { addObj, getObj, putObj, validateParamsCode, validateParamsName } from '/src/api/admin/param';
+import { useDict } from '/@/hooks/dict';
+import { useMessage } from '/@/hooks/message';
+import { addObj, getObj, putObj, validateParamsCode, validateParamsName } from '/@/api/admin/param';
 import { useI18n } from 'vue-i18n';
-import { rule } from '/src/utils/validate';
+import { rule } from '/@/utils/validate';
 
 defineOptions({ name: 'SysPublicParamDialog' });
 const emit = defineEmits(['refresh']);

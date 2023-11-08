@@ -197,12 +197,12 @@
 </template>
 
 <script setup lang="ts" name="账单详情">
-import { getObj, addObj, putObj, payBillRecord } from '/src/api/core/settleBill';
-import { queryPlatSpBalance } from '/src/api/finance/merchantAccountCapital';
-import Array2Object from '/src/utils/array-2-object';
+import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
+import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
+import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['yes_no_type', 'settle_status', 'payment_status'] });
-import thousandthDivision from '/src/utils/thousandth-division';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import thousandthDivision from '/@/utils/thousandth-division';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 const DetailDialog = defineAsyncComponent(() => import('./components/detailDialog.vue'));
 const route: any = useRoute();
 const detailDialogRef = ref();

@@ -185,10 +185,10 @@
 </template>
 
 <script setup lang="ts" name="InvoiceRecordDialog">
-import { useDict } from '/src/hooks/dict';
-import { useMessage } from '/src/hooks/message';
-import { getObj, addObj, putObj } from '/src/api/finance/invoiceRecord';
-import { rule } from '/src/utils/validate';
+import { useDict } from '/@/hooks/dict';
+import { useMessage } from '/@/hooks/message';
+import { getObj, addObj, putObj } from '/@/api/finance/invoiceRecord';
+import { rule } from '/@/utils/validate';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

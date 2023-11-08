@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import { delObjs } from '/src/api/core/spPaymentChannel';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import { delObjs } from '/@/api/core/spPaymentChannel';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const formDialogRef = ref();
 const spPaymentChannelRef = ref();

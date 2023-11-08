@@ -1,4 +1,4 @@
-import { payChannel } from '/src/configuration/dynamic-control';
+import { payChannel } from '/@/configuration/dynamic-control';
 export default [
 	{
 		control: 'MerchantSelect',
