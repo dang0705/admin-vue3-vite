@@ -256,11 +256,11 @@ const conditionForms2 = ref([
 		label: t('undertakerInfo.spName'),
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 	},
-	{
-		key: 'contractTimeRange',
-		rules: [{ required: true, trigger: 'change' }],
-		slot: true,
-	},
+	// {
+	// 	key: 'contractTimeRange',
+	// 	rules: [{ required: true, trigger: 'change' }],
+	// 	slot: true,
+	// },
 ]);
 // 定义查询字典
 // 定义变量内容

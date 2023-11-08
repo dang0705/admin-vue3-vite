@@ -2,7 +2,7 @@ import request from '/@/utils/request';
 
 export function fetchList(query?: Object) {
 	return request({
-		url: '/core/settleBillRecord/notInvoicedPage',
+		url: '/core/settleBillRecord/notInvoiced/page',
 		method: 'get',
 		params: query,
 	});
@@ -20,6 +20,14 @@ export function getObj(id?: string) {
 	return request({
 		url: '/core/settleBillRecord/' + id,
 		method: 'get',
+	});
+}
+
+export function getMergeObj(ids?: Array) {
+	return request({
+		url: '/core/settleBillRecord/checkForCombineInvoice',
+		method: 'post',
+		data: ids,
 	});
 }
 

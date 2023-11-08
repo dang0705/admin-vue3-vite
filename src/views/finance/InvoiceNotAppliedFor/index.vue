@@ -7,7 +7,15 @@
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="未申请发票.xlsx"
 		exportAuth="finance_invoiceRecordNot_export"
+		getFullSelection
+		v-model="selectObjs"
 	>
+		<template #top-bar>
+			<el-button type="primary" style="margin-right: 24px" @click="applyfor('0', 'merge')" :disabled="!selectObjs.length"> 申请合并开票 </el-button>
+			<div>
+				已选择 <span class="text-primary">{{ selectObjs.length }}</span> 条，合计开票金额 <span class="text-primary">{{ amountTo }}</span> 元
+			</div>
+		</template>
 		<template #actions="{ row: { id } }">
 			<el-button icon="folder-add" text type="primary" @click="applyfor(id, 'applyfor')" v-auth="'finance_invoiceRecordNot_applyfor'">
 				申请开票
@@ -18,7 +26,7 @@
 			vertical
 			button-position="center"
 			v-model="applyShow"
-			:title="financeType === 'applyfor' ? '申请开票' : '开具发票'"
+			:title="financeType === 'applyfor' ? '申请开票' : financeType === 'open' ? '开具发票' : '申请合并开票'"
 			submitButtonText="提交"
 			width="80%"
 			:label-width="160"
@@ -27,8 +35,22 @@
 			v-model:form-data="dialogFormData"
 			:onSubmit="onSubmit"
 		>
+			<template #settleBillRecordId>
+				<el-form-item label="结算单编号:">
+					<div>
+						<div v-for="(item, index) in dialogFormData.billRecordNums" :key="index">{{ item }}</div>
+					</div>
+				</el-form-item>
+			</template>
+			<template #serviceAmount>
+				<el-form-item label="结算金额:">
+					<div>
+						<div v-for="(item, index) in dialogFormData.serviceAmounts" :key="index">{{ item }}元</div>
+					</div>
+				</el-form-item>
+			</template>
 			<template #address>
-				<el-form-item label="邮寄地址:" prop="address" v-if="financeType === 'applyfor'">
+				<el-form-item label="邮寄信息:" prop="address" v-if="financeType !== 'open'">
 					<el-radio-group v-model="dialogFormData.radioAddress" class="ml-4" @change="radioChange">
 						<el-radio :label="1" size="large">默认邮寄地址</el-radio>
 						<el-radio :label="0" size="large">手动填写</el-radio>
@@ -61,8 +83,11 @@
 </template>
 
 <script setup lang="ts" name="未申请发票">
-import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
-const financeType = ref(); // 进入方式 applyfor申请 open开票
+import { getObj, getMergeObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
+const financeType = ref(); // 进入方式 applyfor申请 open开票 merge合并开票
+const selectObjs = ref([]); // 勾选的表格行
+
+const amountTo = computed(() => selectObjs.value.reduce((acc, cur) => acc + Number(cur.serviceAmount), 0).toFixed(2));
 
 const columns = [
 	{
@@ -217,26 +242,8 @@ const forms = computed(() => [
 			disabled: true,
 		},
 	},
-	...(financeType.value === 'applyfor'
+	...(financeType.value === 'open'
 		? [
-				{
-					control: 'InputPlus',
-					key: 'settleBillRecordId',
-					label: '结算单编号',
-					props: {
-						disabled: true,
-					},
-				},
-				{
-					control: 'InputPlus',
-					key: 'serviceAmount',
-					label: '结算金额',
-					props: {
-						disabled: true,
-					},
-				},
-		  ]
-		: [
 				{
 					control: 'InputPlus',
 					key: 'invoiceNumber',
@@ -251,6 +258,34 @@ const forms = computed(() => [
 						disabled: true,
 					},
 				},
+		  ]
+		: [
+				{
+					slot: true,
+					key: 'settleBillRecordId',
+					column: 12,
+				},
+				{
+					slot: true,
+					key: 'serviceAmount',
+					column: 12,
+				},
+				// {
+				// 	control: 'InputPlus',
+				// 	key: 'settleBillRecordId',
+				// 	label: '结算单编号',
+				// 	props: {
+				// 		disabled: true,
+				// 	},
+				// },
+				// {
+				// 	control: 'InputPlus',
+				// 	key: 'serviceAmount',
+				// 	label: '结算金额',
+				// 	props: {
+				// 		disabled: true,
+				// 	},
+				// },
 		  ]),
 	{
 		control: 'el-select',
@@ -264,6 +299,9 @@ const forms = computed(() => [
 		key: 'invoicingCategories',
 		label: '开票类目',
 		options: 'invoice_category',
+		props: {
+			multiple: true,
+		},
 		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
 	},
 	...(financeType.value === 'open'
@@ -338,14 +376,15 @@ const applyShow = ref(false);
 
 const applyfor = async (id: string, type: string) => {
 	financeType.value = type;
-	applyShow.value = true;
-	dialogFormData.value = (await getObj(id)).data;
+	dialogFormData.value = type === 'merge' ? (await getMergeObj(selectObjs.value.map(({ id }) => id))).data : (await getObj(id)).data;
+	console.log(dialogFormData.value, 9999);
 	dialogFormData.value.radioAddress = 1;
 	dialogFormData.value.serviceAmount = dialogFormData.value.serviceAmount + '元';
 	dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 	addressInfo.value.postAddress = dialogFormData.value.postAddress;
 	addressInfo.value.postUsername = dialogFormData.value.postUsername;
 	addressInfo.value.postPhone = dialogFormData.value.postPhone;
+	applyShow.value = true;
 };
 
 // 提交
