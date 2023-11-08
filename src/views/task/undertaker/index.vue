@@ -6,7 +6,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="承接记录">
+<script setup lang="ts">
 const UndertakingRecords = defineAsyncComponent(() => import('./components/undertakingRecords.vue'));
 </script>
 <script lang="ts">

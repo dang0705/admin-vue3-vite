@@ -28,21 +28,18 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="systemUndertakerTask">
+<script setup lang="ts">
+import Array2Object from '/@/utils/array-2-object';
+
+defineOptions({ name: 'systemUndertakerTask' });
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
-import { fetchList, delObjs } from '/@/api/core/undertakerTask';
-const route = useRoute();
 const prop = defineProps({
 	taskId: {
 		type: String,
 		default: '',
 	},
 });
-import { useMessage, useMessageBox } from '/@/hooks/message';
-import { payChannel } from '/@/configuration/dynamic-control';
-const router = useRouter();
-const form = reactive({});
-import Array2Object from '/@/utils/array-2-object';
+
 const batchMap = Array2Object({ dic: ['undertaking_status', 'yes_no_type'] });
 interface BatchUploadRecordPage {
 	state: number;
@@ -208,16 +205,16 @@ const columns = [
 ];
 
 // 删除操作
-const handleDelete = async (ids: string[]) => {
-	try {
-		await useMessageBox().confirm('此操作将永久删除');
-	} catch {
-		return;
-	}
-	try {
-		await delObjs(ids);
-		useMessage().success('删除成功');
-		undertakingRecordsRef.value.resetQuery();
-	} catch (err: any) {}
-};
+// const handleDelete = async (ids: string[]) => {
+// 	try {
+// 		await useMessageBox().confirm('此操作将永久删除');
+// 	} catch {
+// 		return;
+// 	}
+// 	try {
+// 		await delObjs(ids);
+// 		useMessage().success('删除成功');
+// 		undertakingRecordsRef.value.resetQuery();
+// 	} catch (err: any) {}
+// };
 </script>

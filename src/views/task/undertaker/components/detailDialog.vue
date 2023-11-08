@@ -20,13 +20,14 @@
 	</Dialog>
 </template>
 
-<script setup lang="ts" name="UndertakerInfoDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, putTaskAcceptance } from '/@/api/core/undertakerTask';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
-import dynamicForms from '/@/views/core/undertakerTask/components/dynamic-forms';
+import dynamicForms from '/@/views/task/undertaker/components/dynamic-forms';
+defineOptions({ name: 'UndertakerInfoDialog' });
 // import dynamicForms from '/@/views/batch/import/dynamic-forms';
 const emit = defineEmits(['refresh']);
 import Array2Object from '/@/utils/array-2-object';

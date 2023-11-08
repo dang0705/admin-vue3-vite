@@ -17,7 +17,7 @@
 <script setup lang="ts" name="任务详情">
 const route = useRoute();
 const taskDetail = defineAsyncComponent(() => import('./components/form.vue'));
-const undertakingRecords = defineAsyncComponent(() => import('/@/views/core/undertakerTask/components/undertakingRecords.vue'));
+const undertakingRecords = defineAsyncComponent(() => import('/@/views/task/undertaker/components/undertakingRecords.vue'));
 </script>
 
 <style scoped lang="scss"></style>

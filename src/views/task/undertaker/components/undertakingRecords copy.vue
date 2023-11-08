@@ -74,12 +74,13 @@
 	<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
 </template>
 
-<script setup lang="ts" name="systemUndertakerTask">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/core/undertakerTask';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useDict } from '/@/hooks/dict';
 
+defineOptions({ name: 'systemUndertakerTask' });
 const { undertaking_status } = useDict('undertaking_status');
 // 引入组件
 // const FormDialog = defineAsyncComponent(() => import('./form.vue'));

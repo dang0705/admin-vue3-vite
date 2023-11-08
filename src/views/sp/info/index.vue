@@ -21,9 +21,7 @@
 			</el-row>
 			<el-row>
 				<div class="mb8" style="width: 100%">
-					<el-button type="primary" class="ml10" @click="$router.push({ path: '/sp/info/add' })" v-auth="'core_spInfo_add'">
-						+添加服务商
-					</el-button>
+					<el-button type="primary" class="ml10" @click="$router.push({ path: '/sp/info/add' })" v-auth="'core_spInfo_add'"> +添加服务商 </el-button>
 					<!-- <el-button plain :disabled="multiple" icon="Delete" type="primary" v-auth="'core_spInfo_del'" @click="handleDelete(selectObjs)">
 						删除
 					</el-button> -->
