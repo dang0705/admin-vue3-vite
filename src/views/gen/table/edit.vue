@@ -117,7 +117,7 @@ import { useTableFieldSubmitApi, useTableApi, fetchDictList } from '/@/api/gen/t
 import { list } from '/@/api/gen/fieldtype';
 import Sortable from 'sortablejs';
 
-const scFormTable = defineAsyncComponent(() => import('/src/components/Table-view/index.vue'));
+const scFormTable = defineAsyncComponent(() => import('/@/components/Table-view/deprecated/index.vue'));
 
 const activeName = ref();
 const tableId = ref('');
