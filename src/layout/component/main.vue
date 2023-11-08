@@ -14,11 +14,11 @@
 	</el-main>
 </template>
 
-<script setup lang="ts" name="layoutMain">
+<script setup lang="ts">
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';
-
+defineOptions({ name: 'Layout-main' });
 // 引入组件
 const LayoutParentView = defineAsyncComponent(() => import('/@/layout/routerView/parent.vue'));
 const LayoutFooter = defineAsyncComponent(() => import('/@/layout/footer/index.vue'));

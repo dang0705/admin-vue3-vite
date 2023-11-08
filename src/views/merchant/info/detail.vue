@@ -18,10 +18,17 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="商户详情">
+<script setup lang="ts">
 // const merchantInfoView = defineAsyncComponent(() => import('./components/formView.vue'));
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 // const merchantInfoDetail = defineAsyncComponent(() => import('./components/formDetail.vue'));
 const spAgree = defineAsyncComponent(() => import('./components/spAgree.vue'));
 const payExit = defineAsyncComponent(() => import('./components/payExit.vue'));
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

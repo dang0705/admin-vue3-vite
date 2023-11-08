@@ -53,10 +53,11 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="distribution">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import request from '/@/utils/request';
+defineOptions({ name: 'distribution' });
 const emit = defineEmits(['refresh']);
 
 const props = defineProps({

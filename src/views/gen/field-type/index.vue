@@ -63,12 +63,13 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemFieldType" setup>
+<script lang="ts" setup>
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObj, fetchList } from '/@/api/gen/fieldtype';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 
+defineOptions({ name: 'systemFieldType' });
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();

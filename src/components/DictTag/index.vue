@@ -17,9 +17,9 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="dict-tag">
+<script setup lang="ts">
 import { computed } from 'vue';
-
+defineOptions({ name: 'Dict-tag' });
 const props = defineProps({
 	// 数据
 	options: {

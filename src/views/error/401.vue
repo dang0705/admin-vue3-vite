@@ -20,9 +20,9 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="noPower">
+<script setup lang="ts">
 import { Session } from '/@/utils/storage';
-
+defineOptions({ name: 'noPower' });
 const onSetAuth = () => {
 	// 清除缓存/token等
 	Session.clear();

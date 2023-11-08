@@ -15,10 +15,10 @@
 	</el-card>
 </template>
 
-<script setup lang="ts" name="currentUser">
+<script setup lang="ts">
 import { useUserInfo } from '/@/stores/userInfo';
 import { getObj } from '/@/api/admin/user';
-
+defineOptions({ name: 'currentUser' });
 const { proxy } = getCurrentInstance();
 const date = ref(new Date());
 

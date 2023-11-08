@@ -24,11 +24,11 @@
 	</template>
 </template>
 
-<script setup lang="ts" name="navMenuSubItem">
+<script setup lang="ts">
 import { computed } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import other from '/@/utils/other';
-
+defineOptions({ name: 'navMenuSubItem' });
 // 定义父组件传过来的值
 const props = defineProps({
 	// 菜单列表

@@ -57,13 +57,14 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="job-log">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/daemon/job-log';
 import { useI18n } from 'vue-i18n';
 import { useDict } from '/@/hooks/dict';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 
+defineOptions({ name: 'job-log' });
 const { t } = useI18n();
 const visible = ref(false);
 

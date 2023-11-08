@@ -33,13 +33,14 @@
 	</Dialog>
 </template>
 
-<script setup lang="ts" name="UndertakingContractDialog">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
 
 import { getObj, addObj } from '/@/api/hro/undertakingContract';
 import { underTakers } from '/@/configuration/dynamic-control';
 import request from '/@/utils/request';
 
+defineOptions({ name: 'UndertakingContractDialog' });
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

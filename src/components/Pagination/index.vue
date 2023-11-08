@@ -14,7 +14,8 @@
 	</el-pagination>
 </template>
 
-<script setup lang="ts" name="pagination">
+<script setup lang="ts">
+defineOptions({ name: 'Pagination' });
 const emit = defineEmits(['sizeChange', 'currentChange']);
 
 const props = defineProps({

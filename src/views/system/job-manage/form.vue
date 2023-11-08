@@ -74,13 +74,13 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="SysJobDialog" setup>
+<script lang="ts" setup>
 // 定义子组件向父组件传值/事件
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { addObj, getObj, putObj } from '/@/api/daemon/job';
 import { useI18n } from 'vue-i18n';
-
+defineOptions({ name: 'SysJobDialog' });
 const emit = defineEmits(['refresh']);
 const Crontab = defineAsyncComponent(() => import('/@/components/Crontab/index.vue'));
 

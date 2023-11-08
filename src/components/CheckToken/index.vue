@@ -1,9 +1,9 @@
 <template>
 	<div></div>
 </template>
-<script setup lang="ts" name="check-token">
+<script setup lang="ts">
 import { checkToken } from '/@/api/login';
-
+defineOptions({ name: 'check-token' });
 const refreshLock = ref(false);
 const refreshTime = ref();
 

@@ -53,14 +53,14 @@
 	</el-form>
 </template>
 
-<script setup lang="ts" name="password">
+<script setup lang="ts">
 import { useUserInfo } from '/@/stores/userInfo';
 import { useI18n } from 'vue-i18n';
 import { generateUUID } from '/@/utils/other';
 import user from '/@/assets/icons/user.png';
 import password from '/@/assets/icons/password.png';
 import code from '/@/assets/icons/code.png';
-
+defineOptions({ name: 'password' });
 // 使用国际化插件
 const { t } = useI18n();
 

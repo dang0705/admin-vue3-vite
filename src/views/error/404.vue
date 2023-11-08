@@ -20,7 +20,8 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="notFound">
+<script setup lang="ts">
+defineOptions({ name: 'notFound' });
 // 定义变量内容
 const router = useRouter();
 

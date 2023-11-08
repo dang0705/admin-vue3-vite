@@ -73,7 +73,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { deptTree, delObj } from '/@/api/admin/dept';
 import { useMessage, useMessageBox } from '/@/hooks/message';

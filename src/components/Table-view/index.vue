@@ -3,7 +3,7 @@
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
-			<div class="mb8" style="width: 100%">
+			<div class="mb8 w-full">
 				<Form-view
 					v-if="conditionForms.length"
 					v-model="state.queryForm"
@@ -20,7 +20,7 @@
 						<slot :name="slot" v-bind="{ form: conditionForms, formData: state.queryForm }" />
 					</template>
 				</Form-view>
-				<slot name="tableTopTwo" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
+				<slot name="tableTopTwo" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 				<div v-if="isShowTopBar" class="top-bar h-8 my-[10px] flex items-center justify-between">
 					<div class="flex items-center flex-grow">
 						<el-button v-if="downBlobFileUrl" v-debounce="exportExcel" icon="download" type="primary" v-auth="exportAuth"> 批量导出 </el-button>
@@ -72,104 +72,14 @@
 
 <script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
+import tableViewProps from './props';
 import thousandthDivision from '/@/utils/thousandth-division';
 import TableActions from '/@/components/Table-view/Table-actions.vue';
 import apis from '/@/api';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
 defineOptions({ name: 'TableView' });
-const props = defineProps({
-	columns: {
-		type: Array,
-		required: true,
-	},
-	module: {
-		type: String,
-		default: '',
-	},
-	actions: {
-		type: [Array, Function],
-		default: () => [],
-	},
-	actionBody: {
-		type: String,
-		default: '',
-	},
-	downBlobFileName: {
-		type: String,
-		default: '',
-	},
-	downBlobFileUrl: {
-		type: String,
-		default: '',
-	},
-	getListFnName: {
-		type: String,
-		default: 'fetchList',
-	},
-	delFnName: {
-		type: String,
-		default: 'delObjs',
-	},
-	// 额外的参数
-	params: {
-		type: Object,
-		default: null,
-	},
-	conditionForms: {
-		type: Array,
-		default: () => [],
-	},
-	selectMainKey: {
-		type: String,
-		default: 'id',
-	},
-	modelValue: {
-		type: Array,
-		default: () => [],
-	},
-	staticQuery: {
-		type: Object,
-		default: () => {},
-	},
-	tableData: {
-		type: Array,
-		default: () => [],
-	},
-	isTab: {
-		type: Boolean,
-		default: false,
-	},
-	noPadding: {
-		type: Boolean,
-		default: false,
-	},
-	noPagination: {
-		type: Boolean,
-		default: false,
-	},
-	createdIsNeed: {
-		type: Boolean,
-		default: true,
-	},
-	labelWidth: {
-		type: String,
-		default: '90px',
-	},
-	getFullSelection: {
-		type: Boolean,
-		default: false,
-	},
-	exportAuth: {
-		type: String,
-		default: '',
-	},
-	// 是否展示topBar, 默认展示
-	isShowTopBar: {
-		type: Boolean,
-		default: true,
-	},
-});
+const props = defineProps(tableViewProps);
 
 const showDialog = ref(false);
 const _dialog = ref({});
@@ -262,7 +172,7 @@ const toggleTab = (item: any) => {
 
 const tableCellFormatter = (row, column, cellValue, index) => {
 	if (column.label?.includes('(元)')) {
-		return `￥${thousandthDivision({ number: cellValue })}`;
+		return cellValue >= 0 && cellValue ? `￥${thousandthDivision({ number: cellValue })}` : '--';
 	}
 	return cellValue;
 };

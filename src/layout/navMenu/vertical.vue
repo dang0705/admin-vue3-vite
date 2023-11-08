@@ -29,11 +29,11 @@
 	</el-menu>
 </template>
 
-<script setup lang="ts" name="navMenuVertical">
+<script setup lang="ts">
 import { RouteRecordRaw } from 'vue-router';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
-
+defineOptions({ name: 'navMenuVertical' });
 // 引入组件
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 

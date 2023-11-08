@@ -188,11 +188,13 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="SettleBillDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/settleBill';
 import { rule } from '/@/utils/validate';
+
+defineOptions({ name: 'SettleBillDialog' });
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

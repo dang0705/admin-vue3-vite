@@ -16,12 +16,12 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutParentView">
+<script setup lang="ts">
 import { useKeepALiveNames } from '/@/stores/keepAliveNames';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
-
+defineOptions({ name: 'layoutParentView' });
 // 引入组件
 const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.vue'));
 

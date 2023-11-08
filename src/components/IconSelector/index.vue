@@ -50,11 +50,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="iconSelector">
+<script setup lang="ts">
 import type { TabsPaneContext } from 'element-plus';
 import initIconfont from '/@/utils/getStyleSheets';
 import '/@/theme/iconSelector.scss';
-
+defineOptions({ name: 'Icon-selector' });
 // 定义父组件传过来的值
 const props = defineProps({
 	// 输入框前置内容

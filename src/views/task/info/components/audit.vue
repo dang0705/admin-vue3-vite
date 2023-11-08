@@ -20,13 +20,13 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="SysOauthClientDetailsDialog" setup>
+<script lang="ts" setup>
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, putAuditTask } from '/@/api/core/task';
 import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
-
+defineOptions({ name: 'SysOauthClientDetailsDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 

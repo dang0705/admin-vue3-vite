@@ -4,11 +4,11 @@
 	</el-header>
 </template>
 
-<script setup lang="ts" name="layoutHeader">
+<script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-
+defineOptions({ name: 'Layout-header' });
 // 引入组件
 const NavBarsIndex = defineAsyncComponent(() => import('/@/layout/navBars/index.vue'));
 

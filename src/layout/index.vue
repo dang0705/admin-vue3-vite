@@ -2,13 +2,13 @@
 	<component :is="layouts[themeConfig.layout]" />
 </template>
 
-<script setup lang="ts" name="layout">
-import { onBeforeMount, onUnmounted, defineAsyncComponent } from 'vue';
+<script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
+defineOptions({ name: 'Layout' });
 // 引入组件
 const layouts: any = {
 	defaults: defineAsyncComponent(() => import('/@/layout/main/defaults.vue')),

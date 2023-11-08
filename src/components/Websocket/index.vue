@@ -1,10 +1,10 @@
 <template>
 	<div></div>
 </template>
-<script setup lang="ts" name="global-websocket">
+<script setup lang="ts">
 import { ElNotification } from 'element-plus';
 import { Session } from '/@/utils/storage';
-
+defineOptions({ name: 'Global-websocket' });
 const emit = defineEmits(['rollback']);
 
 const props = defineProps({

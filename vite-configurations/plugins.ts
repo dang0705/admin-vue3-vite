@@ -1,6 +1,5 @@
 import vue from '@vitejs/plugin-vue';
 import { svgBuilder } from '/@/components/IconSelector/index';
-import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import AutoImport from 'unplugin-auto-import/vite';
 import { createStyleImportPlugin, VxeTableResolve } from 'vite-plugin-style-import';
 import topLevelAwait from 'vite-plugin-top-level-await';
@@ -11,7 +10,6 @@ import injectScript from './inject';
 export default [
 	vue(), // Vue 插件
 	svgBuilder('./src/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
-	vueSetupExtend(), // setup语法糖增强插件
 	AutoImport({
 		include: [
 			/\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
