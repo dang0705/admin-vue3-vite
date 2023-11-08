@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { getObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
+import { getObj, applyInvoice, saveInvoice } from '/src/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 applyfor申请 open开票
 
 const columns = [
