@@ -45,7 +45,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="任务支付流水">
+<script setup lang="ts">
 import { batchPayment, wholePayment } from '/@/api/finance/undertakerAgentPaying';
 import Array2Object from '/@/utils/array-2-object';
 import isArrayItemSame from '/@/utils/is-array-item-same';
@@ -169,5 +169,12 @@ const entirelyPay = async (refresh: Function, data: any) => {
 	await wholePayment(data);
 	// todo 等tab组件更新
 	location.reload();
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

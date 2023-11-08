@@ -60,6 +60,12 @@ import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { useMessage } from '/@/hooks/message';
 
+$bus.on('close-tag', (closeName: string) =>
+	state.tagsViewList.splice(
+		state.tagsViewList.findIndex(({ name }) => name === closeName),
+		1
+	)
+);
 // 引入组件
 const Contextmenu = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/contextmenu.vue'));
 

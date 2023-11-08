@@ -3,6 +3,7 @@
     "$bus": true,
     "$http": true,
     "$refreshList": true,
+    "BASE": true,
     "Component": true,
     "ComponentPublicInstance": true,
     "ComputedRef": true,
@@ -84,7 +85,6 @@
     "watch": true,
     "watchEffect": true,
     "watchPostEffect": true,
-    "watchSyncEffect": true,
-    "BASE": true
+    "watchSyncEffect": true
   }
 }

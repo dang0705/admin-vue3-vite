@@ -7,7 +7,10 @@
 	</el-config-provider>
 </template>
 
-<script setup lang="ts" name="app">
+<script setup lang="ts">
+defineOptions({
+	name: 'app',
+});
 import { useI18n } from 'vue-i18n';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';

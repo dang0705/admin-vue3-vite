@@ -398,3 +398,10 @@ const onSubmit = async (refresh: any) => {
 	}
 };
 </script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
+</script>

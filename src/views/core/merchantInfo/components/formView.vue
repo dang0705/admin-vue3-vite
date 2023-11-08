@@ -55,10 +55,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="log-detail">
+<script setup lang="ts">
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 // const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
+defineOptions({ name: 'log-detail' });
 const route = useRoute();
 /**
  * 从服务器获取用户数据

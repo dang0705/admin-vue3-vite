@@ -175,7 +175,7 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemUser" setup>
+<script lang="ts" setup>
 import { delObj, pageList, putObj } from '/@/api/admin/user';
 import { deptTree } from '/@/api/admin/dept';
 import { BasicTableProps, useTable } from '/@/hooks/table';
@@ -184,6 +184,7 @@ import { useI18n } from 'vue-i18n';
 import array2Object from '/@/utils/array-2-object';
 import { customerAuth, providerAuth } from './enum';
 
+defineOptions({ name: 'systemUser' });
 const userAbleToggleStatus = {
 	enable: '0',
 	disable: '9',

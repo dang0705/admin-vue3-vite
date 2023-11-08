@@ -9,7 +9,8 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="SysFileDialog">
+<script setup lang="ts">
+defineOptions({ name: 'SysFileDialog' });
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

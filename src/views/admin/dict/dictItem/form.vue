@@ -42,11 +42,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="dict-item-form">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { getItemObj, addItemObj, putItemObj, validateDictItemLabel } from '/@/api/admin/dict';
 import { useMessage } from '/@/hooks/message';
-
+defineOptions({ name: 'dict-item-form' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();

@@ -19,8 +19,8 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="账户交易流水">
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+<script setup lang="ts">
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 
 const tabType = ref(1);
@@ -330,5 +330,12 @@ const toggleTab = (item: any) => {
 	nextTick(() => {
 		accountCapitalWaterRef?.value.resetQuery();
 	});
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

@@ -70,7 +70,7 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="充值退款">
+<script setup lang="ts">
 import { delObjs, getObj, addExecuteRefund } from '/@/api/finance/merchantRefund';
 import Array2Object from '/@/utils/array-2-object';
 const batchMap = Array2Object({ dic: ['refund_status'] });
@@ -275,5 +275,12 @@ const onSubmit = async () => {
 
 const refreshDataList = () => {
 	merchantRefundRef?.value.resetQuery();
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

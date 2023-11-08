@@ -31,11 +31,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="systemDeptDialog">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { getObj, deptTree, addObj, putObj } from '/@/api/admin/dept';
 import { useMessage } from '/@/hooks/message';
-
+defineOptions({ name: 'systemDeptDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();

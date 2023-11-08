@@ -1,34 +1,32 @@
 import { useDict } from '/@/hooks/dict';
-interface Params {
+import { Ref } from 'vue';
+
+interface Params<T> {
 	array?: [];
-	dic?: string[];
+	dic?: T[];
 }
-interface Options {
-	value: string | number;
-	label: string;
+interface Options<V, M> {
+	value: V | M;
+	label: V;
 }
-// @ts-ignore
 const transfer = (arr: []) => {
 	const result: any = {};
-	arr.forEach((item: Options) => {
-		result[item.value] = item.label;
-	});
+	arr.forEach((item: Options<string, number>) => (result[item.value] = item.label));
 	return result;
 };
 /**
  * array 转 object
  * @param {array}  array   -- 数组，下拉源
  * @param {string} dic     -- 字典名称
- * @return {[item.value]:item.label}
  */
-export default ({ array, dic }: Params) => {
+export default ({ array, dic }: Params<string>): Ref | [] => {
 	if (dic) {
 		const dicts = useDict(...dic);
 		const result = {} as any;
 		return computed(() => {
 			for (const dictsKey in dicts) {
 				const map = {} as any;
-				dicts[dictsKey].value.forEach(({ value, label }: Options) => (map[value] = label));
+				dicts[dictsKey].value.forEach(({ value, label }: Options<string, number>) => (map[value] = label));
 				result[dictsKey] = map;
 			}
 			return result;
@@ -37,7 +35,7 @@ export default ({ array, dic }: Params) => {
 	return transfer(array as []);
 };
 
-export const valueAsLabel = (object: any) => {
+export const valueAsLabel = (object: Record<string, any>) => {
 	const revertedObj: any = {};
 	for (const key in object) {
 		revertedObj[object[key]] = /^\d+$/.test(key) ? parseInt(key) : (revertedObj[object[key]] = key);

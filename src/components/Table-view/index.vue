@@ -58,6 +58,7 @@
 							:del-fn-name="delObj"
 							:actionsOrigin="actions"
 							:main-key="selectMainKey"
+							@get-dialog-data="getDialogData"
 						/>
 					</template>
 				</el-table-column>
@@ -65,16 +66,18 @@
 			<pagination v-if="!noPagination" @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 		</div>
 		<slot />
+		<Dialog v-model="showDialog" v-model:form-data="dialogFormData" v-bind="_dialog" :columns="24" :on-submit="onDialogSubmit" />
 	</div>
 </template>
 
-<script setup lang="ts" name="TableView">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import thousandthDivision from '/@/utils/thousandth-division';
-import TableActions from '/@/components/FormTable/Table-actions.vue';
+import TableActions from '/@/components/Table-view/Table-actions.vue';
 import apis from '/@/api';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);
+defineOptions({ name: 'TableView' });
 const props = defineProps({
 	columns: {
 		type: Array,
@@ -167,6 +170,23 @@ const props = defineProps({
 		default: true,
 	},
 });
+
+const showDialog = ref(false);
+const _dialog = ref({});
+const dialogFormData = ref({});
+const onDialogSubmit = async () => {
+	const action = apis[`/src/api/${props.module}`][_dialog.value.action?.name];
+	action && (await action({ ...dialogFormData.value, ...(_dialog.value.action?.params || {}) }));
+};
+const getDialogData = async (dialog) => {
+	showDialog.value = true;
+	_dialog.value = dialog;
+	if (dialog.edit) {
+		const { name, params } = dialog.edit;
+		const edit = apis[`/src/api/${props.module}`][name || 'getObj'];
+		edit && (dialogFormData.value = (await edit(params)).data);
+	}
+};
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法

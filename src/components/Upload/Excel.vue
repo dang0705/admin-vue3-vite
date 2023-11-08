@@ -72,7 +72,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="UploadExcel">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
 import other, { generateUUID } from '/@/utils/other';
 import { Session } from '/@/utils/storage';
@@ -80,7 +80,7 @@ import request from '/@/utils/request';
 import { ElNotification } from 'element-plus';
 import { LIMIT } from '/@/configuration/upload-rules';
 import { useRouter } from 'vue-router';
-
+defineOptions({ name: 'Upload-excel' });
 const uuid = ref('id-' + generateUUID());
 const prop = defineProps({
 	url: {

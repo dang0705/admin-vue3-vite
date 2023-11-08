@@ -41,8 +41,8 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="银行流水">
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+<script setup lang="ts">
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
 	status: string;
@@ -253,5 +253,12 @@ const toggleTab = (item: any) => {
 	nextTick(() => {
 		waterSpPaymentBankRef?.value.resetQuery();
 	});
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

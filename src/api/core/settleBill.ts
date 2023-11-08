@@ -59,3 +59,7 @@ export function payBillRecord(obj?: any) {
 		data: obj,
 	});
 }
+
+export function auditing(data?: any) {
+	return $http.post('/core/settleBill/audit', data);
+}

@@ -40,8 +40,8 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="出入账管理">
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+<script setup lang="ts">
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
 interface BatchUploadRecordPage {
@@ -173,5 +173,12 @@ const refreshDataList = () => {
 	nextTick(() => {
 		InOutAccountRef?.value.resetQuery();
 	});
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

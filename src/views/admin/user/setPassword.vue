@@ -45,7 +45,7 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="setPassword" setup>
+<script lang="ts" setup>
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { useUserInfo } from '/@/stores/userInfo';
@@ -57,6 +57,7 @@ import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
 import code from '/@/assets/icons/code.png';
 
+defineOptions({ name: 'setPassword' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 

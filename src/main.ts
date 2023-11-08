@@ -6,20 +6,17 @@ import router from './router';
 import { directive } from '/@/directive';
 import { i18n } from '/@/i18n';
 import other from '/@/utils/other';
-import ElementPlus, { ElSelect, ElInput, ElTimePicker } from 'element-plus';
+import ElementPlus, { ElSelect, ElInput, ElTimePicker, ElDatePicker } from 'element-plus';
 import '/@/theme/tailwind.css';
 import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 import debounce from '/@/directive/debounce';
-
 import {
 	ElementIcons,
 	Pagination,
 	RightToolbar,
 	DictTag,
 	// UploadExcel,
-	UploadFile,
-	UploadImg,
 	Divider,
 	Editor,
 	Tip,
@@ -57,14 +54,13 @@ ElTimePicker.props.placeholder = {
 	type: String,
 	default: '请选择',
 };
+ElDatePicker.props.placeholder = {
+	type: String,
+	default: '请选择',
+};
 
 // 导入通用自定义组件
-app
-	.component('DictTag', DictTag)
-	.component('Pagination', Pagination)
-	.component('RightToolbar', RightToolbar)
-	.component('UploadImg', UploadImg)
-	.component('Divider', Divider);
+app.component('DictTag', DictTag).component('Pagination', Pagination).component('RightToolbar', RightToolbar).component('Divider', Divider);
 
 app.directive(debounce.name, debounce.directive);
 

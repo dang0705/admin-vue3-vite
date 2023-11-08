@@ -110,7 +110,7 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemUserDialog" setup>
+<script lang="ts" setup>
 import { addObj, getObj, putObj, validatePhone, validateUsername } from '/@/api/admin/user';
 import { list as roleList } from '/@/api/admin/role';
 import { list as postList } from '/@/api/admin/post';
@@ -121,6 +121,7 @@ import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
 import { customerAuth, providerAuth } from './enum';
 
+defineOptions({ name: 'systemUserDialog' });
 const { t } = useI18n();
 const postOptions = [
 	{

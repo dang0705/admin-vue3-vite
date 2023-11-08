@@ -191,7 +191,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="承接人名册">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs } from '/@/api/hro/undertakerInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
@@ -256,11 +256,11 @@ const conditionForms2 = ref([
 		label: t('undertakerInfo.spName'),
 		rules: [{ required: true, message: '服务商名称不能为空', trigger: 'change' }],
 	},
-	// {
-	// 	key: 'contractTimeRange',
-	// 	rules: [{ required: true, trigger: 'change' }],
-	// 	slot: true,
-	// },
+	{
+		key: 'contractTimeRange',
+		rules: [{ required: true, trigger: 'change' }],
+		slot: true,
+	},
 ]);
 // 定义查询字典
 // 定义变量内容
@@ -351,4 +351,11 @@ const handleDelete = async (ids: string[]) => {
 };
 
 $refreshList(resetQuery);
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

@@ -231,21 +231,8 @@ const isNeedRecharge = computed(() => {
 		task: form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
 	};
 });
-// const serviceBillInfo = computed(() => {
-// 	return {
-// 		serviceAmount: form.serviceBillRecord[0].serviceAmount,
-// 		accountId: form.serviceBillRecord[0].accountId,
-// 		status: form.serviceBillRecord[0].status,
-// 	};
-// });
-// const taskBillInfo = computed(() => {
-// 	return form.taskBillRecord[0];
-// });
-
-// 定义变量内容
 const router = useRouter();
 const loading = ref(false);
-// 提交表单数据
 const form = reactive({
 	serviceBillRecord: [
 		{
@@ -623,35 +610,35 @@ $refreshList(getmerchantInfoData);
 	padding: 28px 0;
 	background: #fafafa;
 	margin-bottom: 30px;
-}
-.total_list {
-	display: flex;
-	.total_item {
-		width: 25%;
+	.total_list {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: rgba(0, 0, 0, 0.5);
-	}
-	.icon {
-		width: 38px;
-		height: 37px;
-		margin-right: 15px;
-	}
-	.price_box {
-		font-size: 30px;
-	}
-	.price {
-		color: rgba(0, 0, 0, 0.8);
-		display: inline-block;
-	}
-	.unit {
-		font-size: 14px;
-		vertical-align: baseline;
-		display: inline-block;
-	}
-	.info_label {
-		font-size: 14px;
+		.total_item {
+			width: 25%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: rgba(0, 0, 0, 0.5);
+		}
+		.icon {
+			width: 38px;
+			height: 37px;
+			margin-right: 15px;
+		}
+		.price_box {
+			font-size: 30px;
+		}
+		.price {
+			color: rgba(0, 0, 0, 0.8);
+			display: inline-block;
+		}
+		.unit {
+			font-size: 14px;
+			vertical-align: baseline;
+			display: inline-block;
+		}
+		.info_label {
+			font-size: 14px;
+		}
 	}
 }
 </style>

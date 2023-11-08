@@ -103,7 +103,7 @@
 	</el-drawer>
 </template>
 
-<script setup lang="ts" name="personal">
+<script setup lang="ts">
 import { useUserInfo } from '/@/stores/userInfo';
 import { editInfo, getObj, password, UnbindingUser } from '/@/api/admin/user';
 import { useMessage } from '/@/hooks/message';
@@ -112,6 +112,7 @@ import other from '/@/utils/other';
 import { Session } from '/@/utils/storage';
 import { useI18n } from 'vue-i18n';
 
+defineOptions({ name: 'personal' });
 const { t } = useI18n();
 
 const StrengthMeter = defineAsyncComponent(() => import('/@/components/StrengthMeter/index.vue'));

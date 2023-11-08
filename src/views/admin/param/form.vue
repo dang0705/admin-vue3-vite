@@ -44,7 +44,7 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="SysPublicParamDialog" setup>
+<script lang="ts" setup>
 // 定义子组件向父组件传值/事件
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
@@ -52,6 +52,7 @@ import { addObj, getObj, putObj, validateParamsCode, validateParamsName } from '
 import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
 
+defineOptions({ name: 'SysPublicParamDialog' });
 const emit = defineEmits(['refresh']);
 
 const { t } = useI18n();

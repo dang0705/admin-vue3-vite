@@ -94,7 +94,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="商户">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, stopObj, getSpInfoList } from '/@/api/core/merchantInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -207,4 +207,11 @@ const setStopObj = async (ids: string[]) => {
 	} catch (err: any) {}
 };
 $refreshList(resetQuery);
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

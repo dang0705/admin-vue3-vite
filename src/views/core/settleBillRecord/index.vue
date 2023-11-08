@@ -12,9 +12,8 @@
 	</TableView>
 </template>
 
-<script setup lang="ts" name="结算单">
+<script setup lang="ts">
 const router = useRouter();
-import { delObjs, getObj, addObj } from '/@/api/core/settleBillRecord';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { payChannel } from '/@/configuration/dynamic-control';
 
@@ -168,5 +167,12 @@ const handleAction = async (type: string, row: any) => {
 			});
 			break;
 	}
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

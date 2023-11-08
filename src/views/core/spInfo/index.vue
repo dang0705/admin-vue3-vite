@@ -113,7 +113,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="服务商">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, delObjs, switchStatus } from '/@/api/core/spInfo';
 import { useMessage, useMessageBox } from '/@/hooks/message';
@@ -210,4 +210,11 @@ const handleDelete = async (ids: string[]) => {
 };
 
 $refreshList(resetQuery);
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
 </script>

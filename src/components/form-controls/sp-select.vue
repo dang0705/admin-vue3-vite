@@ -1,6 +1,6 @@
-<script setup lang="ts" name="SpSelect">
+<script setup lang="ts">
 import { useSpStore } from '/@/stores/sp';
-
+defineOptions({ name: 'SpSelect' });
 const props = defineProps({
 	modelValue: {
 		type: String,

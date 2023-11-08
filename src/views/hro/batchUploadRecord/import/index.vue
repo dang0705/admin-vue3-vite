@@ -43,7 +43,7 @@
 	</TableView>
 </template>
 
-<script setup lang="ts" name="导入批次">
+<script setup lang="ts">
 import { getObj } from '/@/api/core/batchUploadRecord';
 import columns from '/@/views/hro/batchUploadRecord/import/columns';
 import conditionForms from '/@/views/hro/batchUploadRecord/import/condition-forms';
@@ -71,5 +71,12 @@ const view = async ({ id, type, state }: any) => {
 	currentState.value = state;
 	dialogFormData.value = (await getObj(id)).data;
 	failParams = { batchId: currentId };
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

@@ -4,13 +4,12 @@ import RightToolbar from '/@/components/RightToolbar/index.vue';
 import DictTag from '/@/components/DictTag/index.vue';
 import UploadExcel from '/@/components/Upload/Excel.vue';
 import UploadFile from '/@/components/Upload/index.vue';
-import UploadImg from '/@/components/Upload/Image.vue';
 import Divider from '/@/components/Divider/index.vue';
 import DelWrap from '/@/components/DelWrap/index.vue';
 import Editor from '/@/components/Editor/index.vue';
 import Tip from '/@/components/Tip/index.vue';
 
-export { DelWrap, ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, UploadImg, Divider, Editor, Tip };
+export { DelWrap, ElementIcons, Pagination, RightToolbar, DictTag, UploadExcel, UploadFile, Divider, Editor, Tip };
 
 export const customComponents = [
 	{
@@ -47,7 +46,7 @@ export const customComponents = [
 	},
 	{
 		name: 'TableView',
-		component: () => import('/@/components/FormTable/Table-view.vue'),
+		component: () => import('/@/components/Table-view/index.vue'),
 	},
 	{
 		name: 'FormView',

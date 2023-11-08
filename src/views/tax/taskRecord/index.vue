@@ -6,9 +6,9 @@
 	</Table-view>
 </template>
 
-<script setup lang="ts" name="税务-任务记录">
+<script setup lang="ts">
 import { useMessage, useMessageBox } from '/@/hooks/message';
-const TabView = defineAsyncComponent(() => import('/@/components/FormTable/Tab-view.vue'));
+const TabView = defineAsyncComponent(() => import('/src/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 const route: any = useRoute();
 const router = useRouter();
@@ -122,5 +122,12 @@ const handleView = (taskId: string) => {
 			refresh: 1,
 		},
 	});
+};
+</script>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
 };
 </script>

@@ -29,13 +29,14 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="systemRoleDialog" setup>
+<script lang="ts" setup>
 import { rule } from '/@/utils/validate';
 import { deptTree } from '/@/api/admin/dept';
 import { useMessage } from '/@/hooks/message';
 import { addObj, getObj, putObj, validateRoleCode, validateRoleName } from '/@/api/admin/role';
 import { useI18n } from 'vue-i18n';
 
+defineOptions({ name: 'systemRoleDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 
