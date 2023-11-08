@@ -38,7 +38,8 @@
 			<template #settleBillRecordId>
 				<el-form-item label="结算单编号:">
 					<div>
-						<div v-for="(item, index) in dialogFormData.billRecordNums" :key="index">{{ item }}</div>
+						<div v-if="financeType === 'applyfor'">{{ dialogFormData.settleBillRecordId }}</div>
+						<div v-else v-for="(item, index) in dialogFormData.billRecordNums" :key="index">{{ item }}</div>
 					</div>
 				</el-form-item>
 			</template>
@@ -287,6 +288,19 @@ const forms = computed(() => [
 				// 	},
 				// },
 		  ]),
+	...(financeType.value === 'merge'
+		? [
+				{
+					control: 'InputPlus',
+					key: 'invoicedAmount',
+					label: '开票金额',
+					column: 24,
+					props: {
+						disabled: true,
+					},
+				},
+		  ]
+		: []),
 	{
 		control: 'el-select',
 		key: 'billingType',
@@ -298,9 +312,9 @@ const forms = computed(() => [
 		control: 'el-select',
 		key: 'invoicingCategories',
 		label: '开票类目',
-		options: 'invoice_category',
+		options: dialogFormData.value.invoiceCategoryList,
 		props: {
-			multiple: true,
+			multiple: financeType.value === 'merge',
 		},
 		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
 	},
@@ -365,6 +379,8 @@ let dialogFormData = ref({
 	invoiceTitle: '',
 	merchantName: '',
 	serviceAmount: '',
+	invoicedAmount: '',
+	invoiceCategoryList: [],
 });
 
 let addressInfo = ref({
@@ -376,10 +392,13 @@ const applyShow = ref(false);
 
 const applyfor = async (id: string, type: string) => {
 	financeType.value = type;
+	// dialogFormData.value = {}
 	dialogFormData.value = type === 'merge' ? (await getMergeObj(selectObjs.value.map(({ id }) => id))).data : (await getObj(id)).data;
-	console.log(dialogFormData.value, 9999);
+	console.log(dialogFormData.value, 6666);
+
 	dialogFormData.value.radioAddress = 1;
 	dialogFormData.value.serviceAmount = dialogFormData.value.serviceAmount + '元';
+	dialogFormData.value.invoicedAmount = type === 'merge' ? dialogFormData.value.invoicedAmount + '元' : '';
 	dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName;
 	addressInfo.value.postAddress = dialogFormData.value.postAddress;
 	addressInfo.value.postUsername = dialogFormData.value.postUsername;
@@ -389,6 +408,7 @@ const applyfor = async (id: string, type: string) => {
 
 // 提交
 const onSubmit = async (refresh: any) => {
+	if (financeType.value === 'merge') dialogFormData.value.invoiceCategoryList = dialogFormData.value.invoicingCategories;
 	try {
 		financeType.value === 'applyfor' ? await applyInvoice({ ...dialogFormData.value }) : await saveInvoice({ ...dialogFormData.value });
 		applyShow.value = false;
