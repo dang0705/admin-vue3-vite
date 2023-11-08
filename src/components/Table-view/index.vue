@@ -1,7 +1,7 @@
 <template>
 	<div :class="{ 'layout-padding': !noPadding }">
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
-			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }"></slot>
+			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
 			<div class="mb8" style="width: 100%">
 				<Form-view

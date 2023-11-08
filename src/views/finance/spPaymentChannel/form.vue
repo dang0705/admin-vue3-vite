@@ -18,11 +18,11 @@
 </template>
 
 <script setup lang="ts" name="SpInfoDialog">
-import { useDict } from '/@/hooks/dict';
-import { useMessage } from '/@/hooks/message';
+import { useDict } from '/src/hooks/dict';
+import { useMessage } from '/src/hooks/message';
 // import { spPaymentChannel } from '/@/api/core/spInfo';
-import { getObj, addObj, putObj } from '/@/api/core/spPaymentChannel';
-import { rule } from '/@/utils/validate';
+import { getObj, addObj, putObj } from '/src/api/core/spPaymentChannel';
+import { rule } from '/src/utils/validate';
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容
