@@ -43,7 +43,7 @@
 	</el-form>
 </template>
 
-<script setup lang="ts" name="register">
+<script setup lang="ts">
 import { registerUser, validateUsername, validatePhone } from '/@/api/admin/user';
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
@@ -51,6 +51,7 @@ import { rule } from '/@/utils/validate';
 import user from '/@/assets/icons/user.png';
 import password from '/@/assets/icons/password.png';
 
+defineOptions({ name: 'register' });
 // 注册生命周期事件
 const emit = defineEmits(['afterSuccess']);
 

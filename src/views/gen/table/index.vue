@@ -58,14 +58,15 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemTable" setup>
+<script lang="ts" setup>
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { fetchList, useSyncTableApi, useTableApi } from '/@/api/gen/table';
 import { list } from '/@/api/gen/datasource';
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import { validateNull } from '/@/utils/validate';
-
+import { defineOptions } from 'vue';
+defineOptions({ name: 'systemTable' });
 // 定义变量内容
 const router = useRouter();
 // 引入组件

@@ -27,10 +27,10 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutBreadcrumbSearch">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-
+defineOptions({ name: 'layoutBreadcrumbSearch' });
 // 定义变量内容
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);

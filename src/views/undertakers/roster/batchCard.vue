@@ -29,13 +29,14 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="UndertakerInfoDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import { uploadUndertakerCard } from '/@/api/hro/undertakerInfo';
 import { useRouter } from 'vue-router';
+defineOptions({ name: 'UndertakerInfoDialog' });
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

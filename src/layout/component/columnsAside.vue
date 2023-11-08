@@ -44,13 +44,13 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutColumnsAside">
+<script setup lang="ts">
 import { RouteRecordRaw } from 'vue-router';
 import pinia from '/@/stores/index';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
-
+defineOptions({ name: 'Layout-columns-aside' });
 // 定义变量内容
 const columnsAsideOffsetTopRefs = ref<RefType>([]);
 const columnsAsideActiveRef = ref();

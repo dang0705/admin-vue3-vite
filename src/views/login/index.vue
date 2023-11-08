@@ -32,7 +32,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="loginIndex">
+<script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';
 import illustration from '/@/assets/login/login_bg.svg';
@@ -46,6 +46,7 @@ import { useMessage } from '/@/hooks/message';
 import { Session } from '/@/utils/storage';
 import { initBackEndControlRoutes } from '/@/router/backEnd';
 
+defineOptions({ name: 'loginIndex' });
 // 引入组件
 const Password = defineAsyncComponent(() => import('./component/password.vue'));
 const Mobile = defineAsyncComponent(() => import('./component/mobile.vue'));

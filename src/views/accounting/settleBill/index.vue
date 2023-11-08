@@ -68,7 +68,7 @@
 	</TableView>
 </template>
 
-<script setup lang="ts" name="结算账单">
+<script setup lang="ts">
 import { taskDropList } from '/@/api/core/task';
 import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';

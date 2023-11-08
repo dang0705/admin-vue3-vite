@@ -6,8 +6,14 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="创建任务">
+<script setup lang="ts">
 const taskForm = defineAsyncComponent(() => import('./components/form.vue'));
 </script>
 
-<style scoped lang="scss"></style>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
+</script>

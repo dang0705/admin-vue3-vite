@@ -23,7 +23,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutBreadcrumb">
+<script setup lang="ts">
 import { reactive, computed, onMounted } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { Local } from '/@/utils/storage';
@@ -32,7 +32,7 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useRoutesList } from '/@/stores/routesList';
 import { homePageRouteName } from '/@/configuration/routes';
-
+defineOptions({ name: 'layoutBreadcrumb' });
 // 定义变量内容
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();

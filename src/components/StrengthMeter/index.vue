@@ -11,8 +11,9 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="StrengthMeter">
+<script setup lang="ts">
 import { verifyPasswordStrength } from '/@/utils/toolsValidate';
+defineOptions({ name: 'Strength-meter' });
 const props = defineProps({
 	value: {
 		type: String,

@@ -5,11 +5,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutNavBars">
+<script setup lang="ts">
 import { defineAsyncComponent, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-
+defineOptions({ name: 'layoutNavBars' });
 // 引入组件
 const BreadcrumbIndex = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/index.vue'));
 const TagsView = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/tagsView.vue'));

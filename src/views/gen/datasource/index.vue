@@ -64,13 +64,14 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemDatasourceConf" setup>
+<script lang="ts" setup>
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObj, fetchList } from '/@/api/gen/datasource';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import { downBlobFile } from '/@/utils/other';
 
+defineOptions({ name: 'systemDatasourceConf' });
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();

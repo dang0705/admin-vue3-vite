@@ -46,8 +46,10 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="query-tree">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
+
+defineOptions({ name: 'Query-tree' });
 const emit = defineEmits(['search', 'nodeClick']);
 
 const props = defineProps({

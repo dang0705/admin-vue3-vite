@@ -6,10 +6,10 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutCloseFull">
+<script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-
+defineOptions({ name: 'layoutCloseFull' });
 // 定义变量内容
 const stores = useTagsViewRoutes();
 const { isTagsViewCurrenFull } = storeToRefs(stores);

@@ -36,14 +36,14 @@
 	</el-form>
 </template>
 
-<script setup lang="ts" name="loginMobile">
+<script setup lang="ts">
 import { sendMobileCode } from '/@/api/admin/modify';
 import { useMessage } from '/@/hooks/message';
 import { useUserInfo } from '/@/stores/userInfo';
 import { rule } from '/@/utils/validate';
 import { useI18n } from 'vue-i18n';
 import code from '/@/assets/icons/code.png';
-
+defineOptions({ name: 'loginMobile' });
 const { t } = useI18n();
 const emit = defineEmits(['signInSuccess']);
 

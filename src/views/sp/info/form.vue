@@ -16,11 +16,12 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="SpInfoDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { spPaymentChannel } from '/@/api/core/spInfo';
 import { rule } from '/@/utils/validate';
+defineOptions({ name: 'SpInfoDialog' });
 const emit = defineEmits(['refresh']);
 
 // 定义变量内容

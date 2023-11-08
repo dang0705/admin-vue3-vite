@@ -21,10 +21,10 @@
 	</el-card>-->
 </template>
 
-<script setup lang="ts" name="SysFavoriteDashboard">
+<script setup lang="ts">
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import shortcutCard from '/@/components/ShortcutCard/index.vue';
-
+defineOptions({ name: 'SysFavoriteDashboard' });
 /**
  * 获取路由对象的实例。
  */

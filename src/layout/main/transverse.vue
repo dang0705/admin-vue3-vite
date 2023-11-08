@@ -5,9 +5,9 @@
 	</el-container>
 </template>
 
-<script setup lang="ts" name="layoutTransverse">
+<script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig';
-
+defineOptions({ name: 'layoutTransverse' });
 // 引入组件
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));

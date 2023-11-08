@@ -85,13 +85,14 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="UndertakerInfoDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import { useI18n } from 'vue-i18n';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
+defineOptions({ name: 'UndertakerInfoDialog' });
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();
 

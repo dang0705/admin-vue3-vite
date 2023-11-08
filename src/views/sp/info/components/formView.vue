@@ -203,7 +203,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="SpInfoDetail">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/spInfo';
@@ -212,6 +212,8 @@ import { useRoute } from 'vue-router';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 import { limitText } from '/@/rules';
+
+defineOptions({ name: SpInfoDetail });
 // import { useRouter } from 'vue-router';
 // const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 

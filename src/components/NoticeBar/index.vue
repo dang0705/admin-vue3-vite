@@ -11,9 +11,8 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="noticeBar">
-import { reactive, ref, onMounted, nextTick } from 'vue';
-
+<script setup lang="ts">
+defineOptions({ name: 'Notice-bar' });
 // 定义父组件传过来的值
 const props = defineProps({
 	// 通知栏模式，可选值为 closeable link

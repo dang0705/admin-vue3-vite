@@ -6,8 +6,14 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="编辑商户">
+<script setup lang="ts">
 const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
 </script>
 
-<style scoped lang="scss"></style>
+<script lang="ts">
+export default {
+	created() {
+		this.$options.name = this.$route.meta.title;
+	},
+};
+</script>

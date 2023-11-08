@@ -127,11 +127,12 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="cache">
+<script setup lang="ts">
 import { systemCache } from '/@/api/admin/system';
 import { markRaw } from 'vue';
 import * as echarts from 'echarts';
 
+defineOptions({ name: 'cache' });
 const baseInfo = ref<any>({});
 const commandChartRef = ref();
 const memoryChartRef = ref();

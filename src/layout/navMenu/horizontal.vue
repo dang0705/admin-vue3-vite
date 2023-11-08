@@ -30,13 +30,13 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="navMenuHorizontal">
+<script setup lang="ts">
 import { RouteRecordRaw } from 'vue-router';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
-
+defineOptions({ name: 'navMenuHorizontal' });
 // 引入组件
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
