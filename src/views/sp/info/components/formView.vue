@@ -213,7 +213,7 @@ import uploadBusinessType from '/@/enums/upload-business-type';
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
 import { limitText } from '/@/rules';
 
-defineOptions({ name: SpInfoDetail });
+defineOptions({ name: 'SpInfoDetail' });
 // import { useRouter } from 'vue-router';
 // const Divider = defineAsyncComponent(() => import('/@/components/Divider/index.vue'));
 

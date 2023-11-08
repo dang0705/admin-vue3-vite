@@ -58,7 +58,7 @@ export default (row: any) => {
 						},
 						show: {
 							by: 'auditPass',
-							fn: ({ auditPass }) => !auditPass,
+							fn: ({ auditPass }: any) => !auditPass,
 						},
 					},
 				],
