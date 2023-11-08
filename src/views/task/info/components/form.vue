@@ -4,7 +4,7 @@
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
-		<el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef v-loading="loading">
+		<el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef>
 			<div>
 				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
