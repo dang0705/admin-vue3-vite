@@ -64,13 +64,13 @@
 </template>
 
 <script setup lang="ts" name="distribution">
-import { useMessage } from '/src/hooks/message';
-import { getObj, addObj, putObj, payBillRecord } from '/src/api/core/settleBill';
+import { useMessage } from '/@/hooks/message';
+import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill';
 const emit = defineEmits(['refresh']);
-import { queryPlatSpBalance } from '/src/api/finance/merchantAccountCapital';
-import { addMerchantRecharge } from '/src/api/finance/merchantRecharge';
-import spPaymentChannel from '/src/api/core/spPaymentChannel';
-import commonFunction from '/src/utils/commonFunction';
+import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
+import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
+import spPaymentChannel from '/@/api/core/spPaymentChannel';
+import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const route: any = useRoute();
 const title = ref('');

@@ -69,9 +69,9 @@
 </template>
 
 <script setup lang="ts" name="结算账单">
-import { taskDropList } from '/src/api/core/task';
-import { getSpPaymentChannelList } from '/src/api/core/merchantInfo';
-import { getSpInfoList, getMerchantInfoList } from '/src/api/core/merchantInfo';
+import { taskDropList } from '/@/api/core/task';
+import { getSpPaymentChannelList } from '/@/api/core/merchantInfo';
+import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import conditionForms from './configurations/condition-forms';
 import columns from './configurations/columns';
 import actions from './configurations/tabel-actions';

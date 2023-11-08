@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 defineOptions({ name: 'log-detail' });
-const CodeEditor = defineAsyncComponent(() => import('/src/components/CodeEditor/index.vue'));
+const CodeEditor = defineAsyncComponent(() => import('/@/components/CodeEditor/index.vue'));
 
 const visible = ref(false);
 

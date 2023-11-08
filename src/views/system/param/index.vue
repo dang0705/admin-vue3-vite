@@ -111,10 +111,10 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { delObj, fetchList, refreshCache } from '/src/api/admin/param';
-import { useMessage, useMessageBox } from '/src/hooks/message';
-import { useDict } from '/src/hooks/dict';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { delObj, fetchList, refreshCache } from '/@/api/admin/param';
+import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useDict } from '/@/hooks/dict';
 import { useI18n } from 'vue-i18n';
 
 defineOptions({ name: 'systemSysPublicParam' });

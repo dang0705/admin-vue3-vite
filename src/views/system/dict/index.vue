@@ -59,15 +59,15 @@
 
 <script lang="ts" setup>
 import { Delete, Edit } from '@element-plus/icons-vue';
-import { delObj, fetchList, refreshCache } from '/src/api/admin/dict';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import { delObj, fetchList, refreshCache } from '/@/api/admin/dict';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
-import { downBlobFile } from '/src/utils/other';
+import { downBlobFile } from '/@/utils/other';
 defineOptions({ name: 'systemDic' });
 // 引入组件
 const DicDialog = defineAsyncComponent(() => import('./form.vue'));
 const DictItemDialog = defineAsyncComponent(() => import('./dictItem/index.vue'));
-const QueryTree = defineAsyncComponent(() => import('/src/components/QueryTree/index.vue'));
+const QueryTree = defineAsyncComponent(() => import('/@/components/QueryTree/index.vue'));
 
 const { t } = useI18n();
 // 定义变量内容
@@ -108,7 +108,7 @@ const handleRefreshTree = async (data: any) => {
 	handleNodeClick(data);
 };
 const clearCache = async () => {
-	const { dict } = await import('/src/stores/dict');
+	const { dict } = await import('/@/stores/dict');
 	dict().$patch((state) => (state.dict = []));
 };
 

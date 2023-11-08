@@ -164,7 +164,7 @@ const dashboardData = {
 			img: 'task',
 			auth: 'home_task_statistics',
 			url: '/core/homePage/countTask',
-			route: '/core/task/index',
+			route: '/task/info/index',
 			statusMap: {
 				10: '#FF6826', //任务待审核
 				50: '#2C80FF',

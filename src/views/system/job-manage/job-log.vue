@@ -58,11 +58,11 @@
 </template>
 
 <script setup lang="ts" name="job-log">
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { fetchList, delObjs } from '/src/api/daemon/job-log';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { fetchList, delObjs } from '/@/api/daemon/job-log';
 import { useI18n } from 'vue-i18n';
-import { useDict } from '/src/hooks/dict';
-import { useMessage, useMessageBox } from '/src/hooks/message';
+import { useDict } from '/@/hooks/dict';
+import { useMessage, useMessageBox } from '/@/hooks/message';
 
 const { t } = useI18n();
 const visible = ref(false);

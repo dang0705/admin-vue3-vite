@@ -84,11 +84,11 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicTableProps, useTable } from '/src/hooks/table';
-import { delObj, pageList } from '/src/api/admin/log';
+import { BasicTableProps, useTable } from '/@/hooks/table';
+import { delObj, pageList } from '/@/api/admin/log';
 import { useI18n } from 'vue-i18n';
-import { useMessage, useMessageBox } from '/src/hooks/message';
-import { useDict } from '/src/hooks/dict';
+import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useDict } from '/@/hooks/dict';
 const LogDetail = defineAsyncComponent(() => import('./detail.vue'));
 
 const LogDetailRef = ref();
