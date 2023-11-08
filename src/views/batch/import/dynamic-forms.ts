@@ -1,4 +1,4 @@
-import { Type } from '/@/views/hro/batchUploadRecord/import/enums';
+import { Type } from './enums';
 
 const failFormStatic = [
 	{
