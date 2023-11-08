@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { actionsParams } from '/@/components/Form-view/Form-view-props';
+defineOptions({
+	name: 'Form-action',
+	inheritAttrs: false,
+});
 const props = defineProps({
 	...actionsParams,
 	vertical: { type: Boolean, default: false },

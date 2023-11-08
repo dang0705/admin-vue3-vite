@@ -1,187 +1,185 @@
 <template>
-	<div>
-		<TableView
-			ref="settleBillDetailRef"
-			:columns="indexThead"
-			module="core/settleBill.ts"
-			getListFnName="taskRecordItem"
-			:staticQuery="staticQuery"
-			isTab
-			:condition-forms="conditionForms"
-			labelWidth="140px"
-		>
-			<template #tableTop="{ otherInfo }">
-				<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
-				<div class="total_wrapper">
-					<div class="total_list">
-						<div class="total_item">
-							<img src="/src/assets/images/total_1.png" class="icon" alt="" />
-							<div class="info">
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.billAmountTotal }) }}</div>
-									<div class="unit">元</div>
-								</div>
-								<div class="info_label">结算总金额</div>
+	<TableView
+		ref="settleBillDetailRef"
+		:columns="indexThead"
+		module="core/settleBill.ts"
+		getListFnName="taskRecordItem"
+		:staticQuery="staticQuery"
+		isTab
+		:condition-forms="conditionForms"
+		labelWidth="140px"
+	>
+		<template #tableTop="{ otherInfo }">
+			<Form-view :otherInfo="otherInfo" class="mt-1" label-width="130px" disabled :showBtn="false" v-model="form" :forms="topInfoForms" />
+			<div class="total_wrapper">
+				<div class="total_list">
+					<div class="total_item">
+						<img src="/src/assets/images/total_1.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.billAmountTotal }) }}</div>
+								<div class="unit">元</div>
 							</div>
+							<div class="info_label">结算总金额</div>
 						</div>
-						<div class="total_item">
-							<img src="/src/assets/images/total_3.png" class="icon" alt="" />
-							<div class="info">
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.taskAmountTotal }) }}</div>
-									<div class="unit">元</div>
-								</div>
-								<div class="info_label">任务金额</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_3.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.taskAmountTotal }) }}</div>
+								<div class="unit">元</div>
 							</div>
+							<div class="info_label">任务金额</div>
 						</div>
-						<div class="total_item">
-							<img src="/src/assets/images/total_6.png" class="icon" alt="" />
-							<div class="info">
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.managementAmountTotal }) }}</div>
-									<div class="unit">元</div>
-								</div>
-								<div class="info_label">管理费</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_6.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.managementAmountTotal }) }}</div>
+								<div class="unit">元</div>
 							</div>
+							<div class="info_label">管理费</div>
 						</div>
-						<div class="total_item">
-							<img src="/src/assets/images/total_4.png" class="icon" alt="" />
-							<div class="info">
-								<div class="price_box">
-									<div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
-									<div class="unit">元</div>
-								</div>
-								<div class="info_label">服务费</div>
+					</div>
+					<div class="total_item">
+						<img src="/src/assets/images/total_4.png" class="icon" alt="" />
+						<div class="info">
+							<div class="price_box">
+								<div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
+								<div class="unit">元</div>
 							</div>
+							<div class="info_label">服务费</div>
 						</div>
 					</div>
 				</div>
-				<TableView
-					noPagination
-					style="margin-bottom: 28px"
-					noPadding
-					:tableData="form.serviceBillRecord"
-					:columns="newIndexThead"
-					module="core/settleBill.ts"
-					:createdIsNeed="false"
-					labelWidth="120px"
-				>
-					<template #actions="{ row }">
-						<el-button @click="detailDialogRef.openDialog(form.id, 4, 1)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleAccountCapitalDetail(1)" icon="view" text type="primary"> 查看资金账户 </el-button>
-					</template>
-					<template #top-bar="{ otherInfo }">
-						<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
-						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
-							{{
-								isNeedRecharge.service &&
-								(form.status == 40 || form.status == 50) &&
-								form.serviceBillRecord[0]?.status == 40 &&
+			</div>
+			<TableView
+				noPagination
+				style="margin-bottom: 28px"
+				noPadding
+				:tableData="form.serviceBillRecord"
+				:columns="newIndexThead"
+				module="core/settleBill.ts"
+				:createdIsNeed="false"
+				labelWidth="120px"
+			>
+				<template #actions="{ row }">
+					<el-button @click="detailDialogRef.openDialog(form.id, 4, 1)" icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button @click="handleAccountCapitalDetail(1)" icon="view" text type="primary"> 查看资金账户 </el-button>
+				</template>
+				<template #top-bar="{ otherInfo }">
+					<h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
+					<div class="info_list">
+						<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
+						{{
+							isNeedRecharge.service &&
+							(form.status == 40 || form.status == 50) &&
+							form.serviceBillRecord[0]?.status == 40 &&
+							form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
+								? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
+								: '无需充值'
+						}}
+					</div>
+					<div class="flex items-center ml-auto">
+						<el-button
+							v-auth="'core_settleBill_s_recharge'"
+							@click="detailDialogRef.openDialog(form.id, 3, 1)"
+							style="margin-right: 24px; margin-left: auto !important"
+							type="primary"
+							class="ml10"
+						>
+							充值
+						</el-button>
+						<el-button
+							v-auth="'core_settleBill_s_pay'"
+							:disabled="
+								!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) ||
 								form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
-									? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
+							"
+							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
+							style="margin-right: 24px"
+							type="primary"
+							class="ml10"
+						>
+							付款
+						</el-button>
+					</div>
+				</template>
+			</TableView>
+			<TableView
+				noPagination
+				style="margin-bottom: 28px"
+				noPadding
+				:tableData="form.taskBillRecord"
+				:columns="newIndexThead"
+				module="core/settleBill.ts"
+				:createdIsNeed="false"
+				labelWidth="120px"
+			>
+				<template #actions="{ row }">
+					<el-button @click="detailDialogRef.openDialog(form.id, 4, 2)" icon="view" text type="primary"> 查看收款账号 </el-button>
+					<el-button @click="handleAccountCapitalDetail(2)" icon="view" text type="primary"> 查看资金账户 </el-button>
+				</template>
+				<template #top-bar="{ otherInfo }">
+					<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
+					<div class="info_list">
+						<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
+						<div class="info_item">
+							{{
+								isNeedRecharge.task &&
+								(form.status == 40 || form.status == 50) &&
+								form.taskBillRecord[0]?.status == 40 &&
+								((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
+									(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))
+									? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 									: '无需充值'
 							}}
 						</div>
-						<div class="flex items-center ml-auto">
-							<el-button
-								v-auth="'core_settleBill_s_recharge'"
-								@click="detailDialogRef.openDialog(form.id, 3, 1)"
-								style="margin-right: 24px; margin-left: auto !important"
-								type="primary"
-								class="ml10"
-							>
-								充值
-							</el-button>
-							<el-button
-								v-auth="'core_settleBill_s_pay'"
-								:disabled="
-									!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) ||
-									form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
-								"
-								@click="handlePayBillRecord(form.serviceBillRecord, 1)"
-								style="margin-right: 24px"
-								type="primary"
-								class="ml10"
-							>
-								付款
-							</el-button>
-						</div>
-					</template>
-				</TableView>
-				<TableView
-					noPagination
-					style="margin-bottom: 28px"
-					noPadding
-					:tableData="form.taskBillRecord"
-					:columns="newIndexThead"
-					module="core/settleBill.ts"
-					:createdIsNeed="false"
-					labelWidth="120px"
-				>
-					<template #actions="{ row }">
-						<el-button @click="detailDialogRef.openDialog(form.id, 4, 2)" icon="view" text type="primary"> 查看收款账号 </el-button>
-						<el-button @click="handleAccountCapitalDetail(2)" icon="view" text type="primary"> 查看资金账户 </el-button>
-					</template>
-					<template #top-bar="{ otherInfo }">
-						<h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
-						<div class="info_list">
-							<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
-							<div class="info_item">
-								{{
-									isNeedRecharge.task &&
-									(form.status == 40 || form.status == 50) &&
-									form.taskBillRecord[0]?.status == 40 &&
-									((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
-										(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))
-										? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
-										: '无需充值'
-								}}
-							</div>
-						</div>
-						<el-radio-group v-model="payInFull" class="ml-4">
-							<el-radio :label="true" size="large">全额付款</el-radio>
-							<el-radio :label="false" size="large">只付任务承揽费</el-radio>
-						</el-radio-group>
-						<div class="flex items-center ml-auto">
-							<el-button
-								v-auth="'core_settleBill_t_recharge'"
-								@click="detailDialogRef.openDialog(form.id, 3, 2)"
-								style="margin-right: 24px; margin-left: auto !important"
-								type="primary"
-								class="ml10"
-							>
-								充值
-							</el-button>
-							<el-button
-								v-auth="'core_settleBill_t_pay'"
-								:disabled="
-									!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) ||
-									(payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
-									(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0)
-								"
-								@click="handlePayBillRecord(form.taskBillRecord, 2)"
-								style="margin-right: 24px"
-								type="primary"
-								class="ml10"
-							>
-								付款
-							</el-button>
-						</div>
-					</template>
-				</TableView>
-			</template>
-			<template #actions="{ row }">
-				<el-button v-auth="'core_settleBill_agree'" @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
-				<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
-			</template>
-			<template #top-bar="{ otherInfo }">
-				<el-button @click="handleBtn" v-auth="'core_settleBill_export'" style="margin-right: 24px" icon="download" type="primary" class="ml10">
-					批量导出
-				</el-button>
-				<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
-			</template>
-		</TableView>
+					</div>
+					<el-radio-group v-model="payInFull" class="ml-4">
+						<el-radio :label="true" size="large">全额付款</el-radio>
+						<el-radio :label="false" size="large">只付任务承揽费</el-radio>
+					</el-radio-group>
+					<div class="flex items-center ml-auto">
+						<el-button
+							v-auth="'core_settleBill_t_recharge'"
+							@click="detailDialogRef.openDialog(form.id, 3, 2)"
+							style="margin-right: 24px; margin-left: auto !important"
+							type="primary"
+							class="ml10"
+						>
+							充值
+						</el-button>
+						<el-button
+							v-auth="'core_settleBill_t_pay'"
+							:disabled="
+								!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) ||
+								(payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
+								(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0)
+							"
+							@click="handlePayBillRecord(form.taskBillRecord, 2)"
+							style="margin-right: 24px"
+							type="primary"
+							class="ml10"
+						>
+							付款
+						</el-button>
+					</div>
+				</template>
+			</TableView>
+		</template>
+		<template #actions="{ row }">
+			<el-button v-auth="'core_settleBill_agree'" @click="handleContractFile(row)" icon="view" text type="primary"> 查看关联协议 </el-button>
+			<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
+		</template>
+		<template #top-bar="{ otherInfo }">
+			<el-button @click="handleBtn" v-auth="'core_settleBill_export'" style="margin-right: 24px" icon="download" type="primary" class="ml10">
+				批量导出
+			</el-button>
+			<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
+		</template>
 		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" :payInFull="payInFull" />
 		<uploadExcel
 			ref="importBillRef"
@@ -194,9 +192,8 @@
 			title="导入结算"
 			label-width="178px"
 			submitButtonText="下一步"
-		>
-		</uploadExcel>
-	</div>
+		/>
+	</TableView>
 </template>
 
 <script setup lang="ts" name="账单详情">

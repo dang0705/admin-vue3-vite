@@ -1,16 +1,14 @@
 <template>
-	<div>
-		<TableView
-			:condition-forms="conditionForms"
-			:actions="actions"
-			:columns="columns"
-			action-body="账单"
-			module="core/settleBill.ts"
-			isTab
-			labelWidth="120px"
-		>
-		</TableView>
-	</div>
+	<TableView
+		:condition-forms="conditionForms"
+		:actions="actions"
+		:columns="columns"
+		action-body="账单"
+		module="core/settleBill.ts"
+		isTab
+		labelWidth="120px"
+	>
+	</TableView>
 </template>
 
 <script setup lang="ts">

@@ -1,35 +1,33 @@
 <template>
-	<div>
-		<Table-View
-			:columns="columns"
-			:condition-forms="conditionForms"
-			:actions="actions"
-			action-body="合同"
-			module="hro/undertakingContract.ts"
-			label-width="140"
-		>
-			<template #top-bar>
-				<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
-					手动上传合同
-				</el-button>
-				<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'" @click="batchElectronicSignRef.openDialog()">
-					批量电子签署
-				</el-button>
-			</template>
-			<form-dialog ref="formDialogRef" />
-			<uploadExcel
-				:forms="batchElectronicSignForms"
-				ref="batchElectronicSignRef"
-				guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
-				main-label="待签署用户名单"
-				upload-url="core/undertakingContract/contractBatchSigning"
-				temp-url="/files/合同批量签署模板.xlsx"
-				template-on-front
-				title="添加合同签署"
-				submitButtonText="下一步"
-			/>
-		</Table-View>
-	</div>
+	<Table-View
+		:columns="columns"
+		:condition-forms="conditionForms"
+		:actions="actions"
+		action-body="合同"
+		module="hro/undertakingContract.ts"
+		label-width="140"
+	>
+		<template #top-bar>
+			<el-button icon="folder-add" type="primary" class="ml10" @click="formDialogRef.openDialog()" v-auth="'hro_undertakingContract_add'">
+				手动上传合同
+			</el-button>
+			<el-button icon="folder-add" type="primary" v-auth="'hro_undertakingContract_export'" @click="batchElectronicSignRef.openDialog()">
+				批量电子签署
+			</el-button>
+		</template>
+		<form-dialog ref="formDialogRef" />
+		<uploadExcel
+			:forms="batchElectronicSignForms"
+			ref="batchElectronicSignRef"
+			guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
+			main-label="待签署用户名单"
+			upload-url="core/undertakingContract/contractBatchSigning"
+			temp-url="/files/合同批量签署模板.xlsx"
+			template-on-front
+			title="添加合同签署"
+			submitButtonText="下一步"
+		/>
+	</Table-View>
 </template>
 
 <script setup lang="ts">

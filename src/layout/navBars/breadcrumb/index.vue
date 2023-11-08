@@ -13,7 +13,7 @@
 		</User>
 	</div>
 	<el-dialog v-model="showQrCode">
-		<template #title> 二维码下载 </template>
+		<template #header> 二维码下载 </template>
 		<el-form v-model="qrCodeForm">
 			<el-form-item label="请选择服务商：" prop="id">
 				<SpSelect v-model="qrCodeForm.id" />

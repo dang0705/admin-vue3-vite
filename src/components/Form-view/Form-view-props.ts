@@ -68,7 +68,7 @@ export const actionsParams = {
 export default {
 	forms: {
 		type: Array as () => FormOptions[],
-		required: true,
+		default: () => [],
 	},
 	steps: {
 		type: Array,

@@ -1,30 +1,28 @@
 <template>
-	<div>
-		<TableView
-			ref="InOutAccountRef"
-			:columns="tabType == 1 ? columns1 : columns2"
-			:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
-			:condition-forms="conditionForms"
-			labelWidth="120px"
-			:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
-			:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
-			:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
-		>
-			<template #tableTop>
-				<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
-			</template>
-			<template #top-bar="{ otherInfo }">
-				<el-button
-					v-auth="'finance_waterSpPaymentBank_import'"
-					@click="inOutAccountAddFormsRef.openDialog()"
-					style="margin-right: 24px"
-					icon="Upload"
-					type="primary"
-				>
-					批量导入银行交易流水
-				</el-button>
-			</template>
-		</TableView>
+	<TableView
+		ref="InOutAccountRef"
+		:columns="tabType == 1 ? columns1 : columns2"
+		:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
+		:condition-forms="conditionForms"
+		labelWidth="120px"
+		:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
+		:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
+		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
+	>
+		<template #tableTop>
+			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
+		</template>
+		<template #top-bar="{ otherInfo }">
+			<el-button
+				v-auth="'finance_waterSpPaymentBank_import'"
+				@click="inOutAccountAddFormsRef.openDialog()"
+				style="margin-right: 24px"
+				icon="Upload"
+				type="primary"
+			>
+				批量导入银行交易流水
+			</el-button>
+		</template>
 		<uploadExcel
 			@refreshDataList="refreshDataList"
 			ref="inOutAccountAddFormsRef"
@@ -37,7 +35,7 @@
 			:forms="inOutAccountAddForms"
 			submitButtonText="下一步"
 		/>
-	</div>
+	</TableView>
 </template>
 
 <script setup lang="ts">
