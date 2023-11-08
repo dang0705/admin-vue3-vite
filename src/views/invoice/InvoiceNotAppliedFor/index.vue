@@ -312,7 +312,7 @@ const forms = computed(() => [
 		control: 'el-select',
 		key: 'invoicingCategories',
 		label: '开票类目',
-		options: dialogFormData.value.invoiceCategoryList,
+		options: dialogFormData.value.invoiceCategoryList === null ? dialogFormData.value.invoiceCategoryList : [],
 		props: {
 			multiple: financeType.value === 'merge',
 		},
@@ -392,7 +392,6 @@ const applyShow = ref(false);
 
 const applyfor = async (id: string, type: string) => {
 	financeType.value = type;
-	// dialogFormData.value = {}
 	dialogFormData.value = type === 'merge' ? (await getMergeObj(selectObjs.value.map(({ id }) => id))).data : (await getObj(id)).data;
 	console.log(dialogFormData.value, 6666);
 
