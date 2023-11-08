@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineOptions } from 'vue';
 defineOptions({ name: 'Svg-icon' });
 // 定义父组件传过来的值
 const props = defineProps({

@@ -65,7 +65,6 @@ import { list } from '/@/api/gen/datasource';
 import { useMessage } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
 import { validateNull } from '/@/utils/validate';
-import { defineOptions } from 'vue';
 defineOptions({ name: 'systemTable' });
 // 定义变量内容
 const router = useRouter();

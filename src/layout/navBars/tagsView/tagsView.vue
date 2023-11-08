@@ -59,7 +59,6 @@ import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { useMessage } from '/@/hooks/message';
-import { defineOptions } from 'vue';
 defineOptions({ name: 'layoutTagsView' });
 $bus.on('close-tag', (closeName: string) =>
 	state.tagsViewList.splice(
