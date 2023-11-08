@@ -1,6 +1,6 @@
 <template>
 	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="150px" v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="150px">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务协议名称" prop="agreementName">

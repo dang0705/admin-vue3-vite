@@ -1,6 +1,6 @@
 <template>
 	<el-dialog :close-on-click-modal="false" title="审核任务" width="600" draggable v-model="visible">
-		<el-form :model="form" :rules="dataRules" style="min-height: 150px" formDialogRef label-width="120px" ref="dataFormRef" v-loading="loading">
+		<el-form :model="form" :rules="dataRules" style="min-height: 150px" formDialogRef label-width="120px" ref="dataFormRef">
 			<el-form-item label="审核结果" prop="auditPass">
 				<el-radio-group v-model="form.auditPass">
 					<el-radio :label="true">审核通过</el-radio>
