@@ -1,0 +1,28 @@
+export default {
+   settleBillRecord: {
+        index: '#',
+        importsettleBillRecordTip: 'import SettleBillRecord',
+        id: 'id',
+        settleBillId: 'settleBillId',
+        settleBillName: 'settleBillName',
+        settleBillType: 'settleBillType',
+        paymentBankId: 'paymentBankId',
+        spId: 'spId',
+        bankAccountNumberRecipient: 'bankAccountNumberRecipient',
+        accountNameRecipient: 'accountNameRecipient',
+        serviceAmount: 'serviceAmount',
+        status: 'status',
+        payTime: 'payTime',
+        inputIdTip: 'input id',
+        inputSettleBillIdTip: 'input settleBillId',
+        inputSettleBillNameTip: 'input settleBillName',
+        inputSettleBillTypeTip: 'input settleBillType',
+        inputPaymentBankIdTip: 'input paymentBankId',
+        inputSpIdTip: 'input spId',
+        inputBankAccountNumberRecipientTip: 'input bankAccountNumberRecipient',
+        inputAccountNameRecipientTip: 'input accountNameRecipient',
+        inputServiceAmountTip: 'input serviceAmount',
+        inputStatusTip: 'input status',
+        inputPayTimeTip: 'input payTime',
+    }
+}

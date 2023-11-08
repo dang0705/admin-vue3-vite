@@ -5,14 +5,14 @@ import { useDict, dictCache } from '/@/hooks/dict';
 import FormViewProps, { FormOptions } from '/@/components/Form-view/Form-view-props';
 import Actions from '/@/components/Form-view/Actions.vue';
 import { dict } from '/@/stores/dict';
-
+defineOptions({
+	name: 'Form-view',
+});
 provide('formView', getCurrentInstance()?.ctx);
 const emit = defineEmits(['update:modelValue', 'update:valid', 'update:show', 'get-validation', 'get-page', 'submit-and-cancel']);
 const refresh = inject('refresh', () => {});
 const inDialog = inject('in-dialog', false);
-defineOptions({
-	name: 'Form-view',
-});
+
 const prop = defineProps({
 	modelValue: {
 		type: Object,

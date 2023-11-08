@@ -1,116 +1,114 @@
 <template>
-	<div>
-		<TableView
-			ref="merchantAccountCapitalRef"
-			:columns="indexThead"
-			module="finance/merchantRecharge.ts"
-			:staticQuery="staticQuery"
-			:condition-forms="detailConditionForms"
-			labelWidth="140px"
-			downBlobFileUrl="/finance/merchantRecharge/export"
-		>
-			<template #top-bar>
-				<el-button v-auth="'finance_merchantRefund_add'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
-				<el-button v-auth="'finance_merchantRecharge_add'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
-			</template>
-			<template #tableTopTwo>
-				<div class="flex mb-[30px]">
-					<div class="total_list">
-						<div class="total_item">
-							<div class="info">
-								<div class="info_label">账户余额</div>
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.totalAmount }) }}</div>
-									<div class="unit">元</div>
-								</div>
-							</div>
-						</div>
-						<div class="total_item">
-							<div class="info">
-								<div class="info_label">冻结金额</div>
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
-									<div class="unit">元</div>
-								</div>
-							</div>
-						</div>
-						<div class="total_item">
-							<div class="info">
-								<div class="info_label">可用余额</div>
-								<div class="price_box">
-									<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
-									<div class="unit">元</div>
-								</div>
+	<TableView
+		ref="merchantAccountCapitalRef"
+		:columns="indexThead"
+		module="finance/merchantRecharge.ts"
+		:staticQuery="staticQuery"
+		:condition-forms="detailConditionForms"
+		labelWidth="140px"
+		downBlobFileUrl="/finance/merchantRecharge/export"
+	>
+		<template #top-bar>
+			<el-button v-auth="'finance_merchantRefund_add'" @click="handleRe(2)" type="primary" class="ml10"> 申请退款 </el-button>
+			<el-button v-auth="'finance_merchantRecharge_add'" @click="handleRe(1)" type="primary" class="ml10"> 发起充值 </el-button>
+		</template>
+		<template #tableTopTwo>
+			<div class="flex mb-[30px]">
+				<div class="total_list">
+					<div class="total_item">
+						<div class="info">
+							<div class="info_label">账户余额</div>
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.totalAmount }) }}</div>
+								<div class="unit">元</div>
 							</div>
 						</div>
 					</div>
-					<div class="ml-auto bg-[#fafafa] px-[24px] py-[16px]">
-						<div class="text-[16px] font-bold mb-3">收款账户信息</div>
-						<div class="flex items-center" v-for="(item, index) in accountInfoList" :key="index">
-							<div class="w-[100px]">{{ item.label }}</div>
-							<div class="min-w-[150px]">{{ item.value }}</div>
-							<el-button class="ml-auto" @click="copyText(item.value)" text type="primary"> 复制 </el-button>
+					<div class="total_item">
+						<div class="info">
+							<div class="info_label">冻结金额</div>
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.freeze }) }}</div>
+								<div class="unit">元</div>
+							</div>
+						</div>
+					</div>
+					<div class="total_item">
+						<div class="info">
+							<div class="info_label">可用余额</div>
+							<div class="price_box">
+								<div class="price">{{ thousandthDivision({ number: form.balance }) }}</div>
+								<div class="unit">元</div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="ml-auto bg-[#fafafa] px-[24px] py-[16px]">
+					<div class="text-[16px] font-bold mb-3">收款账户信息</div>
+					<div class="flex items-center" v-for="(item, index) in accountInfoList" :key="index">
+						<div class="w-[100px]">{{ item.label }}</div>
+						<div class="min-w-[150px]">{{ item.value }}</div>
+						<el-button class="ml-auto" @click="copyText(item.value)" text type="primary"> 复制 </el-button>
+					</div>
+				</div>
+			</div>
+		</template>
+		<template #actions="{ row }">
+			<el-button v-auth="'finance_merchantRecharge_edit'" v-if="row.status != 30" @click="handleRevoke(row.id)" icon="view" text type="primary">
+				撤销
+			</el-button>
+			<el-button v-auth="'finance_merchantAccountCapital_view_voucher'" @click="handleContractFile(row)" icon="view" text type="primary">
+				查看转账凭证
+			</el-button>
+		</template>
+		<Dialog
+			vertical
+			button-position="center"
+			v-model="show"
+			:title="reType == 1 ? '发起充值' : '申请退款'"
+			:show-cancel="false"
+			:forms="forms"
+			:columns="24"
+			v-model:form-data="dialogFormData"
+			:on-cancel="onCancel"
+			:on-submit="onSubmit"
+		>
+			<template #payingAmount="{ formData }">
+				<el-form-item
+					label="付款金额"
+					prop="payingAmount"
+					:rules="[
+						{
+							required: true,
+							message: '付款金额不能为空',
+							trigger: 'blur',
+						},
+					]"
+				>
+					<InputPlus v-model="dialogFormData.payingAmount">
+						<template #append>元</template>
+					</InputPlus>
+				</el-form-item>
 			</template>
-			<template #actions="{ row }">
-				<el-button v-auth="'finance_merchantRecharge_edit'" v-if="row.status != 30" @click="handleRevoke(row.id)" icon="view" text type="primary">
-					撤销
-				</el-button>
-				<el-button v-auth="'finance_merchantAccountCapital_view_voucher'" @click="handleContractFile(row)" icon="view" text type="primary">
-					查看转账凭证
-				</el-button>
-			</template>
-			<Dialog
-				vertical
-				button-position="center"
-				v-model="show"
-				:title="reType == 1 ? '发起充值' : '申请退款'"
-				:show-cancel="false"
-				:forms="forms"
-				:columns="24"
-				v-model:form-data="dialogFormData"
-				:on-cancel="onCancel"
-				:on-submit="onSubmit"
-			>
-				<template #payingAmount="{ formData }">
-					<el-form-item
-						label="付款金额"
-						prop="payingAmount"
-						:rules="[
-							{
-								required: true,
-								message: '付款金额不能为空',
-								trigger: 'blur',
-							},
-						]"
+			<template #receiptAccountNumber>
+				<el-form-item label="收款账号:" prop="receiptAccountNumber">
+					<el-select
+						@change="handleFilterAccount(dialogFormData.receiptAccountNumber)"
+						placeholder="请选择"
+						class="w100"
+						v-model="dialogFormData.receiptAccountNumber"
 					>
-						<InputPlus v-model="dialogFormData.payingAmount">
-							<template #append>元</template>
-						</InputPlus>
-					</el-form-item>
-				</template>
-				<template #receiptAccountNumber>
-					<el-form-item label="收款账号:" prop="receiptAccountNumber">
-						<el-select
-							@change="handleFilterAccount(dialogFormData.receiptAccountNumber)"
-							placeholder="请选择"
-							class="w100"
-							v-model="dialogFormData.receiptAccountNumber"
-						>
-							<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in receiptAccountOptions" />
-						</el-select>
-					</el-form-item>
-				</template>
-				<template #receiptAccountBank>
-					<el-form-item label="开户行:" prop="receiptAccountBank">
-						<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
-					</el-form-item>
-				</template>
-			</Dialog>
-		</TableView>
-	</div>
+						<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in receiptAccountOptions" />
+					</el-select>
+				</el-form-item>
+			</template>
+			<template #receiptAccountBank>
+				<el-form-item label="开户行:" prop="receiptAccountBank">
+					<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
+				</el-form-item>
+			</template>
+		</Dialog>
+	</TableView>
 </template>
 
 <script setup lang="ts" name="商户资金账户详情">

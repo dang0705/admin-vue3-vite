@@ -12,7 +12,7 @@
 				</el-link>
 			</div>
 			<el-divider />
-			<form-view
+			<Form-view
 				:forms="forms"
 				:columns="24"
 				vertical
@@ -58,7 +58,7 @@
 						</el-upload>
 					</el-form-item>
 				</template>
-			</form-view>
+			</Form-view>
 		</el-dialog>
 
 		<!--校验失败错误数据-->

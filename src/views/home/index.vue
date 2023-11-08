@@ -231,11 +231,11 @@ const dashboardData = {
 		},*/
 	],
 };
-onMounted(async () => {
+/*onMounted(async () => {
 	await nextTick();
 	const commandChart = echarts.init(document.getElementById('charts') as HTMLDivElement);
 	commandChart.setOption(commandCharOption);
-});
+});*/
 </script>
 
 <style scoped lang="scss">

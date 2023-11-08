@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { actionsParams } from '/@/components/Form-view/Form-view-props';
+defineOptions({
+	name: 'Form-action',
+	inheritAttrs: false,
+});
 const props = defineProps({
 	...actionsParams,
 	vertical: { type: Boolean, default: false },
@@ -32,7 +36,7 @@ const next = async () => {
 			'h-fit',
 			'flex-shrink-0',
 			`justify-${buttonPosition === 'right' ? 'end' : buttonPosition === 'center' ? 'center' : 'start'}`,
-			{ horizontal: !vertical },
+			{ horizontal: !vertical, 'ml-[12px]': !vertical },
 		]"
 	>
 		<template v-if="pagination">
