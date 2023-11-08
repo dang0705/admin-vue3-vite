@@ -17,8 +17,6 @@ import {
 	RightToolbar,
 	DictTag,
 	// UploadExcel,
-	UploadFile,
-	UploadImg,
 	Divider,
 	Editor,
 	Tip,
@@ -62,12 +60,7 @@ ElDatePicker.props.placeholder = {
 };
 
 // 导入通用自定义组件
-app
-	.component('DictTag', DictTag)
-	.component('Pagination', Pagination)
-	.component('RightToolbar', RightToolbar)
-	.component('UploadImg', UploadImg)
-	.component('Divider', Divider);
+app.component('DictTag', DictTag).component('Pagination', Pagination).component('RightToolbar', RightToolbar).component('Divider', Divider);
 
 app.directive(debounce.name, debounce.directive);
 

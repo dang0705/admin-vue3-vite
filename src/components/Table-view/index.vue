@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import thousandthDivision from '/@/utils/thousandth-division';
-import TableActions from '/src/components/Table-view/Table-actions.vue';
+import TableActions from '/@/components/Table-view/Table-actions.vue';
 import apis from '/@/api';
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'));
 const emit = defineEmits(['update:modelValue', 'get-tab-label']);

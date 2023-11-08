@@ -142,5 +142,3 @@ const handleAction = async ({
 		/>
 	</ul>
 </template>
-
-<style scoped lang="scss"></style>
