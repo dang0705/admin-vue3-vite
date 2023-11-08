@@ -36,7 +36,7 @@ const next = async () => {
 			'h-fit',
 			'flex-shrink-0',
 			`justify-${buttonPosition === 'right' ? 'end' : buttonPosition === 'center' ? 'center' : 'start'}`,
-			{ horizontal: !vertical },
+			{ horizontal: !vertical, 'ml-[12px]': !vertical },
 		]"
 	>
 		<template v-if="pagination">
