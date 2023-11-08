@@ -1,6 +1,6 @@
 <template>
 	<el-dialog :close-on-click-modal="false" title="审核任务" width="600" draggable v-model="visible">
-		<el-form :model="form" :rules="dataRules" style="min-height: 150px" formDialogRef label-width="120px" ref="dataFormRef" v-loading="loading">
+		<el-form :model="form" :rules="dataRules" style="min-height: 150px" formDialogRef label-width="120px" ref="dataFormRef">
 			<el-form-item label="审核结果" prop="auditPass">
 				<el-radio-group v-model="form.auditPass">
 					<el-radio :label="true">审核通过</el-radio>
@@ -20,13 +20,13 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" name="SysOauthClientDetailsDialog" setup>
+<script lang="ts" setup>
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, putAuditTask } from '/@/api/core/task';
 import { useI18n } from 'vue-i18n';
 import { rule } from '/@/utils/validate';
-
+defineOptions({ name: 'SysOauthClientDetailsDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 

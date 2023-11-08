@@ -2,7 +2,7 @@
 	<!-- <el-scrollbar> -->
 	<!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
 	<el-card class="!border-none" shadow="never">
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="160px" formDialogRef v-loading="loading" label-position="right">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" label-width="160px" formDialogRef label-position="right">
 			<div>
 				<Divider title="基本信息" />
 				<el-row class="paddcus" :gutter="24">

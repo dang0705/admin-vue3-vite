@@ -9,7 +9,7 @@ export default (row: any) => {
 			label: '查看',
 			auth: auth('view'),
 			to: {
-				path: '/core/settleBill/detail',
+				path: '/accounting/settleBill/detail',
 				query: { id },
 				state: {
 					refresh: 1,
@@ -58,7 +58,7 @@ export default (row: any) => {
 						},
 						show: {
 							by: 'auditPass',
-							fn: ({ auditPass }) => !auditPass,
+							fn: ({ auditPass }: any) => !auditPass,
 						},
 					},
 				],

@@ -9,11 +9,11 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutLogo">
+<script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig';
 import logo from '/@/assets/menu-logo.png';
 import logoMini from '/@/assets/logo-mini.webp';
-
+defineOptions({ name: 'layoutLogo' });
 // 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

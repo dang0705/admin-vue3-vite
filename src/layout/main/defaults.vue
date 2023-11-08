@@ -10,10 +10,10 @@
 	</el-container>
 </template>
 
-<script setup lang="ts" name="layoutDefaults">
+<script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';
-
+defineOptions({ name: 'Layout-defaults' });
 // 引入组件
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));

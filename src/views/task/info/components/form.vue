@@ -4,7 +4,7 @@
 			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
 		</el-steps>
 
-		<el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef v-loading="loading">
+		<el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef>
 			<div>
 				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
 				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
@@ -300,15 +300,17 @@
 	</el-card>
 </template>
 
-<script setup lang="ts" name="TaskDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/task';
 import { agreeList } from '/@/api/core/merchantServiceAgreement';
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
-const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 import uploadBusinessType from '/@/enums/upload-business-type';
+
+const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
+defineOptions({ name: 'TaskDialog' });
 const businessType = uploadBusinessType.merchant;
 const chinaAreaRef = ref();
 // 定义字典

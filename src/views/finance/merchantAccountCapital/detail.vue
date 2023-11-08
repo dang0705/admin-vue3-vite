@@ -14,7 +14,7 @@
 		</template>
 		<template #tableTopTwo>
 			<div class="flex mb-[30px]">
-				<div class="total_list">
+				<div class="total_list bg-[#fafafa]">
 					<div class="total_item">
 						<div class="info">
 							<div class="info_label">账户余额</div>
@@ -253,7 +253,6 @@ $refreshList(getmerchantInfoData);
 
 <style lang="scss" scoped>
 .total_list {
-	background: #fafafa;
 	display: flex;
 	flex: 1;
 	margin-right: 36px;

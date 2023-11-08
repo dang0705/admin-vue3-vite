@@ -157,7 +157,7 @@ const handleAction = async (type: string, row: any) => {
 	switch (type) {
 		case 'view':
 			router.push({
-				path: '/core/settleBill/detail',
+				path: '/accounting/settleBill/detail',
 				query: {
 					id: row.settleBillId,
 				},

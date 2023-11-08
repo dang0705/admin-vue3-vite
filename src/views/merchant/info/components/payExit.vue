@@ -60,7 +60,7 @@
 	<pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" v-bind="state.pagination" />
 
 	<el-dialog width="640px" title="开通支付通道" v-model="visible" :close-on-click-modal="false" draggable>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px" v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="140px">
 			<el-row :gutter="24">
 				<el-col :span="24" class="mb20">
 					<el-form-item label="服务商" prop="spId">

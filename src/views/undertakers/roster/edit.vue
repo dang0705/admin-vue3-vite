@@ -45,13 +45,14 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="UndertakerInfoDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { addSp, uploadCard, updateMobile } from '/@/api/hro/undertakerInfo';
 import { rule } from '/@/utils/validate';
 import uploadBusinessType from '/@/enums/upload-business-type';
 import { getSpInfoListId } from '/@/api/hro/undertakerInfo';
+defineOptions({ name: 'UndertakerInfoDialog' });
 
 const emit = defineEmits(['refresh']);
 

@@ -14,10 +14,11 @@
 	</el-card>
 </template>
 
-<script setup lang="ts" name="SysLogDashboard">
+<script setup lang="ts">
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { pageList } from '/@/api/admin/log';
 
+defineOptions({ name: 'SysLogDashboard' });
 const router = useRouter();
 
 // 创建基本表格参数对象

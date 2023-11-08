@@ -6,9 +6,9 @@
 	<!--	</div>-->
 </template>
 
-<script setup lang="ts" name="layoutFooter">
+<script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig';
-
+defineOptions({ name: 'Layout-footer' });
 // 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

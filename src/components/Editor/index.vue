@@ -12,7 +12,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="wngEditor">
+<script setup lang="ts">
 import '@wangeditor/editor/dist/css/style.css';
 import { reactive, shallowRef, watch, onBeforeUnmount, CSSProperties } from 'vue';
 // @ts-ignore
@@ -20,6 +20,7 @@ import { IDomEditor } from '@wangeditor/editor';
 import { Toolbar, Editor } from '@wangeditor/editor-for-vue';
 import { Session } from '/@/utils/storage';
 import other from '/@/utils/other';
+defineOptions({ name: 'Wang-editor' });
 const { proxy } = getCurrentInstance();
 
 // 定义父组件传过来的值

@@ -5,7 +5,8 @@
 	</el-tooltip>
 </template>
 
-<script setup lang="ts" name="tip">
+<script setup lang="ts">
+defineOptions({ name: 'Tip' });
 const props = defineProps({
 	content: {
 		type: String,

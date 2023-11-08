@@ -7,7 +7,8 @@
 	</div>
 </template>
 
-<script setup name="shortcut">
+<script setup>
+defineOptions({ name: 'Short-cut' });
 const props = defineProps({
 	icon: {
 		type: String,

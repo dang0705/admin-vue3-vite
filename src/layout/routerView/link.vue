@@ -13,9 +13,9 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutLinkView">
+<script setup lang="ts">
 import { verifyUrl } from '/@/utils/toolsValidate';
-
+defineOptions({ name: 'layoutLinkView' });
 // 定义变量内容
 const route = useRoute();
 const state = reactive<LinkViewState>({

@@ -75,12 +75,12 @@
 	</div>
 </template>
 
-<script lang="ts" name="systemGenGroup" setup>
+<script lang="ts" setup>
 import { BasicTableProps, useTable } from '/@/hooks/table';
 import { delObjs, fetchList } from '/@/api/gen/group';
 import { useMessage, useMessageBox } from '/@/hooks/message';
 import { useI18n } from 'vue-i18n';
-
+defineOptions({ name: 'systemGenGroup' });
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'));
 const { t } = useI18n();

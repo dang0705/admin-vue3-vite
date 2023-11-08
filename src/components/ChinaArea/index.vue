@@ -1,9 +1,9 @@
 <template>
 	<el-cascader ref="chinaArea" :options="optionsData" :props="cascaderProps" v-model="selectedOptions" @change="handleChange" />
 </template>
-<script setup lang="ts" name="china-area">
+<script setup lang="ts">
 import { provinceAndCityData, provinceAndCityDataPlus, regionData, regionDataPlus } from '/@/utils/chinaArea';
-
+defineOptions({ name: 'China-area' });
 const emit = defineEmits(['update:modelValue', 'change']);
 const optionsData = ref();
 const chinaArea = ref();

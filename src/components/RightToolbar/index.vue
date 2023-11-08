@@ -26,9 +26,9 @@
 	</div>
 </template>
 
-<script setup name="right-toolbar">
+<script setup>
 import { auth } from '/@/utils/authFunction';
-
+defineOptions({ name: 'Right-toolbar' });
 /**
  * 通过 defineProps 函数定义组件 props
  */

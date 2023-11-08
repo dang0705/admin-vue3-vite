@@ -29,10 +29,11 @@
 	</transition>
 </template>
 
-<script setup lang="ts" name="layoutTagsViewContextmenu">
+<script setup lang="ts">
 import { computed, reactive, onMounted, onUnmounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+defineOptions({ name: 'layoutTagsViewContextmenu' });
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { favoriteRoutes } = storeToRefs(storesTagsViewRoutes);
 

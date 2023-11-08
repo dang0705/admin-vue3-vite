@@ -2,12 +2,12 @@
 	<slot v-if="getUserAuthBtnList" />
 </template>
 
-<script setup lang="ts" name="authAll">
+<script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 import { judementSameArr } from '/@/utils/arrayOperation';
-
+defineOptions({ name: 'Auth-all' });
 // 定义父组件传过来的值
 const props = defineProps({
 	value: {

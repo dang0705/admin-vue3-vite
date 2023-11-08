@@ -46,7 +46,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutTagsView">
+<script setup lang="ts">
 import Sortable from 'sortablejs';
 import { ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
@@ -59,7 +59,7 @@ import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { useMessage } from '/@/hooks/message';
-
+defineOptions({ name: 'layoutTagsView' });
 $bus.on('close-tag', (closeName: string) =>
 	state.tagsViewList.splice(
 		state.tagsViewList.findIndex(({ name }) => name === closeName),

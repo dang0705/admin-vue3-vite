@@ -9,7 +9,7 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutAside">
+<script setup lang="ts">
 import { defineAsyncComponent, reactive, computed, watch, onBeforeMount, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import pinia from '/@/stores/index';
@@ -18,7 +18,7 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import mittBus from '/@/utils/mitt';
 import { useI18n } from 'vue-i18n';
-
+defineOptions({ name: 'Layout-aside' });
 // 引入组件
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Vertical = defineAsyncComponent(() => import('/@/layout/navMenu/vertical.vue'));

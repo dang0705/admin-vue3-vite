@@ -67,12 +67,13 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="systemDatasourceConfDialog">
+<script setup lang="ts">
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/gen/datasource';
 import { useI18n } from 'vue-i18n';
 import { useDict } from '/@/hooks/dict';
 
+defineOptions({ name: 'systemDatasourceConfDialog' });
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();

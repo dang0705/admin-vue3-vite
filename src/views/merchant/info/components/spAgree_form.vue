@@ -1,6 +1,6 @@
 <template>
 	<el-dialog width="1000px" :title="form.id ? '编辑' : '新增'" v-model="visible" :close-on-click-modal="false" draggable>
-		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="150px" v-loading="loading">
+		<el-form ref="dataFormRef" :model="form" :rules="dataRules" formDialogRef label-width="150px">
 			<el-row :gutter="24">
 				<el-col :span="12" class="mb20">
 					<el-form-item label="服务协议名称" prop="agreementName">
@@ -164,12 +164,13 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts" name="MerchantServiceAgreementDialog">
+<script setup lang="ts">
 import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj, userDropList } from '/@/api/core/merchantServiceAgreement';
 import { getSpInfoList } from '/@/api/core/merchantInfo';
 import { rule } from '/@/utils/validate';
+defineOptions({ name: 'MerchantServiceAgreementDialog' });
 const emit = defineEmits(['refresh']);
 const { is_need, fee_calculation_method, invoice_category, service_fee_method } = useDict(
 	'is_need',
