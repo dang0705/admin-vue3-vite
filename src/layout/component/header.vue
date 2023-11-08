@@ -1,5 +1,5 @@
 <template>
-	<el-header class="layout-header" v-show="!isTagsViewCurrenFull">
+	<el-header class="layout-header sticky top-0 z-[10] bg-white" v-show="!isTagsViewCurrenFull">
 		<NavBarsIndex />
 	</el-header>
 </template>
