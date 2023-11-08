@@ -128,7 +128,6 @@ const changeNumber = (data: any, key: string) => {
 			:max="10000000000"
 			:step="1000"
 			:precision="precisions[1]"
-			@blur="changeNumber(gradual[index], [props.itemField?.max])"
 			v-model="gradual[index][props.itemField?.max]"
 		/>&nbsp;<span v-html="texts[1]" />&nbsp;
 		<el-input-number
@@ -142,7 +141,7 @@ const changeNumber = (data: any, key: string) => {
 		/>&nbsp;
 		<span v-html="texts[2]" />
 		<ul class="gradual-tax-operation flex items-center ml-[10px]" v-if="!forceDisabled && index === gradual.length - 1 && !disabled">
-			<li style="color: #ff6826" class="text-[14px] cursor-pointer" @click="addAGradient">&plus;添加</li>
+			<li style="color: #ff6826" class="text-[14px] cursor-pointer" v-if="_.max != null" @click="addAGradient">&plus;添加</li>
 			<li style="color: #e02020" class="text-[14px] cursor-pointer ml-[10px]" v-if="index" @click="removeAGradient(index)">删除</li>
 		</ul>
 	</div>

@@ -2,6 +2,7 @@
 	<Table-view
 		:columns="columns"
 		:condition-forms="conditionForms"
+		isTab
 		module="finance/invoiceRecord.ts"
 		downBlobFileUrl="/finance/invoiceRecord/export"
 		downBlobFileName="发票记录.xlsx"
@@ -261,7 +262,7 @@ const forms = computed(() => [
 		label: '开票类型',
 		options: 'invoice_type',
 		props: {
-			disabled: financeType.value === 'see',
+			disabled: true,
 		},
 		rules: [{ required: financeType.value === 'open', message: '开票类型不能为空', trigger: 'change' }],
 	},
@@ -271,7 +272,9 @@ const forms = computed(() => [
 		label: '开票类目',
 		options: 'invoice_category',
 		props: {
-			disabled: financeType.value === 'see',
+			disabled: true,
+			// 多选类目 暂时不做
+			// multiple: Array.isArray(dialogFormData.value.invoicingCategories),
 		},
 		rules: [{ required: financeType.value === 'open', message: '开票类目不能为空', trigger: 'change' }],
 	},

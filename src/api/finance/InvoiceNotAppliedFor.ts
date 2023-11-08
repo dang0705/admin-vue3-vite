@@ -62,3 +62,11 @@ export function saveInvoice(obj?: Object) {
 		data: obj,
 	});
 }
+
+export function applyCombineInvoice(obj?: Object) {
+	return request({
+		url: '/finance/invoiceRecord/applyCombineInvoice',
+		method: 'post',
+		data: obj,
+	});
+}

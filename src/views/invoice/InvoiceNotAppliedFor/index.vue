@@ -46,7 +46,8 @@
 			<template #serviceAmount>
 				<el-form-item label="结算金额:">
 					<div>
-						<div v-for="(item, index) in dialogFormData.serviceAmounts" :key="index">{{ item }}元</div>
+						<div v-if="financeType === 'applyfor'">{{ dialogFormData.serviceAmount }}</div>
+						<div v-else v-for="(item, index) in dialogFormData.serviceAmounts" :key="index">{{ item }}元</div>
 					</div>
 				</el-form-item>
 			</template>
@@ -84,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { getObj, getMergeObj, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
+import { getObj, getMergeObj, applyCombineInvoice, applyInvoice, saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor';
 const financeType = ref(); // 进入方式 applyfor申请 open开票 merge合并开票
 const selectObjs = ref([]); // 勾选的表格行
 
@@ -133,6 +134,11 @@ const columns = [
 	{
 		prop: 'serviceAmount',
 		label: '可开票全额(元)',
+		'min-width': 120,
+	},
+	{
+		prop: 'isSettled',
+		label: '是否已结算',
 		'min-width': 120,
 	},
 	{
@@ -312,10 +318,11 @@ const forms = computed(() => [
 		control: 'el-select',
 		key: 'invoicingCategories',
 		label: '开票类目',
-		options: dialogFormData.value.invoiceCategoryList === null ? dialogFormData.value.invoiceCategoryList : [],
-		props: {
-			multiple: financeType.value === 'merge',
-		},
+		options: dialogFormData.value.invoiceCategoryList,
+		// props: {   // 多选类目 暂时不做
+		// 	multiple: financeType.value === 'merge',
+		// 	reserveKeyword: false,
+		// },
 		rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }],
 	},
 	...(financeType.value === 'open'
@@ -393,8 +400,7 @@ const applyShow = ref(false);
 const applyfor = async (id: string, type: string) => {
 	financeType.value = type;
 	dialogFormData.value = type === 'merge' ? (await getMergeObj(selectObjs.value.map(({ id }) => id))).data : (await getObj(id)).data;
-	console.log(dialogFormData.value, 6666);
-
+	// dialogFormData.value.invoicingCategories = type === 'merge' ? [] : '';
 	dialogFormData.value.radioAddress = 1;
 	dialogFormData.value.serviceAmount = dialogFormData.value.serviceAmount + '元';
 	dialogFormData.value.invoicedAmount = type === 'merge' ? dialogFormData.value.invoicedAmount + '元' : '';
@@ -407,9 +413,20 @@ const applyfor = async (id: string, type: string) => {
 
 // 提交
 const onSubmit = async (refresh: any) => {
-	if (financeType.value === 'merge') dialogFormData.value.invoiceCategoryList = dialogFormData.value.invoicingCategories;
 	try {
-		financeType.value === 'applyfor' ? await applyInvoice({ ...dialogFormData.value }) : await saveInvoice({ ...dialogFormData.value });
+		switch (financeType.value) {
+			case 'applyfor':
+				await applyInvoice({ ...dialogFormData.value });
+				break;
+			case 'open':
+				await saveInvoice({ ...dialogFormData.value });
+				break;
+			case 'merge':
+				// dialogFormData.value.invoiceCategoryList = dialogFormData.value.invoicingCategories;
+				dialogFormData.value.invoicedAmount = dialogFormData.value.invoicedAmount.slice(0, -1);
+				await applyCombineInvoice({ ...dialogFormData.value });
+				break;
+		}
 		applyShow.value = false;
 		refresh();
 	} catch (err: any) {
