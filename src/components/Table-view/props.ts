@@ -31,6 +31,14 @@ export default {
 		type: String,
 		default: 'delObjs',
 	},
+	noHeader: {
+		type: Boolean,
+		default: false,
+	},
+	border: {
+		type: Boolean,
+		default: true,
+	},
 	// 额外的参数
 	params: {
 		type: Object,

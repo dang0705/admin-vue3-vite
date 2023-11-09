@@ -30,11 +30,11 @@
 				</div>
 			</div>
 			<el-table
-				border
 				v-loading="state.loading"
+				:border="border"
 				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
-				:header-cell-style="tableStyle.headerCellStyle"
+				:header-cell-style="!noHeader ? tableStyle.headerCellStyle : { headerCellStyle: { background: 'transparent', height: 0 } }"
 				@selection-change="onSelectionChange"
 			>
 				<el-table-column
@@ -47,7 +47,10 @@
 						// ...(column.label === '操作' ? { renderHeader } : null),
 					}"
 				>
-					<template v-if="column.slot || column.value" v-slot="{ row }">
+					<template v-if="column.headerSlot" #header>
+						<slot :name="`${column.prop}-header`" />
+					</template>
+					<template v-else-if="column.slot || column.value" v-slot="{ row }">
 						<slot :name="column.prop" :row="row" :confirm="confirm">
 							<template v-if="column.value">{{ column.value(row) }}</template>
 						</slot>
