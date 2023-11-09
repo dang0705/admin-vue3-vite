@@ -69,3 +69,29 @@ export function addAuditRefund(obj?: Object) {
 		data: obj,
 	});
 }
+
+// 商户退款支付记录管理
+export function refundRecordPayPage(query?: Object) {
+	return request({
+		url: '/finance/merchantRefundPaymentRecord/page',
+		method: 'get',
+		params: query,
+	});
+}
+
+// 退款支付
+export function refundRecordPayRefund(obj?: Object) {
+	return request({
+		url: '/finance/merchantRefundPaymentRecord/payRefund',
+		method: 'post',
+		data: obj,
+	});
+}
+// 标记退款失败
+export function refundRecordPayMarkRefundFailed(obj?: Object) {
+	return request({
+		url: '/finance/merchantRefundPaymentRecord/markRefundFailed',
+		method: 'post',
+		data: obj,
+	});
+}

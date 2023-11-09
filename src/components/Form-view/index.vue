@@ -49,10 +49,10 @@ interface OptionsParams {
 }
 
 const formConfigs = ref<any[]>([])
-let stopWatchShow: unknown = null
 const rulesCache: any = {}
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
+  let stopWatchShow: unknown = null
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
@@ -73,7 +73,7 @@ const init = async (forms: FormOptions[]) => {
         () => prop.modelValue[item.key],
         (value) => item.onChange && item.onChange(value, formData.value)
       )
-    stopWatchShow && stopWatchShow()
+    // stopWatchShow && (stopWatchShow as Function)() && (stopWatchShow = null)
     item.show &&
       (stopWatchShow = watch(
         () => prop.modelValue[item.show?.by as string],
@@ -170,23 +170,22 @@ const reset = async () => {
   await nextTick()
   form.value.resetFields()
 }
-const initForm = (forms: any[], autoRun = true) => {
-  autoRun && helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
-  reset()
+const initForm = (forms: any[]) => {
+  helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
 }
 
 watch(
   () => prop.forms as [],
   async (forms: any[]) => {
-    forms.length && initForm(forms, true)
+    forms.length && initForm(forms as [])
   },
   { immediate: true }
 )
+onUnmounted(() => reset())
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  (show) =>
-    show && (formData.value = {}) && initForm(prop.forms, prop.forceUpdate)
+  async (show) => (show ? initForm(prop.forms) : reset())
 )
 const submit = async () => {
   let valid: boolean
