@@ -102,7 +102,6 @@ const handleAction = async ({
 
 	const isDownload = type == 'download';
 	const isDelete = type === 'delete';
-
 	const shouldRefresh = !preview && !isDownload;
 	const { useMessage, useMessageBox } = await import('/@/hooks/message');
 	if (confirm || isDelete) {
@@ -110,12 +109,12 @@ const handleAction = async ({
 			const { markRaw } = await import('vue');
 			const { Delete } = await import('@element-plus/icons-vue');
 			await useMessageBox().confirm(
-				(confirm as Confirm).ask || '是否' + (isDelete ? '删除' : label) + `当前${body}？`,
+				(confirm as Confirm)?.ask || '是否' + (isDelete ? '删除' : label) + `当前${body}？`,
 				'warning',
 				isDelete ? markRaw(Delete) : ''
 			);
 		} catch (e) {
-			return;
+			return Promise.reject(e);
 		}
 	}
 	if (preview?.url) {
@@ -126,11 +125,11 @@ const handleAction = async ({
 		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...(params as [])) : await handler(params);
 		if (shouldRefresh) {
 			refresh && refresh();
-			useMessage().success((confirm as Confirm).done || body + (isDelete ? '删除' : label) + '成功！');
+			useMessage().success((confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！');
 			callback && callback();
 		}
 	} catch (err: any) {
-		Promise.reject(err);
+		return Promise.reject(err);
 	}
 };
 </script>
