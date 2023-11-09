@@ -56,12 +56,12 @@ export default (row: any) => {
 					},
 					{
 						control: 'InputPlus',
-						key: 'receiptAccountName',
+						key: 'merchantName',
 						label: '收款户名',
 						props: {
 							disabled: true,
 						},
-						value: row.receiptAccountName,
+						value: row.merchantName,
 					},
 					{
 						control: 'InputPlus',
@@ -74,12 +74,12 @@ export default (row: any) => {
 					},
 					{
 						control: 'InputPlus',
-						key: 'payingJointBankNumber',
+						key: 'receiptAccountLines',
 						label: '收款开户行联行号',
 						props: {
 							disabled: true,
 						},
-						value: row.payingJointBankNumber,
+						value: row.receiptAccountLines,
 					},
 					{
 						control: 'InputPlus',
