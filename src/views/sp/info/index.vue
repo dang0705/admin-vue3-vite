@@ -130,7 +130,7 @@
 			force-update
 			:close-on-click-modal="false"
 			:forms="forms"
-			:submit="onSubmit"
+			:on-submit="onSubmit"
 			:columns="12"
 			:labelWidth="140"
 			vertical
@@ -339,7 +339,8 @@ const openDialog = (id: string) => {
 const onSubmit = async () => {
 	try {
 		await spPaymentChannel({ ...form.value });
-		useMessage().success('开启成功');
+		useMessage().success('开通成功');
+		getDataList();
 	} catch (err: any) {}
 };
 $refreshList(resetQuery);
