@@ -193,8 +193,8 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 					},
 					{
 						label: '结算商户',
-						control: 'MerchantSelect',
-						key: 'paramObject.merchantId',
+						control: 'InputPlus',
+						key: 'paramObject.merchantName',
 					},
 					{
 						label: '服务商',
@@ -309,6 +309,28 @@ export default ({ dialogFormLabelWidth, currentType, currentTitle, failListColum
 						label: '附言',
 						prop: 'dealPostscript',
 						minWidth: 200,
+					},
+					...failColumnsSuffix,
+				];
+				break;
+			case Type['批量上传身份证']:
+				currentTitle.value = '批量上传身份证';
+				form = [
+					{
+						label: '上传身份证',
+						control: 'DownloadFile',
+						key: 'paramObject.fileUrl',
+						props: {
+							text: '身份证压缩包.zip',
+						},
+					},
+					...failFormStatic,
+				];
+				failListColumns.value = [
+					{
+						label: '目录名称',
+						prop: 'dirName',
+						minWidth: 150,
 					},
 					...failColumnsSuffix,
 				];

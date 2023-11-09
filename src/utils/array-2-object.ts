@@ -1,5 +1,5 @@
-import { useDict } from '/@/hooks/dict';
-import { Ref } from 'vue';
+import { useDict } from '/@/hooks/dict'
+import { Ref } from 'vue'
 
 interface Params<T> {
   array?: []
