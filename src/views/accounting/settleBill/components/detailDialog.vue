@@ -8,14 +8,21 @@
 			label-width="140px"
 			formDialogRef
 			ref="dataFormRef"
-			v-loading="loading"
 		>
 			<template v-if="dialogType === 1">
 				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
-				<el-form-item v-if="payInFull" label="当前结算单金额">
-					{{ settleBillType == 1 ? form.serviceBillRecord[0]?.serviceAmount : form.taskBillRecord[0]?.serviceAmount }}元
+				<el-form-item v-if="settleBillType == 1" label="当前结算单金额">
+					{{ form.serviceBillRecord[0]?.serviceAmount }}
 				</el-form-item>
-				<el-form-item v-if="settleBillType == 2 && !payInFull" label="当前任务承揽费金额"> {{ form.taskBillRecord[0]?.taskAmount }}元 </el-form-item>
+				<el-form-item v-if="settleBillType == 2 && payInFullType === 1" label="当前结算单金额">
+					{{ form.taskBillRecord[0]?.serviceAmount }}元
+				</el-form-item>
+				<el-form-item v-if="settleBillType == 2 && payInFullType === 2" label="当前任务承揽费金额">
+					{{ form.taskBillRecord[0]?.taskAmount }}元
+				</el-form-item>
+				<el-form-item v-if="settleBillType == 2 && payInFullType === 3" label="当前管理费金额">
+					{{ form.taskBillRecord[0]?.managementAmount }}元
+				</el-form-item>
 			</template>
 			<template v-if="dialogType === 2">
 				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0]?.id : form.taskBillRecord[0]?.id }} 成功发起付款！
@@ -93,9 +100,9 @@ const balanceInfo = reactive({
 });
 
 const props = defineProps({
-	payInFull: {
-		type: Boolean,
-		default: true,
+	payInFullType: {
+		type: Number,
+		default: 1,
 	},
 });
 const spPaymentChannelData = reactive({});
@@ -103,6 +110,7 @@ const formData = reactive({
 	payingAccountName: '',
 	payingAccountNumber: '',
 	payingBankName: '',
+	payingJointBankNumber: '',
 	payingAmount: '',
 	transferVouchers: [],
 });
@@ -154,6 +162,18 @@ const addUnderTakerForms = [
 			{
 				required: true,
 				message: '开户行不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'InputPlus',
+		key: 'payingJointBankNumber',
+		label: '开户行联行号',
+		rules: [
+			{
+				required: true,
+				message: '开户行联行号不能为空',
 				trigger: 'blur',
 			},
 		],
@@ -237,7 +257,7 @@ const onSubmit = async () => {
 		payBillRecord({
 			billId: form.id,
 			settleRecordId: obj.id,
-			payInFull: props.payInFull,
+			payInFullType: props.payInFullType == 2 ? false : true,
 		})
 			.then((res: any) => {
 				if (settleBillType.value === 1) {

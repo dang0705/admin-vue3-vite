@@ -127,6 +127,7 @@ const handleAction = async ({
 		if (shouldRefresh) {
 			refresh && refresh();
 			useMessage().success((confirm as Confirm).done || body + (isDelete ? '删除' : label) + '成功！');
+			callback && callback();
 		}
 	} catch (err: any) {
 		Promise.reject(err);

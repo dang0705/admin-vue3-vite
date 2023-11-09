@@ -53,6 +53,18 @@ const formOne = [
 	},
 	{
 		control: 'InputPlus',
+		key: 'payingJointBankNumber',
+		label: '开户行联行号',
+		rules: [
+			{
+				required: true,
+				message: '开户行联行号不能为空',
+				trigger: 'blur',
+			},
+		],
+	},
+	{
+		control: 'InputPlus',
 		key: 'payingAmount',
 		label: '付款金额',
 		rules: [

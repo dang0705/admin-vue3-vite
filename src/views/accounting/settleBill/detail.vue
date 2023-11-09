@@ -123,18 +123,10 @@
 					<div class="info_list">
 						<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 						<div class="info_item">
-							{{
-								(isNeedRecharge.task &&
-									form.taskBillRecord[0]?.status == 40 &&
-									((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
-										(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))) ||
-								(form.taskBillRecord[0]?.status == 55 && form.taskBillRecord[0]?.managementAmount - balanceInfo.spBalance > 0)
-									? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
-									: '无需充值'
-							}}
+							{{ task_isNeedRecharge ? `需要充值: ${task_needRecharge_num}元` : '无需充值' }}
 						</div>
 					</div>
-					<el-radio-group v-if="form.taskBillRecord[0]?.status != 55" v-model="payInFull" class="ml-4">
+					<el-radio-group v-if="form.taskBillRecord[0]?.status == 40" v-model="payInFull" class="ml-4">
 						<el-radio :label="true" size="large">全额付款</el-radio>
 						<el-radio :label="false" size="large">只付任务承揽费</el-radio>
 					</el-radio-group>
@@ -148,13 +140,10 @@
 						>
 							充值
 						</el-button>
-						<!-- :disabled="
-								!(form.taskBillRecord[0]?.status == 40) ||
-								(payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
-								(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0)
-							" -->
+
 						<el-button
 							v-auth="'core_settleBill_t_pay'"
+							:disabled="!task_isNeedRecharge || payInFullType.value === 4"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"
@@ -176,7 +165,7 @@
 			</el-button>
 			<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
 		</template>
-		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" :payInFull="payInFull" />
+		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" :payInFullType="payInFullType" />
 		<uploadExcel
 			ref="importBillRef"
 			@refreshDataList="refreshDataList"
@@ -217,16 +206,13 @@ export interface BillRecordOptions {
 	status: string;
 }
 const payInFull = ref(true);
-
+const payInFullType = ref(1); // 1表示全部付款 2任务承揽费 3管理费 4表示无需付款
 const isNeedRecharge = computed(() => {
 	return {
 		service: form.serviceBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
-		task: form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
 	};
 });
-const task_isNeedRecharge = computed(() => {
-	// form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance']
-});
+
 const router = useRouter();
 const loading = ref(false);
 const form = reactive({
@@ -242,6 +228,8 @@ const form = reactive({
 			serviceAmount: 0,
 			accountId: '',
 			status: '',
+			taskAmount: 0,
+			managementAmount: 0,
 		},
 	],
 	id: '',
@@ -252,6 +240,30 @@ const form = reactive({
 const balanceInfo = reactive({
 	platBalance: 0,
 	spBalance: 0,
+});
+const spBalance = computed(() => {
+	return +balanceInfo.spBalance;
+});
+const task_needRecharge_num = computed(() => {
+	let num = 0;
+	if (form.taskBillRecord[0].status == 40) {
+		if (payInFull.value) {
+			num = spBalance.value - +form.taskBillRecord[0]?.serviceAmount;
+			payInFullType.value = 1;
+		} else {
+			payInFullType.value = 2;
+			num = spBalance.value - +form.taskBillRecord[0]?.taskAmount;
+		}
+	} else if (form.taskBillRecord[0].status == 55) {
+		payInFullType.value = 3;
+		num = spBalance.value - +form.taskBillRecord[0]?.managementAmount;
+	} else {
+		payInFullType.value = 4; // 表示无需付款
+	}
+	return num;
+});
+const task_isNeedRecharge = computed(() => {
+	return task_needRecharge_num.value < 0;
 });
 const topInfoForms = [
 	{
@@ -474,6 +486,12 @@ const indexThead = [
 const staticQuery = {
 	settleBillId: route.query.id,
 };
+
+// 任务承揽费(元)
+// 管理费金额(元)
+// 付款时间
+// 状态
+
 const newIndexThead = [
 	{
 		prop: 'settleBillName',
@@ -498,7 +516,7 @@ const newIndexThead = [
 	{
 		prop: 'bankAccountNumberRecipient',
 		label: '收款方银行账号',
-		minWidth: 100,
+		minWidth: 150,
 	},
 	{
 		prop: 'accountNameRecipient',
@@ -511,9 +529,19 @@ const newIndexThead = [
 		minWidth: 120,
 	},
 	{
+		prop: 'taskAmount',
+		label: '任务承揽费(元)',
+		minWidth: 120,
+	},
+	{
+		prop: 'managementAmount',
+		label: '管理费金额(元)',
+		minWidth: 120,
+	},
+	{
 		prop: 'payTime',
 		label: '付款时间',
-		minWidth: 100,
+		minWidth: 170,
 	},
 	{
 		prop: 'statusDesc',
