@@ -100,6 +100,7 @@ const handleAction = async ({
 	}
 
 	const isDelete = type === 'delete';
+	const isDownload = type == 'download';
 	const { useMessage, useMessageBox } = await import('/@/hooks/message');
 	if (confirm || isDelete) {
 		try {
@@ -119,8 +120,8 @@ const handleAction = async ({
 		return previewFile({ url: preview.url, ...(preview.mime ? { mime: preview.mime } : {}) });
 	}
 	try {
-		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...params) : await handler(params);
-		if (!preview) {
+		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...(params as [])) : await handler(params);
+		if (!preview || !isDownload) {
 			refresh && refresh();
 			useMessage().success((confirm as Confirm).done || body + (isDelete ? '删除' : label) + '成功！');
 		}
