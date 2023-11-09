@@ -11,7 +11,6 @@
 		:staticQuery="staticQuery"
 		labelWidth="120px"
 	>
-		<!-- src\api\tax\index.ts -->
 	</TableView>
 </template>
 <script setup lang="ts">
