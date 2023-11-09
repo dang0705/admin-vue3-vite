@@ -71,3 +71,39 @@ export function taxMerchantInvoice(query?: Object) {
 		params: query,
 	});
 }
+
+// 完税批次列表
+export function dutyPaidPage(query?: Object) {
+	return request({
+		url: '/finance/dutyPaid/page',
+		method: 'get',
+		params: query,
+	});
+}
+
+// 完税批次上传
+export function uploadCertificate(obj?: Object) {
+	return request({
+		url: '/finance/dutyPaid/uploadCertificate',
+		method: 'post',
+		data: obj,
+	});
+}
+
+// 完税明细导出
+export function dutyPaidDetailsExport(query?: Object) {
+	return request({
+		url: '/finance/dutyPaidDetails/export',
+		method: 'get',
+		params: query,
+	});
+}
+
+// 完税明细列表
+export function dutyPaidDetailsPage(query?: Object) {
+	return request({
+		url: '/finance/dutyPaidDetails/page',
+		method: 'get',
+		params: query,
+	});
+}

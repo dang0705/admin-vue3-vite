@@ -4,7 +4,8 @@
 		:actions="actions"
 		:columns="columns"
 		action-body="账单"
-		module="core/settleBill.ts"
+		getListFnName="dutyPaidPage"
+		module="tax/index.ts"
 		isTab
 		labelWidth="120px"
 	>

@@ -1,5 +1,6 @@
 <template>
 	<Table-view
+		isTab
 		:staticQuery="staticQuery"
 		:columns="columns"
 		getListFnName="taxMerchantInvoice"

@@ -8,6 +8,7 @@ const emit = defineEmits(['get-dialog-data']);
 interface Action {
 	handler: Function;
 	params?: unknown;
+	callback?: Function;
 }
 interface Preview {
 	url: string;
@@ -40,7 +41,7 @@ interface Actions {
 	auth?: string; // 权限标识
 	show?: Function; // 按钮显示逻辑
 	action?: Action; // 按钮操作
-	type?: string; // 按钮类型, 目前只有delete(删除)一种, 传入delete 便无需关心action
+	type?: string; // 按钮类型, 目前有delete和download, 传入delete 便无需关心action, 如果是download不会刷新列表
 	preview?: Preview; // 预览文件
 	to?: RouteItems; // 跳转
 	confirm?: boolean | Confirm; // 是否唤起确认
@@ -78,7 +79,7 @@ const actions = computed(() =>
 const handleAction = async ({
 	label,
 	confirm,
-	action: { params, handler } = {},
+	action: { params, handler, callback } = {},
 	type,
 	body = props.actionBody,
 	preview,

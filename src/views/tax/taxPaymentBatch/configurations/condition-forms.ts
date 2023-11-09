@@ -2,7 +2,7 @@ import { payChannel } from '/@/configuration/dynamic-control';
 export default [
 	{
 		control: 'InputPlus',
-		key: 'xxx',
+		key: 'dutyPaidNumber',
 		label: '完税批次账号',
 	},
 	{
@@ -12,7 +12,7 @@ export default [
 	},
 	{
 		control: 'el-date-picker',
-		key: 'ccc',
+		key: 'dutyPaidTime',
 		label: '纳税月份',
 		props: {
 			type: 'month',

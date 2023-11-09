@@ -3,6 +3,7 @@
 		isTab
 		noPadding
 		ref="undertakingRecordsRef"
+		:staticQuery="staticQuery"
 		:columns="columns"
 		label-width="130"
 		exportAuth="hro_undertakerTask_export"
@@ -30,6 +31,7 @@
 
 <script setup lang="ts">
 import Array2Object from '/@/utils/array-2-object';
+const route: any = useRoute();
 
 defineOptions({ name: 'systemUndertakerTask' });
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'));
@@ -38,6 +40,11 @@ const prop = defineProps({
 		type: String,
 		default: '',
 	},
+});
+const staticQuery = computed(() => {
+	return {
+		taskId: route.query.taskId,
+	};
 });
 
 const batchMap = Array2Object({ dic: ['undertaking_status', 'yes_no_type'] });

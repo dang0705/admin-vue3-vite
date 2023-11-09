@@ -75,7 +75,6 @@
 						<div class="info_item">资金账户可用余额: {{ balanceInfo.platBalance }}元</div>
 						{{
 							isNeedRecharge.service &&
-							(form.status == 40 || form.status == 50) &&
 							form.serviceBillRecord[0]?.status == 40 &&
 							form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
 								? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
@@ -94,10 +93,7 @@
 						</el-button>
 						<el-button
 							v-auth="'core_settleBill_s_pay'"
-							:disabled="
-								!((form.status == 40 || form.status == 50) && form.serviceBillRecord[0]?.status == 40) ||
-								form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
-							"
+							:disabled="!(form.serviceBillRecord[0]?.status == 40) || form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0"
 							@click="handlePayBillRecord(form.serviceBillRecord, 1)"
 							style="margin-right: 24px"
 							type="primary"
@@ -128,17 +124,17 @@
 						<div class="info_item">资金账户可用余额: {{ balanceInfo.spBalance }}元</div>
 						<div class="info_item">
 							{{
-								isNeedRecharge.task &&
-								(form.status == 40 || form.status == 50) &&
-								form.taskBillRecord[0]?.status == 40 &&
-								((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
-									(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))
+								(isNeedRecharge.task &&
+									form.taskBillRecord[0]?.status == 40 &&
+									((payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
+										(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0))) ||
+								(form.taskBillRecord[0]?.status == 55 && form.taskBillRecord[0]?.managementAmount - balanceInfo.spBalance > 0)
 									? `需要充值: ${form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance}元`
 									: '无需充值'
 							}}
 						</div>
 					</div>
-					<el-radio-group v-model="payInFull" class="ml-4">
+					<el-radio-group v-if="form.taskBillRecord[0]?.status != 55" v-model="payInFull" class="ml-4">
 						<el-radio :label="true" size="large">全额付款</el-radio>
 						<el-radio :label="false" size="large">只付任务承揽费</el-radio>
 					</el-radio-group>
@@ -152,13 +148,13 @@
 						>
 							充值
 						</el-button>
-						<el-button
-							v-auth="'core_settleBill_t_pay'"
-							:disabled="
-								!((form.status == 40 || form.status == 50) && form.taskBillRecord[0]?.status == 40) ||
+						<!-- :disabled="
+								!(form.taskBillRecord[0]?.status == 40) ||
 								(payInFull && form.taskBillRecord[0]?.serviceAmount - balanceInfo.spBalance > 0) ||
 								(!payInFull && form.taskBillRecord[0]?.taskAmount - balanceInfo.spBalance > 0)
-							"
+							" -->
+						<el-button
+							v-auth="'core_settleBill_t_pay'"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"
@@ -227,6 +223,9 @@ const isNeedRecharge = computed(() => {
 		service: form.serviceBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
 		task: form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance'],
 	};
+});
+const task_isNeedRecharge = computed(() => {
+	// form.taskBillRecord[0]?.serviceAmount > balanceInfo['platBalance']
 });
 const router = useRouter();
 const loading = ref(false);
@@ -348,7 +347,7 @@ const indexThead = [
 	{
 		prop: 'spName',
 		label: '服务商',
-		minWidth: 100,
+		minWidth: 150,
 	},
 	{
 		prop: 'paymentBankName',
@@ -358,7 +357,7 @@ const indexThead = [
 	{
 		prop: 'merchantName',
 		label: '商户',
-		minWidth: 100,
+		minWidth: 150,
 	},
 	{
 		prop: 'taskName',

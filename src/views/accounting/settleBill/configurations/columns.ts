@@ -2,12 +2,12 @@ export default [
 	{
 		prop: 'merchantName',
 		label: '商户',
-		minWidth: 100,
+		minWidth: 150,
 	},
 	{
 		prop: 'spName',
 		label: '服务商',
-		minWidth: 100,
+		minWidth: 150,
 	},
 	{
 		prop: 'billNumber',

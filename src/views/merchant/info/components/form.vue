@@ -141,12 +141,11 @@
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="24" class="mb20">
-						<el-form-item :label="$t('merchantInfo.taxBankArea')" prop="taxBankArea">
-							<InputPlus :disabled="isDetail" v-model="form.taxBankArea" :rows="3" show-word-limit type="textarea" />
+					<el-col :span="12" class="mb20">
+						<el-form-item label="开户行联行号" prop="taxJointBankNumber">
+							<InputPlus :disabled="isDetail" v-model="form.taxJointBankNumber" />
 						</el-form-item>
 					</el-col>
-
 					<el-col :span="12" class="mb20">
 						<!-- <div style="min-width: 160px" class="com_label require">企业电话</div> -->
 						<!-- <el-form-item label-width="0px" prop="areaCode">
@@ -155,6 +154,11 @@
 						&nbsp;&nbsp;-&nbsp;&nbsp; -->
 						<el-form-item prop="phoneNumber" label="企业电话">
 							<InputPlus :disabled="isDetail" v-model="form.phoneNumber" placeholder="电话号码" />
+						</el-form-item>
+					</el-col>
+					<el-col :span="24" class="mb20">
+						<el-form-item :label="$t('merchantInfo.taxBankArea')" prop="taxBankArea">
+							<InputPlus :disabled="isDetail" v-model="form.taxBankArea" :rows="3" show-word-limit type="textarea" />
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -313,6 +317,7 @@ const form = reactive({
 	taxType: '',
 	taxBankNumber: '',
 	taxBankName: '',
+	taxJointBankNumber: '',
 	taxBankArea: '',
 	areaCode: '',
 	areaDatas: '',
@@ -362,6 +367,8 @@ const dataRules = ref({
 		// limitText({ title: '银行账户', min: 3, max: 30 }),
 	],
 	taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
+	taxJointBankNumber: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
+
 	taxBankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	areaCode: [{ required: true, message: '区号不能为空', trigger: 'blur' }],
 	areaDatas: [{ required: true, message: '省市区不能为空', trigger: 'blur' }],

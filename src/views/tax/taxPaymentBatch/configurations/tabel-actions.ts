@@ -1,15 +1,25 @@
-import { submitObj } from '/@/api/core/settleBill';
+import { dutyPaidDetailsExport } from '/@/api/tax/index';
 
-const auth = (auth: string) => `xxx_${auth}`;
-
+const auth = (auth: string) => `finance_${auth}`;
+import { downBlobFile } from '/@/utils/other';
 export default (row: any) => {
-	const { status, contractUrl, id } = row;
+	const { status, dutyPaidFile, id } = row;
+	const exportExcel = () => {
+		downBlobFile(
+			'/finance/dutyPaidDetails/export',
+			{
+				dutyPaidId: id,
+			},
+			'完税明细.xlsx'
+		);
+	};
+
 	return [
 		{
 			label: '查看',
-			// auth: auth('view'),
+			auth: auth('dutyPaidDetails_view'),
 			to: {
-				path: '/core/settleBill/detail',
+				path: '/tax/taxPaymentBatch/detail',
 				query: { id },
 				state: {
 					refresh: 1,
@@ -18,51 +28,22 @@ export default (row: any) => {
 		},
 		{
 			label: '导出完税明细',
-			download: contractUrl,
-			// auth: auth('down'),
+			auth: auth('dutyPaidDetails_export'),
+			params: { id },
+			type: 'download',
+			action: {
+				handler: exportExcel,
+			},
 		},
 		{
 			label: '上传完税证明',
-			// auth: auth('audit'),
-			// show: () => status === '20',
+			auth: auth('dutyPaid_edit'),
 			dialog: {
 				title: '上传完税证明',
 				forms: [
-					// {
-					// 	label: '审核结果',
-					// 	control: 'el-radio-group',
-					// 	key: 'auditPass',
-					// 	value: true,
-					// 	rules: [{ required: true, message: '审核结果不能为空', trigger: 'blur' }],
-					// 	options: [
-					// 		{
-					// 			label: '审核通过',
-					// 			value: true,
-					// 		},
-					// 		{
-					// 			label: '审核驳回',
-					// 			value: false,
-					// 		},
-					// 	],
-					// },
-					// {
-					// 	label: '驳回原因',
-					// 	key: 'auditPostscript',
-					// 	control: 'InputPlus',
-					// 	rules: [{ required: true, message: '驳回原因不能为空', trigger: 'blur' }],
-					// 	props: {
-					// 		rows: 3,
-					// 		showWordLimit: true,
-					// 		type: 'textarea',
-					// 	},
-					// 	show: {
-					// 		by: 'auditPass',
-					// 		fn: ({ auditPass }) => !auditPass,
-					// 	},
-					// },
 					{
 						control: 'UploadFile',
-						key: 'aaa',
+						key: 'fileUrl',
 						label: '上传完税证明',
 						rules: [
 							{
@@ -77,17 +58,17 @@ export default (row: any) => {
 					},
 				],
 				action: {
-					name: 'auditing',
+					name: 'uploadCertificate',
 					params: {
-						billId: id,
+						id: id,
 					},
 				},
 			},
 		},
 		{
-			label: '下载完税明细',
-			download: contractUrl,
-			// auth: auth('down'),
+			label: '下载完税证明',
+			download: dutyPaidFile,
+			show: () => dutyPaidFile,
 		},
 	];
 };
