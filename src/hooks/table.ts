@@ -1,4 +1,4 @@
-import { CellStyle, ElMessage } from 'element-plus';
+import { CellStyle } from 'element-plus';
 import other from '/@/utils/other';
 
 /**
@@ -168,11 +168,13 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 	};
 
 	//   监听外部参数的变化，刷新列表
-	watch(
-		() => others?.value || {},
-		(value) => state.createdIsNeed && query(value),
-		{ deep: true, immediate: true }
-	);
+	others
+		? watch(
+				() => others?.value,
+				(value) => Object.keys(value).length && query(value),
+				{ immediate: true }
+		  )
+		: state.createdIsNeed && query();
 
 	/**
 	 * 分页大小改变事件处理函数
