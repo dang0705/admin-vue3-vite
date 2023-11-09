@@ -40,10 +40,10 @@ interface OptionsParams {
 }
 
 const formConfigs = ref<any[]>([]);
-let stopWatchShow: unknown = null;
 const rulesCache: any = {};
 const initForms = async (forms: FormOptions[]) => {
 	formConfigs.value = [];
+	// let stopWatchShow: unknown = null;
 	for (let i = 0; i < forms.length; i++) {
 		formConfigs.value.push(forms[i]);
 		const item = formConfigs.value[i] as FormOptions;
@@ -63,9 +63,9 @@ const initForms = async (forms: FormOptions[]) => {
 				() => prop.modelValue[item.key],
 				(value) => item.onChange && item.onChange(value, formData.value)
 			);
-		stopWatchShow && stopWatchShow();
+		// stopWatchShow && stopWatchShow();
 		item.show &&
-			(stopWatchShow = watch(
+			watch(
 				() => prop.modelValue[item.show?.by as string],
 				() => {
 					const isShow = item.show && !!item.show.fn(formData.value);
@@ -74,7 +74,7 @@ const initForms = async (forms: FormOptions[]) => {
 					!isShow && (formData.value[item.key] = null);
 				},
 				{ immediate: true }
-			));
+			);
 		if (!item.options) continue;
 
 		// 处理options数据源
