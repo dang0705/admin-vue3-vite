@@ -2,8 +2,8 @@
   <el-dialog
     v-model="state.dialog.isShowDialog"
     class="w-full"
-    :close-on-click-modal="false"
     draggable
+    :close-on-click-modal="false"
     :width="dialogWidth">
     <template #header>
       <p class="text-xl my-2">{{ title }}</p>
@@ -211,17 +211,19 @@ interface Options<T> {
 const renderContent = (h: Function, options: Options<string>) => {
   const { values = [] } = options || {}
   const panels = document.querySelectorAll('.el-transfer-panel__list')
-  const columnWidth = values.length > 1 ? `w-1/${values.length}` : 'flex-grow'
+  // const columnWidth = values.length > 1 ? `w-1/${values.length}` : 'flex-grow'
+  const columnWidth = `${(1 / values.length) * 100}%`
   if (props.showHeader && panels.length && !headerMounted) {
     let head = document.createDocumentFragment()
     panels.forEach((panel) => {
       const ul = document.createElement('ul')
       ul.className =
         'flex justify-between items-center pl-[49px] bg-[#ddd] sticky top-0 z-20'
-      values.forEach(({ label }: Record<string, string>) => {
+      values.forEach(({ label }) => {
         const li = document.createElement('li')
         li.textContent = label
-        li.className = `${columnWidth} text-[16px] h-[30px] flex items-center`
+        li.className = 'text-[16px] h-[30px] flex items-center'
+        li.style.width = columnWidth
         head.appendChild(li)
       })
       ul.appendChild(head)
@@ -232,7 +234,8 @@ const renderContent = (h: Function, options: Options<string>) => {
 
   const child = values.map(({ value }: any) =>
     h('li', {
-      class: [columnWidth, 'truncate'],
+      class: 'truncate',
+      style: { width: columnWidth },
       textContent: value
     })
   )
