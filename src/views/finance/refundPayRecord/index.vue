@@ -1,24 +1,22 @@
 <template>
-	<Table-view
-		:columns="columns"
-		isTab
-		:actions="actions"
-		:condition-forms="conditionForms"
-		getListFnName="refundRecordPayPage"
-		module="finance/merchantRefund.ts"
-	>
-	</Table-view>
+  <Table-view
+    :columns="columns"
+    isTab
+    :actions="actions"
+    :condition-forms="conditionForms"
+    getListFnName="refundRecordPayPage"
+    module="finance/merchantRefund.ts" />
 </template>
 
 <script setup lang="ts">
-import conditionForms from './configurations/condition-forms';
-import columns from './configurations/columns';
-import actions from './configurations/tabel-actions';
+import conditionForms from './configurations/condition-forms'
+import columns from './configurations/columns'
+import actions from './configurations/tabel-actions'
 </script>
 <script lang="ts">
 export default {
-	created() {
-		this.$options.name = this.$route.meta.title;
-	},
-};
+  created() {
+    this.$options.name = this.$route.meta.title
+  }
+}
 </script>
