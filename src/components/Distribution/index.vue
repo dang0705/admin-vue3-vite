@@ -218,7 +218,7 @@ const renderContent = (h: Function, options: Options<string>) => {
       const ul = document.createElement('ul')
       ul.className =
         'flex justify-between items-center pl-[49px] bg-[#ddd] sticky top-0 z-20'
-      values.forEach(({ label }: Record<string, string>) => {
+      values.forEach(({ label }) => {
         const li = document.createElement('li')
         li.textContent = label
         li.className = `${columnWidth} text-[16px] h-[30px] flex items-center`
