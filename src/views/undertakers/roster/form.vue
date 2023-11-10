@@ -4,31 +4,31 @@
 			<el-row :gutter="24">
 				<el-col :span="24" class="mb20">
 					<el-form-item label="姓名:" prop="undertakerName">
-						<el-input v-model="form.undertakerName" placeholder="请输入姓名" />
+						<el-input v-model="form.undertakerName" placeholder="请输入姓名" maxlength="30" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="身份证号码:" prop="undertakerCard">
-						<el-input v-model="form.undertakerCard" placeholder="请输入身份证号码" />
+						<el-input v-model="form.undertakerCard" @input="toUpperCase" placeholder="请输入身份证号码" maxlength="18" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="手机号:" prop="undertakerPhone">
-						<el-input v-model="form.undertakerPhone" placeholder="请输入手机号" />
+						<el-input v-model="form.undertakerPhone" placeholder="请输入手机号" maxlength="11" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="开户行:" prop="bankName">
-						<el-input v-model="form.bankName" placeholder="请输入开户行" />
+						<el-input v-model="form.bankName" placeholder="请输入开户行" maxlength="50" />
 					</el-form-item>
 				</el-col>
 
 				<el-col :span="24" class="mb20">
 					<el-form-item label="银行卡号:" prop="bankNumber">
-						<el-input v-model="form.bankNumber" placeholder="请输入银行卡号" />
+						<el-input v-model="form.bankNumber" placeholder="请输入银行卡号" maxlength="30" />
 					</el-form-item>
 				</el-col>
 
@@ -96,6 +96,9 @@ defineOptions({ name: 'UndertakerInfoDialog' });
 const emit = defineEmits(['refresh']);
 const { t } = useI18n();
 
+// 小写字母自动转大写
+const toUpperCase = () => (form.undertakerCard = form.undertakerCard.toUpperCase());
+
 // 定义变量内容
 const dataFormRef = ref();
 const visible = ref(false);
@@ -123,8 +126,14 @@ const form = reactive({
 // 定义校验规则
 const dataRules = ref({
 	undertakerName: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
-	undertakerCard: [{ required: true, message: '身份证号码不能为空', trigger: 'blur' }],
-	undertakerPhone: [{ required: true, message: '手机号不能为空', trigger: 'blur' }],
+	undertakerCard: [
+		{ required: true, message: '身份证号码不能为空', trigger: 'blur' },
+		{ validator: rule.validateIdCard, trigger: 'blur' },
+	],
+	undertakerPhone: [
+		{ required: true, message: '手机号不能为空', trigger: 'blur' },
+		{ validator: rule.validatePhone, trigger: 'blur' },
+	],
 	bankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
 	bankNumber: [{ required: true, message: '银行卡号不能为空', trigger: 'blur' }],
 	// undertakerAddress: [{ required: true, message: '承接人家庭住址不能为空', trigger: 'blur' }],

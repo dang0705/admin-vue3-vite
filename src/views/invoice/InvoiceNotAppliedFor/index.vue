@@ -11,8 +11,16 @@
 		v-model="selectObjs"
 	>
 		<template #top-bar>
-			<el-button type="primary" style="margin-right: 24px" @click="applyfor('0', 'merge')" :disabled="!selectObjs.length"> 申请合并开票 </el-button>
-			<div>
+			<el-button
+				type="primary"
+				style="margin-right: 24px"
+				@click="applyfor('0', 'merge')"
+				v-auth="'finance_invoiceRecordNot_applyCombine'"
+				:disabled="!selectObjs.length"
+			>
+				申请合并开票
+			</el-button>
+			<div v-auth="'finance_invoiceRecordNot_applyCombine'">
 				已选择 <span class="text-primary">{{ selectObjs.length }}</span> 条，合计开票金额 <span class="text-primary">{{ amountTo }}</span> 元
 			</div>
 		</template>

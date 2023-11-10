@@ -103,6 +103,18 @@ export const rule = {
 		}
 	},
 
+	/**
+	 * 校验身份证号
+	 */
+	validateIdCard(rule: any, value: any, callback: any) {
+		var isPhone = /^(\d{6})(18|19|20)?(\d{2})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(\d{3})(\d|X|x)$/;
+		if (!isPhone.test(value)) {
+			callback(new Error('请输入合法身份证号'));
+		} else {
+			callback();
+		}
+	},
+
 	/* 数字 */
 	number(rule, value, callback) {
 		validateFn('number', rule, value, callback, '包含非数字字符');
