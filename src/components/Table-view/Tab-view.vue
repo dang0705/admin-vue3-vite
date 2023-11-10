@@ -43,5 +43,3 @@ const onTabClick = (label: string, { attributeName, attributeVal }: any) => {
 	emit('toggleTab', { attributeName, attributeVal });
 };
 </script>
-
-<style scoped lang="scss"></style>

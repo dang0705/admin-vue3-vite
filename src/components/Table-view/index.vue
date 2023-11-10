@@ -34,7 +34,7 @@
 				:border="border"
 				:data="tableData.length > 0 ? tableData : state.dataList"
 				:cell-style="tableStyle.cellStyle"
-				:header-cell-style="!noHeader ? tableStyle.headerCellStyle : { headerCellStyle: { background: 'transparent', height: 0 } }"
+				:header-cell-style="header ? tableStyle.headerCellStyle : { headerCellStyle: { background: 'transparent', height: 0 } }"
 				@selection-change="onSelectionChange"
 			>
 				<el-table-column

@@ -143,13 +143,13 @@
 
 						<el-button
 							v-auth="'core_settleBill_t_pay'"
-							:disabled="!task_isNeedRecharge || payInFullType.value === 4"
+							:disabled="task_isNeedRecharge || payInFullType === 4"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"
 							class="ml10"
 						>
-							付款
+							{{ payInFullType == 3 ? '付管理费' : '付款' }}
 						</el-button>
 					</div>
 				</template>
@@ -249,22 +249,23 @@ const task_needRecharge_num = computed(() => {
 	let num = 0;
 	if (form.taskBillRecord[0].status == 40) {
 		if (payInFull.value) {
-			num = spBalance.value - +form.taskBillRecord[0]?.serviceAmount;
+			num = +form.taskBillRecord[0]?.serviceAmount - spBalance.value;
 			payInFullType.value = 1;
 		} else {
 			payInFullType.value = 2;
-			num = spBalance.value - +form.taskBillRecord[0]?.taskAmount;
+			num = +form.taskBillRecord[0]?.taskAmount - spBalance.value;
 		}
 	} else if (form.taskBillRecord[0].status == 55) {
 		payInFullType.value = 3;
-		num = spBalance.value - +form.taskBillRecord[0]?.managementAmount;
+		num = +form.taskBillRecord[0]?.managementAmount - spBalance.value;
 	} else {
 		payInFullType.value = 4; // 表示无需付款
 	}
+	console.log('payInFullType.value', payInFullType.value);
 	return num;
 });
 const task_isNeedRecharge = computed(() => {
-	return task_needRecharge_num.value < 0;
+	return task_needRecharge_num.value > 0;
 });
 const topInfoForms = [
 	{

@@ -14,7 +14,7 @@ export default (row: any) => {
 			// 伪代码
 			label: '同步银行卡信息',
 			show: () => paymentStatus === '40',
-			// auth: auth('audit'),
+			auth: 'core_settleBillTaskRecordItem_edit',
 			dialog: {
 				title: '同步银行卡信息',
 				// forms: [

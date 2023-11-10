@@ -1,5 +1,4 @@
 <script setup>
-import baseUrl from '/@/configuration/base-url';
 defineOptions({ name: 'Download-file' });
 const DownloadComponent = {
 	props: {
@@ -27,7 +26,7 @@ const DownloadComponent = {
 			h(
 				'a',
 				{
-					href: `${baseUrl}/${this.modelValue}`,
+					href: `${BASE}/${this.modelValue}`,
 					download: this.text,
 					class: 'text-primary',
 				},

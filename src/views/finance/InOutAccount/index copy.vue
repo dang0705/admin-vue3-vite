@@ -1,19 +1,18 @@
 <template>
 	<TableView
 		ref="InOutAccountRef"
-		:columns="columns"
+		:columns="tabType == 1 ? columns1 : columns2"
 		:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
 		:condition-forms="conditionForms"
-		:actions="actions"
 		labelWidth="120px"
 		:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
 		:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 	>
-		<!-- <template #tableTop>
+		<template #tableTop>
 			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
-		</template> -->
-		<!-- <template #top-bar="{ otherInfo }">
+		</template>
+		<template #top-bar="{ otherInfo }">
 			<el-button
 				v-auth="'finance_waterSpPaymentBank_import'"
 				@click="inOutAccountAddFormsRef.openDialog()"
@@ -23,7 +22,7 @@
 			>
 				批量导入银行交易流水
 			</el-button>
-		</template> -->
+		</template>
 		<uploadExcel
 			@refreshDataList="refreshDataList"
 			ref="inOutAccountAddFormsRef"
@@ -43,9 +42,6 @@
 const TabView = defineAsyncComponent(() => import('/@/components/Table-view/Tab-view.vue'));
 import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
-import columns from './configurations/columns';
-import conditionForms from './configurations/condition-forms';
-import actions from './configurations/tabel-actions';
 interface BatchUploadRecordPage {
 	status: string;
 }
@@ -65,7 +61,76 @@ const inOutAccountAddForms = [
 	},
 	payChannel({ key: 'channelId', rules: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }] }),
 ];
-
+const columns1 = ref([
+	{
+		prop: 'spName',
+		label: '服务商',
+		minWidth: 150,
+	},
+	{
+		prop: 'paymentBankName',
+		label: '支付通道',
+		minWidth: 150,
+	},
+	{
+		prop: 'amount',
+		label: '入账金额(元)',
+		minWidth: 150,
+	},
+	{
+		prop: 'reciprocalAccountName',
+		label: '对方户名',
+		minWidth: 150,
+	},
+	{
+		prop: 'reciprocalAccountNumber',
+		label: '对方银行账号',
+		minWidth: 150,
+	},
+	{
+		prop: 'dealTime',
+		label: '交易时间',
+		minWidth: 200,
+	},
+	{
+		prop: 'status',
+		label: '状态',
+		minWidth: 150,
+		value: ({ status }: BatchUploadRecordPage) => batchMap.value.merchant_recharge_status[status],
+	},
+]);
+const columns2 = ref([
+	{
+		prop: 'spName',
+		label: '服务商',
+		minWidth: 150,
+	},
+	{
+		prop: 'paymentBankName',
+		label: '支付通道',
+		minWidth: 150,
+	},
+	{
+		prop: 'amount',
+		label: '出账金额(元)',
+		minWidth: 150,
+	},
+	{
+		prop: 'reciprocalAccountName',
+		label: '对方户名',
+		minWidth: 150,
+	},
+	{
+		prop: 'reciprocalAccountNumber',
+		label: '对方银行账号',
+		minWidth: 150,
+	},
+	{
+		prop: 'dealTime',
+		label: '交易时间',
+		minWidth: 200,
+	},
+]);
 const tabs = ref([
 	{
 		label: '入账',
@@ -78,6 +143,24 @@ const tabs = ref([
 		attributeVal: 2,
 	},
 ]);
+const conditionForms = [
+	{
+		control: 'SpSelect',
+		key: 'spId',
+		label: '服务商',
+		props: {
+			platform: true,
+		},
+	},
+	{
+		control: 'DateRange',
+		key: 'dealTimeRange',
+		label: '交易时间',
+		props: {
+			valueType: 'string',
+		},
+	},
+];
 const toggleTab = (item: object) => {
 	tabType.value = item.attributeVal;
 	nextTick(() => {

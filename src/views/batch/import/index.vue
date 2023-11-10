@@ -6,10 +6,11 @@
 			</el-button>
 		</template>
 		<Dialog
-			vertical
-			button-position="center"
 			v-model="show"
 			disabled
+			vertical
+			button-position="center"
+			:save="false"
 			:title="`【 ${currentTitle} 】 导入详情`"
 			:show-cancel="false"
 			:label-width="dialogFormLabelWidth"
@@ -65,6 +66,7 @@ const hasFail = computed(() => currentState.value !== State['进行中'] && curr
 const forms = dynamicForms({ dialogFormLabelWidth, currentType, currentTitle, failListColumns });
 let failParams = {};
 const view = async ({ id, type, state }: any) => {
+	failParams = {};
 	show.value = true;
 	currentId = id;
 	currentType.value = type;
