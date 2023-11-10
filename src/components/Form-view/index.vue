@@ -168,7 +168,7 @@ pagination.value &&
   )
 const reset = async () => {
   await nextTick()
-  form.value.resetFields()
+  form?.value?.resetFields()
 }
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
@@ -181,7 +181,6 @@ watch(
   },
   { immediate: true }
 )
-onUnmounted(() => reset())
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
