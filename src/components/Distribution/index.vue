@@ -147,7 +147,6 @@ interface Values {
 const data = ref<Data[]>([])
 const selectedCache = ref<(string | number)[]>([])
 const selected = ref<(string | number)[]>([])
-const hasDefaultSlot = !!useSlots().default
 
 const formData = ref({})
 props.watchField &&
@@ -172,14 +171,6 @@ const state = reactive({
     submitTxt: '更新'
   }
 })
-const isOpen = computed({
-  get() {
-    return props.forceOpen || state.dialog.isShowDialog
-  },
-  set(value) {
-    state.dialog.isShowDialog = value
-  }
-})
 let headerMounted = false
 // 打开弹窗
 const openDialog = async (row: any) => {
@@ -187,7 +178,6 @@ const openDialog = async (row: any) => {
   loading.value = true
   headerMounted = false
   selected.value = selectedCache.value = []
-  // console.log(request);
   if (!props.lists) {
     var {
       data: { records }
@@ -212,7 +202,13 @@ const openDialog = async (row: any) => {
   render()
 }
 
-const renderContent = (h: Function, options: any) => {
+interface Options<T> {
+  values: {
+    label: T
+    value: T
+  }[]
+}
+const renderContent = (h: Function, options: Options<string>) => {
   const { values = [] } = options || {}
   const panels = document.querySelectorAll('.el-transfer-panel__list')
   const columnWidth = values.length > 1 ? `w-1/${values.length}` : 'flex-grow'
