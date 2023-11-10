@@ -237,7 +237,7 @@ const renderContent = (h: Function, options: any) => {
   const child = values.map(({ value }: any) =>
     h('li', {
       class: [columnWidth, 'truncate'],
-      innerHTML: value
+      textContent: value
     })
   )
   return h
