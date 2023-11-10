@@ -3,9 +3,10 @@ const columns = [
 	{
 		type: 'selection',
 		prop: 'delete',
+		width: 40,
 	},
 	{
-		prop: 'merchantName',
+		prop: 'title',
 		headerSlot: true,
 		width: 200,
 	},
@@ -16,13 +17,11 @@ const columns = [
 </script>
 
 <template>
-	<!--  todo Remember replace the module to the following module when the data has length, ask details for 谢译-->
-	<Table-view module="core/settleBill.ts" :columns="columns" no-header :border="false">
-		<template #merchantName-header>
+	<Table-view module="docs/message.ts" :columns="columns" no-header :border="false">
+		<template #title-header>
 			<el-button text>删除</el-button>
 		</template>
 	</Table-view>
-	<!--	<Table-view module="docs/message.ts"> </Table-view>-->
 </template>
 <script lang="ts">
 export default {

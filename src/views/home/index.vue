@@ -23,7 +23,7 @@
 					<div class="section h-[220px]">
 						<h2 class="flex items-center justify-between mb-5">
 							<p class="flex items-center text-[18px] font-bold"><img :src="remind" class="w-[20px] mr-[5px]" alt="" />待办提醒</p>
-							<router-link to="" class="">更多</router-link>
+							<router-link :to="{ name: '消息管理' }">更多</router-link>
 						</h2>
 						<ul class="flex flex-col h-full">
 							<li class="flex items-center flex-shrink-0 item-data mb-5" v-for="({ label, value, status, tag }, index) in remainData" :key="label">
