@@ -230,7 +230,7 @@ defineExpose({
 									v-show="!form.hidden"
 								>
 									<slot v-if="form.slot" :name="form.key" v-bind="{ form, formData, dynamicColumns }" />
-									<el-form-item v-else :prop="form.key" :label="`${form.label}：`" :rules="form.rules">
+									<el-form-item v-else :prop="form.key" :label="`${form.label ? form.label + '：' : ''}`" :rules="form.rules">
 										<component
 											:is="!form.hidden ? form.control : 'template'"
 											v-model="formData[form.key]"
