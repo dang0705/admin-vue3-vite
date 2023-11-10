@@ -6,6 +6,7 @@
 				ref="queryRef"
 				v-show="showSearch"
 				v-model="state.queryForm"
+        :validation="false"
 				:forms="conditionForms"
 				:on-cancel="resetQuery"
 				:on-submit="getDataList"
@@ -258,7 +259,11 @@ const { task_type } = useDict('task_type');
 
 // 清空搜索条件
 const resetQuery = () => {
-	state.queryForm = {};
+  console.log('state.countResp', state.countResp);
+  
+	state.queryForm = {
+    // ...state.countResp,
+  };
 	task_typeLevel_option.task_typeLevel2_option = [];
 	// 清空多选
 	selectObjs.value = [];

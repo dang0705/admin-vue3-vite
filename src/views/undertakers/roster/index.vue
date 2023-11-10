@@ -6,6 +6,7 @@
 				label-width="160"
 				v-show="showSearch"
 				v-model="state.queryForm"
+        :validation="false"
 				:forms="conditionForms"
 				:on-cancel="resetQuery"
 				:on-submit="getDataList"
