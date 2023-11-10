@@ -85,7 +85,7 @@
 				<el-table-column label="操作" width="210" fixed="right">
 					<template #default="scope">
 						<el-button v-auth="'core_task_view'" icon="view" @click="openTask('view', scope.row.id)" text type="primary"> 查看 </el-button>
-						<el-button
+						<!-- <el-button
 							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
 							icon="edit-pen"
 							text
@@ -93,7 +93,7 @@
 							v-auth="'core_task_edit'"
 							@click="openTask('edit', scope.row.id)"
 							>编辑</el-button
-						>
+						> -->
 						<el-button icon="edit-pen" text type="primary" v-auth="'core_task_copy'" @click="openTask('copy', scope.row.id)">克隆</el-button>
 						<el-button
 							v-if="scope.row.status === '10' && scope.row.auditStatus === '10'"
@@ -166,7 +166,6 @@
 			:params="params"
 			title="批量指派承接人"
 			:forms="addUnderTakerForms"
-			submitButtonText="下一步"
 		/>
 	</div>
 </template>

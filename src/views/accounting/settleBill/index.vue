@@ -27,7 +27,6 @@
 			title="导入结算"
 			label-width="178px"
 			:forms="excelForms"
-			submitButtonText="下一步"
 		>
 			<template #merchantId="{ formData }">
 				<el-form-item label="结算商户" prop="merchantId" :rules="[{ required: true, message: '结算商户不能为空', trigger: 'blur' }]">

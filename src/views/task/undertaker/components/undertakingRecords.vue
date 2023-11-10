@@ -15,7 +15,7 @@
 		<template #actions="{ row }">
 			<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(row.id)">查看</el-button>
 
-			<el-button
+			<!-- <el-button
 				v-if="row.state == 60"
 				@click="detailDialogRef.openDialog(row.id, 2)"
 				icon="edit-pen"
@@ -23,7 +23,7 @@
 				type="primary"
 				v-auth="'hro_undertakerTask_review'"
 				>验收</el-button
-			>
+			> -->
 		</template>
 		<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
 	</Table-view>

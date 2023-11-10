@@ -157,7 +157,7 @@ const prop = defineProps({
 	},
 	submitButtonText: {
 		type: String,
-		default: '确认',
+		default: '确认导入',
 	},
 	params: {
 		type: Object,

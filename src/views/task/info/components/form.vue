@@ -239,6 +239,7 @@
 								:disabled="self_disabled"
 								:min="16"
 								:max="65"
+								@blur="requireChange"
 								v-model="form.taskRequireInfo.requiredAgeMin"
 							></el-input-number>
 						</el-form-item>
@@ -250,6 +251,7 @@
 								:disabled="self_disabled"
 								:min="16"
 								:max="65"
+								@blur="requireChange"
 								v-model="form.taskRequireInfo.requiredAgeMax"
 							></el-input-number>
 						</el-form-item>
@@ -387,11 +389,11 @@ const form = reactive({
 	businessPhone: '',
 	areaDescDatas: '',
 	taskRequireInfo: {
-		requiredSex: '',
-		requiredAgeMin: undefined,
-		requiredAgeMax: undefined,
-		educational: '',
-		experience: '',
+		requiredSex: '0',
+		requiredAgeMin: 16,
+		requiredAgeMax: 65,
+		educational: '0',
+		experience: '0',
 		workFare: '',
 		// "workEnvironment": ""
 		workEnvironment: [],
@@ -468,6 +470,17 @@ const onSubmit = async () => {
 	} catch (err: any) {
 	} finally {
 		loading.value = false;
+	}
+};
+
+const requireChange = () => {
+	console.log('form.taskRequireInfo.requiredAgeMin', form.taskRequireInfo);
+
+	if (!form.taskRequireInfo.requiredAgeMin) {
+		form.taskRequireInfo.requiredAgeMin = 16;
+	}
+	if (!form.taskRequireInfo.requiredAgeMax) {
+		form.taskRequireInfo.requiredAgeMax = 65;
 	}
 };
 
