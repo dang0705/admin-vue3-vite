@@ -257,7 +257,7 @@ const onSubmit = async () => {
 		payBillRecord({
 			billId: form.id,
 			settleRecordId: obj.id,
-			payInFullType: props.payInFullType == 2 ? false : true,
+			payInFull: props.payInFullType == 2 ? false : true,
 		})
 			.then((res: any) => {
 				if (settleBillType.value === 1) {
