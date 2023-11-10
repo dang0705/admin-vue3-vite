@@ -143,7 +143,7 @@
 
 						<el-button
 							v-auth="'core_settleBill_t_pay'"
-							:disabled="!task_isNeedRecharge || payInFullType.value === 4"
+							:disabled="task_isNeedRecharge || payInFullType.value === 4"
 							@click="handlePayBillRecord(form.taskBillRecord, 2)"
 							style="margin-right: 24px"
 							type="primary"

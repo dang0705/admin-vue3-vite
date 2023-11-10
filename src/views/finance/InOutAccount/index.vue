@@ -4,6 +4,7 @@
 		:columns="columns"
 		:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
 		:condition-forms="conditionForms"
+		:actions="actions"
 		labelWidth="120px"
 		:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
 		:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
@@ -43,6 +44,8 @@ const TabView = defineAsyncComponent(() => import('/@/components/Table-view/Tab-
 import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
 import columns from './configurations/columns';
+import conditionForms from './configurations/condition-forms';
+import actions from './configurations/tabel-actions';
 interface BatchUploadRecordPage {
 	status: string;
 }

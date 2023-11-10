@@ -6,6 +6,10 @@ interface BatchUploadRecordPage {
 
 export default [
 	{
+		type: 'selection',
+		width: '40',
+	},
+	{
 		prop: 'spName',
 		label: '服务商',
 		minWidth: 150,
