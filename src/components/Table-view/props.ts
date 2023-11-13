@@ -92,10 +92,10 @@ export default {
 		type: String,
 		default: '',
 	},
-	cellStyle: {
-		type: Object,
-		default: null,
-	},
+    cellStyle: {
+        type: Object,
+        default: null,
+    },
 	// 是否展示topBar, 默认展示
 	isShowTopBar: {
 		type: Boolean,

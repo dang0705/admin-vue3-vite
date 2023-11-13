@@ -1,148 +1,172 @@
 <script setup lang="ts">
-import helpers from '/@/utils/helpers';
-import { RouteItems } from '/@/types/global';
+import helpers from '/@/utils/helpers'
+import { RouteItems } from '/@/types/global'
 
-const $router = useRouter();
-const emit = defineEmits(['get-dialog-data']);
+const $router = useRouter()
+const emit = defineEmits(['get-dialog-data'])
 
 interface Action {
-	handler: Function;
-	params?: unknown;
-	callback?: Function;
+  handler: Function
+  params?: unknown
+  callback?: Function
 }
 interface Preview {
-	url: string;
-	mime?: string;
+  url: string
+  mime?: string
 }
 interface Confirm {
-	ask?: string;
-	done?: string;
+  ask?: string
+  done?: string
 }
 interface DialogAction {
-	name?: string;
-	params?: unknown;
+  name?: string
+  params?: unknown
 }
 interface Edit {
-	name?: string; // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
-	params?: unknown; // 回显的参数
+  name?: string // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
+  params?: unknown // 回显的参数
 }
 interface Dialog {
-	title?: string;
-	forms: []; // From-View的表单配置
-	action: DialogAction; // 该配置不在Dialog组件, 属于为此处特别注入的属性
-	edit?: Edit; // 回显配置，说明同上
-	// ..... others Dialog component props
+  title?: string
+  forms: [] // From-View的表单配置
+  action: DialogAction // 该配置不在Dialog组件, 属于为此处特别注入的属性
+  edit?: Edit // 回显配置，说明同上
+  // ..... others Dialog component props
 }
 interface Actions {
-	label: string; // 按钮文案
-	body?: string; // 确认弹框 的 内容 主体 比如 '是否要删除合同' body为合同
-	download?: string; // 下载路径
-	dialog?: Dialog; // 弹框内的表单
-	auth?: string; // 权限标识
-	show?: Function; // 按钮显示逻辑
-	action?: Action; // 按钮操作
-	type?: string; // 按钮类型, 目前有delete和download, 传入delete 便无需关心action, 如果是download不会刷新列表
-	preview?: Preview; // 预览文件
-	to?: RouteItems; // 跳转
-	confirm?: boolean | Confirm; // 是否唤起确认
+  label: string // 按钮文案
+  body?: string // 确认弹框 的 内容 主体 比如 '是否要删除合同' body为合同
+  download?: string // 下载路径
+  dialog?: Dialog // 弹框内的表单
+  auth?: string // 权限标识
+  show?: Function // 按钮显示逻辑
+  action?: Action // 按钮操作
+  type?: string // 按钮类型, 目前有delete和download, 传入delete 便无需关心action, 如果是download不会刷新列表
+  preview?: Preview // 预览文件
+  to?: RouteItems // 跳转
+  confirm?: boolean | Confirm // 是否唤起确认
 }
 
 const props = defineProps({
-	actionsOrigin: {
-		type: [Array, Function],
-		default: () => [],
-	},
-	actionBody: {
-		type: String,
-		default: '',
-	},
-	row: {
-		type: Object,
-		default: () => ({}),
-	},
-	delFnName: {
-		type: Function,
-		default: null,
-	},
-	mainKey: {
-		type: String,
-		default: '',
-	},
-});
-const refresh = inject('refresh', null);
+  actionsOrigin: {
+    type: [Array, Function],
+    default: () => []
+  },
+  actionBody: {
+    type: String,
+    default: ''
+  },
+  row: {
+    type: Object,
+    default: () => ({})
+  },
+  delFnName: {
+    type: Function,
+    default: null
+  },
+  handlers: {
+    type: Object,
+    default: () => ({})
+  },
+  mainKey: {
+    type: String,
+    default: ''
+  }
+})
+const refresh = inject('refresh', null)
 const actions = computed(() =>
-	(helpers.isFunction(props.actionsOrigin) ? (props.actionsOrigin as Function)(props.row) : props.actionsOrigin).filter(
-		({ show }: Actions) => (show && show()) || show === undefined
-	)
-);
+  (helpers.isFunction(props.actionsOrigin)
+    ? (props.actionsOrigin as Function)(props.row)
+    : props.actionsOrigin
+  ).filter(({ show }: Actions) => (show && show()) || show === undefined)
+)
 
 const handleAction = async ({
-	label,
-	confirm,
-	action: { params, handler, callback } = {},
-	type,
-	body = props.actionBody,
-	preview,
-	dialog,
-	download,
-	to,
+  label,
+  confirm,
+  action: { params, handler, callback } = {},
+  type,
+  body = props.actionBody,
+  preview,
+  dialog,
+  download,
+  to
 }: Actions) => {
-	if (to) {
-		$router.push(to);
-		return;
-	}
-	if (dialog) {
-		emit('get-dialog-data', dialog);
-		return;
-	}
-	if (download) {
-		window.open(`${BASE}/${download}`);
-		return;
-	}
+  if (to) {
+    $router.push(to)
+    return
+  }
+  if (dialog) {
+    emit('get-dialog-data', dialog)
+    return
+  }
+  if (download) {
+    window.open(`${BASE}/${download}`)
+    return
+  }
 
-	const isDownload = type == 'download';
-	const isDelete = type === 'delete';
-	const shouldRefresh = !preview && !isDownload;
-	const { useMessage, useMessageBox } = await import('/@/hooks/message');
-	if (confirm || isDelete) {
-		try {
-			const { markRaw } = await import('vue');
-			const { Delete } = await import('@element-plus/icons-vue');
-			await useMessageBox().confirm(
-				(confirm as Confirm)?.ask || '是否' + (isDelete ? '删除' : label) + `当前${body}？`,
-				'warning',
-				isDelete ? markRaw(Delete) : ''
-			);
-		} catch (e) {
-			return Promise.reject(e);
-		}
-	}
-	if (preview?.url) {
-		const { previewFile } = await import('/@/utils/other');
-		return previewFile({ url: preview.url, ...(preview.mime ? { mime: preview.mime } : {}) });
-	}
-	try {
-		isDelete ? await props.delFnName([props.row[props.mainKey]]) : helpers.isArray(params) ? await handler(...(params as [])) : await handler(params);
-		if (shouldRefresh) {
-			refresh && refresh();
-			useMessage().success((confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！');
-			callback && callback();
-		}
-	} catch (err: any) {
-		return Promise.reject(err);
-	}
-};
+  const isDownload = type == 'download'
+  const isDelete = type === 'delete'
+  const shouldRefresh = !preview && !isDownload
+  const { useMessage, useMessageBox } = await import('/@/hooks/message')
+  if (confirm || isDelete) {
+    try {
+      const { markRaw } = await import('vue')
+      const { Delete } = await import('@element-plus/icons-vue')
+      await useMessageBox().confirm(
+        (confirm as Confirm)?.ask ||
+          '是否' +
+            (isDelete ? '删除' : label) +
+            `当前${body}？` +
+            (isDelete ? '此操作为永久删除。' : ''),
+        'warning',
+        isDelete ? markRaw(Delete) : ''
+      )
+    } catch (e) {
+      return Promise.reject(e)
+    }
+  }
+
+  if (preview?.url) {
+    const { previewFile } = await import('/@/utils/other')
+    return previewFile({
+      url: preview.url,
+      ...(preview.mime ? { mime: preview.mime } : {})
+    })
+  }
+  handler = props.handlers[handler as never] || handler
+  try {
+    isDelete
+      ? await props.delFnName([props.row[props.mainKey]])
+      : helpers.isArray(params)
+      ? await handler(...(params as []))
+      : await handler(params)
+    if (shouldRefresh) {
+      refresh && refresh()
+      useMessage().success(
+        (confirm as Confirm)?.done ||
+          body + (isDelete ? '删除' : label) + '成功！'
+      )
+      callback && callback()
+    }
+  } catch (err: any) {
+    return Promise.reject(err)
+  }
+}
 </script>
 
 <template>
-	<ul class="flex flex-wrap justify-center">
-		<li
-			v-for="(action, index) in actions"
-			v-auth="`${action.auth || ''}`"
-			v-text="action.label"
-			:key="action.label"
-			:class="['text-primary', 'cursor-pointer', { 'mr-[12px]': actions.length > 1 && index < actions.length - 1 }]"
-			@click="handleAction(action)"
-		/>
-	</ul>
+  <ul class="flex flex-wrap justify-center">
+    <li
+      v-for="(action, index) in actions"
+      v-auth="`${action.auth || ''}`"
+      v-text="action.label"
+      :key="action.label"
+      :class="[
+        'text-primary',
+        'cursor-pointer',
+        { 'mr-[12px]': actions.length > 1 && index < actions.length - 1 }
+      ]"
+      @click.passive="handleAction(action)" />
+  </ul>
 </template>

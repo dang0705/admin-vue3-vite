@@ -3,7 +3,7 @@
 		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding, '!border-none': !border }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
-			<div class="mb8 w-full">
+			<div class="mb8 w-full" v-if="!noFormView">
 				<Form-view
 					v-if="conditionForms.length"
 					v-model="state.queryForm"
