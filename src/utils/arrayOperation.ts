@@ -74,13 +74,13 @@ export function removeDuplicate(arr: EmptyArrayType, attr?: string) {
  * @param arrays  {Array}   -- 获取交集的数组
  * @param prop    {string}  -- json数组时,该参数代表以某个字段作为交集
  */
-export const findIntersection = (arrays: any[], prop?: string) => {
+export const findIntersection = <T>(arrays: any[T], prop?: string): T[] => {
   const map = new Map()
-  const intersection: unknown[] = []
+  const intersection: T[] = []
 
-  arrays.forEach((array: []) =>
-    array.forEach((obj) => {
-      const key = prop ? obj[prop] : obj
+  arrays.forEach((array: T[]) =>
+    array.forEach((obj: T) => {
+      const key = prop ? obj[prop as never] : obj
       if (key) {
         if (map.has(key)) {
           map.set(key, map.get(key) + 1)
