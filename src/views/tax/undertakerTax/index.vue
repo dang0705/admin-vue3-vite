@@ -1,21 +1,13 @@
 <template>
-	<Table-view
-		:staticQuery="staticQuery"
-		:isTab="!isTaskDetail"
-		:isShowTopBar="!isTaskDetail"
-		:noPadding="isTaskDetail"
-		:columns="columns"
-		getListFnName="taxUndertakerTask"
-		:condition-forms="isTaskDetail ? [] : conditionForms"
-		module="tax/index.ts"
-	>
-		<template #contractName="{ row }">
-			<a @click="handleContractFile(row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.contractName }}</a>
-		</template>
-		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
-		</template>
-	</Table-view>
+  <Table-view :staticQuery="staticQuery" :isTab="!isTaskDetail" :isShowTopBar="!isTaskDetail" :noPadding="isTaskDetail" :columns="columns" getListFnName="taxUndertakerTask"
+    :condition-forms="isTaskDetail ? [] : conditionForms" module="tax/index.ts">
+    <template #contractName="{ row }">
+      <a v-auth="'taxSupervision_undertakerTask_down'" @click="handleContractFile(row)" href="javascript:;" class="hover:underline text-blue-400">{{ row.contractName }}</a>
+    </template>
+    <template #actions="{ row }">
+      <el-button v-auth="'taxSupervision_undertakerTask_view'" icon="view" text type="primary" @click="handleBtn(row)"> 查看 </el-button>
+    </template>
+  </Table-view>
 </template>
 
 <script setup lang="ts">

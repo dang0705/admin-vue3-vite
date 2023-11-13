@@ -1,15 +1,9 @@
 <template>
-	<Table-view
-		:staticQuery="staticQuery"
-		:columns="columns"
-		getListFnName="taxUndertakingContract"
-		:condition-forms="conditionForms"
-		module="tax/index.ts"
-	>
-		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleContractFile(row)"> 下载 </el-button>
-		</template>
-	</Table-view>
+  <Table-view :staticQuery="staticQuery" :columns="columns" getListFnName="taxUndertakingContract" :condition-forms="conditionForms" module="tax/index.ts">
+    <template #actions="{ row }">
+      <el-button v-auth="'taxSupervision_undertakingContract_down'" icon="download" text type="primary" @click="handleContractFile(row)"> 下载 </el-button>
+    </template>
+  </Table-view>
 </template>
 
 <script setup lang="ts">

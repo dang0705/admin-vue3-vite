@@ -1,6 +1,6 @@
 <template>
   <TableView ref="InOutAccountRef" :columns="columns" :module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'" :condition-forms="conditionForms" :actions="actions"
-    labelWidth="120px" :exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'">
+    labelWidth="120px" exportAuth="finance_merchantRecharge_export">
     <!-- <template #tableTop>
 			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 		</template> -->

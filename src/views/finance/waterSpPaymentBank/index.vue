@@ -1,43 +1,27 @@
 <template>
-	<Table-view
-		ref="waterSpPaymentBankRef"
-		:columns="tabType == 1 ? columns1 : columns2"
-		label-width="110px"
-		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
-		:condition-forms="conditionForms"
-		:staticQuery="staticQuery"
-		:down-blob-file-url="tabType == 2 ? '/finance/waterBankCorporateLinkage/export' : ''"
-		:down-blob-file-name="tabType == 2 ? '银企直联银行流水.xlsx' : ''"
-		:getListFnName="tabType == 1 ? 'fetchList' : 'waterBankPage'"
-		module="finance/waterSpPaymentBank.ts"
-	>
-		<template #tableTop>
-			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
-		</template>
-		<template #loanType="{ formData }">
-			<el-form-item label="出入账状态:" prop="loanType">
-				<el-select @change="handleFilter(formData)" v-model="formData.loanType" placeholder="请选择" class="w100">
-					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in loanTypeOptions" />
-				</el-select>
-			</el-form-item>
-		</template>
-		<template #top-bar="{ otherInfo }">
-			<el-button v-if="tabType == 1" v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
-				批量导入银行交易流水
-			</el-button>
-		</template>
-		<uploadExcel
-			@refreshDataList="refreshDataList"
-			ref="addUnderTakerRef"
-			guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。"
-			upload-label="批量导入银行交易流水"
-			upload-url="core/excel/importWaterSpPaymentBank"
-			temp-url="/files/银行交易流水模版.xlsx"
-			template-on-front
-			title="批量导入银行交易流水"
-			:forms="addUnderTakerForms"
-		/>
-	</Table-view>
+  <Table-view ref="waterSpPaymentBankRef" :columns="tabType == 1 ? columns1 : columns2" label-width="110px"
+    :exportAuth="tabType == 1 ? 'finance_waterSpPaymentBank_export' : 'hro_waterBankCorporateLinkage_export'" :condition-forms="conditionForms" :staticQuery="staticQuery"
+    :down-blob-file-url="tabType == 2 ? '/finance/waterBankCorporateLinkage/export' : ''" :down-blob-file-name="tabType == 2 ? '银企直联银行流水.xlsx' : ''"
+    :getListFnName="tabType == 1 ? 'fetchList' : 'waterBankPage'" module="finance/waterSpPaymentBank.ts">
+    <template #tableTop>
+      <TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
+    </template>
+    <template #loanType="{ formData }">
+      <el-form-item label="出入账状态:" prop="loanType">
+        <el-select @change="handleFilter(formData)" v-model="formData.loanType" placeholder="请选择" class="w100">
+          <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in loanTypeOptions" />
+        </el-select>
+      </el-form-item>
+    </template>
+    <template #top-bar="{ otherInfo }">
+      <el-button v-if="tabType == 1" v-auth="'finance_waterSpPaymentBank_import'" @click="addUnderTakerRef.openDialog()" icon="Upload" type="primary">
+        批量导入银行交易流水
+      </el-button>
+
+    </template>
+    <uploadExcel @refreshDataList="refreshDataList" ref="addUnderTakerRef" guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。" upload-label="批量导入银行交易流水" upload-url="core/excel/importWaterSpPaymentBank"
+      temp-url="/files/银行交易流水模版.xlsx" template-on-front title="批量导入银行交易流水" :forms="addUnderTakerForms" />
+  </Table-view>
 </template>
 
 <script setup lang="ts">

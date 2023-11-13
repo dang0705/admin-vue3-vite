@@ -1,15 +1,9 @@
 <template>
-	<Table-view
-		:staticQuery="staticQuery"
-		:columns="columns"
-		getListFnName="taxSettleRecordItem"
-		:condition-forms="conditionForms"
-		module="tax/index.ts"
-	>
-		<template #actions="{ row }">
-			<el-button icon="download" text type="primary" @click="handleContractFile(row)"> 下载凭证 </el-button>
-		</template>
-	</Table-view>
+  <Table-view :staticQuery="staticQuery" :columns="columns" getListFnName="taxSettleRecordItem" :condition-forms="conditionForms" module="tax/index.ts">
+    <template #actions="{ row }">
+      <el-button v-auth="'taxSupervision_settleRecordItem_view'" icon="download" text type="primary" @click="handleContractFile(row)"> 下载凭证 </el-button>
+    </template>
+  </Table-view>
 </template>
 
 <script setup lang="ts">

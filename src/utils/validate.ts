@@ -145,9 +145,9 @@ export const rule = {
   },
 
   /* 手机号码 */
-  // phone(rule, value, callback) {
-  //   validateFn('mobilePhone', rule, value, callback, '手机号码格式有误')
-  // },
+  interbank(rule, value, callback) {
+    validateFn('InterbankNumber', rule, value, callback, '开户行联行号格式有误')
+  },
   // /^\d{12}$/
 
   /* 字母开头，仅可包含数字 */
@@ -217,7 +217,9 @@ export const getRegExp = function (validatorName) {
     noChinese: '^[^\u4e00-\u9fa5]+$',
     chinese: '^[\u4e00-\u9fa5]+$',
     email: '^([-_A-Za-z0-9.]+)@([_A-Za-z0-9]+\\.)+[A-Za-z0-9]{2,3}$',
-    url: '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
+    url: '(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]',
+    InterbankNumber: /^\d{12}$/,
+    // ^\d{12}$
   }
   return commonRegExp[validatorName]
 }

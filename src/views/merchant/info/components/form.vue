@@ -95,7 +95,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item :label="$t('merchantInfo.contactPhone')" prop="contactPhone">
-              <InputPlus :disabled="isDetail" v-model="form.contactPhone" />
+              <InputPlus :disabled="isDetail" type="number" v-model="form.contactPhone" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -140,7 +140,7 @@
 						</el-form-item>
 						&nbsp;&nbsp;-&nbsp;&nbsp; -->
             <el-form-item prop="phoneNumber" label="企业电话">
-              <InputPlus :disabled="isDetail" v-model="form.phoneNumber" placeholder="电话号码" />
+              <InputPlus :disabled="isDetail" type="number" v-model="form.phoneNumber" placeholder="电话号码" />
             </el-form-item>
           </el-col>
           <el-col :span="24" class="mb20">
@@ -159,7 +159,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item :label="$t('merchantInfo.legalPersonMobile')" prop="legalPersonMobile">
-              <InputPlus :disabled="isDetail" v-model="form.legalPersonMobile" />
+              <InputPlus :disabled="isDetail" type="number" v-model="form.legalPersonMobile" />
             </el-form-item>
           </el-col>
 
@@ -191,7 +191,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item :label="$t('merchantInfo.taxManagerMobile')" prop="taxManagerMobile">
-              <InputPlus :disabled="isDetail" v-model="form.taxManagerMobile" />
+              <InputPlus :disabled="isDetail" type="number" v-model="form.taxManagerMobile" />
             </el-form-item>
           </el-col>
 
@@ -223,7 +223,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item label="收件人手机号" prop="recipientMobile">
-              <InputPlus :disabled="isDetail" v-model="form.recipientMobile" />
+              <InputPlus :disabled="isDetail" type="number" v-model="form.recipientMobile" />
             </el-form-item>
           </el-col>
 
@@ -251,6 +251,7 @@ import { useDict } from '/@/hooks/dict';
 import { useMessage } from '/@/hooks/message';
 import { getObj, addObj, putObj } from '/@/api/core/merchantInfo';
 import { limitText } from '/@/rules';
+import { rule } from '/@/utils/validate';
 import mittBus from '/@/utils/mitt';
 const ChinaArea = defineAsyncComponent(() => import('/@/components/ChinaArea/index.vue'));
 
@@ -323,6 +324,10 @@ const form = reactive({
 	taxManagerIdCard: '',
 	taxManagerPortrait: [],
 	taxManagerNationalEmblem: [],
+
+	recipient: '',
+	recipientMobile: '',
+	postAddress: '',
 });
 
 // const industryLevel_option = reactive({
@@ -342,12 +347,30 @@ const dataRules = ref({
 	district: [{ required: true, message: '所在区不能为空', trigger: 'blur' }],
 	address: [{ required: true, message: '注册地址不能为空', trigger: 'blur' }],
 	entryDate: [{ required: true, message: '入驻日期不能为空', trigger: 'blur' }],
-	enterpriseMailbox: [{ required: true, message: '企业邮箱不能为空', trigger: 'blur' }],
+	enterpriseMailbox: [
+		{ required: true, message: '企业邮箱不能为空', trigger: 'blur' },
+		{
+			validator: rule.email,
+			trigger: 'blur',
+		},
+	],
 	businessLicense: [{ required: true, message: '营业执照不能为空', trigger: 'blur' }],
 	// logo: [{ required: true, message: '企业logo不能为空', trigger: 'blur' }],
 	businessScope: [{ required: true, message: '经营范围不能为空', trigger: 'blur' }],
 	contactName: [{ required: true, message: '联系人不能为空', trigger: 'blur' }],
-	contactPhone: [{ required: true, message: '联系人手机号不能为空', trigger: 'blur' }],
+	contactPhone: [
+		{ required: true, message: '联系人手机号不能为空', trigger: 'blur' },
+		{
+			validator: rule.phone,
+			trigger: 'blur',
+		},
+	],
+	recipientMobile: [
+		{
+			validator: rule.phone,
+			trigger: 'blur',
+		},
+	],
 	// taxRegistrationNumber: [{ required: true, message: '纳税人识别号不能为空', trigger: 'blur' }],
 	taxType: [{ required: true, message: '纳税人类型不能为空', trigger: 'blur' }],
 	taxBankNumber: [
@@ -356,19 +379,43 @@ const dataRules = ref({
 		// limitText({ title: '银行账户', min: 3, max: 30 }),
 	],
 	taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
-	taxJointBankNumber: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
+	taxJointBankNumber: [
+		{ required: true, message: '开户行联行号不能为空', trigger: 'blur' },
+		{
+			validator: rule.interbank,
+			trigger: 'blur',
+		},
+	],
 
 	taxBankArea: [{ required: true, message: '开户地不能为空', trigger: 'blur' }],
 	areaCode: [{ required: true, message: '区号不能为空', trigger: 'blur' }],
 	areaDatas: [{ required: true, message: '省市区不能为空', trigger: 'blur' }],
-	phoneNumber: [{ required: true, message: '企业电话不能为空', trigger: 'blur' }],
+	phoneNumber: [
+		{ required: true, message: '企业电话不能为空', trigger: 'blur' },
+		// {
+		// 	validator: rule.phone,
+		// 	trigger: 'blur',
+		// },
+	],
 	// legalPersonName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
-	// legalPersonMobile: [{ required: true, message: '法人手机号不能为空', trigger: 'blur' }],
+	legalPersonMobile: [
+		// { required: true, message: '法人手机号不能为空', trigger: 'blur' }
+		{
+			validator: rule.phone,
+			trigger: 'blur',
+		},
+	],
 	// legalPersonIdCard: [{ required: true, message: '法人身份证号不能为空', trigger: 'blur' }],
 	// legalPersonPortrait: [{ required: true, message: '法人身份证头像面不能为空', trigger: 'blur' }],
 	// legalPersonNationalEmblem: [{ required: true, message: '法人身份证国徽面不能为空', trigger: 'blur' }],
 	// taxManagerName: [{ required: true, message: '办税人姓名不能为空', trigger: 'blur' }],
-	// taxManagerMobile: [{ required: true, message: '办税人手机号不能为空', trigger: 'blur' }],
+	taxManagerMobile: [
+		// { required: true, message: '办税人手机号不能为空', trigger: 'blur' }
+		{
+			validator: rule.phone,
+			trigger: 'blur',
+		},
+	],
 	// taxManagerIdCard: [{ required: true, message: '办税人身份证号不能为空', trigger: 'blur' }],
 	// taxManagerPortrait: [{ required: true, message: '办税人身份证头像面不能为空', trigger: 'blur' }],
 	// taxManagerNationalEmblem: [{ required: true, message: '办税人身份证国徽面不能为空', trigger: 'blur' }],
