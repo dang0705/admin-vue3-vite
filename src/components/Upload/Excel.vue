@@ -80,6 +80,7 @@ import request from '/@/utils/request';
 import { ElNotification } from 'element-plus';
 import { LIMIT } from '/@/configuration/upload-rules';
 import { useRouter } from 'vue-router';
+import { onUnmounted } from 'vue';
 defineOptions({ name: 'Upload-excel' });
 const uuid = ref('id-' + generateUUID());
 const prop = defineProps({
@@ -320,7 +321,7 @@ const handleFileSuccess = (response: any) => {
 /**
  * 显示上传文件对话框，并清除上传信息
  */
-const openDialog = () => {
+const openDialog = async () => {
 	state.upload.isUploading = false;
 	state.upload.open = true;
 	fileName.value = '';
@@ -336,6 +337,9 @@ const headers = computed(() => {
 		'TENANT-ID': Session.getTenant(),
 	};
 });
+const handleDragStart = () => document.activeElement?.blur();
+window.addEventListener('dragenter', handleDragStart, true);
+onUnmounted(() => window.removeEventListener('dragstart', handleDragStart));
 // 暴露变量
 defineExpose({
 	openDialog,
