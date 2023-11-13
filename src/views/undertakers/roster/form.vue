@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { useDict } from '/@/hooks/dict'
 import { useMessage } from '/@/hooks/message'
-import { getObj, addObj, putObj } from '/@/api/hro/undertakerInfo'
+import { getObj, addObj, putObj } from '/src/api/core/undertakerInfo'
 import { rule } from '/@/utils/validate'
 import { useI18n } from 'vue-i18n'
 import { getSpInfoList } from '/@/api/core/merchantInfo'

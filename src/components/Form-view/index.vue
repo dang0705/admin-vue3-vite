@@ -151,11 +151,11 @@ const init = async (forms: FormOptions[]) => {
       if (helper.isArray(options)) {
         formOptions[item.key] = options
       } else if (helper.isObject(options)) {
-        const { url, params } = options as {
+        const { url, params = {} } = options as {
           url: string
           params: OptionsParams
         }
-        const { keyFrom, keyTo } = params
+        const { keyFrom = null, keyTo = null } = params
         if (keyFrom) {
           if (helper.isArray(keyFrom)) {
             const params = {}

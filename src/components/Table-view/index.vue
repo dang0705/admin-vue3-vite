@@ -38,7 +38,7 @@
         <div
           v-if="isShowTopBar"
           class="top-bar h-8 my-[10px] flex items-center justify-between">
-          <div class="flex items-center flex-grow">
+          <div class="flex items-center flex-grow flex-wrap">
             <el-button
               v-if="downBlobFileUrl"
               v-debounce="exportExcel"
