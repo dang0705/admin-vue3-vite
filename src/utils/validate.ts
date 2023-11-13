@@ -144,6 +144,12 @@ export const rule = {
     validateFn('mobilePhone', rule, value, callback, '手机号码格式有误')
   },
 
+  /* 手机号码 */
+  // phone(rule, value, callback) {
+  //   validateFn('mobilePhone', rule, value, callback, '手机号码格式有误')
+  // },
+  // /^\d{12}$/
+
   /* 字母开头，仅可包含数字 */
   letterStartNumberIncluded(rule, value, callback) {
     validateFn(

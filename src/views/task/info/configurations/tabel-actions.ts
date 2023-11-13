@@ -3,6 +3,8 @@ const auth = (auth: string) => `core_task_${auth}`;
 export default ({ appointRef, addUnderTakerRef, callback }: any) => {
   return (row: any) => {
     const { status, id, auditStatus } = row;
+    console.log('appointRef', appointRef);
+
     const handleAssign = () => {
       appointRef.value.openDialog(row)
     }
@@ -126,9 +128,12 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           ask: '此操作将永久删除',
           done: '删除成功!',
         },
-        action: {
-          handler: delObjs([id]),
-        },
+        // action: {
+        //   handler: delObjs,
+        //   params: {
+        //     ids: [id]
+        //   }
+        // },
       },
       {
         label: '下架',
@@ -138,9 +143,12 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           ask: '您确定将下架该任务吗？',
           done: '下架任务成功!',
         },
-        action: {
-          handler: taskDown(id),
-        },
+        // action: {
+        //   handler: taskDown,
+        //   params: {
+        //     id: id
+        //   }
+        // },
       },
     ];
   };
