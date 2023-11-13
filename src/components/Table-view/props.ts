@@ -72,14 +72,6 @@ export default {
 		type: Boolean,
 		default: false,
 	},
-	noBorder: {
-		type: Boolean,
-		default: false,
-	},
-	noFormView: {
-		type: Boolean,
-		default: false,
-	},
 	noPagination: {
 		type: Boolean,
 		default: false,

@@ -59,9 +59,9 @@ const readMarkAll = async (refresh: any) => {
 </script>
 
 <template>
-	<Table-view module="docs/message.ts" :columns="columns" no-border noFormView no-header :border="false" v-model="selectObjs">
-		<template #tableTop>
-			<div class="text-[18px] font-bold mt-[10px] mb-[24px]">事项提醒</div>
+	<Table-view module="docs/message.ts" :columns="columns" noFormView no-header :border="false" v-model="selectObjs">
+		<template #top-bar>
+			<div class="text-[18px] font-bold">事项提醒</div>
 			<!-- <el-divider /> -->
 		</template>
 		<template #title-header="{ refresh }">
