@@ -4,7 +4,7 @@
       :class="{
         'layout-padding-auto': !noPadding,
         'layout-padding-view': !noPadding,
-         '!border-none': !border
+        '!border-none': !border
       }">
       <slot
         name="tableTop"
@@ -89,7 +89,11 @@
                 <slot :name="`${column.prop}-header`" :refresh="resetQuery" />
               </template>
               <template v-if="column.slot || column.value" v-slot="{ row }">
-                <slot :name="column.prop" :row="row" :confirm="confirm" :refresh="resetQuery">
+                <slot
+                  :name="column.prop"
+                  :row="row"
+                  :confirm="confirm"
+                  :refresh="resetQuery">
                   <template v-if="column.value">
                     {{ column.value(row) }}
                   </template>

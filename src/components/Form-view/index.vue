@@ -7,7 +7,6 @@ import FormViewProps, {
   FormOptions
 } from '/@/components/Form-view/Form-view-props'
 import Actions from '/@/components/Form-view/Actions.vue'
-import { dict } from '/@/stores/dict'
 import helpers from '/@/utils/helpers'
 
 defineOptions({
@@ -28,15 +27,16 @@ const inDialog = inject('in-dialog', false)
 const prop = defineProps({
   modelValue: {
     type: Object,
-    default: () => ({}),
+    default: null,
     required: true
   },
   ...FormViewProps
 })
 const form = ref()
+const data = ref({})
 const formData = computed({
   get() {
-    return prop.modelValue
+    return Object.assign(prop.modelValue, data.value)
   },
   set(value: any) {
     emit('update:modelValue', value)
@@ -53,9 +53,10 @@ interface OptionsParams {
 
 const formConfigs = ref<any[]>([])
 const rulesCache: any = {}
+let stopWatchShow: unknown = null
+
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
-  let stopWatchShow: unknown = null
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
@@ -171,7 +172,7 @@ const init = async (forms: FormOptions[]) => {
               )
             })
           } else {
-            watch(
+            stopWatchShow = watch(
               () => prop.modelValue[keyFrom as string],
               async (value) => {
                 formData.value[item.key] = ''
@@ -228,7 +229,10 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) => (show ? initForm(prop.forms) : reset())
+  async (show) =>
+    show
+      ? initForm(prop.forms)
+      : reset() && stopWatchShow && stopWatchShow() && (stopWatchShow = null)
 )
 const submit = async () => {
   let valid: boolean
