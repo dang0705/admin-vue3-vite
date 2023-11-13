@@ -14,7 +14,7 @@ export const useTagsViewRoutes = defineStore('tagsViewRoutes', {
     favoriteRoutes: []
   }),
   getters: {
-    comparedFavorite() {
+    comparedFavorite(): any[] {
       return findIntersection([this.tagsViewRoutes, this.favoriteRoutes], 'id')
     }
   },
