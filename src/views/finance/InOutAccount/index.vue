@@ -1,17 +1,10 @@
 <template>
-	<TableView
-		ref="InOutAccountRef"
-		:columns="columns"
-		:module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'"
-		:condition-forms="conditionForms"
-		:actions="actions"
-		labelWidth="120px"
-		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
-	>
-		<!-- <template #tableTop>
+  <TableView ref="InOutAccountRef" :columns="columns" :module="tabType == 1 ? 'finance/merchantRecharge.ts' : 'finance/merchantRefund.ts'" :condition-forms="conditionForms" :actions="actions"
+    labelWidth="120px" :exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'">
+    <!-- <template #tableTop>
 			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
 		</template> -->
-		<!-- <template #top-bar="{ otherInfo }">
+    <!-- <template #top-bar="{ otherInfo }">
 			<el-button
 				v-auth="'finance_waterSpPaymentBank_import'"
 				@click="inOutAccountAddFormsRef.openDialog()"
@@ -22,18 +15,9 @@
 				批量导入银行交易流水
 			</el-button>
 		</template> -->
-		<uploadExcel
-			@refreshDataList="refreshDataList"
-			ref="inOutAccountAddFormsRef"
-			guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。"
-			upload-label="批量导入银行交易流水"
-			upload-url="core/excel/importWaterSpPaymentBank"
-			temp-url="/files/银行交易流水模版.xlsx"
-			template-on-front
-			title="批量导入银行交易流水"
-			:forms="inOutAccountAddForms"
-		/>
-	</TableView>
+    <uploadExcel @refreshDataList="refreshDataList" ref="inOutAccountAddFormsRef" guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。" upload-label="批量导入银行交易流水" upload-url="core/excel/importWaterSpPaymentBank"
+      temp-url="/files/银行交易流水模版.xlsx" template-on-front title="批量导入银行交易流水" :forms="inOutAccountAddForms" />
+  </TableView>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +26,7 @@ import { payChannel } from '/@/configuration/dynamic-control';
 import Array2Object from '/@/utils/array-2-object';
 import columns from './configurations/columns';
 import conditionForms from './configurations/condition-forms';
-import actions from './configurations/tabel-actions';
+import actions from './configurations/actions';
 interface BatchUploadRecordPage {
 	status: string;
 }

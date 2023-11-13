@@ -22,7 +22,7 @@ const Appoint = defineAsyncComponent(() => import('./components/appoint.vue'));
 const router = useRouter();
 import columns from './configurations/columns';
 import conditionForms from './configurations/condition-forms';
-import actions from './configurations/tabel-actions';
+import actions from './configurations/actions';
 
 const appointRef = ref();
 const addUnderTakerRef = ref();

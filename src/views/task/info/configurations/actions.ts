@@ -115,25 +115,14 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
         preview: true,
         action: {
           handler: handleBatchAssign,
-          // params: {
-          //   taskId: id
-          // }
         },
       },
       {
         label: '删除',
         auth: auth('del'),
+        type: 'delete',
+        body: '任务',
         show: () => status === '10' && (auditStatus === '10' || auditStatus === '30'),
-        confirm: {
-          ask: '此操作将永久删除',
-          done: '删除成功!',
-        },
-        // action: {
-        //   handler: delObjs,
-        //   params: {
-        //     ids: [id]
-        //   }
-        // },
       },
       {
         label: '下架',
@@ -143,12 +132,10 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           ask: '您确定将下架该任务吗？',
           done: '下架任务成功!',
         },
-        // action: {
-        //   handler: taskDown,
-        //   params: {
-        //     id: id
-        //   }
-        // },
+        action: {
+          handler: taskDown,
+          params: id
+        }
       },
     ];
   };
