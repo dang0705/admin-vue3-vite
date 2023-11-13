@@ -11,6 +11,7 @@
 		</div>
 	</div>
 	<el-input v-else v-bind="$props" v-model="value">
+    <template v-if="append" #append>{{ append }}</template>
 		<template v-for="(_, slot) in $slots" #[slot]>
 			<slot :name="slot" />
 		</template>
@@ -34,6 +35,10 @@ const props = defineProps({
 		type: String,
 		default: '',
 	},
+  append: {
+    type: String,
+    default: ''
+  }
 });
 const value = computed({
 	get: () => props.modelValue as string,

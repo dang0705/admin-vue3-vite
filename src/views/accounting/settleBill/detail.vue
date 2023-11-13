@@ -77,7 +77,7 @@
 							isNeedRecharge.service &&
 							form.serviceBillRecord[0]?.status == 40 &&
 							form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance > 0
-								? `需要充值: ${form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance}元`
+								? `需要充值: ${(form.serviceBillRecord[0]?.serviceAmount - balanceInfo.platBalance).toFixed(2)}元`
 								: '无需充值'
 						}}
 					</div>
@@ -160,9 +160,9 @@
 			<el-button v-auth="'core_settleBill_pay'" @click="handleBtn" icon="view" text type="primary"> 查看支付凭证 </el-button>
 		</template>
 		<template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" v-auth="'core_settleBill_export'" style="margin-right: 24px" icon="download" type="primary" class="ml10">
+			<!-- <el-button @click="handleBtn" v-auth="'core_settleBill_export'" style="margin-right: 24px" icon="download" type="primary" class="ml10">
 				批量导出
-			</el-button>
+			</el-button> -->
 			<!-- <el-button @click="importBillRef.openDialog()" style="margin-right: 24px" icon="Upload" type="primary" class="ml10"> 添加结算明细 </el-button> -->
 		</template>
 		<DetailDialog ref="detailDialogRef" @refresh="getmerchantInfoData()" :payInFullType="payInFullType" />
@@ -176,7 +176,6 @@
 			template-on-front
 			title="导入结算"
 			label-width="178px"
-			submitButtonText="下一步"
 		/>
 	</TableView>
 </template>
@@ -262,10 +261,10 @@ const task_needRecharge_num = computed(() => {
 		payInFullType.value = 4; // 表示无需付款
 	}
 	console.log('payInFullType.value', payInFullType.value);
-	return num;
+	return num.toFixed(2);
 });
 const task_isNeedRecharge = computed(() => {
-	return task_needRecharge_num.value > 0;
+	return +task_needRecharge_num.value > 0;
 });
 const topInfoForms = [
 	{

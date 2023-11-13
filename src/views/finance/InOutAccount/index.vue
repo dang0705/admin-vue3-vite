@@ -6,8 +6,6 @@
 		:condition-forms="conditionForms"
 		:actions="actions"
 		labelWidth="120px"
-		:downBlobFileUrl="tabType == 1 ? '/finance/merchantRecharge/export' : '/finance/merchantRefund/export'"
-		:downBlobFileName="tabType == 1 ? '入账.xlsx' : '出账.xlsx'"
 		:exportAuth="tabType == 1 ? 'finance_merchantRecharge_export' : 'finance_merchantRefund_export'"
 	>
 		<!-- <template #tableTop>
@@ -34,7 +32,6 @@
 			template-on-front
 			title="批量导入银行交易流水"
 			:forms="inOutAccountAddForms"
-			submitButtonText="下一步"
 		/>
 	</TableView>
 </template>

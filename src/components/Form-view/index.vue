@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import request from '/@/utils/request'
 import helper from '/@/utils/helpers'
-import { useDict, dictCache } from '/@/hooks/dict'
+import { dictCache, useDict } from '/@/hooks/dict'
+import { rule } from '/@/utils/validate'
 import FormViewProps, {
   FormOptions
 } from '/@/components/Form-view/Form-view-props'
 import Actions from '/@/components/Form-view/Actions.vue'
 import { dict } from '/@/stores/dict'
+import helpers from '/@/utils/helpers'
+
 defineOptions({
   name: 'Form-view'
 })
@@ -56,10 +59,48 @@ const init = async (forms: FormOptions[]) => {
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
-    !rulesCache[item.key]?.length &&
-      (rulesCache[item.key] = [...(item.rules || [])])
-
+    const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
+      item.control
+    )
     item.hidden = item.hidden ?? false
+
+    // Handle the default rules when need validation
+    if (prop.validation) {
+      const isDisabled = !!item.props?.disabled || prop.disabled
+      item.required = item.required ?? !isDisabled
+      if (item.required) {
+        const message = `${item.label?.replace('：', '')}不能为空`
+        let trigger = 'change'
+        isInput && (trigger = 'blur')
+        item.rules = [
+          ...(item.rules || []),
+          { required: true, message, trigger }
+        ]
+      }
+      !rulesCache[item.key]?.length &&
+        (rulesCache[item.key] = [...(item.rules || [])])
+
+      if (item.validator && isInput) {
+        const setValidator = (validator: string) => {
+          if (!rule[validator]) throw new Error(`wrong validator ${validator}`)
+          return {
+            validator: rule[validator],
+            trigger: 'blur'
+          }
+        }
+
+        if (helpers.isString(item.validator)) {
+          item.rules = [...(item.rules || []), setValidator(item.validator)]
+        } else if (helpers.isArray(item.validator)) {
+          const rules: { validator: any; trigger: string }[] = []
+          ;(item.validator as unknown as []).forEach((validator: string) =>
+            rules.push(setValidator(validator))
+          )
+          item.rules = [...(item.rules || []), ...rules]
+        }
+      }
+    }
+
     // 如果forms的item有默认值，给formData对应的key赋值
     // todo 以下if判断会在动态forms中无法重新赋值, 后续优化
     // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
@@ -80,8 +121,11 @@ const init = async (forms: FormOptions[]) => {
         () => {
           const isShow = item.show && !!item.show.fn(formData.value)
           item.hidden = !isShow
-          item.rules &&
-            (item.rules = isShow ? rulesCache[item.key as string] : [])
+          if (prop.validation) {
+            item.rules &&
+              (item.rules = isShow ? rulesCache[item.key as string] : [])
+          }
+
           !isShow && (formData.value[item.key] = null)
         },
         { immediate: true }
@@ -168,7 +212,7 @@ pagination.value &&
   )
 const reset = async () => {
   await nextTick()
-  form.value.resetFields()
+  form?.value?.resetFields()
 }
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
@@ -181,7 +225,6 @@ watch(
   },
   { immediate: true }
 )
-onUnmounted(() => reset())
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
@@ -189,7 +232,7 @@ watch(
 )
 const submit = async () => {
   let valid: boolean
-  if (prop.validate) {
+  if (prop.validation) {
     try {
       valid = !prop.disabled ? await form.value.validate() : true
     } catch (e) {
@@ -202,7 +245,7 @@ const submit = async () => {
   }
   try {
     prop.onSubmit && (await prop.onSubmit(refresh))
-    prop.save && prop.validate && refresh && refresh()
+    prop.save && prop.validation && refresh && refresh()
     emit('update:show', false)
     // If FormView use in condition, validate will be false, so it won't refresh
   } catch (e) {
@@ -287,7 +330,8 @@ defineExpose({
                   <el-form-item
                     v-else
                     :prop="form.key"
-                    :label="`${form.label}：`"
+                    :label="`${form.label ? form.label + '：' : ''}`"
+                    :label-width="form.labelWidth"
                     :rules="form.rules">
                     <component
                       :is="!form.hidden ? form.control : 'template'"

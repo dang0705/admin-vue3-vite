@@ -89,7 +89,11 @@ const _dialog = ref({});
 const dialogFormData = ref({});
 const onDialogSubmit = async () => {
 	const action = apis[`/src/api/${props.module}`][_dialog.value.action?.name];
-	action && (await action({ ...dialogFormData.value, ...(_dialog.value.action?.params || {}) }));
+	action &&
+		(await action({
+			...dialogFormData.value,
+			...(_dialog.value.action?.params || {}),
+		}));
 };
 const getDialogData = async (dialog) => {
 	showDialog.value = true;

@@ -36,7 +36,6 @@
 			template-on-front
 			title="批量导入银行交易流水"
 			:forms="addUnderTakerForms"
-			submitButtonText="下一步"
 		/>
 	</Table-view>
 </template>

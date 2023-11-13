@@ -55,25 +55,13 @@ const batchElectronicSignForms = [
   {
     control: 'SpSelect',
     label: '服务商',
-    key: 'spId',
-    rules: [
-      {
-        required: true,
-        message: '服务商必填'
-      }
-    ]
+    key: 'spId'
   },
   {
     control: 'el-select',
     label: '合同模板',
     key: 'contractTemplate',
-    options: 'contract_template', // 此处走字典
-    rules: [
-      {
-        required: true,
-        message: '合同模板必填'
-      }
-    ]
+    options: 'contract_template' // 此处走字典
   }
 ]
 // 引入组件

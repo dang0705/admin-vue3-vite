@@ -6,6 +6,7 @@
 				label-width="160"
 				v-show="showSearch"
 				v-model="state.queryForm"
+        :validation="false"
 				:forms="conditionForms"
 				:on-cancel="resetQuery"
 				:on-submit="getDataList"
@@ -173,7 +174,7 @@
 			template-on-front
 			title="批量导入承接人"
 			:forms="addUnderTakerForms"
-			submitButtonText="下一步"
+			
 		/>
 
 		<!-- 批量绑定银行卡 -->
@@ -186,7 +187,7 @@
 			template-on-front
 			formLabelWidth="170"
 			title="批量绑定银行卡"
-			submitButtonText="下一步"
+			
 		/>
 	</div>
 </template>
