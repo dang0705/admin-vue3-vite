@@ -79,8 +79,6 @@ import { Session } from '/@/utils/storage';
 import request from '/@/utils/request';
 import { ElNotification } from 'element-plus';
 import { LIMIT } from '/@/configuration/upload-rules';
-import { useRouter } from 'vue-router';
-import { onUnmounted } from 'vue';
 defineOptions({ name: 'Upload-excel' });
 const uuid = ref('id-' + generateUUID());
 const prop = defineProps({
