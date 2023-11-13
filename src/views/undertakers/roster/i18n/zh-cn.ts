@@ -3,7 +3,7 @@ export default {
 		index: '#',
 		importundertakerInfoTip: '导入承接人信息',
 		id: '承接人ID',
-		undertakerName: '姓名',
+		undertakerName: '承接人姓名',
 		undertakerCard: '证件号码',
 		undertakerPhone: '手机号',
 		undertakerSex: '承接人性别',

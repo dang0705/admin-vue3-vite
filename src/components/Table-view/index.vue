@@ -1,9 +1,9 @@
 <template>
 	<div :class="{ 'layout-padding': !noPadding }">
-		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding }">
+		<div :class="{ 'layout-padding-auto': !noPadding, 'layout-padding-view': !noPadding, '!border-none': noBorder }">
 			<slot name="tableTop" v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
 			<TabView v-if="isTab" @toggleTab="toggleTab" :tabs="state.countResp" v-model="currentTab" />
-			<div class="mb8 w-full">
+			<div class="mb8 w-full" v-if="!noFormView">
 				<Form-view
 					v-if="conditionForms.length"
 					v-model="state.queryForm"
@@ -33,7 +33,7 @@
 				v-loading="state.loading"
 				:border="border"
 				:data="tableData.length > 0 ? tableData : state.dataList"
-				:cell-style="tableStyle.cellStyle"
+				:cell-style="cellStyle || tableStyle.cellStyle"
 				:header-cell-style="header ? tableStyle.headerCellStyle : { headerCellStyle: { background: 'transparent', height: 0 } }"
 				@selection-change="onSelectionChange"
 			>
@@ -48,10 +48,10 @@
 					}"
 				>
 					<template v-if="column.headerSlot" #header>
-						<slot :name="`${column.prop}-header`" />
+						<slot :name="`${column.prop}-header`" :refresh="resetQuery" />
 					</template>
-					<template v-else-if="column.slot || column.value" v-slot="{ row }">
-						<slot :name="column.prop" :row="row" :confirm="confirm">
+					<template v-if="column.slot || column.value" v-slot="{ row }">
+						<slot :name="column.prop" :row="row" :confirm="confirm" :refresh="resetQuery">
 							<template v-if="column.value">{{ column.value(row) }}</template>
 						</slot>
 						<TableActions

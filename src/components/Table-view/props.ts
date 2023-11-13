@@ -72,6 +72,14 @@ export default {
 		type: Boolean,
 		default: false,
 	},
+	noBorder: {
+		type: Boolean,
+		default: false,
+	},
+	noFormView: {
+		type: Boolean,
+		default: false,
+	},
 	noPagination: {
 		type: Boolean,
 		default: false,
@@ -91,6 +99,10 @@ export default {
 	exportAuth: {
 		type: String,
 		default: '',
+	},
+	cellStyle: {
+		type: Object,
+		default: null,
 	},
 	// 是否展示topBar, 默认展示
 	isShowTopBar: {
