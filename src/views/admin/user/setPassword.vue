@@ -133,12 +133,12 @@ const handleSendCode = async () => {
 	const valid = await dataFormRef.value.validateField('phone').catch(() => {});
 	if (!valid) return;
 
-	const response = await sendMobileCode({ phone: form.phone });
+	const response = await sendMobileCode({ phone: form.phone, type: '2' });
 	if (response.data) {
 		useMessage().success('验证码发送成功');
 		timeCacl();
 	} else {
-		useMessage().error(response.msg);
+		// useMessage().error(response.msg);
 	}
 };
 

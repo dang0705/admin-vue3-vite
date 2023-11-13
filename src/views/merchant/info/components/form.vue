@@ -169,7 +169,7 @@
             </el-form-item>
           </el-col>
           <!-- 占位 -->
-          <el-col :span="12" class="mb20"> </el-col>
+          <el-col :span="12" class="mb20"></el-col>
           <el-col :span="12" class="mb20">
             <el-form-item :label="$t('merchantInfo.legalPersonPortrait')" prop="legalPersonPortrait">
               <UploadFile :disabled="isDetail" :type="businessType" v-model="form.legalPersonPortrait" />
@@ -200,7 +200,7 @@
               <InputPlus :disabled="isDetail" v-model="form.taxManagerIdCard" />
             </el-form-item>
           </el-col>
-          <el-col :span="12" class="mb20"> </el-col>
+          <el-col :span="12" class="mb20"></el-col>
           <el-col :span="12" class="mb20">
             <el-form-item :label="$t('merchantInfo.taxManagerPortrait')" prop="taxManagerPortrait">
               <UploadFile :disabled="isDetail" :type="businessType" v-model="form.taxManagerPortrait" />
@@ -236,7 +236,9 @@
 
         <span class="flex justify-center items-center" v-if="!isDetail">
           <el-button @click="resetFields">重置</el-button>
-          <el-button type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
+          <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+            确认
+          </el-button>
         </span>
       </div>
     </el-form>

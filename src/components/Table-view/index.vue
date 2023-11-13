@@ -3,7 +3,8 @@
     <div
       :class="{
         'layout-padding-auto': !noPadding,
-        'layout-padding-view': !noPadding
+        'layout-padding-view': !noPadding,
+        '!border-none': !border
       }">
       <slot
         name="tableTop"
@@ -85,10 +86,14 @@
                 // ...(column.label === '操作' ? { renderHeader } : null),
               }">
               <template v-if="column.headerSlot" #header>
-                <slot :name="`${column.prop}-header`" />
+                <slot :name="`${column.prop}-header`" :refresh="resetQuery" />
               </template>
               <template v-if="column.slot || column.value" v-slot="{ row }">
-                <slot :name="column.prop" :row="row" :confirm="confirm">
+                <slot
+                  :name="column.prop"
+                  :row="row"
+                  :confirm="confirm"
+                  :refresh="resetQuery">
                   <template v-if="column.value">
                     {{ column.value(row) }}
                   </template>
@@ -100,6 +105,7 @@
                   :del-fn-name="delObj"
                   :actionsOrigin="actions"
                   :main-key="selectMainKey"
+                  :handlers="apis[`/src/api/${module}`]"
                   @get-dialog-data="getDialogData" />
               </template>
             </el-table-column>
@@ -132,12 +138,17 @@ const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
 const emit = defineEmits(['update:modelValue', 'get-tab-label'])
 defineOptions({ name: 'TableView' })
 const props = defineProps(tableViewProps)
-
 const showDialog = ref(false)
 const _dialog = ref({})
 const dialogFormData = ref({})
+
+const module = computed(() =>
+  props.module?.includes('.') && props.module?.split('.')[1] !== ''
+    ? props.module
+    : `${props.module}.ts`
+)
 const onDialogSubmit = async () => {
-  const action = apis[`/src/api/${props.module}`][_dialog.value.action?.name]
+  const action = apis[`/src/api/${module.value}`][_dialog.value.action?.name]
   action &&
     (await action({
       ...dialogFormData.value,
@@ -149,7 +160,7 @@ const getDialogData = async (dialog) => {
   _dialog.value = dialog
   if (dialog.edit) {
     const { name, params } = dialog.edit
-    const edit = apis[`/src/api/${props.module}`][name || 'getObj']
+    const edit = apis[`/src/api/${module.value}`][name || 'getObj']
     edit && (dialogFormData.value = (await edit(params)).data)
   }
 }
@@ -158,10 +169,10 @@ const getDialogData = async (dialog) => {
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
 const fetchList: any = computed(
-  () => apis[`/src/api/${props.module}`][props.getListFnName]
+  () => apis[`/src/api/${module.value}`][props.getListFnName]
 )
 const delObj: any = computed(
-  () => apis[`/src/api/${props.module}`][props.delFnName]
+  () => apis[`/src/api/${module.value}`][props.delFnName]
 )
 
 const showSearch = ref(true)

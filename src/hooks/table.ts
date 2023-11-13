@@ -251,11 +251,14 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 	 * 定义表格通用样式
 	 * @returns  css
 	 */
-	const initColumnAlign = (label: string) => {
+	const initColumnAlign = (label: string,align?:string) => {
 		let textAlign = '';
 		switch (true) {
 			case label?.includes('(元)'):
 				textAlign = 'right';
+				break;
+			case align === 'is-left':
+				textAlign = 'left';
 				break;
 			default:
 				textAlign = 'center';
@@ -265,7 +268,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 		};
 	};
 	const tableStyle: TableStyle = {
-		cellStyle: ({ column: { label } }) => initColumnAlign(label),
+		cellStyle: ({ column: { label,align } }) => initColumnAlign(label,align),
 		headerCellStyle: ({ column: { label } }) => {
 			return {
 				textAlign: 'center',
