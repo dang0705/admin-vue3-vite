@@ -73,8 +73,11 @@ const formOne = [
 				message: '付款金额不能为空',
 				trigger: 'blur',
 			},
-		],
-		slot: true,
+    ],
+    props: {
+      type: 'number',
+      append: '元'
+    },
 	},
 ];
 export const formsFunc = (reType: any, form: any) => {
@@ -105,8 +108,9 @@ export const formsFunc = (reType: any, form: any) => {
 						},
 					],
 					props: {
-						type: 'number',
-					},
+            type: 'number',
+            append: '元'
+          },
 				},
 				{
 					control: 'InputPlus',
@@ -138,7 +142,7 @@ export const formsFunc = (reType: any, form: any) => {
 					props: {
 						disabled: true,
 					},
-					slot: true,
+					// slot: true,
 				},
 			];
 		}

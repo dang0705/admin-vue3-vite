@@ -4,7 +4,7 @@
 		:columns="indexThead"
 		module="finance/merchantRecharge.ts"
 		:staticQuery="staticQuery"
-		:condition-forms="detailConditionForms"
+		:condition-forms="conditionForms"
 		labelWidth="140px"
 		downBlobFileUrl="/finance/merchantRecharge/export"
 	>
@@ -14,7 +14,7 @@
 		</template>
 		<template #tableTopTwo>
 			<div class="flex mb-[30px]">
-				<div class="total_list bg-[#fafafa]">
+				<div class="total_list bg-[#fafafa] flex flex-1 mr-9">
 					<div class="total_item">
 						<div class="info">
 							<div class="info_label">账户余额</div>
@@ -73,25 +73,10 @@
 			:on-cancel="onCancel"
 			:on-submit="onSubmit"
 		>
-			<template #payingAmount="{ formData }">
-				<el-form-item
-					label="付款金额"
-					prop="payingAmount"
-					:rules="[
-						{
-							required: true,
-							message: '付款金额不能为空',
-							trigger: 'blur',
-						},
-					]"
-				>
-					<InputPlus v-model="dialogFormData.payingAmount">
-						<template #append>元</template>
-					</InputPlus>
-				</el-form-item>
-			</template>
 			<template #receiptAccountNumber>
-				<el-form-item label="收款账号:" prop="receiptAccountNumber">
+				<el-form-item label="收款账号:" prop="receiptAccountNumber" :rules="[
+            { required: true, message: '收款账号不能为空', trigger: 'blur' }
+          ]">
 					<el-select
 						@change="handleFilterAccount(dialogFormData.receiptAccountNumber)"
 						placeholder="请选择"
@@ -100,11 +85,6 @@
 					>
 						<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in receiptAccountOptions" />
 					</el-select>
-				</el-form-item>
-			</template>
-			<template #receiptAccountBank>
-				<el-form-item label="开户行:" prop="receiptAccountBank">
-					<InputPlus disabled v-model="dialogFormData.receiptAccountBank"></InputPlus>
 				</el-form-item>
 			</template>
 		</Dialog>
@@ -124,23 +104,14 @@ const merchantAccountCapitalRef = ref();
 import commonFunction from '/@/utils/commonFunction';
 const { copyText } = commonFunction();
 const { proxy } = getCurrentInstance();
-import indexThead from '/@/views/finance/merchantAccountCapital/detail-indexThead';
+import indexThead from './configurations-detail/indexThead';
+import conditionForms from './configurations-detail/condition-forms';
 import { formsFunc } from '/@/views/finance/merchantAccountCapital/dynamic-forms';
 let dialogFormData = reactive({
 	receiptAccountBank: '',
 	payingAmount: undefined,
 	receiptAccountNumber: '',
 });
-const detailConditionForms = [
-	{
-		control: 'DateRange',
-		key: 'rechargeStartRange',
-		label: '发起充值时间',
-		props: {
-			valueType: 'string',
-		},
-	},
-];
 const accountInfoList = computed(() => {
 	return [
 		{
@@ -248,14 +219,10 @@ const refreshDataList = () => {
 	getmerchantInfoData();
 	merchantAccountCapitalRef.value.resetQuery();
 };
-$refreshList(getmerchantInfoData);
 </script>
 
 <style lang="scss" scoped>
 .total_list {
-	display: flex;
-	flex: 1;
-	margin-right: 36px;
 	.total_item {
 		width: 33.33%;
 		display: flex;
