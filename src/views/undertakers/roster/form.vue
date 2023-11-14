@@ -216,15 +216,10 @@ const onSubmit = async () => {
 
   try {
     loading.value = true
-    let res = form.id ? await putObj(form) : await addObj(form)
-    if (res.code === 4140013) {
-      msgData.value = res.msg
-      msgVisible.value = true
-    } else {
-      useMessage().success(form.id ? '修改成功' : '添加成功')
-      msgData.value = `身份证号为${form.undertakerCard}的承接人已添加成功！`
-      msgVisible.value = true
-    }
+    form.id ? await putObj(form) : await addObj(form)
+    useMessage().success(form.id ? '修改成功' : '添加成功')
+    msgData.value = `身份证号为${form.undertakerCard}的承接人已添加成功！`
+    msgVisible.value = true
     visible.value = false
     emit('refresh')
   } catch (err: any) {
