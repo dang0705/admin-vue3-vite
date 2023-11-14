@@ -1,19 +1,8 @@
 <template>
-	<el-dialog title="添加支付通道" v-model="visible" :close-on-click-modal="false" draggable width="60%">
-		<form-view
-			v-if="visible"
-			ref="dataFormRef"
-			v-model="form"
-			:forms="conditionForms"
-			:on-submit="onSubmit"
-			:onCancel="() => (visible = false)"
-			submit-button-text="确认"
-			:columns="12"
-			vertical
-			:labelWidth="140"
-			button-position="center"
-		/>
-	</el-dialog>
+  <el-dialog title="添加支付通道" v-model="visible" :close-on-click-modal="false" draggable width="60%">
+    <form-view v-if="visible" ref="dataFormRef" v-model="form" :forms="conditionForms" :on-submit="onSubmit" :onCancel="() => (visible = false)" submit-button-text="确认" :columns="12" vertical
+      :labelWidth="140" button-position="center" />
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -104,7 +93,13 @@ const conditionForms = ref([
 		props: {
 			placeholder: '请输入开户行联行号',
 		},
-		rules: [{ required: true, message: '开户行联行号不能为空', trigger: 'blur' }],
+		rules: [
+			{ required: true, message: '开户行联行号不能为空', trigger: 'blur' },
+			{
+				validator: rule.interbank,
+				trigger: 'blur',
+			},
+		],
 	},
 	{
 		control: 'InputPlus',

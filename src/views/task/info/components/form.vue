@@ -1,97 +1,83 @@
 <template>
-	<el-card class="!border-none" shadow="never">
-		<el-steps v-if="!self_disabled || curStep == 2" class="mb-8" :active="curStep" finish-status="success">
-			<el-step v-for="(item, index) in stepList" :key="index" :title="item" />
-		</el-steps>
+  <el-card class="!border-none" shadow="never">
+    <el-steps v-if="!self_disabled || curStep == 2" class="mb-8" :active="curStep" finish-status="success">
+      <el-step v-for="(item, index) in stepList" :key="index" :title="item" />
+    </el-steps>
 
-		<el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef>
-			<div>
-				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
-				<el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
-					<el-col :span="12" class="mb20">
-						<el-form-item label="商户" prop="merchantId">
-							<el-select @change="handleChangeMerchantId(), handleChangeSpId()" :disabled="self_disabled" clearable v-model="form.merchantId">
-								<el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+    <el-form ref="dataFormRef" class="form-view" :model="form" :rules="dataRules" label-width="140px" formDialogRef>
+      <div>
+        <Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
+        <el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
+          <el-col :span="12" class="mb20">
+            <el-form-item label="商户" prop="merchantId">
+              <el-select @change="handleChangeMerchantId(), handleChangeSpId()" :disabled="self_disabled" clearable v-model="form.merchantId">
+                <el-option :key="item.id" :label="item.merchantName" :value="item.id" v-for="item in merchantList" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="服务商" prop="spId">
-							<el-select @change="handleChangeMerchantId" :disabled="self_disabled" clearable v-model="form.spId">
-								<el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="服务商" prop="spId">
+              <el-select @change="handleChangeMerchantId" :disabled="self_disabled" clearable v-model="form.spId">
+                <el-option :key="item.id" :label="item.spName" :value="item.id" v-for="item in spinfoList" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="服务协议" prop="serviceContractId">
-							<el-select :disabled="self_disabled" clearable v-model="form.serviceContractId">
-								<el-option :key="item.agreementId" :label="item.agreementName" :value="item.agreementId" v-for="item in agree_list" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="服务协议" prop="serviceContractId">
+              <el-select :disabled="self_disabled" clearable v-model="form.serviceContractId">
+                <el-option :key="item.agreementId" :label="item.agreementName" :value="item.agreementId" v-for="item in agree_list" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="任务承接方式" prop="undertakeType">
-							<el-select :disabled="self_disabled" clearable v-model="form.undertakeType">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_undertaking_type" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="任务承接方式" prop="undertakeType">
+              <el-select :disabled="self_disabled" clearable v-model="form.undertakeType">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_undertaking_type" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="任务名称" prop="taskName">
-							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.taskName" />
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="任务名称" prop="taskName">
+              <InputPlus :disabled="self_disabled" maxlength="100" v-model="form.taskName" />
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 140px" class="com_label require">任务类型</div>
-						<el-form-item label-width="0" prop="taskTypeFirst">
-							<el-select
-								@change="form.taskTypeSecond = ''"
-								:disabled="self_disabled"
-								placeholder="一级分类"
-								class="w100"
-								clearable
-								v-model="form.taskTypeFirst"
-							>
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
-							</el-select>
-						</el-form-item>
-						<el-form-item prop="taskTypeSecond" label-width="0" style="margin-left: 12px; flex-shrink: 1">
-							<el-select :disabled="self_disabled" placeholder="二级分类" class="w100" clearable v-model="form.taskTypeSecond">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20 formBox">
+            <div style="min-width: 140px" class="com_label require">任务类型</div>
+            <el-form-item label-width="0" prop="taskTypeFirst">
+              <el-select @change="form.taskTypeSecond = ''" :disabled="self_disabled" placeholder="一级分类" class="w100" clearable v-model="form.taskTypeFirst">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel1_option" />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="taskTypeSecond" label-width="0" style="margin-left: 12px; flex-shrink: 1">
+              <el-select :disabled="self_disabled" placeholder="二级分类" class="w100" clearable v-model="form.taskTypeSecond">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_typeLevel_option.task_typeLevel2_option" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="需要人数" prop="userCount">
-							<el-input-number
-								:max="10000000000"
-								class="inputNumber"
-								:controls="false"
-								:disabled="self_disabled"
-								:min="1"
-								v-model="form.userCount"
-							></el-input-number>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
-							<ChinaArea :disabled="self_disabled" ref="chinaAreaRef" v-model="form.areaDatas" class="w100" />
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="需要人数" prop="userCount">
+              <el-input-number :max="10000000000" class="inputNumber" :controls="false" :disabled="self_disabled" :min="1" v-model="form.userCount"></el-input-number>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
+              <ChinaArea :disabled="self_disabled" ref="chinaAreaRef" v-model="form.areaDatas" class="w100" />
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="24" class="mb20">
-						<el-form-item label="任务地址" prop="address">
-							<InputPlus :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
-						</el-form-item>
-					</el-col>
+          <el-col :span="24" class="mb20">
+            <el-form-item label="任务地址" prop="address">
+              <InputPlus :disabled="self_disabled" maxlength="100" v-model="form.address" :rows="2" show-word-limit type="textarea" />
+            </el-form-item>
+          </el-col>
 
-					<!-- <el-col :span="12" class="mb20">
+          <!-- <el-col :span="12" class="mb20">
 						<el-form-item label="任务开始时间" prop="startTime">
 							<el-date-picker
 								:disabled="self_disabled"
@@ -103,24 +89,17 @@
 						</el-form-item>
 					</el-col> -->
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="任务时间" prop="workTimeRange">
-							<!-- <el-date-picker
+          <el-col :span="12" class="mb20">
+            <el-form-item label="任务时间" prop="workTimeRange">
+              <!-- <el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
 								placeholder="任务开始时间"
 								v-model="form.endTime"
 								:value-format="dateTimeStr"
 							></el-date-picker> -->
-							<el-date-picker
-								:disabled="self_disabled"
-								v-model="form.workTimeRange"
-								type="datetimerange"
-								start-placeholder="任务开始时间"
-								end-placeholder="任务结束时间"
-								:value-format="dateTimeStr"
-							/>
-							<!-- <el-time-picker
+              <el-date-picker :disabled="self_disabled" v-model="form.workTimeRange" type="datetimerange" start-placeholder="任务开始时间" end-placeholder="任务结束时间" :value-format="dateTimeStr" />
+              <!-- <el-time-picker
 								:disabled="self_disabled"
 								:value-format="dateTimeStr"
 								v-model="form.workTimeRange"
@@ -129,52 +108,36 @@
 								start-placeholder="任务开始时间"
 								end-placeholder="任务结束时间"
 							/> -->
-						</el-form-item>
-					</el-col>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="发包单价" prop="unitPrice">
-							<el-input-number
-								class="inputNumber"
-								:max="10000000000"
-								:controls="false"
-								:disabled="self_disabled"
-								:min="0"
-								v-model="form.unitPrice"
-								:precision="2"
-								:step="0.1"
-							></el-input-number>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="发包单价" prop="unitPrice">
+              <el-input-number class="inputNumber" :max="10000000000" :controls="false" :disabled="self_disabled" :min="0" v-model="form.unitPrice" :precision="2" :step="0.1"></el-input-number>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="发包数量" prop="count">
-							<el-input-number
-								class="inputNumber"
-								:max="10000000000"
-								:controls="false"
-								:disabled="self_disabled"
-								:min="1"
-								v-model="form.count"
-							></el-input-number>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="发包数量" prop="count">
+              <el-input-number class="inputNumber" :max="10000000000" :controls="false" :disabled="self_disabled" :min="1" v-model="form.count"></el-input-number>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="计量单位" prop="measuringUnit">
-							<el-select :disabled="self_disabled" class="w100" clearable v-model="form.measuringUnit">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_unit" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="计量单位" prop="measuringUnit">
+              <el-select :disabled="self_disabled" class="w100" clearable v-model="form.measuringUnit">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in task_unit" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="24" class="mb20">
-						<el-form-item label="任务描述" prop="taskDesc">
-							<InputPlus :disabled="self_disabled" maxlength="500" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
-						</el-form-item>
-					</el-col>
+          <el-col :span="24" class="mb20">
+            <el-form-item label="任务描述" prop="taskDesc">
+              <InputPlus :disabled="self_disabled" maxlength="500" v-model="form.taskDesc" :rows="2" show-word-limit type="textarea" />
+            </el-form-item>
+          </el-col>
 
-					<!-- <el-col :span="12" class="mb20">
+          <!-- <el-col :span="12" class="mb20">
 						<el-form-item label=" 是否要求打卡" prop="clockRequired">
 							<el-select :disabled="self_disabled" clearable v-model="form.clockRequired">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in options" />
@@ -182,13 +145,13 @@
 						</el-form-item>
 					</el-col> -->
 
-					<!-- <el-col :span="12" class="mb20">
+          <!-- <el-col :span="12" class="mb20">
 						<el-form-item label="打卡范围" prop="clockRank">
 							<InputPlus :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
 					</el-col> -->
 
-					<!-- <el-col :span="12" class="mb20">
+          <!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
 							<el-time-picker
 								:disabled="self_disabled"
@@ -202,104 +165,83 @@
 						</el-form-item>
 					</el-col> -->
 
-					<!-- <el-col :span="12" class="mb20">
+          <!-- <el-col :span="12" class="mb20">
 						<el-form-item label="签退时间" prop="checkOutTime">
 							<el-time-picker v-model="form.checkOutTime" :value-format="timeStr" />
 						</el-form-item>
 					</el-col> -->
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="业务联系人" prop="businessMerchant">
-							<InputPlus :disabled="self_disabled" v-model="form.businessMerchant" />
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="业务联系人" prop="businessMerchant">
+              <InputPlus :disabled="self_disabled" v-model="form.businessMerchant" />
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="联系人手机号" prop="businessPhone">
-							<InputPlus :disabled="self_disabled" v-model="form.businessPhone" />
-						</el-form-item>
-					</el-col>
-				</el-row>
-				<Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
-				<el-row v-if="curStep == 1 || curStep == 2 || self_disabled" :gutter="24">
-					<el-col :span="12" class="mb20">
-						<el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
-							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender_requirement" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="联系人手机号" prop="businessPhone">
+              <InputPlus :disabled="self_disabled" v-model="form.businessPhone" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
+        <el-row v-if="curStep == 1 || curStep == 2 || self_disabled" :gutter="24">
+          <el-col :span="12" class="mb20">
+            <el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
+              <el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.requiredSex">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in gender_requirement" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20 formBox">
-						<div style="min-width: 140px" class="com_label">年龄要求</div>
-						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
-							<el-input-number
-								class="inputNumber"
-								:controls="false"
-								:disabled="self_disabled"
-								:min="16"
-								:max="65"
-								@blur="requireChange"
-								v-model="form.taskRequireInfo.requiredAgeMin"
-							></el-input-number>
-						</el-form-item>
-						<div style="margin-left: 12px">-</div>
-						<el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
-							<el-input-number
-								class="inputNumber"
-								:controls="false"
-								:disabled="self_disabled"
-								:min="16"
-								:max="65"
-								@blur="requireChange"
-								v-model="form.taskRequireInfo.requiredAgeMax"
-							></el-input-number>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20 formBox">
+            <div style="min-width: 140px" class="com_label">年龄要求</div>
+            <el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMin">
+              <el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="16" :max="65" @blur="requireChange"
+                v-model="form.taskRequireInfo.requiredAgeMin"></el-input-number>
+            </el-form-item>
+            <div style="margin-left: 12px">-</div>
+            <el-form-item label-width="0px" prop="taskRequireInfo.requiredAgeMax" style="margin-left: 12px; flex-shrink: 1">
+              <el-input-number class="inputNumber" :controls="false" :disabled="self_disabled" :min="16" :max="65" @blur="requireChange"
+                v-model="form.taskRequireInfo.requiredAgeMax"></el-input-number>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="学历要求" prop="taskRequireInfo.educational">
-							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.educational">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in education" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="学历要求" prop="taskRequireInfo.educational">
+              <el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.educational">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in education" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="12" class="mb20">
-						<el-form-item label="经验要求" prop="taskRequireInfo.experience">
-							<el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.experience">
-								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in experience" />
-							</el-select>
-						</el-form-item>
-					</el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item label="经验要求" prop="taskRequireInfo.experience">
+              <el-select :disabled="self_disabled" clearable v-model="form.taskRequireInfo.experience">
+                <el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in experience" />
+              </el-select>
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="24" class="mb20">
-						<el-form-item label="工作福利" prop="taskRequireInfo.workFare">
-							<InputPlus
-								:disabled="self_disabled"
-								maxlength="500"
-								v-model="form.taskRequireInfo.workFare"
-								:rows="2"
-								show-word-limit
-								type="textarea"
-							/>
-						</el-form-item>
-					</el-col>
+          <el-col :span="24" class="mb20">
+            <el-form-item label="工作福利" prop="taskRequireInfo.workFare">
+              <InputPlus :disabled="self_disabled" maxlength="500" v-model="form.taskRequireInfo.workFare" :rows="2" show-word-limit type="textarea" />
+            </el-form-item>
+          </el-col>
 
-					<el-col :span="24" class="mb20">
-						<el-form-item label="工作环境" prop="taskRequireInfo.workEnvironment">
-							<UploadFile multiple :limit="5" :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</div>
-		</el-form>
-		<span v-if="!self_disabled || curStep == 2" class="flex justify-center items-center mt-5">
-			<el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
-			<el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
-			<el-button v-if="curStep == stepList.length - 1" type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
-		</span>
-	</el-card>
+          <el-col :span="24" class="mb20">
+            <el-form-item label="工作环境" prop="taskRequireInfo.workEnvironment">
+              <UploadFile multiple :limit="5" :disabled="self_disabled" :type="businessType" v-model="form.taskRequireInfo.workEnvironment" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
+    </el-form>
+    <span v-if="!self_disabled || curStep == 2" class="flex justify-center items-center mt-5">
+      <el-button v-if="curStep != 0" type="primary" @click="onPrev">上一步</el-button>
+      <el-button v-if="curStep < stepList.length - 1" type="primary" @click="onNext">下一步</el-button>
+      <el-button v-if="curStep == stepList.length - 1" type="primary" v-debounce="onSubmit" :disabled="loading">确认</el-button>
+    </span>
+  </el-card>
 </template>
 
 <script setup lang="ts">
@@ -505,6 +447,8 @@ const gettaskData = () => {
 				form.taskId = '';
 				form.taskName = '';
 			}
+			getMerchantInfoData();
+			getSpInfoData();
 			getAgreeList();
 		})
 		.finally(() => {
@@ -522,12 +466,14 @@ const handleChangeSpId = () => {
 	form.spId = '';
 };
 
-// 获取数据
-getMerchantInfoList().then((res: any) => {
-	merchantList.value = res.data || [];
-});
+// 获取商户数据
+const getMerchantInfoData = () => {
+	getMerchantInfoList().then((res: any) => {
+		merchantList.value = res.data || [];
+	});
+};
 
-// 获取数据
+// 获取服务商数据
 const getSpInfoData = () => {
 	getSpInfoList('', {
 		merchantId: form.merchantId,
@@ -537,7 +483,6 @@ const getSpInfoData = () => {
 };
 
 onMounted(() => {
-	getSpInfoData();
 	if (route.query.taskId) {
 		gettaskData();
 	}
@@ -560,7 +505,8 @@ const task_typeLevel_option = computed(() => {
 });
 
 const setCurStep = () => (curStep.value = 0);
-// 获取协议
+
+// 获取协议列表
 const getAgreeList = () => {
 	// 获取数据
 	agreeList({

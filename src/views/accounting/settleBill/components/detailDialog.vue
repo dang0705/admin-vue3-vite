@@ -1,73 +1,54 @@
 <template>
-	<el-dialog :close-on-click-modal="false" :title="title" width="600" draggable v-model="visible">
-		<el-form
-			v-if="dialogType === 1 || dialogType === 2 || dialogType === 4"
-			:model="form"
-			:rules="dataRules"
-			style="min-height: 150px"
-			label-width="140px"
-			formDialogRef
-			ref="dataFormRef"
-		>
-			<template v-if="dialogType === 1">
-				<el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
-				<el-form-item v-if="settleBillType == 1" label="当前结算单金额">
-					{{ form.serviceBillRecord[0]?.serviceAmount }}
-				</el-form-item>
-				<el-form-item v-if="settleBillType == 2 && payInFullType === 1" label="当前结算单金额">
-					{{ form.taskBillRecord[0]?.serviceAmount }}元
-				</el-form-item>
-				<el-form-item v-if="settleBillType == 2 && payInFullType === 2" label="当前任务承揽费金额">
-					{{ form.taskBillRecord[0]?.taskAmount }}元
-				</el-form-item>
-				<el-form-item v-if="settleBillType == 2 && payInFullType === 3" label="当前管理费金额">
-					{{ form.taskBillRecord[0]?.managementAmount }}元
-				</el-form-item>
-			</template>
-			<template v-if="dialogType === 2">
-				您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0]?.id : form.taskBillRecord[0]?.id }} 成功发起付款！
-			</template>
-			<template v-if="dialogType === 4">
-				<el-form-item label="收款开户行">
-					{{ spPaymentChannelData.bankBranch }}
-					<el-button @click="copyText(spPaymentChannelData.bankBranch)" text type="primary"> 复制 </el-button>
-				</el-form-item>
-				<el-form-item label="收款账号">
-					{{ spPaymentChannelData.mainAccount }}
-					<el-button @click="copyText(spPaymentChannelData.mainAccount)" text type="primary"> 复制 </el-button>
-				</el-form-item>
-				<el-form-item label="收款户名">
-					{{ spPaymentChannelData.spName }}
-					<el-button @click="copyText(spPaymentChannelData.spName)" text type="primary"> 复制 </el-button>
-				</el-form-item>
-			</template>
-		</el-form>
-		<div>
-			<form-view
-				ref="formViewRef"
-				v-if="dialogType == 3"
-				:on-cancel="onCancel"
-				:on-submit="onSubmit"
-				submit-button-text="确认"
-				cancel-button-text="取消"
-				:columns="24"
-				:vertical="true"
-				label-width="160px"
-				v-model="formData"
-				:forms="addUnderTakerForms"
-			>
-			</form-view>
-		</div>
-		<template #footer>
-			<span v-if="dialogType === 1" class="dialog-footer">
-				<el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
-				<el-button @click="onSubmit" type="primary">为当前结算单付款</el-button>
-			</span>
-			<span v-if="dialogType === 2" class="dialog-footer">
-				<el-button @click="visible = false" type="primary">确定</el-button>
-			</span>
-		</template>
-	</el-dialog>
+  <el-dialog :close-on-click-modal="false" :title="title" width="600" draggable v-model="visible">
+    <el-form v-if="dialogType === 1 || dialogType === 2 || dialogType === 4" :model="form" :rules="dataRules" style="min-height: 150px" label-width="140px" formDialogRef ref="dataFormRef">
+      <template v-if="dialogType === 1">
+        <el-form-item label="资金账户可用余额"> {{ settleBillType == 1 ? balanceInfo.platBalance : balanceInfo.spBalance }}元 </el-form-item>
+        <el-form-item v-if="settleBillType == 1" label="当前结算单金额">
+          {{ form.serviceBillRecord[0]?.serviceAmount }}
+        </el-form-item>
+        <el-form-item v-if="settleBillType == 2 && payInFullType === 1" label="当前结算单金额">
+          {{ form.taskBillRecord[0]?.serviceAmount }}元
+        </el-form-item>
+        <el-form-item v-if="settleBillType == 2 && payInFullType === 2" label="当前任务承揽费金额">
+          {{ form.taskBillRecord[0]?.taskAmount }}元
+        </el-form-item>
+        <el-form-item v-if="settleBillType == 2 && payInFullType === 3" label="当前管理费金额">
+          {{ form.taskBillRecord[0]?.managementAmount }}元
+        </el-form-item>
+      </template>
+      <template v-if="dialogType === 2">
+        您已为结算单 {{ settleBillType == 1 ? form.serviceBillRecord[0]?.id : form.taskBillRecord[0]?.id }} 成功发起付款！
+      </template>
+      <template v-if="dialogType === 4">
+        <el-form-item label="收款开户行">
+          {{ spPaymentChannelData.bankBranch }}
+          <el-button @click="copyText(spPaymentChannelData.bankBranch)" text type="primary"> 复制 </el-button>
+        </el-form-item>
+        <el-form-item label="收款账号">
+          {{ spPaymentChannelData.mainAccount }}
+          <el-button @click="copyText(spPaymentChannelData.mainAccount)" text type="primary"> 复制 </el-button>
+        </el-form-item>
+        <el-form-item label="收款户名">
+          {{ spPaymentChannelData.spName }}
+          <el-button @click="copyText(spPaymentChannelData.spName)" text type="primary"> 复制 </el-button>
+        </el-form-item>
+      </template>
+    </el-form>
+    <div>
+      <form-view ref="formViewRef" v-if="dialogType == 3" :on-cancel="onCancel" :on-submit="onSubmit" submit-button-text="确认" cancel-button-text="取消" :columns="24" :vertical="true" label-width="160px"
+        v-model="formData" :forms="addUnderTakerForms">
+      </form-view>
+    </div>
+    <template #footer>
+      <span v-if="dialogType === 1" class="dialog-footer">
+        <el-button @click="visible = false">{{ $t('common.cancelButtonText') }}</el-button>
+        <el-button @click="onSubmit" type="primary">为当前结算单付款</el-button>
+      </span>
+      <span v-if="dialogType === 2" class="dialog-footer">
+        <el-button @click="visible = false" type="primary">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts" name="distribution">
@@ -78,6 +59,7 @@ import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital';
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge';
 import spPaymentChannel from '/@/api/core/spPaymentChannel';
 import commonFunction from '/@/utils/commonFunction';
+import { rule } from '/@/utils/validate';
 const { copyText } = commonFunction();
 const route: any = useRoute();
 const title = ref('');
@@ -174,6 +156,10 @@ const addUnderTakerForms = [
 			{
 				required: true,
 				message: '开户行联行号不能为空',
+				trigger: 'blur',
+			},
+			{
+				validator: rule.interbank,
 				trigger: 'blur',
 			},
 		],
