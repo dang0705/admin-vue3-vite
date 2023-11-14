@@ -29,7 +29,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="登录账户" prop="username">
+            <el-form-item label="登录账号" prop="username">
               <el-input
                 class="w100"
                 placeholder="用于登录的凭据，必须唯一"
@@ -225,7 +225,7 @@ const dataForm = reactive({
 const dataRules = reactive({
   //new
   loginAccount: [
-    { required: true, message: '登录账户不能为空', trigger: 'blur' }
+    { required: true, message: '登录账号不能为空', trigger: 'blur' }
   ],
   spAuthScope: [
     { required: true, message: '服务商授权不能为空', trigger: 'change' }
