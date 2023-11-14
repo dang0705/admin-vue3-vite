@@ -133,6 +133,10 @@ const tabs = ref([
 ])
 const baseCols1 = [
   {
+    type: 'selection',
+    width: '40'
+  },
+  {
     prop: 'spName',
     label: '服务商',
     'min-width': 150
@@ -164,6 +168,10 @@ const baseCols1 = [
   }
 ]
 const baseCols2 = [
+  {
+    type: 'selection',
+    width: '40'
+  },
   {
     prop: 'spName',
     label: '服务商',
