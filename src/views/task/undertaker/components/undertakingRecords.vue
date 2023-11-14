@@ -1,21 +1,10 @@
 <template>
-	<Table-view
-		isTab
-		noPadding
-		ref="undertakingRecordsRef"
-		:staticQuery="staticQuery"
-		:columns="columns"
-		label-width="130"
-		exportAuth="hro_undertakerTask_export"
-		:condition-forms="taskId ? conditionForms_task : conditionForms"
-		module="core/undertakerTask.ts"
-		downBlobFileUrl="/core/undertakerTask/export"
-		downBlobFileName="undertakerTask.xlsx"
-	>
-		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(row.id)">查看</el-button>
+  <Table-view isTab noPadding ref="undertakingRecordsRef" :staticQuery="staticQuery" :columns="columns" label-width="130" exportAuth="hro_undertakerTask_export"
+    :condition-forms="taskId ? conditionForms_task : conditionForms" module="core/undertakerTask.ts" downBlobFileUrl="/core/undertakerTask/export" downBlobFileName="undertakerTask.xlsx">
+    <template #actions="{ row }">
+      <el-button icon="view" text type="primary" v-auth="'hro_undertakerTask_view'" @click="detailDialogRef.openDialog(row.id)">查看</el-button>
 
-			<!-- <el-button
+      <!-- <el-button
 				v-if="row.state == 60"
 				@click="detailDialogRef.openDialog(row.id, 2)"
 				icon="edit-pen"
@@ -24,9 +13,9 @@
 				v-auth="'hro_undertakerTask_review'"
 				>验收</el-button
 			> -->
-		</template>
-		<detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
-	</Table-view>
+    </template>
+    <detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
+  </Table-view>
 </template>
 
 <script setup lang="ts">

@@ -1,126 +1,103 @@
 <template>
-	<div :class="['upload-box', 'flex', { 'flex-col': multiple }]" v-if="!hidden">
-		<div class="flex">
-			<ul class="flex flex-warp" v-if="multiple">
-				<li v-for="(image, index) in prefixedUrls" :key="image" class="imgBoxItem">
-					<el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
-					<div class="upload-handle" @click.stop>
-						<div class="handle-icon" @click="editImg(index)" v-if="!self_disabled">
-							<el-icon :size="iconSize">
-								<Edit />
-							</el-icon>
-							<span v-if="!iconSize">编辑</span>
-						</div>
-						<div class="handle-icon" @click="showViewVisible(index)">
-							<el-icon :size="iconSize">
-								<ZoomIn />
-							</el-icon>
-							<span v-if="!iconSize">查看</span>
-						</div>
-						<div class="handle-icon" @click="deleteImg(index)" v-if="!self_disabled">
-							<el-icon :size="iconSize">
-								<Delete />
-							</el-icon>
-							<span v-if="!iconSize">删除</span>
-						</div>
-					</div>
-				</li>
-			</ul>
-			<el-upload
-				v-if="isImage || (!isImage && !disabled)"
-				action="#"
-				ref="uploadRef"
-				drag
-				:id="uuid"
-				:limit="limit"
-				:class="['upload', 'flex-shrink-0', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
-				:multiple="multiple"
-				:disabled="self_disabled"
-				:show-file-list="false"
-				:http-request="handleHttpUpload"
-				:before-upload="beforeUpload"
-				:on-error="uploadError"
-				:on-success="handleAvatarSuccess"
-				:accept="accept.length ? accept.join(',') : new_accept.join(',')"
-			>
-				<!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-				<template v-if="isImage && prefixedUrls.length && !multiple">
-					<img :src="prefixedUrls[0]" class="upload-image" />
-					<div class="upload-handle" @click.stop>
-						<div class="handle-icon" @click="editImg(0)" v-if="!self_disabled">
-							<el-icon :size="iconSize">
-								<Edit />
-							</el-icon>
-							<span v-if="!iconSize">编辑</span>
-						</div>
-						<div class="handle-icon" @click="showViewVisible(0)">
-							<el-icon :size="iconSize">
-								<ZoomIn />
-							</el-icon>
-							<span v-if="!iconSize">查看</span>
-						</div>
-						<div class="handle-icon" @click="deleteImg(0)" v-if="!self_disabled">
-							<el-icon :size="iconSize">
-								<Delete />
-							</el-icon>
-							<span v-if="!iconSize">删除</span>
-						</div>
-					</div>
-				</template>
-				<div
-					class="upload-empty"
-					v-else-if="self_disabled ? false : props.fileType !== 'image' || !prefixedUrls.length || (multiple && prefixedUrls.length < limit)"
-				>
-					<slot name="empty">
-						<el-icon>
-							<Plus />
-						</el-icon>
-						<span>单击上传<br />或拖拽到此处</span>
-					</slot>
-				</div>
-				<template #tip v-if="!self_disabled && ((multiple && prefixedUrls.length < limit) || !multiple)">
-					<!-- accept.length ? accept.join(',') : new_accept.join(',') -->
-					<span class="text-[#999] text-[14px]"
-						>支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span
-					>
-					<!--          upload file loading-->
-					<template v-if="!isImage">
-						<ul>
-							<li v-for="(name, index) in fileNames" :key="name">
-								<el-progress v-if="fileLoading[name]?.loading" :percentage="fileLoading[name].progress" />
-								<div v-else class="flex items-center">
-									<el-icon class="cursor-pointer mr-2" @click="deleteImg(index)" v-if="multiple"><Delete /></el-icon>
-									<span v-text="name.split('^')[0]" class="text-primary mr-2" />
-									<el-icon class="ml-auto" color="green"><Select /></el-icon>
-								</div>
-							</li>
-						</ul>
-					</template>
-				</template>
-				<!-- <el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" /> -->
-			</el-upload>
-			<template v-if="disabled && !isImage">
-				<a
-					class="color-primary hover:underline"
-					v-for="(url, index) in prefixedUrls"
-					:key="url"
-					:download="url"
-					:href="url"
-					v-text="`附件${index + 1}`"
-				/>
-			</template>
-			<div class="el-upload__tip">
-				<slot name="tip" />
-			</div>
-		</div>
-		<el-image-viewer
-			:teleported="true"
-			:initial-index="initialIndex"
-			v-if="imgViewVisible"
-			@close="imgViewVisible = false"
-			:url-list="prefixedUrls"
-		/>
-	</div>
+  <div :class="['upload-box', 'flex', { 'flex-col': multiple }]" v-if="!hidden">
+    <div class="flex">
+      <ul class="flex flex-warp" v-if="multiple">
+        <li v-for="(image, index) in prefixedUrls" :key="image" class="imgBoxItem">
+          <el-image :style="{ height, width }" :src="image" :initial-index="index" :zoom-rate="1.2" :preview-src-list="prefixedUrls" fit="cover" />
+          <div class="upload-handle" @click.stop>
+            <div class="handle-icon" @click="editImg(index)" v-if="!self_disabled">
+              <el-icon :size="iconSize">
+                <Edit />
+              </el-icon>
+              <span v-if="!iconSize">编辑</span>
+            </div>
+            <div class="handle-icon" @click="showViewVisible(index)">
+              <el-icon :size="iconSize">
+                <ZoomIn />
+              </el-icon>
+              <span v-if="!iconSize">查看</span>
+            </div>
+            <div class="handle-icon" @click="deleteImg(index)" v-if="!self_disabled">
+              <el-icon :size="iconSize">
+                <Delete />
+              </el-icon>
+              <span v-if="!iconSize">删除</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <el-upload v-if="isImage || (!isImage && !disabled)" action="#" ref="uploadRef" drag :id="uuid" :limit="limit"
+        :class="['upload', 'flex-shrink-0', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']" :multiple="multiple" :disabled="self_disabled" :show-file-list="false"
+        :http-request="handleHttpUpload" :before-upload="beforeUpload" :on-error="uploadError" :on-success="handleAvatarSuccess" :accept="accept.length ? accept.join(',') : new_accept.join(',')">
+        <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
+        <template v-if="isImage && prefixedUrls.length && !multiple">
+          <img :src="prefixedUrls[0]" class="upload-image" />
+          <div class="upload-handle" @click.stop>
+            <div class="handle-icon" @click="editImg(0)" v-if="!self_disabled">
+              <el-icon :size="iconSize">
+                <Edit />
+              </el-icon>
+              <span v-if="!iconSize">编辑</span>
+            </div>
+            <div class="handle-icon" @click="showViewVisible(0)">
+              <el-icon :size="iconSize">
+                <ZoomIn />
+              </el-icon>
+              <span v-if="!iconSize">查看</span>
+            </div>
+            <div class="handle-icon" @click="deleteImg(0)" v-if="!self_disabled">
+              <el-icon :size="iconSize">
+                <Delete />
+              </el-icon>
+              <span v-if="!iconSize">删除</span>
+            </div>
+          </div>
+        </template>
+        <div class="upload-empty" v-else-if="self_disabled ? false : props.fileType !== 'image' || !prefixedUrls.length || (multiple && prefixedUrls.length < limit)">
+          <slot name="empty">
+            <el-icon>
+              <Plus />
+            </el-icon>
+            <span>单击上传<br />或拖拽到此处</span>
+          </slot>
+        </div>
+        <template #tip v-if="!self_disabled && ((multiple && prefixedUrls.length < limit) || !multiple)">
+          <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
+          <span class="text-[#999] text-[14px]">支持{{ accept.length ? accept.join(',').replace(/image\//g, '') : new_accept.join(',').replace(/image\//g, '') }}文件</span>
+          <!--          upload file loading-->
+          <template v-if="!isImage">
+            <ul v-if="fileNames.length > 0">
+              <li v-for="(name, index) in fileNames" :key="name">
+                <el-progress v-if="fileLoading[name]?.loading" :percentage="fileLoading[name].progress" />
+                <div v-else class="flex items-center">
+                  <el-icon class="cursor-pointer mr-2" @click="deleteImg(index)" v-if="multiple">
+                    <Delete />
+                  </el-icon>
+                  <span v-text="name.split('^')[0]" class="text-primary mr-2" />
+                  <el-icon class="ml-auto" color="green"><Select /></el-icon>
+                </div>
+              </li>
+            </ul>
+            <ul v-else-if="prefixedUrls.length > 0">
+              <li v-for="(url, index) in prefixedUrls" :key="url">
+                <div class="flex items-center">
+                  <a class="color-primary hover:underline" :download="url" :href="url" v-text="`附件${index + 1}`" />
+                </div>
+              </li>
+            </ul>
+          </template>
+        </template>
+        <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" /> -->
+      </el-upload>
+      <template v-if="disabled && !isImage">
+        <a class="color-primary hover:underline" v-for="(url, index) in prefixedUrls" :key="url" :download="url" :href="url" v-text="`附件${index + 1}`" />
+      </template>
+      <div class="el-upload__tip">
+        <slot name="tip" />
+      </div>
+    </div>
+    <el-image-viewer :teleported="true" :initial-index="initialIndex" v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="prefixedUrls" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -287,6 +264,8 @@ watch(
 		// console.log('watch-value', value);
 		urls.value = value;
 		prefixedUrls.value = urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || [];
+		// fileNames.value = [`${name}^${uid}`];
+		// fileNames
 		// console.log('urls.value-1', urls.value);
 		// console.log('prefixedUrls.value-1', prefixedUrls.value);
 	},

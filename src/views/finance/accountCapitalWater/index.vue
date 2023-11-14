@@ -1,22 +1,13 @@
 <template>
-	<Table-view
-		ref="accountCapitalWaterRef"
-		:columns="columns"
-		:down-blob-file-url="downFileUrl"
-		:down-blob-file-name="downFileName"
-		:condition-forms="conditionForms"
-		module="finance/merchantAccountCapitalWater.ts"
-		:getListFnName="getListFnName"
-		:staticQuery="staticQuery"
-		label-width="120px"
-		exportAuth="finance_merchantRecharge_export"
-	>
-		<!-- 伪代码 exportAuth -->
-		<template #tableTop>
-			<TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
-		</template>
-		<template #actions="{ row: {} }"> </template>
-	</Table-view>
+  <Table-view ref="accountCapitalWaterRef" :columns="columns" :down-blob-file-url="downFileUrl" :down-blob-file-name="downFileName" :condition-forms="conditionForms"
+    module="finance/merchantAccountCapitalWater.ts" :getListFnName="getListFnName" :staticQuery="staticQuery" label-width="120px"
+    :exportAuth="tabType === 1 ? 'finance_merchantAccountCapitalWater_batch_export' : tabType === 2 ? 'finance_spAccountCapitalWater_batch_export' : tabType === 3 ? 'finance_platAccountCapitalWater_batch_export' : ''">
+    <!-- 伪代码 exportAuth -->
+    <template #tableTop>
+      <TabView style="padding-left: 20px" @toggleTab="toggleTab" :tabs="tabs"></TabView>
+    </template>
+    <template #actions="{ row: {} }"> </template>
+  </Table-view>
 </template>
 
 <script setup lang="ts">

@@ -24,6 +24,7 @@
           :on-submit="getDataList"
           :on-cancel="resetQuery"
           :validation="false"
+          :label-position="conditionForms.length > 3 ? 'left' : 'right'"
           submit-button-text="查询"
           cancel-button-text="重置">
           <template v-for="(_, slot) in $slots" #[slot]>
@@ -38,7 +39,7 @@
         <div
           v-if="isShowTopBar"
           class="top-bar h-8 my-[10px] flex items-center justify-between">
-          <div class="flex items-center flex-grow">
+          <div class="flex items-center flex-grow flex-wrap">
             <el-button
               v-if="downBlobFileUrl"
               v-debounce="exportExcel"
@@ -148,12 +149,14 @@ const module = computed(() =>
     : `${props.module}.ts`
 )
 const onDialogSubmit = async () => {
-  const action = apis[`/src/api/${module.value}`][_dialog.value.action?.name]
+  const action = _dialog.value.action?.handler
   action &&
     (await action({
       ...dialogFormData.value,
       ...(_dialog.value.action?.params || {})
     }))
+  const { useMessage } = await import('/@/hooks/message')
+  useMessage().success(_dialog.value.successText)
 }
 const getDialogData = async (dialog) => {
   showDialog.value = true

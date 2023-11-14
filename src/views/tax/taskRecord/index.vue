@@ -1,9 +1,9 @@
 <template>
-	<Table-view :staticQuery="staticQuery" isTab :columns="columns" getListFnName="taxTaskPage" :condition-forms="conditionForms" module="tax/index.ts">
-		<template #actions="{ row }">
-			<el-button icon="view" text type="primary" @click="handleView(row.taskId)"> 查看 </el-button>
-		</template>
-	</Table-view>
+  <Table-view :staticQuery="staticQuery" isTab :columns="columns" getListFnName="taxTaskPage" :condition-forms="conditionForms" module="tax/index.ts">
+    <template #actions="{ row }">
+      <el-button v-auth="'taxSupervision_task_view'" icon="view" text type="primary" @click="handleView(row.taskId)"> 查看 </el-button>
+    </template>
+  </Table-view>
 </template>
 
 <script setup lang="ts">

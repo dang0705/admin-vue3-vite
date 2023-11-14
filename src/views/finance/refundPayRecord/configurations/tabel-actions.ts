@@ -65,6 +65,7 @@ export default (row: any) => {
             props: {
               disabled: true
             },
+            validator: 'interbank',
             value: row.receiptAccountLines
           },
           {
@@ -86,13 +87,13 @@ export default (row: any) => {
             }
           }
         ],
-        action: {
-          name: 'refundRecordPayRefund',
-          params: {
-            id: id
-          }
-        },
         labelWidth: '150px'
+      },
+      action: {
+        handler: 'refundRecordPayRefund',
+        params: {
+          id
+        }
       }
     },
     {
@@ -125,12 +126,12 @@ export default (row: any) => {
               type: 'textarea'
             }
           }
-        ],
-        action: {
-          name: 'refundRecordPayMarkRefundFailed',
-          params: {
-            id: id
-          }
+        ]
+      },
+      action: {
+        handler: 'refundRecordPayMarkRefundFailed',
+        params: {
+          id
         }
       }
     }

@@ -32,6 +32,7 @@ export const actionsParams = {
     type: Boolean,
     default: true
   },
+
   buttonPosition: {
     type: String,
     default: 'center'
@@ -91,6 +92,10 @@ export default {
   labelWidth: {
     type: [String, Number],
     default: 120
+  },
+  labelPosition: {
+    type: String,
+    default: 'right'
   },
   show: {
     type: Boolean,

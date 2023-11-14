@@ -19,7 +19,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
 		resolve: { alias }, // 路径别名配置
 		base: command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
 		optimizeDeps: {
-			include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en'],
+			include: ['element-plus/dist/locale/zh-cn.mjs', 'element-plus/dist/locale/en.mjs'],
 		},
 		server: {
 			host: '0.0.0.0', // 服务器地址
