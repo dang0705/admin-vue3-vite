@@ -6,7 +6,7 @@ const $router = useRouter()
 const emit = defineEmits(['get-dialog-data'])
 
 interface Action {
-  handler: Function
+  handler: Function | null
   params?: unknown
   callback?: Function
 }
@@ -84,7 +84,9 @@ const actions = computed(() =>
 const handleAction = async ({
   label,
   confirm,
-  action: { params, handler, callback } = {},
+  action = {
+    handler: null
+  },
   type,
   body = props.actionBody,
   preview,
@@ -92,12 +94,26 @@ const handleAction = async ({
   download,
   to
 }: Actions) => {
+  let { params, handler, callback } = action
   if (to) {
     $router.push(to)
     return
   }
+  const isDelete = type === 'delete'
+  const successText =
+    (confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！'
+
+  handler && (action.handler = props.handlers[handler as never] || handler)
+
   if (dialog) {
-    emit('get-dialog-data', dialog)
+    emit('get-dialog-data', {
+      ...dialog,
+      title: dialog.title || label,
+      label,
+      confirm,
+      action,
+      successText
+    })
     return
   }
   if (download) {
@@ -106,7 +122,6 @@ const handleAction = async ({
   }
 
   const isDownload = type == 'download'
-  const isDelete = type === 'delete'
   const shouldRefresh = !preview && !isDownload
   const { useMessage, useMessageBox } = await import('/@/hooks/message')
   if (confirm || isDelete) {
@@ -134,7 +149,6 @@ const handleAction = async ({
       ...(preview.mime ? { mime: preview.mime } : {})
     })
   }
-  handler = props.handlers[handler as never] || handler
   try {
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
@@ -143,10 +157,7 @@ const handleAction = async ({
       : await handler(params)
     if (shouldRefresh) {
       refresh && refresh()
-      useMessage().success(
-        (confirm as Confirm)?.done ||
-          body + (isDelete ? '删除' : label) + '成功！'
-      )
+      useMessage().success(successText)
       callback && callback()
     }
   } catch (err: any) {

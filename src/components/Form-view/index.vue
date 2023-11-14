@@ -149,7 +149,7 @@ const init = async (forms: FormOptions[]) => {
       formOptions[item.key] = computed(() => dic.value)
     } else {
       if (helper.isArray(options)) {
-        formOptions[item.key] = options
+        stopWatchShow = formOptions[item.key] = options
       } else if (helper.isObject(options)) {
         const { url, params = {} } = options as {
           url: string

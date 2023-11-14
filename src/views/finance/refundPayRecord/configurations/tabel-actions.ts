@@ -86,13 +86,13 @@ export default (row: any) => {
             }
           }
         ],
-        action: {
-          name: 'refundRecordPayRefund',
-          params: {
-            id: id
-          }
-        },
         labelWidth: '150px'
+      },
+      action: {
+        handler: 'refundRecordPayRefund',
+        params: {
+          id
+        }
       }
     },
     {

@@ -148,12 +148,14 @@ const module = computed(() =>
     : `${props.module}.ts`
 )
 const onDialogSubmit = async () => {
-  const action = apis[`/src/api/${module.value}`][_dialog.value.action?.name]
+  const action = _dialog.value.action?.handler
   action &&
     (await action({
       ...dialogFormData.value,
       ...(_dialog.value.action?.params || {})
     }))
+  const { useMessage } = await import('/@/hooks/message')
+  useMessage().success(_dialog.value.successText)
 }
 const getDialogData = async (dialog) => {
   showDialog.value = true
