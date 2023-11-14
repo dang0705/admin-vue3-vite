@@ -1,17 +1,17 @@
-import { delObjs, taskDown } from '/@/api/core/task';
-const auth = (auth: string) => `core_task_${auth}`;
+import { delObjs, taskDown } from '/@/api/core/task'
+const auth = (auth: string) => `core_task_${auth}`
 export default ({ appointRef, addUnderTakerRef, callback }: any) => {
   return (row: any) => {
-    const { status, id, auditStatus } = row;
-    console.log('appointRef', appointRef);
+    const { status, id, auditStatus } = row
+    console.log('appointRef', appointRef)
 
     const handleAssign = () => {
       appointRef.value.openDialog(row)
     }
     const handleBatchAssign = () => {
-      addUnderTakerRef.value.openDialog(row);
+      addUnderTakerRef.value.openDialog(row)
       callback(row)
-    };
+    }
     return [
       {
         label: '查看',
@@ -20,9 +20,9 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           path: '/task/info/detail',
           query: { taskId: id },
           state: {
-            refresh: 1,
-          },
-        },
+            refresh: 1
+          }
+        }
       },
       // 产品要求: 编辑功能暂不开放
       // {
@@ -44,9 +44,9 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           path: '/task/info/copy',
           query: { taskId: id, copy: 1 },
           state: {
-            refresh: 1,
-          },
-        },
+            refresh: 1
+          }
+        }
       },
       {
         label: '审核',
@@ -60,44 +60,48 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
               control: 'el-radio-group',
               key: 'auditPass',
               value: true,
-              rules: [{ required: true, message: '审核结果不能为空', trigger: 'blur' }],
+              rules: [
+                { required: true, message: '审核结果不能为空', trigger: 'blur' }
+              ],
               options: [
                 {
                   label: '审核通过',
-                  value: true,
+                  value: true
                 },
                 {
                   label: '审核驳回',
-                  value: false,
-                },
-              ],
+                  value: false
+                }
+              ]
             },
             {
               label: '驳回原因',
               key: 'auditPostscript',
               control: 'InputPlus',
-              rules: [{ required: true, message: '驳回原因不能为空', trigger: 'blur' }],
+              rules: [
+                { required: true, message: '驳回原因不能为空', trigger: 'blur' }
+              ],
               props: {
                 rows: 3,
                 showWordLimit: true,
-                type: 'textarea',
+                type: 'textarea'
               },
               value: '',
               show: {
                 by: 'auditPass',
                 fn: ({ auditPass }: any) => {
-                  return !auditPass;
-                },
-              },
-            },
-          ],
-          action: {
-            name: 'putAuditTask',
-            params: {
-              taskId: id,
-            },
-          },
+                  return !auditPass
+                }
+              }
+            }
+          ]
         },
+        action: {
+          handler: 'putAuditTask',
+          params: {
+            taskId: id
+          }
+        }
       },
       {
         label: '指派承接人',
@@ -105,8 +109,8 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
         show: () => status === '20',
         preview: true,
         action: {
-          handler: handleAssign,
-        },
+          handler: handleAssign
+        }
       },
       {
         label: '批量指派承接人',
@@ -114,15 +118,16 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
         show: () => status === '20',
         preview: true,
         action: {
-          handler: handleBatchAssign,
-        },
+          handler: handleBatchAssign
+        }
       },
       {
         label: '删除',
         auth: auth('del'),
         type: 'delete',
         body: '任务',
-        show: () => status === '10' && (auditStatus === '10' || auditStatus === '30'),
+        show: () =>
+          status === '10' && (auditStatus === '10' || auditStatus === '30')
       },
       {
         label: '下架',
@@ -130,13 +135,13 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
         show: () => status === '20' && auditStatus === '20',
         confirm: {
           ask: '您确定将下架该任务吗？',
-          done: '下架任务成功!',
+          done: '下架任务成功!'
         },
         action: {
           handler: taskDown,
           params: id
         }
-      },
-    ];
-  };
+      }
+    ]
+  }
 }

@@ -1,6 +1,5 @@
 const auth = (auth: string) => `core_settleBill_${auth}`
 import thousandthDivision from '/@/utils/thousandth-division'
-import { rule } from '/@/utils/validate';
 export default (row: any) => {
   const { payStatus, id, transferVoucher } = row
   return [
@@ -66,12 +65,7 @@ export default (row: any) => {
             props: {
               disabled: true
             },
-            rules: [
-              {
-                validator: rule.interbank,
-                trigger: 'blur',
-              },
-            ],
+            validator: 'interbank',
             value: row.receiptAccountLines
           },
           {
@@ -132,12 +126,12 @@ export default (row: any) => {
               type: 'textarea'
             }
           }
-        ],
-        action: {
-          name: 'refundRecordPayMarkRefundFailed',
-          params: {
-            id: id
-          }
+        ]
+      },
+      action: {
+        handler: 'refundRecordPayMarkRefundFailed',
+        params: {
+          id
         }
       }
     }
