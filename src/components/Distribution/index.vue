@@ -34,7 +34,8 @@
             :render-content="render"
             :titles="titles"
             :button-texts="buttonTexts"
-            :data="data">
+            :data="data"
+            @change="onRightChange">
             <template v-for="(_, slot) in $slots" #[slot]="option">
               <slot :name="slot" v-bind="option" />
             </template>
@@ -152,9 +153,8 @@ const formData = ref({})
 props.watchField &&
   watch(
     () => formData.value[props.watchField],
-    (value) => openDialog()
+    async () => (data.value = await getData())
   )
-
 const { t } = useI18n()
 
 const loading = ref(false)
@@ -171,35 +171,50 @@ const state = reactive({
     submitTxt: '更新'
   }
 })
-let headerMounted = false
+watch(
+  () => state.dialog.isShowDialog,
+  (show) => {
+    if (!show) {
+      formData.value = {}
+      headerMounted.value = false
+    }
+  }
+)
+
+const headerMounted = ref(false)
+
+const getData = async () => {
+  const {
+    data: { records }
+  } = await request.get(props.listUrl, {
+    params: {
+      current: 1,
+      size: 9999,
+      ...(props.watchField
+        ? { [props.watchField]: formData.value[props.watchField] }
+        : {}),
+      ...(state.roleId ? { [props.idFiled]: state.roleId } : {})
+    }
+  })
+  await nextTick()
+  render()
+  return records
+}
 // 打开弹窗
 const openDialog = async (row: any) => {
   state.roleId = row?.[props.idFiled]
   loading.value = true
-  headerMounted = false
   selected.value = selectedCache.value = []
+
   if (!props.lists) {
-    var {
-      data: { records }
-    } = await request.get(props.listUrl, {
-      params: {
-        current: 1,
-        size: 9999,
-        ...(props.watchField
-          ? { [props.watchField]: formData.value[props.watchField] }
-          : {}),
-        ...(state.roleId ? { [props.idFiled]: state.roleId } : {})
-      }
-    })
+    data.value = await getData()
   }
-  data.value = records || props.lists
 
   data.value.forEach(
     ({ selected: select, id }: Data) => select && selected.value.push(id)
   )
   selectedCache.value = [...selected.value]
   state.dialog.isShowDialog = true
-  render()
 }
 
 interface Options<T> {
@@ -213,12 +228,17 @@ const renderContent = (h: Function, options: Options<string>) => {
   const panels = document.querySelectorAll('.el-transfer-panel__list')
   // const columnWidth = values.length > 1 ? `w-1/${values.length}` : 'flex-grow'
   const columnWidth = `${(1 / values.length) * 100}%`
-  if (props.showHeader && panels.length && !headerMounted) {
+  if (
+    props.showHeader &&
+    panels.length &&
+    !headerMounted.value &&
+    values.length
+  ) {
     let head = document.createDocumentFragment()
-    panels.forEach((panel) => {
+    panels.forEach((panel, index) => {
       const ul = document.createElement('ul')
       ul.className =
-        'flex justify-between items-center pl-[49px] bg-[#ddd] sticky top-0 z-20'
+        'header flex justify-between items-center pl-[49px] bg-[#ddd] sticky top-0 z-20'
       values.forEach(({ label }) => {
         const li = document.createElement('li')
         li.textContent = label
@@ -227,9 +247,13 @@ const renderContent = (h: Function, options: Options<string>) => {
         head.appendChild(li)
       })
       ul.appendChild(head)
-      panel.insertBefore(ul, panel.children[0])
+      setTimeout(() => {
+        // !panel.contains(panel.getElementsByTagName('ul')[index]) &&
+        !panel.contains(panel.querySelector('.header')) &&
+          panel.insertBefore(ul, panel.children[0])
+      }, 0)
     })
-    headerMounted = true
+    headerMounted.value = true
   }
 
   const child = values.map(({ value }: any) =>
@@ -249,6 +273,15 @@ const renderContent = (h: Function, options: Options<string>) => {
 }
 const render = props.renderContent || renderContent
 
+const onRightChange = async () => {
+  headerMounted.value = false
+  const panels = document.querySelectorAll('.el-transfer-panel__list')
+  panels.forEach(async (panel) => {
+    await nextTick()
+    const ul = panel.querySelector('.header')
+    ul && panel?.insertBefore(ul, panel.children[0])
+  })
+}
 // 提交授权数据
 const onSubmit = async () => {
   // const menuIds = menuTree.value.getCheckedKeys().join(',').concat(',').concat(menuTree.value.getHalfCheckedKeys().join(','));
