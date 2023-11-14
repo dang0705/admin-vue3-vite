@@ -79,9 +79,7 @@ const actions = computed(() =>
 const handleAction = async ({
   label,
   confirm,
-  action = {
-    handler: null
-  },
+  action,
   type,
   body = props.actionBody,
   preview,
@@ -89,7 +87,7 @@ const handleAction = async ({
   download,
   to
 }: Actions) => {
-  let { params, handler, callback } = action
+  let { params, handler = null, callback } = action || {}
   if (to) {
     $router.push(to)
     return
@@ -98,7 +96,7 @@ const handleAction = async ({
   const successText =
     (confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！'
 
-  handler && (action.handler = props.handlers[handler as never] || handler)
+  handler = props.handlers[handler as never] || handler
 
   if (dialog) {
     emit('get-dialog-data', {
@@ -147,9 +145,11 @@ const handleAction = async ({
   try {
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
-      : helpers.isArray(params)
-      ? await handler(...(params as []))
-      : await handler(params)
+      : handler
+      ? helpers.isArray(params)
+        ? await handler(...(params as []))
+        : await handler(params)
+      : (() => {})()
     if (shouldRefresh) {
       refresh && refresh()
       useMessage().success(successText)

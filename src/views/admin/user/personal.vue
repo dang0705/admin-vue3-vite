@@ -22,7 +22,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="24" class="mb20">
-              <el-form-item label="用户名" prop="username">
+              <el-form-item label="账号" prop="username">
                 <el-input
                   v-model="formData.username"
                   clearable

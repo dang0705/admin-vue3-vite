@@ -29,7 +29,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="登录账户" prop="username">
+            <el-form-item label="登录账号" prop="username">
               <el-input
                 class="w100"
                 placeholder="用于登录的凭据，必须唯一"
@@ -62,7 +62,7 @@
 
           <!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.username')" prop="username">
-							<el-input :disabled="dataForm.userId !== ''" placeholder="请输入用户名" v-model="dataForm.username"></el-input>
+							<el-input :disabled="dataForm.userId !== ''" placeholder="请输入账号" v-model="dataForm.username"></el-input>
 						</el-form-item>
 					</el-col>-->
           <!--					<el-col :span="12" class="mb20">
@@ -225,7 +225,7 @@ const dataForm = reactive({
 const dataRules = reactive({
   //new
   loginAccount: [
-    { required: true, message: '登录账户不能为空', trigger: 'blur' }
+    { required: true, message: '登录账号不能为空', trigger: 'blur' }
   ],
   spAuthScope: [
     { required: true, message: '服务商授权不能为空', trigger: 'change' }
@@ -234,13 +234,13 @@ const dataRules = reactive({
     { required: true, message: '账户类型不能为空', trigger: 'change' }
   ],
   merchantAuthScope: [{ required: true, message: '客户授权不能为空' }],
-  // 用户名校验，不能为空 、长度 5-20、不能和已有数据重复
+  // 账号校验，不能为空 、长度 5-20、不能和已有数据重复
   username: [
-    { required: true, message: '用户名不能为空', trigger: 'blur' },
+    { required: true, message: '账号不能为空', trigger: 'blur' },
     {
       min: 5,
       max: 20,
-      message: '用户名称长度必须介于 5 和 20 之间',
+      message: '账号称长度必须介于 5 和 20 之间',
       trigger: 'blur'
     },
     {

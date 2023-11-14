@@ -43,7 +43,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
     meta: {
       isLink: '',
       isHide: false,
-      isKeepAlive: true,
+      isKeepAlive: false,
       isAffix: true,
       isIframe: false,
       icon: 'iconfont icon-shouye'
