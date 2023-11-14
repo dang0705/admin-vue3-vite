@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { deleteObj, readMark } from '/@/api/docs/message'
-import bgc from '/src/configuration/message-tag-definition'
+import bgc from '/@/configuration/message-tag-definition'
 const $router = useRouter()
 const selectObjs = ref([]) // 勾选的表格行
 const columns = [

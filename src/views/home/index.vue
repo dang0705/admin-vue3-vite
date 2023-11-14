@@ -93,45 +93,12 @@ import undertaker from '/@/assets/dashboard/undertaker.webp'
 import customerProportion from '/@/assets/dashboard/customerProportion.webp'
 
 defineOptions({ name: 'router.home' })
-const statusBgMap = {
-  0: {
-    bg: '#FEE8E2',
-    color: '#FF6826'
-  },
-  4: {
-    bg: '#FEE3E3',
-    color: '#FF0000'
-  },
-  1: {
-    bg: '#DBEAFF',
-    color: '#0065FF'
-  }
-}
+
 let remainDate = ref([])
-const getMessages = async () => {
-  remainDate.value = (await fetchList()).data.records.slice(0, 3)
-}
+const getMessages = async () =>
+  (remainDate.value = (await fetchList()).data.records.slice(0, 3))
+
 getMessages()
-const remainData = [
-  /* {
-    status: 0,
-    tag: '订单提醒',
-    label: '一张灵活用工订单需要处理',
-    showDetails: true
-  },
-  {
-    status: 4,
-    tag: '合同预警',
-    label: 'XXX公司的服务将于30天后到期，请及时处理',
-    showDetails: true
-  },
-  {
-    status: 1,
-    tag: '开票提醒',
-    label: 'XXX公司提交了发票申请，请及时处理',
-    showDetails: true
-  }*/
-]
 const icons = {
   clap,
   publish,
