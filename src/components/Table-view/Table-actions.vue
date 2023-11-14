@@ -18,10 +18,6 @@ interface Confirm {
   ask?: string
   done?: string
 }
-interface DialogAction {
-  name?: string
-  params?: unknown
-}
 interface Edit {
   name?: string // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
   params?: unknown // 回显的参数
@@ -29,7 +25,6 @@ interface Edit {
 interface Dialog {
   title?: string
   forms: [] // From-View的表单配置
-  action: DialogAction // 该配置不在Dialog组件, 属于为此处特别注入的属性
   edit?: Edit // 回显配置，说明同上
   // ..... others Dialog component props
 }

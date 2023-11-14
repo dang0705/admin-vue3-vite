@@ -108,6 +108,8 @@ interface BatchUploadRecordPage {
 ### Table-view 的 actions配置
 ```ts
 import { RouteItems } from '/@/types/global';
+import { submitObj } from '/@/api/core/settleBill';
+
 // 主配置
 interface Actions {
     label: string; // 按钮文案
@@ -138,12 +140,10 @@ interface Confirm {
 	done?: string;         // 成功后的自定义文案
 }
 
-
 // 弹框相关配置
 interface Dialog {
     title?: string;
     forms: [];    // From-View的表单配置
-    action: DialogAction; // 该配置不在Dialog组件, 属于为此处特别注入的属性
     edit?: Edit;  // 回显配置，说明同上
     // ..... others Dialog component props
 }
@@ -152,15 +152,8 @@ interface Edit {
     name?: string; // 除非此处显式定义,否则取api路径下本模块的 getObj 方法
     params?: unknown; // 回显的参数
 }
-interface DialogAction {
-	name?: string;          // api路径下 该模块 ts文件的对应方法名
-	params?: unknown|object;// 接口所需参数
-}
-
-
 
 // 以下为 src/views/core/settleBill/configurations/tabel-actions.ts 的具体使用案例
-import { submitObj } from '/@/api/core/settleBill';
 
 const auth = (auth: string) => `core_settleBill_${auth}`;
 
@@ -224,11 +217,11 @@ export default (row: any) => {
                         },
                     },
                 ],
-                action: {
-                    name: 'auditing',
-                    params: {
-                        billId: id,
-                    },
+            },
+            action: {
+                handler: 'auditing',
+                params: {
+                    billId: id,
                 },
             },
         },
