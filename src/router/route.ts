@@ -91,6 +91,7 @@ export const staticRoutes: Array<RouteRecordRaw> = [
     name: 'h5-contract',
     component: () => import('/@/views/h5/contract.vue'),
     meta: {
+      title: '正在返回',
       isAuth: false
     }
   },
