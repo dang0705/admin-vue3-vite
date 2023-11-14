@@ -1,5 +1,5 @@
-import thousandthDivision from '/@/utils/thousandth-division';
-import { rule } from '/@/utils/validate';
+import thousandthDivision from '/@/utils/thousandth-division'
+import { rule } from '/@/utils/validate'
 const formOne = [
   {
     control: 'UploadFile',
@@ -9,12 +9,12 @@ const formOne = [
       {
         required: true,
         message: '转账凭证不能为空',
-        trigger: 'blur',
-      },
+        trigger: 'blur'
+      }
     ],
     props: {
-      type: '60',
-    },
+      type: '60'
+    }
   },
   {
     control: 'InputPlus',
@@ -24,9 +24,9 @@ const formOne = [
       {
         required: true,
         message: '付款户名不能为空',
-        trigger: 'blur',
-      },
-    ],
+        trigger: 'blur'
+      }
+    ]
   },
   {
     control: 'InputPlus',
@@ -36,9 +36,9 @@ const formOne = [
       {
         required: true,
         message: '付款账号不能为空',
-        trigger: 'blur',
-      },
-    ],
+        trigger: 'blur'
+      }
+    ]
   },
   {
     control: 'InputPlus',
@@ -48,9 +48,9 @@ const formOne = [
       {
         required: true,
         message: '开户行不能为空',
-        trigger: 'blur',
-      },
-    ],
+        trigger: 'blur'
+      }
+    ]
   },
   {
     control: 'InputPlus',
@@ -60,13 +60,13 @@ const formOne = [
       {
         required: true,
         message: '开户行联行号不能为空',
-        trigger: 'blur',
+        trigger: 'blur'
       },
       {
         validator: rule.interbank,
-        trigger: 'blur',
-      },
-    ],
+        trigger: 'blur'
+      }
+    ]
   },
   {
     control: 'InputPlus',
@@ -76,20 +76,20 @@ const formOne = [
       {
         required: true,
         message: '付款金额不能为空',
-        trigger: 'blur',
-      },
+        trigger: 'blur'
+      }
     ],
     props: {
       type: 'number',
       append: '元'
-    },
-  },
-];
+    }
+  }
+]
 export const formsFunc = (reType: any, form: any) => {
   return computed(() => {
-    let forms = [];
+    let forms = []
     if (reType.value === 1) {
-      forms = formOne;
+      forms = formOne
     } else {
       forms = [
         {
@@ -98,8 +98,8 @@ export const formsFunc = (reType: any, form: any) => {
           label: '账户可用余额',
           value: thousandthDivision({ number: form.totalAmount }) + '元',
           props: {
-            disabled: true,
-          },
+            disabled: true
+          }
         },
         {
           control: 'InputPlus',
@@ -109,22 +109,22 @@ export const formsFunc = (reType: any, form: any) => {
             {
               required: true,
               message: '申请退款金额不能为空',
-              trigger: 'blur',
-            },
+              trigger: 'blur'
+            }
           ],
           props: {
             type: 'number',
             append: '元'
-          },
+          }
         },
         {
           control: 'InputPlus',
           key: 'receiptAccountName',
           label: '收款户名',
           props: {
-            disabled: true,
+            disabled: true
           },
-          value: form.merchantName,
+          value: form.merchantName
         },
         {
           control: 'el-select',
@@ -134,23 +134,23 @@ export const formsFunc = (reType: any, form: any) => {
             {
               required: true,
               message: '收款账号不能为空',
-              trigger: 'blur',
-            },
+              trigger: 'blur'
+            }
           ],
           // options: receiptAccountOptions.value,
-          slot: true,
+          slot: true
         },
         {
           control: 'InputPlus',
           key: 'receiptAccountBank',
           label: '开户行',
           props: {
-            disabled: true,
-          },
+            disabled: true
+          }
           // slot: true,
-        },
-      ];
+        }
+      ]
     }
-    return forms;
-  });
-};
+    return forms
+  })
+}
