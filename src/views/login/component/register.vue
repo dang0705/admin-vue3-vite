@@ -105,7 +105,7 @@ const state = reactive({
   isShowPassword: false,
   // 表单内容
   ruleForm: {
-    username: '', // 用户名
+    username: '', // 账号
     password: '', // 密码
     phone: '', // 手机号
     checked: '' // 是否同意条款
@@ -115,14 +115,14 @@ const state = reactive({
 // 表单验证规则
 const dataRules = reactive({
   username: [
-    { required: true, message: '用户名不能为空', trigger: 'blur' },
+    { required: true, message: '账号不能为空', trigger: 'blur' },
     {
       min: 5,
       max: 20,
-      message: '用户名称长度必须介于 5 和 20 之间',
+      message: '账号称长度必须介于 5 和 20 之间',
       trigger: 'blur'
     },
-    // 自定义方法验证用户名
+    // 自定义方法验证账号
     {
       validator: (rule, value, callback) => {
         validateUsername(rule, value, callback, false)
