@@ -1,5 +1,5 @@
-import { RouteRecordRaw } from 'vue-router';
-import { homePageRouteName } from '/@/configuration/routes';
+import { RouteRecordRaw } from 'vue-router'
+import { homePageRouteName } from '/@/configuration/routes'
 
 /**
  * 建议：路由 path 路径与文件夹名称相同，找文件可浏览器地址找，方便定位文件位置
@@ -19,16 +19,16 @@ import { homePageRouteName } from '/@/configuration/routes';
 
 // 扩展 RouteMeta 接口
 declare module 'vue-router' {
-	interface RouteMeta {
-		isLink?: string;
-		isHide?: boolean;
-		isAuth?: boolean;
-		isKeepAlive?: boolean;
-		isAffix?: boolean;
-		isIframe?: boolean;
-		roles?: string[];
-		icon?: string;
-	}
+  interface RouteMeta {
+    isLink?: string
+    isHide?: boolean
+    isAuth?: boolean
+    isKeepAlive?: boolean
+    isAffix?: boolean
+    isIframe?: boolean
+    roles?: string[]
+    icon?: string
+  }
 }
 
 /**
@@ -36,20 +36,20 @@ declare module 'vue-router' {
  * 前端添加路由，请在此处加
  */
 export const dynamicRoutes: Array<RouteRecordRaw> = [
-	{
-		path: '/home',
-		name: homePageRouteName,
-		component: () => import('/@/views/home/index.vue'),
-		meta: {
-			isLink: '',
-			isHide: false,
-			isKeepAlive: true,
-			isAffix: true,
-			isIframe: false,
-			icon: 'iconfont icon-shouye',
-		},
-	},
-	/*	{
+  {
+    path: '/home',
+    name: homePageRouteName,
+    component: () => import('/@/views/home/index.vue'),
+    meta: {
+      isLink: '',
+      isHide: false,
+      isKeepAlive: true,
+      isAffix: true,
+      isIframe: false,
+      icon: 'iconfont icon-shouye'
+    }
+  }
+  /*	{
 		path: '/personal',
 		name: 'router.personal',
 		component: () => import('/@/views/admin/user/personal.vue'),
@@ -57,66 +57,84 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 			isHide: true,
 		},
 	},*/
-];
+]
 
 /**
  * 定义静态路由（默认路由）
  */
 export const staticRoutes: Array<RouteRecordRaw> = [
-	{
-		path: '/login',
-		name: 'staticRoutes.login',
-		component: () => import('/@/views/login/index.vue'),
-		meta: {
-			isAuth: false,
-		},
-	},
-	{
-		path: '/theme-config',
-		name: 'theme-config',
-		component: () => import('/@/views/theme-config.vue'),
-		meta: {},
-	},
-	...(__isDev
-		? [
-				{
-					path: '/test',
-					name: 'test',
-					component: () => import('/@/views/Test.vue'),
-				},
-		  ]
-		: []),
-	{
-		path: '/h5-contract',
-		name: 'h5-contract',
-		component: () => import('/@/views/h5/contract.vue'),
-		meta: {
-			isAuth: false,
-		},
-	},
-];
+  {
+    path: '/login',
+    name: 'staticRoutes.login',
+    component: () => import('/@/views/login/index.vue'),
+    meta: {
+      isAuth: false
+    }
+  },
+  {
+    path: '/theme-config',
+    name: 'theme-config',
+    component: () => import('/@/views/theme-config.vue'),
+    meta: {}
+  },
+  ...(__isDev
+    ? [
+        {
+          path: '/test',
+          name: 'test',
+          component: () => import('/@/views/Test.vue')
+        }
+      ]
+    : []),
+  {
+    path: '/h5-contract',
+    name: 'h5-contract',
+    component: () => import('/@/views/h5/contract.vue'),
+    meta: {
+      isAuth: false
+    }
+  },
+  {
+    path: '/h5-privacyAgreement',
+    name: 'h5-privacyAgreement',
+    component: () => import('/@/views/h5/privacyAgreement.vue'),
+    meta: {
+      title: '隐私协议',
+      isAuth: false
+    }
+  },
+  {
+    path: '/h5-serviceAgreement',
+    name: 'h5-serviceAgreement',
+    component: () => import('/@/views/h5/serviceAgreement.vue'),
+    meta: {
+      title: '用户服务协议',
+      isAuth: false
+    }
+  }
+]
 
 /**
  * 定义404、401界面
  */
 export const notFoundAndNoPower = [
-	{
-		path: '/:path(.*)*',
-		name: 'staticRoutes.notFound',
-		component: () => import('/@/views/error/404.vue'),
-		meta: {
-			isHide: true,
-		},
-	},
-	{
-		path: '/401',
-		name: 'staticRoutes.noPower',
-		component: () => import('/@/views/error/401.vue'),
-		meta: {
-			isHide: true,
-		},
-	},
-];
+  {
+    path: '/:path(.*)*',
+    name: 'staticRoutes.notFound',
+    component: () => import('/@/views/error/404.vue'),
+    meta: {
+      isHide: true
+    }
+  },
+  {
+    path: '/401',
+    name: 'staticRoutes.noPower',
+    component: () => import('/@/views/error/401.vue'),
+    meta: {
+      isHide: true
+    }
+  }
+]
 
 /**
  *  基础性路由
@@ -124,14 +142,14 @@ export const notFoundAndNoPower = [
  * 所有节点都是挂载此节点下
  */
 export const baseRoutes: Array<RouteRecordRaw> = [
-	{
-		path: '/',
-		name: '/',
-		component: () => import('/@/layout/index.vue'),
-		redirect: '/home',
-		meta: {
-			isKeepAlive: true,
-		},
-		children: [],
-	},
-];
+  {
+    path: '/',
+    name: '/',
+    component: () => import('/@/layout/index.vue'),
+    redirect: '/home',
+    meta: {
+      isKeepAlive: true
+    },
+    children: []
+  }
+]
