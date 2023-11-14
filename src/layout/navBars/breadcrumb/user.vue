@@ -64,7 +64,7 @@
             userInfos.user.avatar ? baseURL + userInfos.user.avatar : avatar
           "
           class="layout-navbars-breadcrumb-user-link-photo mr5 w-[16px]" />
-        {{ userInfos.user.nickname || userInfos.user.username }}
+        {{ userInfos.user.name || userInfos.user.username }}
         <el-icon class="el-icon--right">
           <ele-ArrowDown />
         </el-icon>
