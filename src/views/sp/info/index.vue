@@ -73,7 +73,7 @@ const columns = [
     minWidth: 200
   },
   {
-    label: '法人手机号',
+    label: '法定代表人',
     prop: 'legalPersonName',
     minWidth: 200
   },
@@ -88,7 +88,7 @@ const columns = [
     minWidth: 80
   },
   {
-    label: '是否开启支付通道',
+    label: '是否已开通支付通道',
     prop: 'hasPaymentChannel',
     slot: true,
     minWidth: 300
