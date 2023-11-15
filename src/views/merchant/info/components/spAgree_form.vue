@@ -163,7 +163,7 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-show="form.feeCalculationMethod === '1'"
+          v-if="form.feeCalculationMethod === '1'"
           :span="12"
           class="mb20">
           <el-form-item label="平台服务费比例" prop="platformFeeRate">
@@ -175,7 +175,7 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-show="form.feeCalculationMethod === '2'"
+          v-if="form.feeCalculationMethod === '2'"
           :span="12"
           class="mb20">
           <el-form-item label="平台服务费固定值" prop="platformFeeFixed">
@@ -186,7 +186,10 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="12" class="mb20"></el-col>
+        <el-col
+          v-if="form.feeCalculationMethod"
+          :span="12"
+          class="mb20"></el-col>
 
         <el-col :span="12" class="mb20">
           <el-form-item label="管理费计算方式" prop="managementFeeMethod">
@@ -220,7 +223,7 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-show="
+          v-if="
             form.managementFeeMethod === '1' || form.managementFeeMethod === '3'
           "
           :span="12"
@@ -234,7 +237,7 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-show="
+          v-if="
             form.managementFeeMethod === '2' || form.managementFeeMethod === '3'
           "
           :span="12"
@@ -248,7 +251,7 @@
         </el-col>
 
         <el-col
-          v-show="
+          v-if="
             form.managementFeeMethod === '1' || form.managementFeeMethod === '2'
           "
           :span="12"
@@ -326,9 +329,12 @@ const userList = reactive([])
 //   }
 // ])
 // 定义字典
+interface FormData {
+  [key: string]: any // 添加索引签名
+}
 
 // 提交表单数据
-let form = reactive({
+let form = reactive<FormData>({
   merchantId: '',
   id: '',
   agreementName: '',
@@ -344,14 +350,14 @@ let form = reactive({
 
   feeCalculationMethod: '',
   platformInvoiceCategory: '',
-  platformFeeRate: 0,
-  platformFeeFixed: '',
+  platformFeeRate: undefined,
+  platformFeeFixed: undefined,
 
   managementFeeMethod: '',
   invoiceCategory: '',
-  managementFeeRate: 0,
-  managementFeeFixed: '',
-  businessInsurance: ''
+  managementFeeRate: undefined,
+  managementFeeFixed: undefined,
+  businessInsurance: undefined
 
   // feeRates: [],
 })
@@ -428,6 +434,9 @@ const openDialog = (id: string, type: any) => {
   // 重置表单数据
   nextTick(() => {
     dataFormRef.value?.resetFields()
+    Object.keys(form).forEach((key: any) => {
+      form[key] = undefined
+    })
   })
 
   // 获取merchantServiceAgreement信息

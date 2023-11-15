@@ -30,7 +30,7 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: [String, Number],
-    default: ''
+    default: undefined
   },
   disabled: {
     type: Boolean,
@@ -47,15 +47,17 @@ const props = defineProps({
   max: {
     type: [String, Number],
     default: 1000000000
-  },
-  min: {
-    type: [String, Number],
-    default: 0
   }
+  // min: {
+  //   type: [String, Number],
+  //   default: 0
+  // }
 })
 const value = computed({
   get: () => props.modelValue as string,
   set: (value: string) => {
+    console.log('value-12', value)
+
     emit('update:modelValue', value)
   }
 })
