@@ -24,7 +24,6 @@
           :on-submit="getDataList"
           :on-cancel="resetQuery"
           :validation="false"
-          :label-position="conditionForms.length > 3 ? 'left' : 'right'"
           submit-button-text="查询"
           cancel-button-text="重置">
           <template v-for="(_, slot) in $slots" #[slot]>

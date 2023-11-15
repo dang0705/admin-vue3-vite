@@ -42,6 +42,10 @@ const router = useRouter()
 const tabType = ref('任务结算单')
 const columns = [
   {
+    type: 'selection',
+    width: '40'
+  },
+  {
     prop: 'taskName',
     label: '任务名称',
     minWidth: 150

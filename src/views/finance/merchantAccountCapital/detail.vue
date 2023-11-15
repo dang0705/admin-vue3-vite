@@ -138,20 +138,21 @@ import {
   updateMerchantRechargeStatus,
   addMerchantRecharge
 } from '/@/api/finance/merchantRecharge'
+import indexThead from './configurations-detail/indexThead'
+import conditionForms from './configurations-detail/condition-forms'
+import { formsFunc } from '/@/views/finance/merchantAccountCapital/dynamic-forms'
 import { getSelectReceiptAccount, addObj } from '/@/api/finance/merchantRefund'
 import { getObj } from '/@/api/finance/merchantAccountCapital'
 import { useMessage, useMessageBox } from '/@/hooks/message'
 import thousandthDivision from '/@/utils/thousandth-division'
+import commonFunction from '/@/utils/commonFunction'
 const route: any = useRoute()
 const reType = ref(0)
 const show = ref(false)
 const merchantAccountCapitalRef = ref()
-import commonFunction from '/@/utils/commonFunction'
 const { copyText } = commonFunction()
 const { proxy } = getCurrentInstance()
-import indexThead from './configurations-detail/indexThead'
-import conditionForms from './configurations-detail/condition-forms'
-import { formsFunc } from '/@/views/finance/merchantAccountCapital/dynamic-forms'
+
 let dialogFormData = reactive({
   receiptAccountBank: '',
   payingAmount: undefined,
