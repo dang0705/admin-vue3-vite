@@ -181,13 +181,8 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.contactPhone')"
-              prop="contactPhone">
-              <InputPlus
-                :disabled="isDetail"
-                type="number"
-                v-model="form.contactPhone" />
+            <el-form-item label="联系人手机号" prop="contactPhone">
+              <InputPlus :disabled="isDetail" v-model="form.contactPhone" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -250,7 +245,6 @@
             <el-form-item prop="phoneNumber" label="企业电话">
               <InputPlus
                 :disabled="isDetail"
-                type="number"
                 v-model="form.phoneNumber"
                 placeholder="电话号码" />
             </el-form-item>
@@ -284,7 +278,6 @@
               prop="legalPersonMobile">
               <InputPlus
                 :disabled="isDetail"
-                type="number"
                 v-model="form.legalPersonMobile" />
             </el-form-item>
           </el-col>
@@ -335,10 +328,7 @@
             <el-form-item
               :label="$t('merchantInfo.taxManagerMobile')"
               prop="taxManagerMobile">
-              <InputPlus
-                :disabled="isDetail"
-                type="number"
-                v-model="form.taxManagerMobile" />
+              <InputPlus :disabled="isDetail" v-model="form.taxManagerMobile" />
             </el-form-item>
           </el-col>
 
@@ -382,10 +372,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item label="收件人手机号" prop="recipientMobile">
-              <InputPlus
-                :disabled="isDetail"
-                type="number"
-                v-model="form.recipientMobile" />
+              <InputPlus :disabled="isDetail" v-model="form.recipientMobile" />
             </el-form-item>
           </el-col>
 
@@ -516,7 +503,11 @@ const dataRules = ref({
     limitText({ title: '商户名称', min: 1 })
   ],
   socialCreditCode: [
-    { required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }
+    { required: true, message: '社会统一信用代码不能为空', trigger: 'blur' },
+    {
+      validator: rule.socialCode,
+      trigger: 'blur'
+    }
   ],
   industryLevel1: [
     { required: true, message: '行业一级不能为空', trigger: 'blur' }
@@ -634,7 +625,6 @@ const onSubmit = async () => {
     if (!form.id) {
       resetFields()
     }
-  } catch (err: any) {
   } finally {
     loading.value = false
   }
@@ -664,7 +654,7 @@ const getmerchantInfoData = (id: string) => {
 // };
 
 if (route.query.id) {
-  getmerchantInfoData(route.query.id)
+  getmerchantInfoData(route.query.id as string)
 }
 
 const industryLevel_option = computed(() => {

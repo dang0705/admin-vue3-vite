@@ -439,8 +439,8 @@ import { useMessage, useMessageBox } from '/@/hooks/message'
 import { getObj, addObj, putObj } from '/@/api/core/task'
 import { agreeList } from '/@/api/core/merchantServiceAgreement'
 import { getSpInfoList, getMerchantInfoList } from '/@/api/core/merchantInfo'
-import { rule } from '/@/utils/validate'
 import uploadBusinessType from '/@/enums/upload-business-type'
+import closeTagView from '/@/utils/close-tag-view'
 
 const ChinaArea = defineAsyncComponent(
   () => import('/@/components/ChinaArea/index.vue')
@@ -452,7 +452,6 @@ const chinaAreaRef = ref()
 const {
   task_type,
   task_unit,
-  is_need,
   gender_requirement,
   education,
   experience,
@@ -460,13 +459,11 @@ const {
 } = useDict(
   'task_type',
   'task_unit',
-  'is_need',
   'gender_requirement',
   'education',
   'experience',
   'task_undertaking_type'
 )
-import closeTagView from '/@/utils/close-tag-view'
 // 定义变量内容
 const merchantList = ref([])
 const spinfoList = ref([])
@@ -480,16 +477,16 @@ const props = defineProps({
     default: false
   }
 })
-const options = ref([
-  {
-    label: '是',
-    value: true
-  },
-  {
-    label: '否',
-    value: false
-  }
-])
+// const options = ref([
+//   {
+//     label: '是',
+//     value: true
+//   },
+//   {
+//     label: '否',
+//     value: false
+//   }
+// ])
 const dataFormRef = ref()
 const loading = ref(false)
 const agree_list = ref([])
