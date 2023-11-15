@@ -15,12 +15,12 @@
         <el-row class="pr-[48px] pl-[24px]" :gutter="24">
           <Divider title="基本信息" />
           <el-col :span="12" class="mb20">
-            <el-form-item label="服务商名称:" prop="spName">
+            <el-form-item label="服务商名称：" prop="spName">
               <InputPlus v-model="form.spName" :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="业务类型:" prop="busiType">
+            <el-form-item label="业务类型：" prop="busiType">
               <el-select v-model="form.busiType" :disabled="!!route.query.see">
                 <el-option
                   :key="index"
@@ -32,7 +32,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="银行账户:" prop="bankNumber">
+            <el-form-item label="银行账户：" prop="bankNumber">
               <InputPlus
                 v-model="form.bankNumber"
                 @input="inputVal"
@@ -41,13 +41,13 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="企业邮箱:" prop="email">
+            <el-form-item label="企业邮箱：" prop="email">
               <InputPlus v-model="form.email" :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="开户地:" prop="bankArea">
+            <el-form-item label="开户地：" prop="bankArea">
               <InputPlus
                 v-model="form.bankArea"
                 :disabled="!!route.query.see" />
@@ -55,7 +55,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="开户行:" prop="bankName">
+            <el-form-item label="开户行：" prop="bankName">
               <InputPlus
                 v-model="form.bankName"
                 :disabled="!!route.query.see" />
@@ -63,14 +63,14 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="社会统一信用代码:" prop="socialCreditCode">
+            <el-form-item label="社会统一信用代码：" prop="socialCreditCode">
               <InputPlus
                 v-model="form.socialCreditCode"
                 :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="营业执照:" prop="businessLicense">
+            <el-form-item label="营业执照：" prop="businessLicense">
               <UploadFile
                 :type="businessType"
                 v-model="form.businessLicense"
@@ -78,7 +78,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24" class="mb20">
-            <el-form-item label="经营范围:" prop="businessScope">
+            <el-form-item label="经营范围：" prop="businessScope">
               <InputPlus
                 type="textarea"
                 v-model="form.businessScope"
@@ -89,7 +89,7 @@
 
           <Divider title="税率设置" />
           <el-col :span="12" class="mb20">
-            <el-form-item label="个税计算方式:" prop="taxCalculationType">
+            <el-form-item label="个税计算方式：" prop="taxCalculationType">
               <el-select
                 v-model="form.taxCalculationType"
                 :disabled="!!route.query.see">
@@ -103,7 +103,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="增值税税率:" prop="valueAddedTaxRatio">
+            <el-form-item label="增值税税率：" prop="valueAddedTaxRatio">
               <div class="flex">
                 <el-input-number
                   v-model="form.valueAddedTaxRatio"
@@ -115,7 +115,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="单月上限:" prop="monthUpperLimit">
+            <el-form-item label="单月上限：" prop="monthUpperLimit">
               <div class="flex flex-1">
                 <el-input-number
                   v-model="form.monthUpperLimit"
@@ -127,7 +127,7 @@
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="个税税率:" prop="individualTaxRatios">
+            <el-form-item label="个税税率：" prop="individualTaxRatios">
               <IndividualTaxRatios
                 v-model="form.individualTaxRatios"
                 :forceDisabled="!!route.query.see" />
@@ -136,7 +136,7 @@
 
           <Divider title="法人信息" />
           <el-col :span="12" class="mb20">
-            <el-form-item label="法人姓名:" prop="legalPersonName">
+            <el-form-item label="法人姓名：" prop="legalPersonName">
               <InputPlus
                 v-model="form.legalPersonName"
                 :disabled="!!route.query.see" />
@@ -144,7 +144,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="法人手机号:" prop="legalPersonMobile">
+            <el-form-item label="法人手机号：" prop="legalPersonMobile">
               <InputPlus
                 v-model="form.legalPersonMobile"
                 :disabled="!!route.query.see" />
@@ -152,7 +152,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="法人身份证号:" prop="legalPersonIdCard">
+            <el-form-item label="法人身份证号：" prop="legalPersonIdCard">
               <InputPlus
                 v-model="form.legalPersonIdCard"
                 :disabled="!!route.query.see" />
@@ -162,7 +162,7 @@
           <el-col :span="12" class="mb20"></el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="法人身份证头像面:" prop="legalPersonPortrait">
+            <el-form-item label="法人身份证头像面：" prop="legalPersonPortrait">
               <UploadFile
                 :type="businessType"
                 v-model="form.legalPersonPortrait"
@@ -172,7 +172,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              label="法人身份证国徽面:"
+              label="法人身份证国徽面："
               prop="legalPersonNationalEmblem">
               <UploadFile
                 :type="businessType"
@@ -183,7 +183,7 @@
 
           <Divider title="办税人信息" />
           <el-col :span="12" class="mb20">
-            <el-form-item label="办税人姓名:" prop="taxManagerName">
+            <el-form-item label="办税人姓名：" prop="taxManagerName">
               <InputPlus
                 v-model="form.taxManagerName"
                 :disabled="!!route.query.see" />
@@ -191,7 +191,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="办税人手机号:" prop="taxManagerMobile">
+            <el-form-item label="办税人手机号：" prop="taxManagerMobile">
               <InputPlus
                 v-model="form.taxManagerMobile"
                 :disabled="!!route.query.see" />
@@ -199,7 +199,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="办税人身份证号:" prop="taxManagerIdCard">
+            <el-form-item label="办税人身份证号：" prop="taxManagerIdCard">
               <InputPlus
                 v-model="form.taxManagerIdCard"
                 :disabled="!!route.query.see" />
@@ -209,7 +209,9 @@
           <el-col :span="12" class="mb20"></el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="办税人身份证头像面:" prop="taxManagerPortrait">
+            <el-form-item
+              label="办税人身份证头像面："
+              prop="taxManagerPortrait">
               <UploadFile
                 :type="businessType"
                 v-model="form.taxManagerPortrait"
@@ -219,7 +221,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              label="办税人身份证国徽面:"
+              label="办税人身份证国徽面："
               prop="taxManagerNationalEmblem">
               <UploadFile
                 :type="businessType"
@@ -237,7 +239,7 @@
             <el-row>
               <el-col :span="12" class="mb20">
                 <el-form-item
-                  label="资质名称:"
+                  label="资质名称："
                   :prop="`qualifications[${index}].qualificationName`"
                   :rules="[
                     {
@@ -257,7 +259,7 @@
 
               <el-col :span="12" class="mb20">
                 <el-form-item
-                  label="资质文件:"
+                  label="资质文件："
                   :prop="`qualifications[${index}].filePath`"
                   :rules="[
                     {

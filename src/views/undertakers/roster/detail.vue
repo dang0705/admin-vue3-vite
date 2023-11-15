@@ -11,35 +11,35 @@
       :model="form"
       :rules="dataRules && false"
       formDialogRef
-      label-width="150px"
+      label-width="160px"
       v-loading="loading">
       <el-row :gutter="24">
         <el-col :span="12" class="mb20">
-          <el-form-item label="姓名:" prop="undertakerName">
+          <el-form-item label="姓名：" prop="undertakerName">
             <el-input v-model="form.undertakerName" placeholder="" disabled />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="证件号码:" prop="undertakerCard">
+          <el-form-item label="证件号码：" prop="undertakerCard">
             <el-input v-model="form.undertakerCard" placeholder="" disabled />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="手机号码:" prop="undertakerPhone">
+          <el-form-item label="手机号码：" prop="undertakerPhone">
             <el-input v-model="form.undertakerPhone" placeholder="" disabled />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="银行卡号:" prop="bankNumber">
+          <el-form-item label="银行卡号：" prop="bankNumber">
             <el-input v-model="form.bankNumber" placeholder="" disabled />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="开户行:" prop="bankName">
+          <el-form-item label="开户行：" prop="bankName">
             <el-input v-model="form.bankName" placeholder="" disabled />
           </el-form-item>
         </el-col>
@@ -54,7 +54,7 @@
 
         <el-col :span="12" class="mb20">
           <el-form-item
-            label="是否银行四要素验证:"
+            label="是否银行四要素验证："
             prop="isBankFourEssentialFactor">
             <el-select
               placeholder=""
@@ -70,7 +70,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="性别:" prop="undertakerSex">
+          <el-form-item label="性别：" prop="undertakerSex">
             <el-select placeholder="" v-model="form.undertakerSex" disabled>
               <el-option
                 :key="index"
@@ -82,13 +82,13 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="年龄:" prop="undertakerAge">
+          <el-form-item label="年龄：" prop="undertakerAge">
             <el-input v-model="form.undertakerAge" placeholder="" disabled />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="学历:" prop="undertakerEducation">
+          <el-form-item label="学历：" prop="undertakerEducation">
             <el-select
               placeholder=""
               v-model="form.undertakerEducation"
@@ -103,7 +103,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="民族:" prop="undertakerClanName">
+          <el-form-item label="民族：" prop="undertakerClanName">
             <el-input
               v-model="form.undertakerClanName"
               placeholder=""
@@ -112,7 +112,7 @@
         </el-col>
 
         <el-col :span="24" class="mb20">
-          <el-form-item label="参加工作时间:" prop="workTime">
+          <el-form-item label="参加工作时间：" prop="workTime">
             <el-input v-model="form.workTime" placeholder="" disabled />
           </el-form-item>
         </el-col>
@@ -127,7 +127,7 @@
         </el-col>
 
         <el-col :span="24" class="mb20">
-          <el-form-item label="是否存在生效协议:" prop="spName">
+          <el-form-item label="是否存在生效协议：" prop="spName">
             <span v-for="(_, i) in form.spList" :key="i">
               {{ _.isEffectiveContract === '1' ? '是' : '否' }}
               <span v-if="i != form.spList.length - 1">,</span>
@@ -136,7 +136,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="身份证正面:" prop="undertakerPortrait">
+          <el-form-item label="身份证正面：" prop="undertakerPortrait">
             <UploadFile
               v-if="form.undertakerPortrait.length > 0"
               :type="businessType"
@@ -146,7 +146,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="身份证反面:" prop="undertakerNationalEmblem">
+          <el-form-item label="身份证反面：" prop="undertakerNationalEmblem">
             <UploadFile
               v-if="form.undertakerNationalEmblem.length > 0"
               :type="businessType"
