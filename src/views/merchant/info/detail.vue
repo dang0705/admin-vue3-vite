@@ -3,9 +3,7 @@
     <div class="layout-padding-auto layout-padding-view">
       <el-tabs style="min-height: 300px" class="demo-tabs">
         <el-tab-pane label="商户信息">
-          <!-- <merchantInfo-view /> -->
           <merchantInfo-form :isDetail="true" />
-          <!-- <merchantInfo-detail :isDetail="true" /> -->
         </el-tab-pane>
         <el-tab-pane lazy label="服务协议">
           <sp-agree />
@@ -19,13 +17,11 @@
 </template>
 
 <script setup lang="ts">
-// const merchantInfoView = defineAsyncComponent(() => import('./components/formView.vue'));
-const merchantInfoForm = defineAsyncComponent(
+const MerchantInfoForm = defineAsyncComponent(
   () => import('./components/form.vue')
 )
-// const merchantInfoDetail = defineAsyncComponent(() => import('./components/formDetail.vue'));
-const spAgree = defineAsyncComponent(() => import('./components/spAgree.vue'))
-const payExit = defineAsyncComponent(() => import('./components/payExit.vue'))
+const SpAgree = defineAsyncComponent(() => import('./components/spAgree.vue'))
+const PayExit = defineAsyncComponent(() => import('./components/payExit.vue'))
 </script>
 <script lang="ts">
 export default {

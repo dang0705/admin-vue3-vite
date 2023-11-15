@@ -10,12 +10,17 @@
       {{ unit }}
     </div>
   </div>
-  <el-input v-else v-bind="$props" v-model="value">
-    <template v-if="append" #append>{{ append }}</template>
-    <template v-for="(_, slot) in $slots" #[slot]>
-      <slot :name="slot" />
-    </template>
-  </el-input>
+  <div v-else class="flex w-[100%]">
+    <el-input-number
+      class="flex-1"
+      :max="max"
+      :controls="controls"
+      v-bind="$props"
+      v-model="value"></el-input-number>
+    <div class="com_group__append group__append" v-if="unit">
+      {{ unit }}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -35,9 +40,17 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  append: {
-    type: String,
-    default: ''
+  controls: {
+    type: Boolean,
+    default: false
+  },
+  max: {
+    type: [String, Number],
+    default: 1000000000
+  },
+  min: {
+    type: [String, Number],
+    default: 0
   }
 })
 const value = computed({
@@ -59,5 +72,27 @@ const value = computed({
     line-height: 22px;
     word-break: break-all;
   }
+}
+.com_group__append {
+  background-color: var(--el-fill-color-light);
+  color: var(--el-color-info);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  border-radius: var(--el-input-border-radius);
+  padding: 0 20px;
+  white-space: nowrap;
+  min-width: 54px;
+}
+.group__append {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow:
+    0 1px 0 0 var(--el-border-color) inset,
+    0 -1px 0 0 var(--el-border-color) inset,
+    -1px 0 0 0 var(--el-border-color) inset;
 }
 </style>
