@@ -83,7 +83,7 @@
                 :key="index"
                 :label="item.label"
                 :value="item.value"
-                v-for="(item, index) in education"></el-option>
+                v-for="(item, index) in education_requirement"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -152,7 +152,10 @@ const msgVisible = ref(false)
 const msgData = ref('')
 const spinfoList = ref([]) as array
 // 定义字典
-const { nation, education } = useDict('nation', 'education')
+const { nation, education_requirement } = useDict(
+  'nation',
+  'education_requirement'
+)
 // 提交表单数据
 const form = reactive({
   id: '',
