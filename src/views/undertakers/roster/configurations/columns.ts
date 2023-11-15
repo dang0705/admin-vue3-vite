@@ -36,6 +36,16 @@ export default (batchMap) => [
     slot: true
   },
   {
+    label: '开户行',
+    prop: 'bankName',
+    minWidth: 150
+  },
+  {
+    label: '银行卡号',
+    prop: 'bankNumber',
+    minWidth: 200
+  },
+  {
     label: '服务商',
     prop: 'spList',
     minWidth: 180,
