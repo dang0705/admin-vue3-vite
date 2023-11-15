@@ -3,7 +3,6 @@ const auth = (auth: string) => `core_task_${auth}`
 export default ({ appointRef, addUnderTakerRef, callback }: any) => {
   return (row: any) => {
     const { status, id, auditStatus } = row
-    console.log('appointRef', appointRef)
 
     const handleAssign = () => {
       appointRef.value.openDialog(row)

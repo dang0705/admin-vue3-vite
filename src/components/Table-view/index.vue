@@ -9,11 +9,11 @@
       <slot
         name="tableTop"
         v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
-      <TabView
+      <Tab-view
         v-if="isTab"
-        @toggleTab="toggleTab"
+        :value="tabValue"
         :tabs="state.countResp"
-        v-model="currentTab" />
+        @get-value="handleTabClick" />
       <div class="mb8 w-full">
         <Form-view
           v-if="conditionForms.length"
@@ -134,9 +134,10 @@ import tableViewProps from './props'
 import thousandthDivision from '/@/utils/thousandth-division'
 import TableActions from '/@/components/Table-view/Table-actions.vue'
 import apis from '/@/api'
-const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
-const emit = defineEmits(['update:modelValue', 'get-tab-label'])
 defineOptions({ name: 'TableView' })
+
+const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
+const emit = defineEmits(['update:modelValue', 'get-tab-value'])
 const props = defineProps(tableViewProps)
 const showDialog = ref(false)
 const _dialog = ref({})
@@ -157,7 +158,7 @@ const onDialogSubmit = async () => {
   const { useMessage } = await import('/@/hooks/message')
   useMessage().success(_dialog.value.successText)
 }
-const getDialogData = async (dialog) => {
+const getDialogData = async (dialog: any) => {
   showDialog.value = true
   _dialog.value = dialog
   if (dialog.edit) {
@@ -179,7 +180,6 @@ const delObj: any = computed(
 
 const showSearch = ref(true)
 const params = computed(() => props.params)
-const currentTab = ref('')
 const state: BasicTableProps = reactive<BasicTableProps>({
   pageList: fetchList,
   ...(props.staticQuery
@@ -189,7 +189,8 @@ const state: BasicTableProps = reactive<BasicTableProps>({
         }
       }
     : {}),
-  createdIsNeed: props.createdIsNeed
+  tabsAuth: props.tabsAuth as string[],
+  createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
   // ...(props.isTab
   // 	? {
   // 			props: {
@@ -224,7 +225,6 @@ const exportExcel = () => {
     props.downBlobFileName
   )
 }
-
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
@@ -235,28 +235,21 @@ const onSelectionChange = (item: []) => {
     : item.map(({ [props.selectMainKey]: id }: Record<string, string>) => id)
   emit('update:modelValue', selectObjs.value)
 }
-
 //清空搜索条件;
 const resetQuery = () => {
   state.queryForm = {
-    ...props.staticQuery
+    ...props.staticQuery,
+    ...(props.isTab && state.countResp?.length
+      ? { [state.countResp[0].attributeName]: tabValue.value }
+      : {})
   }
   selectObjs.value = []
   getDataList()
 }
 
 provide('refresh', resetQuery)
-watch(
-  () => currentTab.value,
-  (currentTab) => emit('get-tab-label', currentTab)
-)
-const toggleTab = (item: any) => {
-  let pro = item.attributeName
-  Object.assign(state.queryForm, { [pro]: item.attributeVal })
-  getDataList()
-}
 
-const tableCellFormatter = (row, column, cellValue, index) => {
+const tableCellFormatter = (row, column, cellValue) => {
   if (column.label?.includes('(元)')) {
     return cellValue >= 0 && cellValue
       ? `￥${thousandthDivision({ number: cellValue })}`
@@ -264,7 +257,6 @@ const tableCellFormatter = (row, column, cellValue, index) => {
   }
   return cellValue
 }
-
 /**
  * @description  确认弹框
  * @param confirm {string}    确认文案
@@ -286,14 +278,32 @@ const confirm = async ({
     await fn(params)
     getDataList()
     useMessage().success(success)
-  } catch (err: any) {
-    Promise.reject(err)
-  }
+  } catch (err: any) {}
 }
+const tabValue = ref('')
+const getListByTab = (key: string, value: string) => {
+  Object.assign(state.queryForm, { [key]: value })
+  emit('get-tab-value', value)
+  getDataList()
+}
+const handleTabClick = (value: string) => {
+  tabValue.value = value
+  getListByTab(state.countResp?.[0]?.attributeName, value)
+}
+
+const catchHistoryTabState = () => {
+  if (!history.state.tabKey && !history.state.tabValue) return
+  const { tabKey, tabValue: val } = history.state
+  getListByTab(tabKey as string, val)
+  tabValue.value = val
+  history.state.tabKey = history.state.tabValue = null
+}
+onMounted(catchHistoryTabState)
 // 暴露变量
 defineExpose({
   resetQuery
 })
+
 // 接受外部强刷页面的钩子
-$refreshList(resetQuery)
+$refreshList(resetQuery, catchHistoryTabState)
 </script>

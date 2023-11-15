@@ -9,7 +9,7 @@ const props = defineProps({
     default: () => ({})
   }
 })
-
+const noQueryLabels = ['商户', '服务商']
 const localData = ref([])
 const loading = ref(false)
 const data = computed(() =>
@@ -38,7 +38,7 @@ onMounted(async () => {
     <slot />
     <ul class="flex min-h-[68px]">
       <li
-        v-for="({ label, value, attributeVal }, index) in data"
+        v-for="({ label, value, attributeVal, attributeName }, index) in data"
         :class="[
           'flex',
           'flex-col',
@@ -59,7 +59,9 @@ onMounted(async () => {
           @click="
             $router.push({
               path: item.routes ? item.routes[index] : item.route,
-              state: { tabLabel: label }
+              ...(noQueryLabels.includes(label)
+                ? {}
+                : { state: { tabValue: attributeVal, tabKey: attributeName } })
             })
           " />
       </li>

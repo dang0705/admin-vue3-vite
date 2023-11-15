@@ -1,19 +1,23 @@
 <template>
   <TableView
     :columns="columns"
-    isTab
-    @get-tab-label="getTabLabel"
-    module="core/settleBillRecord.ts"
     :condition-forms="conditionForms"
+    :tabs-auth="[
+      'core_settleBillRecord_task_view',
+      'core_settleBillRecord_sp_view'
+    ]"
     :exportAuth="
-      tabType === '任务结算单'
+      tabType === '20' //  '20' means 任务结算单
         ? 'core_settleBillRecord_task_export'
         : tabType === '服务结算单'
         ? 'core_settleBillRecord_sp_export'
         : ''
     "
     downBlobFileUrl="xxx"
-    labelWidth="120px">
+    labelWidth="120px"
+    isTab
+    module="core/settleBillRecord"
+    @get-tab-value="tabType = $event">
     <!-- <template #top-bar="{ otherInfo }">
 			<el-button @click="handleBtn" style="margin-right: 24px" icon="download" type="primary" class="ml10"> 批量导出 </el-button>
 		</template> -->
@@ -182,10 +186,7 @@ const conditionForms = [
 // const handleBtn = () => {
 //   useMessage().wraning('功能正在开发, 请等待~')
 // }
-const getTabLabel = (type: string) => {
-  tabType.value = type
-  console.log('tabType', tabType.value)
-}
+
 const handleAction = async (type: string, row: any) => {
   switch (type) {
     case 'view':

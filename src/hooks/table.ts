@@ -33,6 +33,8 @@ export interface BasicTableProps {
   ascs?: string[]
   // props属性对象，类型为any
   props?: any
+  // permissions of tabs
+  tabsAuth?: string[]
 }
 
 /**
@@ -154,6 +156,11 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         }
         state.dataList = list
         state.pagination!.total = total
+        state.tabsAuth?.length &&
+          res.data.countResp.forEach(
+            (_: any, index: number, arr: any[]) =>
+              (arr[index].auth = (state.tabsAuth as string[])[index] as string)
+          )
         state.countResp = state.isPage ? res.data.countResp : []
         state.otherInfo = state.isPage ? res.data : {}
       } catch (err: any) {
