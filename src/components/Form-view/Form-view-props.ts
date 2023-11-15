@@ -93,10 +93,6 @@ export default {
     type: [String, Number],
     default: 120
   },
-  labelPosition: {
-    type: String,
-    default: 'right'
-  },
   show: {
     type: Boolean,
     default: null
