@@ -5,12 +5,7 @@
       :model="state.queryForm"
       @keyup.enter="getDataList"
       ref="queryRef">
-      <!-- <el-form-item :label="$t('merchantInfo.spList')" prop="spList">
-				<el-select placeholder="请选择" clearable v-model="state.queryForm.spList">
-					<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in merchant_status" />
-				</el-select>
-			</el-form-item> -->
-      <el-form-item :label="$t('merchantInfo.spList')" prop="spId">
+      <el-form-item :label="$t('merchantInfo.spList') + '：'" prop="spId">
         <sp-select v-model="state.queryForm.spId" platform />
       </el-form-item>
       <el-form-item>
@@ -106,7 +101,7 @@
       label-width="140px">
       <el-row :gutter="24">
         <el-col :span="24" class="mb20">
-          <el-form-item label="服务商" prop="spId">
+          <el-form-item label="服务商：" prop="spId">
             <sp-select
               platform
               v-model="form.spId"
@@ -114,7 +109,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="24" class="mb20">
-          <el-form-item label="支付通道" prop="paymentChannelId">
+          <el-form-item label="支付通道：" prop="paymentChannelId">
             <el-select clearable v-model="form.paymentChannelId">
               <el-option
                 :key="item.id"

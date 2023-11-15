@@ -10,16 +10,16 @@
       :model="form"
       :rules="dataRules"
       formDialogRef
-      label-width="150px">
+      label-width="165px">
       <el-row :gutter="24">
         <el-col :span="12" class="mb20">
-          <el-form-item label="服务协议名称" prop="agreementName">
+          <el-form-item label="服务协议名称：" prop="agreementName">
             <InputPlus :disabled="isDetail" v-model="form.agreementName" />
           </el-form-item>
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="服务商" prop="spId">
+          <el-form-item label="服务商：" prop="spId">
             <el-select :disabled="isDetail" clearable v-model="form.spId">
               <el-option
                 :key="item.id"
@@ -31,7 +31,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="服务负责人" prop="serviceManager">
+          <el-form-item label="服务负责人：" prop="serviceManager">
             <el-select
               :disabled="isDetail"
               clearable
@@ -52,7 +52,7 @@
 					</el-form-item>
 				</el-col> -->
         <el-col :span="12" class="mb20">
-          <el-form-item label="要求上传任务成果" prop="isUploadAchievement">
+          <el-form-item label="要求上传任务成果：" prop="isUploadAchievement">
             <el-select
               :disabled="isDetail"
               clearable
@@ -67,7 +67,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="要求电子签署" prop="isElectronicSignature">
+          <el-form-item label="要求电子签署：" prop="isElectronicSignature">
             <el-select
               :disabled="isDetail"
               clearable
@@ -81,7 +81,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12" class="mb20">
-          <el-form-item label="要求先款后票" prop="paymentBeforeInvoice">
+          <el-form-item label="要求先款后票：" prop="paymentBeforeInvoice">
             <el-select
               :disabled="isDetail"
               clearable
@@ -96,7 +96,7 @@
         </el-col>
         <!-- <el-col :span="12" class="mb20"></el-col> -->
         <el-col :span="12" class="mb20">
-          <el-form-item label="起始时间" prop="startTime">
+          <el-form-item label="起始时间：" prop="startTime">
             <el-date-picker
               :disabled="isDetail"
               type="date"
@@ -107,7 +107,7 @@
         </el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="终止时间" prop="endTime">
+          <el-form-item label="终止时间：" prop="endTime">
             <el-date-picker
               :disabled="isDetail"
               type="date"
@@ -118,7 +118,7 @@
         </el-col>
 
         <el-col :span="24" class="mb20">
-          <el-form-item label="企业上传附件" prop="uploadAttachment">
+          <el-form-item label="企业上传附件：" prop="uploadAttachment">
             <UploadFile
               :disabled="isDetail"
               fileType="file"
@@ -130,7 +130,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12" class="mb20">
-          <el-form-item label="平台服务费计算方式" prop="feeCalculationMethod">
+          <el-form-item
+            label="平台服务费计算方式："
+            prop="feeCalculationMethod">
             <el-select
               :disabled="isDetail"
               clearable
@@ -145,7 +147,7 @@
         </el-col>
         <el-col :span="12" class="mb20">
           <el-form-item
-            label="平台服务费开票类目"
+            label="平台服务费开票类目："
             prop="platformInvoiceCategory">
             <el-select
               collapse-tags
@@ -166,7 +168,7 @@
           v-if="form.feeCalculationMethod === '1'"
           :span="12"
           class="mb20">
-          <el-form-item label="平台服务费比例" prop="platformFeeRate">
+          <el-form-item label="平台服务费比例：" prop="platformFeeRate">
             <InputNumber
               :max="100"
               unit="%"
@@ -178,7 +180,7 @@
           v-if="form.feeCalculationMethod === '2'"
           :span="12"
           class="mb20">
-          <el-form-item label="平台服务费固定值" prop="platformFeeFixed">
+          <el-form-item label="平台服务费固定值：" prop="platformFeeFixed">
             <InputNumber
               unit="元"
               :disabled="isDetail"
@@ -192,7 +194,7 @@
           class="mb20"></el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="管理费计算方式" prop="managementFeeMethod">
+          <el-form-item label="管理费计算方式：" prop="managementFeeMethod">
             <el-select
               :disabled="isDetail"
               clearable
@@ -206,7 +208,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12" class="mb20">
-          <el-form-item label="业务费开票类目" prop="invoiceCategory">
+          <el-form-item label="业务费开票类目：" prop="invoiceCategory">
             <el-select
               collapse-tags
               collapse-tags-tooltip
@@ -228,7 +230,7 @@
           "
           :span="12"
           class="mb20">
-          <el-form-item label="管理费比例" prop="managementFeeRate">
+          <el-form-item label="管理费比例：" prop="managementFeeRate">
             <InputNumber
               :disabled="isDetail"
               :max="100"
@@ -242,7 +244,7 @@
           "
           :span="12"
           class="mb20">
-          <el-form-item label="管理费固定值" prop="managementFeeFixed">
+          <el-form-item label="管理费固定值：" prop="managementFeeFixed">
             <InputNumber
               :disabled="isDetail"
               unit="元"
@@ -258,7 +260,7 @@
           class="mb20"></el-col>
 
         <el-col :span="12" class="mb20">
-          <el-form-item label="商业保险费" prop="businessInsurance">
+          <el-form-item label="商业保险费：" prop="businessInsurance">
             <InputNumber
               :disabled="isDetail"
               unit="元"

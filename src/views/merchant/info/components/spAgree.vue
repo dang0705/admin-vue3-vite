@@ -5,7 +5,7 @@
       :model="state.queryForm"
       @keyup.enter="getDataList"
       ref="queryRef">
-      <el-form-item :label="$t('merchantInfo.spList')" prop="spId">
+      <el-form-item :label="$t('merchantInfo.spList') + '：'" prop="spId">
         <el-select clearable v-model="state.queryForm.spId">
           <el-option
             :key="item.id"
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        :label="$t('merchantInfo.feeCalculationMethod')"
+        :label="$t('merchantInfo.feeCalculationMethod') + '：'"
         prop="feeCalculationMethod">
         <el-select clearable v-model="state.queryForm.feeCalculationMethod">
           <el-option
@@ -26,7 +26,7 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        :label="$t('merchantInfo.isUploadAchievement')"
+        :label="$t('merchantInfo.isUploadAchievement') + '：'"
         prop="isUploadAchievement">
         <el-select clearable v-model="state.queryForm.isUploadAchievement">
           <el-option

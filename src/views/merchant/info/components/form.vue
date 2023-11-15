@@ -14,7 +14,7 @@
         <el-row class="paddcus" :gutter="24">
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.merchantName')"
+              :label="$t('merchantInfo.merchantName') + '：'"
               prop="merchantName">
               <InputPlus :disabled="isDetail" v-model="form.merchantName" />
             </el-form-item>
@@ -58,7 +58,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.enterpriseType')"
+              :label="$t('merchantInfo.enterpriseType') + '：'"
               prop="enterpriseType">
               <el-select
                 :disabled="isDetail"
@@ -76,7 +76,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.enterpriseScale')"
+              :label="$t('merchantInfo.enterpriseScale') + '：'"
               prop="enterpriseScale">
               <el-select
                 :disabled="isDetail"
@@ -93,7 +93,9 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
+            <el-form-item
+              :label="$t('merchantInfo.area') + '：'"
+              prop="areaDatas">
               <ChinaArea
                 :disabled="isDetail"
                 ref="chinaAreaRef"
@@ -103,14 +105,16 @@
           </el-col>
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.socialCreditCode')"
+              :label="$t('merchantInfo.socialCreditCode') + '：'"
               prop="socialCreditCode">
               <InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
             </el-form-item>
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item :label="$t('merchantInfo.address')" prop="address">
+            <el-form-item
+              :label="$t('merchantInfo.address') + '：'"
+              prop="address">
               <InputPlus
                 :disabled="isDetail"
                 v-model="form.address"
@@ -122,7 +126,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.entryDate')"
+              :label="$t('merchantInfo.entryDate') + '：'"
               prop="entryDate">
               <el-date-picker
                 :disabled="isDetail"
@@ -133,7 +137,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="企业邮箱" prop="enterpriseMailbox">
+            <el-form-item label="企业邮箱：" prop="enterpriseMailbox">
               <InputPlus
                 :disabled="isDetail"
                 v-model="form.enterpriseMailbox" />
@@ -142,7 +146,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.businessLicense')"
+              :label="$t('merchantInfo.businessLicense') + '：'"
               prop="businessLicense">
               <UploadFile
                 :disabled="isDetail"
@@ -152,7 +156,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('merchantInfo.logo')" prop="logo">
+            <el-form-item :label="$t('merchantInfo.logo') + '：'" prop="logo">
               <UploadFile
                 :disabled="isDetail"
                 :type="businessType"
@@ -162,7 +166,7 @@
 
           <el-col :span="24" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.businessScope')"
+              :label="$t('merchantInfo.businessScope') + '：'"
               prop="businessScope">
               <InputPlus
                 :disabled="isDetail"
@@ -174,14 +178,14 @@
           </el-col>
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.contactName')"
+              :label="$t('merchantInfo.contactName') + '：'"
               prop="contactName">
               <InputPlus :disabled="isDetail" v-model="form.contactName" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="联系人手机号" prop="contactPhone">
+            <el-form-item label="联系人手机号：" prop="contactPhone">
               <InputPlus :disabled="isDetail" v-model="form.contactPhone" />
             </el-form-item>
           </el-col>
@@ -190,7 +194,7 @@
         <el-row class="paddcus" :gutter="24">
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxRegistrationNumber')"
+              :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
               prop="taxRegistrationNumber">
               <InputPlus readonly v-model="form.socialCreditCode" />
               <!-- <span>{{ form.socialCreditCode }}</span> -->
@@ -198,7 +202,9 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('merchantInfo.taxType')" prop="taxType">
+            <el-form-item
+              :label="$t('merchantInfo.taxType') + '：'"
+              prop="taxType">
               <el-select
                 :disabled="isDetail"
                 class="w100"
@@ -215,7 +221,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxBankNumber')"
+              :label="$t('merchantInfo.taxBankNumber') + '：'"
               prop="taxBankNumber">
               <InputPlus :disabled="isDetail" v-model="form.taxBankNumber" />
             </el-form-item>
@@ -223,14 +229,14 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxBankName')"
+              :label="$t('merchantInfo.taxBankName') + '：'"
               prop="taxBankName">
               <InputPlus :disabled="isDetail" v-model="form.taxBankName" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="开户行联行号" prop="taxJointBankNumber">
+            <el-form-item label="开户行联行号：" prop="taxJointBankNumber">
               <InputPlus
                 :disabled="isDetail"
                 v-model="form.taxJointBankNumber" />
@@ -242,7 +248,7 @@
 							<InputPlus :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
 						</el-form-item>
 						&nbsp;&nbsp;-&nbsp;&nbsp; -->
-            <el-form-item prop="phoneNumber" label="企业电话">
+            <el-form-item prop="phoneNumber" label="企业电话：">
               <InputPlus
                 :disabled="isDetail"
                 v-model="form.phoneNumber"
@@ -251,7 +257,7 @@
           </el-col>
           <el-col :span="24" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxBankArea')"
+              :label="$t('merchantInfo.taxBankArea') + '：'"
               prop="taxBankArea">
               <InputPlus
                 :disabled="isDetail"
@@ -266,7 +272,7 @@
         <el-row class="paddcus" :gutter="24">
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.legalPersonName')"
+              :label="$t('merchantInfo.legalPersonName') + '：'"
               prop="legalPersonName">
               <InputPlus :disabled="isDetail" v-model="form.legalPersonName" />
             </el-form-item>
@@ -274,7 +280,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.legalPersonMobile')"
+              :label="$t('merchantInfo.legalPersonMobile') + '：'"
               prop="legalPersonMobile">
               <InputPlus
                 :disabled="isDetail"
@@ -284,7 +290,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.legalPersonIdCard')"
+              :label="$t('merchantInfo.legalPersonIdCard') + '：'"
               prop="legalPersonIdCard">
               <InputPlus
                 :disabled="isDetail"
@@ -295,7 +301,7 @@
           <el-col :span="12" class="mb20"></el-col>
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.legalPersonPortrait')"
+              :label="$t('merchantInfo.legalPersonPortrait') + '：'"
               prop="legalPersonPortrait">
               <UploadFile
                 :disabled="isDetail"
@@ -305,7 +311,7 @@
           </el-col>
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.legalPersonNationalEmblem')"
+              :label="$t('merchantInfo.legalPersonNationalEmblem') + '：'"
               prop="legalPersonNationalEmblem">
               <UploadFile
                 :disabled="isDetail"
@@ -318,7 +324,7 @@
         <el-row class="paddcus" :gutter="24">
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxManagerName')"
+              :label="$t('merchantInfo.taxManagerName') + '：'"
               prop="taxManagerName">
               <InputPlus :disabled="isDetail" v-model="form.taxManagerName" />
             </el-form-item>
@@ -326,7 +332,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxManagerMobile')"
+              :label="$t('merchantInfo.taxManagerMobile') + '：'"
               prop="taxManagerMobile">
               <InputPlus :disabled="isDetail" v-model="form.taxManagerMobile" />
             </el-form-item>
@@ -334,7 +340,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxManagerIdCard')"
+              :label="$t('merchantInfo.taxManagerIdCard') + '：'"
               prop="taxManagerIdCard">
               <InputPlus :disabled="isDetail" v-model="form.taxManagerIdCard" />
             </el-form-item>
@@ -342,7 +348,7 @@
           <el-col :span="12" class="mb20"></el-col>
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxManagerPortrait')"
+              :label="$t('merchantInfo.taxManagerPortrait') + '：'"
               prop="taxManagerPortrait">
               <UploadFile
                 :disabled="isDetail"
@@ -353,7 +359,7 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item
-              :label="$t('merchantInfo.taxManagerNationalEmblem')"
+              :label="$t('merchantInfo.taxManagerNationalEmblem') + '：'"
               prop="taxManagerNationalEmblem">
               <UploadFile
                 :disabled="isDetail"
@@ -365,19 +371,19 @@
         <Divider title="邮寄信息" />
         <el-row class="paddcus" :gutter="24">
           <el-col :span="12" class="mb20">
-            <el-form-item label="收件人" prop="recipient">
+            <el-form-item label="收件人：" prop="recipient">
               <InputPlus :disabled="isDetail" v-model="form.recipient" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="收件人手机号" prop="recipientMobile">
+            <el-form-item label="收件人手机号：" prop="recipientMobile">
               <InputPlus :disabled="isDetail" v-model="form.recipientMobile" />
             </el-form-item>
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="邮寄地址" prop="postAddress">
+            <el-form-item label="邮寄地址：" prop="postAddress">
               <InputPlus
                 :disabled="isDetail"
                 v-model="form.postAddress"

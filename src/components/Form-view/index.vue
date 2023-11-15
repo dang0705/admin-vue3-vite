@@ -370,7 +370,7 @@ defineExpose({
                 </el-col>
               </template>
             </slot>
-            <el-col v-bind="dynamicColumns" class="my-2">
+            <el-col v-bind="dynamicColumns">
               <slot name="after-forms" />
             </el-col>
           </el-row>

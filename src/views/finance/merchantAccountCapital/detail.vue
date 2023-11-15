@@ -24,7 +24,7 @@
       </el-button>
     </template>
     <template #tableTopTwo>
-      <div class="flex mb-[30px]">
+      <div class="flex mb-[24px]">
         <div class="total_list bg-[#fafafa] flex flex-1 mr-9">
           <div class="total_item">
             <div class="info">

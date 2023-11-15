@@ -19,7 +19,7 @@
         <Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
         <el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
           <el-col :span="12" class="mb20">
-            <el-form-item label="商户" prop="merchantId">
+            <el-form-item label="商户：" prop="merchantId">
               <el-select
                 @change="handleChangeMerchantId(), handleChangeSpId()"
                 :disabled="self_disabled"
@@ -35,7 +35,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="服务商" prop="spId">
+            <el-form-item label="服务商：" prop="spId">
               <el-select
                 @change="handleChangeMerchantId"
                 :disabled="self_disabled"
@@ -51,7 +51,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="服务协议" prop="serviceContractId">
+            <el-form-item label="服务协议：" prop="serviceContractId">
               <el-select
                 :disabled="self_disabled"
                 clearable
@@ -66,7 +66,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="任务承接方式" prop="undertakeType">
+            <el-form-item label="任务承接方式：" prop="undertakeType">
               <el-select
                 :disabled="self_disabled"
                 clearable
@@ -81,7 +81,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="任务名称" prop="taskName">
+            <el-form-item label="任务名称：" prop="taskName">
               <InputPlus
                 :disabled="self_disabled"
                 maxlength="100"
@@ -91,7 +91,7 @@
 
           <el-col :span="12" class="mb20 formBox">
             <div style="min-width: 140px" class="com_label require">
-              任务类型
+              任务类型：
             </div>
             <el-form-item label-width="0" prop="taskTypeFirst">
               <el-select
@@ -128,7 +128,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="需要人数" prop="userCount">
+            <el-form-item label="需要人数：" prop="userCount">
               <el-input-number
                 :max="10000000000"
                 class="inputNumber"
@@ -139,7 +139,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('merchantInfo.area')" prop="areaDatas">
+            <el-form-item
+              :label="$t('merchantInfo.area') + '：'"
+              prop="areaDatas">
               <ChinaArea
                 :disabled="self_disabled"
                 ref="chinaAreaRef"
@@ -149,7 +151,7 @@
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="任务地址" prop="address">
+            <el-form-item label="任务地址：" prop="address">
               <InputPlus
                 :disabled="self_disabled"
                 maxlength="100"
@@ -161,7 +163,7 @@
           </el-col>
 
           <!-- <el-col :span="12" class="mb20">
-						<el-form-item label="任务开始时间" prop="startTime">
+						<el-form-item label="任务开始时间：" prop="startTime">
 							<el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
@@ -173,7 +175,7 @@
 					</el-col> -->
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="任务时间" prop="workTimeRange">
+            <el-form-item label="任务时间：" prop="workTimeRange">
               <!-- <el-date-picker
 								:disabled="self_disabled"
 								type="datetime"
@@ -201,7 +203,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="发包单价" prop="unitPrice">
+            <el-form-item label="发包单价：" prop="unitPrice">
               <el-input-number
                 class="inputNumber"
                 :max="10000000000"
@@ -215,7 +217,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="发包数量" prop="count">
+            <el-form-item label="发包数量：" prop="count">
               <el-input-number
                 class="inputNumber"
                 :max="10000000000"
@@ -227,7 +229,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="计量单位" prop="measuringUnit">
+            <el-form-item label="计量单位：" prop="measuringUnit">
               <el-select
                 :disabled="self_disabled"
                 class="w100"
@@ -243,7 +245,7 @@
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="任务描述" prop="taskDesc">
+            <el-form-item label="任务描述：" prop="taskDesc">
               <InputPlus
                 :disabled="self_disabled"
                 maxlength="500"
@@ -255,7 +257,7 @@
           </el-col>
 
           <!-- <el-col :span="12" class="mb20">
-						<el-form-item label=" 是否要求打卡" prop="clockRequired">
+						<el-form-item label=" 是否要求打卡：" prop="clockRequired">
 							<el-select :disabled="self_disabled" clearable v-model="form.clockRequired">
 								<el-option :key="item.value" :label="item.label" :value="item.value" v-for="item in options" />
 							</el-select>
@@ -263,13 +265,13 @@
 					</el-col> -->
 
           <!-- <el-col :span="12" class="mb20">
-						<el-form-item label="打卡范围" prop="clockRank">
+						<el-form-item label="打卡范围：" prop="clockRank">
 							<InputPlus :disabled="self_disabled" v-model="form.clockRank" />
 						</el-form-item>
 					</el-col> -->
 
           <!-- <el-col :span="12" class="mb20">
-						<el-form-item label="签到签退时间" prop="signInOrCheckOutTime">
+						<el-form-item label="签到签退时间：" prop="signInOrCheckOutTime">
 							<el-time-picker
 								:disabled="self_disabled"
 								v-model="form.signInOrCheckOutTime"
@@ -283,13 +285,13 @@
 					</el-col> -->
 
           <!-- <el-col :span="12" class="mb20">
-						<el-form-item label="签退时间" prop="checkOutTime">
+						<el-form-item label="签退时间：" prop="checkOutTime">
 							<el-time-picker v-model="form.checkOutTime" :value-format="timeStr" />
 						</el-form-item>
 					</el-col> -->
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="业务联系人" prop="businessMerchant">
+            <el-form-item label="业务联系人：" prop="businessMerchant">
               <InputPlus
                 :disabled="self_disabled"
                 v-model="form.businessMerchant" />
@@ -297,7 +299,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="联系人手机号" prop="businessPhone">
+            <el-form-item label="联系人手机号：" prop="businessPhone">
               <InputPlus
                 :disabled="self_disabled"
                 v-model="form.businessPhone" />
@@ -309,7 +311,7 @@
           v-if="curStep == 1 || curStep == 2 || self_disabled"
           :gutter="24">
           <el-col :span="12" class="mb20">
-            <el-form-item label="性别要求" prop="taskRequireInfo.requiredSex">
+            <el-form-item label="性别要求：" prop="taskRequireInfo.requiredSex">
               <el-select
                 :disabled="self_disabled"
                 clearable
@@ -324,7 +326,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20 formBox">
-            <div style="min-width: 140px" class="com_label">年龄要求</div>
+            <div style="min-width: 140px" class="com_label">年龄要求：</div>
             <el-form-item
               label-width="0px"
               prop="taskRequireInfo.requiredAgeMin">
@@ -354,7 +356,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="学历要求" prop="taskRequireInfo.educational">
+            <el-form-item label="学历要求：" prop="taskRequireInfo.educational">
               <el-select
                 :disabled="self_disabled"
                 clearable
@@ -369,7 +371,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20">
-            <el-form-item label="经验要求" prop="taskRequireInfo.experience">
+            <el-form-item label="经验要求：" prop="taskRequireInfo.experience">
               <el-select
                 :disabled="self_disabled"
                 clearable
@@ -384,7 +386,7 @@
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="工作福利" prop="taskRequireInfo.workFare">
+            <el-form-item label="工作福利：" prop="taskRequireInfo.workFare">
               <InputPlus
                 :disabled="self_disabled"
                 maxlength="500"
@@ -397,7 +399,7 @@
 
           <el-col :span="24" class="mb20">
             <el-form-item
-              label="工作环境"
+              label="工作环境："
               prop="taskRequireInfo.workEnvironment">
               <UploadFile
                 multiple
