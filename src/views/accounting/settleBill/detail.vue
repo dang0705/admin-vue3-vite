@@ -246,18 +246,19 @@
 </template>
 
 <script setup lang="ts" name="账单详情">
-import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill'
+import { getObj } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import Array2Object from '/@/utils/array-2-object'
 import {
   serviceIndexThead,
   taskIndexThead
 } from './configurations-detail/columns'
+import thousandthDivision from '/@/utils/thousandth-division'
+import { useMessage } from '/@/hooks/message'
 const batchMap = Array2Object({
   dic: ['yes_no_type', 'settle_status', 'payment_status']
 })
-import thousandthDivision from '/@/utils/thousandth-division'
-import { useMessage, useMessageBox } from '/@/hooks/message'
+
 const DetailDialog = defineAsyncComponent(
   () => import('./components/detailDialog.vue')
 )
@@ -271,11 +272,6 @@ interface BatchUploadRecordPage {
   isBankFourEssentialFactor: number
   billStatus: number
   paymentStatus: number
-}
-export interface BillRecordOptions {
-  serviceAmount: number
-  accountId: string
-  status: string
 }
 const payInFull = ref(true)
 const payInFullType = ref(1) // 1表示全部付款 2任务承揽费 3管理费 4表示无需付款
@@ -333,7 +329,6 @@ const task_needRecharge_num = computed(() => {
   } else {
     payInFullType.value = 4 // 表示无需付款
   }
-  console.log('payInFullType.value', payInFullType.value)
   return num.toFixed(2)
 })
 const task_isNeedRecharge = computed(() => {
@@ -405,12 +400,12 @@ const topInfoForms = [
 const conditionForms = [
   {
     control: 'InputPlus',
-    key: 'id',
+    key: 'undertakerName',
     label: '承接人'
   },
   {
     control: 'InputPlus',
-    key: 'billName',
+    key: 'undertakerCard',
     label: '承接人证件号码'
   }
 ]
@@ -569,15 +564,6 @@ const staticQuery = {
   settleBillId: route.query.id
 }
 
-const view = (row: any) => {
-  console.log(1111, row)
-  router.push({
-    path: '/core/settleBill/detail',
-    query: {
-      id: row.id
-    }
-  })
-}
 const handleAccountCapitalDetail = (type: number) => {
   router.push({
     path: '/finance/merchantAccountCapital/detail',
@@ -628,7 +614,6 @@ const handleBtn = () => {
   useMessage().wraning('功能正在开发, 请等待~')
 }
 const handleContractFile = (row) => {
-  console.log('proxy.baseURL', proxy.baseURL)
   window.open(`${proxy.baseURL}/${row.contractFile}`)
 }
 

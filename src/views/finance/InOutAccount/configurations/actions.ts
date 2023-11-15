@@ -1,7 +1,7 @@
-import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge';
-const auth = (auth: string) => `core_settleBill_${auth}`;
+import { updateMerchantRechargeStatus } from '/@/api/finance/merchantRecharge'
+const auth = (auth: string) => `core_settleBill_${auth}`
 export default (row: any) => {
-  const { status, id, transferVoucher } = row;
+  const { status, id, transferVoucher } = row
 
   return [
     // {
@@ -58,21 +58,21 @@ export default (row: any) => {
     {
       label: '撤销',
       auth: 'finance_merchantRecharge_edit',
-      show: () => status !== '30',
+      show: () => status === '10',
       confirm: {
         ask: '您确定撤销吗？',
-        done: '撤销成功!',
+        done: '撤销成功!'
       },
       action: {
         handler: updateMerchantRechargeStatus,
-        params: id,
-      },
+        params: id
+      }
     },
     {
       label: '查看转账凭证',
       show: () => transferVoucher,
       download: transferVoucher,
-      auth: 'finance_merchantAccountCapital_view_voucher',
-    },
-  ];
-};
+      auth: 'finance_merchantAccountCapital_view_voucher'
+    }
+  ]
+}
