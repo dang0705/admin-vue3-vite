@@ -1,16 +1,14 @@
 <template>
-  <el-tabs v-model="value">
-    <template #addIcon>
-      <span></span>
-    </template>
+  <el-tabs v-model="label">
     <el-tab-pane
-      v-for="{ label, value, attributeName, attributeVal } in tabs"
+      v-for="{ label, value, attributeVal, auth = '' } in tabs"
       :key="label"
       :name="label">
       <template #label>
         <ul
+          v-auth="`${auth}`"
           class="flex items-center"
-          @click="onTabClick(label, { attributeName, attributeVal })">
+          @click="onTabClick(attributeVal)">
           <li v-text="label" />
           <li
             v-if="value"
@@ -30,9 +28,10 @@ interface Options {
   value: string
 }
 // 定义子组件向父组件传值/事件
-const emit = defineEmits(['update:modelValue', 'toggleTab'])
+const emit = defineEmits(['get-value'])
+
 const props = defineProps({
-  modelValue: {
+  value: {
     type: String,
     default: ''
   },
@@ -41,14 +40,12 @@ const props = defineProps({
     default: () => []
   }
 })
-const value = computed({
-  get: () => props.modelValue || (props.tabs as Options[])[0]?.label,
-  set: (value: string) => {
-    emit('update:modelValue', value)
-  }
-})
-const onTabClick = (label: string, { attributeName, attributeVal }: any) => {
-  value.value = label
-  emit('toggleTab', { attributeName, attributeVal })
-}
+const value = computed(() => props.value || (props.tabs as Options[])[0]?.value)
+const label = computed(
+  () =>
+    props.tabs?.find((tab: any) => value.value === tab.attributeVal)?.label ||
+    props.tabs?.[0]?.label
+)
+
+const onTabClick = (attributeVal: string) => emit('get-value', attributeVal)
 </script>

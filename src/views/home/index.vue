@@ -27,7 +27,7 @@
       </el-col>
       <el-col :span="8">
         <div class="flex flex-col">
-          <div class="section h-[220px]">
+          <div class="section h-[220px]" v-loading="messageLoading">
             <h2 class="flex items-center justify-between mb-5">
               <p class="flex items-center text-[18px] font-bold">
                 <img :src="remind" class="w-[20px] mr-[5px]" alt="" />
@@ -95,8 +95,16 @@ import customerProportion from '/@/assets/dashboard/customerProportion.webp'
 defineOptions({ name: 'router.home' })
 
 let remainDate = ref([])
-const getMessages = async () =>
-  (remainDate.value = (await fetchList()).data.records.slice(0, 3))
+const messageLoading = ref(false)
+const getMessages = async () => {
+  try {
+    messageLoading.value = true
+    remainDate.value = (await fetchList()).data.records.slice(0, 3)
+  } catch (e) {
+  } finally {
+    messageLoading.value = false
+  }
+}
 
 getMessages()
 const icons = {
@@ -192,6 +200,7 @@ const dashboardData = {
 		},*/
   ]
 }
+onMounted(() => console.log(1))
 /*onMounted(async () => {
 	await nextTick();
 	const commandChart = echarts.init(document.getElementById('charts') as HTMLDivElement);
