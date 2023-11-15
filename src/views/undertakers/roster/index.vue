@@ -101,7 +101,7 @@
       title="批量签署"
       watch-field="spId">
       <template #contractTimeRange="{ formData }">
-        <el-form-item
+        <!-- <el-form-item
           label="开始结束日期:"
           prop="contractTimeRange"
           :rules="[
@@ -117,7 +117,7 @@
             end-placeholder="请选择结束时间"
             value-format="YYYY-MM-DD"
             v-model="formData.contractTimeRange" />
-        </el-form-item>
+        </el-form-item> -->
       </template>
     </Distribution>
 
