@@ -8,6 +8,22 @@ export function fetchList(query?: Object) {
   })
 }
 
+export function taskPage(query?: Object) {
+  return request({
+    url: '/core/settleBillRecord/taskPage',
+    method: 'get',
+    params: query
+  })
+}
+
+export function spPage(query?: Object) {
+  return request({
+    url: '/core/settleBillRecord/spPage',
+    method: 'get',
+    params: query
+  })
+}
+
 export function addObj(obj?: Object) {
   return request({
     url: '/core/settleBillRecord',
