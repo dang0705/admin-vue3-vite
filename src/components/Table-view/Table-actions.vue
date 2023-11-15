@@ -95,7 +95,6 @@ const handleAction = async ({
   const isDelete = type === 'delete'
   const successText =
     (confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！'
-
   handler = props.handlers[handler as never] || handler
 
   if (dialog) {
@@ -104,7 +103,10 @@ const handleAction = async ({
       title: dialog.title || label,
       label,
       confirm,
-      action,
+      action: {
+        ...action,
+        handler
+      },
       successText
     })
     return

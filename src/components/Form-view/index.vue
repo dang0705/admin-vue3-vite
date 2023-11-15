@@ -298,7 +298,6 @@ defineExpose({
         :label-width="labelWidth"
         :model="formData"
         :rules="formRules"
-        :label-position="labelPosition"
         ref="form">
         <div
           :class="[

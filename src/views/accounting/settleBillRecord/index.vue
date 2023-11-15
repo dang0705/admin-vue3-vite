@@ -3,6 +3,13 @@
     :columns="columns"
     isTab
     @get-tab-label="getTabLabel"
+    :getListFnName="
+      tabType === '任务结算单'
+        ? 'taskPage'
+        : tabType === '服务结算单'
+        ? 'spPage'
+        : ''
+    "
     module="core/settleBillRecord.ts"
     :condition-forms="conditionForms"
     :exportAuth="
