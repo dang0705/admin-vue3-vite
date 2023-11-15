@@ -68,6 +68,10 @@ export const customComponents = [
     component: () => import('/@/components/InputPlus/index.vue')
   },
   {
+    name: 'InputNumber',
+    component: () => import('/@/components/InputNumber/index.vue')
+  },
+  {
     name: 'InputCopy',
     component: () => import('/@/components/InputCopy/index.vue')
   },

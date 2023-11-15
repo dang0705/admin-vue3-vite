@@ -129,8 +129,6 @@ const openDialog = (id: string, type: number = 1) => {
     showBtn.value = false
     forms = dynamicForms({ type: 1 })
   }
-  console.log('forms', forms, type)
-
   // 重置表单数据
   nextTick(() => {
     dataFormRef.value?.resetFields()
@@ -159,10 +157,6 @@ const onSubmit = async () => {
     } else {
       visible.value = false
     }
-  } catch (err: any) {
-    console.log('err', err)
-
-    // useMessage().error(err.msg);
   } finally {
     loading.value = false
   }

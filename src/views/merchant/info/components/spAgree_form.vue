@@ -162,28 +162,34 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col v-show="form.feeCalculationMethod == 1" :span="12" class="mb20">
+        <el-col
+          v-if="form.feeCalculationMethod === '1'"
+          :span="12"
+          class="mb20">
           <el-form-item label="平台服务费比例" prop="platformFeeRate">
-            <InputPlus
+            <InputNumber
+              :max="100"
+              unit="%"
               :disabled="isDetail"
-              type="number"
-              v-model.number="form.platformFeeRate">
-              <template #append>%</template>
-            </InputPlus>
+              v-model.number="form.platformFeeRate" />
           </el-form-item>
         </el-col>
-        <el-col v-show="form.feeCalculationMethod == 2" :span="12" class="mb20">
+        <el-col
+          v-if="form.feeCalculationMethod === '2'"
+          :span="12"
+          class="mb20">
           <el-form-item label="平台服务费固定值" prop="platformFeeFixed">
-            <InputPlus
+            <InputNumber
+              unit="元"
               :disabled="isDetail"
-              type="number"
-              v-model.number="form.platformFeeFixed">
-              <template #append>元</template>
-            </InputPlus>
+              v-model.number="form.platformFeeFixed" />
           </el-form-item>
         </el-col>
 
-        <el-col :span="12" class="mb20"></el-col>
+        <el-col
+          v-if="form.feeCalculationMethod"
+          :span="12"
+          class="mb20"></el-col>
 
         <el-col :span="12" class="mb20">
           <el-form-item label="管理费计算方式" prop="managementFeeMethod">
@@ -217,51 +223,46 @@
           </el-form-item>
         </el-col>
         <el-col
-          v-show="
-            form.managementFeeMethod == 1 || form.managementFeeMethod == 3
+          v-if="
+            form.managementFeeMethod === '1' || form.managementFeeMethod === '3'
           "
           :span="12"
           class="mb20">
           <el-form-item label="管理费比例" prop="managementFeeRate">
-            <InputPlus
+            <InputNumber
               :disabled="isDetail"
-              type="number"
-              v-model.number="form.managementFeeRate">
-              <template #append>%</template>
-            </InputPlus>
+              :max="100"
+              unit="%"
+              v-model.number="form.managementFeeRate" />
           </el-form-item>
         </el-col>
         <el-col
-          v-show="
-            form.managementFeeMethod == 2 || form.managementFeeMethod == 3
+          v-if="
+            form.managementFeeMethod === '2' || form.managementFeeMethod === '3'
           "
           :span="12"
           class="mb20">
           <el-form-item label="管理费固定值" prop="managementFeeFixed">
-            <InputPlus
+            <InputNumber
               :disabled="isDetail"
-              type="number"
-              v-model.number="form.managementFeeFixed">
-              <template #append>元</template>
-            </InputPlus>
+              unit="元"
+              v-model.number="form.managementFeeFixed" />
           </el-form-item>
         </el-col>
 
         <el-col
-          v-show="
-            form.managementFeeMethod == 1 || form.managementFeeMethod == 2
+          v-if="
+            form.managementFeeMethod === '1' || form.managementFeeMethod === '2'
           "
           :span="12"
           class="mb20"></el-col>
 
         <el-col :span="12" class="mb20">
           <el-form-item label="商业保险费" prop="businessInsurance">
-            <InputPlus
+            <InputNumber
               :disabled="isDetail"
-              type="number"
-              v-model.number="form.businessInsurance">
-              <template #append>元</template>
-            </InputPlus>
+              unit="元"
+              v-model.number="form.businessInsurance" />
           </el-form-item>
         </el-col>
 
@@ -307,9 +308,6 @@ const {
   'invoice_category',
   'service_fee_method'
 )
-// import uploadBusinessType from '/@/enums/upload-business-type'
-// import IndividualTaxRatios from '/@/components/Gradientization/index.vue';
-// const businessType = uploadBusinessType.merchant
 const route = useRoute()
 
 // 定义变量内容
@@ -318,7 +316,7 @@ const isDetail = ref(false)
 // const iTRTexts = ref(['元 < 单人单月任务金额 <=', '元，比例', '%'])
 const visible = ref(false)
 const loading = ref(false)
-const spinfoList = ref([]) as array
+const spinfoList = ref([])
 const userList = reactive([])
 // const agreementTypeOptions = ref([
 //   {
@@ -331,11 +329,14 @@ const userList = reactive([])
 //   }
 // ])
 // 定义字典
+interface FormData {
+  [key: string]: any // 添加索引签名
+}
 
 // 提交表单数据
-let form = reactive({
+let form = reactive<FormData>({
   merchantId: '',
-
+  id: '',
   agreementName: '',
   spId: '',
   serviceManager: '',
@@ -349,14 +350,14 @@ let form = reactive({
 
   feeCalculationMethod: '',
   platformInvoiceCategory: '',
-  platformFeeRate: 0,
-  platformFeeFixed: '',
+  platformFeeRate: undefined,
+  platformFeeFixed: undefined,
 
   managementFeeMethod: '',
   invoiceCategory: '',
-  managementFeeRate: 0,
-  managementFeeFixed: '',
-  businessInsurance: ''
+  managementFeeRate: undefined,
+  managementFeeFixed: undefined,
+  businessInsurance: undefined
 
   // feeRates: [],
 })
@@ -433,8 +434,9 @@ const openDialog = (id: string, type: any) => {
   // 重置表单数据
   nextTick(() => {
     dataFormRef.value?.resetFields()
-    // platformFeeRate
-    console.log('form', form)
+    Object.keys(form).forEach((key: any) => {
+      form[key] = undefined
+    })
   })
 
   // 获取merchantServiceAgreement信息
@@ -451,7 +453,7 @@ const openDialog = (id: string, type: any) => {
 const onSubmit = async () => {
   const valid = await dataFormRef.value.validate().catch(() => {})
   if (!valid) return false
-  form.merchantId = route.query.id
+  form.merchantId = route.query.id as string
   // form.feeRates.forEach((item) => {
   // 	delete item.id;
   // });
@@ -461,7 +463,6 @@ const onSubmit = async () => {
     useMessage().success(form.id ? '修改成功' : '添加成功')
     visible.value = false
     emit('refresh')
-  } catch (err: any) {
   } finally {
     loading.value = false
   }

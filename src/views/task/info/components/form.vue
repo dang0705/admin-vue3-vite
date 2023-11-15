@@ -546,7 +546,6 @@ const self_disabled = computed(() =>
 // watch(
 // 	() => props.isDetail,
 // 	(val) => {
-// 		console.log('val-111', val);
 // 	}
 // );
 
@@ -626,15 +625,12 @@ const onSubmit = async () => {
         refresh: 1
       }
     })
-  } catch (err: any) {
   } finally {
     loading.value = false
   }
 }
 
 const requireChange = () => {
-  console.log('form.taskRequireInfo.requiredAgeMin', form.taskRequireInfo)
-
   if (!form.taskRequireInfo.requiredAgeMin) {
     form.taskRequireInfo.requiredAgeMin = 16
   }
