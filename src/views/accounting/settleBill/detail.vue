@@ -66,7 +66,7 @@
                 <div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
                 <div class="unit">元</div>
               </div>
-              <div class="info_label">服务费</div>
+              <div class="info_label">平台服务费</div>
             </div>
           </div>
         </div>
@@ -246,18 +246,19 @@
 </template>
 
 <script setup lang="ts" name="账单详情">
-import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill'
+import { getObj } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import Array2Object from '/@/utils/array-2-object'
 import {
   serviceIndexThead,
   taskIndexThead
 } from './configurations-detail/columns'
+import thousandthDivision from '/@/utils/thousandth-division'
+import { useMessage } from '/@/hooks/message'
 const batchMap = Array2Object({
   dic: ['yes_no_type', 'settle_status', 'payment_status']
 })
-import thousandthDivision from '/@/utils/thousandth-division'
-import { useMessage, useMessageBox } from '/@/hooks/message'
+
 const DetailDialog = defineAsyncComponent(
   () => import('./components/detailDialog.vue')
 )
@@ -267,15 +268,10 @@ const importBillRef = ref()
 const settleBillDetailRef = ref()
 const { proxy } = getCurrentInstance()
 interface BatchUploadRecordPage {
-  isSignServiceContract: number
+  isEffectiveContract: number
   isBankFourEssentialFactor: number
   billStatus: number
   paymentStatus: number
-}
-export interface BillRecordOptions {
-  serviceAmount: number
-  accountId: string
-  status: string
 }
 const payInFull = ref(true)
 const payInFullType = ref(1) // 1表示全部付款 2任务承揽费 3管理费 4表示无需付款
@@ -333,7 +329,6 @@ const task_needRecharge_num = computed(() => {
   } else {
     payInFullType.value = 4 // 表示无需付款
   }
-  console.log('payInFullType.value', payInFullType.value)
   return num.toFixed(2)
 })
 const task_isNeedRecharge = computed(() => {
@@ -405,16 +400,17 @@ const topInfoForms = [
 const conditionForms = [
   {
     control: 'InputPlus',
-    key: 'id',
+    key: 'undertakerName',
     label: '承接人'
   },
   {
     control: 'InputPlus',
-    key: 'billName',
+    key: 'undertakerCard',
     label: '承接人证件号码'
   }
 ]
 const indexThead = [
+  // 收款银行卡更新备注
   {
     type: 'selection',
     width: '40'
@@ -476,7 +472,7 @@ const indexThead = [
   },
   {
     prop: 'taskAmount',
-    label: '任务金额(元)',
+    label: '个人任务承揽费(元)',
     minWidth: 120
   },
   {
@@ -489,11 +485,11 @@ const indexThead = [
     label: '实发金额(元)',
     minWidth: 120
   },
-  {
-    prop: 'commissionAmount',
-    label: '管理费(元)',
-    minWidth: 120
-  },
+  // {
+  //   prop: 'commissionAmount',
+  //   label: '管理费(元)',
+  //   minWidth: 120
+  // },
   {
     prop: 'undertaderStartTime',
     label: '承接开始时间',
@@ -515,11 +511,11 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'isSignServiceContract',
-    label: '是否签署协议',
-    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isSignServiceContract],
-    minWidth: 150
+    prop: 'isEffectiveContract',
+    label: '是否存在生效协议',
+    'min-width': 180,
+    value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
+      batchMap.value.yes_no_type[isEffectiveContract]
   },
   {
     prop: 'isBankFourEssentialFactor',
@@ -552,11 +548,11 @@ const indexThead = [
     label: '支付失败原因',
     minWidth: 150
   },
-  // {
-  // 	prop: 'failureReason',
-  // 	label: '收款银行卡更新备注',
-  // 	minWidth: 150,
-  // },
+  {
+    prop: 'bankCardUpdateDesc',
+    label: '收款银行卡更新备注',
+    minWidth: 150
+  },
   {
     label: '操作',
     prop: 'actions',
@@ -569,15 +565,6 @@ const staticQuery = {
   settleBillId: route.query.id
 }
 
-const view = (row: any) => {
-  console.log(1111, row)
-  router.push({
-    path: '/core/settleBill/detail',
-    query: {
-      id: row.id
-    }
-  })
-}
 const handleAccountCapitalDetail = (type: number) => {
   router.push({
     path: '/finance/merchantAccountCapital/detail',
@@ -628,7 +615,6 @@ const handleBtn = () => {
   useMessage().wraning('功能正在开发, 请等待~')
 }
 const handleContractFile = (row) => {
-  console.log('proxy.baseURL', proxy.baseURL)
   window.open(`${proxy.baseURL}/${row.contractFile}`)
 }
 
@@ -642,16 +628,20 @@ $refreshList(getmerchantInfoData)
 <style lang="scss" scoped>
 .info_list {
   display: flex;
+
   .info_item {
     margin-right: 20px;
   }
 }
+
 .total_wrapper {
   padding: 28px 0;
   background: #fafafa;
   margin-bottom: 30px;
+
   .total_list {
     display: flex;
+
     .total_item {
       width: 25%;
       display: flex;
@@ -659,23 +649,28 @@ $refreshList(getmerchantInfoData)
       justify-content: center;
       color: rgba(0, 0, 0, 0.5);
     }
+
     .icon {
       width: 38px;
       height: 37px;
       margin-right: 15px;
     }
+
     .price_box {
       font-size: 30px;
     }
+
     .price {
       color: rgba(0, 0, 0, 0.8);
       display: inline-block;
     }
+
     .unit {
       font-size: 14px;
       vertical-align: baseline;
       display: inline-block;
     }
+
     .info_label {
       font-size: 14px;
     }

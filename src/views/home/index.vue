@@ -200,7 +200,6 @@ const dashboardData = {
 		},*/
   ]
 }
-onMounted(() => console.log(1))
 /*onMounted(async () => {
 	await nextTick();
 	const commandChart = echarts.init(document.getElementById('charts') as HTMLDivElement);
