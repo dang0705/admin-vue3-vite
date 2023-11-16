@@ -59,20 +59,12 @@
         删除
       </el-button>-->
     </template>
-    <template #undertakerEducation="{ row: { undertakerEducation } }">
-      {{ batchMap?.education[undertakerEducation] }}
-    </template>
     <template #spList="{ row: { spList } }">
       <div
         class="overflow-hidden text-ellipsis"
         v-for="{ spName } in spList"
         :key="spName">
         {{ spName }}
-      </div>
-    </template>
-    <template #isEffectiveContract="{ row: { spList } }">
-      <div v-for="({ isEffectiveContract }, i) in spList" :key="i">
-        {{ isEffectiveContract === '0' ? '否' : '是' }}
       </div>
     </template>
     <!-- 编辑、新增  -->
