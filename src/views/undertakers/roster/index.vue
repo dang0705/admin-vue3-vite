@@ -59,14 +59,6 @@
         删除
       </el-button>-->
     </template>
-    <template #spList="{ row: { spList } }">
-      <div
-        class="overflow-hidden text-ellipsis"
-        v-for="{ spName } in spList"
-        :key="spName">
-        {{ spName }}
-      </div>
-    </template>
     <!-- 编辑、新增  -->
     <form-dialog ref="formDialogRef" />
     <!-- 查看 -->

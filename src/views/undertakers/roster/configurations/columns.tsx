@@ -51,17 +51,17 @@ export default (batchMap) => [
     label: '服务商',
     prop: 'spList',
     minWidth: 180,
-    slot: true
+    slot: ({ row: { spList = [] } }: any) =>
+      spList.map(({ spName }: any) => <div>{spName}</div>)
   },
   {
     label: '是否存在生效协议',
     prop: 'isEffectiveContract',
     minWidth: 160,
-    slot: ({ row: { spList } }: any) => {
-      return spList?.map(({ isEffectiveContract }: any) => (
+    slot: ({ row: { spList = [] } }: any) =>
+      spList.map(({ isEffectiveContract }: any) => (
         <div>{isEffectiveContract === '0' ? '否' : '是'}</div>
       ))
-    }
   },
   {
     label: '是否银行四要素验证',
