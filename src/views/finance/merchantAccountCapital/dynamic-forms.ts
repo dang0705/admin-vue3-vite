@@ -26,7 +26,10 @@ const formOne = [
         message: '付款户名不能为空',
         trigger: 'blur'
       }
-    ]
+    ],
+    props: {
+      maxlength: 30
+    }
   },
   {
     control: 'InputPlus',
@@ -38,7 +41,10 @@ const formOne = [
         message: '付款账号不能为空',
         trigger: 'blur'
       }
-    ]
+    ],
+    props: {
+      maxlength: 30
+    }
   },
   {
     control: 'InputPlus',
@@ -50,7 +56,10 @@ const formOne = [
         message: '开户行不能为空',
         trigger: 'blur'
       }
-    ]
+    ],
+    props: {
+      maxlength: 50
+    }
   },
   {
     control: 'InputPlus',
@@ -69,7 +78,7 @@ const formOne = [
     ]
   },
   {
-    control: 'InputPlus',
+    control: 'InputNumber',
     key: 'payingAmount',
     label: '付款金额',
     rules: [
@@ -80,8 +89,7 @@ const formOne = [
       }
     ],
     props: {
-      type: 'number',
-      append: '元'
+      unit: '元'
     }
   }
 ]
