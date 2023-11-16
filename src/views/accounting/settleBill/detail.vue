@@ -268,7 +268,7 @@ const importBillRef = ref()
 const settleBillDetailRef = ref()
 const { proxy } = getCurrentInstance()
 interface BatchUploadRecordPage {
-  isEffectiveContract: number
+  isSignServiceContract: number
   isBankFourEssentialFactor: number
   billStatus: number
   paymentStatus: number
@@ -511,11 +511,11 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'isEffectiveContract',
+    prop: 'isSignServiceContract',
     label: '是否存在生效协议',
     'min-width': 180,
-    value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isEffectiveContract]
+    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
+      batchMap.value.yes_no_type[isSignServiceContract]
   },
   {
     prop: 'isBankFourEssentialFactor',

@@ -109,11 +109,11 @@ export default [
     minWidth: 180
   },
   {
-    prop: 'isEffectiveContract',
+    prop: 'isSignServiceContract',
     label: '是否存在生效协议',
     'min-width': 180,
-    value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isEffectiveContract]
+    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
+      batchMap.value.yes_no_type[isSignServiceContract]
   },
   {
     prop: 'isBankFourEssentialFactor',
