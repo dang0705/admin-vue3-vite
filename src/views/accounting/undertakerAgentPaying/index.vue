@@ -70,7 +70,6 @@ import {
 import Array2Object from '/@/utils/array-2-object'
 import isArrayItemSame from '/@/utils/is-array-item-same'
 import { useMessageBox } from '/@/hooks/message'
-import thousandthDivision from '/@/utils/thousandth-division'
 import columns from '/@/views/accounting/undertakerAgentPaying/columns'
 import conditionForms from '/@/views/accounting/undertakerAgentPaying/conditionForms'
 // 当前tab选中的中文

@@ -2,7 +2,6 @@
   <Table-view
     :columns="columns"
     :condition-forms="conditionForms"
-    isTab
     module="finance/invoiceRecord.ts"
     downBlobFileUrl="/finance/invoiceRecord/export"
     downBlobFileName="发票记录.xlsx"

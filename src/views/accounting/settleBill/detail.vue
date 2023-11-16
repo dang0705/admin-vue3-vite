@@ -5,7 +5,6 @@
     module="core/settleBill.ts"
     getListFnName="taskRecordItem"
     :staticQuery="staticQuery"
-    isTab
     :condition-forms="conditionForms"
     downBlobFileUrl="xxx"
     exportAuth="core_settleBill_export"
@@ -268,7 +267,7 @@ const importBillRef = ref()
 const settleBillDetailRef = ref()
 const { proxy } = getCurrentInstance()
 interface BatchUploadRecordPage {
-  isEffectiveContract: number
+  isSignServiceContract: number
   isBankFourEssentialFactor: number
   billStatus: number
   paymentStatus: number
@@ -416,6 +415,16 @@ const indexThead = [
     width: '40'
   },
   {
+    prop: 'billName',
+    label: '账单名称',
+    minWidth: 100
+  },
+  {
+    prop: 'billNumber',
+    label: '账单编号',
+    minWidth: 100
+  },
+  {
     prop: 'undertakerName',
     label: '承接人',
     minWidth: 100
@@ -501,7 +510,7 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'id',
+    prop: 'detailNumber',
     label: '任务结算明细编号',
     minWidth: 150
   },
@@ -511,11 +520,11 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'isEffectiveContract',
+    prop: 'isSignServiceContract',
     label: '是否存在生效协议',
     'min-width': 180,
-    value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isEffectiveContract]
+    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
+      batchMap.value.yes_no_type[isSignServiceContract]
   },
   {
     prop: 'isBankFourEssentialFactor',
@@ -525,14 +534,12 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'billStatus',
+    prop: 'billStatusDesc',
     label: '结算状态',
-    value: ({ billStatus }: BatchUploadRecordPage) =>
-      batchMap.value.settle_status[billStatus],
     minWidth: 100
   },
   {
-    prop: 'billSettleTime',
+    prop: 'paymentSuccessTime',
     label: '支付时间',
     minWidth: 100
   },

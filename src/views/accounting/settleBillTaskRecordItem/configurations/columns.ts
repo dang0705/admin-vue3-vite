@@ -14,6 +14,16 @@ export default [
     width: '40'
   },
   {
+    prop: 'billName',
+    label: '账单名称',
+    minWidth: 100
+  },
+  {
+    prop: 'billNumber',
+    label: '账单编号',
+    minWidth: 100
+  },
+  {
     prop: 'undertakerName',
     label: '承接人',
     minWidth: 100
@@ -91,29 +101,29 @@ export default [
   {
     prop: 'undertaderStartTime',
     label: '承接开始时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
     prop: 'undertaderEndTime',
     label: '承接结束时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
-    prop: 'id',
+    prop: 'detailNumber',
     label: '任务结算明细编号',
     minWidth: 150
   },
   {
     prop: 'billSettleTime',
     label: '付款时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
-    prop: 'isEffectiveContract',
+    prop: 'isSignServiceContract',
     label: '是否存在生效协议',
     'min-width': 180,
-    value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isEffectiveContract]
+    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
+      batchMap.value.yes_no_type[isSignServiceContract]
   },
   {
     prop: 'isBankFourEssentialFactor',
@@ -130,9 +140,9 @@ export default [
     minWidth: 100
   },
   {
-    prop: 'billSettleTime',
+    prop: 'paymentSuccessTime',
     label: '支付时间',
-    minWidth: 100
+    minWidth: 180
   },
   {
     prop: 'paymentStatus',

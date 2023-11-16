@@ -68,10 +68,6 @@ export default {
     type: Array,
     default: () => []
   },
-  isTab: {
-    type: Boolean,
-    default: false
-  },
   noPadding: {
     type: Boolean,
     default: false
@@ -104,5 +100,9 @@ export default {
   isShowTopBar: {
     type: Boolean,
     default: true
+  },
+  tabs: {
+    type: Array,
+    default: () => []
   }
 }

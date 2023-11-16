@@ -67,6 +67,11 @@ const columns = [
     'min-width': 160
   },
   {
+    prop: 'createTime',
+    label: '创建时间',
+    'min-width': 180
+  },
+  {
     prop: 'bankNameDesc',
     label: '账号类别',
     'min-width': 160
@@ -76,11 +81,11 @@ const columns = [
     label: '开户行',
     'min-width': 160
   },
-  {
-    prop: 'bankArea',
-    label: '开户地',
-    'min-width': 160
-  },
+  // {
+  //   prop: 'bankArea',
+  //   label: '开户地',
+  //   'min-width': 160
+  // },
   {
     prop: 'channelStatusDesc',
     label: '状态',

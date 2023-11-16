@@ -59,22 +59,6 @@
         删除
       </el-button>-->
     </template>
-    <template #undertakerEducation="{ row: { undertakerEducation } }">
-      {{ batchMap?.education[undertakerEducation] }}
-    </template>
-    <template #spList="{ row: { spList } }">
-      <div
-        class="overflow-hidden text-ellipsis"
-        v-for="{ spName } in spList"
-        :key="spName">
-        {{ spName }}
-      </div>
-    </template>
-    <template #isEffectiveContract="{ row: { spList } }">
-      <div v-for="({ isEffectiveContract }, i) in spList" :key="i">
-        {{ isEffectiveContract === '0' ? '否' : '是' }}
-      </div>
-    </template>
     <!-- 编辑、新增  -->
     <form-dialog ref="formDialogRef" />
     <!-- 查看 -->
@@ -100,8 +84,8 @@
       save-method="post"
       title="批量签署"
       watch-field="spId">
-      <template #contractTimeRange="{ formData }">
-        <!-- <el-form-item
+      <!--<template #contractTimeRange="{ formData }">
+         <el-form-item
           label="开始结束日期:"
           prop="contractTimeRange"
           :rules="[
@@ -117,8 +101,8 @@
             end-placeholder="请选择结束时间"
             value-format="YYYY-MM-DD"
             v-model="formData.contractTimeRange" />
-        </el-form-item> -->
-      </template>
+        </el-form-item>
+      </template> -->
     </Distribution>
 
     <!-- 批量导入承接人-->
@@ -191,12 +175,12 @@ const conditionForms2 = ref([
     rules: [
       { required: true, message: '服务商名称不能为空', trigger: 'change' }
     ]
-  },
+  } /*,
   {
     key: 'contractTimeRange',
     rules: [{ required: true, trigger: 'change' }],
     slot: true
-  }
+  }*/
 ])
 const addUnderTakerForms = [
   {

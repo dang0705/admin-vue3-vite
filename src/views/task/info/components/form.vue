@@ -700,6 +700,9 @@ const getSpInfoData = () => {
 onMounted(() => {
   if (route.query.taskId) {
     gettaskData()
+  } else {
+    getMerchantInfoData()
+    getSpInfoData()
   }
 })
 
@@ -726,7 +729,8 @@ const getAgreeList = () => {
   // 获取数据
   agreeList({
     merchantId: form.merchantId,
-    spId: form.spId
+    spId: form.spId,
+    status: 1
   }).then((res: any) => {
     agree_list.value = res.data || []
   })

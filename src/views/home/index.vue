@@ -144,6 +144,7 @@ const dashboardData = {
       img: 'account',
       url: '/core/homePage/settleBillStatistics',
       route: '/accounting/settleBill/index',
+      auth: 'home_settleBill_statistics',
       statusMap: {
         40: '#FF6826', //任务待审核
         50: '#2C80FF',
@@ -157,6 +158,7 @@ const dashboardData = {
       img: 'merchant',
       url: '/core/homePage/companyStatistics',
       routes: ['/merchant/info/index', '/sp/info/index'],
+      auth: 'home_spInfo_statistics',
       statusMap: {
         10: '#2C80FF',
         20: '#1D2129'
@@ -167,6 +169,7 @@ const dashboardData = {
       img: 'invoiceRecords',
       url: '/core/homePage/invoiceStatistics',
       route: '/invoice/invoiceRecord/index',
+      auth: 'home_invoice_statistics',
       statusMap: {
         10: '#2C80FF',
         20: '#1D2129'

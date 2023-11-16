@@ -1,7 +1,6 @@
 <template>
   <Table-view
     :columns="columns"
-    isTab
     :actions="actions"
     :condition-forms="conditionForms"
     getListFnName="refundRecordPayPage"

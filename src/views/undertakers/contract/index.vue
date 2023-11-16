@@ -32,8 +32,7 @@
       upload-url="core/undertakingContract/contractBatchSigning"
       temp-url="/files/合同批量签署模板.xlsx"
       template-on-front
-      title="添加合同签署"
-      submitButtonText="下一步" />
+      title="添加合同签署" />
   </Table-View>
 </template>
 

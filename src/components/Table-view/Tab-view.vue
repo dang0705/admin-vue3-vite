@@ -1,9 +1,9 @@
 <template>
-  <div class="flex items-center relative border-b mb-[10px]">
+  <div class="flex items-center relative border-b mb-[10px] overflow-x-hidden">
     <ArrowLeft
       v-if="isOverflow"
       @click.passive="scroll('left')"
-      class="w-[1em] h-[1em] cursor-pointer" />
+      class="w-[16px] h-[16px] cursor-pointer" />
     <ul class="flex items-center tabs overflow-x-auto relative">
       <li
         class="slider h-[2px] absolute bottom-0 bg-primary transition-transform"
@@ -12,7 +12,9 @@
           transform: `translateX(${slideDistance}px)`
         }" />
       <li
-        v-for="({ label, value, attributeVal, auth = '' }, index) in tabs"
+        v-for="(
+          { label, value = undefined, attributeVal, auth = '' }, index
+        ) in tabs"
         v-auth="`${auth}`"
         :key="attributeVal"
         :class="[
@@ -30,7 +32,7 @@
         @click="onTabClick(attributeVal, index)">
         <span v-text="label" />
         <span
-          v-if="value"
+          v-if="value !== undefined"
           v-text="value"
           class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]"
           style="padding: 0 10px 0" />
@@ -54,26 +56,33 @@ interface Options {
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['get-value'])
 
-const { value: modelValue = '', tabs = [] } = defineProps(['value', 'tabs'])
+const props = defineProps({
+  value: {
+    type: String,
+    default: ''
+  },
+  tabs: {
+    type: Array,
+    default: () => []
+  }
+})
 
-const value = computed(() => modelValue || (tabs as Options[])[0]?.attributeVal)
-const label = computed(
-  () =>
-    tabs?.find((tab: any) => value.value === tab.attributeVal)?.label ||
-    tabs?.[0]?.label
-)
+const value = computed(() => {
+  return props.value || (props.tabs as Options[])[0]?.attributeVal
+})
 const isOverflow = ref(false)
 const currentIndex = ref(0)
 
 let tabWidth = 0
+let tabInitialized = false
 const tabsWrapper: Element = ref(null)
 const tabPanels: Element = ref(null)
 
 const initTabWrap = async (): Promise<any> => {
   await nextTick()
+  const tabsDom: Element | null = document.querySelector('.tabs')
+  tabsWrapper.value = tabsDom
   return new Promise((res) => {
-    const tabsDom: Element | null = document.querySelector('.tabs')
-    tabsWrapper.value = tabsDom
     res({
       tabsDom,
       tabsWidth: tabsDom?.getBoundingClientRect().width as number
@@ -81,44 +90,65 @@ const initTabWrap = async (): Promise<any> => {
   })
 }
 const initTab = (tabsDom: Element | null, tabsWidth: number) => {
-  tabWidth = 0
-  tabPanels.value = tabsDom?.querySelectorAll('.tab')
-  slideWidth.value = tabPanels.value[0].offsetWidth
-  tabPanels.value.forEach(
-    (tab) => (tabWidth += tab.getBoundingClientRect().width)
-  )
-  isOverflow.value = tabWidth > tabsWidth
+  if (!tabInitialized) {
+    tabWidth = 0
+    tabPanels.value = tabsDom?.querySelectorAll('.tab')
+    const defaultTab = tabPanels.value?.[0]
+    const paddingRight = getTabPadding(defaultTab, 'paddingRight')
+
+    slideWidth.value = defaultTab.offsetWidth - +paddingRight
+    tabPanels.value.forEach(
+      (tab: Element) => (tabWidth += tab.getBoundingClientRect().width)
+    )
+    isOverflow.value = tabWidth > tabsWidth
+    tabInitialized = true
+  }
 }
 const init = async () => {
   const { tabsDom, tabsWidth } = await initTabWrap()
-  await nextTick()
   initTab(tabsDom, tabsWidth)
 }
+const onResize = () => {
+  tabInitialized = false
+  init()
+}
 watch(
-  () => tabs,
+  () => props.tabs,
   async (tabs) => {
-    await nextTick()
-    tabs.length && init()
+    if (tabs.length) {
+      await init()
+      if (value.value) {
+        currentIndex.value = props.tabs?.findIndex(
+          ({ attributeVal }: any) => attributeVal === value.value
+        )
+        moveSlide(currentIndex.value)
+      }
+    }
   },
   {
     immediate: true,
     deep: true
   }
 )
-onMounted(async () => window.addEventListener('resize', init, true))
-onUnmounted(() => window.removeEventListener('resize', init))
+onMounted(async () => window.addEventListener('resize', onResize, true))
+onUnmounted(() => window.removeEventListener('resize', onResize))
 
 const slideDistance = ref(0)
 const slideWidth = ref(0)
-const moveSlide = (index: number) => {
-  const self = tabPanels.value[index]
-  const paddingLeft = getComputedStyle(self).paddingLeft.replace('px', '')
+const getTabPadding = (el: Element, padding: string) =>
+  getComputedStyle(el)[padding].replace('px', '')
+const moveSlide = async (index: number = 0) => {
+  await nextTick()
+  const self = tabPanels.value?.[index]
+  const paddingLeft = getTabPadding(self, 'paddingLeft')
+  const paddingRight = getTabPadding(self, 'paddingRight')
   slideDistance.value = self.offsetLeft + +paddingLeft
+  slideWidth.value = self.offsetWidth - (+paddingLeft + +paddingRight)
 }
 const onTabClick = (attributeVal: string, index: number) => {
   currentIndex.value = index
-  emit('get-value', attributeVal)
   moveSlide(index)
+  emit('get-value', attributeVal)
 }
 const scroll = (dir) => {
   dir === 'left'
@@ -128,6 +158,6 @@ const scroll = (dir) => {
 </script>
 <style>
 .tabs::-webkit-scrollbar {
-  height: 0;
+  height: 0 !important;
 }
 </style>

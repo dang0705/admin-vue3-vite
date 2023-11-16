@@ -1,18 +1,8 @@
 export default [
   {
     type: 'selection',
-    width: '40'
-  },
-  {
-    type: 'selection',
     key: 'selection',
     width: '40',
-    fixed: 'left'
-  },
-  {
-    prop: 'paymentBankId',
-    label: '支付通道ID',
-    'min-width': 200,
     fixed: 'left'
   },
   {
@@ -31,18 +21,13 @@ export default [
     'min-width': 150
   },
   {
-    prop: 'sendBankName',
-    label: '付款开户行',
-    'min-width': 150
-  },
-  {
     prop: 'undertakerBankNumber',
     label: '承接人银行卡号',
     'min-width': 200
   },
   {
     prop: 'spName',
-    label: '服务商名称',
+    label: '服务商',
     'min-width': 150
   },
   {
@@ -50,7 +35,6 @@ export default [
     label: '支付通道',
     'min-width': 150
   },
-
   {
     prop: 'sendBankName',
     label: '付款开户行',
@@ -58,13 +42,29 @@ export default [
   },
   {
     prop: 'sendAccountNumber',
-    label: '付款账号',
+    label: '付款银行账号',
     'min-width': 150
   },
   {
     prop: 'merchantName',
     label: '商户',
     'min-width': 150
+  },
+  {
+    prop: 'taskAmount',
+    label: '任务承揽费(元)',
+    'min-width': 120,
+    align: 'right'
+  },
+  {
+    prop: 'taxWithheld',
+    label: '代扣税款(元)',
+    'min-width': 120
+  },
+  {
+    prop: 'paidAmount',
+    label: '实发金额(元)',
+    'min-width': 120
   },
   {
     prop: 'billName',
@@ -81,29 +81,6 @@ export default [
     label: '任务结算明细编号',
     'min-width': 200
   },
-
-  {
-    prop: 'taskUndertakerId',
-    label: '任务承接编号',
-    'min-width': 200
-  },
-  {
-    prop: 'taskAmount',
-    label: '任务金额(元)',
-    'min-width': 120,
-    align: 'right'
-  },
-  {
-    prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    'min-width': 120
-  },
-  {
-    prop: 'paidAmount',
-    label: '实发金额(元)',
-    'min-width': 120
-  },
-
   {
     prop: 'paymentInitiationTime',
     label: '结算时间',
@@ -120,9 +97,19 @@ export default [
     slot: true,
     'min-width': 150
   },
+  // {
+  //   prop: 'taskUndertakerId',
+  //   label: '任务承接编号',
+  //   'min-width': 200
+  // },
   {
     prop: 'payCause',
     label: '支付失败原因',
+    'min-width': 150
+  },
+  {
+    prop: 'receivingCardUpdateDesc',
+    label: '银行卡更换备注',
     'min-width': 150
   },
   {
