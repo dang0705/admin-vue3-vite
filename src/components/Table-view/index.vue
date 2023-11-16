@@ -98,6 +98,13 @@
                   <template v-if="column.value">
                     {{ column.value(row) }}
                   </template>
+                  <TableSlot
+                    v-else-if="helpers.isFunction(column.slot)"
+                    :slot-function="column.slot"
+                    :selections="selectObjs"
+                    :row="row"
+                    :confirm="confirm"
+                    :refresh="resetQuery" />
                 </slot>
                 <TableActions
                   v-if="column.prop === 'actions' && actions.length"
@@ -135,6 +142,7 @@ import tableViewProps from './props'
 import thousandthDivision from '/@/utils/thousandth-division'
 import TableActions from '/@/components/Table-view/Table-actions.vue'
 import apis from '/@/api'
+import helpers from '/@/utils/helpers'
 defineOptions({ name: 'TableView' })
 
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
