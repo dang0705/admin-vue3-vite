@@ -12,7 +12,9 @@
           transform: `translateX(${slideDistance}px)`
         }" />
       <li
-        v-for="({ label, value, attributeVal, auth = '' }, index) in tabs"
+        v-for="(
+          { label, value = undefined, attributeVal, auth = '' }, index
+        ) in tabs"
         v-auth="`${auth}`"
         :key="attributeVal"
         :class="[
@@ -30,7 +32,7 @@
         @click="onTabClick(attributeVal, index)">
         <span v-text="label" />
         <span
-          v-if="value"
+          v-if="value !== undefined"
           v-text="value"
           class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]"
           style="padding: 0 10px 0" />
@@ -91,7 +93,7 @@ const initTab = (tabsDom: Element | null, tabsWidth: number) => {
   if (!tabInitialized) {
     tabWidth = 0
     tabPanels.value = tabsDom?.querySelectorAll('.tab')
-    const defaultTab = tabPanels.value[0]
+    const defaultTab = tabPanels.value?.[0]
     const paddingRight = getTabPadding(defaultTab, 'paddingRight')
 
     slideWidth.value = defaultTab.offsetWidth - +paddingRight

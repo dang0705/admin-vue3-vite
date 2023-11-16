@@ -80,6 +80,7 @@ module.exports = {
 				'vue/no-deprecated-v-on-native-modifier': 'off',
 				'vue/multi-word-component-names': 'off',
 				'vue/no-setup-props-destructure': 'off',
+				'vue/no-v-for-template-key-on-child': 'off',
 				'no-useless-escape': 'off',
 				'no-sparse-arrays': 'off',
 				'no-prototype-builtins': 'off',
