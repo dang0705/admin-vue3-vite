@@ -8,13 +8,13 @@
       <el-form
         :model="dataForm"
         :rules="dataRules"
-        label-width="100px"
+        label-width="110px"
         ref="dataFormRef"
         v-loading="loading">
         <el-row :gutter="20">
           <!--            new for 2023.09.14 start-->
           <el-col :span="12" class="mb20">
-            <el-form-item label="账户类型" prop="levelType">
+            <el-form-item label="账户类型：" prop="levelType">
               <el-select
                 class="w100"
                 v-model="dataForm.levelType"
@@ -29,7 +29,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="登录账号" prop="username">
+            <el-form-item label="登录账号：" prop="username">
               <el-input
                 class="w100"
                 placeholder="用于登录的凭据，必须唯一"
@@ -37,7 +37,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="服务商授权" prop="spAuthScope">
+            <el-form-item label="服务商授权：" prop="spAuthScope">
               <el-select class="w100" v-model="dataForm.spAuthScope">
                 <el-option
                   v-for="{ label, value } in providerAuth"
@@ -48,7 +48,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item label="客户授权" prop="merchantAuthScope">
+            <el-form-item label="客户授权：" prop="merchantAuthScope">
               <el-select class="w100" v-model="dataForm.merchantAuthScope">
                 <el-option
                   v-for="{ label, value } in customerAuth"
@@ -71,7 +71,7 @@
 						</el-form-item>
 					</el-col>-->
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('sysuser.name')" prop="name">
+            <el-form-item :label="$t('sysuser.name') + '：'" prop="name">
               <el-input
                 clearable
                 placeholder="请输入姓名"
@@ -79,7 +79,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('sysuser.phone')" prop="phone">
+            <el-form-item :label="$t('sysuser.phone') + '：'" prop="phone">
               <el-input
                 clearable
                 placeholder="请输入手机号"
@@ -87,7 +87,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('sysuser.role')" prop="role">
+            <el-form-item :label="$t('sysuser.role') + '：'" prop="role">
               <el-select
                 class="w100"
                 clearable

@@ -8,23 +8,23 @@
     <el-form
       :model="form"
       :rules="dataRules"
-      label-width="90px"
+      label-width="110px"
       ref="dataFormRef"
       v-loading="loading">
-      <el-form-item :label="$t('sysrole.roleName')" prop="roleName">
+      <el-form-item :label="$t('sysrole.roleName') + '：'" prop="roleName">
         <el-input
           :placeholder="$t('sysrole.please_enter_a_role_name')"
           clearable
           v-model="form.roleName"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('sysrole.roleCode')" prop="roleCode">
+      <el-form-item :label="$t('sysrole.roleCode') + '：'" prop="roleCode">
         <el-input
           :placeholder="$t('sysrole.please_enter_the_role_Code')"
           :disabled="form.roleId !== ''"
           clearable
           v-model="form.roleCode"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('sysrole.roleDesc')" prop="roleDesc">
+      <el-form-item :label="$t('sysrole.roleDesc') + '：'" prop="roleDesc">
         <el-input
           :placeholder="$t('sysrole.please_enter_the_role_description')"
           maxlength="150"
@@ -32,7 +32,7 @@
           type="textarea"
           v-model="form.roleDesc"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('sysrole.status')" prop="enabled">
+      <el-form-item :label="$t('sysrole.status') + '：'" prop="enabled">
         <el-switch v-model="form.enabled" />
       </el-form-item>
     </el-form>
