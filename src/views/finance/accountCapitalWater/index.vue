@@ -9,79 +9,69 @@
     :getListFnName="getListFnName"
     :staticQuery="staticQuery"
     label-width="120px"
+    @get-tab-value="toggleTab"
+    :tabs="tabs"
     :exportAuth="
-      tabType === 1
+      tabType === '1'
         ? 'finance_merchantAccountCapitalWater_batch_export'
-        : tabType === 2
+        : tabType === '2'
         ? 'finance_spAccountCapitalWater_batch_export'
-        : tabType === 3
+        : tabType === '3'
         ? 'finance_platAccountCapitalWater_batch_export'
         : ''
     ">
     <!-- 伪代码 exportAuth -->
-    <template #tableTop>
-      <TabView
-        style="padding-left: 20px"
-        @toggleTab="toggleTab"
-        :tabs="tabs"></TabView>
-    </template>
     <template #actions="{ row: {} }"></template>
   </Table-view>
 </template>
 
 <script setup lang="ts">
 import { payChannel } from '/@/configuration/dynamic-control'
-const TabView = defineAsyncComponent(
-  () => import('/@/components/Table-view/Tab-view.vue')
-)
 
-const tabType = ref(1)
+const tabType = ref('1')
 const accountCapitalWaterRef = ref()
 const staticQuery = computed(() => {
   return {
-    isPlatform: tabType.value == 3 ? 1 : undefined
+    isPlatform: tabType.value === '3' ? 1 : undefined
   }
 })
 const getListFnName = computed(() => {
-  if (tabType.value == 1 || tabType.value == 3) {
+  if (tabType.value === '1' || tabType.value === '3') {
     return 'fetchList'
-  } else if (tabType.value == 2) {
+  } else if (tabType.value === '2') {
     return 'spAccountCapitalWaterPage'
   }
 })
 const downFileUrl = computed(() => {
-  if (tabType.value == 1) {
+  if (tabType.value === '1') {
     return '/finance/merchantAccountCapitalWater/export'
-  } else if (tabType.value == 2) {
+  } else if (tabType.value === '2') {
     return '/finance/spAccountCapitalWater/export'
-  } else if (tabType.value == 3) {
+  } else if (tabType.value === '3') {
     return '/finance/merchantAccountCapitalWater/export'
   }
 })
 const downFileName = computed(() => {
-  if (tabType.value == 1) {
+  if (tabType.value === '1') {
     return '商户资金账户.xlsx'
-  } else if (tabType.value == 2) {
+  } else if (tabType.value === '2') {
     return '服务商余额账户.xlsx'
-  } else if (tabType.value == 3) {
+  } else if (tabType.value === '3') {
     return '平台余额账户.xlsx'
   }
 })
 const tabs = ref([
   {
     label: '商户资金账户',
-    value: '',
-    attributeVal: 1
+    attributeVal: '1'
   },
   {
     label: '服务商余额账户',
-    value: '',
-    attributeVal: 2
+    attributeVal: '2'
   },
   {
     label: '平台余额账户',
-    value: '',
-    attributeVal: 3
+    attributeVal: '3'
   }
 ])
 // 商户资金账户
@@ -240,11 +230,11 @@ const columns3 = [
   }
 ]
 const columns = computed(() => {
-  if (tabType.value == 1) {
+  if (tabType.value === '1') {
     return columns1
-  } else if (tabType.value == 2) {
+  } else if (tabType.value === '2') {
     return columns2
-  } else if (tabType.value == 3) {
+  } else if (tabType.value === '3') {
     return columns3
   }
 })
@@ -343,14 +333,15 @@ const conditionForms2 = [
   payChannel()
 ]
 const conditionForms = computed(() => {
-  if (tabType.value == 1 || tabType.value == 2) {
+  if (tabType.value === '1' || tabType.value === '2') {
     return conditionForms1
-  } else if (tabType.value == 3) {
+  } else if (tabType.value === '3') {
     return conditionForms2
   }
 })
-const toggleTab = (item: any) => {
-  tabType.value = item.attributeVal
+
+const toggleTab = (attributeVal: string) => {
+  tabType.value = attributeVal
   nextTick(() => {
     accountCapitalWaterRef?.value.resetQuery()
   })

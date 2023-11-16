@@ -244,7 +244,7 @@ const onSelectionChange = (item: []) => {
 const resetQuery = () => {
   state.queryForm = {
     ...props.staticQuery,
-    ...(newTabs.value?.length
+    ...(newTabs.value?.length && newTabs.value[0].attributeName
       ? { [newTabs.value[0].attributeName]: tabValue.value }
       : {})
   }

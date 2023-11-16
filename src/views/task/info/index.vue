@@ -5,7 +5,7 @@
     :condition-forms="conditionForms"
     :actions="computedActions"
     labelWidth="120px">
-    <template #top-bar="{ otherInfo }">
+    <!-- <template #top-bar="{ otherInfo }">
       <el-button
         icon="folder-add"
         type="primary"
@@ -14,7 +14,7 @@
         v-auth="'core_task_add'">
         新 增
       </el-button>
-    </template>
+    </template> -->
     <template #TaskType="{ formData }">
       <el-form-item label="任务类型：">
         <TaskType
