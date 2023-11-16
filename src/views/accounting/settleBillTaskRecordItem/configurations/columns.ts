@@ -91,22 +91,22 @@ export default [
   {
     prop: 'undertaderStartTime',
     label: '承接开始时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
     prop: 'undertaderEndTime',
     label: '承接结束时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
-    prop: 'id',
+    prop: 'detailNumber',
     label: '任务结算明细编号',
     minWidth: 150
   },
   {
     prop: 'billSettleTime',
     label: '付款时间',
-    minWidth: 150
+    minWidth: 180
   },
   {
     prop: 'isEffectiveContract',
@@ -130,9 +130,9 @@ export default [
     minWidth: 100
   },
   {
-    prop: 'billSettleTime',
+    prop: 'paymentSuccessTime',
     label: '支付时间',
-    minWidth: 100
+    minWidth: 180
   },
   {
     prop: 'paymentStatus',

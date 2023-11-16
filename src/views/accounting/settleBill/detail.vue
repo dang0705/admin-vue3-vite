@@ -501,7 +501,7 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'id',
+    prop: 'detailNumber',
     label: '任务结算明细编号',
     minWidth: 150
   },
@@ -532,7 +532,7 @@ const indexThead = [
     minWidth: 100
   },
   {
-    prop: 'billSettleTime',
+    prop: 'paymentSuccessTime',
     label: '支付时间',
     minWidth: 100
   },

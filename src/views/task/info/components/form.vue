@@ -700,6 +700,9 @@ const getSpInfoData = () => {
 onMounted(() => {
   if (route.query.taskId) {
     gettaskData()
+  } else {
+    getMerchantInfoData()
+    getSpInfoData()
   }
 })
 
