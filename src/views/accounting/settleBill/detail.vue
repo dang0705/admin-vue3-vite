@@ -5,7 +5,6 @@
     module="core/settleBill.ts"
     getListFnName="taskRecordItem"
     :staticQuery="staticQuery"
-    isTab
     :condition-forms="conditionForms"
     downBlobFileUrl="xxx"
     exportAuth="core_settleBill_export"
@@ -525,10 +524,8 @@ const indexThead = [
     minWidth: 150
   },
   {
-    prop: 'billStatus',
+    prop: 'billStatusDesc',
     label: '结算状态',
-    value: ({ billStatus }: BatchUploadRecordPage) =>
-      batchMap.value.settle_status[billStatus],
     minWidth: 100
   },
   {

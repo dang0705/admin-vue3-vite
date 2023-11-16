@@ -1,41 +1,37 @@
 <template>
   <Table-view
     ref="waterSpPaymentBankRef"
-    :columns="tabType == 1 ? columns1 : columns2"
+    :columns="tabType === '1' ? columns1 : columns2"
     label-width="110px"
     :exportAuth="
-      tabType == 1
+      tabType === '1'
         ? 'finance_waterSpPaymentBank_export'
-        : tabType == 2
+        : tabType === '2'
         ? 'hro_waterBankCorporateLinkage_export'
         : ''
     "
     :condition-forms="conditionForms"
     :staticQuery="staticQuery"
     :down-blob-file-url="
-      tabType == 1
+      tabType === '1'
         ? '/finance/waterSpPaymentBank/export'
-        : tabType == 2
+        : tabType === '2'
         ? '/finance/waterBankCorporateLinkage/export'
         : ''
     "
+    @get-tab-value="toggleTab"
     :down-blob-file-name="
-      tabType == 1
+      tabType === '1'
         ? '手动维护银行流水.xlsx'
-        : tabType == 2
+        : tabType === '2'
         ? '银企直联银行流水.xlsx'
         : ''
     "
+    :tabs="tabs"
     :getListFnName="
-      tabType == 1 ? 'fetchList' : tabType == 2 ? 'waterBankPage' : ''
+      tabType === '1' ? 'fetchList' : tabType === '2' ? 'waterBankPage' : ''
     "
     module="finance/waterSpPaymentBank.ts">
-    <template #tableTop>
-      <TabView
-        style="padding-left: 20px"
-        @toggleTab="toggleTab"
-        :tabs="tabs"></TabView>
-    </template>
     <template #loanType="{ formData }">
       <el-form-item label="出入账状态:" prop="loanType">
         <el-select
@@ -53,7 +49,7 @@
     </template>
     <template #top-bar="{ otherInfo }">
       <el-button
-        v-if="tabType == 1"
+        v-if="tabType === '1'"
         v-auth="'finance_waterSpPaymentBank_import'"
         @click="addUnderTakerRef.openDialog()"
         icon="Upload"
@@ -81,7 +77,6 @@ const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
 const TabView = defineAsyncComponent(
   () => import('/@/components/Table-view/Tab-view.vue')
 )
-// tabs
 interface BatchUploadRecordPage {
   status: string
   loanType: string
@@ -91,7 +86,7 @@ const staticQuery = computed(() => {
     loanType: 10
   }
 })
-const tabType = ref(1)
+const tabType = ref('1')
 const loanType = ref(10)
 const waterSpPaymentBankRef = ref()
 const loanTypeOptions = [
@@ -123,13 +118,11 @@ const addUnderTakerForms = ref([
 const tabs = ref([
   {
     label: '手动维护',
-    value: '',
-    attributeVal: 1
+    attributeVal: '1'
   },
   {
     label: '银企直联',
-    value: '',
-    attributeVal: 2
+    attributeVal: '2'
   }
 ])
 const baseCols1 = [
@@ -288,14 +281,13 @@ const refreshDataList = () => {
   })
 }
 const handleFilter = (form: any) => {
-  console.log(123, form)
   loanType.value = form.loanType
   if (!form.loanType) {
     form.loanType = 10
   }
 }
-const toggleTab = (item: any) => {
-  tabType.value = item.attributeVal
+const toggleTab = (attributeVal: string) => {
+  tabType.value = attributeVal
   nextTick(() => {
     waterSpPaymentBankRef?.value.resetQuery()
   })

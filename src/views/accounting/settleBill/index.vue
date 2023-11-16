@@ -5,7 +5,6 @@
     :columns="columns"
     action-body="账单"
     module="core/settleBill.ts"
-    isTab
     labelWidth="120px">
     <template #top-bar="{ otherInfo }">
       <el-button

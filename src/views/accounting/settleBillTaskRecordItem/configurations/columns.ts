@@ -14,6 +14,16 @@ export default [
     width: '40'
   },
   {
+    prop: 'billName',
+    label: '账单名称',
+    minWidth: 100
+  },
+  {
+    prop: 'billNumber',
+    label: '账单编号',
+    minWidth: 100
+  },
+  {
     prop: 'undertakerName',
     label: '承接人',
     minWidth: 100

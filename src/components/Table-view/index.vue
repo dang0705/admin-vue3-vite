@@ -10,9 +10,9 @@
         name="tableTop"
         v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
       <Tab-view
-        v-if="isTab"
+        v-if="newTabs.length"
         :value="tabValue"
-        :tabs="state.countResp"
+        :tabs="newTabs"
         @get-value="handleTabClick" />
       <div class="mb8 w-full">
         <slot
@@ -169,6 +169,10 @@ const getDialogData = async (dialog: any) => {
   }
 }
 
+const newTabs = computed(() => {
+  return state.countResp || props.tabs
+})
+
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
@@ -192,14 +196,6 @@ const state: BasicTableProps = reactive<BasicTableProps>({
     : {}),
   tabsAuth: props.tabsAuth as string[],
   createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
-  // ...(props.isTab
-  // 	? {
-  // 			props: {
-  // 				item: 'list.records',
-  // 				totalCount: 'list.total',
-  // 			},
-  // 	  }
-  // 	: {}),
 })
 const {
   currentChangeHandle,
@@ -240,8 +236,8 @@ const onSelectionChange = (item: []) => {
 const resetQuery = () => {
   state.queryForm = {
     ...props.staticQuery,
-    ...(props.isTab && state.countResp?.length
-      ? { [state.countResp[0].attributeName]: tabValue.value }
+    ...(newTabs.value?.length
+      ? { [newTabs.value[0].attributeName]: tabValue.value }
       : {})
   }
   selectObjs.value = []
@@ -285,11 +281,13 @@ const tabValue = ref('')
 const getListByTab = (key: string, value: string) => {
   Object.assign(state.queryForm, { [key]: value })
   emit('get-tab-value', value)
-  getDataList()
+  if (!props.tabs.length) {
+    getDataList()
+  }
 }
 const handleTabClick = (value: string) => {
   tabValue.value = value
-  getListByTab(state.countResp?.[0]?.attributeName, value)
+  getListByTab(newTabs.value?.[0]?.attributeName, value)
 }
 
 const catchHistoryTabState = () => {

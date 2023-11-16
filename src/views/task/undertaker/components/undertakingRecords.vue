@@ -1,6 +1,5 @@
 <template>
   <Table-view
-    isTab
     noPadding
     ref="undertakingRecordsRef"
     :staticQuery="staticQuery"

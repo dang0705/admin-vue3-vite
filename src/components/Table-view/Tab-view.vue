@@ -67,9 +67,9 @@ const props = defineProps({
   }
 })
 
-const value = computed(
-  () => props.value || (props.tabs as Options[])[0]?.attributeVal
-)
+const value = computed(() => {
+  return props.value || (props.tabs as Options[])[0]?.attributeVal
+})
 const isOverflow = ref(false)
 const currentIndex = ref(0)
 

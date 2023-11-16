@@ -2,7 +2,6 @@
   <TableView
     :actions="actions"
     :columns="columns"
-    isTab
     module="core/settleBillTaskRecordItem.ts"
     :condition-forms="conditionForms"
     labelWidth="140px"

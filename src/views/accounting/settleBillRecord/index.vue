@@ -16,7 +16,6 @@
     "
     downBlobFileUrl="xxx"
     labelWidth="120px"
-    isTab
     module="core/settleBillRecord"
     @get-tab-value="tabType = $event">
     <!-- <template #top-bar="{ otherInfo }">

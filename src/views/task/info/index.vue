@@ -1,6 +1,5 @@
 <template>
   <TableView
-    isTab
     :columns="columns"
     module="core/task.ts"
     :condition-forms="conditionForms"
