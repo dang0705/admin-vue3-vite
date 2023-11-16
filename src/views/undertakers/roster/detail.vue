@@ -89,16 +89,10 @@
 
         <el-col :span="12" class="mb20">
           <el-form-item label="学历：" prop="undertakerEducation">
-            <el-select
-              placeholder=""
+            <el-input
               v-model="form.undertakerEducation"
-              disabled>
-              <el-option
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-                v-for="(item, index) in education"></el-option>
-            </el-select>
+              placeholder=""
+              disabled />
           </el-form-item>
         </el-col>
 
