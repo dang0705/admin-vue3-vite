@@ -75,10 +75,13 @@
 </template>
 
 <script setup lang="ts">
+import Array2Object from '/@/utils/array-2-object'
+import { payChannel } from '/@/configuration/dynamic-control'
+const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
 const TabView = defineAsyncComponent(
   () => import('/@/components/Table-view/Tab-view.vue')
 )
-import Array2Object from '/@/utils/array-2-object'
+// tabs
 interface BatchUploadRecordPage {
   status: string
   loanType: string
@@ -88,8 +91,6 @@ const staticQuery = computed(() => {
     loanType: 10
   }
 })
-const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
-import { payChannel } from '/@/configuration/dynamic-control'
 const tabType = ref(1)
 const loanType = ref(10)
 const waterSpPaymentBankRef = ref()

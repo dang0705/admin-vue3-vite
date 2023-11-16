@@ -1,4 +1,5 @@
 <template>
+  <!-- :getListFnName="" -->
   <TableView
     :columns="columns"
     :condition-forms="conditionForms"
@@ -7,7 +8,7 @@
       'core_settleBillRecord_sp_view'
     ]"
     :exportAuth="
-      tabType === '20' //  '20' means 任务结算单
+      tabType === '任务结算单' //  '20' means 任务结算单
         ? 'core_settleBillRecord_task_export'
         : tabType === '服务结算单'
         ? 'core_settleBillRecord_sp_export'

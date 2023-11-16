@@ -108,7 +108,7 @@ export default [
     'min-width': 150
   },
   {
-    prop: 'xxx',
+    prop: 'receivingCardUpdateDesc',
     label: '银行卡更换备注',
     'min-width': 150
   },

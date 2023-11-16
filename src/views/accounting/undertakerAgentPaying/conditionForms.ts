@@ -46,7 +46,10 @@ export default [
   {
     label: '支付时间',
     control: 'DateRange',
-    key: 'paymentSuccessTime'
+    key: 'paymentSuccessTime',
+    props: {
+      valueType: 'string'
+    }
   },
   payChannel()
 ]
