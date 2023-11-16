@@ -29,7 +29,7 @@
           index ? 'px-[16px]' : 'pr-[16px]',
           { 'text-primary': currentIndex == index }
         ]"
-        @click="onTabClick(attributeVal, index)">
+        @click="onTabClick($event, attributeVal, index)">
         <span v-text="label" />
         <span
           v-if="value !== undefined"
@@ -75,17 +75,19 @@ const currentIndex = ref(0)
 
 let tabWidth = 0
 let tabInitialized = false
-const tabsWrapper: Element = ref(null)
-const tabPanels: Element = ref(null)
+let tabsWrapperWidth = 0
+const tabsWrapper: HTMLElement = ref(null)
+const tabPanels: HTMLElement = ref(null)
 
 const initTabWrap = async (): Promise<any> => {
   await nextTick()
-  const tabsDom: Element | null = document.querySelector('.tabs')
+  const tabsDom: HTMLElement | null = document.querySelector('.tabs')
   tabsWrapper.value = tabsDom
   return new Promise((res) => {
+    tabsWrapperWidth = tabsDom?.getBoundingClientRect().width as number
     res({
       tabsDom,
-      tabsWidth: tabsDom?.getBoundingClientRect().width as number
+      tabsWidth: tabsWrapperWidth
     })
   })
 }
@@ -112,6 +114,7 @@ const onResize = () => {
   tabInitialized = false
   init()
 }
+let hasTabs = false
 watch(
   () => props.tabs,
   async (tabs) => {
@@ -121,7 +124,8 @@ watch(
         currentIndex.value = props.tabs?.findIndex(
           ({ attributeVal }: any) => attributeVal === value.value
         )
-        moveSlide(currentIndex.value)
+        !hasTabs && moveSlide(currentIndex.value)
+        hasTabs = true
       }
     }
   },
@@ -137,20 +141,21 @@ const slideDistance = ref(0)
 const slideWidth = ref(0)
 const getTabPadding = (el: Element, padding: string) =>
   getComputedStyle(el)[padding].replace('px', '')
-const moveSlide = async (index: number = 0) => {
+const moveSlide = async (index: number = 0, e?: any) => {
   await nextTick()
   const self = tabPanels.value?.[index]
+  console.log(e?.layerX)
   const paddingLeft = getTabPadding(self, 'paddingLeft')
   const paddingRight = getTabPadding(self, 'paddingRight')
   slideDistance.value = self.offsetLeft + +paddingLeft
   slideWidth.value = self.offsetWidth - (+paddingLeft + +paddingRight)
 }
-const onTabClick = (attributeVal: string, index: number) => {
+const onTabClick = (e: any, attributeVal: string, index: number) => {
   currentIndex.value = index
-  moveSlide(index)
+  moveSlide(index, e)
   emit('get-value', attributeVal)
 }
-const scroll = (dir) => {
+const scroll = (dir: string) => {
   dir === 'left'
     ? (tabsWrapper.value.scrollLeft -= 60)
     : (tabsWrapper.value.scrollLeft += 60)

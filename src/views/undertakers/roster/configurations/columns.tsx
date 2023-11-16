@@ -1,4 +1,4 @@
-export default (batchMap) => [
+export default (batchMap: Ref) => [
   {
     type: 'selection',
     width: 40
@@ -33,7 +33,7 @@ export default (batchMap) => [
     label: '学历',
     prop: 'undertakerEducation',
     minWidth: 60,
-    value: ({ undertakerEducation }) =>
+    value: ({ undertakerEducation }: any) =>
       batchMap?.value.education[undertakerEducation]
     // slot: true
   },
@@ -67,7 +67,7 @@ export default (batchMap) => [
     label: '是否银行四要素验证',
     prop: 'isBankFourEssentialFactor',
     minWidth: 160,
-    value: ({ isBankFourEssentialFactor }) =>
+    value: ({ isBankFourEssentialFactor }: any) =>
       isBankFourEssentialFactor == 0 ? '否' : '是'
   },
   {
