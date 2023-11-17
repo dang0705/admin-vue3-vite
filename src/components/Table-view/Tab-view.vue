@@ -20,10 +20,16 @@
         }" />
       <li
         v-for="(
-          { label, value = undefined, attributeVal, auth = '' }, index
+          {
+            [props.label]: label,
+            [props.value]: key,
+            value = undefined,
+            auth = ''
+          },
+          index
         ) in tabs"
         v-auth="`${auth}`"
-        :key="attributeVal"
+        :key="key"
         :class="[
           'tab',
           'flex',
@@ -37,7 +43,7 @@
           index ? 'px-[16px]' : 'pr-[16px]',
           { 'text-primary': currentIndex == index }
         ]"
-        @click="onTabClick($event, attributeVal, index)">
+        @click="onTabClick($event, key, index)">
         <span v-text="label" />
         <span
           v-if="value !== undefined"
@@ -72,18 +78,28 @@ interface Options {
 const emit = defineEmits(['get-value'])
 const id = `tabs-${generateUUID()}`
 const props = defineProps({
-  value: {
+  // parent value
+  modelValue: {
     type: String,
     default: ''
   },
   tabs: {
     type: Array,
     default: () => []
+  },
+  // custom data field
+  label: {
+    type: String,
+    default: 'label'
+  },
+  value: {
+    type: String,
+    default: 'attributeVal'
   }
 })
 
-const value = computed(
-  () => props.value || (props.tabs as Options[])[0]?.attributeVal
+const currentValue = computed(
+  () => props.modelValue || (props.tabs as Options[])[0]?.attributeVal
 )
 const isOverflow = ref(false)
 const currentIndex = ref(0)
@@ -140,9 +156,9 @@ watch(
   async (tabs) => {
     if (tabs.length) {
       await init()
-      if (value.value) {
+      if (currentValue.value) {
         currentIndex.value = props.tabs?.findIndex(
-          ({ attributeVal }: any) => attributeVal === value.value
+          ({ attributeVal }: any) => attributeVal === currentValue.value
         )
         !hasTabs && moveSlide({ once: true })
         hasTabs = true
@@ -203,14 +219,14 @@ const scroll = (dir: string) => {
   isDisabledDirection()
 }
 
-// Direction arrow is disable
+// limit direction arrow  disable
 const isDisabledDirection = () => {
   const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
   tabsScrollLeft.value = tabsWrapper.value.scrollLeft
   tabScrollIsEnd = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
 }
 </script>
-<style>
+<style scoped>
 .tabs::-webkit-scrollbar {
   height: 0 !important;
 }

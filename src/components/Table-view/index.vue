@@ -11,7 +11,7 @@
         v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
       <Tab-view
         v-if="newTabs.length"
-        :value="tabValue"
+        :model-value="tabValue"
         :tabs="newTabs"
         @get-value="handleTabClick" />
       <div class="mb8 w-full">
