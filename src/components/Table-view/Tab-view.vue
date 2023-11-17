@@ -189,7 +189,7 @@ const moveSlide = async ({ e = null, once }: Move) => {
 const onTabClick = (e: any, attributeVal: string, index: number) => {
   currentIndex.value = index
   moveSlide({ e })
-  // emit('get-value', attributeVal)
+  emit('get-value', attributeVal)
 }
 
 let tabScrollIsEnd = false
