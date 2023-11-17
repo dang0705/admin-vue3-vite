@@ -196,7 +196,7 @@
             <el-form-item
               :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
               prop="taxRegistrationNumber">
-              <InputPlus readonly v-model="form.socialCreditCode" />
+              <InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
               <!-- <span>{{ form.socialCreditCode }}</span> -->
             </el-form-item>
           </el-col>

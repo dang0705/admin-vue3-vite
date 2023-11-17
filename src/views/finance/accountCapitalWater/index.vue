@@ -116,7 +116,7 @@ const columns1 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
@@ -172,7 +172,7 @@ const columns2 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
@@ -218,7 +218,7 @@ const columns3 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
