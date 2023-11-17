@@ -24,16 +24,18 @@ const TableSlot = {
     }
   },
   render() {
-    return h(
-      'div',
-      {},
-      this.slotFunction({
-        row: this.row,
-        selections: this.selections,
-        refresh: this.refresh,
-        confirm: this.confirm
-      })
-    )
+    return Object.keys(this.row).length
+      ? h(
+          'div',
+          {},
+          this.slotFunction({
+            row: this.row,
+            selections: this.selections,
+            refresh: this.refresh,
+            confirm: this.confirm
+          })
+        )
+      : null
   }
 }
 </script>

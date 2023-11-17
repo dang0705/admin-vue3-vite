@@ -78,5 +78,9 @@ export const customComponents = [
   {
     name: 'FetchTips',
     component: () => import('/@/components/form-controls/FetchTips.vue')
+  },
+  {
+    name: 'TableSlot',
+    component: () => import('/@/components/form-controls/Table-slot.vue')
   }
 ]
