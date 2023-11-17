@@ -6,7 +6,34 @@
     :condition-forms="conditionForms"
     labelWidth="140px"
     exportAuth="core_settleBillTaskRecordItem_export"
-    downBlobFileUrl="xxx"></TableView>
+    downBlobFileUrl="xxx">
+    <template #billName="{ row }">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/accounting/settleBill/detail',
+          query: {
+            id: row.settleBillId
+          },
+          state: 1
+        }">
+        {{ row.billName }}
+      </router-link>
+    </template>
+    <template #billNumber="{ row }">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/accounting/settleBill/detail',
+          query: {
+            id: row.settleBillId
+          },
+          state: 1
+        }">
+        {{ row.billNumber }}
+      </router-link>
+    </template>
+  </TableView>
 </template>
 
 <script setup lang="ts">

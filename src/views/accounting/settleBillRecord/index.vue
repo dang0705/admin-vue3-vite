@@ -1,5 +1,5 @@
+<!-- :getListFnName="" -->
 <template>
-  <!-- :getListFnName="" -->
   <TableView
     :columns="columns"
     :condition-forms="conditionForms"
@@ -18,24 +18,31 @@
     labelWidth="120px"
     module="core/settleBillRecord"
     @get-tab-value="tabType = $event">
-    <!-- <template #top-bar="{ otherInfo }">
-			<el-button @click="handleBtn" style="margin-right: 24px" icon="download" type="primary" class="ml10"> 批量导出 </el-button>
-		</template> -->
     <template #settleBillName="{ row }">
-      <a
-        @click="handleAction('view', row)"
-        href="javascript:;"
-        class="hover:underline text-blue-400">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/accounting/settleBill/detail',
+          query: {
+            id: row.settleBillId
+          },
+          state: 1
+        }">
         {{ row.settleBillName }}
-      </a>
+      </router-link>
     </template>
     <template #billNumber="{ row }">
-      <a
-        @click="handleAction('view', row)"
-        href="javascript:;"
-        class="hover:underline text-blue-400">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/accounting/settleBill/detail',
+          query: {
+            id: row.settleBillId
+          },
+          state: 1
+        }">
         {{ row.billNumber }}
-      </a>
+      </router-link>
     </template>
   </TableView>
 </template>
@@ -186,22 +193,6 @@ const conditionForms = [
 // const handleBtn = () => {
 //   useMessage().wraning('功能正在开发, 请等待~')
 // }
-
-const handleAction = async (type: string, row: any) => {
-  switch (type) {
-    case 'view':
-      router.push({
-        path: '/accounting/settleBill/detail',
-        query: {
-          id: row.settleBillId
-        },
-        state: {
-          refresh: 1
-        }
-      })
-      break
-  }
-}
 </script>
 <script lang="ts">
 export default {

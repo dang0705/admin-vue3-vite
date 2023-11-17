@@ -101,7 +101,7 @@ const columns1 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -157,7 +157,7 @@ const columns2 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -203,7 +203,7 @@ const columns3 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -263,29 +263,30 @@ const conditionForms1 = [
     control: 'el-select',
     key: 'cause',
     label: '类型',
-    options: [
-      // 伪代码
-      {
-        label: '充值',
-        value: '1'
-      },
-      {
-        label: '充值退款',
-        value: '2'
-      },
-      {
-        label: '任务支出',
-        value: '3'
-      },
-      {
-        label: '管理费支出',
-        value: '4'
-      },
-      {
-        label: '服务费支出',
-        value: '5'
-      }
-    ]
+    options: 'fund_occurrence_cause'
+    // options: [
+    //   // 伪代码
+    //   {
+    //     label: '充值',
+    //     value: '1'
+    //   },
+    //   {
+    //     label: '充值退款',
+    //     value: '2'
+    //   },
+    //   {
+    //     label: '任务支出',
+    //     value: '3'
+    //   },
+    //   {
+    //     label: '管理费支出',
+    //     value: '4'
+    //   },
+    //   {
+    //     label: '服务费支出',
+    //     value: '5'
+    //   }
+    // ]
   },
   {
     control: 'DateRange',
