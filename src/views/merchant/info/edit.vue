@@ -1,19 +1,21 @@
 <template>
-	<div class="layout-padding cache overflow-auto">
-		<div class="layout-padding-auto layout-padding-view">
-			<merchantInfo-form />
-		</div>
-	</div>
+  <div class="layout-padding cache overflow-auto">
+    <div class="layout-padding-auto layout-padding-view">
+      <merchantInfo-form />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-const merchantInfoForm = defineAsyncComponent(() => import('./components/form.vue'));
+const MerchantInfoForm = defineAsyncComponent(
+  () => import('./components/form.vue')
+)
 </script>
 
 <script lang="ts">
 export default {
-	created() {
-		this.$options.name = this.$route.meta.title;
-	},
-};
+  created() {
+    this.$options.name = this.$route.meta.title
+  }
+}
 </script>
