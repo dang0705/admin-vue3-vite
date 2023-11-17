@@ -16,6 +16,7 @@
 import { useThemeConfig } from '/@/stores/themeConfig'
 import logo from '/@/assets/menu-logo.png'
 import logoMini from '/@/assets/logo-mini.webp'
+import widthThrottle from '/@/configuration/width-throttle'
 defineOptions({ name: 'layoutLogo' })
 // 定义变量内容
 const storesThemeConfig = useThemeConfig()
@@ -24,7 +25,11 @@ const { themeConfig } = storeToRefs(storesThemeConfig)
 // 设置 logo 的显示。classic 经典布局默认显示 logo
 const setShowLogo = computed(() => {
   let { isCollapse, layout } = themeConfig.value
-  return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000
+  return (
+    !isCollapse ||
+    layout === 'classic' ||
+    document.body.clientWidth < widthThrottle
+  )
 })
 // logo 点击实现菜单展开/收起
 const onThemeConfigChange = () => {

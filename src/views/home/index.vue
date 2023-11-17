@@ -175,32 +175,6 @@ const dashboardData = {
         20: '#1D2129'
       }
     }
-    /*    {
-      title: '承接人',
-      img: 'undertaker',
-      data: [
-        {
-          label: '承接人',
-          value: 10,
-          status: 3
-        },
-        {
-          label: '任务承接记录',
-          value: 10,
-          status: 3
-        }
-      ],
-      statusMap: {
-        10: '#2C80FF',
-        20: '#1D2129'
-      }
-    }*/
-    /*	{
-			title: '客户占比',
-			img: 'customerProportion',
-			charts: true,
-			data: [],
-		},*/
   ]
 }
 /*onMounted(async () => {

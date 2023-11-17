@@ -1,4 +1,6 @@
+@import "/@/theme/variables";
 @import './index.scss';
+
 
 /* 页面宽度小于576px
 ------------------------------- */
@@ -33,7 +35,7 @@
 
 /* 页面宽度小于1000px
 ------------------------------- */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: $width-throttle) {
 	// 布局配置
 	.layout-drawer-content-flex {
 		position: relative;
