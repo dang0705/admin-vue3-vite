@@ -181,10 +181,11 @@ const moveSlide = async ({ e = null, once }: Move) => {
   slideDistance.value = currentTab.value.offsetLeft + +paddingLeft
   slideWidth.value =
     currentTab.value.offsetWidth - (+paddingLeft + +paddingRight)
-  once &&
-    isOverflow.value &&
-    (tabsWrapper.value.scrollLeft =
-      currentTab.value.offsetLeft - currentTab.value.offsetWidth)
+  if (once && isOverflow.value) {
+    tabsWrapper.value.scrollLeft =
+      currentTab.value.offsetLeft - currentTab.value.offsetWidth
+    isDisabledDirection()
+  }
 }
 const onTabClick = (e: any, attributeVal: string, index: number) => {
   currentIndex.value = index
@@ -196,11 +197,15 @@ let tabScrollIsEnd = false
 const scroll = (dir: string) => {
   const isLeft = dir === 'left'
   const { offsetWidth } = currentTab.value
-  const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
   isLeft
     ? (tabsWrapper.value.scrollLeft -= offsetWidth)
     : (tabsWrapper.value.scrollLeft += offsetWidth)
+  isDisabledDirection()
+}
 
+// Direction arrow is disable
+const isDisabledDirection = () => {
+  const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
   tabsScrollLeft.value = tabsWrapper.value.scrollLeft
   tabScrollIsEnd = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
 }
