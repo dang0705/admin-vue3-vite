@@ -3,8 +3,9 @@
   <div>
     <el-dialog
       :title="title"
-      v-model="state.upload.open"
       :close-on-click-modal="false"
+      :width="width"
+      v-model="state.upload.open"
       draggable>
       <div class="guidance mb10">
         <p v-html="guidance" />
@@ -197,6 +198,10 @@ const prop = defineProps({
   labelWidth: {
     type: [String, Number],
     default: 140
+  },
+  width: {
+    type: [Number, String],
+    default: '640px'
   }
 })
 const valid = ref(false)

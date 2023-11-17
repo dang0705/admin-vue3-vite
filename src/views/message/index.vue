@@ -50,8 +50,6 @@ const readMarkAll = async (refresh: any) => {
   <Table-view
     module="docs/message.ts"
     :columns="columns"
-    noFormView
-    no-header
     :border="false"
     v-model="selectObjs">
     <template #top-bar>
