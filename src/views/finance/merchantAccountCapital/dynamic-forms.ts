@@ -110,7 +110,7 @@ export const formsFunc = (reType: any, form: any) => {
           }
         },
         {
-          control: 'InputPlus',
+          control: 'InputNumber',
           key: 'receiptAmount',
           label: '申请退款金额',
           rules: [
@@ -121,8 +121,7 @@ export const formsFunc = (reType: any, form: any) => {
             }
           ],
           props: {
-            type: 'number',
-            append: '元'
+            unit: '元'
           }
         },
         {
