@@ -1,10 +1,17 @@
 <template>
-  <div class="flex items-center relative border-b mb-[10px] overflow-x-hidden">
+  <div
+    class="tabs-wrapper flex items-center relative border-b mb-[10px] overflow-x-hidden">
     <ArrowLeft
       v-if="isOverflow"
-      @click.passive="scroll('left')"
-      class="w-[16px] h-[16px] cursor-pointer" />
-    <ul class="flex items-center tabs overflow-x-auto relative">
+      @click.passive="tabsScrollLeft ? scroll('left') : null"
+      :class="[
+        'w-[16px]',
+        'h-[16px]',
+        'cursor-pointer',
+        'mr-[4px]',
+        { disabled: !tabsScrollLeft }
+      ]" />
+    <ul :id="id" class="flex items-center tabs overflow-x-auto relative">
       <li
         class="slider h-[2px] absolute bottom-0 bg-primary transition-transform"
         :style="{
@@ -26,6 +33,7 @@
           'py-[8px]',
           'text-[14px]',
           'box-border',
+          'select-none',
           index ? 'px-[16px]' : 'pr-[16px]',
           { 'text-primary': currentIndex == index }
         ]"
@@ -40,13 +48,20 @@
     </ul>
     <ArrowRight
       v-if="isOverflow"
-      @click.passive="scroll('right')"
-      class="w-[1em] h-[1em] cursor-pointer" />
+      @click.passive="tabScrollIsEnd ? null : scroll('right')"
+      :class="[
+        'w-[16px]',
+        'h-[16px]',
+        'cursor-pointer',
+        'ml-[4px]',
+        { disabled: tabScrollIsEnd }
+      ]" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
+import { generateUUID } from '/@/utils/other'
 
 defineOptions({ name: 'Tab-view' })
 interface Options {
@@ -55,7 +70,7 @@ interface Options {
 }
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['get-value'])
-
+const id = `tabs-${generateUUID()}`
 const props = defineProps({
   value: {
     type: String,
@@ -67,48 +82,53 @@ const props = defineProps({
   }
 })
 
-const value = computed(() => {
-  return props.value || (props.tabs as Options[])[0]?.attributeVal
-})
+const value = computed(
+  () => props.value || (props.tabs as Options[])[0]?.attributeVal
+)
 const isOverflow = ref(false)
 const currentIndex = ref(0)
 
 let tabWidth = 0
 let tabInitialized = false
 let tabsWrapperWidth = 0
+let tabsScrollLeft = ref(0)
+
 const tabsWrapper: HTMLElement = ref(null)
 const tabPanels: HTMLElement = ref(null)
 
+const initWrapWidth = () => {
+  tabsWrapper.value = document.querySelector(`#${id}`)
+  tabsWrapperWidth = tabsWrapper.value?.getBoundingClientRect().width as number
+  return tabsWrapperWidth
+}
 const initTabWrap = async (): Promise<any> => {
   await nextTick()
-  const tabsDom: HTMLElement | null = document.querySelector('.tabs')
-  tabsWrapper.value = tabsDom
-  return new Promise((res) => {
-    tabsWrapperWidth = tabsDom?.getBoundingClientRect().width as number
+  const tabsWidth = initWrapWidth()
+  return new Promise((res) =>
     res({
-      tabsDom,
-      tabsWidth: tabsWrapperWidth
+      tabsWidth
     })
-  })
+  )
 }
-const initTab = (tabsDom: Element | null, tabsWidth: number) => {
+const initTab = async (tabsWidth: number) => {
   if (!tabInitialized) {
     tabWidth = 0
-    tabPanels.value = tabsDom?.querySelectorAll('.tab')
+    tabPanels.value = tabsWrapper.value?.querySelectorAll('.tab')
     const defaultTab = tabPanels.value?.[0]
     const paddingRight = getTabPadding(defaultTab, 'paddingRight')
-
     slideWidth.value = defaultTab.offsetWidth - +paddingRight
     tabPanels.value.forEach(
       (tab: Element) => (tabWidth += tab.getBoundingClientRect().width)
     )
     isOverflow.value = tabWidth > tabsWidth
+    await nextTick()
+    isOverflow.value && (tabsWrapperWidth = initWrapWidth())
     tabInitialized = true
   }
 }
 const init = async () => {
-  const { tabsDom, tabsWidth } = await initTabWrap()
-  initTab(tabsDom, tabsWidth)
+  const { tabsWidth } = await initTabWrap()
+  initTab(tabsWidth)
 }
 const onResize = () => {
   tabInitialized = false
@@ -124,7 +144,7 @@ watch(
         currentIndex.value = props.tabs?.findIndex(
           ({ attributeVal }: any) => attributeVal === value.value
         )
-        !hasTabs && moveSlide(currentIndex.value)
+        !hasTabs && moveSlide({ once: true })
         hasTabs = true
       }
     }
@@ -139,30 +159,58 @@ onUnmounted(() => window.removeEventListener('resize', onResize))
 
 const slideDistance = ref(0)
 const slideWidth = ref(0)
+
 const getTabPadding = (el: Element, padding: string) =>
   getComputedStyle(el)[padding].replace('px', '')
-const moveSlide = async (index: number = 0, e?: any) => {
+
+const currentTab = computed(() => tabPanels.value[currentIndex.value])
+interface Move {
+  e?: any
+  once?: boolean
+}
+const moveSlide = async ({ e = null, once }: Move) => {
   await nextTick()
-  const self = tabPanels.value?.[index]
-  console.log(e?.layerX)
-  const paddingLeft = getTabPadding(self, 'paddingLeft')
-  const paddingRight = getTabPadding(self, 'paddingRight')
-  slideDistance.value = self.offsetLeft + +paddingLeft
-  slideWidth.value = self.offsetWidth - (+paddingLeft + +paddingRight)
+  // overRight
+  e?.layerX + currentTab.value.offsetWidth > tabsWrapperWidth && scroll('right')
+  // overLeft
+  tabsWrapper.value.scrollLeft &&
+    e?.layerX < currentTab.value.offsetWidth &&
+    scroll('left')
+  const paddingLeft = getTabPadding(currentTab.value, 'paddingLeft')
+  const paddingRight = getTabPadding(currentTab.value, 'paddingRight')
+  slideDistance.value = currentTab.value.offsetLeft + +paddingLeft
+  slideWidth.value =
+    currentTab.value.offsetWidth - (+paddingLeft + +paddingRight)
+  once &&
+    isOverflow.value &&
+    (tabsWrapper.value.scrollLeft =
+      currentTab.value.offsetLeft - currentTab.value.offsetWidth)
 }
 const onTabClick = (e: any, attributeVal: string, index: number) => {
   currentIndex.value = index
-  moveSlide(index, e)
-  emit('get-value', attributeVal)
+  moveSlide({ e })
+  // emit('get-value', attributeVal)
 }
+
+let tabScrollIsEnd = false
 const scroll = (dir: string) => {
-  dir === 'left'
-    ? (tabsWrapper.value.scrollLeft -= 60)
-    : (tabsWrapper.value.scrollLeft += 60)
+  const isLeft = dir === 'left'
+  const { offsetWidth } = currentTab.value
+  const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
+  isLeft
+    ? (tabsWrapper.value.scrollLeft -= offsetWidth)
+    : (tabsWrapper.value.scrollLeft += offsetWidth)
+
+  tabsScrollLeft.value = tabsWrapper.value.scrollLeft
+  tabScrollIsEnd = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
 }
 </script>
 <style>
 .tabs::-webkit-scrollbar {
   height: 0 !important;
+}
+.tabs-wrapper svg.disabled {
+  opacity: 0.4;
+  cursor: not-allowed !important;
 }
 </style>
