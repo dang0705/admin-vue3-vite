@@ -34,7 +34,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="section" v-loading="loading">
+  <div v-loading="loading">
     <slot />
     <ul class="flex min-h-[68px]">
       <li
@@ -42,28 +42,29 @@ onMounted(async () => {
         :class="[
           'flex',
           'flex-col',
-          'items-center',
           'flex-shrink-0',
           'item-data',
+          'cursor-pointer',
+          'group',
+          'hover:text-primary',
           { 'border-left': index }
         ]"
         :key="label"
         :style="{
-          color: item.statusMap[+attributeVal],
           width: `calc(100% / ${data.length})`
-        }">
-        <span v-text="label" class="text-[14px] leading-10" />
+        }"
+        @click="
+          $router.push({
+            path: item.routes ? item.routes[index] : item.route,
+            ...(noQueryLabels.includes(label)
+              ? {}
+              : { state: { tabValue: attributeVal, tabKey: attributeName } })
+          })
+        ">
         <span
           v-text="value"
-          class="text-[28px] leading-[1] cursor-pointer hover:underline"
-          @click="
-            $router.push({
-              path: item.routes ? item.routes[index] : item.route,
-              ...(noQueryLabels.includes(label)
-                ? {}
-                : { state: { tabValue: attributeVal, tabKey: attributeName } })
-            })
-          " />
+          class="text-[18px] leading-[1] cursor-pointer group-hover:underline mt-[16px]" />
+        <span v-text="label" class="text-[14px] leading-[20px] mt-[5px]" />
       </li>
       <li class="w-full flex justify-center items-center">
         <span v-if="!data.length" class="flex justify-center">暂无数据</span>
@@ -71,20 +72,3 @@ onMounted(async () => {
     </ul>
   </div>
 </template>
-
-<style scoped lang="postcss">
-a {
-  color: #0065ff;
-}
-.section {
-  @apply rounded-normal bg-white px-[30px] py-[20px] mb-[18px];
-  h2 {
-    color: #2b3674;
-  }
-}
-.item-data {
-  &.border-left {
-    border-left: 1px solid #ccc;
-  }
-}
-</style>
