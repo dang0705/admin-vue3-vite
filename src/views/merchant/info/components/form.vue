@@ -21,7 +21,7 @@
           </el-col>
 
           <el-col :span="12" class="mb20 formBox">
-            <div style="min-width: 160px" class="com_label require">行业</div>
+            <div style="min-width: 160px" class="com_label require">行业：</div>
             <el-form-item label-width="0" prop="industryLevel1">
               <el-select
                 :disabled="isDetail"
