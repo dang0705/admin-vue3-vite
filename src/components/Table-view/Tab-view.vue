@@ -11,7 +11,7 @@
         'mr-[4px]',
         { disabled: !tabsScrollLeft }
       ]" />
-    <ul :id="id" class="flex items-center tabs overflow-x-auto relative">
+    <ul :id="id" class="flex items-center tabs overflow-x-auto relative w-full">
       <li
         class="slider h-[2px] absolute bottom-0 bg-primary transition-transform"
         :style="{
