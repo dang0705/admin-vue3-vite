@@ -80,7 +80,7 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
                 { required: true, message: '驳回原因不能为空', trigger: 'blur' }
               ],
               props: {
-                rows: 3,
+                rows: 5,
                 showWordLimit: true,
                 type: 'textarea'
               },

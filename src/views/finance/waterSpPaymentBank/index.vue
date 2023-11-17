@@ -1,7 +1,7 @@
 <template>
   <Table-view
     ref="waterSpPaymentBankRef"
-    :columns="tabType === '1' ? columns1 : columns2"
+    :columns="columns"
     label-width="110px"
     :exportAuth="
       tabType === '1'
@@ -11,7 +11,6 @@
         : ''
     "
     :condition-forms="conditionForms"
-    :staticQuery="staticQuery"
     :down-blob-file-url="
       tabType === '1'
         ? '/finance/waterSpPaymentBank/export'
@@ -32,7 +31,7 @@
       tabType === '1' ? 'fetchList' : tabType === '2' ? 'waterBankPage' : ''
     "
     module="finance/waterSpPaymentBank.ts">
-    <template #loanType="{ formData }">
+    <!-- <template #loanType="{ formData }">
       <el-form-item label="出入账状态:" prop="loanType">
         <el-select
           @change="handleFilter(formData)"
@@ -46,7 +45,7 @@
             v-for="item in loanTypeOptions" />
         </el-select>
       </el-form-item>
-    </template>
+    </template> -->
     <template #top-bar="{ otherInfo }">
       <el-button
         v-if="tabType === '1'"
@@ -71,34 +70,11 @@
 </template>
 
 <script setup lang="ts">
-import Array2Object from '/@/utils/array-2-object'
 import { payChannel } from '/@/configuration/dynamic-control'
-const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
-const TabView = defineAsyncComponent(
-  () => import('/@/components/Table-view/Tab-view.vue')
-)
-interface BatchUploadRecordPage {
-  status: string
-  loanType: string
-}
-const staticQuery = computed(() => {
-  return {
-    loanType: 10
-  }
-})
+import columns from './configurations/columns'
+import conditionForms from './configurations/condition-forms'
 const tabType = ref('1')
-const loanType = ref(10)
 const waterSpPaymentBankRef = ref()
-const loanTypeOptions = [
-  {
-    label: '入账',
-    value: 10
-  },
-  {
-    label: '出账',
-    value: 20
-  }
-]
 const addUnderTakerRef = ref()
 const addUnderTakerForms = ref([
   {
@@ -125,166 +101,10 @@ const tabs = ref([
     attributeVal: '2'
   }
 ])
-const baseCols1 = [
-  {
-    type: 'selection',
-    width: '40'
-  },
-  {
-    prop: 'spName',
-    label: '服务商',
-    'min-width': 150
-  },
-  {
-    prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 150
-  },
-  {
-    prop: 'amount',
-    label: '入账金额(元)',
-    'min-width': 150
-  },
-  {
-    prop: 'reciprocalAccountName',
-    label: '对方户名',
-    'min-width': 150
-  },
-  {
-    prop: 'reciprocalAccountNumber',
-    label: '对方银行账号',
-    'min-width': 150
-  },
-  {
-    prop: 'dealTime',
-    label: '交易时间',
-    'min-width': 150
-  }
-]
-const baseCols2 = [
-  {
-    type: 'selection',
-    width: '40'
-  },
-  {
-    prop: 'spName',
-    label: '服务商',
-    'min-width': 150
-  },
-  {
-    prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 150
-  },
-  {
-    prop: 'amount',
-    label: '发生金额(元)',
-    'min-width': 150
-  },
-  {
-    prop: 'loanType',
-    label: '出入账类型',
-    'min-width': 150
-    // 伪代码
-    // value: ({ loanType }: BatchUploadRecordPage) => loanTypeOptions[loanType],
-  },
-  {
-    prop: 'reciprocalAccountName',
-    label: '对方户名',
-    'min-width': 150
-  },
-  {
-    prop: 'reciprocalAccountNumber',
-    label: '对方银行账号',
-    'min-width': 150
-  },
-  {
-    prop: 'dealTime',
-    label: '交易时间',
-    'min-width': 150
-  }
-]
-const columns1 = computed(() => {
-  return [
-    ...baseCols1,
-    ...(loanType.value == 10
-      ? [
-          {
-            prop: 'status',
-            label: '状态',
-            'min-width': 150,
-            value: ({ status }: BatchUploadRecordPage) =>
-              batchMap.value.water_sp_payment_bank_status[status]
-          }
-        ]
-      : [])
-  ]
-})
-const columns2 = computed(() => {
-  return [
-    ...baseCols2,
-    ...(loanType.value == 10
-      ? [
-          {
-            prop: 'status',
-            label: '状态',
-            'min-width': 150,
-            value: ({ status }: BatchUploadRecordPage) =>
-              batchMap.value.water_sp_payment_bank_status[status]
-          }
-        ]
-      : [])
-  ]
-})
-
-const conditionForms = [
-  {
-    control: 'SpSelect',
-    key: 'spId',
-    label: '服务商',
-    props: {
-      platform: true
-    }
-  },
-  {
-    control: 'DateRange',
-    key: 'dealTimeRange',
-    label: '交易时间',
-    props: {
-      valueType: 'string'
-    }
-  },
-  {
-    control: 'el-select',
-    key: 'loanType',
-    label: '出入账状态',
-    slot: true,
-    options: [
-      {
-        label: '入账',
-        value: 10
-      },
-      {
-        label: '出账',
-        value: 20
-      }
-    ],
-    value: 10
-    // props: {
-    //   disabled: true
-    // }
-  }
-]
 const refreshDataList = () => {
   nextTick(() => {
     waterSpPaymentBankRef?.value.resetQuery()
   })
-}
-const handleFilter = (form: any) => {
-  loanType.value = form.loanType
-  if (!form.loanType) {
-    form.loanType = 10
-  }
 }
 const toggleTab = (attributeVal: string) => {
   tabType.value = attributeVal
