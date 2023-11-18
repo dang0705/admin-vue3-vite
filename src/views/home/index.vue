@@ -87,12 +87,15 @@
               详情 &nbsp; &gt;
             </div> -->
             <div
-              @mouseenter="row.show = false"
-              v-if="row.show"
-              class="text-[12px] text-[#999999] py-[10px]">
+              @mouseenter.passive="row.show = false"
+              v-show="row.show"
+              class="text-[12px] text-[#999] py-[10px] h-full cursor-pointer">
               {{ row.createTime }}
             </div>
-            <div class="py-[10px]" v-else @mouseleave="row.show = true">
+            <div
+              class="py-[10px]"
+              v-show="!row.show"
+              @mouseleave.passive="row.show = true">
               <el-tooltip
                 content="设为已读"
                 placement="top"
