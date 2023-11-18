@@ -5,11 +5,6 @@ export default [
     control: 'el-input'
   },
   {
-    label: '社会统一信用代码',
-    key: 'socialCreditCode',
-    control: 'el-input'
-  },
-  {
     label: '服务商',
     key: 'spId',
     control: 'SpSelect'
@@ -19,5 +14,10 @@ export default [
     key: 'status',
     options: 'merchant_status',
     control: 'el-select'
+  },
+  {
+    label: '社会统一信用代码',
+    key: 'socialCreditCode',
+    control: 'el-input'
   }
 ]
