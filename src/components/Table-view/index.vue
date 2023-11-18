@@ -54,7 +54,8 @@
               v-bind="{
                 refresh: resetQuery,
                 otherInfo: state.otherInfo,
-                query: state.queryForm
+                query: state.queryForm,
+                selectObjs: selectObjs
               }" />
           </div>
           <right-toolbar

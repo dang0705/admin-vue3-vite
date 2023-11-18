@@ -62,7 +62,8 @@ export default (row: any) => {
               }
             ],
             props: {
-              type: '60'
+              type: '60',
+              accept: ['.jpg', '.pdf']
             }
           }
         ]

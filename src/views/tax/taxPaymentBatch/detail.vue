@@ -1,3 +1,5 @@
+<!-- downBlobFileUrl="/finance/dutyPaidDetails/export"
+downBlobFileName="完税明细.xlsx" -->
 <template>
   <div>
     <TableView
@@ -6,8 +8,6 @@
       action-body="账单"
       getListFnName="dutyPaidDetailsPage"
       module="tax/index.ts"
-      downBlobFileUrl="/finance/dutyPaidDetails/export"
-      downBlobFileName="完税明细.xlsx"
       :staticQuery="staticQuery"
       labelWidth="120px">
       <template #tableTop="{ otherInfo }">
