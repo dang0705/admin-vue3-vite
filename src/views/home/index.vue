@@ -161,12 +161,14 @@ const columns = [
   {
     prop: 'content',
     slot: true,
-    align: 'left'
+    align: 'left',
+    showOverflowTooltip: false
   },
   {
     prop: 'right',
     slot: true,
-    width: 125
+    width: 150,
+    showOverflowTooltip: false
   }
 ]
 
