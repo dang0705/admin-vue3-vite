@@ -1,6 +1,7 @@
 <template>
   <Table-view
     :columns="columns"
+    :isTab="false"
     getListFnName="taxFrontPage"
     :condition-forms="conditionForms"
     module="tax/index.ts">
@@ -53,7 +54,7 @@
         text
         type="primary"
         @click="handleView('undertakerTax', row)">
-        查看承揽记录
+        查看承接记录
       </el-button>
     </template>
     <template #transfer="{ row }">
@@ -90,17 +91,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
-import { payChannel } from '/@/configuration/dynamic-control'
-import thousandthDivision from '/@/utils/thousandth-division'
-// import closeTagView from '/@/utils/close-tag-view';
 const route: any = useRoute()
 const router = useRouter()
-const form = reactive({
-  totalAmount: 0,
-  freeze: 0,
-  balance: 0
-})
 const unitMaps = {
   发放总额: '元',
   开票总额: '元'

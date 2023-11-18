@@ -104,5 +104,13 @@ export default {
   tabs: {
     type: Array,
     default: () => []
+  },
+  size: {
+    type: Number,
+    default: 0
+  },
+  isTab: {
+    type: Boolean,
+    default: true
   }
 }

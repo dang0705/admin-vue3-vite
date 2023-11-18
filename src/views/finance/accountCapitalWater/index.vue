@@ -7,7 +7,6 @@
     :condition-forms="conditionForms"
     module="finance/merchantAccountCapitalWater.ts"
     :getListFnName="getListFnName"
-    :staticQuery="staticQuery"
     label-width="120px"
     @get-tab-value="toggleTab"
     :tabs="tabs"
@@ -20,6 +19,19 @@
         ? 'finance_platAccountCapitalWater_batch_export'
         : ''
     ">
+    <template #subAccountNum="{ row }">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/finance/merchantAccountCapital/detail',
+          query: {
+            id: row.accountId
+          },
+          state: 1
+        }">
+        {{ row.subAccountNum }}
+      </router-link>
+    </template>
     <!-- 伪代码 exportAuth -->
     <template #actions="{ row: {} }"></template>
   </Table-view>
@@ -30,16 +42,18 @@ import { payChannel } from '/@/configuration/dynamic-control'
 
 const tabType = ref('1')
 const accountCapitalWaterRef = ref()
-const staticQuery = computed(() => {
-  return {
-    isPlatform: tabType.value === '3' ? 1 : undefined
-  }
-})
+// const staticQuery = computed(() => {
+//   return {
+//     isPlatform: tabType.value === '3' ? 1 : undefined
+//   }
+// })
 const getListFnName = computed(() => {
   if (tabType.value === '1') {
     return 'fetchList'
-  } else if (tabType.value === '2' || tabType.value === '3') {
+  } else if (tabType.value === '2') {
     return 'spAccountCapitalWaterPage'
+  } else if (tabType.value === '3') {
+    return 'spAccountCapitalWaterPlatform'
   }
 })
 const downFileUrl = computed(() => {
@@ -93,7 +107,8 @@ const columns1 = [
   {
     prop: 'subAccountNum',
     label: '资金账户',
-    'min-width': 160
+    'min-width': 160,
+    slot: true
   },
   {
     prop: 'amount',

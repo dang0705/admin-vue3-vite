@@ -10,7 +10,7 @@
         name="tableTop"
         v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
       <Tab-view
-        v-if="newTabs.length"
+        v-if="isTab && newTabs.length"
         :model-value="tabValue"
         :tabs="newTabs"
         @get-value="handleTabClick" />
@@ -27,6 +27,7 @@
           :on-submit="getDataList"
           :on-cancel="resetQuery"
           :validation="false"
+          :buttons-icon="['Search', 'Refresh']"
           submit-button-text="查询"
           cancel-button-text="重置">
           <template v-for="(_, slot) in $slots" #[slot]>
@@ -53,7 +54,8 @@
               v-bind="{
                 refresh: resetQuery,
                 otherInfo: state.otherInfo,
-                query: state.queryForm
+                query: state.queryForm,
+                selectObjs: selectObjs
               }" />
           </div>
           <right-toolbar
@@ -202,6 +204,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
         }
       }
     : {}),
+  ...(props.size ? { pagination: { size: props.size } } : {}),
   tabsAuth: props.tabsAuth as string[],
   createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
 })

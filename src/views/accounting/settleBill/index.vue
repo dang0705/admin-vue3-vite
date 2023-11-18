@@ -6,7 +6,7 @@
     action-body="账单"
     module="core/settleBill.ts"
     labelWidth="120px">
-    <template #top-bar="{ otherInfo }">
+    <template #top-bar="{ otherInfo, selectObjs }">
       <el-button
         v-auth="'core_settleBill_add'"
         type="primary"
@@ -26,6 +26,7 @@
         style="margin-right: 24px"
         type="primary"
         class="ml10"
+        :disabled="selectObjs.length === 0"
         @click="handleBtn">
         批量导出明细
       </el-button>

@@ -16,109 +16,6 @@
       label-width="140px"
       formDialogRef>
       <div>
-        <el-row
-          v-if="curStep == 1 || curStep == 2 || self_disabled"
-          :gutter="24">
-          <el-col :span="12" class="mb20">
-            <el-form-item label="性别要求：" prop="taskRequireInfo.requiredSex">
-              <el-select
-                :disabled="self_disabled"
-                clearable
-                v-model="form.taskRequireInfo.requiredSex">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in gender_requirement" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20 formBox">
-            <div style="min-width: 140px" class="com_label">年龄要求：</div>
-            <el-form-item
-              label-width="0px"
-              prop="taskRequireInfo.requiredAgeMin">
-              <el-input-number
-                class="inputNumber"
-                :controls="false"
-                :disabled="self_disabled"
-                :min="16"
-                :max="65"
-                @blur="requireChange"
-                v-model="form.taskRequireInfo.requiredAgeMin"></el-input-number>
-            </el-form-item>
-            <div style="margin-left: 12px">-</div>
-            <el-form-item
-              label-width="0px"
-              prop="taskRequireInfo.requiredAgeMax"
-              style="margin-left: 12px; flex-shrink: 1">
-              <el-input-number
-                class="inputNumber"
-                :controls="false"
-                :disabled="self_disabled"
-                :min="16"
-                :max="65"
-                @blur="requireChange"
-                v-model="form.taskRequireInfo.requiredAgeMax"></el-input-number>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20">
-            <el-form-item label="学历要求：" prop="taskRequireInfo.educational">
-              <el-select
-                :disabled="self_disabled"
-                clearable
-                v-model="form.taskRequireInfo.educational">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in education" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20">
-            <el-form-item label="经验要求：" prop="taskRequireInfo.experience">
-              <el-select
-                :disabled="self_disabled"
-                clearable
-                v-model="form.taskRequireInfo.experience">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in experience" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="24" class="mb20">
-            <el-form-item label="工作福利：" prop="taskRequireInfo.workFare">
-              <InputPlus
-                :disabled="self_disabled"
-                maxlength="500"
-                v-model="form.taskRequireInfo.workFare"
-                :rows="2"
-                show-word-limit
-                type="textarea" />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="24" class="mb20">
-            <el-form-item
-              label="工作环境："
-              prop="taskRequireInfo.workEnvironment">
-              <UploadFile
-                multiple
-                :limit="5"
-                :disabled="self_disabled"
-                :type="businessType"
-                v-model="form.taskRequireInfo.workEnvironment" />
-            </el-form-item>
-          </el-col>
-        </el-row>
         <Divider v-if="curStep == 2 || self_disabled" :title="stepList[0]" />
         <el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
           <el-col :span="12" class="mb20">
@@ -410,6 +307,109 @@
           </el-col>
         </el-row>
         <Divider v-if="curStep == 2 || self_disabled" :title="stepList[1]" />
+        <el-row
+          v-if="curStep == 1 || curStep == 2 || self_disabled"
+          :gutter="24">
+          <el-col :span="12" class="mb20">
+            <el-form-item label="性别要求：" prop="taskRequireInfo.requiredSex">
+              <el-select
+                :disabled="self_disabled"
+                clearable
+                v-model="form.taskRequireInfo.requiredSex">
+                <el-option
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="item in gender_requirement" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12" class="mb20 formBox">
+            <div style="min-width: 140px" class="com_label">年龄要求：</div>
+            <el-form-item
+              label-width="0px"
+              prop="taskRequireInfo.requiredAgeMin">
+              <el-input-number
+                class="inputNumber"
+                :controls="false"
+                :disabled="self_disabled"
+                :min="16"
+                :max="65"
+                @blur="requireChange"
+                v-model="form.taskRequireInfo.requiredAgeMin"></el-input-number>
+            </el-form-item>
+            <div style="margin-left: 12px">-</div>
+            <el-form-item
+              label-width="0px"
+              prop="taskRequireInfo.requiredAgeMax"
+              style="margin-left: 12px; flex-shrink: 1">
+              <el-input-number
+                class="inputNumber"
+                :controls="false"
+                :disabled="self_disabled"
+                :min="16"
+                :max="65"
+                @blur="requireChange"
+                v-model="form.taskRequireInfo.requiredAgeMax"></el-input-number>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12" class="mb20">
+            <el-form-item label="学历要求：" prop="taskRequireInfo.educational">
+              <el-select
+                :disabled="self_disabled"
+                clearable
+                v-model="form.taskRequireInfo.educational">
+                <el-option
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="item in education" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12" class="mb20">
+            <el-form-item label="经验要求：" prop="taskRequireInfo.experience">
+              <el-select
+                :disabled="self_disabled"
+                clearable
+                v-model="form.taskRequireInfo.experience">
+                <el-option
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="item in experience" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24" class="mb20">
+            <el-form-item label="工作福利：" prop="taskRequireInfo.workFare">
+              <InputPlus
+                :disabled="self_disabled"
+                maxlength="500"
+                v-model="form.taskRequireInfo.workFare"
+                :rows="2"
+                show-word-limit
+                type="textarea" />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24" class="mb20">
+            <el-form-item
+              label="工作环境："
+              prop="taskRequireInfo.workEnvironment">
+              <UploadFile
+                multiple
+                :limit="5"
+                :disabled="self_disabled"
+                :type="businessType"
+                v-model="form.taskRequireInfo.workEnvironment" />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </div>
     </el-form>
     <span
