@@ -8,17 +8,6 @@
     downBlobFileName="users.xlsx"
     exportAuth="sys_user_export"
     module="admin/user">
-    <template #role>
-      <el-form-item label="角色：" prop="role">
-        <el-select class="w100" clearable multiple placeholder="请选择角色">
-          <el-option
-            :key="item.roleId"
-            :label="item.roleName"
-            :value="item.roleId"
-            v-for="item in roleData" />
-        </el-select>
-      </el-form-item>
-    </template>
     <template #top-bar>
       <el-button
         v-auth="'sys_user_add'"
@@ -61,15 +50,6 @@ import { useI18n } from 'vue-i18n'
 import { useDict } from '/@/hooks/dict'
 import { customerAuth, providerAuth } from './enum'
 import Array2Object from '/@/utils/array-2-object'
-import { list as roleList } from '/@/api/admin/role'
-const roleData = ref<any[]>([])
-// 角色数据
-roleList().then((res) => {
-  roleData.value = res.data
-  // 默认选择第一个
-  // dataForm.role = [res.data[0].roleId];
-})
-
 // 字典转map，用于显示中文
 const batchMap = Array2Object({ dic: ['sp_auth_method', 'merchant_auth'] })
 
@@ -98,9 +78,15 @@ const conditionForms = [
   {
     label: '角色',
     key: 'role',
-    // options: roleData,
-    // control: 'el-select'
-    slot: true
+    options: {
+      url: `admin/role/list`
+    },
+    props: {
+      label: 'roleName',
+      value: 'roleId',
+      multiple: true
+    },
+    control: 'el-select'
   }
 ]
 
