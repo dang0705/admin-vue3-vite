@@ -378,6 +378,7 @@ defineExpose({
             v-if="!inDialog"
             v-bind="$props"
             v-model="page"
+            :buttons-icon="buttonsIcon"
             :submit="submit"
             :cancel="cancel"
             :pagination="pagination"

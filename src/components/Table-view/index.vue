@@ -27,6 +27,7 @@
           :on-submit="getDataList"
           :on-cancel="resetQuery"
           :validation="false"
+          :buttons-icon="['Search', 'Refresh']"
           submit-button-text="查询"
           cancel-button-text="重置">
           <template v-for="(_, slot) in $slots" #[slot]>
