@@ -203,6 +203,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
         }
       }
     : {}),
+  ...(props.size ? { pagination: { size: props.size } } : {}),
   tabsAuth: props.tabsAuth as string[],
   createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
 })
