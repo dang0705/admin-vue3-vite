@@ -112,8 +112,8 @@ import { submitObj } from '/@/api/core/settleBill';
 
 // 主配置
 interface Actions {
-    label: string; // 按钮文案
-    body?: string; // 确认弹框的内容主体，如：'是否要删除【合同】'，合同为body，其他文案会依上下文自动拼接
+    label: strng; // 按钮文案
+    body?: stiring; // 确认弹框的内容主体，如：'是否要删除【合同】'，合同为body，其他文案会依上下文自动拼接
     download?: string; // 下载路径，传入后便为下载功能
     dialog?: Dialog; // 弹框内的表单，传入后唤起弹框
     auth?: string; // 权限标识

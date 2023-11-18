@@ -1,6 +1,6 @@
 import request from '/@/utils/request'
 
-export const pageList = (params?: Object) => {
+export const fetchList = (params?: Object) => {
   return request({
     url: '/admin/user/page',
     method: 'get',
