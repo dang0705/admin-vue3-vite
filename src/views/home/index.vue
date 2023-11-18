@@ -1,15 +1,15 @@
 <template>
   <div class="p-[20px] 2xl:px-[238px] xl:px-[100px] pt-0">
     <h1 class="text-[20px] flex items-center my-[18px]">
-      <img :src="clap" alt="" class="w-[30px] mr-2" />
-      欢迎回来，{{ userName }}
+      <!-- <img :src="clap" alt="" class="w-[30px] mr-2" />
+      欢迎回来，{{ userName }} -->
     </h1>
     <ul id="dashboard" class="flex">
       <li class="flex flex-col flex-shrink-0 w-[320px]">
         <div
           class="section !px-[12px] !pt-[16px]"
           style="height: 128px; padding-bottom: 10px">
-          <ul class="h-[120px] flex flex-wrap justify-between">
+          <ul class="h-[100px] flex flex-wrap justify-between pr-[50px]">
             <li
               v-for="(
                 { icon, text, route, bg, iconSize, hover }, index
@@ -26,8 +26,8 @@
                 <SvgIcon
                   :name="`iconfont ${icon}`"
                   :color="hover ? '#fff' : bg"
-                  :size="iconSize"
-                  class="mr-[10px]" />
+                  :size="iconSize - 2"
+                  class="mr-[5px]" />
                 {{ text }}
               </router-link>
             </li>
@@ -66,7 +66,9 @@
             <!-- <el-divider /> -->
           </template>
           <template #title="{ row }">
-            <div class="rounded-[3px] relative" :style="bgc(row.noticeType)">
+            <div
+              class="rounded-[3px] relative text-[12px]"
+              :style="bgc(row.noticeType)">
               {{ row.title }}
               <!-- <div
                 v-if="row.readStatus === '0'"
@@ -85,15 +87,12 @@
               详情 &nbsp; &gt;
             </div> -->
             <div
-              @mouseenter="timeShow = false"
-              v-if="timeShow"
+              @mouseenter="row.show = false"
+              v-if="row.show"
               class="text-[12px] text-[#999999] py-[10px]">
               {{ row.createTime }}
             </div>
-            <div
-              class="py-[10px]"
-              v-if="!timeShow"
-              @mouseleave="timeShow = true">
+            <div class="py-[10px]" v-else @mouseleave="row.show = true">
               <el-tooltip
                 content="设为已读"
                 placement="top"
@@ -141,8 +140,6 @@ import bgc from '/@/configuration/message-tag-definition'
 import { deleteObj, readMark, readUnread } from '/@/api/docs/message'
 
 defineOptions({ name: 'router.home' })
-
-let timeShow = ref(true)
 let remainDate = ref([])
 const messageLoading = ref(false)
 const getMessages = async () => {
@@ -159,7 +156,7 @@ const columns = [
   {
     prop: 'title',
     slot: true,
-    width: 100
+    width: 90
   },
   {
     prop: 'content',
@@ -169,7 +166,7 @@ const columns = [
   {
     prop: 'right',
     slot: true,
-    width: 140
+    width: 125
   }
 ]
 
@@ -288,7 +285,7 @@ const readMarkUnread = async (id: string, refresh: any) => {
 
 <style scoped lang="scss">
 .section {
-  @apply rounded-normal bg-white px-[22px] pt-[28px] mb-[12px];
+  @apply rounded-normal bg-white px-[22px] pt-[20px] mb-[12px];
   box-shadow: 0 0 4px 1px #0000000f;
   h2 {
     color: #2b3674;
