@@ -153,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import { useMessage } from '/@/hooks/message'
 import {
   getObj,
   getMergeObj,
@@ -512,9 +513,11 @@ const onSubmit = async (refresh: any) => {
     switch (financeType.value) {
       case 'applyfor':
         await applyInvoice({ ...dialogFormData.value })
+        useMessage().success('申请成功')
         break
       case 'open':
         await saveInvoice({ ...dialogFormData.value })
+        useMessage().success('申请成功')
         break
       case 'merge':
         // dialogFormData.value.invoiceCategoryList = dialogFormData.value.invoicingCategories;
