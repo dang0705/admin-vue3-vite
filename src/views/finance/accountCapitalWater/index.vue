@@ -7,7 +7,6 @@
     :condition-forms="conditionForms"
     module="finance/merchantAccountCapitalWater.ts"
     :getListFnName="getListFnName"
-    :staticQuery="staticQuery"
     label-width="120px"
     @get-tab-value="toggleTab"
     :tabs="tabs"
@@ -30,16 +29,18 @@ import { payChannel } from '/@/configuration/dynamic-control'
 
 const tabType = ref('1')
 const accountCapitalWaterRef = ref()
-const staticQuery = computed(() => {
-  return {
-    isPlatform: tabType.value === '3' ? 1 : undefined
-  }
-})
+// const staticQuery = computed(() => {
+//   return {
+//     isPlatform: tabType.value === '3' ? 1 : undefined
+//   }
+// })
 const getListFnName = computed(() => {
   if (tabType.value === '1') {
     return 'fetchList'
-  } else if (tabType.value === '2' || tabType.value === '3') {
+  } else if (tabType.value === '2') {
     return 'spAccountCapitalWaterPage'
+  } else if (tabType.value === '3') {
+    return 'spAccountCapitalWaterPlatform'
   }
 })
 const downFileUrl = computed(() => {

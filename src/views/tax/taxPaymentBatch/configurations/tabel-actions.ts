@@ -3,7 +3,7 @@ import { dutyPaidDetailsExport } from '/@/api/tax/index'
 const auth = (auth: string) => `finance_${auth}`
 import { downBlobFile } from '/@/utils/other'
 export default (row: any) => {
-  const { status, dutyPaidFile, id } = row
+  const { spName, dutyPaidFile, id } = row
   const exportExcel = () => {
     downBlobFile(
       '/finance/dutyPaidDetails/export',
@@ -41,6 +41,15 @@ export default (row: any) => {
       dialog: {
         title: '上传完税证明',
         forms: [
+          {
+            control: 'InputPlus',
+            key: 'waterNo',
+            label: '服务商',
+            value: spName,
+            props: {
+              disabled: true
+            }
+          },
           {
             control: 'UploadFile',
             key: 'fileUrl',

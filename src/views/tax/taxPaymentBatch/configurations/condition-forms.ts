@@ -1,4 +1,4 @@
-import { payChannel } from '/@/configuration/dynamic-control'
+// import { payChannel } from '/@/configuration/dynamic-control'
 export default [
   {
     control: 'InputPlus',
@@ -16,7 +16,7 @@ export default [
     label: '纳税月份',
     props: {
       type: 'month',
-      valueFormat: 'MM'
+      valueFormat: 'YYYY-MM'
     }
   }
 ]
