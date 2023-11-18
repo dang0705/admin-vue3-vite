@@ -8,7 +8,6 @@
     <el-form
       v-if="dialogType === 1 || dialogType === 2 || dialogType === 4"
       :model="form"
-      :rules="dataRules"
       style="min-height: 150px"
       label-width="140px"
       formDialogRef
@@ -245,13 +244,6 @@ const addUnderTakerForms = [
     }
   }
 ]
-// 定义校验规则
-const dataRules = ref({
-  auditPass: [{ required: true, message: '审核结果不能为空', trigger: 'blur' }],
-  auditPostscript: [
-    { required: true, message: '驳回原因不能为空', trigger: 'blur' }
-  ]
-})
 const onCancel = () => {
   visible.value = false
 }

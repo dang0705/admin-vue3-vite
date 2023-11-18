@@ -151,6 +151,7 @@
               <UploadFile
                 :disabled="isDetail"
                 :type="businessType"
+                :loading="getInfoLoading"
                 v-model="form.businessLicense" />
             </el-form-item>
           </el-col>
@@ -160,6 +161,7 @@
               <UploadFile
                 :disabled="isDetail"
                 :type="businessType"
+                :loading="getInfoLoading"
                 v-model="form.logo" />
             </el-form-item>
           </el-col>
@@ -196,7 +198,7 @@
             <el-form-item
               :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
               prop="taxRegistrationNumber">
-              <InputPlus readonly v-model="form.socialCreditCode" />
+              <InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
               <!-- <span>{{ form.socialCreditCode }}</span> -->
             </el-form-item>
           </el-col>
@@ -413,19 +415,18 @@ import { getObj, addObj, putObj } from '/@/api/core/merchantInfo'
 import { limitText } from '/@/rules'
 import { rule } from '/@/utils/validate'
 import mittBus from '/@/utils/mitt'
+import uploadBusinessType from '/@/enums/upload-business-type'
+import closeTagView from '/@/utils/close-tag-view'
 const ChinaArea = defineAsyncComponent(
   () => import('/@/components/ChinaArea/index.vue')
 )
-
-import uploadBusinessType from '/@/enums/upload-business-type'
-
 // 定义变量内容
 const dataFormRef = ref()
 const loading = ref(false)
-import closeTagView from '/@/utils/close-tag-view'
+const getInfoLoading = ref(false)
 
 // 定义父组件传过来的值
-const props = defineProps({
+defineProps({
   isDetail: {
     type: Boolean,
     default: false
@@ -640,12 +641,14 @@ const onSubmit = async () => {
 const getmerchantInfoData = (id: string) => {
   // 获取数据
   loading.value = true
+  getInfoLoading.value = true
   getObj(id)
     .then((res: any) => {
       Object.assign(form, res.data)
     })
     .finally(() => {
       loading.value = false
+      getInfoLoading.value = false
     })
 }
 

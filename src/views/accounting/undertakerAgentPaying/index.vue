@@ -137,7 +137,7 @@ const confirmToPay = async (
           label: '批量支付总金额(元)',
           control: 'InputPlus',
           key: 'paidAmount',
-          value: summary
+          value: summary.toFixed(2)
         },
         {
           label: '批量支付总笔数',

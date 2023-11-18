@@ -9,6 +9,8 @@
           <el-image
             :style="{ height, width }"
             :src="image"
+            v-loading="imgLoading"
+            @load="imgLoad"
             :initial-index="index"
             :zoom-rate="1.2"
             :preview-src-list="prefixedUrls"
@@ -64,7 +66,11 @@
         :accept="accept.length ? accept.join(',') : new_accept.join(',')">
         <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
         <template v-if="isImage && prefixedUrls.length && !multiple">
-          <img :src="prefixedUrls[0]" class="upload-image" />
+          <img
+            v-loading="imgLoading"
+            @load="imgLoad"
+            :src="prefixedUrls[0]"
+            class="upload-image" />
           <div class="upload-handle" @click.stop>
             <div class="handle-icon" @click="editImg(0)" v-if="!self_disabled">
               <el-icon :size="iconSize">
@@ -123,7 +129,6 @@
                 : new_accept.join(',').replace(/image\//g, '')
             }}文件
           </span>
-          <!--          upload file loading-->
           <template v-if="!isImage">
             <ul v-if="fileNames.length > 0">
               <li v-for="(name, index) in fileNames" :key="name">
@@ -197,6 +202,10 @@ import {
 } from '/@/configuration/upload-rules'
 import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility'
 defineOptions({ name: 'Upload-file' })
+const imgLoading = ref(false)
+const imgLoad = (e) => {
+  console.log(e)
+}
 // 接受父组件参数
 const props = defineProps({
   modelValue: {
@@ -267,6 +276,10 @@ const props = defineProps({
     default: false
   },
   hidden: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
     type: Boolean,
     default: false
   }

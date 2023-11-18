@@ -9,7 +9,7 @@ export default {
         spId: '服务商id',
         beforeBalance: '余额-发生前金额',
         amount: '余额-发生金额',
-        afterBalance: '余额-发生后金额',
+        overBalance: '余额-发生后金额',
         freezeBeforeBalance: '冻结-发生前金额',
         freezeAmount: '冻结-发生金额',
         freezeAfterBalance: '冻结-发生后金额',

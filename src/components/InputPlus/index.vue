@@ -10,7 +10,13 @@
       {{ unit }}
     </div>
   </div>
-  <el-input v-else v-bind="$props" v-model="value">
+
+  <el-input
+    v-else
+    v-bind="$props"
+    v-model="value"
+    :maxlength="maxlength"
+    :showWordLimit="showWordLimit">
     <template v-if="append" #append>{{ append }}</template>
     <template v-for="(_, slot) in $slots" #[slot]>
       <slot :name="slot" />
@@ -38,6 +44,14 @@ const props = defineProps({
   append: {
     type: String,
     default: ''
+  },
+  showWordLimit: {
+    type: Boolean,
+    default: false
+  },
+  maxlength: {
+    type: [String, Number],
+    default: 500
   }
 })
 const value = computed({

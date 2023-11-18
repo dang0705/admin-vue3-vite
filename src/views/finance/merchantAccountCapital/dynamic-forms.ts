@@ -155,6 +155,22 @@ export const formsFunc = (reType: any, form: any) => {
             disabled: true
           }
           // slot: true,
+        },
+        {
+          control: 'InputPlus',
+          key: 'payingJointBankNumber',
+          label: '开户行联行号',
+          rules: [
+            {
+              required: true,
+              message: '开户行联行号不能为空',
+              trigger: 'blur'
+            },
+            {
+              validator: rule.interbank,
+              trigger: 'blur'
+            }
+          ]
         }
       ]
     }

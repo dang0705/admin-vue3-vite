@@ -187,10 +187,6 @@ const prop = defineProps({
     type: String,
     default: '确认导入'
   },
-  params: {
-    type: Object,
-    default: () => ({})
-  },
   toBatch: {
     type: Boolean,
     default: true

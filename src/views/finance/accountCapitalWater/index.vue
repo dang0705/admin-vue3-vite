@@ -36,9 +36,9 @@ const staticQuery = computed(() => {
   }
 })
 const getListFnName = computed(() => {
-  if (tabType.value === '1' || tabType.value === '3') {
+  if (tabType.value === '1') {
     return 'fetchList'
-  } else if (tabType.value === '2') {
+  } else if (tabType.value === '2' || tabType.value === '3') {
     return 'spAccountCapitalWaterPage'
   }
 })
@@ -48,7 +48,7 @@ const downFileUrl = computed(() => {
   } else if (tabType.value === '2') {
     return '/finance/spAccountCapitalWater/export'
   } else if (tabType.value === '3') {
-    return '/finance/merchantAccountCapitalWater/export'
+    return '/finance/spAccountCapitalWater/export'
   }
 })
 const downFileName = computed(() => {
@@ -101,7 +101,7 @@ const columns1 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -116,7 +116,7 @@ const columns1 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
@@ -157,7 +157,7 @@ const columns2 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -172,7 +172,7 @@ const columns2 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
@@ -203,7 +203,7 @@ const columns3 = [
     'min-width': 160
   },
   {
-    prop: 'afterBalance',
+    prop: 'overBalance',
     label: '交易后余额（元）',
     'min-width': 160
   },
@@ -218,7 +218,7 @@ const columns3 = [
     'min-width': 160
   },
   {
-    prop: 'cause',
+    prop: 'causeDesc',
     label: '类型',
     'min-width': 160
   },
@@ -263,29 +263,30 @@ const conditionForms1 = [
     control: 'el-select',
     key: 'cause',
     label: '类型',
-    options: [
-      // 伪代码
-      {
-        label: '充值',
-        value: '1'
-      },
-      {
-        label: '充值退款',
-        value: '2'
-      },
-      {
-        label: '任务支出',
-        value: '3'
-      },
-      {
-        label: '管理费支出',
-        value: '4'
-      },
-      {
-        label: '服务费支出',
-        value: '5'
-      }
-    ]
+    options: 'fund_occurrence_cause'
+    // options: [
+    //   // 伪代码
+    //   {
+    //     label: '充值',
+    //     value: '1'
+    //   },
+    //   {
+    //     label: '充值退款',
+    //     value: '2'
+    //   },
+    //   {
+    //     label: '任务支出',
+    //     value: '3'
+    //   },
+    //   {
+    //     label: '管理费支出',
+    //     value: '4'
+    //   },
+    //   {
+    //     label: '服务费支出',
+    //     value: '5'
+    //   }
+    // ]
   },
   {
     control: 'DateRange',
@@ -333,9 +334,9 @@ const conditionForms2 = [
   payChannel()
 ]
 const conditionForms = computed(() => {
-  if (tabType.value === '1' || tabType.value === '2') {
+  if (tabType.value === '1') {
     return conditionForms1
-  } else if (tabType.value === '3') {
+  } else if (tabType.value === '3' || tabType.value === '2') {
     return conditionForms2
   }
 })
