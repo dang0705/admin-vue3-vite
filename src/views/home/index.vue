@@ -145,7 +145,7 @@ const messageLoading = ref(false)
 const getMessages = async () => {
   try {
     messageLoading.value = true
-    remainDate.value = (await fetchList()).data.records.slice(0, 3)
+    remainDate.value = await fetchList()
   } catch (e) {
   } finally {
     messageLoading.value = false
