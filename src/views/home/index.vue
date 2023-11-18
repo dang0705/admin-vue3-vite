@@ -9,7 +9,7 @@
         <div
           class="section !px-[12px] !pt-[16px]"
           style="height: 128px; padding-bottom: 10px">
-          <ul class="h-[100px] flex flex-wrap justify-between pr-[50px]">
+          <ul class="h-[100px] flex flex-wrap justify-between">
             <li
               v-for="(
                 { icon, text, route, bg, iconSize, hover }, index
