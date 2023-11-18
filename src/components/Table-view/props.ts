@@ -108,5 +108,9 @@ export default {
   size: {
     type: Number,
     default: 0
+  },
+  isTab: {
+    type: Boolean,
+    default: true
   }
 }

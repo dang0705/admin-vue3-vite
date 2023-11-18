@@ -10,7 +10,7 @@
         name="tableTop"
         v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
       <Tab-view
-        v-if="newTabs.length"
+        v-if="isTab && newTabs.length"
         :model-value="tabValue"
         :tabs="newTabs"
         @get-value="handleTabClick" />
