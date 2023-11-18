@@ -19,6 +19,19 @@
         ? 'finance_platAccountCapitalWater_batch_export'
         : ''
     ">
+    <template #subAccountNum="{ row }">
+      <router-link
+        class="hover:underline text-blue-400"
+        :to="{
+          path: '/finance/merchantAccountCapital/detail',
+          query: {
+            id: row.accountId
+          },
+          state: 1
+        }">
+        {{ row.subAccountNum }}
+      </router-link>
+    </template>
     <!-- 伪代码 exportAuth -->
     <template #actions="{ row: {} }"></template>
   </Table-view>
@@ -94,7 +107,8 @@ const columns1 = [
   {
     prop: 'subAccountNum',
     label: '资金账户',
-    'min-width': 160
+    'min-width': 160,
+    slot: true
   },
   {
     prop: 'amount',
