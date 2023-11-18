@@ -51,7 +51,83 @@
       </li>
 
       <!--      Messages here-->
-      <li class="section flex-grow ml-[12px] h-[354px]"></li>
+      <li class="section flex-grow ml-[12px] h-[354px]">
+        <Table-view
+          module="docs/message.ts"
+          :columns="columns"
+          :border="false"
+          noPagination
+          noPadding
+          :isShowTopBar="false"
+          :header="false"
+          :size="4">
+          <template #tableTop>
+            <div class="text-[18px] font-bold">当日事项提醒</div>
+            <!-- <el-divider /> -->
+          </template>
+          <template #title="{ row }">
+            <div class="rounded-[3px] relative" :style="bgc(row.noticeType)">
+              {{ row.title }}
+              <!-- <div
+                v-if="row.readStatus === '0'"
+                class="w-[6px] h-[6px] rounded-[50%] bg-[#FF6826] absolute top-[-3px] left-0"></div> -->
+            </div>
+          </template>
+          <template #content="{ row }">
+            <div :class="{ 'opacity-[0.5]': row.readStatus === '1' }">
+              {{ row.content }}
+            </div>
+          </template>
+          <template #right="{ row, refresh }">
+            <!-- <div
+              class="text-[#0065FF] cursor-pointer"
+              @click="goDetail(row.id, row.url, refresh)">
+              详情 &nbsp; &gt;
+            </div> -->
+            <div
+              @mouseenter="timeShow = false"
+              v-if="timeShow"
+              class="text-[12px] text-[#999999] py-[10px]">
+              {{ row.createTime }}
+            </div>
+            <div
+              class="py-[10px]"
+              v-if="!timeShow"
+              @mouseleave="timeShow = true">
+              <el-tooltip
+                content="设为已读"
+                placement="top"
+                v-if="row.readStatus === '0'">
+                <SvgIcon
+                  name="iconfont icon-biaojiweiyidu"
+                  :size="13"
+                  color="#858585"
+                  class="mr-[18px] cursor-pointer"
+                  @click="readMarkOne(row.id, refresh)" />
+              </el-tooltip>
+              <el-tooltip
+                content="设为未读"
+                placement="top"
+                v-if="row.readStatus === '1'">
+                <SvgIcon
+                  name="iconfont icon-biaojiweiweidu"
+                  :size="13"
+                  color="#858585"
+                  class="mr-[18px] cursor-pointer"
+                  @click="readMarkUnread(row.id, refresh)" />
+              </el-tooltip>
+              <el-tooltip content="删除" placement="top">
+                <SvgIcon
+                  name="iconfont icon-shanchu"
+                  :size="13"
+                  color="#858585"
+                  class="cursor-pointer"
+                  @click="delMessage(row.id, refresh)" />
+              </el-tooltip>
+            </div>
+          </template>
+        </Table-view>
+      </li>
     </ul>
   </div>
 </template>
@@ -61,9 +137,12 @@ import { useUserInfo } from '/@/stores/userInfo'
 import { fetchList } from '/@/api/docs/message'
 import Column from '/@/views/home/components/column.vue'
 import clap from '/@/assets/dashboard/clap.webp'
+import bgc from '/@/configuration/message-tag-definition'
+import { deleteObj, readMark, readUnread } from '/@/api/docs/message'
 
 defineOptions({ name: 'router.home' })
 
+let timeShow = ref(true)
 let remainDate = ref([])
 const messageLoading = ref(false)
 const getMessages = async () => {
@@ -75,6 +154,24 @@ const getMessages = async () => {
     messageLoading.value = false
   }
 }
+
+const columns = [
+  {
+    prop: 'title',
+    slot: true,
+    width: 100
+  },
+  {
+    prop: 'content',
+    slot: true,
+    align: 'left'
+  },
+  {
+    prop: 'right',
+    slot: true,
+    width: 140
+  }
+]
 
 const routes = ref([
   {
@@ -167,6 +264,21 @@ const dashboardData = [
   }
 ]
 
+const delMessage = async (id: string, refresh: any) => {
+  await deleteObj([id])
+  refresh()
+}
+
+const readMarkOne = async (id: string, refresh: any) => {
+  await readMark([id])
+  refresh()
+}
+
+const readMarkUnread = async (id: string, refresh: any) => {
+  await readUnread(id)
+  refresh()
+}
+
 /*onMounted(async () => {
 	await nextTick();
 	const commandChart = echarts.init(document.getElementById('charts') as HTMLDivElement);
@@ -186,5 +298,15 @@ const dashboardData = [
   &.border-left {
     border-left: 1px solid #ccc;
   }
+}
+
+:deep(.el-tooltip) {
+  overflow: visible !important;
+}
+:deep(.el-table__header-wrapper) {
+  display: none !important;
+}
+:deep(.tabs-wrapper) {
+  margin-bottom: 0 !important;
 }
 </style>
