@@ -54,7 +54,7 @@
         text
         type="primary"
         @click="handleView('undertakerTax', row)">
-        查看承揽记录
+        查看承接记录
       </el-button>
     </template>
     <template #transfer="{ row }">
