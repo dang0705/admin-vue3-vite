@@ -32,7 +32,10 @@ export const actionsParams = {
     type: Boolean,
     default: true
   },
-
+  buttonsIcon: {
+    type: Array,
+    default: () => []
+  },
   buttonPosition: {
     type: String,
     default: 'center'

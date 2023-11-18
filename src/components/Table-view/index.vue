@@ -27,6 +27,7 @@
           :on-submit="getDataList"
           :on-cancel="resetQuery"
           :validation="false"
+          :buttons-icon="['Search', 'Refresh']"
           submit-button-text="查询"
           cancel-button-text="重置">
           <template v-for="(_, slot) in $slots" #[slot]>
@@ -202,6 +203,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
         }
       }
     : {}),
+  ...(props.size ? { pagination: { size: props.size } } : {}),
   tabsAuth: props.tabsAuth as string[],
   createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
 })

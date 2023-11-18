@@ -279,7 +279,9 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     headerCellStyle: ({ column: { label } }) => {
       return {
         textAlign: 'center',
-        background: 'var(--el-table-row-hover-bg-color)',
+        height: '54px',
+        fontSize: '14px',
+        background: 'var(--table-header-bg-color)',
         color: 'var(--el-text-color-primary)'
       }
     }

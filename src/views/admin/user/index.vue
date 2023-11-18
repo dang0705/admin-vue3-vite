@@ -1,259 +1,210 @@
 <template>
-  <div class="layout-padding">
-    <!--		<splitpanes>-->
-    <!-- <pane size="15">
-				<div class="layout-padding-auto layout-padding-view">
-					<el-scrollbar>
-						<query-tree :placeholder="$t('common.queryDeptTip')" :query="deptData.queryList" :show-expand="true" @node-click="handleNodeClick">
+  <Table-view
+    :condition-forms="conditionForms"
+    :columns="columns"
+    :actions="actions"
+    label-width="100"
+    downBlobFileUrl="/admin/user/export"
+    downBlobFileName="users.xlsx"
+    exportAuth="sys_user_export"
+    module="admin/user">
+    <template #top-bar>
+      <el-button
+        v-auth="'sys_user_add'"
+        icon="folder-add"
+        type="primary"
+        @click="userDialogRef.openDialog()">
+        {{ $t('common.addBtn') }}
+      </el-button>
+    </template>
+    <template #roleName="{ row }">
+      <el-tag v-for="(item, index) in row.roleList" :key="index">
+        {{ item.roleName }}
+      </el-tag>
+    </template>
+  </Table-view>
 
-							<template #default="{ node, data }">
-								<el-tooltip v-if="data.isLock" class="item" effect="dark" :content="$t('sysuser.noDataScopeTip')" placement="right-start">
-									<span
-										>{{ node.label }}
-										<SvgIcon name="ele-Lock" />
-									</span>
-								</el-tooltip>
-								<span v-if="!data.isLock">{{ node.label }}</span>
-							</template>
-						</query-tree>
-					</el-scrollbar>
-				</div>
-			</pane> -->
-    <!-- <pane class="ml8"> -->
-    <div class="layout-padding-auto layout-padding-view">
-      <el-row v-show="showSearch">
-        <el-form
-          ref="queryRef"
-          :inline="true"
-          :model="state.queryForm"
-          @keyup.enter="getDataList">
-          <el-form-item :label="$t('sysuser.name') + '：'" prop="name">
-            <el-input
-              v-model="state.queryForm.name"
-              :placeholder="$t('sysuser.inputNameTip')"
-              clearable />
-          </el-form-item>
-          <el-form-item :label="$t('sysuser.phone') + '：'" prop="phone">
-            <el-input
-              v-model="state.queryForm.phone"
-              :placeholder="$t('sysuser.inputPhoneTip')"
-              clearable />
-          </el-form-item>
-          <el-form-item>
-            <el-button icon="Search" type="primary" v-debounce="getDataList">
-              {{ $t('common.queryBtn') }}
-            </el-button>
-            <el-button icon="Refresh" v-debounce="resetQuery">
-              {{ $t('common.resetBtn') }}
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <el-row>
-        <div class="mb8" style="width: 100%">
-          <el-button
-            v-auth="'sys_user_add'"
-            icon="folder-add"
-            type="primary"
-            @click="userDialogRef.openDialog()">
-            {{ $t('common.addBtn') }}
-          </el-button>
-          <!--					<el-button v-auth="'sys_user_switch'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()"> 启用 </el-button>-->
-          <!--					<el-button v-auth="'sys_user_switch'" icon="folder-add" type="primary" @click="userDialogRef.openDialog()"> 停用 </el-button>-->
-          <!--					<el-button plain v-auth="'sys_user_add'" class="ml10" icon="upload-filled" type="primary" @click="excelUploadRef.show()">
-						{{ $t('common.importBtn') }}
-					</el-button>-->
-
-          <!--					<el-button plain v-auth="'sys_user_del'" :disabled="multiple" class="ml10" icon="Delete" type="primary" @click="handleDelete(selectObjs)">
-						{{ $t('common.delBtn') }}
-					</el-button>-->
-          <right-toolbar
-            v-model:showSearch="showSearch"
-            :export="'sys_user_export'"
-            @exportExcel="exportExcel"
-            @queryTable="getDataList"
-            class="ml10 mr20"
-            style="float: right" />
-        </div>
-      </el-row>
-      <el-table
-        v-loading="state.loading"
-        :data="state.dataList"
-        @selection-change="handleSelectionChange"
-        border
-        :cell-style="tableStyle.cellStyle"
-        :header-cell-style="tableStyle.headerCellStyle">
-        <el-table-column
-          :selectable="handleSelectable"
-          type="selection"
-          width="40" />
-        <el-table-column
-          :label="$t('sysuser.index')"
-          type="index"
-          width="60"
-          fixed="left" />
-        <el-table-column
-          :label="$t('sysuser.username')"
-          prop="username"
-          width="100"
-          fixed="left"
-          show-overflow-tooltip></el-table-column>
-        <el-table-column
-          :label="$t('sysuser.name')"
-          prop="name"
-          show-overflow-tooltip></el-table-column>
-        <el-table-column
-          :label="$t('sysuser.phone')"
-          prop="phone"
-          width="120"
-          show-overflow-tooltip></el-table-column>
-        <el-table-column
-          :label="$t('sysuser.spAuthScope')"
-          prop="spAuthScope"
-          width="120"
-          show-overflow-tooltip>
-          <template #default="{ row: { spAuthScope } }">
-            <span
-              v-text="
-                array2Object({ array: providerAuth as [] })[spAuthScope]
-              " />
-          </template>
-        </el-table-column>
-        <el-table-column
-          :label="$t('sysuser.merchantAuthScope')"
-          prop="merchantAuthScope"
-          width="120"
-          show-overflow-tooltip>
-          <template #default="{ row: { merchantAuthScope } }">
-            <span
-              v-text="
-                array2Object({ array: customerAuth as [] })[merchantAuthScope]
-              " />
-          </template>
-        </el-table-column>
-
-        <el-table-column :label="$t('sysuser.role')" show-overflow-tooltip>
-          <template #default="scope">
-            <el-tag v-for="(item, index) in scope.row.roleList" :key="index">
-              {{ item.roleName }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :label="$t('sysuser.createTime')"
-          prop="createTime"
-          show-overflow-tooltip
-          width="180" />
-        <el-table-column :label="$t('sysuser.lockFlag')" show-overflow-tooltip>
-          <template #default="scope">
-            <span v-text="scope.row.lockFlag === '9' ? '停用' : '启用'" />
-          </template>
-        </el-table-column>
-        <el-table-column :label="$t('common.action')" width="350" fixed="right">
-          <template #default="scope">
-            <el-button
-              v-auth="'sys_user_edit'"
-              icon="edit-pen"
-              text
-              type="primary"
-              @click="userDialogRef.openDialog(scope.row.userId)">
-              {{ $t('common.editBtn') }}
-            </el-button>
-            <template v-if="scope.row.lockFlag === userAbleToggleStatus.enable">
-              <!--            10 means all-->
-              <el-button
-                v-if="scope.row.merchantAuthScope !== '10'"
-                v-auth="`sys_user_merchant`"
-                text
-                type="primary"
-                icon="Switch"
-                @click="customersRef.openDialog(scope.row)">
-                {{ $t('sysuser.distributionMerchant') }}
-              </el-button>
-              <!--            10 means all-->
-              <el-button
-                v-if="scope.row.spAuthScope !== '10'"
-                v-auth="`sys_user_sp`"
-                text
-                type="primary"
-                icon="Switch"
-                @click="providerRef.openDialog(scope.row)">
-                {{ $t('sysuser.distributionSp') }}
-              </el-button>
-              <!--							<el-tooltip :content="$t('sysuser.deleteDisabledTip')" :disabled="scope.row.userId !== '1'" placement="top">
-								<span style="margin-left: 12px">
-									<el-button
-										icon="delete"
-										v-auth="'sys_user_del'"
-										:disabled="scope.row.username === 'admin'"
-										text
-										type="primary"
-										@click="handleDelete([scope.row.userId])"
-										>{{ $t('common.delBtn') }}
-									</el-button>
-								</span>
-							</el-tooltip>-->
-            </template>
-
-            <el-button
-              v-auth="`sys_user_switch`"
-              icon="turn-off"
-              text
-              type="primary"
-              @click="changeSwitch(scope.row)">
-              {{ scope.row.lockFlag === '9' ? '启用' : '停用' }}
-            </el-button>
-            <!--						<el-switch v-model="scope.row.lockFlag" @change="changeSwitch(scope.row)" active-value="0" inactive-value="9" />-->
-          </template>
-        </el-table-column>
-      </el-table>
-      <pagination
-        v-bind="state.pagination"
-        @current-change="currentChangeHandle"
-        @size-change="sizeChangeHandle"></pagination>
-    </div>
-    <!-- </pane> -->
-    <!--		</splitpanes>-->
-
-    <user-form ref="userDialogRef" @refresh="getDataList(false)" />
-    <Distribution
-      ref="customersRef"
-      id-filed="userId"
-      :titles="['未分配商户', '已分配商户']"
-      list-url="core/userMgrMerchant/assignMerchantPage"
-      save-url="core/userMgrMerchant/assignMerchant"
-      title="批量分配商户" />
-    <Distribution
-      ref="providerRef"
-      :titles="['未分配服务商', '已分配服务商']"
-      id-filed="userId"
-      list-url="core/userMgrSp/assignSpPage"
-      save-url="core/userMgrSp/assignSP"
-      title="批量分配服务商" />
-    <!--		<upload-excel
-			ref="excelUploadRef"
-			:title="$t('sysuser.importUserTip')"
-			temp-url="/docs/sys-file/local/file/user.xlsx"
-			url="/admin/user/import"
-			@refreshDataList="getDataList"
-		/>-->
-  </div>
+  <user-form ref="userDialogRef" @refresh="getDataList(false)" />
+  <Distribution
+    ref="customersRef"
+    id-filed="userId"
+    :titles="['未分配商户', '已分配商户']"
+    list-url="core/userMgrMerchant/assignMerchantPage"
+    save-url="core/userMgrMerchant/assignMerchant"
+    title="批量分配商户" />
+  <Distribution
+    ref="providerRef"
+    :titles="['未分配服务商', '已分配服务商']"
+    id-filed="userId"
+    list-url="core/userMgrSp/assignSpPage"
+    save-url="core/userMgrSp/assignSP"
+    title="批量分配服务商" />
 </template>
 
 <script lang="ts" setup>
-import { delObj, pageList, putObj } from '/@/api/admin/user'
+import { delObj, fetchList, putObj } from '/@/api/admin/user'
 import { deptTree } from '/@/api/admin/dept'
 import { BasicTableProps, useTable } from '/@/hooks/table'
 import { useMessage, useMessageBox } from '/@/hooks/message'
 import { useI18n } from 'vue-i18n'
-import array2Object from '/@/utils/array-2-object'
+import { useDict } from '/@/hooks/dict'
 import { customerAuth, providerAuth } from './enum'
+import Array2Object from '/@/utils/array-2-object'
+// 字典转map，用于显示中文
+const batchMap = Array2Object({ dic: ['sp_auth_method', 'merchant_auth'] })
 
+const conditionForms = [
+  {
+    label: '姓名',
+    key: 'name',
+    control: 'el-input'
+  },
+  {
+    label: '手机号',
+    key: 'phone',
+    control: 'el-input'
+  },
+  {
+    label: '登录账号',
+    key: 'username',
+    control: 'el-input'
+  },
+  {
+    label: '账户类型',
+    key: 'levelType',
+    options: 'user_level_type',
+    control: 'el-select'
+  },
+  {
+    label: '角色',
+    key: 'role',
+    options: {
+      url: `admin/role/list`
+    },
+    props: {
+      label: 'roleName',
+      value: 'roleId',
+      multiple: true
+    },
+    control: 'el-select'
+  }
+]
+
+const columns = [
+  {
+    type: 'selection',
+    width: '40',
+    fixed: 'left'
+  },
+  {
+    label: '登陆账号',
+    prop: 'username',
+    minWidth: '100',
+    fixed: 'left'
+  },
+  {
+    label: '姓名',
+    prop: 'name',
+    minWidth: '100'
+  },
+  {
+    label: '手机号',
+    prop: 'phone',
+    minWidth: '100'
+  },
+  {
+    label: '服务商授权',
+    value: ({ spAuthScope }) => batchMap.value.sp_auth_method[spAuthScope],
+    minWidth: '120'
+  },
+  {
+    label: '商户授权',
+    value: ({ merchantAuthScope }) =>
+      batchMap.value.merchant_auth[merchantAuthScope],
+    minWidth: '120'
+  },
+  {
+    label: '角色',
+    prop: 'roleName',
+    slot: true,
+    minWidth: '100'
+  },
+  {
+    label: '创建时间',
+    prop: 'createTime',
+    minWidth: '200'
+  },
+  {
+    label: '状态',
+    prop: 'lockFlag',
+    minWidth: '80',
+    value: ({ lockFlag }: any) => (lockFlag == '9' ? '停用' : '启用')
+  },
+  {
+    label: '操作',
+    slot: true,
+    prop: 'actions',
+    fixed: 'right',
+    minWidth: 300
+  }
+]
+
+const openDialog = (userId) => userDialogRef.value.openDialog(userId)
+const openDialogM = (row) => customersRef.value.openDialog(row)
+const openDialogSP = (row) => providerRef.value.openDialog(row)
+const actions = (row) => {
+  return [
+    {
+      auth: 'sys_user_edit',
+      label: '修改',
+      preview: true,
+      action: {
+        handler: openDialog,
+        params: row.userId
+      }
+    },
+    {
+      auth: 'sys_user_merchant',
+      label: '分配商户',
+      preview: true,
+      show: () =>
+        row.merchantAuthScope !== '10' &&
+        row.lockFlag === userAbleToggleStatus.enable,
+      action: {
+        handler: openDialogM,
+        params: row
+      }
+    },
+    {
+      auth: 'sys_user_sp',
+      label: '分配服务商',
+      preview: true,
+      show: () =>
+        row.spAuthScope !== '10' &&
+        row.lockFlag === userAbleToggleStatus.enable,
+      action: {
+        handler: openDialogSP,
+        params: row
+      }
+    },
+    {
+      auth: 'sys_user_switch',
+      label: row.lockFlag === '9' ? '启用' : '停用',
+      // preview: true,
+      action: {
+        handler: changeSwitch,
+        params: row
+      }
+    }
+  ]
+}
 defineOptions({ name: 'systemUser' })
 const userAbleToggleStatus = {
   enable: '0',
   disable: '9'
 }
+
+const { user_level_type } = useDict('user_level_type')
 // 动态引入组件
 const UserForm = defineAsyncComponent(() => import('./form.vue'))
 const QueryTree = defineAsyncComponent(
@@ -269,14 +220,7 @@ const { t } = useI18n()
 const userDialogRef = ref()
 const customersRef = ref()
 const providerRef = ref()
-const excelUploadRef = ref()
 const queryRef = ref()
-const showSearch = ref(true)
-
-// 多选rows
-const selectObjs = ref([]) as any
-// 是否可以多选
-const multiple = ref(true)
 
 // 定义表格查询、后台调用的API
 const state: BasicTableProps = reactive<BasicTableProps>({
@@ -285,15 +229,9 @@ const state: BasicTableProps = reactive<BasicTableProps>({
     username: '',
     phone: ''
   },
-  pageList: pageList
+  pageList: fetchList
 })
-const {
-  getDataList,
-  currentChangeHandle,
-  sizeChangeHandle,
-  downBlobFile,
-  tableStyle
-} = useTable(state)
+const { getDataList, downBlobFile } = useTable(state)
 
 // 部门树使用的数据
 const deptData = reactive({
@@ -315,22 +253,6 @@ const resetQuery = () => {
 const handleNodeClick = (e: any) => {
   state.queryForm.deptId = e.id
   getDataList()
-}
-
-// 导出excel
-const exportExcel = () => {
-  downBlobFile('/admin/user/export', state.queryForm, 'users.xlsx')
-}
-
-// 是否可以多选
-const handleSelectable = (row: any) => {
-  return row.username !== 'admin'
-}
-
-// 多选事件
-const handleSelectionChange = (objs: { userId: string }[]) => {
-  selectObjs.value = objs.map(({ userId }) => userId)
-  multiple.value = !objs.length
 }
 
 // 删除操作
