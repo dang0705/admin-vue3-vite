@@ -98,6 +98,7 @@
               @mouseleave.passive="row.show = true">
               <el-tooltip
                 content="设为已读"
+                :show-after="300"
                 placement="top"
                 v-if="row.readStatus === '0'">
                 <SvgIcon
@@ -109,6 +110,7 @@
               </el-tooltip>
               <el-tooltip
                 content="设为未读"
+                :show-after="300"
                 placement="top"
                 v-if="row.readStatus === '1'">
                 <SvgIcon
@@ -118,7 +120,7 @@
                   class="mr-[18px] cursor-pointer"
                   @click="readMarkUnread(row.id, refresh)" />
               </el-tooltip>
-              <el-tooltip content="删除" placement="top">
+              <el-tooltip :show-after="300" content="删除" placement="top">
                 <SvgIcon
                   name="iconfont icon-shanchu"
                   :size="13"
