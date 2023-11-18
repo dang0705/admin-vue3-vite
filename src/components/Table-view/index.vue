@@ -68,7 +68,8 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
-            :border="border"
+            size="small"
+            :border="false"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
             :header-cell-style="
