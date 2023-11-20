@@ -123,5 +123,13 @@ module.exports = {
 				mask: 'var(--el-mask-color)',
 			},
 		},
+		screens: {
+			'xs': 0, // min 0    max:424
+			'sm': '425px', // min 425  max 767
+			'md': '768px', // min 768  max 1023
+			'lg': '1024px', // min 1024 max 1439
+			'xl': '1440px', // min 1440+,
+			'2xl': '1980px',
+		},
 	},
 };

@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useThemeConfig } from '/@/stores/themeConfig'
-import logo from '/@/assets/menu-logo.png'
+import logo from '/@/assets/menu-logo.webp'
 import logoMini from '/@/assets/logo-mini.webp'
 import widthThrottle from '/@/configuration/width-throttle'
 defineOptions({ name: 'layoutLogo' })

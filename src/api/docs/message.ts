@@ -19,3 +19,11 @@ export function readMark(ids?: Object) {
     data: ids
   })
 }
+
+export function readUnread(id?: Object) {
+  return request({
+    url: '/docs/sysNotice/read/unread',
+    method: 'post',
+    data: { id }
+  })
+}
