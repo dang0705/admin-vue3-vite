@@ -63,7 +63,9 @@ const readMarkAll = async (refresh: any) => {
       </el-button>
     </template> -->
     <template #title="{ row }">
-      <div class="rounded-[3px] relative" :style="bgc(row.noticeType)">
+      <div
+        class="rounded-[3px] relative flex justify-center items-center"
+        :style="bgc(row.noticeType)">
         {{ row.title }}
         <!-- <div
           v-if="row.readStatus === '0'"

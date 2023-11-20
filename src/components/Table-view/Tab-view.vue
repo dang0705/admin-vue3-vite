@@ -41,7 +41,7 @@
           'box-border',
           'select-none',
           'px-[16px]',
-          // 'hover:bg-primary-light-9',
+          'hover:text-primary',
           {
             'text-primary': currentIndex == index
             // 'bg-primary-light-9': currentIndex == index

@@ -67,7 +67,7 @@
           </template>
           <template #tab-right>
             <span
-              class="text-[#999] cursor-pointer"
+              class="text-[#999] cursor-pointer hover:text-primary hover:underline"
               @click="$router.push({ path: '/message/index' })">
               更多 &gt;&gt;
             </span>
