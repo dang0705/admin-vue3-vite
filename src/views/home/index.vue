@@ -82,8 +82,13 @@
                 class="w-[6px] h-[6px] rounded-[50%] bg-[#FF6826] absolute top-[-3px] left-0"></div> -->
             </div>
           </template>
-          <template #content="{ row }">
-            <div :class="{ 'opacity-[0.5]': row.readStatus === '1' }">
+          <template #content="{ row, refresh }">
+            <div
+              :class="[
+                'cursor-pointer',
+                { 'opacity-[0.5]': row.readStatus === '1' }
+              ]"
+              @click="goDetail(row.id, row.url, refresh)">
               {{ row.content }}
             </div>
           </template>
@@ -132,11 +137,6 @@
                 </el-tooltip>
               </div>
             </div>
-            <!-- <div
-              class="text-[#0065FF] cursor-pointer"
-              @click="goDetail(row.id, row.url, refresh)">
-              详情 &nbsp; &gt;
-            </div> -->
           </template>
         </Table-view>
       </li>
@@ -151,6 +151,7 @@ import Column from '/@/views/home/components/column.vue'
 import clap from '/@/assets/dashboard/clap.webp'
 import bgc from '/@/configuration/message-tag-definition'
 import { deleteObj, readMark, readUnread } from '/@/api/docs/message'
+const $router = useRouter()
 
 defineOptions({ name: 'router.home' })
 let remainDate = ref([])
@@ -288,6 +289,12 @@ const readMarkOne = async (id: string, refresh: any) => {
 
 const readMarkUnread = async (id: string, refresh: any) => {
   await readUnread(id)
+  refresh()
+}
+
+const goDetail = async (id: string, url: string, refresh: any) => {
+  $router.push({ path: url })
+  await readMark([id])
   refresh()
 }
 
