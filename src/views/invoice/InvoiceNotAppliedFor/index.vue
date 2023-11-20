@@ -3,7 +3,7 @@
     :columns="columns"
     :condition-forms="conditionForms"
     module="finance/InvoiceNotAppliedFor.ts"
-    labelWidth="100px"
+    labelWidth="120px"
     downBlobFileUrl="/finance/invoiceRecord/export"
     downBlobFileName="未申请发票.xlsx"
     exportAuth="finance_invoiceRecordNot_export"
@@ -141,11 +141,16 @@
               required: dialogFormData.radioAddress === 0,
               message: '收件人手机号不能为空',
               trigger: 'blur'
+            },
+            {
+              validator: rule.mobile,
+              trigger: 'blur'
             }
           ]">
           <InputPlus
             v-model="dialogFormData.postPhone"
-            :disabled="dialogFormData.radioAddress === 1" />
+            :disabled="dialogFormData.radioAddress === 1"
+            maxlength="11" />
         </el-form-item>
       </template>
     </Dialog>
@@ -153,6 +158,8 @@
 </template>
 
 <script setup lang="ts">
+import { useMessage } from '/@/hooks/message'
+import { rule } from '/@/utils/validate'
 import {
   getObj,
   getMergeObj,
@@ -243,7 +250,7 @@ const conditionForms = [
     }
   },
   {
-    label: '充值时间',
+    label: '结算完成时间',
     control: 'DateRange',
     key: 'payTimeFromTo',
     props: {
@@ -512,9 +519,11 @@ const onSubmit = async (refresh: any) => {
     switch (financeType.value) {
       case 'applyfor':
         await applyInvoice({ ...dialogFormData.value })
+        useMessage().success('申请成功')
         break
       case 'open':
         await saveInvoice({ ...dialogFormData.value })
+        useMessage().success('申请成功')
         break
       case 'merge':
         // dialogFormData.value.invoiceCategoryList = dialogFormData.value.invoicingCategories;

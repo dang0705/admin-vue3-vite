@@ -393,7 +393,8 @@ const rejectForms = computed(() =>
           key: 'reason',
           label: '作废原因',
           props: {
-            type: 'textarea'
+            type: 'textarea',
+            maxlength: '500'
           },
           rules: [
             {
