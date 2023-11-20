@@ -113,8 +113,7 @@
       upload-url="core/undertakerInfo/import"
       temp-url="/files/批量导入承接人模板.xlsx"
       template-on-front
-      title="批量导入承接人"
-      :forms="addUnderTakerForms" />
+      title="批量导入承接人" />
 
     <!-- 批量绑定银行卡 -->
     <uploadExcel
@@ -182,29 +181,29 @@ const conditionForms2 = ref([
     slot: true
   }*/
 ])
-const addUnderTakerForms = [
-  {
-    control: 'el-radio-group',
-    key: 'isInventoryUser',
-    label: '是否存量用户',
-    options: [
-      {
-        label: '是',
-        value: 1
-      },
-      {
-        label: '否',
-        value: 0
-      }
-    ],
-    rules: [
-      {
-        required: true
-      }
-    ],
-    value: 1
-  }
-]
+// const addUnderTakerForms = [
+//   {
+//     control: 'el-radio-group',
+//     key: 'isInventoryUser',
+//     label: '是否存量用户',
+//     options: [
+//       {
+//         label: '是',
+//         value: 1
+//       },
+//       {
+//         label: '否',
+//         value: 0
+//       }
+//     ],
+//     rules: [
+//       {
+//         required: true
+//       }
+//     ],
+//     value: 1
+//   }
+// ]
 </script>
 <script lang="ts">
 export default {
