@@ -207,7 +207,7 @@ const columns = [
     'min-width': 120
   },
   {
-    prop: 'id',
+    prop: 'billRecordNum',
     label: '结算单编号',
     'min-width': 175
   },
