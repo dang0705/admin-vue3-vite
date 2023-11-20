@@ -218,7 +218,6 @@ const onSubmit = async () => {
   if (!valid) return false
 
   try {
-    loading.value = true
     form.id ? await putObj(form) : await addObj(form)
     useMessage().success(form.id ? '修改成功' : '添加成功')
     msgData.value = `身份证号为${form.undertakerCard}的承接人已添加成功！`
@@ -227,7 +226,6 @@ const onSubmit = async () => {
     emit('refresh')
   } catch (err: any) {
   } finally {
-    loading.value = false
   }
 }
 
