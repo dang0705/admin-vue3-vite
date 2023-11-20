@@ -13,7 +13,11 @@
         v-if="isTab && newTabs.length"
         :model-value="tabValue"
         :tabs="newTabs"
-        @get-value="handleTabClick" />
+        @get-value="handleTabClick">
+        <template v-for="(_, slot) in $slots" #[slot]>
+          <slot :name="slot" />
+        </template>
+      </Tab-view>
       <div class="mb8 w-full">
         <slot
           name="tableTopTwo"
@@ -68,7 +72,8 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
-            :border="border"
+            size="small"
+            :border="false"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
             :header-cell-style="

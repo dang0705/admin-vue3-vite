@@ -486,3 +486,9 @@ input[type='number'] {
 // .el-input__inner {
 //   line-height: 1px !important;
 // }
+
+
+.el-form-item--default {
+  --font-size: 12px;
+  --el-form-label-font-size: var(--font-size);
+}

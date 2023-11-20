@@ -44,17 +44,16 @@
 				</template>
 			</el-popover>
 		</div>-->
-    <div
-      class="layout-navbars-breadcrumb-user-icon mr10"
-      @click="onScreenfullClick">
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onScreenfullClick">
       <i
         class="iconfont"
         :title="state.isScreenfull ? $t('user.title6') : $t('user.title5')"
         :class="
           !state.isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'
-        "></i>
+        " />
     </div>
     <el-dropdown
+      class="layout-navbars-breadcrumb-user-icon user-info"
       :show-timeout="70"
       :hide-timeout="50"
       @command="onHandleCommandClick">
@@ -64,7 +63,7 @@
             userInfos.user.avatar ? baseURL + userInfos.user.avatar : avatar
           "
           class="layout-navbars-breadcrumb-user-link-photo mr5 w-[16px]" />
-        {{ userInfos.user.name || userInfos.user.username }}
+        <!--        {{ userInfos.user.name || userInfos.user.username }}-->
         <el-icon class="el-icon--right">
           <ele-ArrowDown />
         </el-icon>
@@ -270,7 +269,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .layout-navbars-breadcrumb-user {
   display: flex;
   align-items: center;
@@ -292,16 +291,26 @@ onMounted(() => {
   &-icon {
     padding: 0 10px;
     cursor: pointer;
-    color: var(--next-bg-topBarColor);
-    height: 50px;
+    color: var(--el-menu-hover-bg-color);
+    width: 32px;
+    height: 32px;
     line-height: 50px;
     display: flex;
+    justify-content: center;
     align-items: center;
+    border-radius: 50%;
+    &:not(.user-info) {
+      margin-right: 17px;
+      background-color: var(--el-menu-hover-bg-color);
+    }
 
+    i,
+    img {
+      color: var(--primary);
+    }
     &:hover {
-      background: var(--next-color-user-hover);
-
-      i {
+      i,
+      img {
         display: inline-block;
         animation: logoAnimation 0.3s ease-in-out;
       }

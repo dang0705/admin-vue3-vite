@@ -164,7 +164,7 @@ const handleAction = async ({
 </script>
 
 <template>
-  <ul class="flex flex-wrap justify-center">
+  <ul class="flex flex-wrap justify-start">
     <li
       v-for="(action, index) in actions"
       v-auth="`${action.auth || ''}`"
