@@ -268,7 +268,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         textAlign = 'left'
         break
       default:
-        textAlign = 'center'
+        textAlign = 'left'
     }
     return {
       textAlign
@@ -278,10 +278,11 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     cellStyle: ({ column: { label, align } }) => initColumnAlign(label, align),
     headerCellStyle: ({ column: { label } }) => {
       return {
-        textAlign: 'center',
-        height: '54px',
-        fontSize: '14px',
-        background: 'var(--table-header-bg-color)',
+        textAlign: 'left',
+        height: '40px',
+        fontSize: '12px',
+        // background: 'var(--table-header-bg-color)',
+        background: '#f1f1f1',
         color: 'var(--el-text-color-primary)'
       }
     }

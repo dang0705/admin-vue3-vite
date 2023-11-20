@@ -29,7 +29,11 @@ export default (row: any) => {
               params: {
                 id: id
               },
-              texts: ['确定要将该笔结算明细的收款银行卡信息更新为', '吗？']
+              texts: ['确定要将该笔结算明细的收款银行卡信息更新为', '吗？'],
+              style: {
+                'text-align': 'center',
+                'font-size': '12px'
+              }
             }
           }
         ]

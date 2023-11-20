@@ -1,17 +1,18 @@
 <template>
   <!-- <el-scrollbar> -->
   <!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
-  <el-card class="!border-none" shadow="never">
-    <el-form
-      ref="dataFormRef"
-      :model="form"
-      :rules="dataRules"
-      label-width="160px"
-      formDialogRef
-      label-position="right">
-      <div>
-        <Divider title="基本信息" />
-        <el-row class="paddcus" :gutter="24">
+  <!-- <el-card class="!border-none" shadow="never"> -->
+  <el-form
+    ref="dataFormRef"
+    :model="form"
+    :rules="dataRules"
+    label-width="160px"
+    formDialogRef
+    label-position="right">
+    <div>
+      <!-- <Divider title="基本信息" /> -->
+      <el-card class="!border-none" header="基本信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
               :label="$t('merchantInfo.merchantName') + '：'"
@@ -192,8 +193,10 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <Divider title="税务信息" />
-        <el-row class="paddcus" :gutter="24">
+      </el-card>
+      <!-- <Divider title="税务信息" /> -->
+      <el-card class="!border-none mt-6" header="税务信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
               :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
@@ -270,8 +273,10 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <Divider title="法人信息" />
-        <el-row class="paddcus" :gutter="24">
+      </el-card>
+      <!-- <Divider title="法人信息" /> -->
+      <el-card class="!border-none" header="法人信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
               :label="$t('merchantInfo.legalPersonName') + '：'"
@@ -322,8 +327,10 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <Divider title="办税人信息" />
-        <el-row class="paddcus" :gutter="24">
+      </el-card>
+      <!-- <Divider title="办税人信息" /> -->
+      <el-card class="!border-none" header="办税人信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
               :label="$t('merchantInfo.taxManagerName') + '：'"
@@ -370,8 +377,14 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <Divider title="邮寄信息" />
-        <el-row class="paddcus" :gutter="24">
+      </el-card>
+      <!-- <Divider title="邮寄信息" /> -->
+      <el-card
+        style="margin-bottom: 71px"
+        class="!border-none"
+        header="邮寄信息"
+        shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="收件人：" prop="recipient">
               <InputPlus :disabled="isDetail" v-model="form.recipient" />
@@ -395,7 +408,8 @@
             </el-form-item>
           </el-col>
         </el-row>
-
+      </el-card>
+      <div class="page_bottom_wrapper" :style="{ 'width': barWidth }">
         <span class="flex justify-center items-center" v-if="!isDetail">
           <el-button @click="resetFields">重置</el-button>
           <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
@@ -403,8 +417,9 @@
           </el-button>
         </span>
       </div>
-    </el-form>
-  </el-card>
+    </div>
+  </el-form>
+  <!-- </el-card> -->
   <!-- </el-scrollbar> -->
 </template>
 
@@ -417,6 +432,10 @@ import { rule } from '/@/utils/validate'
 import mittBus from '/@/utils/mitt'
 import uploadBusinessType from '/@/enums/upload-business-type'
 import closeTagView from '/@/utils/close-tag-view'
+import { storeToRefs } from 'pinia'
+import { useThemeConfig } from '/@/stores/themeConfig'
+const storesThemeConfig = useThemeConfig()
+const { themeConfig } = storeToRefs(storesThemeConfig)
 const ChinaArea = defineAsyncComponent(
   () => import('/@/components/ChinaArea/index.vue')
 )
@@ -449,6 +468,10 @@ const {
   'enterprise_scale',
   'industry'
 )
+
+const barWidth = computed(() => {
+  return `calc(100vw - ${!themeConfig.value.isCollapse ? 220 : 64}px)`
+})
 
 // 提交表单数据
 const form = reactive({
@@ -685,6 +708,41 @@ const industryLevel_option = computed(() => {
 
 <style scoped lang="scss">
 .paddcus {
-  padding: 0 48px 0 24px;
+  // padding: 0 48px 0 24px;
+  width: 1224px;
+  margin: 0 auto;
+  padding-right: 96px;
+}
+::v-deep(.el-card) {
+  margin: 15px;
+}
+::v-deep(.el-card__header) {
+  text-align: center;
+}
+::v-deep(.el-card__body) {
+  display: flex;
+  justify-content: center;
+}
+.page_bottom_wrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 56px;
+  line-height: 56px;
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  padding: 0 24px;
+  // z-index: 9;
+  width: calc(100vw - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 -9px 28px 8px #0000000d,
+    0 -6px 16px 0 #00000014,
+    0 -3px 6px -4px #0000001f;
 }
 </style>
