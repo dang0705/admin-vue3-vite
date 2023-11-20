@@ -19,9 +19,6 @@
         </template>
       </Tab-view>
       <div class="mb8 w-full">
-        <slot
-          name="tableTopTwo"
-          v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
         <Form-view
           v-if="conditionForms.length"
           v-model="state.queryForm"
@@ -40,7 +37,9 @@
               v-bind="{ form: conditionForms, formData: state.queryForm }" />
           </template>
         </Form-view>
-
+        <slot
+          name="tableTopTwo"
+          v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
         <div
           v-if="isShowTopBar"
           class="top-bar h-8 my-[10px] flex items-center justify-between">

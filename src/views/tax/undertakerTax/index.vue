@@ -42,7 +42,8 @@ const detailDialogRef = ref()
 const staticQuery = computed(() => {
   return {
     spId: route.query.spId,
-    merchantId: route.query.merchantId
+    merchantId: route.query.merchantId,
+    taskId: route.query.taskId
   }
 })
 const columns = [
