@@ -322,3 +322,8 @@ defineExpose({
 // 接受外部强刷页面的钩子
 $refreshList(resetQuery, catchHistoryTabState)
 </script>
+<style>
+.el-table .cell {
+  position: relative;
+}
+</style>

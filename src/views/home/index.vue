@@ -88,54 +88,56 @@
             </div>
           </template>
           <template #right="{ row, refresh }">
+            <div class="h-[52px] relative py-[10px] box-border">
+              <div
+                @mouseenter.passive="row.show = false"
+                v-show="row.show"
+                class="text-[12px] text-[#999] cursor-pointer">
+                {{ row.createTime }}
+              </div>
+              <div
+                class="absolute h-full w-full"
+                v-show="!row.show"
+                @mouseleave.passive="row.show = true">
+                <el-tooltip
+                  content="设为已读"
+                  :show-after="300"
+                  placement="top"
+                  v-if="row.readStatus === '0'">
+                  <SvgIcon
+                    name="iconfont icon-biaojiweiyidu"
+                    :size="13"
+                    color="#858585"
+                    class="mr-[18px] cursor-pointer"
+                    @click="readMarkOne(row.id, refresh)" />
+                </el-tooltip>
+                <el-tooltip
+                  content="设为未读"
+                  :show-after="300"
+                  placement="top"
+                  v-if="row.readStatus === '1'">
+                  <SvgIcon
+                    name="iconfont icon-biaojiweiweidu"
+                    :size="13"
+                    color="#858585"
+                    class="mr-[18px] cursor-pointer"
+                    @click="readMarkUnread(row.id, refresh)" />
+                </el-tooltip>
+                <el-tooltip :show-after="300" content="删除" placement="top">
+                  <SvgIcon
+                    name="iconfont icon-shanchu"
+                    :size="13"
+                    color="#858585"
+                    class="cursor-pointer"
+                    @click="delMessage(row.id, refresh)" />
+                </el-tooltip>
+              </div>
+            </div>
             <!-- <div
               class="text-[#0065FF] cursor-pointer"
               @click="goDetail(row.id, row.url, refresh)">
               详情 &nbsp; &gt;
             </div> -->
-            <div
-              @mouseenter.passive="row.show = false"
-              v-show="row.show"
-              class="text-[12px] text-[#999] py-[10px] h-full cursor-pointer">
-              {{ row.createTime }}
-            </div>
-            <div
-              class="py-[10px]"
-              v-show="!row.show"
-              @mouseleave.passive="row.show = true">
-              <el-tooltip
-                content="设为已读"
-                :show-after="300"
-                placement="top"
-                v-if="row.readStatus === '0'">
-                <SvgIcon
-                  name="iconfont icon-biaojiweiyidu"
-                  :size="13"
-                  color="#858585"
-                  class="mr-[18px] cursor-pointer"
-                  @click="readMarkOne(row.id, refresh)" />
-              </el-tooltip>
-              <el-tooltip
-                content="设为未读"
-                :show-after="300"
-                placement="top"
-                v-if="row.readStatus === '1'">
-                <SvgIcon
-                  name="iconfont icon-biaojiweiweidu"
-                  :size="13"
-                  color="#858585"
-                  class="mr-[18px] cursor-pointer"
-                  @click="readMarkUnread(row.id, refresh)" />
-              </el-tooltip>
-              <el-tooltip :show-after="300" content="删除" placement="top">
-                <SvgIcon
-                  name="iconfont icon-shanchu"
-                  :size="13"
-                  color="#858585"
-                  class="cursor-pointer"
-                  @click="delMessage(row.id, refresh)" />
-              </el-tooltip>
-            </div>
           </template>
         </Table-view>
       </li>
