@@ -22,8 +22,9 @@
 const MerchantInfoForm = defineAsyncComponent(
   () => import('./components/form.vue')
 )
-const SpAgree = defineAsyncComponent(() => import('./components/spAgree.vue'))
-const PayExit = defineAsyncComponent(() => import('./components/payExit.vue'))
+const SpAgree = defineAsyncComponent(() => import('./spAgree/index.vue'))
+const PayExit = defineAsyncComponent(() => import('./payExit/index.vue'))
+// const PayExit = defineAsyncComponent(() => import('./components/payExit.vue'))
 </script>
 <script lang="ts">
 export default {
