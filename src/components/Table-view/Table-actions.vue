@@ -93,8 +93,11 @@ const handleAction = async ({
     return
   }
   const isDelete = type === 'delete'
+  // const successText =
+  //   (confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！'
+  // handler = props.handlers[handler as never] || handler
   const successText =
-    (confirm as Confirm)?.done || body + (isDelete ? '删除' : label) + '成功！'
+    (confirm as Confirm)?.done || body + (isDelete ? '删除' : '操作') + '成功！'
   handler = props.handlers[handler as never] || handler
 
   if (dialog) {
@@ -148,10 +151,10 @@ const handleAction = async ({
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
       : handler
-      ? helpers.isArray(params)
-        ? await handler(...(params as []))
-        : await handler(params)
-      : (() => {})()
+        ? helpers.isArray(params)
+          ? await handler(...(params as []))
+          : await handler(params)
+        : (() => {})()
     if (shouldRefresh) {
       refresh && refresh()
       useMessage().success(successText)
