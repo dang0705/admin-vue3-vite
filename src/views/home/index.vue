@@ -65,10 +65,16 @@
             <div class="text-[18px] font-bold">当日事项提醒</div>
             <!-- <el-divider /> -->
           </template>
-          <template #tab-right>更多</template>
+          <template #tab-right>
+            <span
+              class="text-[#999] cursor-pointer"
+              @click="$router.push({ path: '/message/index' })">
+              更多 &gt;&gt;
+            </span>
+          </template>
           <template #title="{ row }">
             <div
-              class="rounded-[3px] relative text-[12px]"
+              class="rounded-[3px] relative text-[12px] flex justify-center items-center"
               :style="bgc(row.noticeType)">
               {{ row.title }}
               <!-- <div
