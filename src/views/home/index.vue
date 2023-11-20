@@ -19,9 +19,9 @@
               @mouseenter="routes[index].hover = true"
               @mouseleave="routes[index].hover = false"
               class="w-[116px] h-[44px] cursor-pointer rounded-[6px] flex items-center pl-[10px]">
-              <router-link
-                :to="{ path: route }"
+              <div
                 :style="{ color: hover ? '#fff' : '#000' }"
+                @click="go2Module(route, index)"
                 class="flex items-center">
                 <SvgIcon
                   :name="`iconfont ${icon}`"
@@ -29,7 +29,7 @@
                   :size="iconSize - 2"
                   class="mr-[5px]" />
                 {{ text }}
-              </router-link>
+              </div>
             </li>
           </ul>
         </div>
@@ -73,68 +73,66 @@
               更多 &gt;&gt;
             </span>
           </template>
-          <template #title="{ row }">
-            <div
-              class="rounded-[3px] relative text-[12px] flex justify-center items-center w-fit h-[20px] px-[6px]"
-              :style="bgc(row.noticeType)">
-              {{ row.title }}
-            </div>
-          </template>
           <template #content="{ row, refresh }">
             <div
               :class="[
+                'flex',
+                'justify-between',
                 'cursor-pointer',
+                'items-center',
                 { 'opacity-[0.5]': row.readStatus === '1' }
               ]"
+              @mouseenter="row.show = false"
+              @mouseleave="row.show = true"
               @click="goDetail(row, refresh)">
-              {{ row.content }}
-            </div>
-          </template>
-          <template #right="{ row, refresh }">
-            <div
-              class="h-[52px] relative py-[10px] box-border"
-              @mouseleave.passive="row.show = true">
               <div
-                @mouseenter="row.show = false"
-                v-show="row.show"
-                class="text-[12px] h-full text-[#999] cursor-pointer text-right">
-                {{ row.createTime }}
+                class="rounded-[3px] relative text-[12px] flex justify-center items-center w-fit h-[20px] px-[6px]"
+                :style="bgc(row.noticeType)">
+                {{ row.title }}
               </div>
-              <div
-                class="absolute h-full flex justify-end w-full"
-                v-show="!row.show">
-                <el-tooltip
-                  content="设为已读"
-                  :show-after="300"
-                  placement="top"
-                  v-if="row.readStatus === '0'">
-                  <SvgIcon
-                    name="iconfont icon-biaojiweiyidu"
-                    :size="13"
-                    color="#858585"
-                    class="mr-[18px] cursor-pointer"
-                    @click="readMarkOne(row.id, refresh)" />
-                </el-tooltip>
-                <el-tooltip
-                  content="设为未读"
-                  :show-after="300"
-                  placement="top"
-                  v-if="row.readStatus === '1'">
-                  <SvgIcon
-                    name="iconfont icon-biaojiweiweidu"
-                    :size="13"
-                    color="#858585"
-                    class="mr-[18px] cursor-pointer"
-                    @click="readMarkUnread(row.id, refresh)" />
-                </el-tooltip>
-                <el-tooltip :show-after="300" content="删除" placement="top">
-                  <SvgIcon
-                    name="iconfont icon-shanchu"
-                    :size="13"
-                    color="#858585"
-                    class="cursor-pointer"
-                    @click="delMessage(row.id, refresh)" />
-                </el-tooltip>
+              <div class="mr-auto ml-[12px]" v-text="row.content" />
+              <div class="h-[52px] relative py-[10px] box-border">
+                <div
+                  v-show="row.show"
+                  class="text-[12px] h-full text-[#999] cursor-pointer text-right">
+                  {{ row.createTime }}
+                </div>
+                <div
+                  class="absolute h-full flex justify-end w-full"
+                  v-show="!row.show">
+                  <el-tooltip
+                    content="设为已读"
+                    :show-after="300"
+                    placement="top"
+                    v-if="row.readStatus === '0'">
+                    <SvgIcon
+                      name="iconfont icon-biaojiweiyidu"
+                      :size="13"
+                      color="#858585"
+                      class="mr-[18px] cursor-pointer"
+                      @click="readMarkOne(row.id, refresh)" />
+                  </el-tooltip>
+                  <el-tooltip
+                    content="设为未读"
+                    :show-after="300"
+                    placement="top"
+                    v-if="row.readStatus === '1'">
+                    <SvgIcon
+                      name="iconfont icon-biaojiweiweidu"
+                      :size="13"
+                      color="#858585"
+                      class="mr-[18px] cursor-pointer"
+                      @click="readMarkUnread(row.id, refresh)" />
+                  </el-tooltip>
+                  <el-tooltip :show-after="300" content="删除" placement="top">
+                    <SvgIcon
+                      name="iconfont icon-shanchu"
+                      :size="13"
+                      color="#858585"
+                      class="cursor-pointer"
+                      @click="delMessage(row.id, refresh)" />
+                  </el-tooltip>
+                </div>
               </div>
             </div>
           </template>
@@ -169,20 +167,9 @@ const getMessages = async () => {
 
 const columns = [
   {
-    prop: 'title',
-    slot: true,
-    width: 90
-  },
-  {
     prop: 'content',
     slot: true,
     align: 'left',
-    showOverflowTooltip: false
-  },
-  {
-    prop: 'right',
-    slot: true,
-    width: 150,
     showOverflowTooltip: false
   }
 ]
@@ -302,6 +289,11 @@ const goDetail = async ({ id, url }, refresh: any) => {
   })
   await readMark([id])
   refresh()
+}
+const router = useRouter()
+const go2Module = (route, index) => {
+  router.push({ path: route })
+  routes.value[index].hover = false
 }
 
 /*onMounted(async () => {
