@@ -31,7 +31,7 @@ export default [
     'min-width': 160
   },
   {
-    prop: 'xxx',
+    prop: 'terminateTime',
     label: '终止时间',
     'min-width': 160
   },
