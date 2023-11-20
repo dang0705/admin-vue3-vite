@@ -13,7 +13,6 @@
         v-if="isTab && newTabs.length"
         :model-value="tabValue"
         :tabs="newTabs"
-        class="flex-grow"
         @get-value="handleTabClick">
         <template v-for="(_, slot) in $slots" #[slot]>
           <slot :name="slot" />
