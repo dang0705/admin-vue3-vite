@@ -94,7 +94,7 @@
               <div
                 @mouseenter="row.show = false"
                 v-show="row.show"
-                class="text-[12px] text-[#999] cursor-pointer">
+                class="text-[12px] h-full text-[#999] cursor-pointer">
                 {{ row.createTime }}
               </div>
               <div class="absolute h-full w-full" v-show="!row.show">
