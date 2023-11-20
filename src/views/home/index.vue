@@ -54,6 +54,7 @@
       <li
         class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)]">
         <Table-view
+          v-if="remainDate.length"
           module="docs/message.ts"
           :columns="columns"
           :border="false"
@@ -142,6 +143,9 @@
             </div>
           </template>
         </Table-view>
+        <!--        <div v-else class="flex justify-center items-center">
+           <img src="">
+        </div>-->
       </li>
     </ul>
   </div>
