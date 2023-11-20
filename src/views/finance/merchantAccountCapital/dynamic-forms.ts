@@ -170,7 +170,10 @@ export const formsFunc = (reType: any, form: any) => {
               validator: rule.interbank,
               trigger: 'blur'
             }
-          ]
+          ],
+          props: {
+            disabled: true
+          }
         }
       ]
     }

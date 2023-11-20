@@ -156,7 +156,8 @@ const { proxy } = getCurrentInstance()
 let dialogFormData = reactive({
   receiptAccountBank: '',
   payingAmount: undefined,
-  receiptAccountNumber: ''
+  receiptAccountNumber: '',
+  payingJointBankNumber: ''
 })
 const accountInfoList = computed(() => {
   return [
@@ -211,6 +212,7 @@ const handleFilterAccount = (value: any) => {
     return item.value == value
   })
   dialogFormData.receiptAccountBank = obj.receiptAccountBank
+  dialogFormData.payingJointBankNumber = obj.receiptAccountLines
 }
 // 发起充值/退款
 const handleRe = async (type: number) => {

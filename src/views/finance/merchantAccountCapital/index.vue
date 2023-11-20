@@ -3,6 +3,7 @@
     :columns="columns"
     exportAuth="core_merchantAccountCapital_export"
     :condition-forms="conditionForms"
+    downBlobFileUrl="/finance/merchantAccountCapitalWater/export"
     module="finance/merchantAccountCapital.ts">
     <template #actions="{ row }">
       <el-button
@@ -22,17 +23,6 @@
         查看收款账号
       </el-button>
     </template>
-    <template #top-bar="{ otherInfo }">
-      <el-button
-        @click="handleBtn"
-        style="margin-right: 24px"
-        icon="download"
-        type="primary"
-        class="ml10">
-        批量导出
-      </el-button>
-    </template>
-
     <Dialog
       vertical
       button-position="center"
