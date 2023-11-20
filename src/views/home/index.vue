@@ -79,8 +79,7 @@
                 'flex',
                 'justify-between',
                 'cursor-pointer',
-                'items-center',
-                { 'opacity-[0.5]': row.readStatus === '1' }
+                'items-center'
               ]"
               @mouseenter="row.show = false"
               @mouseleave="row.show = true"
@@ -90,7 +89,13 @@
                 :style="bgc(row.noticeType)">
                 {{ row.title }}
               </div>
-              <div class="mr-auto ml-[12px]" v-text="row.content" />
+              <div
+                :class="[
+                  'mr-auto',
+                  'ml-[12px]',
+                  { 'opacity-[0.5]': row.readStatus === '1' }
+                ]"
+                v-text="row.content" />
               <div class="h-[52px] relative py-[10px] box-border">
                 <div
                   v-show="row.show"
