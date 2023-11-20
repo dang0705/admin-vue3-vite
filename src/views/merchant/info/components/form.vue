@@ -1,7 +1,4 @@
 <template>
-  <!-- <el-scrollbar> -->
-  <!-- :body-style="{ padding: '20px 72px 20px 48px' }" -->
-  <!-- <el-card class="!border-none" shadow="never"> -->
   <el-form
     ref="dataFormRef"
     :model="form"
@@ -11,7 +8,11 @@
     label-position="right">
     <div>
       <!-- <Divider title="基本信息" /> -->
-      <el-card class="!border-none" header="基本信息" shadow="never">
+      <el-card
+        class="!border-none"
+        :style="{ 'margin-top': isDetail ? '0px' : '15px' }"
+        header="基本信息"
+        shadow="never">
         <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
@@ -380,7 +381,7 @@
       </el-card>
       <!-- <Divider title="邮寄信息" /> -->
       <el-card
-        style="margin-bottom: 71px"
+        :style="{ 'margin-bottom': !isDetail ? '71px' : '0px' }"
         class="!border-none"
         header="邮寄信息"
         shadow="never">
@@ -409,8 +410,11 @@
           </el-col>
         </el-row>
       </el-card>
-      <div class="page_bottom_wrapper" :style="{ 'width': barWidth }">
-        <span class="flex justify-center items-center" v-if="!isDetail">
+      <div
+        v-if="!isDetail"
+        class="page_bottom_wrapper"
+        :style="{ 'width': barWidth }">
+        <span class="flex justify-center items-center">
           <el-button @click="resetFields">重置</el-button>
           <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
             确认
@@ -419,8 +423,6 @@
       </div>
     </div>
   </el-form>
-  <!-- </el-card> -->
-  <!-- </el-scrollbar> -->
 </template>
 
 <script setup lang="ts">
@@ -716,6 +718,7 @@ const industryLevel_option = computed(() => {
 ::v-deep(.el-card) {
   margin: 15px;
 }
+
 ::v-deep(.el-card__header) {
   text-align: center;
 }

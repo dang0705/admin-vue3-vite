@@ -30,12 +30,14 @@
         @click="handleBtn">
         批量导出明细
       </el-button>
-      <div class="info_list">
+      <div class="flex">
         <div
-          class="info_item"
+          class="mr-5 flex items-center"
           v-for="(item, index) in otherInfo.sumResp"
           :key="index">
-          {{ item.label }}:{{ item.value }}元
+          <span class="translate-y-[1px]">{{ item.label }}:</span>
+          <el-statistic :value="item.value" />
+          <span class="translate-y-[1px]">元</span>
         </div>
       </div>
     </template>
@@ -230,12 +232,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.info_list {
-  display: flex;
-
-  .info_item {
-    margin-right: 20px;
-  }
-}
-</style>

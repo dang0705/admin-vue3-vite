@@ -3,7 +3,9 @@
     <div class="layout-padding-auto layout-padding-view">
       <el-tabs style="min-height: 300px" class="demo-tabs">
         <el-tab-pane label="商户信息">
-          <merchantInfo-form :isDetail="true" />
+          <merchantInfo-form
+            style="transform: translateY(-15px)"
+            :isDetail="true" />
         </el-tab-pane>
         <el-tab-pane lazy label="服务协议">
           <sp-agree />

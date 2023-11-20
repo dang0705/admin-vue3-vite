@@ -18,7 +18,7 @@ export default [
   {
     label: '联系人手机号',
     prop: 'contactPhone',
-    minWidth: 150
+    minWidth: 120
   },
   {
     label: '创建人',

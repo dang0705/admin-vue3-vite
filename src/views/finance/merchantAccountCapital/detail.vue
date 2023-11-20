@@ -31,7 +31,8 @@
               <div class="info_label">账户余额</div>
               <div class="price_box">
                 <div class="price">
-                  {{ thousandthDivision({ number: form.totalAmount }) }}
+                  <el-statistic
+                    :value="thousandthDivision({ number: form.totalAmount })" />
                 </div>
                 <div class="unit">元</div>
               </div>
@@ -42,7 +43,8 @@
               <div class="info_label">冻结金额</div>
               <div class="price_box">
                 <div class="price">
-                  {{ thousandthDivision({ number: form.freeze }) }}
+                  <el-statistic
+                    :value="thousandthDivision({ number: form.freeze })" />
                 </div>
                 <div class="unit">元</div>
               </div>
@@ -53,7 +55,8 @@
               <div class="info_label">可用余额</div>
               <div class="price_box">
                 <div class="price">
-                  {{ thousandthDivision({ number: form.balance }) }}
+                  <el-statistic
+                    :value="thousandthDivision({ number: form.balance })" />
                 </div>
                 <div class="unit">元</div>
               </div>
@@ -304,5 +307,9 @@ const refreshDataList = () => {
   .info_label {
     font-size: 14px;
   }
+}
+
+:deep(.el-statistic__content) {
+  font-size: 30px;
 }
 </style>

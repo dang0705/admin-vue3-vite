@@ -258,7 +258,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * 定义表格通用样式
    * @returns  css
    */
-  const initColumnAlign = (label: string, align?: string) => {
+  const initColumn = (label: string, align?: string) => {
     let textAlign = ''
     switch (true) {
       case label?.includes('(元)'):
@@ -271,11 +271,12 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         textAlign = 'left'
     }
     return {
-      textAlign
+      textAlign,
+      'height': '48px'
     }
   }
   const tableStyle: TableStyle = {
-    cellStyle: ({ column: { label, align } }) => initColumnAlign(label, align),
+    cellStyle: ({ column: { label, align } }) => initColumn(label, align),
     headerCellStyle: ({ column: { label } }) => {
       return {
         textAlign: 'left',

@@ -1,4 +1,4 @@
 export default [
-  '//at.alicdn.com/t/c/font_4194340_wa2udwmcafe.css',
-  '//at.alicdn.com/t/c/font_4334995_qtlaqi52usb.css'
+  '//at.alicdn.com/t/c/font_4194340_0vsimk998s9o.css',
+  '//at.alicdn.com/t/c/font_4334995_vl7ubna2lgk.css'
 ]

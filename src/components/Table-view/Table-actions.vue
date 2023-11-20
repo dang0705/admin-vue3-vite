@@ -164,6 +164,32 @@ const handleAction = async ({
     return Promise.reject(err)
   }
 }
+const getIcon = (action) => {
+  let icon
+  if (action.label.includes('查看') || action.preview) {
+    icon = 'icon-chakan'
+  } else if (action.type === 'delete') {
+    icon = 'icon-shanchu1'
+  } else if (action.label === '编辑') {
+    icon = 'icon-bianji'
+  } else {
+    icon = action.icon
+  }
+  return icon
+}
+const getColor = (action) => {
+  let color
+  if (action.label.includes('查看') || action.preview) {
+    color = 'rgba(0,0,0,0.65)'
+  } else if (action.type === 'delete') {
+    color = '#FF5A00'
+  } else if (action.label === '编辑') {
+    color = '#1590FF'
+  } else {
+    color = '#FF5A00'
+  }
+  return color
+}
 </script>
 
 <template>
@@ -171,13 +197,15 @@ const handleAction = async ({
     <li
       v-for="(action, index) in actions"
       v-auth="`${action.auth || ''}`"
-      v-text="action.label"
       :key="action.label"
       :class="[
-        'text-primary',
         'cursor-pointer',
         { 'mr-[12px]': actions.length > 1 && index < actions.length - 1 }
       ]"
-      @click.passive="handleAction(action)" />
+      :style="{ 'color': getColor(action) }"
+      @click.passive="handleAction(action)">
+      <span :class="['iconfont', getIcon(action)]" class="font12"></span>
+      <span class="ml-1">{{ action.label }}</span>
+    </li>
   </ul>
 </template>
