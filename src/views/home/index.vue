@@ -18,10 +18,10 @@
               :style="{ backgroundColor: hover ? bg : 'transparent' }"
               @mouseenter="routes[index].hover = true"
               @mouseleave="routes[index].hover = false"
+              @click="go2Module(route, index)"
               class="w-[116px] h-[44px] cursor-pointer rounded-[6px] flex items-center pl-[10px]">
               <div
                 :style="{ color: hover ? '#fff' : '#000' }"
-                @click="go2Module(route, index)"
                 class="flex items-center">
                 <SvgIcon
                   :name="`iconfont ${icon}`"
