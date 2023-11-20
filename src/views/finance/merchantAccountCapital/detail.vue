@@ -23,7 +23,7 @@
         发起充值
       </el-button>
     </template>
-    <template #tableTopTwo>
+    <template #tableTop>
       <div class="flex mb-[24px]">
         <div class="total_list bg-[#fafafa] flex flex-1 mr-9">
           <div class="total_item">
