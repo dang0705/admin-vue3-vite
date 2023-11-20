@@ -15,7 +15,7 @@
         :tabs="newTabs"
         @get-value="handleTabClick">
         <template v-for="(_, slot) in $slots" #[slot]>
-          <slot :name="slot" />
+          <slot :name="slot" :refresh="resetQuery" />
         </template>
       </Tab-view>
       <div class="mb8 w-full">
