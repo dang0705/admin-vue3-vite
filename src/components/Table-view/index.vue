@@ -137,6 +137,7 @@
     <Dialog
       v-model="showDialog"
       v-model:form-data="dialogFormData"
+      append-to-body
       v-bind="_dialog"
       :columns="24"
       :on-submit="onDialogSubmit" />

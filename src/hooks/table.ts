@@ -248,11 +248,15 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * @param url 文件下载地址
    * @param query 请求参数（可能包含token）
    * @param fileName 文件名
+   * @param exportExcel 导出
    * @returns 返回一个Promise对象，用于异步处理结果
    */
-  const downBlobFile = (url: string, query: any, fileName: string) => {
-    return other.downBlobFile(url, query, fileName)
-  }
+  const downBlobFile = (
+    url: string,
+    query: any,
+    fileName: string,
+    exportExcel: boolean
+  ) => other.downBlobFile(url, query, fileName, exportExcel)
 
   /**
    * 定义表格通用样式

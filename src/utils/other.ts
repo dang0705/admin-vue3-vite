@@ -257,14 +257,28 @@ export function base64Encrypt(src: string) {
  * @param url 目标下载接口
  * @param query 查询参数
  * @param fileName 文件名称
+ * @param exportExcel 导出excel
  * @returns {*}
  */
-export function downBlobFile(url: any, query: any, fileName: string) {
+export function downBlobFile(
+  url: any,
+  query: any,
+  fileName: string,
+  exportExcel = false
+) {
   return request({
     url: url,
-    method: 'get',
     responseType: 'blob',
-    params: query
+    ...(exportExcel
+      ? {
+          method: 'post',
+          data: query,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      : {
+          method: 'get',
+          params: query
+        })
   }).then((response) => {
     handleBlobFile(response, fileName)
   })
@@ -405,8 +419,13 @@ const other = {
   base64Encrypt: (data: any) => {
     return base64Encrypt(data)
   },
-  downBlobFile: (url: any, query: any, fileName: string) => {
-    return downBlobFile(url, query, fileName)
+  downBlobFile: (
+    url: any,
+    query: any,
+    fileName: string,
+    exportExcel: boolean
+  ) => {
+    return downBlobFile(url, query, fileName, exportExcel)
   },
   toUnderline: (str: string) => {
     return toUnderline(str)

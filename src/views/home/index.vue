@@ -1,15 +1,15 @@
 <template>
-  <div class="p-[20px] 2xl:px-[238px] xl:px-[100px] pt-0">
-    <h1 class="text-[20px] flex items-center my-[18px]">
-      <!-- <img :src="clap" alt="" class="w-[30px] mr-2" />
-      欢迎回来，{{ userName }} -->
-    </h1>
-    <ul id="dashboard" class="flex">
+  <div class="px-[20px]">
+    <!--    <h1 class="text-[20px] flex items-center my-[18px]">
+      &lt;!&ndash; <img :src="clap" alt="" class="w-[30px] mr-2" />
+      欢迎回来，{{ userName }} &ndash;&gt;
+    </h1>-->
+    <ul id="dashboard" class="flex my-[18px] mx-auto justify-center">
       <li class="flex flex-col flex-shrink-0 w-[320px]">
         <div
           class="section !px-[12px] !pt-[16px]"
           style="height: 128px; padding-bottom: 10px">
-          <ul class="h-[100px] flex flex-wrap justify-between">
+          <ul class="h-[100px] flex flex-wrap justify-between pr-[50px]">
             <li
               v-for="(
                 { icon, text, route, bg, iconSize, hover }, index
@@ -51,19 +51,20 @@
       </li>
 
       <!--      Messages here-->
-      <li class="section flex-grow ml-[12px] h-[354px]">
+      <li
+        class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)]">
         <Table-view
           module="docs/message.ts"
           :columns="columns"
           :border="false"
-          noPagination
-          noPadding
           :isShowTopBar="false"
           :header="false"
-          :size="4">
+          :size="4"
+          no-pagination
+          no-padding
+          class="w-full">
           <template #tableTop>
             <div class="text-[18px] font-bold">当日事项提醒</div>
-            <!-- <el-divider /> -->
           </template>
           <template #tab-right>
             <span
@@ -74,12 +75,9 @@
           </template>
           <template #title="{ row }">
             <div
-              class="rounded-[3px] relative text-[12px] flex justify-center items-center"
+              class="rounded-[3px] relative text-[12px] flex justify-center items-center w-fit h-[20px] px-[6px]"
               :style="bgc(row.noticeType)">
               {{ row.title }}
-              <!-- <div
-                v-if="row.readStatus === '0'"
-                class="w-[6px] h-[6px] rounded-[50%] bg-[#FF6826] absolute top-[-3px] left-0"></div> -->
             </div>
           </template>
           <template #content="{ row, refresh }">
@@ -88,7 +86,7 @@
                 'cursor-pointer',
                 { 'opacity-[0.5]': row.readStatus === '1' }
               ]"
-              @click="goDetail(row.id, row.url, refresh)">
+              @click="goDetail(row, refresh)">
               {{ row.content }}
             </div>
           </template>
@@ -99,10 +97,12 @@
               <div
                 @mouseenter="row.show = false"
                 v-show="row.show"
-                class="text-[12px] h-full text-[#999] cursor-pointer">
+                class="text-[12px] h-full text-[#999] cursor-pointer text-right">
                 {{ row.createTime }}
               </div>
-              <div class="absolute h-full w-full" v-show="!row.show">
+              <div
+                class="absolute h-full flex justify-end w-full"
+                v-show="!row.show">
                 <el-tooltip
                   content="设为已读"
                   :show-after="300"
@@ -148,9 +148,10 @@
 import { useUserInfo } from '/@/stores/userInfo'
 import { fetchList } from '/@/api/docs/message'
 import Column from '/@/views/home/components/column.vue'
-import clap from '/@/assets/dashboard/clap.webp'
 import bgc from '/@/configuration/message-tag-definition'
 import { deleteObj, readMark, readUnread } from '/@/api/docs/message'
+import qs from 'qs'
+
 const $router = useRouter()
 
 defineOptions({ name: 'router.home' })
@@ -292,8 +293,13 @@ const readMarkUnread = async (id: string, refresh: any) => {
   refresh()
 }
 
-const goDetail = async (id: string, url: string, refresh: any) => {
-  $router.push({ path: url })
+const goDetail = async ({ id, url }, refresh: any) => {
+  const [path, query] = url.split('?')
+  const { attributeName, attributeVal } = qs.parse(query)
+  $router.push({
+    path,
+    state: { tabValue: attributeVal, tabKey: attributeName }
+  })
   await readMark([id])
   refresh()
 }
