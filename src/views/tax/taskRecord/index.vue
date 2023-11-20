@@ -19,14 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
-const TabView = defineAsyncComponent(
-  () => import('/@/components/Table-view/Tab-view.vue')
-)
-import { payChannel } from '/@/configuration/dynamic-control'
 const route: any = useRoute()
 const router = useRouter()
-const form = reactive({})
 const columns = [
   {
     prop: 'spName',
@@ -61,7 +55,7 @@ const columns = [
   },
   {
     prop: 'startTime',
-    label: '发布时间',
+    label: '开始时间',
     'min-width': 180
   },
   {
@@ -120,7 +114,7 @@ const conditionForms = [
   {
     control: 'DateRange',
     key: 'queryTimeRange',
-    label: '发布时间',
+    label: '审核时间',
     props: {
       valueType: 'string'
     }
