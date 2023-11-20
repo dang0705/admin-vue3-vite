@@ -88,17 +88,16 @@
             </div>
           </template>
           <template #right="{ row, refresh }">
-            <div class="h-[52px] relative py-[10px] box-border">
+            <div
+              class="h-[52px] relative py-[10px] box-border"
+              @mouseleave.passive="row.show = true">
               <div
                 @mouseenter="row.show = false"
                 v-show="row.show"
                 class="text-[12px] text-[#999] cursor-pointer">
                 {{ row.createTime }}
               </div>
-              <div
-                class="absolute h-full w-full"
-                v-show="!row.show"
-                @mouseleave.passive="row.show = true">
+              <div class="absolute h-full w-full" v-show="!row.show">
                 <el-tooltip
                   content="设为已读"
                   :show-after="300"
