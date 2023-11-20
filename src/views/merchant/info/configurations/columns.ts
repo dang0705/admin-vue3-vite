@@ -2,13 +2,13 @@ export default [
   {
     label: '商户名称',
     prop: 'merchantName',
-    minWidth: 100
+    minWidth: 120
   },
-  { label: '社会统一信用代码', prop: 'socialCreditCode', minWidth: 140 },
+  { label: '社会统一信用代码', prop: 'socialCreditCode', minWidth: 165 },
   {
     label: '服务商',
     prop: 'spList',
-    minWidth: 150
+    minWidth: 120
   },
   {
     label: '联系人',
@@ -28,7 +28,7 @@ export default [
   {
     label: '创建时间',
     prop: 'createTime',
-    minWidth: 160
+    minWidth: 135
   },
   {
     label: '状态',

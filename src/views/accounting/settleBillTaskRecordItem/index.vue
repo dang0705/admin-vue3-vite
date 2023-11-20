@@ -1,11 +1,16 @@
 <template>
   <TableView
     :actions="actions"
-    :columns="columns"
+    :columns="newColumns"
     module="core/settleBillTaskRecordItem.ts"
-    :condition-forms="conditionForms"
+    :condition-forms="forms"
+    :staticQuery="staticQuery"
     labelWidth="140px"
-    exportAuth="core_settleBillTaskRecordItem_export"
+    :exportAuth="
+      route.query.id
+        ? 'core_settleBill_export'
+        : 'core_settleBillTaskRecordItem_export'
+    "
     downBlobFileUrl="xxx">
     <template #billName="{ row }">
       <router-link
@@ -33,16 +38,52 @@
         {{ row.billNumber }}
       </router-link>
     </template>
+    <template v-for="(_, slot) in $slots" #[slot]>
+      <slot :name="slot" />
+    </template>
   </TableView>
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 import actions from './configurations/tabel-actions'
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
+const route: any = useRoute()
+const forms = computed(() => {
+  if (!route.query.id) {
+    return conditionForms
+  } else {
+    return [
+      {
+        control: 'InputPlus',
+        key: 'undertakerName',
+        label: '承接人'
+      },
+      {
+        control: 'InputPlus',
+        key: 'undertakerCard',
+        label: '承接人证件号码'
+      }
+    ]
+  }
+})
+const newColumns = computed(() => {
+  return columns.map((item) => {
+    if (
+      route.query.id &&
+      (item.prop === 'billName' || item.prop === 'billNumber')
+    ) {
+      return {
+        ...item,
+        slot: false
+      }
+    } else {
+      return item
+    }
+  })
+})
+const staticQuery = {
+  settleBillId: route.query.id
 }
 </script>
 <script lang="ts">

@@ -1,14 +1,17 @@
+<!-- <TableView
+ref="settleBillDetailRef"
+:columns="indexThead"
+module="core/settleBill.ts"
+getListFnName="taskRecordItem"
+:staticQuery="staticQuery"
+:condition-forms="conditionForms"
+downBlobFileUrl="xxx"
+exportAuth="core_settleBill_export"
+labelWidth="140px">
+
+</TableView> -->
 <template>
-  <TableView
-    ref="settleBillDetailRef"
-    :columns="indexThead"
-    module="core/settleBill.ts"
-    getListFnName="taskRecordItem"
-    :staticQuery="staticQuery"
-    :condition-forms="conditionForms"
-    downBlobFileUrl="xxx"
-    exportAuth="core_settleBill_export"
-    labelWidth="140px">
+  <SettleBillTaskRecordItem>
     <template #tableTop="{ otherInfo }">
       <Form-view
         :otherInfo="otherInfo"
@@ -97,8 +100,8 @@
         </template>
         <template #top-bar="{ otherInfo }">
           <h2 style="font-size: 16px; margin-right: 20px">服务结算单</h2>
-          <div class="info_list">
-            <div class="info_item">
+          <div class="flex">
+            <div class="mr-5">
               资金账户可用余额: {{ balanceInfo.platBalance }}元
             </div>
             {{
@@ -167,11 +170,11 @@
         </template>
         <template #top-bar="{ otherInfo }">
           <h2 style="font-size: 16px; margin-right: 20px">任务结算单</h2>
-          <div class="info_list">
-            <div class="info_item">
+          <div class="flex">
+            <div class="mr-5">
               资金账户可用余额: {{ balanceInfo.spBalance }}元
             </div>
-            <div class="info_item">
+            <div class="mr-5">
               {{
                 task_isNeedRecharge
                   ? `需要充值: ${task_needRecharge_num}元`
@@ -209,24 +212,6 @@
         </template>
       </TableView>
     </template>
-    <template #actions="{ row }">
-      <el-button
-        v-auth="'core_settleBill_agree'"
-        @click="handleContractFile(row)"
-        icon="view"
-        text
-        type="primary">
-        查看关联协议
-      </el-button>
-      <el-button
-        v-auth="'core_settleBill_pay'"
-        @click="handleBtn"
-        icon="view"
-        text
-        type="primary">
-        查看支付凭证
-      </el-button>
-    </template>
     <DetailDialog
       ref="detailDialogRef"
       @refresh="getmerchantInfoData()"
@@ -241,7 +226,7 @@
       template-on-front
       title="导入结算"
       label-width="178px" />
-  </TableView>
+  </SettleBillTaskRecordItem>
 </template>
 
 <script setup lang="ts" name="账单详情">
@@ -257,7 +242,9 @@ import { useMessage } from '/@/hooks/message'
 const batchMap = Array2Object({
   dic: ['yes_no_type', 'settle_status', 'payment_status']
 })
-
+const SettleBillTaskRecordItem = defineAsyncComponent(
+  () => import('/@/views/accounting/settleBillTaskRecordItem/index.vue')
+)
 const DetailDialog = defineAsyncComponent(
   () => import('./components/detailDialog.vue')
 )
@@ -395,183 +382,6 @@ const topInfoForms = [
     label: '创建人'
   }
 ]
-// 筛选表单
-const conditionForms = [
-  {
-    control: 'InputPlus',
-    key: 'undertakerName',
-    label: '承接人'
-  },
-  {
-    control: 'InputPlus',
-    key: 'undertakerCard',
-    label: '承接人证件号码'
-  }
-]
-const indexThead = [
-  // 收款银行卡更新备注
-  {
-    type: 'selection',
-    width: '40'
-  },
-  {
-    prop: 'billName',
-    label: '账单名称',
-    minWidth: 100
-  },
-  {
-    prop: 'billNumber',
-    label: '账单编号',
-    minWidth: 100
-  },
-  {
-    prop: 'undertakerName',
-    label: '承接人',
-    minWidth: 100
-  },
-  {
-    prop: 'undertakerCard',
-    label: '承接人证件号码',
-    minWidth: 150
-  },
-  {
-    prop: 'undertakerPhone',
-    label: '承接人手机号码',
-    minWidth: 150
-  },
-  {
-    prop: 'spName',
-    label: '服务商',
-    minWidth: 150
-  },
-  {
-    prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 100
-  },
-  {
-    prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
-  },
-  {
-    prop: 'taskName',
-    label: '任务名称',
-    minWidth: 100
-  },
-  {
-    prop: 'taskUndertakerId',
-    label: '任务承接编号',
-    minWidth: 150
-  },
-  {
-    prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 100
-  },
-  {
-    prop: 'undertakerBankName',
-    label: '承接人开户行',
-    minWidth: 150
-  },
-  {
-    prop: 'undertakerBankNumber',
-    label: '承接人银行卡号',
-    minWidth: 150
-  },
-  {
-    prop: 'taskAmount',
-    label: '个人任务承揽费(元)',
-    minWidth: 120
-  },
-  {
-    prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    minWidth: 120
-  },
-  {
-    prop: 'paidAmount',
-    label: '实发金额(元)',
-    minWidth: 120
-  },
-  // {
-  //   prop: 'commissionAmount',
-  //   label: '管理费(元)',
-  //   minWidth: 120
-  // },
-  {
-    prop: 'undertaderStartTime',
-    label: '承接开始时间',
-    minWidth: 150
-  },
-  {
-    prop: 'undertaderEndTime',
-    label: '承接结束时间',
-    minWidth: 150
-  },
-  {
-    prop: 'detailNumber',
-    label: '任务结算明细编号',
-    minWidth: 150
-  },
-  {
-    prop: 'billSettleTime',
-    label: '付款时间',
-    minWidth: 150
-  },
-  {
-    prop: 'isSignServiceContract',
-    label: '是否存在生效协议',
-    'min-width': 180,
-    value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isSignServiceContract]
-  },
-  {
-    prop: 'isBankFourEssentialFactor',
-    label: '是否银行四要素校验',
-    value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isBankFourEssentialFactor],
-    minWidth: 150
-  },
-  {
-    prop: 'billStatusDesc',
-    label: '结算状态',
-    minWidth: 100
-  },
-  {
-    prop: 'paymentSuccessTime',
-    label: '支付时间',
-    minWidth: 100
-  },
-  {
-    prop: 'paymentStatus',
-    label: '支付状态',
-    value: ({ paymentStatus }: BatchUploadRecordPage) =>
-      batchMap.value.payment_status[paymentStatus],
-    minWidth: 100
-  },
-  {
-    prop: 'failureReason',
-    label: '支付失败原因',
-    minWidth: 150
-  },
-  {
-    prop: 'bankCardUpdateDesc',
-    label: '收款银行卡更新备注',
-    minWidth: 150
-  },
-  {
-    label: '操作',
-    prop: 'actions',
-    fixed: 'right',
-    slot: true,
-    minWidth: 300
-  }
-]
-const staticQuery = {
-  settleBillId: route.query.id
-}
-
 const handleAccountCapitalDetail = (type: number) => {
   router.push({
     path: '/finance/merchantAccountCapital/detail',
@@ -610,21 +420,12 @@ const getQueryBalance = () => {
     })
     .finally(() => {})
 }
-
 if (route.query.id) {
   getmerchantInfoData()
 }
-
 const handlePayBillRecord = (list = [], billType: number) => {
   detailDialogRef.value?.openDialog(form.id, 1, billType)
 }
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
-}
-const handleContractFile = (row) => {
-  window.open(`${proxy.baseURL}/${row.contractFile}`)
-}
-
 const refreshDataList = () => {
   getmerchantInfoData()
   settleBillDetailRef.value.resetQuery()
@@ -633,14 +434,6 @@ $refreshList(getmerchantInfoData)
 </script>
 
 <style lang="scss" scoped>
-.info_list {
-  display: flex;
-
-  .info_item {
-    margin-right: 20px;
-  }
-}
-
 .total_wrapper {
   padding: 28px 0;
   background: #fafafa;
