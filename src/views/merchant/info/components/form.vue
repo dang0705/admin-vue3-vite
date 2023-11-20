@@ -312,6 +312,7 @@
               :label="$t('merchantInfo.legalPersonPortrait') + '：'"
               prop="legalPersonPortrait">
               <UploadFile
+                :loading="getInfoLoading"
                 :disabled="isDetail"
                 :type="businessType"
                 v-model="form.legalPersonPortrait" />
@@ -322,6 +323,7 @@
               :label="$t('merchantInfo.legalPersonNationalEmblem') + '：'"
               prop="legalPersonNationalEmblem">
               <UploadFile
+                :loading="getInfoLoading"
                 :disabled="isDetail"
                 :type="businessType"
                 v-model="form.legalPersonNationalEmblem" />
@@ -361,6 +363,7 @@
               :label="$t('merchantInfo.taxManagerPortrait') + '：'"
               prop="taxManagerPortrait">
               <UploadFile
+                :loading="getInfoLoading"
                 :disabled="isDetail"
                 :type="businessType"
                 v-model="form.taxManagerPortrait" />
@@ -372,6 +375,7 @@
               :label="$t('merchantInfo.taxManagerNationalEmblem') + '：'"
               prop="taxManagerNationalEmblem">
               <UploadFile
+                :loading="getInfoLoading"
                 :disabled="isDetail"
                 :type="businessType"
                 v-model="form.taxManagerNationalEmblem" />

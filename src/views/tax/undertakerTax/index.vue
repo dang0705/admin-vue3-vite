@@ -131,7 +131,7 @@ const conditionForms = [
   {
     control: 'DateRange',
     key: 'queryTimeRange',
-    label: '开始时间',
+    label: '开始日期',
     props: {
       valueType: 'string'
     }
