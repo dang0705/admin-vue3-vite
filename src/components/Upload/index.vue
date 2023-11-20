@@ -73,15 +73,8 @@
           :accept="accept.length ? accept.join(',') : new_accept.join(',')">
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
           <template v-if="isImage && prefixedUrls.length && !multiple">
-            <img
-              v-if="prefixedUrls[0]"
-              :src="prefixedUrls[0]"
-              class="upload-image" />
-            <img
-              v-else
-              class="w-[120px] h-[120px]"
-              src="/src/assets/test.jpg"
-              alt="" />
+            <img :src="prefixedUrls[0]" class="upload-image" />
+
             <div class="upload-handle" @click.stop>
               <div
                 class="handle-icon"
@@ -109,6 +102,11 @@
               </div>
             </div>
           </template>
+          <img
+            v-if="isImage && prefixedUrls.length === 0 && !multiple"
+            class="w-[120px] h-[120px]"
+            src="/src/assets/test.jpg"
+            alt="" />
           <div
             class="upload-empty"
             v-else-if="
