@@ -163,7 +163,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    minWidth: 200
+    minWidth: 150
   }
 ]
 

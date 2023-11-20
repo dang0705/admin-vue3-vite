@@ -75,12 +75,12 @@ const columns = [
   {
     label: '法定代表人',
     prop: 'legalPersonName',
-    minWidth: 200
+    minWidth: 120
   },
   {
     label: '法人手机号',
     prop: 'legalPersonMobile',
-    minWidth: 250
+    minWidth: 120
   },
   {
     label: '状态',
@@ -91,14 +91,14 @@ const columns = [
     label: '是否已开通支付通道',
     prop: 'hasPaymentChannel',
     slot: true,
-    minWidth: 300
+    minWidth: 150
   },
   {
     label: '操作',
     slot: true,
     prop: 'actions',
     fixed: 'right',
-    minWidth: 300
+    minWidth: 150
   }
 ]
 const actions = ({ id, status }) => {

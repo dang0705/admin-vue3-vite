@@ -12,7 +12,7 @@ export default (batchMap: Ref) => [
   {
     label: '身份证号码',
     prop: 'undertakerCard',
-    minWidth: 200
+    minWidth: 150
   },
   {
     label: '手机号码',
@@ -73,7 +73,7 @@ export default (batchMap: Ref) => [
   {
     label: '操作',
     prop: 'actions',
-    minWidth: 395,
+    minWidth: 280,
     fixed: 'right',
     slot: true
   }
