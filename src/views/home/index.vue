@@ -65,6 +65,7 @@
             <div class="text-[18px] font-bold">当日事项提醒</div>
             <!-- <el-divider /> -->
           </template>
+          <template #tab-right>更多</template>
           <template #title="{ row }">
             <div
               class="rounded-[3px] relative text-[12px]"

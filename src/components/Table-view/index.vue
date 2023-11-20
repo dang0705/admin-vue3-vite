@@ -13,7 +13,12 @@
         v-if="isTab && newTabs.length"
         :model-value="tabValue"
         :tabs="newTabs"
-        @get-value="handleTabClick" />
+        class="flex-grow"
+        @get-value="handleTabClick">
+        <template v-for="(_, slot) in $slots" #[slot]>
+          <slot :name="slot" />
+        </template>
+      </Tab-view>
       <div class="mb8 w-full">
         <slot
           name="tableTopTwo"
