@@ -12,9 +12,7 @@
     export-auth="finance_undertakerAgentPaying_export"
     @get-tab-value="currentTab = $event">
     <!--    '40' 支付失败 '10待支付'-->
-    <template
-      #top-bar="{ refresh, query }"
-      v-if="['40', '10'].includes(currentTab)">
+    <template #top-bar="{ refresh, query }" v-if="['40'].includes(currentTab)">
       <el-button
         type="primary"
         v-auth="`finance_undertakerAgentPaying_pay`"
