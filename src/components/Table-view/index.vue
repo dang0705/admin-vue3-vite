@@ -100,6 +100,7 @@
                 <slot
                   :name="column.prop"
                   :row="row"
+                  :list="state.dataList"
                   :confirm="confirm"
                   :refresh="resetQuery">
                   <template v-if="column.value">
