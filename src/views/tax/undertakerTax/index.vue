@@ -1,5 +1,6 @@
 <template>
   <Table-view
+    ref="undertakerTaxRef"
     :staticQuery="staticQuery"
     :isShowTopBar="!isTaskDetail"
     :noPadding="isTaskDetail"
@@ -22,19 +23,22 @@
         icon="view"
         text
         type="primary"
-        @click="handleBtn(row)">
+        @click="detailDialogRef.openDialog(row.id)">
         查看
       </el-button>
     </template>
+    <detail-dialog ref="detailDialogRef" @refresh="refreshDataList" />
   </Table-view>
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
-import { payChannel } from '/@/configuration/dynamic-control'
+const DetailDialog = defineAsyncComponent(
+  () => import('/@/views/task/undertaker/components/detailDialog.vue')
+)
 const { proxy } = getCurrentInstance()
 const route: any = useRoute()
-const router = useRouter()
+const undertakerTaxRef = ref()
+const detailDialogRef = ref()
 const staticQuery = computed(() => {
   return {
     spId: route.query.spId,
@@ -97,8 +101,6 @@ const columns = [
   }
 ]
 const isTaskDetail = computed(() => {
-  console.log('route.query.taskId-1', route.query.taskId)
-
   return route.query.taskId ? true : false
 })
 const conditionForms = [
@@ -134,8 +136,8 @@ const conditionForms = [
     }
   }
 ]
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
+const refreshDataList = () => {
+  undertakerTaxRef.value.resetQuery()
 }
 const handleContractFile = (row: any) => {
   window.open(`${proxy.baseURL}/${row.contractFile}`)

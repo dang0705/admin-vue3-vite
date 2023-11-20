@@ -63,14 +63,14 @@
         text
         type="primary"
         @click="handleView('transferVoucherTax', row)">
-        企业转账凭证
+        商户转款记录
       </el-button>
       <el-button
         icon="view"
         text
         type="primary"
         @click="handleView('perVoucherTax', row)">
-        个人结算凭证
+        个人结算记录
       </el-button>
     </template>
     <template #invoice="{ row }">
@@ -79,11 +79,15 @@
         text
         type="primary"
         @click="handleView('invoiceTax', row)">
-        查看发票
+        商户发票
       </el-button>
     </template>
     <template #tax="{ row }">
-      <el-button icon="view" text type="primary" @click="handleView(row)">
+      <el-button
+        icon="view"
+        text
+        type="primary"
+        @click="handleView('taxPaymentBatch', row)">
         查看完税凭证
       </el-button>
     </template>
