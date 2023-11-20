@@ -90,7 +90,7 @@
           <template #right="{ row, refresh }">
             <div class="h-[52px] relative py-[10px] box-border">
               <div
-                @mouseenter.passive="row.show = false"
+                @mouseenter="row.show = false"
                 v-show="row.show"
                 class="text-[12px] text-[#999] cursor-pointer">
                 {{ row.createTime }}
