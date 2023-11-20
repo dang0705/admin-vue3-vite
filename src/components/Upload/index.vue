@@ -74,7 +74,6 @@
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
           <template v-if="isImage && prefixedUrls.length && !multiple">
             <img :src="prefixedUrls[0]" class="upload-image" />
-
             <div class="upload-handle" @click.stop>
               <div
                 class="handle-icon"
@@ -102,11 +101,6 @@
               </div>
             </div>
           </template>
-          <img
-            v-if="isImage && prefixedUrls.length === 0 && !multiple"
-            class="w-[120px] h-[120px]"
-            src="/src/assets/test.jpg"
-            alt="" />
           <div
             class="upload-empty"
             v-else-if="
@@ -174,6 +168,13 @@
               </ul>
             </template>
           </template>
+          <img
+            v-if="
+              self_disabled && isImage && prefixedUrls.length === 0 && !multiple
+            "
+            class="w-[120px] h-[120px]"
+            src="/src/assets/test.jpg"
+            alt="" />
           <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" /> -->
         </el-upload>
         <template v-if="disabled && !isImage">
@@ -198,8 +199,8 @@
     </div>
     <div v-else>
       <img class="w-[120px] h-[120px]" src="/src/assets/test.jpg" alt="" />
-      <!-- <SvgIcon name="iconfont icon-tupianzhanweifu" :size="68" color="#eee" /> -->
     </div>
+    <!-- <SvgIcon name="iconfont icon-tupianzhanweifu" :size="68" color="#eee" /> -->
   </div>
 </template>
 
