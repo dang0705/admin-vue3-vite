@@ -36,7 +36,12 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item label="服务商：" prop="spId">
+              <InputPlus
+                v-if="self_disabled && !form.spId"
+                :disabled="self_disabled"
+                v-model="form.spId"></InputPlus>
               <el-select
+                v-else
                 @change="handleChangeMerchantId"
                 :disabled="self_disabled"
                 clearable
@@ -52,7 +57,12 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item label="服务协议：" prop="serviceContractId">
+              <InputPlus
+                v-if="self_disabled && !form.serviceContractId"
+                :disabled="self_disabled"
+                v-model="form.serviceContractId"></InputPlus>
               <el-select
+                v-else
                 :disabled="self_disabled"
                 clearable
                 v-model="form.serviceContractId">
@@ -694,6 +704,10 @@ const getSpInfoData = () => {
     merchantId: form.merchantId
   }).then((res: any) => {
     spinfoList.value = res.data || []
+    let obj = spinfoList.value.find((item: any) => item.id === form.spId)
+    if (!obj) {
+      form.spId = ''
+    }
   })
 }
 
@@ -733,6 +747,12 @@ const getAgreeList = () => {
     status: route.query.copy == 1 || !route.query.taskId ? 1 : undefined
   }).then((res: any) => {
     agree_list.value = res.data || []
+    let obj = agree_list.value.find(
+      (item: any) => item.agreementId === form.serviceContractId
+    )
+    if (!obj) {
+      form.serviceContractId = ''
+    }
   })
 }
 
