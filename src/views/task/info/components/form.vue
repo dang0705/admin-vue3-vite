@@ -20,7 +20,12 @@
         <el-row v-if="curStep == 0 || curStep == 2" :gutter="24">
           <el-col :span="12" class="mb20">
             <el-form-item label="商户：" prop="merchantId">
+              <InputPlus
+                v-if="self_disabled && !form.merchantId"
+                :disabled="self_disabled"
+                v-model="form.merchantName"></InputPlus>
               <el-select
+                v-else
                 @change="handleChangeMerchantId(), handleChangeSpId()"
                 :disabled="self_disabled"
                 clearable
@@ -39,9 +44,10 @@
               <InputPlus
                 v-if="self_disabled && !form.spId"
                 :disabled="self_disabled"
-                v-model="form.spId"></InputPlus>
+                v-model="form.spName"></InputPlus>
               <el-select
                 v-else
+                const
                 @change="handleChangeMerchantId"
                 :disabled="self_disabled"
                 clearable
@@ -60,7 +66,7 @@
               <InputPlus
                 v-if="self_disabled && !form.serviceContractId"
                 :disabled="self_disabled"
-                v-model="form.serviceContractId"></InputPlus>
+                v-model="form.serviceContractName"></InputPlus>
               <el-select
                 v-else
                 :disabled="self_disabled"
@@ -638,7 +644,6 @@ const onSubmit = async () => {
       }
     })
   } finally {
-    loading.value = false
   }
 }
 
@@ -695,6 +700,12 @@ const handleChangeSpId = () => {
 const getMerchantInfoData = () => {
   getMerchantInfoList().then((res: any) => {
     merchantList.value = res.data || []
+    let obj = merchantList.value.find(
+      (item: any) => item.id === form.merchantId
+    )
+    if (!obj) {
+      form.merchantId = ''
+    }
   })
 }
 
