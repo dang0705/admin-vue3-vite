@@ -196,12 +196,6 @@ const conditionForms = [
     props: {
       platform: true
     }
-  },
-  {
-    label: '发票状态',
-    control: 'el-select',
-    key: 'invoiceStatus',
-    options: 'invoice_status'
   }
 ]
 
@@ -394,7 +388,8 @@ const rejectForms = computed(() =>
           label: '作废原因',
           props: {
             type: 'textarea',
-            maxlength: '500'
+            maxlength: '500',
+            showWordLimit: true
           },
           rules: [
             {
@@ -427,7 +422,9 @@ const rejectForms = computed(() =>
           key: 'reason',
           label: '驳回原因',
           props: {
-            type: 'textarea'
+            type: 'textarea',
+            maxlength: '500',
+            showWordLimit: true
           },
           rules: [
             {
