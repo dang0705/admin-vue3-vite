@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] overflow-scroll">
+  <div class="h-[100vh] overflow-scroll bg-[#fff]">
     <p
       class="MsoNormal"
       style="
