@@ -37,7 +37,7 @@ export default {
   },
   border: {
     type: Boolean,
-    default: true
+    default: false
   },
   // 额外的参数
   params: {

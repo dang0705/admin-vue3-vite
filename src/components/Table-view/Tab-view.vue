@@ -40,13 +40,17 @@
           'text-[14px]',
           'box-border',
           'select-none',
-          index ? 'px-[16px]' : 'pr-[16px]',
-          { 'text-primary': currentIndex == index }
+          'px-[16px]',
+          'hover:text-primary',
+          {
+            'text-primary': currentIndex == index
+            // 'bg-primary-light-9': currentIndex == index
+          }
         ]"
         @click="onTabClick($event, key, index)">
         <span v-text="label" />
         <span
-          v-if="value !== undefined"
+          v-if="value !== undefined && value !== ''"
           v-text="value"
           class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]"
           style="padding: 0 10px 0" />
@@ -62,6 +66,9 @@
         'ml-[4px]',
         { disabled: tabScrollIsEnd }
       ]" />
+    <div class="flex-shrink-0">
+      <slot name="tab-right" />
+    </div>
   </div>
 </template>
 
@@ -132,7 +139,8 @@ const initTab = async (tabsWidth: number) => {
     tabPanels.value = tabsWrapper.value?.querySelectorAll('.tab')
     const defaultTab = tabPanels.value?.[0]
     const paddingRight = getTabPadding(defaultTab, 'paddingRight')
-    slideWidth.value = defaultTab.offsetWidth - +paddingRight
+    const paddingLeft = getTabPadding(defaultTab, 'paddingLeft')
+    slideWidth.value = defaultTab.offsetWidth - (+paddingRight + +paddingLeft)
     tabPanels.value.forEach(
       (tab: Element) => (tabWidth += tab.getBoundingClientRect().width)
     )
@@ -173,7 +181,7 @@ watch(
 onMounted(async () => window.addEventListener('resize', onResize, true))
 onUnmounted(() => window.removeEventListener('resize', onResize))
 
-const slideDistance = ref(0)
+const slideDistance = ref(16)
 const slideWidth = ref(0)
 
 const getTabPadding = (el: Element, padding: string) =>
