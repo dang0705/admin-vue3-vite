@@ -150,7 +150,7 @@ export default [
     prop: 'paymentStatus',
     label: '支付状态',
     value: ({ paymentStatus }: BatchUploadRecordPage) =>
-      batchMap.value.payment_status[paymentStatus],
+      batchMap.value.payment_status[paymentStatus] || '无',
     minWidth: 100
   },
   {
