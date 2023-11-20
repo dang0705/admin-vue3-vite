@@ -6,7 +6,7 @@
     <User>
       <template #top-slot-1>
         <div @click="qrCode">
-          <SvgIcon name="iconfont icon_yaoqingma" />
+          <SvgIcon title="邀请二维码" name="iconfont icon_yaoqingma" />
         </div>
       </template>
     </User>

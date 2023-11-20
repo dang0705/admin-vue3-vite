@@ -52,9 +52,9 @@
 
       <!--      Messages here-->
       <li
-        class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)]">
+        class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)] overflow-hidden">
         <Table-view
-          module="docs/message.ts"
+          module="docs/homeMessage.ts"
           :columns="columns"
           :border="false"
           :isShowTopBar="false"
