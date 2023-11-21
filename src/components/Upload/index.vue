@@ -146,7 +146,7 @@
               ((multiple && prefixedUrls?.length < limit) || !multiple)
             ">
             <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
-            <span class="text-[#999] text-[14px]">
+            <span class="text-[#999] text-[14px]" v-if="acceptText">
               支持{{
                 accept.length
                   ? accept.join(',').replace(/image\//g, '')
@@ -360,6 +360,10 @@ const props = defineProps({
   hoverNoBorder: {
     type: String,
     default: '1px dashed var(--el-color-primary)'
+  },
+  acceptText: {
+    type: Boolean,
+    default: true
   }
 })
 let fileNames = ref([])
