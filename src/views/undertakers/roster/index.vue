@@ -135,7 +135,8 @@ import Array2Object from '/@/utils/array-2-object'
 import conditionForms from '/@/views/undertakers/roster/configurations/condition-forms'
 import getColumns from '/@/views/undertakers/roster/configurations/columns'
 import getActions from '/src/views/undertakers/roster/configurations/actions'
-import logomini from '/@/assets/logo-mini.webp'
+import id_z from '/@/assets/id/id_z.webp'
+import id_f from '/@/assets/id/id_f.webp'
 
 const batchMap = Array2Object({ dic: ['gender', 'education'] })
 
@@ -159,7 +160,7 @@ const actions = ({ id, undertakerPhone }: any) => [
       params: [id]
     }
   },
-  ...getActions({ id, undertakerPhone }, logomini)
+  ...getActions({ id, undertakerPhone }, id_z, id_f)
 ]
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'))
@@ -218,3 +219,8 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+::v-deep(.el-upload-dragger) {
+  border: none !important;
+}
+</style>
