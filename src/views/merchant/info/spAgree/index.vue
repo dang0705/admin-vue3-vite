@@ -43,6 +43,9 @@
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 // import actions from './configurations/tabel-actions'
+const FormDialog = defineAsyncComponent(
+  () => import('../components/spAgree_form.vue')
+)
 const route: any = useRoute()
 const formDialogRef = ref()
 const spAgreeRef = ref()

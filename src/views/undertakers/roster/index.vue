@@ -160,7 +160,8 @@ const actions = ({ id, undertakerPhone }: any) => [
 ]
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'))
-const DetailDialog = defineAsyncComponent(() => import('./detail.vue'))
+// const DetailDialog = defineAsyncComponent(() => import('./detail.vue'))
+const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'))
 const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'))
 const Distribution = defineAsyncComponent(
   () => import('/@/components/Distribution/index.vue')

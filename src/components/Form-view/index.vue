@@ -344,7 +344,10 @@ defineExpose({
                         ...form.props,
                         ...(form.props?.disabled ? { placeholder: '--' } : {}),
                         clearable: form.props?.clearable ?? true,
-                        disabled: form.props?.disabled ?? prop.disabled
+                        disabled: form.props?.disabled ?? prop.disabled,
+                        ...(form.control === 'el-input'
+                          ? { maxlength: 100 }
+                          : {})
                       }">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">

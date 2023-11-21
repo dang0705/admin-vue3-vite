@@ -18,7 +18,10 @@
             <el-form-item
               :label="$t('merchantInfo.merchantName') + '：'"
               prop="merchantName">
-              <InputPlus :disabled="isDetail" v-model="form.merchantName" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="50"
+                v-model="form.merchantName" />
             </el-form-item>
           </el-col>
 
@@ -109,7 +112,10 @@
             <el-form-item
               :label="$t('merchantInfo.socialCreditCode') + '：'"
               prop="socialCreditCode">
-              <InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="18"
+                v-model="form.socialCreditCode" />
             </el-form-item>
           </el-col>
 
@@ -121,6 +127,7 @@
                 :disabled="isDetail"
                 v-model="form.address"
                 :rows="3"
+                maxlength="100"
                 show-word-limit
                 type="textarea" />
             </el-form-item>
@@ -142,6 +149,7 @@
             <el-form-item label="企业邮箱：" prop="enterpriseMailbox">
               <InputPlus
                 :disabled="isDetail"
+                maxlength="50"
                 v-model="form.enterpriseMailbox" />
             </el-form-item>
           </el-col>
@@ -183,6 +191,7 @@
           <el-col :span="12" class="mb20">
             <el-form-item
               :label="$t('merchantInfo.contactName') + '：'"
+              maxlength="30"
               prop="contactName">
               <InputPlus :disabled="isDetail" v-model="form.contactName" />
             </el-form-item>
@@ -190,7 +199,10 @@
 
           <el-col :span="12" class="mb20">
             <el-form-item label="联系人手机号：" prop="contactPhone">
-              <InputPlus :disabled="isDetail" v-model="form.contactPhone" />
+              <InputPlus
+                :disabled="isDetail"
+                v-model="form.contactPhone"
+                maxlength="11" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -202,7 +214,7 @@
             <el-form-item
               :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
               prop="taxRegistrationNumber">
-              <InputPlus :disabled="isDetail" v-model="form.socialCreditCode" />
+              <InputPlus :disabled="true" v-model="form.socialCreditCode" />
               <!-- <span>{{ form.socialCreditCode }}</span> -->
             </el-form-item>
           </el-col>
@@ -229,7 +241,10 @@
             <el-form-item
               :label="$t('merchantInfo.taxBankNumber') + '：'"
               prop="taxBankNumber">
-              <InputPlus :disabled="isDetail" v-model="form.taxBankNumber" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="30"
+                v-model="form.taxBankNumber" />
             </el-form-item>
           </el-col>
 
@@ -244,6 +259,7 @@
           <el-col :span="12" class="mb20">
             <el-form-item label="开户行联行号：" prop="taxJointBankNumber">
               <InputPlus
+                maxlength="12"
                 :disabled="isDetail"
                 v-model="form.taxJointBankNumber" />
             </el-form-item>
@@ -257,6 +273,7 @@
             <el-form-item prop="phoneNumber" label="企业电话：">
               <InputPlus
                 :disabled="isDetail"
+                maxlength="30"
                 v-model="form.phoneNumber"
                 placeholder="电话号码" />
             </el-form-item>
@@ -270,6 +287,7 @@
                 v-model="form.taxBankArea"
                 :rows="3"
                 show-word-limit
+                maxlength="100"
                 type="textarea" />
             </el-form-item>
           </el-col>
@@ -282,7 +300,10 @@
             <el-form-item
               :label="$t('merchantInfo.legalPersonName') + '：'"
               prop="legalPersonName">
-              <InputPlus :disabled="isDetail" v-model="form.legalPersonName" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="30"
+                v-model="form.legalPersonName" />
             </el-form-item>
           </el-col>
 
@@ -292,6 +313,7 @@
               prop="legalPersonMobile">
               <InputPlus
                 :disabled="isDetail"
+                maxlength="11"
                 v-model="form.legalPersonMobile" />
             </el-form-item>
           </el-col>
@@ -302,6 +324,7 @@
               prop="legalPersonIdCard">
               <InputPlus
                 :disabled="isDetail"
+                maxlength="18"
                 v-model="form.legalPersonIdCard" />
             </el-form-item>
           </el-col>
@@ -338,7 +361,10 @@
             <el-form-item
               :label="$t('merchantInfo.taxManagerName') + '：'"
               prop="taxManagerName">
-              <InputPlus :disabled="isDetail" v-model="form.taxManagerName" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="30"
+                v-model="form.taxManagerName" />
             </el-form-item>
           </el-col>
 
@@ -346,7 +372,10 @@
             <el-form-item
               :label="$t('merchantInfo.taxManagerMobile') + '：'"
               prop="taxManagerMobile">
-              <InputPlus :disabled="isDetail" v-model="form.taxManagerMobile" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="11"
+                v-model="form.taxManagerMobile" />
             </el-form-item>
           </el-col>
 
@@ -354,7 +383,10 @@
             <el-form-item
               :label="$t('merchantInfo.taxManagerIdCard') + '：'"
               prop="taxManagerIdCard">
-              <InputPlus :disabled="isDetail" v-model="form.taxManagerIdCard" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="18"
+                v-model="form.taxManagerIdCard" />
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20"></el-col>
@@ -392,13 +424,19 @@
         <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="收件人：" prop="recipient">
-              <InputPlus :disabled="isDetail" v-model="form.recipient" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="30"
+                v-model="form.recipient" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" class="mb20">
             <el-form-item label="收件人手机号：" prop="recipientMobile">
-              <InputPlus :disabled="isDetail" v-model="form.recipientMobile" />
+              <InputPlus
+                :disabled="isDetail"
+                maxlength="11"
+                v-model="form.recipientMobile" />
             </el-form-item>
           </el-col>
 
@@ -408,6 +446,7 @@
                 :disabled="isDetail"
                 v-model="form.postAddress"
                 :rows="3"
+                maxlength="100"
                 show-word-limit
                 type="textarea" />
             </el-form-item>
@@ -495,8 +534,8 @@ const form = reactive({
   address: '',
   entryDate: '',
   enterpriseMailbox: '',
-  businessLicense: [],
-  logo: [],
+  businessLicense: null,
+  logo: null,
   businessScope: '',
   contactName: '',
   contactPhone: '',
@@ -514,14 +553,14 @@ const form = reactive({
   legalPersonName: '',
   legalPersonMobile: '',
   legalPersonIdCard: '',
-  legalPersonPortrait: [],
-  legalPersonNationalEmblem: [],
+  legalPersonPortrait: null,
+  legalPersonNationalEmblem: null,
   // 办税人信息
   taxManagerName: '',
   taxManagerMobile: '',
   taxManagerIdCard: '',
-  taxManagerPortrait: [],
-  taxManagerNationalEmblem: [],
+  taxManagerPortrait: null,
+  taxManagerNationalEmblem: null,
 
   recipient: '',
   recipientMobile: '',
@@ -677,7 +716,9 @@ const getmerchantInfoData = (id: string) => {
     })
     .finally(() => {
       loading.value = false
+      // setTimeout(() => {
       getInfoLoading.value = false
+      // }, 500000)
     })
 }
 
