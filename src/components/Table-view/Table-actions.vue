@@ -174,6 +174,8 @@ const getIcon = (action) => {
     icon = 'icon-bianji'
   } else if (action.label === '停用') {
     icon = 'icon-zhongzhi'
+  } else if (action.label === '启用') {
+    icon = 'icon-qiyong'
   } else {
     icon = action.icon
   }

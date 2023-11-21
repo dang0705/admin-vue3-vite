@@ -78,7 +78,7 @@
       show-header
       ids-field="undertakerIds"
       ref="customersRef"
-      dialog-width="60%"
+      dialog-width="1000px"
       list-url="core/undertakerInfo/getUnsignedReceiverInformation"
       save-url="core/undertakingContract/undertakerSignContract"
       save-method="post"
@@ -172,9 +172,11 @@ const conditionForms2 = ref([
     control: 'SpSelect',
     key: 'spId',
     label: t('undertakerInfo.spName'),
+    column: 10,
     rules: [
       { required: true, message: '服务商名称不能为空', trigger: 'change' }
-    ]
+    ],
+    labelWidth: 70
   } /*,
   {
     key: 'contractTimeRange',
