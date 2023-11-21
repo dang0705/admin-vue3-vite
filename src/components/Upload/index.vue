@@ -351,7 +351,7 @@ const props = defineProps({
   },
   bgColor: {
     type: String,
-    default: 'transparent'
+    default: '#F3F3F3'
   },
   noBorder: {
     type: String,
@@ -392,8 +392,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-      ? IMAGE_TYPES
-      : FILE_TYPES
+    ? IMAGE_TYPES
+    : FILE_TYPES
 )
 
 // 查看图片
@@ -547,8 +547,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-      ? LIMIT.compression
-      : LIMIT.file
+    ? LIMIT.compression
+    : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
@@ -664,10 +664,10 @@ const uploadError = (err: any) => {
         // height: v-bind(height);
         padding: 0;
         overflow: hidden;
-        background-color: v-bind(bgColor);
         // border: 1px dashed var(--el-border-color-darker);
         border-radius: v-bind(borderRadius);
         @apply bg-[#F3F3F3];
+        background-color: v-bind(bgColor);
 
         &:hover {
           border: v-bind(hoverNoBorder);

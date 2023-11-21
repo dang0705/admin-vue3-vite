@@ -42,7 +42,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
           control: 'UploadFile',
           props: {
             type: businessType,
-            bgColor: '#fbfbfb !important',
+            bgColor: '#fbfbfb',
             noBorder: 'none',
             hoverNoBorder: 'none',
             style: { width: '210px', height: '170px' },
@@ -62,7 +62,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
           control: 'UploadFile',
           props: {
             type: businessType,
-            bgColor: '#fbfbfb !important',
+            bgColor: '#fbfbfb',
             noBorder: 'none',
             hoverNoBorder: 'none',
             style: { width: '210px', height: '170px' },
