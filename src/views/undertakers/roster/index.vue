@@ -113,7 +113,8 @@
       upload-url="core/undertakerInfo/import"
       temp-url="/files/批量导入承接人模板.xlsx"
       template-on-front
-      title="批量导入承接人" />
+      title="批量导入承接人"
+      :forms="addUnderTakerForms" />
 
     <!-- 批量绑定银行卡 -->
     <uploadExcel

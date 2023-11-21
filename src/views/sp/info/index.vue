@@ -36,7 +36,7 @@
       :labelWidth="140"
       vertical
       draggable
-      width="60%"
+      width="600px"
       ref="dataFormRef"
       submit-button-text="确认"
       button-position="center" />

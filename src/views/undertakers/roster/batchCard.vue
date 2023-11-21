@@ -4,7 +4,7 @@
     v-model="visible"
     :close-on-click-modal="false"
     draggable
-    width="50%">
+    width="35%">
     <el-form
       ref="dataFormRef"
       :model="form"
