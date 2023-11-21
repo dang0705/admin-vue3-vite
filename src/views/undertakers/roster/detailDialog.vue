@@ -52,7 +52,7 @@
                 proxy.baseURL + '/' + form.undertakerPortrait?.[0]
               ]"
               :initial-index="4"
-              fit="cover" />
+              fit="contain" />
           </div>
           <div class="card_col">
             <el-image
