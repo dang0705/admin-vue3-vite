@@ -82,5 +82,9 @@ export const customComponents = [
   {
     name: 'TableSlot',
     component: () => import('/@/components/form-controls/Table-slot.vue')
+  },
+  {
+    name: 'Tag',
+    component: () => import('/@/components/Tag/index.vue')
   }
 ]
