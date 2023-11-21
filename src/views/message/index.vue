@@ -92,10 +92,16 @@ const readMarkUnread = async (id: string, refresh: any) => {
       </div>
     </template>
     <template #content="{ row, refresh }">
-      <div
-        :class="['cursor-pointer', { 'opacity-[0.5]': row.readStatus === '1' }]"
-        @click="goDetail(row.id, row.url, refresh)">
-        {{ row.content }}
+      <div @mouseleave.passive="row.show = true">
+        <div
+          @mouseenter="row.show = false"
+          :class="[
+            'cursor-pointer',
+            { 'opacity-[0.5]': row.readStatus === '1' }
+          ]"
+          @click="goDetail(row.id, row.url, refresh)">
+          {{ row.content }}
+        </div>
       </div>
     </template>
     <template #right="{ row, refresh }">
