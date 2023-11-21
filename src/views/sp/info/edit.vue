@@ -1,5 +1,7 @@
 <template>
-  <spInfo-form />
+  <div>
+    <spInfo-form />
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -28,7 +28,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
         id
       }
     },
-    icon: 'icon-tianjia'
+    icon: 'icon-icon_tianjia'
   },
   {
     label: '上传身份证',
@@ -45,6 +45,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
             bgColor: '#fbfbfb',
             noBorder: 'none',
             hoverNoBorder: 'none',
+            borderRadius: '10px',
             style: { width: '210px', height: '170px' },
             empty: () => (
               <div
@@ -65,6 +66,8 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
             bgColor: '#fbfbfb',
             noBorder: 'none',
             hoverNoBorder: 'none',
+            borderRadius: '10px',
+            acceptText: false,
             style: { width: '210px', height: '170px' },
             empty: () => (
               <div

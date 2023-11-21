@@ -115,7 +115,11 @@
         temp-url="/files/批量导入承接人模板.xlsx"
         template-on-front
         title="批量导入承接人"
-        :forms="addUnderTakerForms" />
+        :forms="addUnderTakerForms">
+        <template #top>
+          <div>123</div>
+        </template>
+      </uploadExcel>
 
       <!-- 批量绑定银行卡 -->
       <uploadExcel
