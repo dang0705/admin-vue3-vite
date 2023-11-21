@@ -15,7 +15,6 @@
       :columns="24"
       :forms="forms"
       :on-submit="onSubmit"
-      button-position="center"
       vertical>
       <template v-for="(_, slot) in $slots" #[slot]>
         <slot :name="slot" v-bind="{ formData }" />
@@ -26,7 +25,7 @@
             <label v-text="`${mainLabel}：`" />
           </template>
           <el-transfer
-            class="w-full flex justify-between items-center"
+            class="w-full flex justify-between items-center mb-[12px]"
             v-model="selected"
             filterable
             :filter-method="filterMethod"

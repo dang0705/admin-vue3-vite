@@ -4,11 +4,14 @@
     v-if="setShowLogo"
     @click="onThemeConfigChange">
     <!--		<span>{{ themeConfig.globalTitle }}</span>-->
-    <img :src="logo" class="w-[120px] my-[20px]" />
+    <img :src="logo" class="w-[120px] my-[20px] menu-logo" />
     <hr class="w-full" style="color: #f4f7fe; opacity: 0.14" />
   </div>
-  <div class="layout-logo-size" v-else @click="onThemeConfigChange">
-    <img :src="logoMini" class="layout-logo-size-img" />
+  <div
+    class="layout-logo flex justify-center items-center"
+    v-else
+    @click="onThemeConfigChange">
+    <img :src="logoMini" class="layout-logo-size-img w-[20px]" />
   </div>
 </template>
 
@@ -63,7 +66,7 @@ const onThemeConfigChange = () => {
     }
   }
 }
-.layout-logo-size {
+.layout-logo {
   width: 100%;
   height: 50px;
   display: flex;

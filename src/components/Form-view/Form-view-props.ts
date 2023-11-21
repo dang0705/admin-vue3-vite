@@ -38,7 +38,7 @@ export const actionsParams = {
   },
   buttonPosition: {
     type: String,
-    default: 'center'
+    default: 'right'
   },
   submitButtonText: {
     type: String,

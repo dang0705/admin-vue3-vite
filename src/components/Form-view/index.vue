@@ -193,9 +193,7 @@ const init = async (forms: FormOptions[]) => {
   }
 }
 
-const resetFields = () => {
-  prop.submitButtonText === '重置' && reset()
-}
+const resetFields = () => prop.cancelButtonText === '重置' && reset()
 
 const page = ref(0)
 const isLastPage = computed(() =>

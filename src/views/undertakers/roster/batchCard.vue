@@ -39,22 +39,26 @@
         </el-col>
       </el-row>
     </el-form>
-    <span class="flex justify-center items-center">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-        确认
-      </el-button>
-    </span>
+    <template #footer>
+      <div class="flex items-center justify-end">
+        <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+          确认
+        </el-button>
+        <el-button @click="visible = false">取消</el-button>
+      </div>
+    </template>
   </el-dialog>
   <el-dialog :title="title" v-model="state.successVisible">
     <p v-text="state.upload.data" />
     <template #footer>
-      <el-button type="primary" @click="goToBatchManagement">
-        {{ $t('common.goToBatchManagement') }}
-      </el-button>
-      <el-button @click="handleCancel">
-        {{ $t('common.cancelButtonText') }}
-      </el-button>
+      <div class="flex items-center flex-end">
+        <el-button type="primary" @click="goToBatchManagement">
+          {{ $t('common.goToBatchManagement') }}
+        </el-button>
+        <el-button @click="handleCancel">
+          {{ $t('common.cancelButtonText') }}
+        </el-button>
+      </div>
     </template>
   </el-dialog>
 </template>

@@ -158,6 +158,40 @@
 
 // 水平菜单、横向菜单折叠背景色
 .el-popper.is-pure.is-light {
+	&.sidebar-menu{
+		width: 160px;
+		background: #273045;
+		box-shadow: 0 5px 5px -3px #0000001a, 0 8px 10px 1px #0000000f, 0 3px 14px 2px #0000000d;
+		border-radius: 6px;
+		overflow: hidden;
+		padding: 10px;
+		border:none;
+		ul{
+			overflow: unset;
+			width: 100%;
+			li{
+				background-image: unset !important;
+				height: 26px !important;
+				width: 100%;
+				&:hover{
+					background-color: #202637 !important;
+				}
+				&:after{
+					content:'';
+					background-image:none
+				}
+				&:before{
+					content:'';
+					background-image:none
+
+				}
+				&:not(:first-child){
+					margin-top: 4px;
+				}
+			}
+
+		}
+	}
 	// 水平菜单
 	.el-menu--vertical {
 		background: var(--next-bg-menuBar);
@@ -283,8 +317,22 @@
 		.el-dialog {
 			margin: 0 auto !important;
 			position: absolute;
+			border-radius: 6px;
 
-			.el-dialog__body {
+			&__header{
+				position: relative;
+				margin-right: 0;
+				&:after{
+					content:'';
+					position: absolute;
+					width: 100%;
+					height: 1px;
+					background-color: #E8E8E8;
+					left:0;
+					bottom:0
+				}
+			}
+			&__body {
 				padding: 20px !important;
 			}
 		}

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tabs-wrapper flex items-center relative border-b mb-[10px] overflow-x-hidden">
+    class="tabs-wrapper flex items-center relative border-b overflow-x-hidden">
     <ArrowLeft
       v-if="isOverflow"
       @click.passive="tabsScrollLeft ? scroll('left') : null"

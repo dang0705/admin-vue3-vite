@@ -7,9 +7,10 @@
     :collapse-transition="false">
     <template v-for="val in menuLists">
       <el-sub-menu
-        :index="val.path"
         v-if="val.children && val.children.length > 0"
-        :key="val.path">
+        :index="val.path"
+        :key="val.path"
+        popper-class="sidebar-menu">
         <template #title>
           <SvgIcon :name="val.meta.icon" />
           <span>{{ other.setMenuI18n(val) }}</span>

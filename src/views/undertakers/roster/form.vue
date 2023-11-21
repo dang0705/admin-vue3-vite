@@ -111,20 +111,22 @@
         </el-col>
       </el-row>
     </el-form>
-    <span class="flex justify-center items-center">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-        确认
-      </el-button>
-    </span>
+    <template #footer>
+      <div class="flex justify-end items-center">
+        <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+          确认
+        </el-button>
+        <el-button @click="visible = false">取消</el-button>
+      </div>
+    </template>
   </el-dialog>
   <!-- 成功 已存在提示 -->
   <el-dialog title="添加承接人" v-model="msgVisible" width="40%">
     <p class="text-center" v-text="msgData" />
     <template #footer>
-      <span class="flex justify-center items-center">
+      <div class="flex justify-end items-center">
         <el-button type="primary" @click="msgVisible = false">确定</el-button>
-      </span>
+      </div>
     </template>
   </el-dialog>
 </template>
