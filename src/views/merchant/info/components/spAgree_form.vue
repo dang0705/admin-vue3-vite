@@ -14,7 +14,10 @@
       <el-row :gutter="24">
         <el-col :span="12" class="mb20">
           <el-form-item label="服务协议名称：" prop="agreementName">
-            <InputPlus :disabled="isDetail" v-model="form.agreementName" />
+            <InputPlus
+              maxlength="50"
+              :disabled="isDetail"
+              v-model="form.agreementName" />
           </el-form-item>
         </el-col>
 

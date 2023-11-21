@@ -141,6 +141,13 @@
               </div>
             </div>
           </template>
+          <template #empty>
+            <div
+              class="h-[250px] flex flex-col justify-center items-center text-black text-[14px]">
+              <img src="/src/assets/images/home-message-no-data.webp" />
+              <p>您暂无新的事项提醒</p>
+            </div>
+          </template>
         </Table-view>
         <!--        <div v-else class="flex justify-center items-center">
            <img src="">

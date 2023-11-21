@@ -193,9 +193,7 @@ const init = async (forms: FormOptions[]) => {
   }
 }
 
-const resetFields = () => {
-  prop.submitButtonText === '重置' && reset()
-}
+const resetFields = () => prop.cancelButtonText === '重置' && reset()
 
 const page = ref(0)
 const isLastPage = computed(() =>
@@ -344,7 +342,10 @@ defineExpose({
                         ...form.props,
                         ...(form.props?.disabled ? { placeholder: '--' } : {}),
                         clearable: form.props?.clearable ?? true,
-                        disabled: form.props?.disabled ?? prop.disabled
+                        disabled: form.props?.disabled ?? prop.disabled,
+                        ...(form.control === 'el-input'
+                          ? { maxlength: 100 }
+                          : {})
                       }">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">

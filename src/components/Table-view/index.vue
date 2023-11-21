@@ -18,61 +18,102 @@
           <slot :name="slot" :refresh="resetQuery" />
         </template>
       </Tab-view>
-      <div class="mb8 w-full">
-        <Form-view
-          v-if="conditionForms.length"
-          v-model="state.queryForm"
-          v-show="showSearch"
-          :label-width="labelWidth"
-          :forms="conditionForms"
-          :on-submit="getDataList"
-          :on-cancel="resetQuery"
-          :validation="false"
-          :buttons-icon="['Search', 'Refresh']"
-          submit-button-text="查询"
-          cancel-button-text="重置">
-          <template v-for="(_, slot) in $slots" #[slot]>
-            <slot
-              :name="slot"
-              v-bind="{ form: conditionForms, formData: state.queryForm }" />
-          </template>
-        </Form-view>
+      <div
+        :class="[
+          'w-full',
+          'relative',
+          'z-50',
+          {
+            'mb-[10px]': isShowTopBar
+              ? hasTopBarSlot ||
+                (downBlobFileUrl && userInfos.permissionMap[exportAuth])
+              : false
+          }
+        ]">
+        <ul
+          :class="['flex', 'relative', 'w-full', 'mt-[10px]']"
+          v-if="conditionForms.length">
+          <li v-show="showSearch" :class="['flex-grow', 'mr-[30px]']">
+            <Form-view
+              v-model="state.queryForm"
+              :label-width="labelWidth"
+              :forms="conditionForms"
+              :on-submit="getDataList"
+              :on-cancel="resetQuery"
+              :validation="false"
+              :buttons-icon="['Search', 'Refresh']"
+              submit-button-text="查询"
+              cancel-button-text="重置">
+              <template v-for="(_, slot) in $slots" #[slot]>
+                <slot
+                  :name="slot"
+                  v-bind="{
+                    form: conditionForms,
+                    formData: state.queryForm
+                  }" />
+              </template>
+            </Form-view>
+          </li>
+          <li style="right: -10px" :class="['absolute']">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              :content="
+                showSearch
+                  ? $t('queryTree.hideSearch')
+                  : $t('queryTree.displayTheSearch')
+              "
+              placement="top">
+              <el-button
+                style="
+                  width: 32px;
+                  height: 32px;
+                  border: 1px solid #e7e7e7;
+                  border-radius: 100px 0 0 100px;
+                "
+                :icon="showSearch ? 'ArrowUp' : 'ArrowDown'"
+                @click="showSearch = !showSearch" />
+            </el-tooltip>
+          </li>
+        </ul>
         <slot
           name="tableTopTwo"
           v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
         <div
-          v-if="isShowTopBar"
-          class="top-bar h-8 my-[10px] flex items-center justify-between">
+          v-if="
+            (downBlobFileUrl && userInfos.permissionMap[exportAuth]) ||
+            (hasTopBarSlot && isShowTopBar)
+          "
+          style="line-height: 0"
+          :class="['top-bar', 'flex', 'items-center', 'justify-between']">
           <div class="flex items-center flex-grow flex-wrap">
             <el-button
-              v-if="downBlobFileUrl"
+              v-if="downBlobFileUrl && userInfos.permissionMap[exportAuth]"
+              :class="{ 'mr-[10px]': true }"
               v-debounce="exportExcel"
               icon="download"
-              type="primary"
-              v-auth="exportAuth">
+              type="primary">
               批量导出
             </el-button>
-            <slot
-              name="top-bar"
-              v-bind="{
-                refresh: resetQuery,
-                otherInfo: state.otherInfo,
-                query: state.queryForm,
-                selectObjs: selectObjs
-              }" />
+            <div class="flex items-center">
+              <slot
+                name="top-bar"
+                v-bind="{
+                  refresh: resetQuery,
+                  otherInfo: state.otherInfo,
+                  query: state.queryForm,
+                  selectObjs: selectObjs
+                }" />
+            </div>
           </div>
-          <right-toolbar
-            v-if="conditionForms.length"
-            v-model:showSearch="showSearch"
-            style="float: right"
-            @queryTable="getDataList" />
         </div>
       </div>
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
             size="small"
-            :border="false"
+            :class="['table-view', { 'no-border': !border }]"
+            :border="border"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
             :header-cell-style="
@@ -81,6 +122,9 @@
                 : { headerCellStyle: { background: 'transparent', height: 0 } }
             "
             @selection-change="onSelectionChange">
+            <template #empty v-if="hasEmptySlot">
+              <slot name="empty" />
+            </template>
             <el-table-column
               v-for="column in columns"
               :key="column.prop"
@@ -151,6 +195,10 @@ import thousandthDivision from '/@/utils/thousandth-division'
 import TableActions from '/@/components/Table-view/Table-actions.vue'
 import apis from '/@/api'
 import helpers from '/@/utils/helpers'
+import { useUserInfo } from '/@/stores/userInfo'
+
+const { userInfos } = storeToRefs(useUserInfo())
+
 defineOptions({ name: 'TableView' })
 
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
@@ -159,6 +207,10 @@ const props = defineProps(tableViewProps)
 const showDialog = ref(false)
 const _dialog = ref({})
 const dialogFormData = ref({})
+
+const slots = useSlots()
+const hasEmptySlot = !!slots.empty
+const hasTopBarSlot = !!slots['top-bar']
 
 const module = computed(() =>
   props.module?.includes('.') && props.module?.split('.')[1] !== ''
@@ -327,5 +379,8 @@ $refreshList(resetQuery, catchHistoryTabState)
 <style>
 .el-table .cell {
   position: relative;
+}
+.table-view.no-border .el-table__inner-wrapper::before {
+  background-color: unset;
 }
 </style>

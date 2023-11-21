@@ -12,8 +12,7 @@ export default [
   {
     prop: 'isElectronicSignatureDesc',
     label: '要求电子签署',
-    'min-width': 160,
-    slot: true
+    'min-width': 160
   },
   {
     prop: 'isUploadAchievementDesc',

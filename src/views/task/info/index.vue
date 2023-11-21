@@ -31,7 +31,7 @@
       guidance="请先确保待指派的承接人已录入系统且已签署任务的承接服务商，然后按照导入模版填写承接人信息。"
       upload-label="待签署用户名单"
       upload-url="core/undertakerTask/batchAppointUndertaker"
-      temp-url="/files/批量导入承接人模板.xlsx"
+      temp-url="/files/批量指派承接人模板.xlsx"
       template-on-front
       :params="params"
       title="批量指派承接人" />

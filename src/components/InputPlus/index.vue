@@ -15,7 +15,7 @@
     v-else
     v-bind="$props"
     v-model="value"
-    :maxlength="maxlength"
+    :maxlength="myLength"
     :showWordLimit="showWordLimit">
     <template v-if="append" #append>{{ append }}</template>
     <template v-for="(_, slot) in $slots" #[slot]>
@@ -51,7 +51,22 @@ const props = defineProps({
   },
   maxlength: {
     type: [String, Number],
-    default: 500
+    default: 0
+  },
+  type: {
+    type: String,
+    default: 'text'
+  }
+})
+const myLength = computed(() => {
+  if (props.maxlength !== 0) {
+    return props.maxlength
+  } else {
+    if (props.type === 'textarea') {
+      return 500
+    } else {
+      return 100
+    }
   }
 })
 const value = computed({

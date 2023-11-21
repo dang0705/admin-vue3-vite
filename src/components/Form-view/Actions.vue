@@ -39,6 +39,7 @@ const getIcon = () => {
       icons.value.push(Icon)
     })
 }
+const isResetButton = props.cancelButtonText === '重置'
 getIcon()
 </script>
 
@@ -54,10 +55,10 @@ getIcon()
         buttonPosition === 'right'
           ? 'end'
           : buttonPosition === 'center'
-            ? 'center'
-            : 'start'
+          ? 'center'
+          : 'start'
       }`,
-      { horizontal: !vertical, 'ml-[12px]': !vertical }
+      { horizontal: !vertical, 'ml-[8px]': !vertical }
     ]">
     <template v-if="pagination">
       <el-button plain v-if="page" @click="page--">
@@ -78,9 +79,19 @@ getIcon()
     <slot name="third-button" />
     <el-button
       v-if="showCancel && !pagination"
+      :class="{
+        'no-text-with-icon': isResetButton,
+        '!ml-[8px]': !vertical,
+        'w-[32px]': isResetButton
+      }"
       v-debounce="cancel"
-      v-bind="icons.length ? { icon: icons[1] } : {}">
-      {{ cancelButtonText || $t('common.cancelButtonText') }}
+      v-bind="{
+        ...(icons.length ? { icon: icons[1] } : {}),
+        ...(isResetButton ? { bg: '#fff' } : {})
+      }">
+      {{
+        isResetButton ? '' : cancelButtonText || $t('common.cancelButtonText')
+      }}
     </el-button>
   </div>
 </template>
@@ -98,5 +109,21 @@ getIcon()
       justify-content: center;
     }
   }
+}
+</style>
+<style>
+/*!**
+sb 需求导致的
+ *!
+.el-button.no-text-with-icon {
+  --el-button-active-text-color: #000;
+  --el-button-hover-text-color: var(--el-text-color-regular);
+  --el-button-hover-bg-color: #eee;
+  --el-button-active-border-color: transparent;
+  --el-button-hover-border-color: transparent;
+  --el-button-outline-color: transparent;
+}*/
+.el-button.no-text-with-icon span {
+  margin-left: 0;
 }
 </style>

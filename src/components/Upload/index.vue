@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div
-      :class="['upload-box', 'flex', { 'flex-col': multiple }]"
-      v-if="!loading">
+    <!-- v-if="!loading" -->
+    <div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
       <div class="flex">
         <ul class="flex flex-warp" v-if="multiple">
           <li
@@ -10,6 +9,8 @@
             :key="image"
             class="imgBoxItem">
             <el-image
+              @load="imgLoadCom"
+              @error="imgLoadError"
               :style="{ height, width }"
               v-if="image"
               :src="image"
@@ -72,8 +73,13 @@
           :on-success="handleAvatarSuccess"
           :accept="accept.length ? accept.join(',') : new_accept.join(',')">
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
+
           <template v-if="isImage && prefixedUrls.length && !multiple">
-            <img :src="prefixedUrls[0]" class="upload-image" />
+            <img
+              :src="prefixedUrls[0]"
+              @load="imgLoadCom"
+              @error="imgLoadError"
+              class="upload-image" />
             <div class="upload-handle" @click.stop>
               <div
                 class="handle-icon"
@@ -107,8 +113,8 @@
               self_disabled
                 ? false
                 : props.fileType !== 'image' ||
-                  !prefixedUrls.length ||
-                  (multiple && prefixedUrls.length < limit)
+                  !prefixedUrls?.length ||
+                  (multiple && prefixedUrls?.length < limit)
             ">
             <slot name="empty">
               <el-icon>
@@ -125,7 +131,7 @@
             #tip
             v-if="
               !self_disabled &&
-              ((multiple && prefixedUrls.length < limit) || !multiple)
+              ((multiple && prefixedUrls?.length < limit) || !multiple)
             ">
             <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
             <span class="text-[#999] text-[14px]">
@@ -155,7 +161,7 @@
                   </div>
                 </li>
               </ul>
-              <ul v-else-if="prefixedUrls.length > 0">
+              <ul v-else-if="prefixedUrls?.length > 0">
                 <li v-for="(url, index) in prefixedUrls" :key="url">
                   <div class="flex items-center">
                     <a
@@ -168,16 +174,42 @@
               </ul>
             </template>
           </template>
+          <el-skeleton
+            v-if="
+              self_disabled &&
+              isImage &&
+              prefixedUrls?.length === 0 &&
+              !multiple
+            "
+            style="width: 120px"
+            :loading="imgLoading"
+            animated>
+            <template #template>
+              <el-skeleton-item
+                variant="image"
+                style="width: 120px; height: 120px" />
+            </template>
+          </el-skeleton>
           <img
             v-if="
-              self_disabled && isImage && prefixedUrls.length === 0 && !multiple
+              self_disabled &&
+              isImage &&
+              prefixedUrls?.length === 0 &&
+              !multiple &&
+              imgFail
             "
             class="w-[120px] h-[120px]"
             src="/src/assets/test.jpg"
             alt="" />
-          <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls.length" style="width: 100%; height: 100%" /> -->
+
+          <!-- <img
+              class="w-[120px] h-[120px]"
+              src="/src/assets/test.jpg"
+              alt="" /> -->
+
+          <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls?.length" style="width: 100%; height: 100%" /> -->
         </el-upload>
-        <template v-if="disabled && !isImage">
+        <template v-if="disabled && !isImage && prefixedUrls">
           <a
             class="color-primary hover:underline"
             v-for="(url, index) in prefixedUrls"
@@ -197,10 +229,6 @@
         @close="imgViewVisible = false"
         :url-list="prefixedUrls" />
     </div>
-    <div v-else>
-      <img class="w-[120px] h-[120px]" src="/src/assets/test.jpg" alt="" />
-    </div>
-    <!-- <SvgIcon name="iconfont icon-tupianzhanweifu" :size="68" color="#eee" /> -->
   </div>
 </template>
 
@@ -225,9 +253,9 @@ defineOptions({ name: 'Upload-file' })
 // 接受父组件参数
 const props = defineProps({
   modelValue: {
-    type: Array,
+    type: [Array, null],
     required: true,
-    default: () => []
+    default: null
   },
   uploadFileUrl: {
     type: String,
@@ -301,8 +329,15 @@ const props = defineProps({
   }
 })
 let fileNames = ref([])
+const imgLoading = ref(true)
+const imgFail = ref(false)
 const isImage = props.fileType === 'image'
-
+const imgLoadCom = () => {
+  imgLoading.value = false
+}
+const imgLoadError = () => {
+  imgLoading.value = false
+}
 const { isInDialog, isDialogShow } = useDialogVisibility()
 
 watch(
@@ -379,9 +414,21 @@ const upload = async (options: UploadRequestOptions) => {
 }
 
 const urls = ref<string[]>([])
-const prefixedUrls = ref<string[]>([])
+// const prefixedUrls = ref<string[]>([])
+const prefixedUrls = ref([])
 const value = computed(() =>
   helper.isString(props.modelValue) ? [] : props.modelValue
+)
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (!value || value.length === 0) {
+      imgLoading.value = false
+      imgFail.value = true
+    }
+  },
+  { deep: true }
 )
 
 // props.fileType === 'image' &&
@@ -395,7 +442,7 @@ watch(
     // fileNames.value = [`${name}^${uid}`];
     // fileNames
     // console.log('urls.value-1', urls.value);
-    // console.log('prefixedUrls.value-1', prefixedUrls.value);
+    // console.log('prefixedUrls?.value-1', prefixedUrls?.value);
   },
   { immediate: true, deep: props.multiple }
 )
