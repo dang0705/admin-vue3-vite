@@ -79,7 +79,7 @@ const props = defineProps({
   },
   buttonTexts: {
     type: Array,
-    default: () => ['移出选中', '授予选中']
+    default: () => []
   },
   renderContent: {
     type: Function,
@@ -308,6 +308,7 @@ defineExpose({
 
 <style scoped lang="scss">
 ::v-deep(.el-transfer__buttons) {
+  width: 40px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -315,6 +316,14 @@ defineExpose({
     margin: 10px 0 0 0;
     width: 100%;
   }
+}
+::v-deep(.el-button.is-disabled) {
+  width: 35px;
+  background: #f6f6f6;
+  border-color: #cecece;
+}
+::v-deep(.is-guttered) {
+  padding: 0 60px 0 60px !important;
 }
 ::v-deep(.no-label) {
   .el-form-item__content {

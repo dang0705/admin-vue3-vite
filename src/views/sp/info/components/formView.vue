@@ -1,19 +1,15 @@
 <template>
-  <div class="layout-padding overflow-auto form-view" style="height: auto">
-    <div
-      :class="[
-        'layout-padding-auto layout-padding-view !border-none',
-        { detailDisabled: !!route.query.see }
-      ]">
-      <el-form
-        ref="dataFormRef"
-        :model="form"
-        :rules="dataRules"
-        formDialogRef
-        label-width="160px"
-        v-loading="loading">
-        <el-row class="pr-[48px] pl-[24px]" :gutter="24">
-          <Divider title="基本信息" />
+  <el-form
+    ref="dataFormRef"
+    :model="form"
+    :rules="dataRules"
+    formDialogRef
+    label-width="160px"
+    v-loading="loading">
+    <div>
+      <!-- <Divider title="基本信息" /> -->
+      <el-card class="!border-none" header="基本信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="服务商名称：" prop="spName">
               <InputPlus v-model="form.spName" :disabled="!!route.query.see" />
@@ -86,8 +82,12 @@
                 :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
+        </el-row>
+      </el-card>
 
-          <Divider title="税率设置" />
+      <!-- <Divider title="税率设置" /> -->
+      <el-card class="!border-none" header="税率设置" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="个税计算方式：" prop="taxCalculationType">
               <el-select
@@ -133,8 +133,12 @@
                 :forceDisabled="!!route.query.see" />
             </el-form-item>
           </el-col>
+        </el-row>
+      </el-card>
 
-          <Divider title="法人信息" />
+      <!-- <Divider title="法人信息" /> -->
+      <el-card class="!border-none" header="法人信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="法人姓名：" prop="legalPersonName">
               <InputPlus
@@ -180,8 +184,12 @@
                 :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
+        </el-row>
+      </el-card>
 
-          <Divider title="办税人信息" />
+      <!-- <Divider title="办税人信息" /> -->
+      <el-card class="!border-none" header="法人信息" shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="办税人姓名：" prop="taxManagerName">
               <InputPlus
@@ -229,8 +237,16 @@
                 :disabled="!!route.query.see" />
             </el-form-item>
           </el-col>
+        </el-row>
+      </el-card>
 
-          <Divider title="资质信息" />
+      <!-- <Divider title="资质信息" /> -->
+      <el-card
+        :style="{ 'margin-bottom': !route.query.see ? '71px' : '0px' }"
+        class="!border-none"
+        header="法人信息"
+        shadow="never">
+        <el-row class="paddcus" :gutter="48">
           <el-col
             :span="24"
             class="mb20"
@@ -304,35 +320,41 @@
             </el-row>
           </el-col>
         </el-row>
-      </el-form>
-      <span class="dialog-footer m-auto" v-if="!route.query.see">
-        <el-button v-debounce="resetForm">重置</el-button>
-        <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-          提交
-        </el-button>
-      </span>
-    </div>
-    <el-dialog
-      v-model="visible"
-      title=""
-      width="30%"
-      center
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      @close="visible = false">
-      <div class="text-center">
-        您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？
-      </div>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="goSpList()">谢谢，不用了</el-button>
-          <el-button type="primary" @click="goSpList('pay')">
-            开通支付通道
+      </el-card>
+      <div
+        v-if="!route.query.see"
+        class="page_bottom_wrapper"
+        :style="{ 'width': barWidth }">
+        <span class="flex justify-center items-center">
+          <el-button v-debounce="resetForm">重置</el-button>
+          <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+            确认
           </el-button>
         </span>
-      </template>
-    </el-dialog>
-  </div>
+      </div>
+    </div>
+  </el-form>
+
+  <el-dialog
+    v-model="visible"
+    title=""
+    width="30%"
+    center
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    @close="visible = false">
+    <div class="text-center">
+      您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="goSpList()">谢谢，不用了</el-button>
+        <el-button type="primary" @click="goSpList('pay')">
+          开通支付通道
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
@@ -345,6 +367,9 @@ import uploadBusinessType from '/@/enums/upload-business-type'
 import IndividualTaxRatios from '/@/components/Gradientization/index.vue'
 import { limitText } from '/@/rules'
 import closeTagView from '/@/utils/close-tag-view'
+import { useThemeConfig } from '/@/stores/themeConfig'
+const storesThemeConfig = useThemeConfig()
+const { themeConfig } = storeToRefs(storesThemeConfig)
 
 defineOptions({ name: 'SpInfoDetail' })
 // import { useRouter } from 'vue-router';
@@ -359,6 +384,9 @@ const dataFormRef = ref()
 const visible = ref(false)
 const loading = ref(false)
 const businessType = uploadBusinessType.sp
+const barWidth = computed(() => {
+  return `calc(100vw - ${!themeConfig.value.isCollapse ? 220 : 64}px)`
+})
 // 定义查询字典
 const { busi_type, tax_calculation_type } = useDict(
   'busi_type',
@@ -612,3 +640,44 @@ const getspInfoData = (id: string) => {
 // 暴露变量
 defineExpose({})
 </script>
+<style scoped lang="scss">
+.paddcus {
+  // padding: 0 48px 0 24px;
+  width: 1224px;
+  margin: 0 auto;
+  padding-right: 96px;
+}
+::v-deep(.el-card) {
+  margin: 15px;
+}
+
+::v-deep(.el-card__header) {
+  text-align: center;
+}
+::v-deep(.el-card__body) {
+  display: flex;
+  justify-content: center;
+}
+.page_bottom_wrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 56px;
+  line-height: 56px;
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+  background: #fff;
+  border-top: 1px solid #e8e8e8;
+  padding: 0 24px;
+  z-index: 5;
+  width: calc(100vw - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 -9px 28px 8px #0000000d,
+    0 -6px 16px 0 #00000014,
+    0 -3px 6px -4px #0000001f;
+}
+</style>

@@ -3,6 +3,7 @@
     :title="form.id ? '修改承接人' : '添加承接人'"
     v-model="visible"
     :close-on-click-modal="false"
+    width="600px"
     draggable>
     <el-form
       ref="dataFormRef"

@@ -151,10 +151,10 @@ const handleAction = async ({
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
       : handler
-        ? helpers.isArray(params)
-          ? await handler(...(params as []))
-          : await handler(params)
-        : (() => {})()
+      ? helpers.isArray(params)
+        ? await handler(...(params as []))
+        : await handler(params)
+      : (() => {})()
     if (shouldRefresh) {
       refresh && refresh()
       useMessage().success(successText)
@@ -172,6 +172,10 @@ const getIcon = (action) => {
     icon = 'icon-shanchu1'
   } else if (action.label === '编辑') {
     icon = 'icon-bianji'
+  } else if (action.label === '停用') {
+    icon = 'icon-zhongzhi'
+  } else if (action.label === '启用') {
+    icon = 'icon-qiyong'
   } else {
     icon = action.icon
   }

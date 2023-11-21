@@ -348,6 +348,18 @@ const props = defineProps({
   style: {
     type: Object,
     default: null
+  },
+  bgColor: {
+    type: String,
+    default: '#F3F3F3'
+  },
+  noBorder: {
+    type: String,
+    default: '1px dashed var(--el-border-color-darker)'
+  },
+  hoverNoBorder: {
+    type: String,
+    default: '1px dashed var(--el-color-primary)'
   }
 })
 let fileNames = ref([])
@@ -380,8 +392,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-      ? IMAGE_TYPES
-      : FILE_TYPES
+    ? IMAGE_TYPES
+    : FILE_TYPES
 )
 
 // 查看图片
@@ -535,8 +547,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-      ? LIMIT.compression
-      : LIMIT.file
+    ? LIMIT.compression
+    : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
@@ -644,6 +656,7 @@ const uploadError = (err: any) => {
       .el-upload-dragger {
         display: flex;
         align-items: center;
+        border: v-bind(noBorder);
         // justify-content: center;
         // width: 100%;
         // height: 100%;
@@ -651,13 +664,13 @@ const uploadError = (err: any) => {
         // height: v-bind(height);
         padding: 0;
         overflow: hidden;
-        background-color: transparent;
-        border: 1px dashed var(--el-border-color-darker);
+        // border: 1px dashed var(--el-border-color-darker);
         border-radius: v-bind(borderRadius);
         @apply bg-[#F3F3F3];
+        background-color: v-bind(bgColor);
 
         &:hover {
-          border: 1px dashed var(--el-color-primary);
+          border: v-bind(hoverNoBorder);
         }
       }
 
