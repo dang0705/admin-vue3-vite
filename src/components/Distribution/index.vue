@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="state.dialog.isShowDialog"
-    class="w-full px-[60px]"
+    class="w-full"
     draggable
     :close-on-click-modal="false"
     :width="dialogWidth">
@@ -321,6 +321,9 @@ defineExpose({
   width: 35px;
   background: #f6f6f6;
   border-color: #cecece;
+}
+::v-deep(.is-guttered) {
+  padding: 0 60px 0 60px !important;
 }
 ::v-deep(.no-label) {
   .el-form-item__content {

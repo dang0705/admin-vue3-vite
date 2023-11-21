@@ -173,7 +173,7 @@ const conditionForms2 = ref([
     control: 'SpSelect',
     key: 'spId',
     label: t('undertakerInfo.spName'),
-    column: 10,
+    column: 12,
     rules: [
       { required: true, message: '服务商名称不能为空', trigger: 'change' }
     ],
