@@ -109,6 +109,7 @@
           </template>
           <div
             class="upload-empty"
+            :style="props.style"
             v-else-if="
               self_disabled
                 ? false
@@ -117,14 +118,19 @@
                   (multiple && prefixedUrls?.length < limit)
             ">
             <slot name="empty">
-              <el-icon>
-                <Plus />
-              </el-icon>
-              <span>
-                单击上传
-                <br />
-                或拖拽到此处
-              </span>
+              <TableSlot
+                v-if="props.empty && helpers.isFunction(props.empty)"
+                :slot-function="props.empty" />
+              <template v-else>
+                <el-icon>
+                  <Plus />
+                </el-icon>
+                <span>
+                  单击上传
+                  <br />
+                  或拖拽到此处
+                </span>
+              </template>
             </slot>
           </div>
           <template
@@ -249,6 +255,8 @@ import {
   COMPRESSION
 } from '/@/configuration/upload-rules'
 import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility'
+import TableSlot from '/@/components/form-controls/Table-slot.vue'
+import helpers from '/@/utils/helpers'
 defineOptions({ name: 'Upload-file' })
 // 接受父组件参数
 const props = defineProps({
@@ -326,6 +334,14 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
+  },
+  empty: {
+    type: Function,
+    default: null
+  },
+  style: {
+    type: Object,
+    default: () => ({})
   }
 })
 let fileNames = ref([])
@@ -356,8 +372,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-      ? IMAGE_TYPES
-      : FILE_TYPES
+    ? IMAGE_TYPES
+    : FILE_TYPES
 )
 
 // 查看图片
@@ -512,8 +528,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-      ? LIMIT.compression
-      : LIMIT.file
+    ? LIMIT.compression
+    : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value

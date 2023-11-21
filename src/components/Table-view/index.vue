@@ -89,7 +89,6 @@
           <div class="flex items-center flex-grow flex-wrap">
             <el-button
               v-if="downBlobFileUrl && userInfos.permissionMap[exportAuth]"
-              :class="{ 'mr-[10px]': true }"
               v-debounce="exportExcel"
               icon="download"
               type="primary">
@@ -151,6 +150,7 @@
                   </template>
                   <TableSlot
                     v-else-if="helpers.isFunction(column.slot)"
+                    has-data
                     :slot-function="column.slot"
                     :selections="selectObjs"
                     :row="row"
