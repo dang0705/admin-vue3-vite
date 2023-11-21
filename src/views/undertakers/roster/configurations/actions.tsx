@@ -1,7 +1,8 @@
 import uploadBusinessType from '/@/enums/upload-business-type'
+import logomini from '/@/assets/logo-mini.webp'
 const businessType = uploadBusinessType.hro
 
-export default ({ id, undertakerPhone }: any) => [
+export default ({ id, undertakerPhone }: any, logomini) => [
   {
     label: '加入服务商',
     auth: 'hro_undertakerInfo_join',
@@ -42,15 +43,25 @@ export default ({ id, undertakerPhone }: any) => [
           control: 'UploadFile',
           props: {
             type: businessType
+            // style:{width:'100px'},
+            // empty: () => (
+            //   <div
+            //     style={{
+            //       backgroundImage: `url(${logomini})`
+            //     }}></div>
+            // )
           }
+          // column: 12
         },
         {
-          label: '上传身份证国徽面',
+          // label: '上传身份证国徽面',
           key: 'cardOpposite',
           control: 'UploadFile',
           props: {
             type: businessType
           }
+          // labelWidth: 1,
+          // column: 12
         }
       ]
     },

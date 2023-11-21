@@ -134,7 +134,9 @@ import { useI18n } from 'vue-i18n'
 import Array2Object from '/@/utils/array-2-object'
 import conditionForms from '/@/views/undertakers/roster/configurations/condition-forms'
 import getColumns from '/@/views/undertakers/roster/configurations/columns'
-import getActions from '/@/views/undertakers/roster/configurations/actions'
+import getActions from '/src/views/undertakers/roster/configurations/actions'
+import logomini from '/@/assets/logo-mini.webp'
+
 const batchMap = Array2Object({ dic: ['gender', 'education'] })
 
 const formDialogRef = ref()
@@ -157,7 +159,7 @@ const actions = ({ id, undertakerPhone }: any) => [
       params: [id]
     }
   },
-  ...getActions({ id, undertakerPhone })
+  ...getActions({ id, undertakerPhone }, logomini)
 ]
 // 引入组件
 const FormDialog = defineAsyncComponent(() => import('./form.vue'))
