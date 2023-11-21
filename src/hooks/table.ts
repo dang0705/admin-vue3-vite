@@ -255,7 +255,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     url: string,
     query: any,
     fileName: string,
-    exportExcel: boolean
+    exportExcel?: boolean
   ) => other.downBlobFile(url, query, fileName, exportExcel)
 
   /**

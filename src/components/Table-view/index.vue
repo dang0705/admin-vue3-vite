@@ -236,7 +236,8 @@ const exportExcel = () => {
           )
         : selectObjs
     }),
-    props.downBlobFileName
+    props.downBlobFileName,
+    true
   )
 }
 /**

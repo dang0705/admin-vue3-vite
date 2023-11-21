@@ -287,6 +287,7 @@ export function downBlobFile(
 /**
  * blob 文件刘处理
  * @param response 响应结果
+ * @param fileName 文件名
  * @returns
  */
 export function handleBlobFile(response: any, fileName: string) {
@@ -423,7 +424,7 @@ const other = {
     url: any,
     query: any,
     fileName: string,
-    exportExcel: boolean
+    exportExcel?: boolean
   ) => {
     return downBlobFile(url, query, fileName, exportExcel)
   },
