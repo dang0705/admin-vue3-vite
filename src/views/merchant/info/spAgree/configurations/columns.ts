@@ -27,7 +27,7 @@ export default [
   },
   {
     prop: 'endTime',
-    label: '结束原因',
+    label: '结束时间',
     'min-width': 160
   },
   {
