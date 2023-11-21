@@ -69,7 +69,7 @@
                   width: 32px;
                   height: 32px;
                   border: 1px solid #e7e7e7;
-                  border-radius: 100px 0 0 100px;
+                  border-radius: 2px;
                 "
                 :icon="showSearch ? 'ArrowUp' : 'ArrowDown'"
                 @click="showSearch = !showSearch" />
@@ -110,7 +110,7 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
-            size="small"
+            size="large"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"

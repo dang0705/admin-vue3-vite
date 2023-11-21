@@ -28,8 +28,6 @@ import columns from '/@/views/merchant/info/configurations/columns'
 import actions from '/@/views/merchant/info/configurations/actions'
 const { merchant_status } = useDict('merchant_status')
 const getType = (status: BatchUploadRecordPage) => {
-  console.log('batchMap.value.merchant_status', merchant_status)
-  // return batchMap.value.merchant_status[status]
   return merchant_status.value.find((item) => item.value === status).color
 }
 </script>

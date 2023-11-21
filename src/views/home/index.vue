@@ -80,7 +80,8 @@
                 'flex',
                 'justify-between',
                 'cursor-pointer',
-                'items-center'
+                'items-center',
+                'text-[12px]'
               ]"
               @mouseenter="row.show = false"
               @mouseleave="row.show = true"
@@ -90,7 +91,9 @@
                 :style="bgc(row.noticeType)">
                 {{ row.title }}
               </div>
-              <div :class="['mr-auto', 'ml-[12px]']" v-text="row.content" />
+              <div
+                :class="['mr-auto', 'ml-[12px]', 'text-[12px]']"
+                v-text="row.content" />
               <div class="h-[52px] relative py-[10px] box-border">
                 <div
                   v-show="row.show"
