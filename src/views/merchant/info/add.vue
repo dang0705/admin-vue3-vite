@@ -1,9 +1,5 @@
 <template>
-  <div class="layout-padding cache overflow-auto">
-    <div class="layout-padding-view">
-      <merchantInfo-form />
-    </div>
-  </div>
+  <merchantInfo-form />
 </template>
 
 <script setup lang="ts">
