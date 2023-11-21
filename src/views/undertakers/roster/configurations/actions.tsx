@@ -42,6 +42,9 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
           control: 'UploadFile',
           props: {
             type: businessType,
+            bgColor: '#fbfbfb !important',
+            noBorder: 'none',
+            hoverNoBorder: 'none',
             style: { width: '210px', height: '170px' },
             empty: () => (
               <div
@@ -59,6 +62,9 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
           control: 'UploadFile',
           props: {
             type: businessType,
+            bgColor: '#fbfbfb !important',
+            noBorder: 'none',
+            hoverNoBorder: 'none',
             style: { width: '210px', height: '170px' },
             empty: () => (
               <div

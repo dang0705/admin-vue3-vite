@@ -347,6 +347,18 @@ const props = defineProps({
   style: {
     type: Object,
     default: null
+  },
+  bgColor: {
+    type: String,
+    default: 'transparent'
+  },
+  noBorder: {
+    type: String,
+    default: '1px dashed var(--el-border-color-darker)'
+  },
+  hoverNoBorder: {
+    type: String,
+    default: '1px dashed var(--el-color-primary)'
   }
 })
 let fileNames = ref([])
@@ -642,6 +654,7 @@ const uploadError = (err: any) => {
       .el-upload-dragger {
         display: flex;
         align-items: center;
+        border: v-bind(noBorder);
         // justify-content: center;
         // width: 100%;
         // height: 100%;
@@ -649,13 +662,13 @@ const uploadError = (err: any) => {
         // height: v-bind(height);
         padding: 0;
         overflow: hidden;
-        background-color: transparent;
-        border: 1px dashed var(--el-border-color-darker);
+        background-color: v-bind(bgColor);
+        // border: 1px dashed var(--el-border-color-darker);
         border-radius: v-bind(borderRadius);
         @apply bg-[#F3F3F3];
 
         &:hover {
-          border: 1px dashed var(--el-color-primary);
+          border: v-bind(hoverNoBorder);
         }
       }
 

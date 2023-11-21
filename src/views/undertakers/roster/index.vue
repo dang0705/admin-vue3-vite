@@ -1,23 +1,24 @@
 <template>
-  <Table-view
-    :condition-forms="conditionForms"
-    :columns="columns"
-    :actions="actions"
-    down-blob-file-url="core/undertakerInfo/export"
-    down-blob-file-name="undertakerInfo.xlsx"
-    label-width="160"
-    export-auth="hro_undertakerInfo_export"
-    module="core/undertakerInfo">
-    <template #top-bar>
-      <el-button
-        icon="Upload"
-        type="primary"
-        class="ml10"
-        @click="batchCardDialogRef.openDialog()"
-        v-auth="'hro_undertakerInfo_batchUploadCard'">
-        批量上传身份证
-      </el-button>
-      <!--        <el-button
+  <div class="wrap">
+    <Table-view
+      :condition-forms="conditionForms"
+      :columns="columns"
+      :actions="actions"
+      down-blob-file-url="core/undertakerInfo/export"
+      down-blob-file-name="undertakerInfo.xlsx"
+      label-width="160"
+      export-auth="hro_undertakerInfo_export"
+      module="core/undertakerInfo">
+      <template #top-bar>
+        <el-button
+          icon="Upload"
+          type="primary"
+          class="ml10"
+          @click="batchCardDialogRef.openDialog()"
+          v-auth="'hro_undertakerInfo_batchUploadCard'">
+          批量上传身份证
+        </el-button>
+        <!--        <el-button
         icon="Upload"
         type="primary"
         class="ml10"
@@ -25,31 +26,31 @@
         v-auth="'hro_undertakerInfo_batchBind'">
         批量绑定银行卡
       </el-button>-->
-      <el-button
-        icon="Upload"
-        type="primary"
-        class="ml10"
-        @click="customersRef.openDialog()"
-        v-auth="'hro_undertakerInfo_batchSign'">
-        发起批量签署
-      </el-button>
-      <el-button
-        icon="Upload"
-        type="primary"
-        class="ml10"
-        @click="addUnderTakerRef.openDialog()"
-        v-auth="'hro_undertakerInfo_batchImport'">
-        批量导入承接人
-      </el-button>
-      <el-button
-        icon="folder-add"
-        type="primary"
-        class="ml10"
-        @click="formDialogRef.openDialog()"
-        v-auth="'hro_undertakerInfo_add'">
-        添加承接人
-      </el-button>
-      <!--        <el-button
+        <el-button
+          icon="Upload"
+          type="primary"
+          class="ml10"
+          @click="customersRef.openDialog()"
+          v-auth="'hro_undertakerInfo_batchSign'">
+          发起批量签署
+        </el-button>
+        <el-button
+          icon="Upload"
+          type="primary"
+          class="ml10"
+          @click="addUnderTakerRef.openDialog()"
+          v-auth="'hro_undertakerInfo_batchImport'">
+          批量导入承接人
+        </el-button>
+        <el-button
+          icon="folder-add"
+          type="primary"
+          class="ml10"
+          @click="formDialogRef.openDialog()"
+          v-auth="'hro_undertakerInfo_add'">
+          添加承接人
+        </el-button>
+        <!--        <el-button
         plain
         :disabled="multiple"
         icon="Delete"
@@ -58,33 +59,33 @@
         @click="handleDelete(selectObjs)">
         删除
       </el-button>-->
-    </template>
-    <!-- 编辑、新增  -->
-    <form-dialog ref="formDialogRef" />
-    <!-- 查看 -->
-    <detail-dialog ref="detailDialogRef" />
+      </template>
+      <!-- 编辑、新增  -->
+      <form-dialog ref="formDialogRef" />
+      <!-- 查看 -->
+      <detail-dialog ref="detailDialogRef" />
 
-    <!-- 批量上传身份证 -->
-    <batchCard-dialog ref="batchCardDialogRef" />
+      <!-- 批量上传身份证 -->
+      <batchCard-dialog ref="batchCardDialogRef" />
 
-    <!-- 批量签署
+      <!-- 批量签署
      ids-field:   自定义保存接口的字段名
      save-method: 自定义保存接口的method
      watch-field: 监听额外的表单中的某个字段，根据其值刷新列表
      -->
-    <Distribution
-      :titles="['未签署承接人', '待签署承接人']"
-      :forms="conditionForms2"
-      show-header
-      ids-field="undertakerIds"
-      ref="customersRef"
-      dialog-width="1000px"
-      list-url="core/undertakerInfo/getUnsignedReceiverInformation"
-      save-url="core/undertakingContract/undertakerSignContract"
-      save-method="post"
-      title="批量签署"
-      watch-field="spId">
-      <!--<template #contractTimeRange="{ formData }">
+      <Distribution
+        :titles="['未签署承接人', '待签署承接人']"
+        :forms="conditionForms2"
+        show-header
+        ids-field="undertakerIds"
+        ref="customersRef"
+        dialog-width="1000px"
+        list-url="core/undertakerInfo/getUnsignedReceiverInformation"
+        save-url="core/undertakingContract/undertakerSignContract"
+        save-method="post"
+        title="批量签署"
+        watch-field="spId">
+        <!--<template #contractTimeRange="{ formData }">
          <el-form-item
           label="开始结束日期:"
           prop="contractTimeRange"
@@ -103,30 +104,31 @@
             v-model="formData.contractTimeRange" />
         </el-form-item>
       </template> -->
-    </Distribution>
+      </Distribution>
 
-    <!-- 批量导入承接人-->
-    <uploadExcel
-      ref="addUnderTakerRef"
-      guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
-      upload-label="待签署用户名单"
-      upload-url="core/undertakerInfo/import"
-      temp-url="/files/批量导入承接人模板.xlsx"
-      template-on-front
-      title="批量导入承接人"
-      :forms="addUnderTakerForms" />
+      <!-- 批量导入承接人-->
+      <uploadExcel
+        ref="addUnderTakerRef"
+        guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
+        upload-label="待签署用户名单"
+        upload-url="core/undertakerInfo/import"
+        temp-url="/files/批量导入承接人模板.xlsx"
+        template-on-front
+        title="批量导入承接人"
+        :forms="addUnderTakerForms" />
 
-    <!-- 批量绑定银行卡 -->
-    <uploadExcel
-      ref="bindBankRef"
-      guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
-      upload-label="承接人银行卡信息表"
-      upload-url="core/undertakerInfo/importUndertakerBank"
-      temp-url="/files/批量绑定银行卡模板.xlsx"
-      template-on-front
-      formLabelWidth="170"
-      title="批量绑定银行卡" />
-  </Table-view>
+      <!-- 批量绑定银行卡 -->
+      <uploadExcel
+        ref="bindBankRef"
+        guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
+        upload-label="承接人银行卡信息表"
+        upload-url="core/undertakerInfo/importUndertakerBank"
+        temp-url="/files/批量绑定银行卡模板.xlsx"
+        template-on-front
+        formLabelWidth="170"
+        title="批量绑定银行卡" />
+    </Table-view>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -219,8 +221,3 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
-::v-deep(.el-upload-dragger) {
-  border: none !important;
-}
-</style>
