@@ -33,13 +33,14 @@ export default [
   {
     label: '状态',
     prop: 'statusDesc',
-    minWidth: 100
+    minWidth: 130,
+    slot: true
   },
   {
     label: '操作',
     prop: 'actions',
     slot: true,
     fixed: 'right',
-    minWidth: 200
+    minWidth: 220
   }
 ]

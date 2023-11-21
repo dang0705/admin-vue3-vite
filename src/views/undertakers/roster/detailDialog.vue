@@ -66,7 +66,7 @@
                 proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0]
               ]"
               :initial-index="4"
-              fit="cover" />
+              fit="contain" />
           </div>
         </div>
       </div>
@@ -278,9 +278,12 @@ defineExpose({
   display: flex;
   padding: 20px;
   box-sizing: border-box;
+  margin-bottom: 20px;
   .name {
     display: flex;
     line-height: 22px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
   }
   .u_row {
     display: flex;
@@ -303,12 +306,13 @@ defineExpose({
     }
   }
   .card_pic {
-    height: 60px;
+    // height: 60px;
+    width: 120px;
   }
 }
 .title_box {
   height: 40px;
-  background: #fafafa;
+  background: #f1f1f1;
   border-radius: 6px;
   display: flex;
   align-items: center;

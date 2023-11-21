@@ -21,7 +21,7 @@
             <img
               v-else
               class="w-[120px] h-[120px]"
-              src="/src/assets/test.jpg"
+              src="/src/assets/fail.png"
               alt="" />
             <div class="upload-handle" @click.stop>
               <div
@@ -74,7 +74,8 @@
           :accept="accept.length ? accept.join(',') : new_accept.join(',')">
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
 
-          <template v-if="isImage && prefixedUrls.length && !multiple">
+          <template
+            v-if="isImage && prefixedUrls.length && !multiple && !imgFail">
             <div :style="style">
               <img
                 :src="prefixedUrls[0]"
@@ -190,7 +191,8 @@
               self_disabled &&
               isImage &&
               prefixedUrls?.length === 0 &&
-              !multiple
+              !multiple &&
+              imgLoading
             "
             style="width: 120px"
             :loading="imgLoading"
@@ -202,23 +204,22 @@
             </template>
           </el-skeleton>
           <img
+            v-if="self_disabled && isImage && !multiple && imgFail"
+            class="w-[120px] h-[120px]"
+            src="/src/assets/fail.png"
+            alt="" />
+          <img
             v-if="
               self_disabled &&
               isImage &&
               prefixedUrls?.length === 0 &&
               !multiple &&
-              imgFail
+              !imgFail &&
+              !imgLoading
             "
             class="w-[120px] h-[120px]"
-            src="/src/assets/test.jpg"
+            src="/src/assets/zhanwei.png"
             alt="" />
-
-          <!-- <img
-              class="w-[120px] h-[120px]"
-              src="/src/assets/test.jpg"
-              alt="" /> -->
-
-          <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls?.length" style="width: 100%; height: 100%" /> -->
         </el-upload>
         <template v-if="disabled && !isImage && prefixedUrls">
           <a
@@ -369,7 +370,9 @@ const imgLoadCom = () => {
   imgLoading.value = false
 }
 const imgLoadError = () => {
+  imgFail.value = true
   imgLoading.value = false
+  console.log('失败了', imgFail.value)
 }
 const { isInDialog, isDialogShow } = useDialogVisibility()
 
@@ -389,8 +392,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-    ? IMAGE_TYPES
-    : FILE_TYPES
+      ? IMAGE_TYPES
+      : FILE_TYPES
 )
 
 // 查看图片
@@ -458,7 +461,6 @@ watch(
   (value) => {
     if (!value || value.length === 0) {
       imgLoading.value = false
-      imgFail.value = true
     }
   },
   { deep: true }
@@ -545,8 +547,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-    ? LIMIT.compression
-    : LIMIT.file
+      ? LIMIT.compression
+      : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
