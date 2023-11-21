@@ -75,35 +75,40 @@
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
 
           <template v-if="isImage && prefixedUrls.length && !multiple">
-            <img
-              :src="prefixedUrls[0]"
-              @load="imgLoadCom"
-              @error="imgLoadError"
-              class="upload-image" />
-            <div class="upload-handle" @click.stop>
-              <div
-                class="handle-icon"
-                @click="editImg(0)"
-                v-if="!self_disabled">
-                <el-icon :size="iconSize">
-                  <Edit />
-                </el-icon>
-                <span v-if="!iconSize">编辑</span>
-              </div>
-              <div class="handle-icon" @click="showViewVisible(0)">
-                <el-icon :size="iconSize">
-                  <ZoomIn />
-                </el-icon>
-                <span v-if="!iconSize">查看</span>
-              </div>
-              <div
-                class="handle-icon"
-                @click="deleteImg(0)"
-                v-if="!self_disabled">
-                <el-icon :size="iconSize">
-                  <Delete />
-                </el-icon>
-                <span v-if="!iconSize">删除</span>
+            <div :style="style">
+              <img
+                :src="prefixedUrls[0]"
+                @load="imgLoadCom"
+                @error="imgLoadError"
+                :class="[
+                  'upload-image',
+                  ...(style ? ['!w-full', '!h-full'] : [])
+                ]" />
+              <div class="upload-handle" @click.stop>
+                <div
+                  class="handle-icon"
+                  @click="editImg(0)"
+                  v-if="!self_disabled">
+                  <el-icon :size="iconSize">
+                    <Edit />
+                  </el-icon>
+                  <span v-if="!iconSize">编辑</span>
+                </div>
+                <div class="handle-icon" @click="showViewVisible(0)">
+                  <el-icon :size="iconSize">
+                    <ZoomIn />
+                  </el-icon>
+                  <span v-if="!iconSize">查看</span>
+                </div>
+                <div
+                  class="handle-icon"
+                  @click="deleteImg(0)"
+                  v-if="!self_disabled">
+                  <el-icon :size="iconSize">
+                    <Delete />
+                  </el-icon>
+                  <span v-if="!iconSize">删除</span>
+                </div>
               </div>
             </div>
           </template>
@@ -341,7 +346,7 @@ const props = defineProps({
   },
   style: {
     type: Object,
-    default: () => ({})
+    default: null
   }
 })
 let fileNames = ref([])
