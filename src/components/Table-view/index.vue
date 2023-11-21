@@ -22,7 +22,7 @@
         :class="[
           'w-full',
           'relative',
-          'z-50',
+          'z-[2]',
           {
             'mb-[10px]': isShowTopBar
               ? hasTopBarSlot ||
@@ -113,7 +113,6 @@
           <el-table
             size="small"
             :class="['table-view', { 'no-border': !border }]"
-            :border="border"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
             :header-cell-style="
@@ -121,6 +120,7 @@
                 ? tableStyle.headerCellStyle
                 : { headerCellStyle: { background: 'transparent', height: 0 } }
             "
+            v-bind="{ ...props, ...$attrs }"
             @selection-change="onSelectionChange">
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />

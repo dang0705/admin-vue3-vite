@@ -60,6 +60,7 @@
           :isShowTopBar="false"
           :header="false"
           :size="4"
+          max-height="250"
           no-pagination
           no-padding
           class="w-full">
@@ -85,17 +86,11 @@
               @mouseleave="row.show = true"
               @click="goDetail(row, refresh)">
               <div
-                class="rounded-[3px] relative text-[12px] flex justify-center items-center w-fit h-[20px] px-[6px]"
+                class="rounded-[3px] relative text-[12px] flex flex-shrink-0 justify-center items-center w-fit h-[20px] px-[6px]"
                 :style="bgc(row.noticeType)">
                 {{ row.title }}
               </div>
-              <div
-                :class="[
-                  'mr-auto',
-                  'ml-[12px]',
-                  { 'opacity-[0.5]': row.readStatus === '1' }
-                ]"
-                v-text="row.content" />
+              <div :class="['mr-auto', 'ml-[12px]']" v-text="row.content" />
               <div class="h-[52px] relative py-[10px] box-border">
                 <div
                   v-show="row.show"
@@ -127,7 +122,7 @@
                       :size="13"
                       color="#858585"
                       class="mr-[18px] cursor-pointer"
-                      @click="readMarkUnread(row.id, refresh)" />
+                      @click.stop="readMarkUnread(row.id, refresh)" />
                   </el-tooltip>
                   <el-tooltip :show-after="300" content="删除" placement="top">
                     <SvgIcon
@@ -135,7 +130,7 @@
                       :size="13"
                       color="#858585"
                       class="cursor-pointer"
-                      @click="delMessage(row.id, refresh)" />
+                      @click.stop="delMessage(row.id, refresh)" />
                   </el-tooltip>
                 </div>
               </div>
