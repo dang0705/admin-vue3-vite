@@ -21,11 +21,27 @@ const TableSlot = {
     confirm: {
       type: Function,
       default: () => {}
+    },
+    hasData: {
+      type: Boolean,
+      default: false
     }
   },
   render() {
-    return Object.keys(this.row).length
-      ? h(
+    return this.hasData
+      ? Object.keys(this.row).length
+        ? h(
+            'div',
+            {},
+            this.slotFunction({
+              row: this.row,
+              selections: this.selections,
+              refresh: this.refresh,
+              confirm: this.confirm
+            })
+          )
+        : null
+      : h(
           'div',
           {},
           this.slotFunction({
@@ -35,7 +51,6 @@ const TableSlot = {
             confirm: this.confirm
           })
         )
-      : null
   }
 }
 </script>

@@ -153,7 +153,7 @@ interface Edit {
     params?: unknown; // 回显的参数
 }
 
-// 以下为 src/views/core/settleBill/configurations/tabel-actions.ts 的具体使用案例
+// 以下为 src/views/core/settleBill/configurations/tabel-actions.tsx 的具体使用案例
 
 const auth = (auth: string) => `core_settleBill_${auth}`;
 
