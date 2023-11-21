@@ -6,6 +6,11 @@
     action-body="合同"
     module="hro/undertakingContract.ts"
     label-width="140">
+    <template #state="{ row }">
+      <Tag
+        :type="getType(row.state)?.color"
+        :text="getType(row.state)?.label"></Tag>
+    </template>
     <template #top-bar>
       <el-button
         icon="folder-add"
@@ -37,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDict } from '/@/hooks/dict'
 import Array2Object, { valueAsLabel } from '/@/utils/array-2-object'
 import actions from '/@/views/undertakers/contract/configuration/actions'
 import conditionForms from '/@/views/undertakers/contract/configuration/condition-forms'
@@ -45,7 +51,10 @@ import getColumns from '/@/views/undertakers/contract/configuration/columns'
 const contractMap = Array2Object({ dic: ['contract_type', 'contract_status'] })
 
 // vue 3.3+ new feature  https://blog.vuejs.org/posts/vue-3-3#experimental-features
-
+const { contract_status } = useDict('contract_status')
+const getType = (state: string) => {
+  return contract_status.value.find((item) => item.value === state)
+}
 const columns = getColumns(contractMap)
 // 合同类型、状态枚举
 const batchElectronicSignRef = ref()

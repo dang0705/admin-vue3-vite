@@ -27,7 +27,7 @@ import conditionForms from '/@/views/merchant/info/configurations/condition-form
 import columns from '/@/views/merchant/info/configurations/columns'
 import actions from '/@/views/merchant/info/configurations/actions'
 const { merchant_status } = useDict('merchant_status')
-const getType = (status: BatchUploadRecordPage) => {
+const getType = (status: string) => {
   return merchant_status.value.find((item) => item.value === status).color
 }
 </script>
