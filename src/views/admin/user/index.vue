@@ -15,6 +15,7 @@
           v-auth="'sys_user_add'"
           icon="folder-add"
           type="primary"
+          class="ml-[10px]"
           @click="userDialogRef.openDialog()">
           {{ $t('common.addBtn') }}
         </el-button>
