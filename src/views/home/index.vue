@@ -39,7 +39,7 @@
           :key="item.title"
           :item="item"
           class="h-[132px] section">
-          <h2 class="flex items-center text-[16px]">
+          <h2 class="flex items-center text-lg">
             <SvgIcon
               :name="`iconfont ${item.icon}`"
               :size="18"
@@ -65,7 +65,7 @@
           no-padding
           class="w-full">
           <template #tableTop>
-            <div class="text-[18px] font-bold">当日事项提醒</div>
+            <div class="text-lg font-bold">当日事项提醒</div>
           </template>
           <template #tab-right>
             <span
@@ -92,7 +92,12 @@
                 {{ row.title }}
               </div>
               <div
-                :class="['mr-auto', 'ml-[12px]', 'text-[12px]']"
+                :class="[
+                  'mr-auto',
+                  'ml-[12px]',
+                  'text-[12px]',
+                  { 'opacity-[0.5]': row.readStatus === '1' }
+                ]"
                 v-text="row.content" />
               <div class="h-[52px] relative py-[10px] box-border">
                 <div
@@ -105,39 +110,33 @@
                   v-show="!row.show">
                   <el-tooltip
                     content="设为已读"
-                    :teleported="false"
                     :show-after="300"
                     placement="top"
                     v-if="row.readStatus === '0'">
                     <SvgIcon
                       name="iconfont icon-biaojiweiyidu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="mr-[18px] cursor-pointer"
                       @click="readMarkOne(row.id, refresh)" />
                   </el-tooltip>
                   <el-tooltip
                     content="设为未读"
-                    :teleported="false"
                     :show-after="300"
                     placement="top"
                     v-if="row.readStatus === '1'">
                     <SvgIcon
                       name="iconfont icon-biaojiweiweidu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="mr-[18px] cursor-pointer"
                       @click.stop="readMarkUnread(row.id, refresh)" />
                   </el-tooltip>
-                  <el-tooltip
-                    :teleported="false"
-                    :show-after="300"
-                    content="删除"
-                    placement="top">
+                  <el-tooltip :show-after="300" content="删除" placement="top">
                     <SvgIcon
                       name="iconfont icon-shanchu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="cursor-pointer"
                       @click.stop="delMessage(row.id, refresh)" />
                   </el-tooltip>

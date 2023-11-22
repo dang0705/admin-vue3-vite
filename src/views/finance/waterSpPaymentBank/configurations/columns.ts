@@ -43,7 +43,6 @@ export default [
     prop: 'status',
     label: '状态',
     'min-width': 150,
-    value: ({ status }: BatchUploadRecordPage) =>
-      batchMap.value.water_sp_payment_bank_status[status]
+    options: 'water_sp_payment_bank_status'
   }
 ]

@@ -1,6 +1,9 @@
 @import 'mixins/index.scss';
 .el-table--default{
-	font-size:12px;
+	font-size:var(--el-font-size-extra-base)
+}
+.el-breadcrumb{
+  font-size:inherit;
 }
 /* Button 按钮
 ------------------------------- */
@@ -109,6 +112,8 @@
 .el-menu-item,
 .el-sub-menu__title {
 	color: var(--next-bg-menuBarColor) !important;
+  font-size: var(--el-font-size-extra-small);
+
 }
 
 // 修复点击左侧菜单折叠再展开时，宽度不跟随问题
@@ -172,12 +177,17 @@
 		ul{
 			overflow: unset;
 			width: 100%;
+			min-width: unset;
+			padding: 0;
 			li{
 				background-image: unset !important;
 				height: 26px !important;
 				width: 100%;
 				&:hover{
-					background-color: #202637 !important;
+					width: 140px;
+					height: 26px;
+					background-color:rgba(255,255,255,0.1) !important;
+					border-radius: 4px;
 				}
 				&:after{
 					content:'';

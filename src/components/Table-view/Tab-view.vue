@@ -37,7 +37,6 @@
           'flex-shrink-0',
           'cursor-pointer',
           'py-[8px]',
-          'text-[14px]',
           'box-border',
           'select-none',
           'px-[16px]',
@@ -50,7 +49,7 @@
         @click="onTabClick($event, key, index)">
         <span v-text="label" />
         <span
-          v-if="value !== undefined && value !== ''"
+          v-if="value !== undefined && value !== '' && value !== null"
           v-text="value"
           class="h-[20px] leading-[20px] rounded-[12px] bg-[#8c8c8c1a] ml-[5px]"
           style="padding: 0 10px 0" />

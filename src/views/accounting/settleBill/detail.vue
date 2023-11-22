@@ -441,13 +441,32 @@ $refreshList(getmerchantInfoData)
 
   .total_list {
     display: flex;
-
+    height: 100%;
     .total_item {
       width: 25%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      position: relative;
+      &:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        content: '';
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--primary);
+        border-radius: 10px;
+      }
+      &:hover {
+        &:before {
+          display: block;
+        }
+      }
     }
 
     .icon {

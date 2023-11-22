@@ -110,7 +110,6 @@ onMounted(() => {
 <style>
 .el-tabs__item {
   color: #8c8c8c !important;
-  font-size: 16px !important;
 }
 .el-tabs__item.is-active {
   color: #333333 !important;

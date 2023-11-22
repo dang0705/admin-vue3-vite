@@ -1,39 +1,124 @@
 <template>
-  <div>
-    <!-- v-if="!loading" -->
-    <div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
-      <div class="flex">
-        <ul class="flex flex-warp" v-if="multiple">
-          <li
-            v-for="(image, index) in prefixedUrls"
-            :key="image"
-            class="imgBoxItem">
-            <el-image
-              @load="imgLoadCom"
-              @error="imgLoadError"
-              :style="{ height, width }"
-              v-if="image"
-              :src="image"
-              :initial-index="index"
-              :zoom-rate="1.2"
-              :preview-src-list="prefixedUrls"
-              fit="cover" />
+  <div :class="['upload-box', 'flex', { 'flex-col': multiple }]">
+    <div class="flex">
+      <ul class="flex flex-warp" v-if="multiple">
+        <li
+          v-for="(image, index) in prefixedUrls"
+          :key="image"
+          class="imgBoxItem">
+          <el-image
+            v-if="image"
+            @load="imgLoadCom"
+            @error="imgLoadError"
+            :style="{ height, width }"
+            :src="image"
+            :initial-index="index"
+            :zoom-rate="1.2"
+            :preview-src-list="prefixedUrls"
+            fit="cover" />
+          <img
+            v-else
+            class="w-[120px] h-[120px]"
+            src="/src/assets/fail.png"
+            alt="" />
+          <div class="upload-handle" @click.stop>
+            <div
+              class="handle-icon"
+              @click="editImg(index)"
+              v-if="!selfDisabled">
+              <el-icon :size="iconSize">
+                <Edit />
+              </el-icon>
+              <span v-if="!iconSize">编辑</span>
+            </div>
+            <div class="handle-icon" @click="showViewVisible(index)">
+              <el-icon :size="iconSize">
+                <ZoomIn />
+              </el-icon>
+              <span v-if="!iconSize">查看</span>
+            </div>
+            <div
+              class="handle-icon"
+              @click="deleteImg(index)"
+              v-if="!selfDisabled">
+              <el-icon :size="iconSize">
+                <Delete />
+              </el-icon>
+              <span v-if="!iconSize">删除</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <el-upload
+        v-if="isImage || (!isImage && !disabled)"
+        action="#"
+        ref="uploadRef"
+        drag
+        :id="uuid"
+        :limit="limit"
+        :class="[
+          'upload',
+          'flex-shrink-0',
+          selfDisabled ? 'disabled' : '',
+          drag ? 'no-border' : ''
+        ]"
+        :multiple="multiple"
+        :disabled="selfDisabled"
+        :show-file-list="false"
+        :http-request="handleHttpUpload"
+        :before-upload="beforeUpload"
+        :on-error="uploadError"
+        :on-success="handleAvatarSuccess"
+        :accept="accept.length ? accept.join(',') : new_accept.join(',')">
+        <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
+
+        <template v-if="isImage && prefixedUrls.length && !multiple">
+          <div :style="style" class="min-w-[120px] min-h-[120px] relative">
+            <el-skeleton
+              :loading="imgLoading"
+              animated
+              style="
+                width: inherit;
+                height: inherit;
+                min-width: 120px;
+                min-height: 120px;
+                overflow: hidden;
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 2;
+              ">
+              <template #template>
+                <div class="w-[120px] h-[120px]">
+                  <el-skeleton-item
+                    variant="image"
+                    style="width: inherit; height: inherit" />
+                </div>
+              </template>
+            </el-skeleton>
             <img
-              v-else
-              class="w-[120px] h-[120px]"
-              src="/src/assets/fail.png"
-              alt="" />
-            <div class="upload-handle" @click.stop>
-              <div
-                class="handle-icon"
-                @click="editImg(index)"
-                v-if="!self_disabled">
+              :src="prefixedUrls[0]"
+              :class="[
+                'absolute',
+                'left-0',
+                'top-0',
+                'w-[120px]',
+                'h-[120px]',
+                'z-[1]',
+                'upload-image',
+                ...(style ? ['!w-full', '!h-full'] : [])
+              ]"
+              @load="imgLoadCom"
+              @error="imgLoadError" />
+
+            <div class="upload-handle z-50" @click.stop>
+              <div class="handle-icon" @click="editImg(0)" v-if="!selfDisabled">
                 <el-icon :size="iconSize">
                   <Edit />
                 </el-icon>
                 <span v-if="!iconSize">编辑</span>
               </div>
-              <div class="handle-icon" @click="showViewVisible(index)">
+              <div class="handle-icon" @click="showViewVisible(0)">
                 <el-icon :size="iconSize">
                   <ZoomIn />
                 </el-icon>
@@ -41,205 +126,137 @@
               </div>
               <div
                 class="handle-icon"
-                @click="deleteImg(index)"
-                v-if="!self_disabled">
+                @click="deleteImg(0)"
+                v-if="!selfDisabled">
                 <el-icon :size="iconSize">
                   <Delete />
                 </el-icon>
                 <span v-if="!iconSize">删除</span>
               </div>
             </div>
-          </li>
-        </ul>
-        <el-upload
-          v-if="isImage || (!isImage && !disabled)"
-          action="#"
-          ref="uploadRef"
-          drag
-          :id="uuid"
-          :limit="limit"
-          :class="[
-            'upload',
-            'flex-shrink-0',
-            self_disabled ? 'disabled' : '',
-            drag ? 'no-border' : ''
-          ]"
-          :multiple="multiple"
-          :disabled="self_disabled"
-          :show-file-list="false"
-          :http-request="handleHttpUpload"
-          :before-upload="beforeUpload"
-          :on-error="uploadError"
-          :on-success="handleAvatarSuccess"
-          :accept="accept.length ? accept.join(',') : new_accept.join(',')">
-          <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
-
-          <template
-            v-if="isImage && prefixedUrls.length && !multiple && !imgFail">
-            <div :style="style">
-              <img
-                :src="prefixedUrls[0]"
-                @load="imgLoadCom"
-                @error="imgLoadError"
-                :class="[
-                  'upload-image',
-                  ...(style ? ['!w-full', '!h-full'] : [])
-                ]" />
-              <div class="upload-handle" @click.stop>
-                <div
-                  class="handle-icon"
-                  @click="editImg(0)"
-                  v-if="!self_disabled">
-                  <el-icon :size="iconSize">
-                    <Edit />
-                  </el-icon>
-                  <span v-if="!iconSize">编辑</span>
-                </div>
-                <div class="handle-icon" @click="showViewVisible(0)">
-                  <el-icon :size="iconSize">
-                    <ZoomIn />
-                  </el-icon>
-                  <span v-if="!iconSize">查看</span>
-                </div>
-                <div
-                  class="handle-icon"
-                  @click="deleteImg(0)"
-                  v-if="!self_disabled">
-                  <el-icon :size="iconSize">
+          </div>
+        </template>
+        <div
+          class="upload-empty"
+          :style="props.style"
+          v-else-if="
+            selfDisabled
+              ? false
+              : !isImage ||
+                !prefixedUrls?.length ||
+                (multiple && prefixedUrls?.length < limit)
+          ">
+          <slot name="empty">
+            <TableSlot
+              v-if="props.empty && helpers.isFunction(props.empty)"
+              :slot-function="props.empty" />
+            <template v-else>
+              <el-icon>
+                <Plus />
+              </el-icon>
+              <span>
+                单击上传
+                <br />
+                或拖拽到此处
+              </span>
+            </template>
+          </slot>
+        </div>
+        <template
+          #tip
+          v-if="
+            !selfDisabled &&
+            ((multiple && prefixedUrls?.length < limit) || !multiple)
+          ">
+          <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
+          <span class="text-[#999]" v-if="acceptText">
+            支持{{
+              accept.length
+                ? accept.join(',').replace(/image\//g, '')
+                : new_accept.join(',').replace(/image\//g, '')
+            }}文件
+          </span>
+          <template v-if="!isImage">
+            <ul v-if="fileNames.length > 0">
+              <li v-for="(name, index) in fileNames" :key="name">
+                <el-progress
+                  v-if="fileLoading[name]?.loading"
+                  :percentage="fileLoading[name].progress" />
+                <div v-else class="flex items-center">
+                  <el-icon
+                    class="cursor-pointer mr-2"
+                    @click="deleteImg(index)"
+                    v-if="multiple">
                     <Delete />
                   </el-icon>
-                  <span v-if="!iconSize">删除</span>
+                  <span v-text="name.split('^')[0]" class="text-primary mr-2" />
+                  <el-icon class="ml-auto" color="green"><Select /></el-icon>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
+            <ul v-else-if="prefixedUrls?.length > 0">
+              <li v-for="(url, index) in prefixedUrls" :key="url">
+                <div class="flex items-center">
+                  <a
+                    class="color-primary hover:underline"
+                    :download="url"
+                    :href="url"
+                    v-text="`附件${index + 1}`" />
+                </div>
+              </li>
+            </ul>
           </template>
-          <div
-            class="upload-empty"
-            :style="props.style"
-            v-else-if="
-              self_disabled
-                ? false
-                : props.fileType !== 'image' ||
-                  !prefixedUrls?.length ||
-                  (multiple && prefixedUrls?.length < limit)
-            ">
-            <slot name="empty">
-              <TableSlot
-                v-if="props.empty && helpers.isFunction(props.empty)"
-                :slot-function="props.empty" />
-              <template v-else>
-                <el-icon>
-                  <Plus />
-                </el-icon>
-                <span>
-                  单击上传
-                  <br />
-                  或拖拽到此处
-                </span>
-              </template>
-            </slot>
-          </div>
-          <template
-            #tip
-            v-if="
-              !self_disabled &&
-              ((multiple && prefixedUrls?.length < limit) || !multiple)
-            ">
-            <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
-            <span class="text-[#999] text-[14px]" v-if="acceptText">
-              支持{{
-                accept.length
-                  ? accept.join(',').replace(/image\//g, '')
-                  : new_accept.join(',').replace(/image\//g, '')
-              }}文件
-            </span>
-            <template v-if="!isImage">
-              <ul v-if="fileNames.length > 0">
-                <li v-for="(name, index) in fileNames" :key="name">
-                  <el-progress
-                    v-if="fileLoading[name]?.loading"
-                    :percentage="fileLoading[name].progress" />
-                  <div v-else class="flex items-center">
-                    <el-icon
-                      class="cursor-pointer mr-2"
-                      @click="deleteImg(index)"
-                      v-if="multiple">
-                      <Delete />
-                    </el-icon>
-                    <span
-                      v-text="name.split('^')[0]"
-                      class="text-primary mr-2" />
-                    <el-icon class="ml-auto" color="green"><Select /></el-icon>
-                  </div>
-                </li>
-              </ul>
-              <ul v-else-if="prefixedUrls?.length > 0">
-                <li v-for="(url, index) in prefixedUrls" :key="url">
-                  <div class="flex items-center">
-                    <a
-                      class="color-primary hover:underline"
-                      :download="url"
-                      :href="url"
-                      v-text="`附件${index + 1}`" />
-                  </div>
-                </li>
-              </ul>
-            </template>
-          </template>
-          <el-skeleton
-            v-if="
-              self_disabled &&
-              isImage &&
-              prefixedUrls?.length === 0 &&
-              !multiple
-            "
-            style="width: 120px"
-            :loading="imgLoading"
-            animated>
-            <template #template>
-              <el-skeleton-item
-                variant="image"
-                style="width: 120px; height: 120px" />
-            </template>
-          </el-skeleton>
-          <img
-            v-if="self_disabled && isImage && !multiple && imgFail"
-            class="w-[120px] h-[120px]"
-            src="/src/assets/fail.png"
-            alt="" />
-          <img
-            v-if="
-              self_disabled &&
-              isImage &&
-              prefixedUrls?.length === 0 &&
-              !multiple &&
-              !imgFail &&
-              !imgLoading
-            "
-            class="w-[120px] h-[120px]"
-            src="/src/assets/zhanwei.png"
-            alt="" />
-        </el-upload>
-        <template v-if="disabled && !isImage && prefixedUrls">
-          <a
-            class="color-primary hover:underline"
-            v-for="(url, index) in prefixedUrls"
-            :key="url"
-            :download="url"
-            :href="url"
-            v-text="`附件${index + 1}`" />
         </template>
-        <div class="el-upload__tip">
-          <slot name="tip" />
-        </div>
+        <el-skeleton
+          v-if="
+            selfDisabled && isImage && prefixedUrls?.length === 0 && !multiple
+          "
+          style="width: 120px"
+          :loading="imgLoading"
+          animated>
+          <template #template>
+            <el-skeleton-item
+              variant="image"
+              style="width: 120px; height: 120px" />
+          </template>
+        </el-skeleton>
+        <img
+          v-if="isImage && !multiple && imgFail"
+          class="w-[120px] h-[120px] absolute left-0 top-0 z-[1]"
+          src="/src/assets/fail.png"
+          alt="" />
+        <img
+          v-if="
+            selfDisabled &&
+            isImage &&
+            prefixedUrls?.length === 0 &&
+            !multiple &&
+            !imgFail &&
+            !imgLoading
+          "
+          class="w-[120px] h-[120px] absolute left-0 top-0 z-[1]"
+          src="/src/assets/zhanwei.png"
+          alt="" />
+      </el-upload>
+      <template v-if="disabled && !isImage && prefixedUrls">
+        <a
+          class="color-primary hover:underline"
+          v-for="(url, index) in prefixedUrls"
+          :key="url"
+          :download="url"
+          :href="url"
+          v-text="`附件${index + 1}`" />
+      </template>
+      <div class="el-upload__tip">
+        <slot name="tip" />
       </div>
-      <el-image-viewer
-        :teleported="true"
-        :initial-index="initialIndex"
-        v-if="imgViewVisible"
-        @close="imgViewVisible = false"
-        :url-list="prefixedUrls" />
     </div>
+    <el-image-viewer
+      :teleported="true"
+      :initial-index="initialIndex"
+      v-if="imgViewVisible"
+      @close="imgViewVisible = false"
+      :url-list="prefixedUrls" />
   </div>
 </template>
 
@@ -262,124 +279,27 @@ import {
 import { useDialogVisibility } from '/@/components/Dialog/hooks/use-dialog-visibility'
 import TableSlot from '/@/components/form-controls/Table-slot.vue'
 import helpers from '/@/utils/helpers'
+import propsData from './props'
+import getFileExt from '/@/utils/get-file-ext'
+
 defineOptions({ name: 'Upload-file' })
 // 接受父组件参数
-const props = defineProps({
-  modelValue: {
-    type: [Array, null],
-    required: true,
-    default: null
-  },
-  uploadFileUrl: {
-    type: String,
-    default: '/docs/sys-file/upload'
-  },
-  getPreviewUrl: {
-    type: String,
-    default: '/docs/sys-file/gmyg'
-  },
-  drag: {
-    type: Boolean,
-    default: true
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  // 大小约束
-  fileSize: {
-    type: [Number, String],
-    default: 0
-  },
-  // 数量约束
-  limit: {
-    type: [Number, String],
-    default: 0
-  },
-  fileType: {
-    type: String,
-    default: 'image'
-  },
-  accept: {
-    type: Array,
-    default: () => []
-  },
-  height: {
-    type: String,
-    default: '120px'
-  },
-  width: {
-    type: String,
-    default: '120px'
-  },
-  borderRadius: {
-    type: String,
-    default: '3px'
-  },
-  multiple: {
-    type: Boolean,
-    default: false
-  },
-  iconSize: {
-    type: [String, Number],
-    default: 20
-  },
-  type: {
-    type: String,
-    default: ''
-  },
-  showName: {
-    type: Boolean,
-    default: false
-  },
-  hidden: {
-    type: Boolean,
-    default: false
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  empty: {
-    type: Function,
-    default: null
-  },
-  style: {
-    type: Object,
-    default: null
-  },
-  bgColor: {
-    type: String,
-    default: '#F3F3F3'
-  },
-  noBorder: {
-    type: String,
-    default: '1px dashed var(--el-border-color-darker)'
-  },
-  hoverNoBorder: {
-    type: String,
-    default: '1px dashed var(--el-color-primary)'
-  },
-  hoverBg: {
-    type: String,
-    default: null
-  },
-  acceptText: {
-    type: Boolean,
-    default: true
-  }
-})
+const props = defineProps(propsData)
 let fileNames = ref([])
 const imgLoading = ref(true)
 const imgFail = ref(false)
-const isImage = props.fileType === 'image'
+const isImage = ref(props.fileType === 'image')
 const imgLoadCom = () => {
+  imgFail.value = false
   imgLoading.value = false
 }
-const imgLoadError = () => {
-  imgFail.value = true
-  imgLoading.value = false
-  console.log('失败了', imgFail.value)
+const imgLoadError = async (e) => {
+  await nextTick()
+  if (isImage.value) {
+    imgFail.value = true
+    imgLoading.value = false
+    console.log('失败了', imgFail.value)
+  }
 }
 const { isInDialog, isDialogShow } = useDialogVisibility()
 
@@ -391,7 +311,7 @@ watch(
 
 const { proxy } = getCurrentInstance()
 
-const fileTypeText = isImage ? '图片' : '文件'
+const fileTypeText = isImage.value ? '图片' : '文件'
 // 生成组件唯一id
 const uuid = ref('id-' + generateUUID())
 const uploadRef = ref()
@@ -412,7 +332,7 @@ const formContext = inject(formContextKey, void 0)
 // 获取 el-form-item 组件上下文
 const formItemContext = inject(formItemContextKey, void 0)
 // 判断是否禁用上传和删除
-const self_disabled = computed(() => props.disabled || formContext?.disabled)
+const selfDisabled = computed(() => props.disabled || formContext?.disabled)
 // 文件名称
 
 /**
@@ -428,12 +348,14 @@ const fileLoading = reactive({} as any)
 const upload = async (options: UploadRequestOptions) => {
   let formData = new FormData()
   const { name, uid } = options.file
+  isImage.value = IMAGE_TYPES.includes(`.${getFileExt(name)}`)
   const fileName = `${name}^${uid}`
   fileLoading[fileName] = {}
   fileLoading[fileName].loading = true
   formData.append('file', options.file)
   formData.append('businessType', props.type)
   try {
+    isImage.value && (imgLoading.value = true)
     const { data } = await request({
       url: props.uploadFileUrl,
       method: 'post',
@@ -453,6 +375,7 @@ const upload = async (options: UploadRequestOptions) => {
     options.onError(error as any)
   } finally {
     fileLoading[fileName].loading = false
+    isImage.value && (imgLoading.value = false)
   }
 }
 
@@ -470,17 +393,28 @@ watch(
       imgLoading.value = false
     }
   },
-  { deep: true }
+  { deep: true, immediate: true }
 )
 
+const filesJson = ref()
 // props.fileType === 'image' &&
 watch(
   () => value.value as [],
   (value: []) => {
     // console.log('watch-value', value);
+
+    filesJson.value = []
     urls.value = value
     prefixedUrls.value =
-      urls?.value?.map((url) => `${proxy.baseURL}/${url}`) || []
+      urls?.value?.map((url) => {
+        // const queryString = url.includes('&') ? url.split('&') : []
+        // queryString.length &&
+        //   filesJson.value.push(
+        //     qs.parse(url.split('?')[1].replace('application/', ''))
+        //   )
+        return `${proxy.baseURL}/${url}`
+      }) || []
+
     // fileNames.value = [`${name}^${uid}`];
     // fileNames
     // console.log('urls.value-1', urls.value);
@@ -513,6 +447,7 @@ const handleAvatarSuccess = () => {
   uploadRef.value.clearFiles() //上传成功之后清除历史记录
 }
 
+// 限制总量
 const maxOnceUploadLimit = computed(() => {
   // console.log('urls.value.length - Number(props.limit)', urls.value.length - Number(props.limit));
   return Number(props.limit) - urls.value.length

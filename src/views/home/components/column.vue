@@ -63,8 +63,8 @@ onMounted(async () => {
         ">
         <span
           v-text="value"
-          class="text-[18px] leading-[1] cursor-pointer group-hover:underline mt-[16px]" />
-        <span v-text="label" class="text-[14px] leading-[20px] mt-[5px]" />
+          class="leading-[1] cursor-pointer group-hover:underline mt-[16px]" />
+        <span v-text="label" class="leading-[20px] mt-[5px]" />
       </li>
       <li class="w-full flex justify-center items-center">
         <span v-if="!data.length" class="flex justify-center">暂无数据</span>

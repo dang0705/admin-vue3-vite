@@ -68,7 +68,7 @@
         class="login-content-submit"
         :loading="loading"
         @click="onSignIn">
-        <span class="text-[white] text-[16px] font-bold">
+        <span class="text-[white] font-bold">
           {{ $t('password.accountBtnText') }}
         </span>
       </el-button>
