@@ -22,7 +22,7 @@
         :class="[
           'w-full',
           'relative',
-          'z-[2]',
+          'z-[3]',
           {
             'mb-[10px]': isShowTopBar
               ? hasTopBarSlot ||
