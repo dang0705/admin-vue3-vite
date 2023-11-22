@@ -34,7 +34,8 @@ export default [
     label: '状态',
     prop: 'status',
     minWidth: 130,
-    options: 'merchant_status'
+    slot: true
+    // options: 'merchant_status'
   },
   {
     label: '操作',
