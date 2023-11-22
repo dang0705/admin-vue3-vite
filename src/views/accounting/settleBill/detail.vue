@@ -465,6 +465,7 @@ $refreshList(getmerchantInfoData)
         padding: 12px 14px;
         display: flex;
         justify-content: center;
+        align-items: center;
         &:before {
           position: absolute;
           left: 0;
