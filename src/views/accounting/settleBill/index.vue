@@ -6,7 +6,7 @@
     action-body="账单"
     module="core/settleBill.ts"
     labelWidth="120px">
-    <template #top-bar="{ otherInfo, selectObjs }">
+    <template #top-bar="{ otherInfo, selectObjs, downParams }">
       <el-button
         v-auth="'core_settleBill_add'"
         type="primary"
@@ -18,7 +18,7 @@
         v-auth="'core_settleBill_batch_export'"
         type="primary"
         class="ml10"
-        @click="handleBtn">
+        @click="exportExcel('/core/settleBill/export', downParams)">
         批量导出账单
       </el-button>
       <el-button
@@ -27,7 +27,9 @@
         type="primary"
         class="ml10"
         :disabled="selectObjs.length === 0"
-        @click="handleBtn">
+        @click="
+          exportExcel('/core/settleBill/exportTaskRecordItem', downParams)
+        ">
         批量导出明细
       </el-button>
       <div class="flex">
@@ -165,6 +167,7 @@ import columns from './configurations/columns'
 import actions from './configurations/tabel-actions'
 import excelForms from './configurations/excel-forms'
 import { useMessage } from '/@/hooks/message'
+import { downBlobFile } from '/@/utils/other'
 const importBillRef = ref()
 const formInfo = reactive({
   taskList: [],
@@ -173,7 +176,16 @@ const formInfo = reactive({
   merchantList: [],
   spinfoList: []
 })
-
+// 导出excel
+const exportExcel = async (url: string, downParams: any) => {
+  const { useMessageBox } = await import('/@/hooks/message')
+  try {
+    await useMessageBox().confirm('确定批量导出数据？')
+  } catch {
+    return
+  }
+  downBlobFile(url, downParams, '', true)
+}
 const openDialog = () => {
   formInfo.taskList = []
   formInfo.spPaymentChannelList = []

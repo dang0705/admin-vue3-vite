@@ -92,6 +92,7 @@ const downloadUrlRegex = /^\/gen\/generator\/download/
 const exportUrlRegex = /export/
 const handleResponse = (response: AxiosResponse<any>) => {
   const { config } = response
+  console.log('config', response)
   const isBlob = config.responseType?.toLowerCase() === 'blob'
   if (
     ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) ||
@@ -118,10 +119,25 @@ const handleResponse = (response: AxiosResponse<any>) => {
         import.meta.env.VITE_PWD_ENC_KEY
       )
     )
+    // return response.data
+    // return  isBlob ? {
+    if (isBlob) {
+      return {
+        ...response.data,
+        fileName: response['headers']['content-disposition']
+      }
+    } else {
+      return response.data
+    }
+  }
+  if (isBlob) {
+    return {
+      ...response.data,
+      fileName: response['headers']['content-disposition']
+    }
+  } else {
     return response.data
   }
-
-  return response.data
 }
 
 /**
@@ -131,6 +147,7 @@ service.interceptors.response.use(handleResponse, (error) => {
   const {
     response: { status, data: { msg } = {}, config }
   } = error
+
   if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
     $bus.emit('off-action-loading')
   }

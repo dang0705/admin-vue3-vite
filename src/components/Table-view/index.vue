@@ -78,7 +78,10 @@
         </ul>
         <slot
           name="tableTopTwo"
-          v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
+          v-bind="{
+            refresh: resetQuery,
+            otherInfo: state.otherInfo
+          }" />
         <div
           v-if="
             (downBlobFileUrl && userInfos.permissionMap[exportAuth]) ||
@@ -101,7 +104,8 @@
                   refresh: resetQuery,
                   otherInfo: state.otherInfo,
                   query: state.queryForm,
-                  selectObjs: selectObjs
+                  selectObjs: selectObjs,
+                  downParams: downParams
                 }" />
             </div>
           </div>
@@ -303,17 +307,20 @@ const exportExcel = async () => {
   }
   downBlobFile(
     props.downBlobFileUrl,
-    Object.assign(state.queryForm, props.params, {
-      ids: props.getFullSelection
-        ? selectObjs.value.map(
-            ({ [props.selectMainKey]: id }: Record<string, string>) => id
-          )
-        : selectObjs
-    }),
+    downParams.value,
     props.downBlobFileName,
     true
   )
 }
+const downParams = computed(() => {
+  return Object.assign(state.queryForm, props.params, {
+    ids: props.getFullSelection
+      ? selectObjs.value.map(
+          ({ [props.selectMainKey]: id }: Record<string, string>) => id
+        )
+      : selectObjs
+  })
+})
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
