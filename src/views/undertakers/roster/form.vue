@@ -3,16 +3,17 @@
     :title="form.id ? '修改承接人' : '添加承接人'"
     v-model="visible"
     :close-on-click-modal="false"
+    width="600px"
     draggable>
     <el-form
       ref="dataFormRef"
       :model="form"
       :rules="dataRules"
       formDialogRef
-      label-width="100px"
+      label-width="150px"
       v-loading="loading">
       <el-row :gutter="24">
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="姓名:" prop="undertakerName">
             <el-input
               v-model="form.undertakerName"
@@ -21,7 +22,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="身份证号码:" prop="undertakerCard">
             <el-input
               v-model="form.undertakerCard"
@@ -31,7 +32,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="手机号:" prop="undertakerPhone">
             <el-input
               v-model="form.undertakerPhone"
@@ -40,7 +41,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="开户行:" prop="bankName">
             <el-input
               v-model="form.bankName"
@@ -49,7 +50,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="银行卡号:" prop="bankNumber">
             <el-input
               v-model="form.bankNumber"
@@ -64,7 +65,7 @@
 					</el-form-item>
 				</el-col> -->
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="民族:" prop="undertakerClan">
             <el-select placeholder="请选择" v-model="form.undertakerClan">
               <el-option
@@ -76,7 +77,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="学历:" prop="undertakerEducation">
             <el-select placeholder="请选择" v-model="form.undertakerEducation">
               <el-option
@@ -88,7 +89,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="参加工作日期:" prop="workTime">
             <el-date-picker
               type="date"
@@ -98,7 +99,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" class="mb20">
+        <el-col :span="20" class="mb20">
           <el-form-item label="服务商:" class="ml2" prop="spId">
             <el-select placeholder="请选择" v-model="form.spId">
               <el-option

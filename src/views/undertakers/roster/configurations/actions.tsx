@@ -1,8 +1,7 @@
 import uploadBusinessType from '/@/enums/upload-business-type'
-import logomini from '/@/assets/logo-mini.webp'
 const businessType = uploadBusinessType.hro
 
-export default ({ id, undertakerPhone }: any, logomini) => [
+export default ({ id, undertakerPhone }: any, id_z, id_f) => [
   {
     label: '加入服务商',
     auth: 'hro_undertakerInfo_join',
@@ -28,39 +27,58 @@ export default ({ id, undertakerPhone }: any, logomini) => [
       params: {
         id
       }
-    }
+    },
+    icon: 'icon-icon_tianjia'
   },
   {
     label: '上传身份证',
     auth: 'hro_undertakerInfo_uploadCard',
     dialog: {
-      labelWidth: 160,
+      labelWidth: 90,
       forms: [
         {
-          label: '上传身份证头像面',
+          label: '身份证件',
           key: 'cardFront',
           control: 'UploadFile',
           props: {
-            type: businessType
-            // style:{width:'100px'},
-            // empty: () => (
-            //   <div
-            //     style={{
-            //       backgroundImage: `url(${logomini})`
-            //     }}></div>
-            // )
-          }
-          // column: 12
+            type: businessType,
+            bgColor: '#fbfbfb',
+            noBorder: 'none',
+            hoverNoBorder: 'none',
+            borderRadius: '10px',
+            style: { width: '210px', height: '170px' },
+            empty: () => (
+              <div
+                class={['w-[210px]', 'h-[170px]', 'bg-no-repeat', 'bg-cover']}
+                style={{
+                  backgroundImage: `url(${id_z})`
+                }}></div>
+            )
+          },
+          column: 12
         },
         {
           // label: '上传身份证国徽面',
           key: 'cardOpposite',
           control: 'UploadFile',
           props: {
-            type: businessType
-          }
-          // labelWidth: 1,
-          // column: 12
+            type: businessType,
+            bgColor: '#fbfbfb',
+            noBorder: 'none',
+            hoverNoBorder: 'none',
+            borderRadius: '10px',
+            acceptText: false,
+            style: { width: '210px', height: '170px' },
+            empty: () => (
+              <div
+                class={['w-[210px]', 'h-[170px]', 'bg-no-repeat', 'bg-cover']}
+                style={{
+                  backgroundImage: `url(${id_f})`
+                }}></div>
+            )
+          },
+          labelWidth: 50,
+          column: 12
         }
       ]
     },
@@ -69,7 +87,8 @@ export default ({ id, undertakerPhone }: any, logomini) => [
       params: {
         id
       }
-    }
+    },
+    icon: 'icon-shangchuan'
   },
   {
     label: '修改手机号',
@@ -94,6 +113,7 @@ export default ({ id, undertakerPhone }: any, logomini) => [
     action: {
       handler: 'updateMobile',
       params: { id }
-    }
+    },
+    icon: 'icon-bianji'
   }
 ]

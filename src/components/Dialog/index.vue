@@ -21,7 +21,7 @@ const props = defineProps({
   },
   width: {
     type: [Number, String],
-    default: '640px'
+    default: '600px'
   },
   ...FormViewProps
 })

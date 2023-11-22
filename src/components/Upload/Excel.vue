@@ -10,6 +10,9 @@
       <div class="guidance mb10">
         <p v-html="guidance" />
       </div>
+      <template v-for="(_, slot) in $slots" #[slot]>
+        <slot :name="slot" />
+      </template>
       <div v-if="tempUrl" class="my-6">
         <a
           v-if="templateOnFront"

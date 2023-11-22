@@ -352,6 +352,7 @@
 ------------------------------- */
 .el-card__header {
 	padding: 15px 20px;
+  font-weight: bold;
 }
 
 // 日历
@@ -365,6 +366,7 @@
 // 表格修改默认颜色
 .el-table {
 	color: #000000;
+  font-size: 12px;
 	.el-button.is-text {
 		padding: 0;
 	}
@@ -542,4 +544,9 @@ input[type='number'] {
 .el-form-item--default {
   --font-size: 12px;
   --el-form-label-font-size: var(--font-size);
+}
+
+
+.el-table td.el-table__cell {
+  height: 48px;
 }

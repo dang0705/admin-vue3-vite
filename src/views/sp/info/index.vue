@@ -5,6 +5,9 @@
     :actions="actions"
     label-width="140"
     module="core/spInfo">
+    <template #statusDesc="{ row }">
+      <Tag :type="getType(row.status)" :text="row.statusDesc"></Tag>
+    </template>
     <template #top-bar>
       <el-button
         type="primary"
@@ -36,7 +39,7 @@
       :labelWidth="140"
       vertical
       draggable
-      width="60%"
+      width="600px"
       ref="dataFormRef"
       submit-button-text="确认"
       button-position="center" />
@@ -44,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDict } from '/@/hooks/dict'
 import { spPaymentChannel } from '/@/api/core/spInfo'
 import { useMessage } from '/@/hooks/message'
 import { rule } from '/@/utils/validate'
@@ -60,7 +64,10 @@ const conditionForms = [
     control: 'el-select'
   }
 ]
-
+const { sp_status } = useDict('sp_status')
+const getType = (status: string) => {
+  return sp_status.value.find((item) => item.value === status).color
+}
 const columns = [
   {
     label: '服务商名称',
@@ -85,7 +92,8 @@ const columns = [
   {
     label: '状态',
     prop: 'statusDesc',
-    minWidth: 80
+    minWidth: 80,
+    slot: true
   },
   {
     label: '是否已开通支付通道',

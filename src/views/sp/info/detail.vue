@@ -1,5 +1,7 @@
 <template>
-  <spInfo-form />
+  <div class="layout-padding w-100 overflow-auto form-view">
+    <div class="layout-padding-auto layout-padding-view"><spInfo-form /></div>
+  </div>
 </template>
 
 <script setup lang="ts">

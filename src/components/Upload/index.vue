@@ -21,7 +21,7 @@
             <img
               v-else
               class="w-[120px] h-[120px]"
-              src="/src/assets/test.jpg"
+              src="/src/assets/fail.png"
               alt="" />
             <div class="upload-handle" @click.stop>
               <div
@@ -74,7 +74,8 @@
           :accept="accept.length ? accept.join(',') : new_accept.join(',')">
           <!--				如果返回的是OSS 地址则不需要增加 baseURL-->
 
-          <template v-if="isImage && prefixedUrls.length && !multiple">
+          <template
+            v-if="isImage && prefixedUrls.length && !multiple && !imgFail">
             <div :style="style">
               <img
                 :src="prefixedUrls[0]"
@@ -145,7 +146,7 @@
               ((multiple && prefixedUrls?.length < limit) || !multiple)
             ">
             <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
-            <span class="text-[#999] text-[14px]">
+            <span class="text-[#999] text-[14px]" v-if="acceptText">
               支持{{
                 accept.length
                   ? accept.join(',').replace(/image\//g, '')
@@ -202,23 +203,22 @@
             </template>
           </el-skeleton>
           <img
+            v-if="self_disabled && isImage && !multiple && imgFail"
+            class="w-[120px] h-[120px]"
+            src="/src/assets/fail.png"
+            alt="" />
+          <img
             v-if="
               self_disabled &&
               isImage &&
               prefixedUrls?.length === 0 &&
               !multiple &&
-              imgFail
+              !imgFail &&
+              !imgLoading
             "
             class="w-[120px] h-[120px]"
-            src="/src/assets/test.jpg"
+            src="/src/assets/zhanwei.png"
             alt="" />
-
-          <!-- <img
-              class="w-[120px] h-[120px]"
-              src="/src/assets/test.jpg"
-              alt="" /> -->
-
-          <!-- <el-image v-if="isImage && self_disabled && !prefixedUrls?.length" style="width: 100%; height: 100%" /> -->
         </el-upload>
         <template v-if="disabled && !isImage && prefixedUrls">
           <a
@@ -347,6 +347,22 @@ const props = defineProps({
   style: {
     type: Object,
     default: null
+  },
+  bgColor: {
+    type: String,
+    default: '#F3F3F3'
+  },
+  noBorder: {
+    type: String,
+    default: '1px dashed var(--el-border-color-darker)'
+  },
+  hoverNoBorder: {
+    type: String,
+    default: '1px dashed var(--el-color-primary)'
+  },
+  acceptText: {
+    type: Boolean,
+    default: true
   }
 })
 let fileNames = ref([])
@@ -357,7 +373,9 @@ const imgLoadCom = () => {
   imgLoading.value = false
 }
 const imgLoadError = () => {
+  imgFail.value = true
   imgLoading.value = false
+  console.log('失败了', imgFail.value)
 }
 const { isInDialog, isDialogShow } = useDialogVisibility()
 
@@ -377,8 +395,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-    ? IMAGE_TYPES
-    : FILE_TYPES
+      ? IMAGE_TYPES
+      : FILE_TYPES
 )
 
 // 查看图片
@@ -446,7 +464,6 @@ watch(
   (value) => {
     if (!value || value.length === 0) {
       imgLoading.value = false
-      imgFail.value = true
     }
   },
   { deep: true }
@@ -533,8 +550,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-    ? LIMIT.compression
-    : LIMIT.file
+      ? LIMIT.compression
+      : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
@@ -642,6 +659,7 @@ const uploadError = (err: any) => {
       .el-upload-dragger {
         display: flex;
         align-items: center;
+        border: v-bind(noBorder);
         // justify-content: center;
         // width: 100%;
         // height: 100%;
@@ -649,13 +667,13 @@ const uploadError = (err: any) => {
         // height: v-bind(height);
         padding: 0;
         overflow: hidden;
-        background-color: transparent;
-        border: 1px dashed var(--el-border-color-darker);
+        // border: 1px dashed var(--el-border-color-darker);
         border-radius: v-bind(borderRadius);
         @apply bg-[#F3F3F3];
+        background-color: v-bind(bgColor);
 
         &:hover {
-          border: 1px dashed var(--el-color-primary);
+          border: v-bind(hoverNoBorder);
         }
       }
 
