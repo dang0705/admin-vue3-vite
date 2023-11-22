@@ -94,6 +94,10 @@ export default {
     type: String,
     default: '1px dashed var(--el-color-primary)'
   },
+  hoverBg: {
+    type: String,
+    default: null
+  },
   acceptText: {
     type: Boolean,
     default: true

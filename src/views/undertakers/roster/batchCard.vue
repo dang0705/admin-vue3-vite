@@ -18,6 +18,8 @@
             <UploadFile
               :type="businessType"
               noBorder="none"
+              hoverNoBorder="none"
+              hoverBg="#fff7f3"
               :style="{ width: '173px', height: '140px' }"
               :accept="['.zip']"
               fileType="zip"

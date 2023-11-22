@@ -116,6 +116,7 @@
         noDivider
         noBorder="none"
         bgColor="#F3F3F3"
+        hoverBg="#fff7f3"
         :forms="addUnderTakerForms">
         <template #excel-top>
           <div

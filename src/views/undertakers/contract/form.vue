@@ -75,6 +75,7 @@ const forms = [
       fileType: 'file',
       style: { width: '173px', height: '140px' },
       noBorder: 'none',
+      hoverBg:"#fff7f3",
       hoverNoBorder: 'none',
       empty: () => (
               <div>

@@ -37,6 +37,7 @@
       template-on-front
       noDivider
       noBorder="none"
+      hoverBg="#fff7f3"
       bgColor="#F3F3F3"
       labelWidth="120"
       title="添加合同签署">

@@ -221,6 +221,10 @@ const prop = defineProps({
   bgColor: {
     type: String,
     default: '#FFFFFF'
+  },
+  hoverBg: {
+    type: String,
+    default: null
   }
 })
 const valid = ref(false)
@@ -418,5 +422,14 @@ defineExpose({
   height: v-bind(excelHeight);
   border: v-bind(noBorder);
   background-color: v-bind(bgColor);
+
+  &:hover {
+    background-color: v-bind(hoverBg);
+  }
+}
+
+:deep(.el-upload-dragger.is-dragover) {
+  background-color: var(--el-color-primary-light-9);
+  border: 1px dashed var(--el-color-primary) !important;
 }
 </style>
