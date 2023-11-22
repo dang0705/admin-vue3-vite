@@ -237,7 +237,7 @@ const renderContent = (h: Function, options: Options<string>) => {
     panels.forEach((panel, index) => {
       const ul = document.createElement('ul')
       ul.className =
-        'header flex justify-between items-center pl-[49px] bg-[#ddd] sticky top-0 z-20'
+        'header flex justify-between items-center pl-[49px] bg-[#FAFAFC] sticky top-0 z-20'
       values.forEach(({ label }) => {
         const li = document.createElement('li')
         li.textContent = label
@@ -312,6 +312,7 @@ defineExpose({
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 0 60px;
   button {
     margin: 10px 0 0 0;
     width: 100%;

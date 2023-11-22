@@ -28,7 +28,8 @@ export default (contractMap: any, labelMapping: LabelMapping<number>) =>
       action: {
         handler: termination,
         params: { id }
-      }
+      },
+      icon: 'icon-zhongzhi'
     },
     {
       label: '删除',

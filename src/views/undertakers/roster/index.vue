@@ -109,15 +109,30 @@
       <!-- 批量导入承接人-->
       <uploadExcel
         ref="addUnderTakerRef"
-        guidance="请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。"
         upload-label="待签署用户名单"
         upload-url="core/undertakerInfo/import"
-        temp-url="/files/批量导入承接人模板.xlsx"
         template-on-front
         title="批量导入承接人"
+        noDivider
+        noBorder="none"
+        bgColor="#F3F3F3"
         :forms="addUnderTakerForms">
-        <template #top>
-          <div>123</div>
+        <template #excel-top>
+          <div
+            class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
+            style="border: 1px solid #ff682659">
+            请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。
+            <a href="/files/批量导入承接人模板.xlsx">
+              <el-button icon="download" type="primary" class="ml10">
+                下载模版
+              </el-button>
+            </a>
+          </div>
+        </template>
+        <template #excel-body>
+          <img
+            class="w-[48px] h-[48px] mx-auto"
+            src="../../../assets/uploadImg/file.webp" />
         </template>
       </uploadExcel>
 

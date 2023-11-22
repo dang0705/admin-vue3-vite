@@ -10,9 +10,7 @@
       <div class="guidance mb10">
         <p v-html="guidance" />
       </div>
-      <template v-for="(_, slot) in $slots" #[slot]>
-        <slot :name="slot" />
-      </template>
+      <slot name="excel-top" :downExcelTemp="downExcelTemp" />
       <div v-if="tempUrl" class="my-6">
         <a
           v-if="templateOnFront"
@@ -29,7 +27,7 @@
           {{ $t('excel.downloadTemplate') }}
         </el-link>
       </div>
-      <el-divider />
+      <el-divider v-if="!noDivider" />
       <Form-view
         :forms="forms"
         :columns="24"
@@ -65,9 +63,11 @@
               :on-error="handleFileError"
               :on-change="onChange">
               <i class="el-icon-upload" />
-              <div class="el-upload__text">
+              <div
+                class="el-upload__text w-[100%] h-[100%] flex items-center justify-center flex-col">
+                <slot name="excel-body" />
                 {{ $t('excel.operationNotice') }}
-                <em>{{ $t('excel.clickUpload') }}</em>
+                <!-- <em>{{ $t('excel.clickUpload') }}</em> -->
               </div>
               <template #tip>
                 <div class="el-upload__tip text-center">
@@ -201,6 +201,26 @@ const prop = defineProps({
   width: {
     type: [Number, String],
     default: '640px'
+  },
+  noDivider: {
+    type: Boolean,
+    default: false
+  },
+  excelWidth: {
+    type: [Number, String],
+    default: '173px'
+  },
+  excelHeight: {
+    type: [Number, String],
+    default: '140px'
+  },
+  noBorder: {
+    type: String,
+    default: '1px dashed var(--el-border-color-darker)'
+  },
+  bgColor: {
+    type: String,
+    default: '#FFFFFF'
   }
 })
 const valid = ref(false)
@@ -387,8 +407,16 @@ defineExpose({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .el-upload__tip {
   text-align: left;
+}
+
+:deep(.el-upload-dragger) {
+  padding: 0;
+  width: v-bind(excelWidth);
+  height: v-bind(excelHeight);
+  border: v-bind(noBorder);
+  background-color: v-bind(bgColor);
 }
 </style>

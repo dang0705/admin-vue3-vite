@@ -24,12 +24,13 @@
   </Dialog>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import { useMessage } from '/@/hooks/message'
 
 import { getObj, addObj } from '/@/api/hro/undertakingContract'
 import { underTakers } from '/@/configuration/dynamic-control'
 import request from '/@/utils/request'
+import img from '/@/assets/uploadImg/file.webp'
 
 defineOptions({ name: 'UndertakingContractDialog' })
 const emit = defineEmits(['refresh'])
@@ -72,6 +73,17 @@ const forms = [
     label: '上传合同扫描件',
     props: {
       fileType: 'file',
+      style: { width: '173px', height: '140px' },
+      noBorder: 'none',
+      hoverNoBorder: 'none',
+      empty: () => (
+              <div>
+              <div class={['w-[48px]', 'h-[48px]', 'bg-no-repeat', 'bg-cover','mx-auto']} style={{
+                  backgroundImage: `url(${img})`
+                }}></div>
+              <div>单击上传或拖拽到此处</div>
+              </div>
+            ),
       accept: ['.pdf'],
       type: '30',
       showName: true

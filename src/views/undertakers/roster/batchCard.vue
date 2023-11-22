@@ -17,14 +17,25 @@
           <el-form-item label="上传身份证:" prop="cardZip">
             <UploadFile
               :type="businessType"
+              noBorder="none"
+              :style="{ width: '173px', height: '140px' }"
               :accept="['.zip']"
               fileType="zip"
               fileSize="200"
               show-name
               v-model="form.cardZip"
-              v-if="visible" />
+              v-if="visible">
+              <template #empty>
+                <img
+                  class="w-[48px] h-[48px]"
+                  src="../../../assets/uploadImg/file.webp" />
+                <div class="text-[#000000]">单击上传或拖拽到此处</div>
+              </template>
+            </UploadFile>
           </el-form-item>
-          <ul class="pl-[20px]">
+          <ul
+            class="pl-[20px] rounded-[6px] bg-[#FFF7F3] text-[12px] pt-[15px] mt-[25px]"
+            style="border: 1px solid #ff682659">
             <li class="mb-[10px]">文件要求:</li>
             <li class="mb-[10px]">
               1、上传文件必须为zip压缩包格式，文件大小不超过200MB
@@ -42,7 +53,7 @@
     <template #footer>
       <div class="flex items-center justify-end">
         <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-          确认
+          确认导入
         </el-button>
         <el-button @click="visible = false">取消</el-button>
       </div>
