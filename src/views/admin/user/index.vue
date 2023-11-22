@@ -4,6 +4,7 @@
       :condition-forms="conditionForms"
       :columns="columns"
       :actions="actions"
+      ref="tabView"
       label-width="100"
       downBlobFileUrl="/admin/user/export"
       downBlobFileName="users.xlsx"
@@ -25,7 +26,7 @@
       </template>
     </Table-view>
 
-    <user-form ref="userDialogRef" @refresh="getDataList(false)" />
+    <user-form ref="userDialogRef" @refresh="tabView.resetQuery" />
     <Distribution
       ref="customersRef"
       id-filed="userId"
@@ -54,7 +55,7 @@ import { customerAuth, providerAuth } from './enum'
 import Array2Object from '/@/utils/array-2-object'
 // 字典转map，用于显示中文
 const batchMap = Array2Object({ dic: ['sp_auth_method', 'merchant_auth'] })
-
+const tabView = ref('')
 const conditionForms = [
   {
     label: '姓名',
