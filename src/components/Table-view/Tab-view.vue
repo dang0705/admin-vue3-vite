@@ -138,10 +138,12 @@ const initTab = async (tabsWidth: number) => {
     tabWidth = 0
     tabPanels.value = tabsWrapper.value?.querySelectorAll('.tab')
     const defaultTab = tabPanels.value?.[0]
-    const paddingRight = getTabPadding(defaultTab, 'paddingRight')
-    const paddingLeft = getTabPadding(defaultTab, 'paddingLeft')
-    slideWidth.value = defaultTab.offsetWidth - (+paddingRight + +paddingLeft)
-    tabPanels.value.forEach(
+    if (defaultTab) {
+      const paddingRight = getTabPadding(defaultTab, 'paddingRight')
+      const paddingLeft = getTabPadding(defaultTab, 'paddingLeft')
+      slideWidth.value = defaultTab.offsetWidth - (+paddingRight + +paddingLeft)
+    }
+    tabPanels?.value?.forEach(
       (tab: Element) => (tabWidth += tab.getBoundingClientRect().width)
     )
     isOverflow.value = tabWidth > tabsWidth
@@ -178,14 +180,12 @@ watch(
     deep: true
   }
 )
-onMounted(async () => window.addEventListener('resize', onResize, true))
-onUnmounted(() => window.removeEventListener('resize', onResize))
 
 const slideDistance = ref(16)
 const slideWidth = ref(0)
 
 const getTabPadding = (el: Element, padding: string) =>
-  getComputedStyle(el)?.[padding].replace('px', '')
+  el && getComputedStyle(el)?.[padding].replace('px', '')
 
 const currentTab = computed(() => tabPanels.value[currentIndex.value])
 interface Move {
@@ -233,6 +233,9 @@ const isDisabledDirection = () => {
   tabsScrollLeft.value = tabsWrapper.value.scrollLeft
   tabScrollIsEnd = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
 }
+
+onMounted(() => window.addEventListener('resize', onResize, true))
+onUnmounted(() => window.removeEventListener('resize', onResize))
 </script>
 <style scoped>
 .tabs::-webkit-scrollbar {
