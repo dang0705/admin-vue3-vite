@@ -294,7 +294,13 @@ watch(
   }
 )
 // 导出excel
-const exportExcel = () => {
+const exportExcel = async () => {
+  const { useMessageBox } = await import('/@/hooks/message')
+  try {
+    await useMessageBox().confirm('确定批量导出数据？')
+  } catch {
+    return
+  }
   downBlobFile(
     props.downBlobFileUrl,
     Object.assign(state.queryForm, props.params, {
