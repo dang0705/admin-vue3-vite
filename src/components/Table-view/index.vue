@@ -94,7 +94,7 @@
               type="primary">
               批量导出
             </el-button>
-            <div class="flex items-center w-[100%]">
+            <div class="flex items-center flex-1">
               <slot
                 name="top-bar"
                 v-bind="{
@@ -110,6 +110,7 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
+            v-bind="{ ...props, ...$attrs }"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
@@ -118,7 +119,6 @@
                 ? tableStyle.headerCellStyle
                 : { headerCellStyle: { background: 'transparent', height: 0 } }
             "
-            v-bind="{ ...props, ...$attrs }"
             @selection-change="onSelectionChange">
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />

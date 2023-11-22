@@ -8,10 +8,10 @@
     labelWidth="140px"
     :exportAuth="
       route.query.id
-        ? 'core_settleBill_export'
-        : 'core_settleBillTaskRecordItem_export'
+        ? 'core_settleBillTaskRecordItem_export'
+        : 'core_settleBill_export'
     "
-    downBlobFileUrl="xxx">
+    downBlobFileUrl="/core/settleBillTaskRecordItem/export">
     <template #billName="{ row }">
       <router-link
         class="hover:underline text-blue-400"

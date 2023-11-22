@@ -11,10 +11,16 @@
       tabType === '任务结算单' //  '20' means 任务结算单
         ? 'core_settleBillRecord_task_export'
         : tabType === '服务结算单'
-        ? 'core_settleBillRecord_sp_export'
-        : ''
+          ? 'core_settleBillRecord_sp_export'
+          : ''
     "
-    downBlobFileUrl="xxx"
+    :downBlobFileUrl="
+      tabType === '任务结算单'
+        ? '/core/settleBillRecord/exportTaskSettleBillRecord'
+        : tabType === '服务结算单'
+          ? '/core/settleBillRecord/exportServiceSettleBillRecord'
+          : ''
+    "
     labelWidth="120px"
     module="core/settleBillRecord"
     @get-tab-value="tabType = $event">
