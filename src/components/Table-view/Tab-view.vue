@@ -37,7 +37,6 @@
           'flex-shrink-0',
           'cursor-pointer',
           'py-[8px]',
-          'text-[14px]',
           'box-border',
           'select-none',
           'px-[16px]',

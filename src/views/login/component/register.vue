@@ -58,7 +58,7 @@
         v-waves
         @click="handleRegister"
         :loading="loading">
-        <span class="text-[white] text-[16px] font-bold">
+        <span class="text-[white] font-bold">
           {{ $t('password.registerBtnText') }}
         </span>
       </el-button>
