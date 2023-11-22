@@ -38,7 +38,7 @@
 import Array2Object from '/@/utils/array-2-object'
 const route: any = useRoute()
 defineOptions({ name: 'systemUndertakerTask' })
-const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'))
+const DetailDialog = defineAsyncComponent(() => import('./detailDialogNew.vue'))
 defineProps({
   taskId: {
     type: String,

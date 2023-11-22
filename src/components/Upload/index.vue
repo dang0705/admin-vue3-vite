@@ -293,6 +293,8 @@ const imgLoading = ref(true)
 const imgFail = ref(false)
 const isImage = ref(props.fileType === 'image')
 const imgLoadCom = () => {
+  console.log('load')
+
   imgFail.value = false
   imgLoading.value = false
 }
@@ -322,8 +324,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-    ? IMAGE_TYPES
-    : FILE_TYPES
+      ? IMAGE_TYPES
+      : FILE_TYPES
 )
 
 // 查看图片
@@ -392,7 +394,7 @@ const value = computed(() =>
 watch(
   () => props.modelValue,
   (value) => {
-    console.log(value)
+    console.log('value', value)
     if (!value || value.length === 0) {
       imgLoading.value = false
     }
@@ -493,8 +495,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-    ? LIMIT.compression
-    : LIMIT.file
+      ? LIMIT.compression
+      : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
