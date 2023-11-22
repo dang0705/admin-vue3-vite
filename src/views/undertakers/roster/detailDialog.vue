@@ -119,7 +119,6 @@
     </el-form>
     <span class="flex justify-end items-center footer">
       <el-button @click="visible = false">取 消</el-button>
-      <!-- <el-button type="primary" @click="onSubmit" :disabled="loading">确认</el-button> -->
       <el-button type="primary" @click="visible = false">确 认</el-button>
     </span>
   </el-dialog>
@@ -127,26 +126,15 @@
 
 <script setup lang="ts">
 import { useDict } from '/@/hooks/dict'
-import { useMessage } from '/@/hooks/message'
-import { getObj, addObj, putObj } from '/src/api/core/undertakerInfo'
-import { rule } from '/@/utils/validate'
-import uploadBusinessType from '/@/enums/upload-business-type'
+import { getObj } from '/src/api/core/undertakerInfo'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const { proxy } = getCurrentInstance()
-
-const emit = defineEmits(['refresh'])
-
 // 定义变量内容
 const dataFormRef = ref()
 const visible = ref(false)
 const loading = ref(false)
-const businessType = uploadBusinessType.hro
 // 定义字典
-const { yes_no_type, gender, education } = useDict(
-  'yes_no_type',
-  'gender',
-  'education'
-)
+const { yes_no_type, gender } = useDict('yes_no_type', 'gender')
 // 提交表单数据
 const form = reactive({
   id: '',
@@ -168,7 +156,6 @@ const form = reactive({
   isBankFourEssentialFactor: '',
   spList: []
 })
-
 // 定义校验规则
 const dataRules = ref({
   undertakerName: [
@@ -215,7 +202,6 @@ const dataRules = ref({
     { required: true, message: '是否验证银行四要素不能为空', trigger: 'blur' }
   ]
 })
-
 // 打开弹窗
 const openDialog = (id: string) => {
   visible.value = true
@@ -232,25 +218,6 @@ const openDialog = (id: string) => {
     getundertakerInfoData(id)
   }
 }
-
-// 提交
-const onSubmit = async () => {
-  const valid = await dataFormRef.value.validate().catch(() => {})
-  if (!valid) return false
-
-  try {
-    loading.value = true
-    form.id ? await putObj(form) : await addObj(form)
-    useMessage().success(form.id ? '修改成功' : '添加成功')
-    visible.value = false
-    emit('refresh')
-  } catch (err: any) {
-    useMessage().error(err.msg)
-  } finally {
-    loading.value = false
-  }
-}
-
 // 初始化表单数据
 const getundertakerInfoData = (id: string) => {
   // 获取数据
@@ -263,7 +230,6 @@ const getundertakerInfoData = (id: string) => {
       loading.value = false
     })
 }
-
 // 暴露变量
 defineExpose({
   openDialog
