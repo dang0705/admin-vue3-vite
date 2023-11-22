@@ -110,7 +110,6 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
-            size="large"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
@@ -138,7 +137,9 @@
               <template v-if="column.headerSlot" #header>
                 <slot :name="`${column.prop}-header`" :refresh="resetQuery" />
               </template>
-              <template v-if="column.slot || column.value" v-slot="{ row }">
+              <template
+                v-if="column.slot || column.value || column.options"
+                v-slot="{ row }">
                 <slot
                   :name="column.prop"
                   :row="row"
@@ -147,6 +148,11 @@
                   :refresh="resetQuery">
                   <template v-if="column.value">
                     {{ column.value(row) }}
+                  </template>
+                  <template v-if="column.options">
+                    <Tag
+                      :type="row[column.prop + '_obj'].type"
+                      :text="row[column.prop + '_obj'].text"></Tag>
                   </template>
                   <TableSlot
                     v-else-if="helpers.isFunction(column.slot)"
@@ -264,7 +270,8 @@ const state: BasicTableProps = reactive<BasicTableProps>({
     : {}),
   ...(props.size ? { pagination: { size: props.size } } : {}),
   tabsAuth: props.tabsAuth as string[],
-  createdIsNeed: history.state.tabValue ? false : props.createdIsNeed
+  createdIsNeed: history.state.tabValue ? false : props.createdIsNeed,
+  columns: props.columns
 })
 const {
   currentChangeHandle,
@@ -277,6 +284,15 @@ const {
 
 const selectObjs = ref([]) as any
 
+watch(
+  () => props.columns,
+  (columns) => {
+    columns?.length && (state.columns = columns)
+  },
+  {
+    immediate: true
+  }
+)
 // 导出excel
 const exportExcel = () => {
   downBlobFile(

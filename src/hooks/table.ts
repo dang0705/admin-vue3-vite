@@ -1,5 +1,7 @@
 import { CellStyle } from 'element-plus'
 import other from '/@/utils/other'
+import helper from '/@/utils/helpers'
+import { useDict } from '/@/hooks/dict'
 
 /**
  * 表格组件基础配置属性
@@ -35,6 +37,8 @@ export interface BasicTableProps {
   props?: any
   // permissions of tabs
   tabsAuth?: string[]
+  // 表格配置的columns
+  columns?: any[]
 }
 
 /**
@@ -163,6 +167,27 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
           )
         state.countResp = state.isPage ? res.data.countResp : []
         state.otherInfo = state.isPage ? res.data : {}
+        let optionsMap = new Map()
+        state.columns?.forEach((item) => {
+          if (item.options) {
+            optionsMap.set(item.prop, item.options)
+          }
+        })
+        if (optionsMap.size) {
+          for (const key of optionsMap.keys()) {
+            let options = optionsMap.get(key)
+            if (options && helper.isString(options)) {
+              const { [options as string]: dic } = useDict(options as string)
+              state.dataList?.forEach((item) => {
+                let obj = dic.value.find((e: any) => e.value === item[key])
+                item[key + '_obj'] = {
+                  type: obj.color,
+                  text: obj.label
+                }
+              })
+            }
+          }
+        }
       } catch (err: any) {
         state.dataList = []
         // 捕获异常并显示错误提示

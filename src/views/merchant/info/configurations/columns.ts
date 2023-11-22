@@ -32,9 +32,9 @@ export default [
   },
   {
     label: '状态',
-    prop: 'statusDesc',
+    prop: 'status',
     minWidth: 130,
-    slot: true
+    options: 'merchant_status'
   },
   {
     label: '操作',

@@ -55,8 +55,8 @@ getIcon()
         buttonPosition === 'right'
           ? 'end'
           : buttonPosition === 'center'
-          ? 'center'
-          : 'start'
+            ? 'center'
+            : 'start'
       }`,
       { horizontal: !vertical, 'ml-[8px]': !vertical }
     ]">
@@ -86,8 +86,7 @@ getIcon()
       }"
       v-debounce="cancel"
       v-bind="{
-        ...(icons.length ? { icon: icons[1] } : {}),
-        ...(isResetButton ? { bg: '#fff' } : {})
+        ...(icons.length ? { icon: icons[1] } : {})
       }">
       {{
         isResetButton ? '' : cancelButtonText || $t('common.cancelButtonText')
