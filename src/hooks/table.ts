@@ -341,7 +341,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     cellStyle: ({ column: { label, align } }) => initColumn(label, align),
     headerCellStyle: ({ column: { label } }) => {
       return {
-        textAlign: 'left',
+        textAlign: label?.includes('(元)') ? 'right' : 'left',
         height: '40px',
         fontSize: '12px',
         // background: 'var(--table-header-bg-color)',
