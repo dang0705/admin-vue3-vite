@@ -116,7 +116,7 @@
                     <SvgIcon
                       name="iconfont icon-biaojiweiyidu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="mr-[18px] cursor-pointer"
                       @click="readMarkOne(row.id, refresh)" />
                   </el-tooltip>
@@ -128,7 +128,7 @@
                     <SvgIcon
                       name="iconfont icon-biaojiweiweidu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="mr-[18px] cursor-pointer"
                       @click.stop="readMarkUnread(row.id, refresh)" />
                   </el-tooltip>
@@ -136,7 +136,7 @@
                     <SvgIcon
                       name="iconfont icon-shanchu"
                       :size="13"
-                      color="#858585"
+                      color="#000"
                       class="cursor-pointer"
                       @click.stop="delMessage(row.id, refresh)" />
                   </el-tooltip>
