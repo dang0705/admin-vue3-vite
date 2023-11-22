@@ -232,3 +232,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+::v-deep(.el-statistic__content) {
+  font-size: var(--el-font-size-base);
+}
+</style>
