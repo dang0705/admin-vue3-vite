@@ -601,34 +601,13 @@ const uploadError = (err: any) => {
         display: flex;
         position: relative;
         align-items: center;
-        // justify-content: center;
-        // width: 100%;
-        // height: 100%;
-        // width: v-bind(width);
-        // height: v-bind(height);
         padding: 0;
         overflow: hidden;
-        // border: 1px dashed var(--el-border-color-darker);
-        @apply bg-[#F3F3F3];
+        border: v-bind(noBorder);
         background-color: v-bind(bgColor);
-
-        &:before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          border: v-bind(noBorder);
-          border-radius: v-bind(borderRadius);
-          display: none;
-        }
         &:hover {
           border: v-bind(hoverNoBorder);
           background-color: v-bind(hoverBg);
-          &:before {
-            display: block;
-          }
         }
       }
 
