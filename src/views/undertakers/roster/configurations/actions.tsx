@@ -7,11 +7,13 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
     auth: 'hro_undertakerInfo_join',
     dialog: {
       title: '加入服务商',
+      labelWidth: 120,
       forms: [
         {
           label: '服务商',
           control: 'el-select',
           key: 'spId',
+          column: 20,
           options: {
             url: `core/undertakerInfo/getSpInfoList/${id}`
           },
@@ -93,6 +95,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
   {
     label: '修改手机号',
     dialog: {
+      labelWidth: 160,
       forms: [
         {
           label: '当前手机号码',
@@ -105,6 +108,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
         {
           label: '新手机号码',
           control: 'el-input',
+          column: 20,
           validator: 'phone',
           key: 'mobile'
         }

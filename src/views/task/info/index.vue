@@ -35,6 +35,7 @@
       noDivider
       noBorder="none"
       bgColor="#F3F3F3"
+      hoverBg="#fff7f3"
       :params="params"
       title="批量指派承接人">
       <template #excel-top>

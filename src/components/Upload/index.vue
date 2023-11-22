@@ -360,6 +360,10 @@ const props = defineProps({
     type: String,
     default: '1px dashed var(--el-color-primary)'
   },
+  hoverBg: {
+    type: String,
+    default: null
+  },
   acceptText: {
     type: Boolean,
     default: true
@@ -674,12 +678,13 @@ const uploadError = (err: any) => {
 
         &:hover {
           border: v-bind(hoverNoBorder);
+          background-color: v-bind(hoverBg);
         }
       }
 
       .el-upload-dragger.is-dragover {
         background-color: var(--el-color-primary-light-9);
-        border: 2px dashed var(--el-color-primary) !important;
+        border: 1px dashed var(--el-color-primary) !important;
       }
 
       .upload-image {
