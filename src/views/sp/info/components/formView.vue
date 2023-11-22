@@ -188,7 +188,7 @@
       </el-card>
 
       <!-- <Divider title="办税人信息" /> -->
-      <el-card class="!border-none" header="法人信息" shadow="never">
+      <el-card class="!border-none" header="办税人信息" shadow="never">
         <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item label="办税人姓名：" prop="taxManagerName">
@@ -244,7 +244,7 @@
       <el-card
         :style="{ 'margin-bottom': !route.query.see ? '71px' : '0px' }"
         class="!border-none"
-        header="法人信息"
+        header="资质信息"
         shadow="never">
         <el-row class="paddcus" :gutter="48">
           <el-col

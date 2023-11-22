@@ -19,7 +19,8 @@ export default (contractMap) => [
     label: '合同状态',
     prop: 'state',
     width: '140',
-    value: ({ state }) => contractMap.value.contract_status[state]
+    // value: ({ state }) => contractMap.value.contract_status[state],
+    slot: true
   },
   {
     label: '操作',

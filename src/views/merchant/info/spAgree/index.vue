@@ -7,6 +7,9 @@
     ref="spAgreeRef"
     :staticQuery="staticQuery"
     module="core/merchantServiceAgreement">
+    <template #statusDesc="{ row }">
+      <Tag :type="getType(row.status)" :text="row.statusDesc"></Tag>
+    </template>
     <template #top-bar>
       <el-button
         icon="folder-add"
@@ -40,12 +43,17 @@
 </template>
 
 <script setup lang="ts">
+import { useDict } from '/@/hooks/dict'
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 // import actions from './configurations/tabel-actions'
 const FormDialog = defineAsyncComponent(
   () => import('../components/spAgree_form.vue')
 )
+const { agreement_status } = useDict('agreement_status')
+const getType = (status: string) => {
+  return agreement_status.value.find((item) => item.value === status).color
+}
 const route: any = useRoute()
 const formDialogRef = ref()
 const spAgreeRef = ref()
