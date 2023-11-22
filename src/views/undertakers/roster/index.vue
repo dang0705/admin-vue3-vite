@@ -122,7 +122,7 @@
           <div
             class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
             style="border: 1px solid #ff682659">
-            请按照导入模版填写承接人信息，承接人必须在18岁到70岁范围内。
+            请按照导入模版填写承接人信息，承接人必须在16岁到65岁范围内。
             <a href="/files/批量导入承接人模板.xlsx">
               <el-button icon="download" type="primary" class="ml10">
                 下载模版
