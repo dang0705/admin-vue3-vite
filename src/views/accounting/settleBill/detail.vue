@@ -24,51 +24,61 @@ labelWidth="140px">
       <div class="total_wrapper">
         <div class="total_list">
           <div class="total_item">
-            <img src="/src/assets/images/total_1.png" class="icon" alt="" />
-            <div class="info">
-              <div class="price_box">
-                <div class="price">
-                  {{ thousandthDivision({ number: form.billAmountTotal }) }}
+            <div class="hover-wrapper">
+              <img src="/src/assets/images/total_1.png" class="icon" alt="" />
+              <div class="info">
+                <div class="price_box">
+                  <div class="price">
+                    {{ thousandthDivision({ number: form.billAmountTotal }) }}
+                  </div>
+                  <div class="unit">元</div>
                 </div>
-                <div class="unit">元</div>
+                <div class="info_label">结算总金额</div>
               </div>
-              <div class="info_label">结算总金额</div>
             </div>
           </div>
           <div class="total_item">
-            <img src="/src/assets/images/total_3.png" class="icon" alt="" />
-            <div class="info">
-              <div class="price_box">
-                <div class="price">
-                  {{ thousandthDivision({ number: form.taskAmountTotal }) }}
+            <div class="hover-wrapper">
+              <img src="/src/assets/images/total_3.png" class="icon" alt="" />
+              <div class="info">
+                <div class="price_box">
+                  <div class="price">
+                    {{ thousandthDivision({ number: form.taskAmountTotal }) }}
+                  </div>
+                  <div class="unit">元</div>
                 </div>
-                <div class="unit">元</div>
+                <div class="info_label">任务金额</div>
               </div>
-              <div class="info_label">任务金额</div>
             </div>
           </div>
           <div class="total_item">
-            <img src="/src/assets/images/total_6.png" class="icon" alt="" />
-            <div class="info">
-              <div class="price_box">
-                <div class="price">
-                  {{
-                    thousandthDivision({ number: form.managementAmountTotal })
-                  }}
+            <div class="hover-wrapper">
+              <img src="/src/assets/images/total_6.png" class="icon" alt="" />
+              <div class="info">
+                <div class="price_box">
+                  <div class="price">
+                    {{
+                      thousandthDivision({ number: form.managementAmountTotal })
+                    }}
+                  </div>
+                  <div class="unit">元</div>
                 </div>
-                <div class="unit">元</div>
+                <div class="info_label">管理费</div>
               </div>
-              <div class="info_label">管理费</div>
             </div>
           </div>
           <div class="total_item">
-            <img src="/src/assets/images/total_4.png" class="icon" alt="" />
-            <div class="info">
-              <div class="price_box">
-                <div class="price">{{ form.serviceAmountTotal || '0.00' }}</div>
-                <div class="unit">元</div>
+            <div class="hover-wrapper">
+              <img src="/src/assets/images/total_4.png" class="icon" alt="" />
+              <div class="info">
+                <div class="price_box">
+                  <div class="price">
+                    {{ form.serviceAmountTotal || '0.00' }}
+                  </div>
+                  <div class="unit">元</div>
+                </div>
+                <div class="info_label">平台服务费</div>
               </div>
-              <div class="info_label">平台服务费</div>
             </div>
           </div>
         </div>
@@ -450,21 +460,27 @@ $refreshList(getmerchantInfoData)
       justify-content: center;
       color: rgba(0, 0, 0, 0.5);
       cursor: pointer;
-      position: relative;
-      &:before {
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        content: '';
-        width: 100%;
-        height: 100%;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
-      }
-      &:hover {
+      .hover-wrapper {
+        position: relative;
+        padding: 12px 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &:before {
-          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: none;
+          content: '';
+          width: 100%;
+          height: 100%;
+          box-shadow: 0 0 4px 2px #0000001a;
+          border-radius: 6px;
+        }
+        &:hover {
+          &:before {
+            display: block;
+          }
         }
       }
     }
