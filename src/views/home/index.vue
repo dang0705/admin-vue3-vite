@@ -39,7 +39,7 @@
           :key="item.title"
           :item="item"
           class="h-[132px] section">
-          <h2 class="flex items-center text-[16px]">
+          <h2 class="flex items-center text-lg">
             <SvgIcon
               :name="`iconfont ${item.icon}`"
               :size="18"
@@ -65,7 +65,7 @@
           no-padding
           class="w-full">
           <template #tableTop>
-            <div class="text-[18px] font-bold">当日事项提醒</div>
+            <div class="text-lg font-bold">当日事项提醒</div>
           </template>
           <template #tab-right>
             <span

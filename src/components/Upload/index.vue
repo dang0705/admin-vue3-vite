@@ -25,7 +25,7 @@
             <div
               class="handle-icon"
               @click="editImg(index)"
-              v-if="!self_disabled">
+              v-if="!selfDisabled">
               <el-icon :size="iconSize">
                 <Edit />
               </el-icon>
@@ -40,7 +40,7 @@
             <div
               class="handle-icon"
               @click="deleteImg(index)"
-              v-if="!self_disabled">
+              v-if="!selfDisabled">
               <el-icon :size="iconSize">
                 <Delete />
               </el-icon>
@@ -59,11 +59,11 @@
         :class="[
           'upload',
           'flex-shrink-0',
-          self_disabled ? 'disabled' : '',
+          selfDisabled ? 'disabled' : '',
           drag ? 'no-border' : ''
         ]"
         :multiple="multiple"
-        :disabled="self_disabled"
+        :disabled="selfDisabled"
         :show-file-list="false"
         :http-request="handleHttpUpload"
         :before-upload="beforeUpload"
@@ -112,10 +112,7 @@
               @error="imgLoadError" />
 
             <div class="upload-handle z-50" @click.stop>
-              <div
-                class="handle-icon"
-                @click="editImg(0)"
-                v-if="!self_disabled">
+              <div class="handle-icon" @click="editImg(0)" v-if="!selfDisabled">
                 <el-icon :size="iconSize">
                   <Edit />
                 </el-icon>
@@ -130,7 +127,7 @@
               <div
                 class="handle-icon"
                 @click="deleteImg(0)"
-                v-if="!self_disabled">
+                v-if="!selfDisabled">
                 <el-icon :size="iconSize">
                   <Delete />
                 </el-icon>
@@ -143,7 +140,7 @@
           class="upload-empty"
           :style="props.style"
           v-else-if="
-            self_disabled
+            selfDisabled
               ? false
               : !isImage ||
                 !prefixedUrls?.length ||
@@ -168,11 +165,11 @@
         <template
           #tip
           v-if="
-            !self_disabled &&
+            !selfDisabled &&
             ((multiple && prefixedUrls?.length < limit) || !multiple)
           ">
           <!-- accept.length ? accept.join(',') : new_accept.join(',') -->
-          <span class="text-[#999] text-[14px]" v-if="acceptText">
+          <span class="text-[#999]" v-if="acceptText">
             支持{{
               accept.length
                 ? accept.join(',').replace(/image\//g, '')
@@ -212,7 +209,7 @@
         </template>
         <el-skeleton
           v-if="
-            self_disabled && isImage && prefixedUrls?.length === 0 && !multiple
+            selfDisabled && isImage && prefixedUrls?.length === 0 && !multiple
           "
           style="width: 120px"
           :loading="imgLoading"
@@ -230,7 +227,7 @@
           alt="" />
         <img
           v-if="
-            self_disabled &&
+            selfDisabled &&
             isImage &&
             prefixedUrls?.length === 0 &&
             !multiple &&
@@ -337,7 +334,7 @@ const formContext = inject(formContextKey, void 0)
 // 获取 el-form-item 组件上下文
 const formItemContext = inject(formItemContextKey, void 0)
 // 判断是否禁用上传和删除
-const self_disabled = computed(() => props.disabled || formContext?.disabled)
+const selfDisabled = computed(() => props.disabled || formContext?.disabled)
 // 文件名称
 
 /**
@@ -394,7 +391,6 @@ const value = computed(() =>
 watch(
   () => props.modelValue,
   (value) => {
-    console.log('value', value)
     if (!value || value.length === 0) {
       imgLoading.value = false
     }
