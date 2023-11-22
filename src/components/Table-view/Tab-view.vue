@@ -185,7 +185,7 @@ const slideDistance = ref(16)
 const slideWidth = ref(0)
 
 const getTabPadding = (el: Element, padding: string) =>
-  getComputedStyle(el)[padding].replace('px', '')
+  getComputedStyle(el)?.[padding].replace('px', '')
 
 const currentTab = computed(() => tabPanels.value[currentIndex.value])
 interface Move {

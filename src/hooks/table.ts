@@ -276,6 +276,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     }
     return {
       textAlign,
+      fontSize: '12px',
       'height': '48px'
     }
   }
