@@ -15,7 +15,6 @@
       :columns="24"
       :forms="forms"
       :on-submit="onSubmit"
-      button-position="center"
       vertical>
       <template v-for="(_, slot) in $slots" #[slot]>
         <slot :name="slot" v-bind="{ formData }" />
@@ -26,7 +25,7 @@
             <label v-text="`${mainLabel}：`" />
           </template>
           <el-transfer
-            class="w-full flex justify-between items-center"
+            class="w-full flex justify-between items-center mb-[12px]"
             v-model="selected"
             filterable
             :filter-method="filterMethod"
@@ -89,7 +88,7 @@ const props = defineProps({
   },
   buttonTexts: {
     type: Array,
-    default: () => ['移出选中', '授予选中']
+    default: () => []
   },
   renderFunc: {
     type: Function,
@@ -242,9 +241,11 @@ defineExpose({
 
 <style scoped lang="scss">
 ::v-deep(.el-transfer__buttons) {
+  width: 40px;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 0 60px;
   button {
     margin: 10px 0 0 0;
     width: 100%;
@@ -255,8 +256,16 @@ defineExpose({
     margin-left: 0 !important;
   }
 }
+::v-deep(.is-guttered) {
+  padding: 0 60px 0 60px !important;
+}
+::v-deep(.el-button.is-disabled) {
+  width: 35px;
+  background: #f6f6f6;
+  border-color: #cecece;
+}
 ::v-deep(.el-transfer-panel) {
-  width: fit-content;
+  // width: fit-content;
 }
 ::v-deep(.el-checkbox) {
   margin-right: 0;

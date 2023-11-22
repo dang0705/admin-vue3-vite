@@ -44,7 +44,8 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           state: {
             refresh: 1
           }
-        }
+        },
+        icon: 'icon-kelong'
       },
       {
         label: '审核',
@@ -99,7 +100,8 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
           params: {
             taskId: id
           }
-        }
+        },
+        icon: 'icon-shenhe'
       },
       {
         label: '指派承接人',
@@ -138,7 +140,8 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
         action: {
           handler: taskDown,
           params: id
-        }
+        },
+        icon: 'icon-a-xiajia1'
       }
     ]
   }
