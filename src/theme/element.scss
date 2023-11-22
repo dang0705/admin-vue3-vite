@@ -172,12 +172,17 @@
 		ul{
 			overflow: unset;
 			width: 100%;
+			min-width: unset;
+			padding: 0;
 			li{
 				background-image: unset !important;
 				height: 26px !important;
 				width: 100%;
 				&:hover{
-					background-color: #202637 !important;
+					width: 140px;
+					height: 26px;
+					background-color:rgba(255,255,255,0.1) !important;
+					border-radius: 4px;
 				}
 				&:after{
 					content:'';

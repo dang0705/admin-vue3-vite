@@ -92,7 +92,12 @@
                 {{ row.title }}
               </div>
               <div
-                :class="['mr-auto', 'ml-[12px]', 'text-[12px]']"
+                :class="[
+                  'mr-auto',
+                  'ml-[12px]',
+                  'text-[12px]',
+                  { 'opacity-[0.5]': row.readStatus === '1' }
+                ]"
                 v-text="row.content" />
               <div class="h-[52px] relative py-[10px] box-border">
                 <div
@@ -105,7 +110,6 @@
                   v-show="!row.show">
                   <el-tooltip
                     content="设为已读"
-                    :teleported="false"
                     :show-after="300"
                     placement="top"
                     v-if="row.readStatus === '0'">
@@ -118,7 +122,6 @@
                   </el-tooltip>
                   <el-tooltip
                     content="设为未读"
-                    :teleported="false"
                     :show-after="300"
                     placement="top"
                     v-if="row.readStatus === '1'">
@@ -129,11 +132,7 @@
                       class="mr-[18px] cursor-pointer"
                       @click.stop="readMarkUnread(row.id, refresh)" />
                   </el-tooltip>
-                  <el-tooltip
-                    :teleported="false"
-                    :show-after="300"
-                    content="删除"
-                    placement="top">
+                  <el-tooltip :show-after="300" content="删除" placement="top">
                     <SvgIcon
                       name="iconfont icon-shanchu"
                       :size="13"
