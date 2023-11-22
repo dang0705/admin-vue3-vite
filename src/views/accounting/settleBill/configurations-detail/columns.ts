@@ -1,18 +1,13 @@
 export const serviceIndexThead = [
   {
-    prop: 'settleBillName',
-    label: '账单名称',
-    minWidth: 100
-  },
-  {
-    prop: 'billNumber',
-    label: '账单编号',
-    minWidth: 100
-  },
-  {
     prop: 'billRecordNum',
     label: '结算单编号',
     minWidth: 100
+  },
+  {
+    prop: 'serviceAmount',
+    label: '结算金额(元)',
+    minWidth: 120
   },
   {
     prop: 'paymentBankName',
@@ -28,11 +23,6 @@ export const serviceIndexThead = [
     prop: 'accountNameRecipient',
     label: '收款方户名',
     minWidth: 100
-  },
-  {
-    prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 120
   },
 
   {
@@ -56,19 +46,24 @@ export const serviceIndexThead = [
 
 export const taskIndexThead = [
   {
-    prop: 'settleBillName',
-    label: '账单名称',
-    minWidth: 100
-  },
-  {
-    prop: 'billNumber',
-    label: '账单编号',
-    minWidth: 100
-  },
-  {
     prop: 'billRecordNum',
     label: '结算单编号',
     minWidth: 100
+  },
+  {
+    prop: 'serviceAmount',
+    label: '结算金额(元)',
+    minWidth: 120
+  },
+  {
+    prop: 'taskAmount',
+    label: '任务承揽费(元)',
+    minWidth: 150
+  },
+  {
+    prop: 'managementAmount',
+    label: '管理费金额(元)',
+    minWidth: 120
   },
   {
     prop: 'paymentBankName',
@@ -85,21 +80,7 @@ export const taskIndexThead = [
     label: '收款方户名',
     minWidth: 100
   },
-  {
-    prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 120
-  },
-  {
-    prop: 'taskAmount',
-    label: '任务承揽费(元)',
-    minWidth: 120
-  },
-  {
-    prop: 'managementAmount',
-    label: '管理费金额(元)',
-    minWidth: 120
-  },
+
   {
     prop: 'payTime',
     label: '付款时间',

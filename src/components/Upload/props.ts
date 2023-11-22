@@ -2,7 +2,7 @@ export default {
   modelValue: {
     type: [Array, null],
     required: true,
-    default: null
+    default: -1
   },
   uploadFileUrl: {
     type: String,

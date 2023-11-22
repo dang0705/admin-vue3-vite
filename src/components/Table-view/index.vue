@@ -94,7 +94,7 @@
               type="primary">
               批量导出
             </el-button>
-            <div class="flex items-center">
+            <div class="flex items-center w-[100%]">
               <slot
                 name="top-bar"
                 v-bind="{

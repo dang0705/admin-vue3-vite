@@ -48,6 +48,16 @@
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 import actions from './configurations/tabel-actions'
+import Array2Object from '/@/utils/array-2-object'
+const batchMap = Array2Object({
+  dic: ['yes_no_type', 'settle_status', 'payment_status']
+})
+interface BatchUploadRecordPage {
+  isSignServiceContract: number
+  isBankFourEssentialFactor: number
+  billStatus: number
+  paymentStatus: number
+}
 const route: any = useRoute()
 const forms = computed(() => {
   if (!route.query.id) {
@@ -68,20 +78,26 @@ const forms = computed(() => {
   }
 })
 const newColumns = computed(() => {
-  return columns.map((item) => {
-    if (
-      route.query.id &&
-      (item.prop === 'billName' || item.prop === 'billNumber')
-    ) {
-      return {
-        ...item,
-        slot: false
+  let list = [] as Array
+  columns.forEach((item: any) => {
+    if (route.query.id) {
+      if (item.prop !== 'billName' && item.prop !== 'billNumber') {
+        list.push(item)
       }
     } else {
-      return item
+      if (item.prop === 'billName' || item.prop === 'billNumber') {
+        list.push({
+          ...item,
+          slot: true
+        })
+      } else {
+        list.push(item)
+      }
     }
   })
+  return list
 })
+
 const staticQuery = {
   settleBillId: route.query.id
 }

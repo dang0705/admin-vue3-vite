@@ -290,6 +290,8 @@ const imgLoading = ref(true)
 const imgFail = ref(false)
 const isImage = ref(props.fileType === 'image')
 const imgLoadCom = () => {
+  console.log('load')
+
   imgFail.value = false
   imgLoading.value = false
 }
@@ -597,8 +599,8 @@ const uploadError = (err: any) => {
 
       .el-upload-dragger {
         display: flex;
+        position: relative;
         align-items: center;
-        border: v-bind(noBorder);
         // justify-content: center;
         // width: 100%;
         // height: 100%;
@@ -607,13 +609,26 @@ const uploadError = (err: any) => {
         padding: 0;
         overflow: hidden;
         // border: 1px dashed var(--el-border-color-darker);
-        border-radius: v-bind(borderRadius);
         @apply bg-[#F3F3F3];
         background-color: v-bind(bgColor);
 
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          border: v-bind(noBorder);
+          border-radius: v-bind(borderRadius);
+          display: none;
+        }
         &:hover {
           border: v-bind(hoverNoBorder);
           background-color: v-bind(hoverBg);
+          &:before {
+            display: block;
+          }
         }
       }
 
