@@ -117,6 +117,7 @@ app.config.globalProperties = {
   parseTime,
   HOST,
   BASE,
+  TOKEN,
   baseURL: import.meta.env.VITE_API_URL
 }
 

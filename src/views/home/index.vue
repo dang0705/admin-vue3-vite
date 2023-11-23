@@ -99,7 +99,7 @@
                   { 'opacity-[0.5]': row.readStatus === '1' }
                 ]"
                 v-text="row.content" />
-              <div class="h-[52px] relative py-[10px] box-border">
+              <div class="h-[52px] relative py-[10px] box-border flex-shrink-0">
                 <div
                   v-show="row.show"
                   class="text-[12px] h-full text-[#999] cursor-pointer text-right">

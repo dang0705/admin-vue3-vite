@@ -11,6 +11,7 @@ declare global {
   const BASE: typeof import('../../@/configuration/base-url')['default']
   const EffectScope: typeof import('vue')['EffectScope']
   const HOST: typeof import('../../@/configuration/host')['default']
+  const TOKEN: typeof import('../../@/configuration/token')['default']
   const __isDev: typeof import('../../@/configuration/env')['default']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']
