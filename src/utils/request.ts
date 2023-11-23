@@ -101,7 +101,6 @@ const downloadUrlRegex = /^\/gen\/generator\/download/
 const exportUrlRegex = /export/
 const handleResponse = (response: AxiosResponse<any>) => {
   const { config } = response
-  console.log('config', response)
   const isBlob = config.responseType?.toLowerCase() === 'blob'
   if (
     ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string) ||

@@ -12,36 +12,38 @@
             class="total_item"
             v-for="(item, index) in otherInfo.countResp"
             :key="index">
-            <img
-              v-if="item.label === '发放笔数'"
-              src="../../../assets/images/total_2.png"
-              alt=""
-              class="w-[38px] pic" />
-            <img
-              v-else-if="item.label === '发放总额'"
-              src="../../../assets/images/total_3.png"
-              alt=""
-              class="w-[38px] pic" />
-            <img
-              v-else-if="item.label === '商户数量'"
-              src="../../../assets/images/total_5.png"
-              alt=""
-              class="w-[38px] pic" />
-            <img
-              v-else-if="item.label === '开票总额'"
-              src="../../../assets/images/total_6.png"
-              alt=""
-              class="w-[38px] pic" />
-            <div class="info ml-3">
-              <div class="price_box">
-                <div class="price">
-                  <el-statistic :value="item.value" />
+            <div class="hover-wrapper flex items-center">
+              <img
+                v-if="item.label === '发放笔数'"
+                src="../../../assets/images/total_2.png"
+                alt=""
+                class="w-[38px] pic" />
+              <img
+                v-else-if="item.label === '发放总额'"
+                src="../../../assets/images/total_3.png"
+                alt=""
+                class="w-[38px] pic" />
+              <img
+                v-else-if="item.label === '商户数量'"
+                src="../../../assets/images/total_5.png"
+                alt=""
+                class="w-[38px] pic" />
+              <img
+                v-else-if="item.label === '开票总额'"
+                src="../../../assets/images/total_6.png"
+                alt=""
+                class="w-[38px] pic" />
+              <div class="info ml-3">
+                <div class="price_box">
+                  <div class="price">
+                    <el-statistic :value="item.value" />
+                  </div>
+                  <div class="unit" v-if="unitMaps[item.label]">
+                    {{ unitMaps[item.label] }}
+                  </div>
                 </div>
-                <div class="unit" v-if="unitMaps[item.label]">
-                  {{ unitMaps[item.label] }}
-                </div>
+                <div class="info_label">{{ item.label }}</div>
               </div>
-              <div class="info_label">{{ item.label }}</div>
             </div>
           </div>
         </div>
@@ -208,9 +210,7 @@ export default {
   display: flex;
   flex: 1;
   padding: 30px 0;
-  .pic {
-    transform: translateY(15px);
-  }
+
   .total_item {
     width: 33.33%;
     display: flex;
@@ -218,6 +218,33 @@ export default {
     justify-content: center;
     color: rgba(0, 0, 0, 0.5);
     min-width: 100px;
+    .hover-wrapper {
+      position: relative;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        content: '';
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 0 4px 2px #0000001a;
+        border-radius: 6px;
+      }
+      &:hover {
+        &:before {
+          display: block;
+        }
+      }
+      .pic {
+        //transform: translateY(15px);
+        flex-shrink: 0;
+      }
+    }
   }
   .icon {
     width: 38px;

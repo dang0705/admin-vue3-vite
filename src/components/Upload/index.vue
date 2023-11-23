@@ -11,7 +11,7 @@
             @load="imgLoadCom"
             @error="imgLoadError"
             :style="{ height, width }"
-            :src="image"
+            :src="`${image}${TOKEN}`"
             :initial-index="index"
             :zoom-rate="1.2"
             :preview-src-list="prefixedUrls"
@@ -97,7 +97,7 @@
               </template>
             </el-skeleton>
             <img
-              :src="prefixedUrls[0]"
+              :src="`${prefixedUrls[0]}${TOKEN}`"
               :class="[
                 'absolute',
                 'left-0',
@@ -111,7 +111,7 @@
               @load="imgLoadCom"
               @error="imgLoadError" />
 
-            <div class="upload-handle z-50" @click.stop>
+            <div class="upload-handle z-[1]" @click.stop>
               <div class="handle-icon" @click="editImg(0)" v-if="!selfDisabled">
                 <el-icon :size="iconSize">
                   <Edit />
@@ -321,8 +321,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-      ? IMAGE_TYPES
-      : FILE_TYPES
+    ? IMAGE_TYPES
+    : FILE_TYPES
 )
 
 // 查看图片
@@ -491,8 +491,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-      ? LIMIT.compression
-      : LIMIT.file
+    ? LIMIT.compression
+    : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value
