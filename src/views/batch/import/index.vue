@@ -16,10 +16,8 @@
       v-model="show"
       disabled
       vertical
-      button-position="center"
       :save="false"
       :title="`【 ${currentTitle} 】 导入详情`"
-      :show-cancel="false"
       :label-width="dialogFormLabelWidth"
       :forms="forms"
       :columns="24"
@@ -59,11 +57,10 @@
 
 <script setup lang="ts">
 import { getObj } from '/@/api/core/batchUploadRecord'
-import columns from '/@/views/batch/import/columns'
-import conditionForms from '/@/views/batch/import/condition-forms'
-import dynamicForms from '/@/views/batch/import/dynamic-forms'
-import { State } from '/@/views/batch/import/enums'
-// 筛选表单
+import { State } from '/@/views/batch/import/configurations/enums'
+import columns from '/@/views/batch/import/configurations/columns'
+import conditionForms from '/@/views/batch/import/configurations/condition-forms'
+import dynamicForms from '/@/views/batch/import/configurations/dynamic-forms'
 
 const dialogFormLabelWidth = ref(160)
 const failListColumns = ref<any[]>([])
