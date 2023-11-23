@@ -1,9 +1,5 @@
 <template>
   <div class="px-[20px]">
-    <!--    <h1 class="text-[20px] flex items-center my-[18px]">
-      &lt;!&ndash; <img :src="clap" alt="" class="w-[30px] mr-2" />
-      欢迎回来，{{ userName }} &ndash;&gt;
-    </h1>-->
     <ul id="dashboard" class="flex my-[18px] mx-auto justify-center">
       <li class="flex flex-col flex-shrink-0 w-[320px]">
         <div
@@ -49,148 +45,27 @@
           </h2>
         </Column>
       </li>
-
       <!--      Messages here-->
       <li
         class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)] overflow-hidden">
-        <Table-view
-          module="docs/homeMessage.ts"
-          :columns="columns"
-          :border="false"
-          :isShowTopBar="false"
-          :header="false"
-          :size="4"
-          max-height="250"
+        <Message
+          has-more
+          :table-height="250"
           no-pagination
           no-padding
-          class="w-full">
-          <template #tableTop>
-            <div class="text-lg font-bold">当日事项提醒</div>
-          </template>
-          <template #tab-right>
-            <span
-              class="text-[#999] cursor-pointer hover:text-primary hover:underline"
-              @click="$router.push({ path: '/message/index' })">
-              更多 &gt;&gt;
-            </span>
-          </template>
-          <template #content="{ row, refresh }">
-            <div
-              :class="[
-                'flex',
-                'justify-between',
-                'cursor-pointer',
-                'items-center',
-                'text-[12px]'
-              ]"
-              @mouseenter="row.show = false"
-              @mouseleave="row.show = true"
-              @click="goDetail(row, refresh)">
-              <div
-                class="rounded-[3px] relative text-[12px] flex flex-shrink-0 justify-center items-center w-fit h-[20px] px-[6px]"
-                :style="bgc(row.noticeType)">
-                {{ row.title }}
-              </div>
-              <div
-                :class="[
-                  'mr-auto',
-                  'ml-[12px]',
-                  'text-[12px]',
-                  { 'opacity-[0.5]': row.readStatus === '1' }
-                ]"
-                v-text="row.content" />
-              <div class="h-[52px] relative py-[10px] box-border flex-shrink-0">
-                <div
-                  v-show="row.show"
-                  class="text-[12px] h-full text-[#999] cursor-pointer text-right">
-                  {{ row.createTime }}
-                </div>
-                <div
-                  class="absolute h-full flex justify-end w-full"
-                  v-show="!row.show">
-                  <el-tooltip
-                    content="设为已读"
-                    :show-after="300"
-                    placement="top"
-                    v-if="row.readStatus === '0'">
-                    <SvgIcon
-                      name="iconfont icon-biaojiweiyidu"
-                      :size="13"
-                      color="#000"
-                      class="mr-[18px] cursor-pointer"
-                      @click="readMarkOne(row.id, refresh)" />
-                  </el-tooltip>
-                  <el-tooltip
-                    content="设为未读"
-                    :show-after="300"
-                    placement="top"
-                    v-if="row.readStatus === '1'">
-                    <SvgIcon
-                      name="iconfont icon-biaojiweiweidu"
-                      :size="13"
-                      color="#000"
-                      class="mr-[18px] cursor-pointer"
-                      @click.stop="readMarkUnread(row.id, refresh)" />
-                  </el-tooltip>
-                  <el-tooltip :show-after="300" content="删除" placement="top">
-                    <SvgIcon
-                      name="iconfont icon-shanchu"
-                      :size="13"
-                      color="#000"
-                      class="cursor-pointer"
-                      @click.stop="delMessage(row.id, refresh)" />
-                  </el-tooltip>
-                </div>
-              </div>
-            </div>
-          </template>
-          <template #empty>
-            <div
-              class="h-[250px] flex flex-col justify-center items-center text-black text-[14px]">
-              <img src="/src/assets/images/home-message-no-data.webp" />
-              <p>您暂无新的事项提醒</p>
-            </div>
-          </template>
-        </Table-view>
-        <!--        <div v-else class="flex justify-center items-center">
-           <img src="">
-        </div>-->
+          module="docs/homeMessage.ts" />
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useUserInfo } from '/@/stores/userInfo'
-import { fetchList } from '/@/api/docs/message'
 import Column from '/@/views/home/components/column.vue'
-import bgc from '/@/configuration/message-tag-definition'
-import { deleteObj, readMark, readUnread } from '/@/api/docs/message'
-import qs from 'qs'
+import Message from '/@/views/message/component/index.vue'
 
 const $router = useRouter()
 
 defineOptions({ name: 'router.home' })
-let remainDate = ref([])
-const messageLoading = ref(false)
-const getMessages = async () => {
-  try {
-    messageLoading.value = true
-    remainDate.value = await fetchList()
-  } catch (e) {
-  } finally {
-    messageLoading.value = false
-  }
-}
-
-const columns = [
-  {
-    prop: 'content',
-    slot: true,
-    align: 'left',
-    showOverflowTooltip: false
-  }
-]
 
 const routes = ref([
   {
@@ -226,11 +101,6 @@ const routes = ref([
     iconSize: 22
   }
 ])
-
-getMessages()
-
-const { userInfos } = storeToRefs(useUserInfo())
-const userName = userInfos.value.user.name
 
 const dashboardData = [
   {
@@ -282,35 +152,8 @@ const dashboardData = [
     }
   }
 ]
-
-const delMessage = async (id: string, refresh: any) => {
-  await deleteObj([id])
-  refresh()
-}
-
-const readMarkOne = async (id: string, refresh: any) => {
-  await readMark([id])
-  refresh()
-}
-
-const readMarkUnread = async (id: string, refresh: any) => {
-  await readUnread(id)
-  refresh()
-}
-
-const goDetail = async ({ id, url }, refresh: any) => {
-  const [path, query] = url.split('?')
-  const { attributeName, attributeVal } = qs.parse(query)
-  $router.push({
-    path,
-    state: { tabValue: attributeVal, tabKey: attributeName }
-  })
-  await readMark([id])
-  refresh()
-}
-const router = useRouter()
 const go2Module = (route, index) => {
-  router.push({ path: route })
+  $router.push({ path: route })
   routes.value[index].hover = false
 }
 

@@ -299,13 +299,13 @@ const refreshDataList = () => {
   }
 
   .unit {
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     vertical-align: baseline;
     display: inline-block;
   }
 
   .info_label {
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
   }
 }
 

@@ -509,7 +509,7 @@ defineExpose({
           color: var(--next-color-white);
 
           .personal-recommend-msg {
-            font-size: 12px;
+            font-size: var(--el-font-size-base);
             margin-top: 10px;
           }
         }

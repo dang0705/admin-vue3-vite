@@ -33,7 +33,7 @@
           v-else
           type="primary"
           :underline="false"
-          style="font-size: 12px; vertical-align: baseline"
+          style="font-size: var(--el-font-size-base); vertical-align: baseline"
           @click="downExcelTemp">
           {{ $t('excel.downloadTemplate') }}
         </el-link>

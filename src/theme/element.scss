@@ -13,12 +13,12 @@
 .el-button i.fa,
 .el-button--default i.iconfont,
 .el-button--default i.fa {
-	font-size: 14px !important;
+	font-size: var(--el-font-size-medium) !important;
 }
 
 .el-button--small i.iconfont,
 .el-button--small i.fa {
-	font-size: 12px !important;
+	font-size: var(--el-font-size-base) !important;
 }
 .el-button [class*='el-icon'] + span {
 	margin-left: 6px;
@@ -311,7 +311,7 @@
 // }
 
 .el-step__title {
-	font-size: 14px;
+	font-size: var(--el-font-size-medium);
 }
 
 /* Dialog 对话框
@@ -331,6 +331,7 @@
 			margin: 0 auto !important;
 			position: absolute;
 			border-radius: 6px;
+			--el-dialog-width: 600px;
 
 			&__header{
 				position: relative;
@@ -376,7 +377,7 @@
 // 表格修改默认颜色
 .el-table {
 	color: #000000;
-  font-size: 12px;
+  font-size: var(--el-font-size-base);
 	.el-button.is-text {
 		padding: 0;
 	}
@@ -552,7 +553,7 @@ input[type='number'] {
 
 
 .el-form-item--default {
-  --font-size: 12px;
+  --font-size: var(--el-font-size-base);
   --el-form-label-font-size: var(--font-size);
 }
 

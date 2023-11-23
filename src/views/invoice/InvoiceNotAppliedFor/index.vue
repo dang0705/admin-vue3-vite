@@ -12,7 +12,7 @@
     <template #top-bar>
       <el-button
         type="primary"
-        style="margin-right: 24px"
+        style="margin: 0 24px 0 10px"
         @click="applyfor('0', 'merge')"
         v-auth="'finance_invoiceRecordNot_applyCombine'"
         :disabled="!selectObjs.length">
@@ -52,12 +52,12 @@
         financeType === 'applyfor'
           ? '申请开票'
           : financeType === 'open'
-          ? '开具发票'
-          : '申请合并开票'
+            ? '开具发票'
+            : '申请合并开票'
       "
       submitButtonText="提交"
-      width="80%"
-      :label-width="160"
+      width="1000px"
+      :label-width="130"
       :forms="forms"
       :columns="12"
       v-model:form-data="dialogFormData"
@@ -105,59 +105,13 @@
             <el-radio :label="0" size="large">手动填写</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          label="邮寄地址："
-          prop="postAddress"
-          :rules="[
-            {
-              required: dialogFormData.radioAddress === 0,
-              message: '邮寄地址不能为空',
-              trigger: 'blur'
-            }
-          ]">
-          <InputPlus
-            v-model="dialogFormData.postAddress"
-            :disabled="dialogFormData.radioAddress === 1" />
-        </el-form-item>
-        <el-form-item
-          label="收件人："
-          prop="postUsername"
-          :rules="[
-            {
-              required: dialogFormData.radioAddress === 0,
-              message: '收件人不能为空',
-              trigger: 'blur'
-            }
-          ]">
-          <InputPlus
-            v-model="dialogFormData.postUsername"
-            :disabled="dialogFormData.radioAddress === 1" />
-        </el-form-item>
-        <el-form-item
-          label="收件人手机号："
-          prop="postPhone"
-          :rules="[
-            {
-              required: dialogFormData.radioAddress === 0,
-              message: '收件人手机号不能为空',
-              trigger: 'blur'
-            },
-            {
-              validator: rule.mobile,
-              trigger: 'blur'
-            }
-          ]">
-          <InputPlus
-            v-model="dialogFormData.postPhone"
-            :disabled="dialogFormData.radioAddress === 1"
-            maxlength="11" />
-        </el-form-item>
       </template>
     </Dialog>
   </Table-view>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { useMessage } from '/@/hooks/message'
 import { rule } from '/@/utils/validate'
 import {
@@ -277,10 +231,26 @@ const conditionForms = [
 
 const forms = computed(() => [
   {
+    slot: true,
+    title: {
+      html: '基本信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
+    column: 24
+  },
+  {
     control: 'InputPlus',
     key: 'merchantName',
     label: '开票抬头',
-    column: 24,
+    props: {
+      disabled: true
+    }
+  },
+  {
+    control: 'InputPlus',
+    key: 'bankName',
+    label: '开户行',
     props: {
       disabled: true
     }
@@ -296,16 +266,16 @@ const forms = computed(() => [
   },
   {
     control: 'InputPlus',
-    key: 'enterpriseMailbox',
-    label: '企业邮箱',
+    key: 'bankNo',
+    label: '银行账号',
     props: {
       disabled: true
     }
   },
   {
     control: 'InputPlus',
-    key: 'enterpriseAddress',
-    label: '企业地址',
+    key: 'enterpriseMailbox',
+    label: '企业邮箱',
     props: {
       disabled: true
     }
@@ -320,19 +290,20 @@ const forms = computed(() => [
   },
   {
     control: 'InputPlus',
-    key: 'bankName',
-    label: '开户行',
+    key: 'enterpriseAddress',
+    label: '企业地址',
     props: {
       disabled: true
     }
   },
   {
-    control: 'InputPlus',
-    key: 'bankNo',
-    label: '银行账号',
-    props: {
-      disabled: true
-    }
+    slot: true,
+    title: {
+      html: '开票信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
+    column: 24
   },
   ...(financeType.value === 'open'
     ? [
@@ -364,22 +335,6 @@ const forms = computed(() => [
           key: 'serviceAmount',
           column: 12
         }
-        // {
-        // 	control: 'InputPlus',
-        // 	key: 'settleBillRecordId',
-        // 	label: '结算单编号',
-        // 	props: {
-        // 		disabled: true,
-        // 	},
-        // },
-        // {
-        // 	control: 'InputPlus',
-        // 	key: 'serviceAmount',
-        // 	label: '结算金额',
-        // 	props: {
-        // 		disabled: true,
-        // 	},
-        // },
       ]),
   ...(financeType.value === 'merge'
     ? [
@@ -419,8 +374,13 @@ const forms = computed(() => [
           key: 'invoiceFiles',
           label: '发票图片',
           column: 24,
+          value: [],
           props: {
             type: '60'
+            // noBorder: 'none',
+            // hoverNoBorder: 'none',
+            // hoverBg: '#fff7f3',
+            // style: "{ width: '173px', height: '140px' }"
           },
           rules: [
             {
@@ -435,8 +395,51 @@ const forms = computed(() => [
     : []),
   {
     slot: true,
+    title: {
+      html: '邮寄信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
+    column: 24
+  },
+  {
+    slot: true,
     key: 'address',
     column: 24
+  },
+  {
+    control: 'InputPlus',
+    key: 'postUsername',
+    label: '收件人',
+    props: {
+      disabled: dialogFormData.value.radioAddress === 1
+    },
+    rules: [
+      {
+        required: dialogFormData.value.radioAddress === 0,
+        message: '收件人不能为空',
+        trigger: 'blur'
+      }
+    ]
+  },
+  {
+    control: 'InputPlus',
+    key: 'postPhone',
+    label: '收件人手机号',
+    props: {
+      disabled: dialogFormData.value.radioAddress === 1
+    },
+    rules: [
+      {
+        required: dialogFormData.value.radioAddress === 0,
+        message: '收件人手机号不能为空',
+        trigger: 'blur'
+      },
+      {
+        validator: rule.mobile,
+        trigger: 'blur'
+      }
+    ]
   },
   ...(financeType.value === 'open'
     ? [
@@ -458,7 +461,22 @@ const forms = computed(() => [
           ]
         }
       ]
-    : [])
+    : []),
+  {
+    control: 'InputPlus',
+    key: 'postAddress',
+    label: '邮寄地址',
+    props: {
+      disabled: dialogFormData.value.radioAddress === 1
+    },
+    rules: [
+      {
+        required: dialogFormData.value.radioAddress === 0,
+        message: '邮寄地址不能为空',
+        trigger: 'blur'
+      }
+    ]
+  }
 ])
 
 const radioChange = () => {

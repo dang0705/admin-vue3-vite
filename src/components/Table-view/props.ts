@@ -106,7 +106,7 @@ export default {
     default: () => []
   },
   size: {
-    type: Number,
+    type: [Number, String],
     default: 0
   },
   isTab: {

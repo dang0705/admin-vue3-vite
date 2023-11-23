@@ -57,7 +57,7 @@ export interface Pagination {
   // 当前页码，默认为1
   current?: number
   // 每页显示条数，默认为10
-  size?: number
+  size?: number | string
   // 总条数，默认为0
   total?: number
   // 每页显示条数选择器的选项数组，默认为[10,20,30,40]
@@ -324,7 +324,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     }
     return {
       textAlign,
-      fontSize: '12px',
+      fontSize: 'var(--el-font-size-base)',
       'height': '48px'
     }
   }
@@ -334,7 +334,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
       return {
         textAlign: label?.includes('(元)') ? 'right' : 'left',
         height: '40px',
-        fontSize: '12px',
+        fontSize: 'var(--el-font-size-base)',
         // background: 'var(--table-header-bg-color)',
         background: '#f1f1f1',
         color: 'var(--el-text-color-primary)'

@@ -151,10 +151,10 @@ const handleAction = async ({
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
       : handler
-        ? helpers.isArray(params)
-          ? await handler(...(params as []))
-          : await handler(params)
-        : (() => {})()
+      ? helpers.isArray(params)
+        ? await handler(...(params as []))
+        : await handler(params)
+      : (() => {})()
     if (shouldRefresh) {
       refresh && refresh()
       useMessage().success(successText)

@@ -152,7 +152,7 @@ onBeforeRouteUpdate((to) => {
   }
 
   .layout-navbars-breadcrumb-iconfont {
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     margin-right: 5px;
   }
 

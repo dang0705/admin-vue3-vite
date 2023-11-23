@@ -632,7 +632,7 @@ const uploadError = (err: any) => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: var(--el-font-size-base);
         line-height: 30px;
         color: var(--el-color-info);
 
