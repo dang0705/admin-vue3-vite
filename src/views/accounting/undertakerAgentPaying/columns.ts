@@ -94,8 +94,9 @@ export default [
   {
     prop: 'payStatus',
     label: '支付状态',
-    slot: true,
-    'min-width': 150
+    // slot: true,
+    // 'min-width': 150
+    options: 'undertaker_agent_paying_pay_status'
   },
   // {
   //   prop: 'taskUndertakerId',

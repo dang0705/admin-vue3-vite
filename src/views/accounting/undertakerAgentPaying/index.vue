@@ -26,9 +26,9 @@
         全部支付
       </el-button>
     </template>
-    <template #payStatus="{ row: { payStatus } }">
+    <!-- <template #payStatus="{ row: { payStatus } }">
       {{ playStatusMapping['undertaker_agent_paying_pay_status'][payStatus] }}
-    </template>
+    </template> -->
     <template #actions="{ row }">
       <el-button
         v-if="

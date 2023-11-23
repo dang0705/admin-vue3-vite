@@ -74,9 +74,9 @@ const columns = [
     'min-width': 180
   },
   {
-    prop: 'statusDesc',
+    prop: 'status',
     label: '状态',
-    'min-width': 180
+    options: 'task_status'
   },
   {
     label: '操作',

@@ -120,9 +120,10 @@ const columns = [
     'min-width': 150
   },
   {
-    prop: 'statusDesc',
+    prop: 'status',
     label: '发票状态',
-    'min-width': 100
+    options: 'invoice_status'
+    // 'min-width': 100
   },
   {
     prop: 'reason',

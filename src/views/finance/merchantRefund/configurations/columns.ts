@@ -28,9 +28,10 @@ export default [
   {
     prop: 'status',
     label: '状态',
-    'min-width': 160,
-    value: ({ status }: BatchUploadRecordPage) =>
-      batchMap.value.refund_status[status]
+    options: 'refund_status'
+    // 'min-width': 160,
+    // value: ({ status }: BatchUploadRecordPage) =>
+    //   batchMap.value.refund_status[status]
   },
   {
     prop: 'auditPostscript',

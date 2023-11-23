@@ -85,7 +85,7 @@ const columns = [
     slot: true
   },
   {
-    prop: 'id',
+    prop: 'billRecordNum',
     label: '结算单编号',
     minWidth: 150
   },
@@ -160,7 +160,7 @@ const conditionForms = [
   },
   {
     control: 'InputPlus',
-    key: 'settleBillName',
+    key: 'billName',
     label: '账单名称'
   },
   {
@@ -170,7 +170,7 @@ const conditionForms = [
   },
   {
     control: 'InputPlus',
-    key: 'id',
+    key: 'recordNum',
     label: '结算单编号'
   },
   {
@@ -183,7 +183,7 @@ const conditionForms = [
   },
   {
     control: 'el-select',
-    key: 'status',
+    key: 'billStatus',
     label: '结算状态',
     options: 'settle_status'
   },
