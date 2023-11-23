@@ -6,7 +6,7 @@
     action-body="账单"
     module="core/settleBill.ts"
     labelWidth="120px">
-    <template #top-bar="{ otherInfo, selectObjs }">
+    <template #top-bar="{ otherInfo, selectObjs, downParams }">
       <el-button
         v-auth="'core_settleBill_add'"
         type="primary"
@@ -18,7 +18,7 @@
         v-auth="'core_settleBill_batch_export'"
         type="primary"
         class="ml10"
-        @click="handleBtn">
+        @click="exportExcel('/core/settleBill/export', downParams)">
         批量导出账单
       </el-button>
       <el-button
@@ -27,7 +27,9 @@
         type="primary"
         class="ml10"
         :disabled="selectObjs.length === 0"
-        @click="handleBtn">
+        @click="
+          exportExcel('/core/settleBill/exportTaskRecordItem', downParams)
+        ">
         批量导出明细
       </el-button>
       <div class="flex">
@@ -42,12 +44,13 @@
       </div>
     </template>
     <!-- 导入结算-->
-    <uploadExcel
+    <Upload-excel
       ref="importBillRef"
       guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
       upload-label="导入结算"
       upload-url="core/settleBill/import"
-      temp-url="/files/任务承接明细表.xlsx"
+      temp-url="/files/TASK_UNDERTAKING_DETAILS.xlsx"
+      download-name="任务承接明细表"
       template-on-front
       title="导入结算"
       label-width="178px"
@@ -152,7 +155,7 @@
           </el-select>
         </el-form-item>
       </template>
-    </uploadExcel>
+    </Upload-excel>
   </TableView>
 </template>
 
@@ -165,6 +168,7 @@ import columns from './configurations/columns'
 import actions from './configurations/tabel-actions'
 import excelForms from './configurations/excel-forms'
 import { useMessage } from '/@/hooks/message'
+import { downBlobFile } from '/@/utils/other'
 const importBillRef = ref()
 const formInfo = reactive({
   taskList: [],
@@ -173,7 +177,16 @@ const formInfo = reactive({
   merchantList: [],
   spinfoList: []
 })
-
+// 导出excel
+const exportExcel = async (url: string, downParams: any) => {
+  const { useMessageBox } = await import('/@/hooks/message')
+  try {
+    await useMessageBox().confirm('确定批量导出数据？')
+  } catch {
+    return
+  }
+  downBlobFile(url, downParams, '', true)
+}
 const openDialog = () => {
   formInfo.taskList = []
   formInfo.spPaymentChannelList = []

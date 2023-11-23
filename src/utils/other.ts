@@ -187,13 +187,13 @@ export const openWindow = (
   const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-    ? document.documentElement.clientWidth
-    : screen.width
+      ? document.documentElement.clientWidth
+      : screen.width
   const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-    ? document.documentElement.clientHeight
-    : screen.height
+      ? document.documentElement.clientHeight
+      : screen.height
 
   const left = width / 2 - w / 2 + dualScreenLeft
   const top = height / 2 - h / 2 + dualScreenTop
@@ -258,17 +258,20 @@ export function base64Encrypt(src: string) {
  * @param query 查询参数
  * @param fileName 文件名称
  * @param exportExcel 导出excel
+ * @param localFile 本地文件
  * @returns {*}
  */
 export function downBlobFile(
   url: any,
   query: any,
   fileName: string,
-  exportExcel = false
+  exportExcel = false,
+  localFile = false
 ) {
   return request({
-    url: url,
+    url,
     responseType: 'blob',
+    localFile,
     ...(exportExcel
       ? {
           method: 'post',
@@ -280,7 +283,7 @@ export function downBlobFile(
           params: query
         })
   }).then((response) => {
-    handleBlobFile(response, fileName)
+    handleBlobFile(response.blob, fileName ? fileName : response.fileName)
   })
 }
 
@@ -303,7 +306,7 @@ export function handleBlobFile(response: any, fileName: string) {
   var binaryData = [] as any
   binaryData.push(response)
   link.href = window.URL.createObjectURL(new Blob(binaryData))
-  link.download = fileName
+  link.download = fileName ? decodeURI(fileName) : ''
   document.body.appendChild(link)
   link.click()
   window.setTimeout(function () {
@@ -424,9 +427,10 @@ const other = {
     url: any,
     query: any,
     fileName: string,
-    exportExcel?: boolean
+    exportExcel?: boolean,
+    localFile?: boolean
   ) => {
-    return downBlobFile(url, query, fileName, exportExcel)
+    return downBlobFile(url, query, fileName, exportExcel, localFile)
   },
   toUnderline: (str: string) => {
     return toUnderline(str)

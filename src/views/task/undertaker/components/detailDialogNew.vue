@@ -4,7 +4,7 @@
     v-model="visible"
     :close-on-click-modal="false"
     draggable
-    width="1000px">
+    width="900px">
     <el-form
       class="form-view"
       :model="form"

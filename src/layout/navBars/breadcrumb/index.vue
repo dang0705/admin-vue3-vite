@@ -22,7 +22,7 @@
       <img
         v-show="qrCodeUrl && qrCodeUrl !== '1'"
         class="w-[200px]"
-        :src="qrCodeUrl" />
+        :src="`${qrCodeUrl}${TOKEN}`" />
       <span v-if="!qrCodeUrl">选择服务商后，可查看二维码</span>
     </div>
     <template #footer>

@@ -13,7 +13,6 @@
         <el-button
           icon="Upload"
           type="primary"
-          class="ml10"
           @click="batchCardDialogRef.openDialog()"
           v-auth="'hro_undertakerInfo_batchUploadCard'">
           批量上传身份证
@@ -29,7 +28,6 @@
         <el-button
           icon="Upload"
           type="primary"
-          class="ml10"
           @click="customersRef.openDialog()"
           v-auth="'hro_undertakerInfo_batchSign'">
           发起批量签署
@@ -37,7 +35,6 @@
         <el-button
           icon="Upload"
           type="primary"
-          class="ml10"
           @click="addUnderTakerRef.openDialog()"
           v-auth="'hro_undertakerInfo_batchImport'">
           批量导入承接人
@@ -45,7 +42,6 @@
         <el-button
           icon="folder-add"
           type="primary"
-          class="ml10"
           @click="formDialogRef.openDialog()"
           v-auth="'hro_undertakerInfo_add'">
           添加承接人
@@ -107,34 +103,25 @@
       </Distribution>
 
       <!-- 批量导入承接人-->
-      <uploadExcel
+      <Upload-excel
         ref="addUnderTakerRef"
         upload-label="待签署用户名单"
         upload-url="core/undertakerInfo/import"
+        temp-url="/files/BATCH_IMPORT_OF_RECIPIENT_TEMPLATES.xlsx"
+        guidance="请按照导入模版填写承接人信息，承接人必须在16岁到65岁范围内。"
+        download-name="批量导入承接人模板"
         template-on-front
         title="批量导入承接人"
         noDivider
         noBorder="none"
         bgColor="#F3F3F3"
         hoverBg="#fff7f3">
-        <template #excel-top>
-          <div
-            class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
-            style="border: 1px solid #ff682659">
-            请按照导入模版填写承接人信息，承接人必须在16岁到65岁范围内。
-            <a href="/files/批量导入承接人模板.xlsx">
-              <el-button icon="download" type="primary" class="ml10">
-                下载模版
-              </el-button>
-            </a>
-          </div>
-        </template>
         <template #excel-body>
           <img
             class="w-[48px] h-[48px] mx-auto"
             src="../../../assets/uploadImg/file.webp" />
         </template>
-      </uploadExcel>
+      </Upload-excel>
 
       <!-- 批量绑定银行卡 -->
       <uploadExcel
@@ -142,7 +129,8 @@
         guidance="请按照绑定银行卡模版填写信息，填写前请确认相关承接人存在于系统中。"
         upload-label="承接人银行卡信息表"
         upload-url="core/undertakerInfo/importUndertakerBank"
-        temp-url="/files/批量绑定银行卡模板.xlsx"
+        temp-url="/files/BATCH_BIND_BANK_CARD_TEMPLATES.xlsx"
+        dowload-name="批量绑定银行卡模板"
         template-on-front
         formLabelWidth="170"
         title="批量绑定银行卡" />

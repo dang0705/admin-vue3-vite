@@ -56,13 +56,14 @@
         批量导入银行交易流水
       </el-button>
     </template>
-    <uploadExcel
+    <UploadExcel
       @refreshDataList="refreshDataList"
       ref="addUnderTakerRef"
       guidance="请按照导入模版填写银行交易流水，确保信息正确且无遗漏。"
       upload-label="批量导入银行交易流水"
       upload-url="core/excel/importWaterSpPaymentBank"
-      temp-url="/files/银行交易流水模版.xlsx"
+      temp-url="/files/BANK_TRANSACTION_FLOW_TEMPLATE.xlsx"
+      download-name="银行交易流水模版"
       template-on-front
       title="批量导入银行交易流水"
       :forms="addUnderTakerForms" />

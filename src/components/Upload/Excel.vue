@@ -7,11 +7,22 @@
       :width="width"
       v-model="state.upload.open"
       draggable>
-      <div class="guidance mb10">
-        <p v-html="guidance" />
-      </div>
-      <slot name="excel-top" :downExcelTemp="downExcelTemp" />
-      <div v-if="tempUrl" class="my-6">
+      <slot name="excel-top" :downExcelTemp="downExcelTemp">
+        <div
+          v-if="tempUrl"
+          class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
+          style="border: 1px solid #ff682659">
+          {{ guidance }}
+          <el-button
+            icon="download"
+            type="primary"
+            class="ml10"
+            v-debounce="downExcelTemp">
+            下载模版
+          </el-button>
+        </div>
+      </slot>
+      <!--      <div v-if="tempUrl" class="my-6">
         <a
           v-if="templateOnFront"
           class="color-primary hover:"
@@ -26,7 +37,7 @@
           @click="downExcelTemp">
           {{ $t('excel.downloadTemplate') }}
         </el-link>
-      </div>
+      </div>-->
       <el-divider v-if="!noDivider" />
       <Form-view
         :forms="forms"
@@ -125,7 +136,8 @@ const prop = defineProps({
     default: '/docs/sys-file/upload'
   },
   tempUrl: {
-    type: String
+    type: String,
+    default: ''
   },
   forceOpen: {
     type: Boolean,
@@ -225,6 +237,10 @@ const prop = defineProps({
   hoverBg: {
     type: String,
     default: null
+  },
+  downloadName: {
+    type: String,
+    default: ''
   }
 })
 const valid = ref(false)
@@ -262,7 +278,14 @@ const downExcelTemp = () => {
   other.downBlobFile(
     prop.templateOnFront ? prop.tempUrl : other.adaptationUrl(prop.tempUrl),
     {},
-    'temp.xlsx'
+    prop.downloadName
+      ? `${prop.downloadName}.xlsx`
+      : prop.tempUrl?.substring(
+          prop.tempUrl?.lastIndexOf('/') + 1,
+          prop.tempUrl.length
+        ),
+    false,
+    true
   )
 }
 

@@ -78,7 +78,10 @@
         </ul>
         <slot
           name="tableTopTwo"
-          v-bind="{ refresh: resetQuery, otherInfo: state.otherInfo }" />
+          v-bind="{
+            refresh: resetQuery,
+            otherInfo: state.otherInfo
+          }" />
         <div
           v-if="
             (downBlobFileUrl && userInfos.permissionMap[exportAuth]) ||
@@ -91,17 +94,19 @@
               v-if="downBlobFileUrl && userInfos.permissionMap[exportAuth]"
               v-debounce="exportExcel"
               icon="download"
-              type="primary">
+              type="primary"
+              class="export">
               批量导出
             </el-button>
-            <div class="flex items-center flex-1">
+            <div class="flex items-center flex-1 top-bar-extra-buttons">
               <slot
                 name="top-bar"
                 v-bind="{
                   refresh: resetQuery,
                   otherInfo: state.otherInfo,
                   query: state.queryForm,
-                  selectObjs: selectObjs
+                  selectObjs: selectObjs,
+                  downParams: downParams
                 }" />
             </div>
           </div>
@@ -303,17 +308,20 @@ const exportExcel = async () => {
   }
   downBlobFile(
     props.downBlobFileUrl,
-    Object.assign(state.queryForm, props.params, {
-      ids: props.getFullSelection
-        ? selectObjs.value.map(
-            ({ [props.selectMainKey]: id }: Record<string, string>) => id
-          )
-        : selectObjs
-    }),
+    downParams.value,
     props.downBlobFileName,
     true
   )
 }
+const downParams = computed(() => {
+  return Object.assign(state.queryForm, props.params, {
+    ids: props.getFullSelection
+      ? selectObjs.value.map(
+          ({ [props.selectMainKey]: id }: Record<string, string>) => id
+        )
+      : selectObjs
+  })
+})
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
@@ -401,6 +409,12 @@ $refreshList(resetQuery, catchHistoryTabState)
 <style>
 .el-table .cell {
   position: relative;
+}
+.top-bar .export + .top-bar-extra-buttons .el-button:first-child {
+  margin-left: 10px;
+}
+.top-bar-extra-buttons .el-button:not(:first-child) {
+  margin-left: 10px;
 }
 .table-view.no-border .el-table__inner-wrapper::before {
   background-color: unset;

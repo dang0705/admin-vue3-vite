@@ -151,10 +151,10 @@ const handleAction = async ({
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
       : handler
-      ? helpers.isArray(params)
-        ? await handler(...(params as []))
-        : await handler(params)
-      : (() => {})()
+        ? helpers.isArray(params)
+          ? await handler(...(params as []))
+          : await handler(params)
+        : (() => {})()
     if (shouldRefresh) {
       refresh && refresh()
       useMessage().success(successText)
@@ -176,6 +176,20 @@ const getIcon = (action) => {
     icon = 'icon-zhongzhi'
   } else if (action.label === '启用') {
     icon = 'icon-qiyong'
+  } else if (action.label === '撤销') {
+    icon = 'icon-qiyong'
+  } else if (action.label === '退款审核') {
+    icon = 'icon-qiyong'
+  } else if (action.label === '支付') {
+    icon = 'icon-qiyong'
+  } else if (action.label === '标记退款失败') {
+    icon = 'icon-qiyong'
+  } else if (action.label === '导出完税明细') {
+    icon = 'icon-xiazai'
+  } else if (action.label === '上传完税证明') {
+    icon = 'icon-shangchuan'
+  } else if (action.label === '下载完税证明') {
+    icon = 'icon-xiazai'
   } else {
     icon = action.icon
   }

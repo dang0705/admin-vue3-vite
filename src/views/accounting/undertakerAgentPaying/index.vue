@@ -47,7 +47,6 @@
     <!--    付款弹框-->
     <Dialog
       vertical
-      button-position="center"
       disabled
       label-width="180"
       v-model="dialog.show"

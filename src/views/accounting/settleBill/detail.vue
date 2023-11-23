@@ -226,7 +226,7 @@ labelWidth="140px">
       ref="detailDialogRef"
       @refresh="getmerchantInfoData()"
       :payInFullType="payInFullType" />
-    <uploadExcel
+    <Upload-excel
       ref="importBillRef"
       @refreshDataList="refreshDataList"
       guidance="在导入结算单之前，请确认与结算单相关的任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"

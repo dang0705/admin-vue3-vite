@@ -9,13 +9,12 @@
     <template #state="{ row }">
       <Tag
         :type="getType(row.state)?.color"
-        :text="getType(row.state)?.label"></Tag>
+        :text="getType(row.state)?.label" />
     </template>
     <template #top-bar>
       <el-button
         icon="folder-add"
         type="primary"
-        class="ml10"
         @click="formDialogRef.openDialog()"
         v-auth="'hro_undertakingContract_add'">
         手动上传合同
@@ -29,11 +28,14 @@
       </el-button>
     </template>
     <form-dialog ref="formDialogRef" />
-    <uploadExcel
+    <Upload-excel
       :forms="batchElectronicSignForms"
       ref="batchElectronicSignRef"
       main-label="待签署用户名单"
       upload-url="core/undertakingContract/contractBatchSigning"
+      guidance="请按照导入模版填写承接人信息，承接人必须在16岁到65岁范围内。"
+      temp-url="/files/CONTRACT_BATCH_SIGNING_TEMPLATE.xlsx"
+      download-name="合同批量签署模板"
       template-on-front
       noDivider
       noBorder="none"
@@ -41,24 +43,12 @@
       bgColor="#F3F3F3"
       labelWidth="120"
       title="添加合同签署">
-      <template #excel-top>
-        <div
-          class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
-          style="border: 1px solid #ff682659">
-          请按照导入模版填写承接人信息，承接人必须在16岁到65岁范围内。
-          <a href="/files/合同批量签署模板.xlsx">
-            <el-button icon="download" type="primary" class="ml10">
-              下载模版
-            </el-button>
-          </a>
-        </div>
-      </template>
       <template #excel-body>
         <img
           class="w-[48px] h-[48px] mx-auto"
           src="../../../assets/uploadImg/file.webp" />
       </template>
-    </uploadExcel>
+    </Upload-excel>
   </Table-View>
 </template>
 

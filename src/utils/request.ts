@@ -17,6 +17,8 @@ const service: AxiosInstance = axios.create({
 interface Config extends AxiosRequestConfig {
   // 是否mock
   actionLoading?: boolean
+  // 是否本地文件
+  localFile?: boolean
 }
 const ACTION_REQUEST = ['put', 'post', 'delete']
 const NO_LADING_ACTIONS = ['/docs/sys-file/upload']
@@ -37,6 +39,13 @@ service.interceptors.request.use(
           config.responseType?.toLowerCase() === 'blob'))
     ) {
       $bus.emit('on-action-loading')
+    }
+    if (
+      config.responseType === 'blob' &&
+      config.localFile &&
+      !ACTION_REQUEST.includes(config.method?.toLowerCase())
+    ) {
+      config.baseURL = ''
     }
     // 统一增加Authorization请求头, skipToken 跳过增加token
     const token = Session.getToken()
@@ -118,10 +127,25 @@ const handleResponse = (response: AxiosResponse<any>) => {
         import.meta.env.VITE_PWD_ENC_KEY
       )
     )
+    // return response.data
+    // return  isBlob ? {
+    if (isBlob) {
+      return {
+        blob: response.data,
+        fileName: response?.['headers']?.['content-disposition']
+      }
+    } else {
+      return response.data
+    }
+  }
+  if (isBlob) {
+    return {
+      blob: response.data,
+      fileName: response?.['headers']?.['content-disposition']
+    }
+  } else {
     return response.data
   }
-
-  return response.data
 }
 
 /**
@@ -131,6 +155,7 @@ service.interceptors.response.use(handleResponse, (error) => {
   const {
     response: { status, data: { msg } = {}, config }
   } = error
+
   if (ACTION_REQUEST.includes(config.method?.toLocaleLowerCase() as string)) {
     $bus.emit('off-action-loading')
   }

@@ -25,13 +25,13 @@
     </template>
     <Dialog
       vertical
-      button-position="center"
       v-model="accountShow"
       title="收款银行信息"
       submitButtonText="确认"
-      :label-width="120"
+      :label-width="150"
       :forms="accountForms"
-      :columns="24"
+      :columns="20"
+      width="500px"
       v-model:form-data="formData"
       :showBtn="false"></Dialog>
   </Table-view>
