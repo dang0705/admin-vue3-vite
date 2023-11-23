@@ -132,8 +132,8 @@ const handleResponse = (response: AxiosResponse<any>) => {
     // return  isBlob ? {
     if (isBlob) {
       return {
-        ...response.data,
-        fileName: response['headers']['content-disposition']
+        blob: response.data,
+        fileName: response?.['headers']?.['content-disposition']
       }
     } else {
       return response.data
@@ -141,8 +141,8 @@ const handleResponse = (response: AxiosResponse<any>) => {
   }
   if (isBlob) {
     return {
-      ...response.data,
-      fileName: response['headers']['content-disposition']
+      blob: response.data,
+      fileName: response?.['headers']?.['content-disposition']
     }
   } else {
     return response.data

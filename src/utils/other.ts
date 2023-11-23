@@ -283,7 +283,7 @@ export function downBlobFile(
           params: query
         })
   }).then((response) => {
-    handleBlobFile(response, fileName ? fileName : response.fileName)
+    handleBlobFile(response.blob, fileName ? fileName : response.fileName)
   })
 }
 
@@ -306,7 +306,7 @@ export function handleBlobFile(response: any, fileName: string) {
   var binaryData = [] as any
   binaryData.push(response)
   link.href = window.URL.createObjectURL(new Blob(binaryData))
-  link.download = fileName
+  link.download = fileName ? decodeURI(fileName) : ''
   document.body.appendChild(link)
   link.click()
   window.setTimeout(function () {

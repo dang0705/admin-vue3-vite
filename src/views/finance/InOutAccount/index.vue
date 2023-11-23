@@ -7,7 +7,7 @@
     module="finance/merchantRecharge.ts"
     labelWidth="120px"
     exportAuth="finance_merchantRecharge_export"
-    downBlobFileUrl="xxx">
+    downBlobFileUrl="/finance/merchantRecharge/export">
     <uploadExcel
       @refreshDataList="refreshDataList"
       ref="inOutAccountAddFormsRef"
