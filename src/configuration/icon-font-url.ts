@@ -1,4 +1,4 @@
 export default [
-  '//at.alicdn.com/t/c/font_4334995_etejy1499c6.css',
-  '//at.alicdn.com/t/c/font_4194340_0vsimk998s9o.css'
+  '//at.alicdn.com/t/c/font_4194340_ksz0sjp3d8c.css', // for 信息化中心
+  '//at.alicdn.com/t/c/font_4334995_onzdjkmsqvm.css' //for 积木优工后台icon
 ]
