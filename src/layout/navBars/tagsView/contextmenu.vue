@@ -177,10 +177,10 @@ defineExpose({
   z-index: 2190;
   position: fixed;
   .el-dropdown-menu__item {
-    font-size: 12px !important;
+    font-size: var(--el-font-size-base) !important;
     white-space: nowrap;
     i {
-      font-size: 12px !important;
+      font-size: var(--el-font-size-base) !important;
     }
   }
 }

@@ -285,7 +285,7 @@ defineExpose({
   padding: 0 20px;
   font-family: PingFangSC-Medium;
   font-weight: 500;
-  font-size: 14px;
+  font-size: var(--el-font-size-medium);
   color: #000000;
   margin: 13px 0 18px;
 }
@@ -302,7 +302,7 @@ defineExpose({
     opacity: 0.4;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     color: #000000;
     text-align: right;
     line-height: 42px;
@@ -313,7 +313,7 @@ defineExpose({
     opacity: 0.8;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     color: #000000;
     line-height: 42px;
   }

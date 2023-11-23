@@ -20,7 +20,8 @@ export interface FormOptions {
   value?: unknown // 组件默认数据
   rules?: FormItemRule[] // 验证规则
   slot?: boolean | string //插槽,
-  title?: string // 表单区间的标题
+  title?: string // 表单区间的标题上
+  afterTitle?: string // 表单区间的标题下
   hidden?: boolean // 表单隐藏,但有表单数据
   onChange?: Function // 控件值改变回调
   show?: Show // 控制表单(控件)动态显隐

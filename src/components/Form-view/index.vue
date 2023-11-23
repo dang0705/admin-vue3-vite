@@ -149,7 +149,7 @@ const init = async (forms: FormOptions[]) => {
       formOptions[item.key] = computed(() => dic.value)
     } else {
       if (helper.isArray(options)) {
-        stopWatchShow = formOptions[item.key] = options
+        formOptions[item.key] = options
       } else if (helper.isObject(options)) {
         const { url, params = {} } = options as {
           url: string
@@ -313,7 +313,7 @@ defineExpose({
                     <h1
                       v-if="helper.isString(form.title)"
                       v-text="form.title"
-                      class="mb-[20px] text-lg font-bold" />
+                      class="text-lg pl-[20px] mb-[18px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px]" />
                     <h1
                       v-else
                       v-html="form.title.html"
@@ -321,6 +321,7 @@ defineExpose({
                       class="mb-[20px] text-lg font-bold" />
                   </slot>
                 </el-col>
+
                 <el-col
                   v-bind="form.column ? { span: form.column } : dynamicColumns"
                   :class="['mb-2', { 'mb-[14px]': vertical }]"
@@ -368,6 +369,19 @@ defineExpose({
                       </template>
                     </component>
                   </el-form-item>
+                </el-col>
+                <el-col :span="24" v-if="form.afterTitle">
+                  <slot :name="`title-after-${form.key}`">
+                    <h1
+                      v-if="helper.isString(form.afterTitle)"
+                      v-text="form.afterTitle"
+                      class="text-lg pl-[20px] mb-[18px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px]" />
+                    <h1
+                      v-else
+                      v-html="form.afterTitle.html"
+                      :style="form.afterTitle.style"
+                      class="mb-[20px] text-lg font-bold" />
+                  </slot>
                 </el-col>
               </template>
             </slot>

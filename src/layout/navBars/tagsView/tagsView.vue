@@ -727,7 +727,7 @@ watch(
     display: flex;
     align-items: center;
     color: var(--el-text-color-regular);
-    font-size: 12px;
+    font-size: var(--el-font-size-base);
     white-space: nowrap;
     padding: 0 15px;
     &-li {
@@ -751,7 +751,7 @@ watch(
       &-iconfont {
         position: relative;
         left: -5px;
-        font-size: 12px;
+        font-size: var(--el-font-size-base);
       }
       &-icon {
         border-radius: 100%;

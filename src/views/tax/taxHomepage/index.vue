@@ -262,14 +262,14 @@ export default {
     display: inline-block;
   }
   .unit {
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     vertical-align: baseline;
     display: inline-block;
     color: rgba(0, 0, 0, 0.5);
     transform: translateY(3px);
   }
   .info_label {
-    font-size: 14px;
+    font-size: var(--el-font-size-medium);
     color: rgba(0, 0, 0, 0.5);
     font-weight: 500;
   }

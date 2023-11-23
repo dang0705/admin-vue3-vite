@@ -64,7 +64,7 @@ const colorObj = computed(() => {
   width: fit-content;
   border-radius: 2px;
   .tag_text {
-    font-size: 12px;
+    font-size: var(--el-font-size-base);
     font-weight: bold;
   }
 }

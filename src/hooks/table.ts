@@ -333,7 +333,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     }
     return {
       textAlign,
-      fontSize: '12px',
+      fontSize: 'var(--el-font-size-base)',
       'height': '48px'
     }
   }
@@ -343,7 +343,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
       return {
         textAlign: label?.includes('(元)') ? 'right' : 'left',
         height: '40px',
-        fontSize: '12px',
+        fontSize: 'var(--el-font-size-base)',
         // background: 'var(--table-header-bg-color)',
         background: '#f1f1f1',
         color: 'var(--el-text-color-primary)'

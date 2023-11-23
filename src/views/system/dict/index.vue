@@ -173,12 +173,12 @@ const handleDelete = async (ids: string[]) => {
   flex: 1;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: var(--el-font-size-medium);
   padding-right: 24px;
   height: 100%;
 }
 .custom-tree-node .code {
-  font-size: 12px;
+  font-size: var(--el-font-size-base);
   color: #999;
 }
 .custom-tree-node .do {
