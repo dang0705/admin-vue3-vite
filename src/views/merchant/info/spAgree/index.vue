@@ -14,7 +14,6 @@
       <el-button
         icon="folder-add"
         type="primary"
-        class="ml10"
         @click="formDialogRef.openDialog()"
         v-auth="'core_merchantServiceAgreement_add'">
         新 增

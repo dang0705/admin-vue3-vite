@@ -11,7 +11,6 @@
         <el-button
           icon="folder-add"
           type="primary"
-          class="ml10"
           :disabled="!selectObjs.length"
           @click="showDialog = true"
           v-auth="'hro_undertakerInfo_not_sp_add'">

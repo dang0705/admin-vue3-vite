@@ -11,7 +11,6 @@
     <template #top-bar>
       <el-button
         type="primary"
-        class="ml10"
         @click="$router.push({ path: '/sp/info/add' })"
         v-auth="'core_spInfo_add'">
         +添加服务商

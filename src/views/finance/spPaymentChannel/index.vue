@@ -8,7 +8,6 @@
       <el-button
         icon="folder-add"
         type="primary"
-        class="ml10"
         @click="formDialogRef.openDialog()"
         v-auth="'core_spPaymentChannel_add'">
         添加支付通道

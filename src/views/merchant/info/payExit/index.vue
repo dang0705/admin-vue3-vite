@@ -12,7 +12,6 @@
       <el-button
         icon="folder-add"
         type="primary"
-        class="ml10"
         @click="openPayExit('add')"
         v-auth="'core_merchantServiceAgreement_add'">
         新 增

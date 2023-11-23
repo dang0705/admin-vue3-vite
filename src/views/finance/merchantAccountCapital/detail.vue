@@ -11,15 +11,13 @@
       <el-button
         v-auth="'finance_merchantRefund_add'"
         @click="handleRe(2)"
-        type="primary"
-        class="ml10">
+        type="primary">
         申请退款
       </el-button>
       <el-button
         v-auth="'finance_merchantRecharge_add'"
         @click="handleRe(1)"
-        type="primary"
-        class="ml10">
+        type="primary">
         发起充值
       </el-button>
     </template>

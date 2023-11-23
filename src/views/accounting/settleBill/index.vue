@@ -10,7 +10,6 @@
       <el-button
         v-auth="'core_settleBill_add'"
         type="primary"
-        class="ml10"
         @click="openDialog()">
         导入结算
       </el-button>
@@ -25,7 +24,6 @@
         v-auth="'core_settleBill_batch_export_detail'"
         style="margin-right: 24px"
         type="primary"
-        class="ml10"
         :disabled="selectObjs.length === 0"
         @click="
           exportExcel('/core/settleBill/exportTaskRecordItem', downParams)

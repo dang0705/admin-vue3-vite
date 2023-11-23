@@ -12,7 +12,6 @@
       <el-button
         icon="folder-add"
         type="primary"
-        class="ml10"
         @click="$router.push({ path: '/merchant/info/add' })"
         v-auth="'core_merchantInfo_add'">
         添加商户
