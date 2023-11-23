@@ -67,7 +67,6 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
     :border="false"
     :isShowTopBar="false"
     :header="false"
-    :size="4"
     v-bind="{ ...(tableHeight ? { maxHeight: tableHeight } : {}), ...$attrs }"
     class="w-full">
     <template v-for="(_, slot) in $slots" #[slot]="{ refresh }">
