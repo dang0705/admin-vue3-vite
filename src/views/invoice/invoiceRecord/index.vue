@@ -49,31 +49,13 @@
       v-model="applyShow"
       :title="financeType === 'see' ? '查看发票' : '开具发票'"
       submitButtonText="提交"
-      width="80%"
-      :label-width="160"
+      width="1000px"
+      :label-width="130"
       :forms="forms"
       :columns="12"
       :showBtn="financeType !== 'see'"
       v-model:form-data="dialogFormData"
-      :onSubmit="onSubmit">
-      <template #address>
-        <el-form-item label="邮寄地址：" prop="address" v-if="false">
-          <el-radio-group v-model="dialogFormData.radioAddress" class="ml-4">
-            <el-radio :label="1" size="large">默认邮寄地址</el-radio>
-            <el-radio :label="0" size="large">手动填写</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="邮寄地址：" prop="postAddress">
-          <InputPlus v-model="dialogFormData.postAddress" disabled />
-        </el-form-item>
-        <el-form-item label="收件人：" prop="postUsername">
-          <InputPlus v-model="dialogFormData.postUsername" disabled />
-        </el-form-item>
-        <el-form-item label="收件人手机号：" prop="postPhone">
-          <InputPlus v-model="dialogFormData.postPhone" disabled />
-        </el-form-item>
-      </template>
-    </Dialog>
+      :onSubmit="onSubmit" />
     <Dialog
       vertical
       button-position="center"
@@ -201,42 +183,18 @@ const conditionForms = [
 
 const forms = computed(() => [
   {
+    slot: true,
+    title: {
+      html: '基本信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
+    column: 24
+  },
+  {
     control: 'InputPlus',
     key: 'merchantName',
     label: '开票抬头',
-    column: 24,
-    props: {
-      disabled: true
-    }
-  },
-  {
-    control: 'InputPlus',
-    key: 'unifiedSocialCreditIdentifier',
-    label: '统一社会信用代码',
-    props: {
-      disabled: true
-    }
-  },
-  {
-    control: 'InputPlus',
-    key: 'enterpriseMailbox',
-    label: '企业邮箱',
-    props: {
-      disabled: true
-    }
-  },
-  {
-    control: 'InputPlus',
-    key: 'enterpriseAddress',
-    label: '企业地址',
-    props: {
-      disabled: true
-    }
-  },
-  {
-    control: 'InputPlus',
-    key: 'enterprisePhone',
-    label: '企业电话',
     props: {
       disabled: true
     }
@@ -251,11 +209,52 @@ const forms = computed(() => [
   },
   {
     control: 'InputPlus',
+    key: 'unifiedSocialCreditIdentifier',
+    label: '统一社会信用代码',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    control: 'InputPlus',
     key: 'bankNo',
     label: '银行账号',
     props: {
       disabled: true
     }
+  },
+  {
+    control: 'InputPlus',
+    key: 'enterpriseMailbox',
+    label: '企业邮箱',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    control: 'InputPlus',
+    key: 'enterprisePhone',
+    label: '企业电话',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    control: 'InputPlus',
+    key: 'enterpriseAddress',
+    label: '企业地址',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    slot: true,
+    title: {
+      html: '开票信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
+    column: 24
   },
   {
     control: 'InputPlus',
@@ -337,8 +336,28 @@ const forms = computed(() => [
   },
   {
     slot: true,
-    key: 'address',
+    title: {
+      html: '邮寄信息',
+      style:
+        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
+    },
     column: 24
+  },
+  {
+    control: 'InputPlus',
+    key: 'postUsername',
+    label: '收件人',
+    props: {
+      disabled: true
+    }
+  },
+  {
+    control: 'InputPlus',
+    key: 'postPhone',
+    label: '收件人手机号',
+    props: {
+      disabled: true
+    }
   },
   {
     control: 'el-select',
@@ -370,6 +389,14 @@ const forms = computed(() => [
         trigger: 'blur'
       }
     ]
+  },
+  {
+    control: 'InputPlus',
+    key: 'postAddress',
+    label: '邮寄地址',
+    props: {
+      disabled: true
+    }
   }
 ])
 

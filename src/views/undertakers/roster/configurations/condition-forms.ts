@@ -2,17 +2,17 @@ export default [
   {
     control: 'InputPlus',
     key: 'undertakerName',
-    label: '承接人姓名'
+    label: '姓名'
   },
   {
     control: 'InputPlus',
     key: 'undertakerCard',
-    label: '证件号码'
+    label: '身份证号码'
   },
   {
     control: 'InputPlus',
     key: 'undertakerPhone',
-    label: '手机号'
+    label: '手机号码'
   },
   {
     control: 'YesOrNo',
