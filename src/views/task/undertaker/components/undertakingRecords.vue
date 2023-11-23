@@ -192,6 +192,7 @@ const columns = [
     prop: 'isEffectiveContract',
     label: '是否存在生效协议',
     'min-width': 180,
+    // options: 'yes_no_type'
     value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
       batchMap.value.yes_no_type[isEffectiveContract]
   },
@@ -199,6 +200,7 @@ const columns = [
     prop: 'isBankFourEssentialFactor',
     label: '是否银行四要素校验',
     'min-width': 180,
+    // options: 'yes_no_type'
     value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) =>
       batchMap.value.yes_no_type[isBankFourEssentialFactor]
   },
@@ -206,8 +208,7 @@ const columns = [
     prop: 'state',
     label: '状态',
     'min-width': 180,
-    value: ({ state }: BatchUploadRecordPage) =>
-      batchMap.value.undertaking_status[state]
+    options: 'undertaking_status'
   },
   {
     label: '操作',

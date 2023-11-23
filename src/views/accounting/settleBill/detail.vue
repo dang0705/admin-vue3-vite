@@ -92,6 +92,9 @@ labelWidth="140px">
         module="core/settleBill.ts"
         :createdIsNeed="false"
         labelWidth="120px">
+        <template #statusDesc="{ row }">
+          <Tag :type="getTypeService" :text="row.statusDesc"></Tag>
+        </template>
         <template #actions="{ row }">
           <el-button
             @click="detailDialogRef.openDialog(form.id, 4, 1)"
@@ -162,6 +165,9 @@ labelWidth="140px">
         module="core/settleBill.ts"
         :createdIsNeed="false"
         labelWidth="120px">
+        <template #statusDesc="{ row }">
+          <Tag :type="getTypeTask" :text="row.statusDesc"></Tag>
+        </template>
         <template #actions="{ row }">
           <el-button
             @click="detailDialogRef.openDialog(form.id, 4, 2)"
@@ -240,6 +246,7 @@ labelWidth="140px">
 </template>
 
 <script setup lang="ts" name="账单详情">
+import { useDict } from '/@/hooks/dict'
 import { getObj } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import Array2Object from '/@/utils/array-2-object'
@@ -248,7 +255,22 @@ import {
   taskIndexThead
 } from './configurations-detail/columns'
 import thousandthDivision from '/@/utils/thousandth-division'
-import { useMessage } from '/@/hooks/message'
+const { settle_status } = useDict('settle_status')
+// setTimeout(() => {
+// const getType = (status: string) => {
+//   return settle_status.value.find((item) => item.value === status).color
+// }
+const getTypeService = computed(() => {
+  return settle_status.value.find(
+    (item) => item.value === form.serviceBillRecord[0]?.status
+  ).color
+})
+const getTypeTask = computed(() => {
+  return settle_status.value.find(
+    (item) => item.value === form.taskBillRecord[0]?.status
+  ).color
+})
+// }, 1000)
 const batchMap = Array2Object({
   dic: ['yes_no_type', 'settle_status', 'payment_status']
 })

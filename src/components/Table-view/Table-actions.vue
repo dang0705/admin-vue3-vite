@@ -190,6 +190,10 @@ const getIcon = (action) => {
     icon = 'icon-shangchuan'
   } else if (action.label === '下载完税证明') {
     icon = 'icon-xiazai'
+  } else if (action.label === '下载电子协议') {
+    icon = 'icon-xiazai'
+  } else if (action.label === '同步银行卡信息') {
+    icon = 'icon-tongbu'
   } else {
     icon = action.icon
   }

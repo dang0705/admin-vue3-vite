@@ -125,9 +125,10 @@ const columns = [
     minWidth: 200
   },
   {
-    prop: 'statusDesc',
+    prop: 'status',
     label: '结算状态',
-    minWidth: 150
+    minWidth: 150,
+    options: 'settle_status'
   }
   // {
   // 	label: '操作',

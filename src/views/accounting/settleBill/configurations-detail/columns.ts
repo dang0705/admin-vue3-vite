@@ -33,7 +33,8 @@ export const serviceIndexThead = [
   {
     prop: 'statusDesc',
     label: '结算状态',
-    minWidth: 100
+    minWidth: 100,
+    slot: true
   },
   {
     label: '操作',
@@ -89,7 +90,8 @@ export const taskIndexThead = [
   {
     prop: 'statusDesc',
     label: '结算状态',
-    minWidth: 100
+    minWidth: 100,
+    slot: true
   },
   {
     label: '操作',

@@ -65,7 +65,7 @@
               {{
                 form.undertakerConfirmAmount
                   ? form.undertakerConfirmAmount + '元'
-                  : '--'
+                  : '-'
               }}
             </div>
           </div>

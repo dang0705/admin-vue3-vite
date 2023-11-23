@@ -12,9 +12,9 @@ export default function ({
   number = helper.isNumber(number)
     ? number
     : helper.isString(number)
-    ? +number
-    : number
-  if (number === null) return '--'
+      ? +number
+      : number
+  if (number === null) return '-'
   if (number === 0 || number === undefined) return '0.00'
 
   const str = (number as number).toFixed(decimals as number)

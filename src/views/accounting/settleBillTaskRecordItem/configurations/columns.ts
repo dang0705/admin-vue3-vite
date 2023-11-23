@@ -135,9 +135,7 @@ export default [
   {
     prop: 'billStatus',
     label: '结算状态',
-    value: ({ billStatus }: BatchUploadRecordPage) =>
-      batchMap.value.settle_status[billStatus],
-    minWidth: 100
+    options: 'settle_status'
   },
   {
     prop: 'paymentSuccessTime',
@@ -148,7 +146,7 @@ export default [
     prop: 'paymentStatus',
     label: '支付状态',
     value: ({ paymentStatus }: BatchUploadRecordPage) =>
-      batchMap.value.payment_status[paymentStatus] || '无',
+      batchMap.value.payment_status[paymentStatus],
     minWidth: 100
   },
   {
@@ -166,6 +164,6 @@ export default [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    minWidth: 220
+    minWidth: 238
   }
 ]

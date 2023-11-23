@@ -340,7 +340,7 @@ defineExpose({
                       v-model="formData[form.key]"
                       v-bind="{
                         ...form.props,
-                        ...(form.props?.disabled ? { placeholder: '--' } : {}),
+                        ...(form.props?.disabled ? { placeholder: '' } : {}),
                         clearable: form.props?.clearable ?? true,
                         disabled: form.props?.disabled ?? prop.disabled,
                         ...(form.control === 'el-input'

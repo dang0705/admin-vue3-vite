@@ -76,9 +76,10 @@ export default [
     minWidth: 200
   },
   {
-    prop: 'statusDesc',
+    prop: 'status',
     label: '状态',
-    minWidth: 200
+    minWidth: 200,
+    options: 'settle_status'
   },
   {
     prop: 'auditPostscript',

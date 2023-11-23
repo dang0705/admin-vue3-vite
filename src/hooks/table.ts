@@ -3,7 +3,7 @@ import other from '/@/utils/other'
 import helper from '/@/utils/helpers'
 import { useDict } from '/@/hooks/dict'
 import Array2Object from '/@/utils/array-2-object'
-const xxx = ref([])
+const dicWatchObj = ref([])
 /**
  * 表格组件基础配置属性
  */
@@ -168,59 +168,50 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
           )
         state.countResp = state.isPage ? res.data.countResp : []
         state.otherInfo = state.isPage ? res.data : {}
-        // let optionsMap = new Map()
-        // state.columns?.forEach((item) => {
-        //   if (item.options) {
-        //     optionsMap.set(item.prop, item.options)
-        //   }
-        // })
+        let optionsMap = new Map()
+        state.columns?.forEach((item) => {
+          if (item.options) {
+            optionsMap.set(item.prop, item.options)
+          }
+        })
+        if (optionsMap.size) {
+          for (const key of optionsMap.keys()) {
+            let options = optionsMap.get(key)
+            console.log('options', options)
 
-        // console.log('optionsMap', optionsMap)
+            watch(
+              () => dicWatchObj.value,
+              (dicObj) => {
+                let dic = dicObj[options]
+                console.log('dic', dic)
 
-        // if (optionsMap.size) {
-        //   for (const key of optionsMap.keys()) {
-        //     let options = optionsMap.get(key)
+                state.dataList?.forEach((v) => {
+                  let obj = dic.find((e: any) => {
+                    console.log('v[key]', v[key])
+                    console.log('e.value', e.value)
 
-        //     if (options && helper.isString(options)) {
-        //       console.log('options', options)
-        //       // const dicObj = useDict(options as string)
-        //       xxx = Array2Object({
-        //         dic: [options as string]
-        //       })
-        //       // console.log('xxx.value', xxx)
+                    return e.value == v[key]
+                  })
+                  console.log('obj', obj)
 
-        //       watch(
-        //         () => xxx.value,
-        //         (value) => {
-        //           console.log('value-1', value)
-
-        //           let dic = dicObj[options]
-        //           // console.log('dic2', dic)
-        //           state.dataList?.forEach((v) => {
-        //             console.log('dic', dic.value)
-        //             // console.log('v', v[key])
-        //             // let obj = dic.value.find((e: any) => {
-        //             //   console.log('e.value', e.value)
-        //             //   console.log('e.value === v[key]', e.value === v[key])
-        //             //   return e.value === v[key]
-        //             // })
-        //             // console.log('obj', obj)
-        //             // if (obj) {
-        //             //   v[key + '_obj'] = {
-        //             //     type: obj.color,
-        //             //     text: obj.label
-        //             //   }
-        //             // }
-        //           })
-        //         }
-        //       )
-        //       // console.log('dicObj', dicObj)
-        //       // console.log('dicObj[options]-1', dicObj[options])
-        //     }
-        //   }
-        // }
+                  if (obj) {
+                    v[key + '_obj'] = {
+                      type: obj.color,
+                      text: obj.label
+                    }
+                  }
+                })
+              },
+              {
+                deep: true
+              }
+            )
+            if (options && helper.isString(options)) {
+              dicWatchObj.value = useDict(options as string)
+            }
+          }
+        }
       } catch (err: any) {
-        console.log('err', err)
         state.dataList = []
         // 捕获异常并显示错误提示
         // ElMessage.error(err.msg || err.data.msg);
