@@ -103,12 +103,12 @@
     </template>
     <Dialog
       vertical
-      button-position="center"
       v-model="show"
       :title="reType == 1 ? '发起充值' : '申请退款'"
+      :label-width="150"
       :show-cancel="false"
       :forms="forms"
-      :columns="24"
+      :columns="20"
       v-model:form-data="dialogFormData"
       :on-cancel="onCancel"
       :on-submit="onSubmit">
