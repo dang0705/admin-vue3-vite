@@ -57,7 +57,7 @@ export interface Pagination {
   // 当前页码，默认为1
   current?: number
   // 每页显示条数，默认为10
-  size?: number
+  size?: number | string
   // 总条数，默认为0
   total?: number
   // 每页显示条数选择器的选项数组，默认为[10,20,30,40]

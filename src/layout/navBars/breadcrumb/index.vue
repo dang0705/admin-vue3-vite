@@ -11,7 +11,7 @@
       </template>
     </User>
   </div>
-  <el-dialog v-model="showQrCode" width="30%">
+  <el-dialog v-model="showQrCode">
     <template #header>二维码下载</template>
     <el-form v-model="qrCodeForm" class="px-[60px]">
       <el-form-item label="请选择服务商：" prop="id">
