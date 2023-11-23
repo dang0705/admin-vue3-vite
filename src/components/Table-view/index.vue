@@ -169,7 +169,7 @@
                     :refresh="resetQuery" />
                 </slot>
                 <TableActions
-                  v-if="column.prop === 'actions' && actions.length"
+                  v-if="column.prop === 'actions'"
                   :row="row"
                   :action-body="actionBody"
                   :del-fn-name="delObj"
