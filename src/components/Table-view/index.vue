@@ -94,10 +94,11 @@
               v-if="downBlobFileUrl && userInfos.permissionMap[exportAuth]"
               v-debounce="exportExcel"
               icon="download"
-              type="primary">
+              type="primary"
+              class="export">
               批量导出
             </el-button>
-            <div class="flex items-center flex-1">
+            <div class="flex items-center flex-1 top-bar-extra-buttons">
               <slot
                 name="top-bar"
                 v-bind="{
@@ -408,6 +409,12 @@ $refreshList(resetQuery, catchHistoryTabState)
 <style>
 .el-table .cell {
   position: relative;
+}
+.top-bar .export + .top-bar-extra-buttons .el-button:first-child {
+  margin-left: 10px;
+}
+.top-bar-extra-buttons .el-button:not(:first-child) {
+  margin-left: 10px;
 }
 .table-view.no-border .el-table__inner-wrapper::before {
   background-color: unset;
