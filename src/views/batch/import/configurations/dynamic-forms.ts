@@ -1,18 +1,5 @@
 import { Type } from './enums'
 
-const failFormStatic = [
-  {
-    title: '导入结果',
-    control: 'el-select',
-    label: '状态',
-    key: 'batchState',
-    options: 'batch_status'
-  },
-  {
-    key: 'status',
-    slot: true
-  }
-]
 const failColumnsSuffix = [
   {
     prop: 'errorMessage',
@@ -27,10 +14,25 @@ export default ({
   dialogFormLabelWidth,
   currentType,
   currentTitle,
-  failListColumns
+  failListColumns,
+  hasFail
 }: any) =>
   computed(() => {
     let form: any[]
+    const failFormStatic = [
+      {
+        title: '导入结果',
+        control: 'el-select',
+        label: '状态',
+        key: 'batchState',
+        options: 'batch_status',
+        ...(hasFail.value ? { afterTitle: '失败记录表' } : {})
+      },
+      {
+        key: 'status',
+        slot: true
+      }
+    ]
     dialogFormLabelWidth.value =
       currentType.value === Type['批量导入结算'] ? 200 : 160
     switch (currentType.value) {
@@ -86,6 +88,7 @@ export default ({
         currentTitle.value = '批量绑定银行卡'
         form = [
           {
+            title: '参数信息',
             control: 'DownloadFile',
             label: '任务人银行卡信息表',
             key: 'paramObject.fileUrl',
@@ -123,6 +126,7 @@ export default ({
         currentTitle.value = '批量电子签署'
         form = [
           {
+            title: '参数信息',
             control: 'SpSelect',
             label: '服务商',
             key: 'paramObject.spId'
@@ -195,6 +199,7 @@ export default ({
         currentTitle.value = '批量导入结算'
         form = [
           {
+            title: '参数信息',
             label: '账单名称',
             control: 'InputPlus',
             key: 'paramObject.billName'
@@ -269,6 +274,8 @@ export default ({
         currentTitle.value = '批量导入银行交易流水'
         form = [
           {
+            title: '参数信息',
+
             label: '服务商',
             control: 'InputPlus',
             key: 'paramObject.spName'
@@ -325,6 +332,8 @@ export default ({
         currentTitle.value = '批量上传身份证'
         form = [
           {
+            title: '参数信息',
+
             label: '上传身份证',
             control: 'DownloadFile',
             key: 'paramObject.fileUrl',

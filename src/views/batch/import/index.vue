@@ -39,10 +39,8 @@
         </el-form-item>
       </template>
       <template #after-forms v-if="hasFail">
-        <ul class="flex justify-between">
-          <li class="mb-[20px] text-lg font-bold">失败记录表</li>
-        </ul>
         <TableView
+          no-padding
           :columns="failListColumns"
           :params="failParams"
           :down-blob-file-name="`${currentTitle}-失败记录表.xlsx`"
@@ -81,7 +79,8 @@ const forms = dynamicForms({
   dialogFormLabelWidth,
   currentType,
   currentTitle,
-  failListColumns
+  failListColumns,
+  hasFail
 })
 let failParams = {}
 const view = async ({ id, type, state }: any) => {
