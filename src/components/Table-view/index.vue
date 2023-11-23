@@ -157,7 +157,7 @@
                   <template v-if="column.options">
                     <Tag
                       :type="row[column.prop + '_obj']?.type"
-                      :text="row[column.prop + '_obj']?.text"></Tag>
+                      :text="row[column.prop + '_obj']?.text" />
                   </template>
                   <TableSlot
                     v-else-if="helpers.isFunction(column.slot)"

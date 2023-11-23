@@ -2,13 +2,13 @@ import iconFontUrl from '/@/configuration/icon-font-url'
 
 // 字体图标 url
 const cssCdnUrlList: Array<string> = [
-  '//at.alicdn.com/t/font_2298093_y6u00apwst.css', // 初始图标
-  ...iconFontUrl // 设计给的图标
+  ...iconFontUrl, // 设计给的图标
+  '//at.alicdn.com/t/font_2298093_y6u00apwst.css' // 初始图标
   // '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
 ]
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [
-  '//at.alicdn.com/t/c/font_4194340_qaidk4jgbm.js'
+  // '//at.alicdn.com/t/c/font_4194340_qaidk4jgbm.js'
 ]
 
 // 动态批量设置字体图标

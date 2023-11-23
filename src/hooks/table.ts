@@ -237,7 +237,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    */
   const sizeChangeHandle = (val: number) => {
     // 修改state.pagination中的size属性
-    state.pagination!.size = val
+    state.pagination!.size = +val
     // 再次发起查询操作
     query(others?.value)
   }
