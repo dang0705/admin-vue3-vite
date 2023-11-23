@@ -157,7 +157,7 @@
     <!-- 角色编辑、新增  -->
     <role-dialog ref="roleDialogRef" @refresh="getDataList()" />
     <!-- 导入角色 -->
-    <upload-excel
+    <Upload-excel
       ref="excelUploadRef"
       :title="$t('sysuser.importUserTip')"
       url="/admin/role/import"

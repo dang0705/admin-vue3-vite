@@ -27,35 +27,26 @@
       dialogWidth="1000px"
       list-url="/core/undertakerTask/getAssignUndertaker"
       save-url="/core/undertakerTask/determineAssignUndertaker" />
-    <uploadExcel
+    <Upload-excel
       ref="addUnderTakerRef"
       upload-label="待签署用户名单"
       upload-url="core/undertakerTask/batchAppointUndertaker"
+      guidance="请先确保待指派的承接人已录入系统且已签署任务的承接服务商，然后按照导入模版填写承接人信息。"
       template-on-front
-      noDivider
+      no-divider
       noBorder="none"
       bgColor="#F3F3F3"
       hoverBg="#fff7f3"
+      temp-url="/files/BATCH_ASSIGN_TAKEOVER_TEMPLATE.xlsx"
+      download-name="批量指派承接人模板"
       :params="params"
       title="批量指派承接人">
-      <template #excel-top>
-        <div
-          class="bg-[#fff7f3] rounded-[6px] py-[20px] pl-[12px] pr-[18px] mb-[22px] flex items-center justify-between"
-          style="border: 1px solid #ff682659">
-          请先确保待指派的承接人已录入系统且已签署任务的承接服务商，然后按照导入模版填写承接人信息。
-          <a href="/files/批量指派承接人模板.xlsx">
-            <el-button icon="download" type="primary" class="ml10">
-              下载模版
-            </el-button>
-          </a>
-        </div>
-      </template>
       <template #excel-body>
         <img
           class="w-[48px] h-[48px] mx-auto"
           src="../../../assets/uploadImg/file.webp" />
       </template>
-    </uploadExcel>
+    </Upload-excel>
   </TableView>
 </template>
 

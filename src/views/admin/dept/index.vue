@@ -109,7 +109,7 @@
       </el-table>
     </div>
     <dept-form ref="deptDialogRef" @refresh="getDataList()" />
-    <upload-excel
+    <Upload-excel
       ref="excelUploadRef"
       :title="$t('sysdept.importTip')"
       url="/admin/dept/import"

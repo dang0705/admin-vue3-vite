@@ -44,12 +44,13 @@
       </div>
     </template>
     <!-- 导入结算-->
-    <uploadExcel
+    <Upload-excel
       ref="importBillRef"
       guidance="在批量结算之前，请确认所有任务承接已完成交付，然后请下载《任务承接明细表模版》，按照参考格式填写并在本页面上传"
       upload-label="导入结算"
       upload-url="core/settleBill/import"
-      temp-url="/files/任务承接明细表.xlsx"
+      temp-url="/files/TASK_UNDERTAKING_DETAILS.xlsx"
+      download-name="任务承接明细表"
       template-on-front
       title="导入结算"
       label-width="178px"
@@ -154,7 +155,7 @@
           </el-select>
         </el-form-item>
       </template>
-    </uploadExcel>
+    </Upload-excel>
   </TableView>
 </template>
 

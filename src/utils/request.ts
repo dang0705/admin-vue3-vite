@@ -17,6 +17,8 @@ const service: AxiosInstance = axios.create({
 interface Config extends AxiosRequestConfig {
   // 是否mock
   actionLoading?: boolean
+  // 是否本地文件
+  localFile?: boolean
 }
 const ACTION_REQUEST = ['put', 'post', 'delete']
 const NO_LADING_ACTIONS = ['/docs/sys-file/upload']
@@ -37,6 +39,13 @@ service.interceptors.request.use(
           config.responseType?.toLowerCase() === 'blob'))
     ) {
       $bus.emit('on-action-loading')
+    }
+    if (
+      config.responseType === 'blob' &&
+      config.localFile &&
+      !ACTION_REQUEST.includes(config.method?.toLowerCase())
+    ) {
+      config.baseURL = ''
     }
     // 统一增加Authorization请求头, skipToken 跳过增加token
     const token = Session.getToken()
