@@ -38,6 +38,14 @@
         {{ row.billNumber }}
       </router-link>
     </template>
+    <template #actions="{ row }">
+      <el-button
+        v-auth="`core_settleBillTaskRecordItem_edit`"
+        type="text"
+        @click="down(row.contractFile)">
+        同步银行卡信息
+      </el-button>
+    </template>
     <template v-for="(_, slot) in $slots" #[slot]>
       <slot :name="slot" />
     </template>
@@ -57,6 +65,9 @@ interface BatchUploadRecordPage {
   isBankFourEssentialFactor: number
   billStatus: number
   paymentStatus: number
+}
+const down = (download) => {
+  window.open(`${BASE}/${download}`)
 }
 const route: any = useRoute()
 const forms = computed(() => {

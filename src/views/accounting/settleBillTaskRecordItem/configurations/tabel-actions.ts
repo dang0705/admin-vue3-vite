@@ -12,38 +12,38 @@ export default (row: any) => {
       download: contractFile,
       auth: auth('agree'),
       show: () => contractFile
-    },
-    {
-      label: '同步银行卡信息',
-      show: () => paymentStatus === '40',
-      auth: 'core_settleBillTaskRecordItem_edit',
-      dialog: {
-        title: '同步银行卡信息',
-        forms: [
-          {
-            label: '',
-            control: 'FetchTips',
-            labelWidth: '0px',
-            props: {
-              handler: queryUnderTakerBankCard,
-              params: {
-                id: id
-              },
-              texts: ['确定要将该笔结算明细的收款银行卡信息更新为', '吗？'],
-              style: {
-                'text-align': 'center',
-                'font-size': '12px'
-              }
-            }
-          }
-        ]
-      },
-      action: {
-        handler: 'updateUnderTakerBankCard',
-        params: {
-          id: id
-        }
-      }
     }
+    // {
+    //   label: '同步银行卡信息',
+    //   show: () => paymentStatus === '40',
+    //   auth: 'core_settleBillTaskRecordItem_edit',
+    //   dialog: {
+    //     title: '同步银行卡信息',
+    //     forms: [
+    //       {
+    //         label: '',
+    //         control: 'FetchTips',
+    //         labelWidth: '0px',
+    //         props: {
+    //           handler: queryUnderTakerBankCard,
+    //           params: {
+    //             id: id
+    //           },
+    //           texts: ['确定要将该笔结算明细的收款银行卡信息更新为', '吗？'],
+    //           style: {
+    //             'text-align': 'center',
+    //             'font-size': '12px'
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   action: {
+    //     handler: 'updateUnderTakerBankCard',
+    //     params: {
+    //       id: id
+    //     }
+    //   }
+    // }
   ]
 }
