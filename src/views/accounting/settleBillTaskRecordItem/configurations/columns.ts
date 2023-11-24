@@ -39,6 +39,21 @@ export default [
     minWidth: 150
   },
   {
+    prop: 'taskAmount',
+    label: '个人任务承揽费(元)',
+    minWidth: 150
+  },
+  {
+    prop: 'taxWithheld',
+    label: '代扣税款(元)',
+    minWidth: 120
+  },
+  {
+    prop: 'paidAmount',
+    label: '实发金额(元)',
+    minWidth: 120
+  },
+  {
     prop: 'spName',
     label: '服务商',
     minWidth: 150
@@ -78,21 +93,7 @@ export default [
     label: '承接人银行卡号',
     minWidth: 150
   },
-  {
-    prop: 'taskAmount',
-    label: '个人任务承揽费(元)',
-    minWidth: 150
-  },
-  {
-    prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    minWidth: 120
-  },
-  {
-    prop: 'paidAmount',
-    label: '实发金额(元)',
-    minWidth: 120
-  },
+
   // {
   //   prop: 'commissionAmount',
   //   label: '管理费(元)',

@@ -90,6 +90,11 @@ const columns = [
     minWidth: 150
   },
   {
+    prop: 'serviceAmount',
+    label: '结算金额(元)',
+    minWidth: 150
+  },
+  {
     prop: 'merchantName',
     label: '商户',
     minWidth: 150
@@ -114,11 +119,7 @@ const columns = [
   // 	label: '收款方户名',
   // 	minWidth: 150,
   // },
-  {
-    prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 150
-  },
+
   {
     prop: 'payTime',
     label: '付款时间',

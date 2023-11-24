@@ -26,6 +26,22 @@ export default [
     'min-width': 200
   },
   {
+    prop: 'taskAmount',
+    label: '任务承揽费(元)',
+    'min-width': 150,
+    align: 'right'
+  },
+  {
+    prop: 'taxWithheld',
+    label: '代扣税款(元)',
+    'min-width': 120
+  },
+  {
+    prop: 'paidAmount',
+    label: '实发金额(元)',
+    'min-width': 120
+  },
+  {
     prop: 'spName',
     label: '服务商',
     'min-width': 150
@@ -49,22 +65,6 @@ export default [
     prop: 'merchantName',
     label: '商户',
     'min-width': 150
-  },
-  {
-    prop: 'taskAmount',
-    label: '任务承揽费(元)',
-    'min-width': 150,
-    align: 'right'
-  },
-  {
-    prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    'min-width': 120
-  },
-  {
-    prop: 'paidAmount',
-    label: '实发金额(元)',
-    'min-width': 120
   },
   {
     prop: 'billName',
