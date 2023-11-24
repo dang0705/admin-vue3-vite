@@ -2,8 +2,8 @@ import iconFontUrl from '/@/configuration/icon-font-url'
 
 // 字体图标 url
 const cssCdnUrlList: Array<string> = [
-  ...iconFontUrl, // 设计给的图标
-  '//at.alicdn.com/t/font_2298093_y6u00apwst.css' // 初始图标
+  ...iconFontUrl // 设计给的图标
+  // '//at.alicdn.com/t/font_2298093_y6u00apwst.css' // 初始图标
   // '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
 ]
 // 第三方 js url

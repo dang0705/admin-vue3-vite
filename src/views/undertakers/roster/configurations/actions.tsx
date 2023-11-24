@@ -29,8 +29,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
       params: {
         id
       }
-    },
-    icon: 'icon-icon_tianjia'
+    }
   },
   {
     label: '上传身份证',
@@ -89,8 +88,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
       params: {
         id
       }
-    },
-    icon: 'icon-shangchuan'
+    }
   },
   {
     label: '修改手机号',
@@ -117,7 +115,6 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
     action: {
       handler: 'updateMobile',
       params: { id }
-    },
-    icon: 'icon-bianji'
+    }
   }
 ]

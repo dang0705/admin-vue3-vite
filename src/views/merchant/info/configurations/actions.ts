@@ -31,7 +31,6 @@ export default ({ id, status }: any) => {
       label: '终止合作',
       auth: 'core_merchantInfo_stop',
       show: () => status === '1',
-      icon: 'icon-zhongzhi',
       confirm: {
         ask: '您确定将终止该商户合作吗？'
       },
