@@ -5,7 +5,7 @@
     :down-blob-file-url="downFileUrl"
     :down-blob-file-name="downFileName"
     :condition-forms="conditionForms"
-    module="finance/merchantAccountCapitalWater.ts"
+    module="finance/merchantAccountCapitalWater"
     :getListFnName="getListFnName"
     label-width="120px"
     @get-tab-value="toggleTab"

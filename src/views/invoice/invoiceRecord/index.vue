@@ -1,72 +1,33 @@
 <template>
   <Table-view
     :columns="columns"
-    :condition-forms="conditionForms"
-    module="finance/invoiceRecord.ts"
+    :condition-forms="conditions"
+    :actions="actions"
+    module="finance/invoiceRecord"
     downBlobFileUrl="/finance/invoiceRecord/export"
-    downBlobFileName="发票记录.xlsx"
     exportAuth="finance_invoiceRecord_export">
-    <template #actions="{ row: { id, status } }">
-      <el-button
-        icon="view"
-        text
-        type="primary"
-        @click="applyfor(id, 'see')"
-        v-auth="'finance_invoiceRecord_view'">
-        查看
-      </el-button>
-      <el-button
-        icon="edit"
-        text
-        type="primary"
-        v-if="status === '20'"
-        @click="applyfor(id, 'cancel')"
-        v-auth="'finance_invoiceRecord_cancel'">
-        作废
-      </el-button>
-      <el-button
-        icon="edit"
-        text
-        type="primary"
-        v-if="status === '10'"
-        @click="applyfor(id, 'open')"
-        v-auth="'finance_invoiceRecord_add'">
-        开票
-      </el-button>
-      <el-button
-        icon="edit"
-        text
-        type="primary"
-        v-if="status === '00'"
-        @click="applyfor(id, 'reject')"
-        v-auth="'finance_invoiceRecord_audit'">
-        审核
-      </el-button>
-    </template>
     <Dialog
       vertical
-      button-position="center"
       v-model="applyShow"
+      v-model:form-data="dialogFormData"
       :title="financeType === 'see' ? '查看发票' : '开具发票'"
-      submitButtonText="提交"
-      width="1000px"
       :label-width="130"
       :forms="forms"
       :columns="12"
       :showBtn="financeType !== 'see'"
-      v-model:form-data="dialogFormData"
-      :onSubmit="onSubmit" />
+      :onSubmit="onSubmit"
+      submitButtonText="提交"
+      width="1000px" />
     <Dialog
-      vertical
-      button-position="center"
+      v-model:form-data="rejectFormData"
       v-model="rejectShow"
       :title="financeType === 'cancel' ? '发票作废' : '发票审核'"
-      submitButtonText="确认"
       :label-width="120"
       :forms="rejectForms"
       :columns="24"
-      v-model:form-data="rejectFormData"
-      :onSubmit="onSubmit"></Dialog>
+      :onSubmit="onSubmit"
+      vertical
+      submitButtonText="确认" />
   </Table-view>
 </template>
 
@@ -77,119 +38,32 @@ import {
   cancelInvoice
 } from '/@/api/finance/invoiceRecord'
 import { saveInvoice } from '/@/api/finance/InvoiceNotAppliedFor'
+import conditions from '/@/views/invoice/invoiceRecord/configurations/conditions'
+import getActions from '/@/views/invoice/invoiceRecord/configurations/actions'
+import columns from '/@/views/invoice/invoiceRecord/configurations/columns'
 const financeType = ref() // 进入方式 see查看 open开票 cancel作废 reject驳回
-
-const columns = [
-  {
-    type: 'selection',
-    width: '40'
-  },
-  {
-    prop: 'applyNumber',
-    label: '申请编号',
-    'min-width': 175
-  },
-  {
-    prop: 'billRecordNum',
-    label: '结算单编号',
-    'min-width': 175
-  },
-  {
-    prop: 'createTime',
-    label: '申请时间',
-    'min-width': 170
-  },
-  {
-    prop: 'invoicingAmount',
-    label: '开票金额(元)',
-    'min-width': 120
-  },
-  {
-    prop: 'billingTypeDesc',
-    label: '发票类型',
-    'min-width': 150
-  },
-  {
-    prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
-  },
-  {
-    prop: 'spName',
-    label: '服务商',
-    'min-width': 150
-  },
-  {
-    prop: 'status',
-    label: '发票状态',
-    options: 'invoice_status'
-    // 'min-width': 100
-  },
-  {
-    prop: 'reason',
-    label: '原因',
-    'min-width': 150
-  },
-
-  {
-    prop: 'invoicingCategoriesDesc',
-    label: '开票类目',
-    'min-width': 180
-  },
-  {
-    prop: 'postOrderNumber',
-    label: '快递单号',
-    'min-width': 180
-  },
-  {
-    label: '操作',
-    prop: 'actions',
-    fixed: 'right',
-    slot: true,
-    minWidth: 150
+const applyfor = async (id: string, type: string) => {
+  financeType.value = type
+  if (type === 'see' || type === 'open') {
+    applyShow.value = true
+    dialogFormData.value = (await getObj(id)).data
+    dialogFormData.value.radioAddress = 1
+    dialogFormData.value.invoicingAmount =
+      dialogFormData.value.invoicingAmount + '元'
+    dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName
+    dialogFormData.value.id = id
+  } else {
+    rejectShow.value = true
+    rejectFormData.value.id = id
   }
-]
+}
 
-const conditionForms = [
-  {
-    label: '申请编号',
-    control: 'InputPlus',
-    key: 'applyNumber'
-  },
-  {
-    label: '发票类型',
-    control: 'el-select',
-    key: 'billingType',
-    options: 'invoice_type'
-  },
-  {
-    label: '申请时间',
-    control: 'DateRange',
-    key: 'createTimeFromTo'
-  },
-  {
-    label: '商户',
-    control: 'MerchantSelect',
-    key: 'merchantId'
-  },
-  {
-    label: '服务商',
-    control: 'SpSelect',
-    key: 'spId',
-    props: {
-      platform: true
-    }
-  }
-]
+const actions = getActions(applyfor)
 
 const forms = computed(() => [
   {
     slot: true,
-    title: {
-      html: '基本信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '基本信息',
     column: 24
   },
   {
@@ -250,11 +124,7 @@ const forms = computed(() => [
   },
   {
     slot: true,
-    title: {
-      html: '开票信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '开票信息',
     column: 24
   },
   {
@@ -337,11 +207,7 @@ const forms = computed(() => [
   },
   {
     slot: true,
-    title: {
-      html: '邮寄信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '邮寄信息',
     column: 24
   },
   {
@@ -481,22 +347,6 @@ const rejectShow = ref(false)
 let rejectFormData = ref({
   id: ''
 })
-
-const applyfor = async (id: string, type: string) => {
-  financeType.value = type
-  if (type === 'see' || type === 'open') {
-    applyShow.value = true
-    dialogFormData.value = (await getObj(id)).data
-    dialogFormData.value.radioAddress = 1
-    dialogFormData.value.invoicingAmount =
-      dialogFormData.value.invoicingAmount + '元'
-    dialogFormData.value.invoiceTitle = dialogFormData.value.merchantName
-    dialogFormData.value.id = id
-  } else {
-    rejectShow.value = true
-    rejectFormData.value.id = id
-  }
-}
 
 // 提交
 const onSubmit = async (refresh: any) => {

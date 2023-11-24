@@ -7,9 +7,8 @@
     label-width="130"
     exportAuth="hro_undertakerTask_export"
     :condition-forms="taskId ? conditionForms_task : conditionForms"
-    module="core/undertakerTask.ts"
-    downBlobFileUrl="/core/undertakerTask/export"
-    downBlobFileName="undertakerTask.xlsx">
+    module="core/undertakerTask"
+    downBlobFileUrl="/core/undertakerTask/export">
     <template #actions="{ row }">
       <el-button
         icon="view"

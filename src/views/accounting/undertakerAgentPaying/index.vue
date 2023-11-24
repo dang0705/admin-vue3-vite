@@ -74,7 +74,7 @@ import conditionForms from '/@/views/accounting/undertakerAgentPaying/conditionF
 const playStatusMapping = Array2Object({
   dic: ['undertaker_agent_paying_pay_status']
 })
-const actions = (row) => [
+const actions = (row: any) => [
   {
     label: '支付',
     auth: 'finance_undertakerAgentPaying_pay',

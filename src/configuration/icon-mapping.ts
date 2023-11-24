@@ -1,3 +1,8 @@
+/**
+ * Icon 映射表
+ * label为按钮关键字, 内部使用的是action.label.includes方法进行包含匹配
+ * 注入新图标之前请仔细检查是否已存在同类型图标,如已存在则改成数组或者数组中追加
+ */
 export default [
   {
     label: '下线',
@@ -5,7 +10,7 @@ export default [
   },
   {
     label: ['导出', '下载'],
-    icon: 'icon_xiazai'
+    icon: 'icon_xiazai1'
   },
   {
     label: '上传',
@@ -24,8 +29,8 @@ export default [
     icon: 'icon_zhongzhi'
   },
   {
-    label: '撤销',
-    icon: 'icon_liuchengzuofei'
+    label: ['撤销', '作废'],
+    icon: 'icon_zuofei'
   },
   {
     label: '审核',
@@ -54,5 +59,9 @@ export default [
   {
     label: '添加',
     icon: 'icon_icon_tianjia'
+  },
+  {
+    label: '开票',
+    icon: 'icon_fapiaojilu'
   }
 ]

@@ -5,7 +5,7 @@
     :columns="columns"
     action-body="账单"
     getListFnName="dutyPaidPage"
-    module="tax/index.ts"
+    module="tax/index"
     labelWidth="120px"></TableView>
 </template>
 

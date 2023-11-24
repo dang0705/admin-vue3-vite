@@ -1,7 +1,7 @@
 <template>
   <TableView
     :columns="columns"
-    module="core/task.ts"
+    module="core/task"
     :condition-forms="conditionForms"
     :actions="computedActions"
     labelWidth="120px">

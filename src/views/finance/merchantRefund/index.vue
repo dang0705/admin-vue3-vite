@@ -4,7 +4,7 @@
     :actions="actions"
     :condition-forms="conditionForms"
     getListFnName="getRefundPage"
-    module="finance/merchantRefund.ts">
+    module="finance/merchantRefund">
     <template #subAccountNum="{ row }">
       <router-link
         class="hover:underline text-blue-400"

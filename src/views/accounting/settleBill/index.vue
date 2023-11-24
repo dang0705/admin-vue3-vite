@@ -4,7 +4,7 @@
     :actions="actions"
     :columns="columns"
     action-body="账单"
-    module="core/settleBill.ts"
+    module="core/settleBill"
     labelWidth="120px">
     <template #top-bar="{ otherInfo, selectObjs, downParams }">
       <el-button

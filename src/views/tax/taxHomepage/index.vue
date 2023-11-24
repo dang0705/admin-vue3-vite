@@ -4,7 +4,7 @@
     :isTab="false"
     getListFnName="taxFrontPage"
     :condition-forms="conditionForms"
-    module="tax/index.ts">
+    module="tax/index">
     <template #tableTopTwo="{ otherInfo }">
       <div class="total_wrapper mb-4">
         <div class="total_list" v-if="otherInfo.countResp?.length">

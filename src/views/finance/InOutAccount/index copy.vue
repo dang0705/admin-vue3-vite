@@ -16,7 +16,6 @@
         ? '/finance/merchantRecharge/export'
         : '/finance/merchantRefund/export'
     "
-    :downBlobFileName="tabType === '1' ? '入账.xlsx' : '出账.xlsx'"
     :exportAuth="
       tabType === '1'
         ? 'finance_merchantRecharge_export'

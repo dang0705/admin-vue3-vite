@@ -313,12 +313,11 @@ defineExpose({
                     <h1
                       v-if="helper.isString(form.title)"
                       v-text="form.title"
-                      class="text-lg pl-[20px] mb-[18px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px]" />
+                      class="text-lg pl-[20px] mb-[10px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px] font-bold" />
                     <h1
                       v-else
                       v-html="form.title.html"
-                      :style="form.title.style"
-                      class="mb-[20px] text-lg font-bold" />
+                      :style="form.title.style" />
                   </slot>
                 </el-col>
 
@@ -375,12 +374,11 @@ defineExpose({
                     <h1
                       v-if="helper.isString(form.afterTitle)"
                       v-text="form.afterTitle"
-                      class="text-lg pl-[20px] mb-[18px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px]" />
+                      class="text-lg pl-[20px] mb-[10px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px] font-bold" />
                     <h1
                       v-else
                       v-html="form.afterTitle.html"
-                      :style="form.afterTitle.style"
-                      class="mb-[20px] text-lg font-bold" />
+                      :style="form.afterTitle.style" />
                   </slot>
                 </el-col>
               </template>

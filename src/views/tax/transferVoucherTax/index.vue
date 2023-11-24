@@ -4,7 +4,7 @@
     :columns="columns"
     getListFnName="taxMerchantRecharge"
     :condition-forms="conditionForms"
-    module="tax/index.ts">
+    module="tax/index">
     <template #actions="{ row }">
       <el-button
         v-auth="'taxSupervision_merchantRecharge_down'"

@@ -2,12 +2,14 @@
 import helpers from '/@/utils/helpers'
 import iconMapping from '/@/configuration/icon-mapping'
 import { RouteItems } from '/@/types/global'
+import { downBlobFile } from '/@/utils/other'
 
 const $router = useRouter()
 const emit = defineEmits(['get-dialog-data'])
 
 interface Action {
   handler: Function | null
+  save: boolean // 是否是直接保存的方法
   params?: unknown
   callback?: Function
 }
@@ -29,10 +31,14 @@ interface Dialog {
   edit?: Edit // 回显配置，说明同上
   // ..... others Dialog component props
 }
+interface Download {
+  url: string
+  params: any
+}
 interface Actions {
   label: string // 按钮文案
   body?: string // 确认弹框 的 内容 主体 比如 '是否要删除合同' body为合同
-  download?: string // 下载路径
+  download?: string | Download // 下载路径
   dialog?: Dialog // 弹框内的表单
   auth?: string // 权限标识
   show?: Function // 按钮显示逻辑
@@ -41,6 +47,7 @@ interface Actions {
   preview?: Preview // 预览文件
   to?: RouteItems // 跳转
   confirm?: boolean | Confirm // 是否唤起确认
+  icon: string // 图标
 }
 
 const props = defineProps({
@@ -88,7 +95,7 @@ const handleAction = async ({
   download,
   to
 }: Actions) => {
-  let { params, handler = null, callback } = action || {}
+  let { params, handler = null, callback, save = true } = action || {}
   if (to) {
     $router.push(to)
     return
@@ -116,7 +123,8 @@ const handleAction = async ({
     return
   }
   if (download) {
-    window.open(`${BASE}/${download}`)
+    const { url = '', params = {} } = download as Download
+    downBlobFile(`${url || download}`, params)
     return
   }
 
@@ -156,7 +164,7 @@ const handleAction = async ({
         ? await handler(...(params as []))
         : await handler(params)
       : (() => {})()
-    if (shouldRefresh) {
+    if (shouldRefresh && save) {
       refresh && refresh()
       useMessage().success(successText)
       callback && callback()
@@ -166,8 +174,10 @@ const handleAction = async ({
   }
 }
 
-const getIcon = (action: any) => {
+const getIcon = (action: Actions) => {
   const { label: actionLabel, preview, icon = '', type } = action
+  if (icon) return icon
+
   let Icon = ''
   if (actionLabel.includes('查看') || preview) {
     return 'icon_chakan'
@@ -183,72 +193,11 @@ const getIcon = (action: any) => {
       return actionLabel.includes(label) && (Icon = icon)
     }
   })
-  return icon || Icon
-  /*else if (label.includes('导出') || label.includes('下载')) {
-    return 'icon_xiazai'
-  } else if (label.includes('上传')) {
-    return 'icon_shangchuan'
-  } else if (label.includes('停用')) {
-    return 'icon_zhongzhi'
-  } else if (label.includes('编辑')) {
-    return 'icon_bianji'
-  } else if (label.includes('启用')) {
-    return 'icon_zhongzhi'
-  } else if (label.includes('撤销')) {
-    return 'icon_liuchengzuofei'
-  } else if (label.includes('退款审核')) {
-    return 'icon_shenhe'
-  }*/
-  /*  let Icon = icon
-  switch (action.label) {
-    case '标记退款失败':
-      Icon = 'icon_biaojiweiyidu'
-      break
-    case '同步银行卡信息':
-      Icon = 'icon_tongbu'
-      break
-    case '支付':
-      Icon = 'icon_daizhifu'
-      break
-    default:
-  }
-  return Icon*/
-  /*if (action.label.includes('查看') || action.preview) {
-    icon = 'icon_chakan'
-  } else if (action.type === 'delete') {
-    icon = 'icon_shanchu1'
-  } else if (action.label === '编辑') {
-    icon = 'icon_bianji'
-  } else if (action.label === '停用') {
-    icon = 'icon_zhongzhi'
-  } else if (action.label === '启用') {
-    icon = 'icon_qiyong'
-  } else if (action.label === '撤销') {
-    icon = 'icon_liuchengzuofei'
-  } else if (action.label === '退款审核') {
-    icon = 'icon_shenhe'
-  } else if (action.label === '标记退款失败') {
-    icon = 'icon_biaojiweiyidu'
-  } else if (action.label === '导出完税明细') {
-    icon = 'icon_xiazai'
-  } else if (action.label === '上传完税证明') {
-    icon = 'icon_shangchuan'
-  } else if (action.label === '下载完税证明') {
-    icon = 'icon_xiazai'
-  } else if (action.label === '下载电子协议') {
-    icon = 'icon_xiazai'
-  } else if (action.label === '同步银行卡信息') {
-    icon = 'icon_tongbu'
-  } else if (action.label === '支付') {
-    icon = 'icon_daizhifu'
-  } else {
-    icon = action.icon
-  }
-  return icon*/
+  return Icon
 }
-const getColor = (action) => {
+const getColor = (action: Actions) => {
   let color
-  if (action.label.includes('查看') || action.preview) {
+  if (action.label.includes('查看')) {
     color = 'rgba(0,0,0,0.65)'
   } else if (action.type === 'delete') {
     color = '#FF5A00'
@@ -273,8 +222,8 @@ const getColor = (action) => {
       ]"
       :style="{ 'color': getColor(action) }"
       @click.passive="handleAction(action)">
-      <span :class="['iconfont', getIcon(action)]" class="font12"></span>
-      <span class="ml-1">{{ action.label }}</span>
+      <i :class="['iconfont', '!text-default', getIcon(action)]" />
+      <span class="ml-1 hover:underline">{{ action.label }}</span>
     </li>
   </ul>
 </template>

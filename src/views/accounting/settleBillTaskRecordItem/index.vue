@@ -1,15 +1,16 @@
 <template>
   <TableView
     :columns="newColumns"
-    module="core/settleBillTaskRecordItem.ts"
     :condition-forms="forms"
+    :actions="actions"
     :staticQuery="staticQuery"
-    labelWidth="140px"
     :exportAuth="
       route.query.id
         ? 'core_settleBillTaskRecordItem_export'
         : 'core_settleBill_export'
     "
+    labelWidth="140px"
+    module="core/settleBillTaskRecordItem"
     downBlobFileUrl="/core/settleBillTaskRecordItem/export">
     <template #billName="{ row }">
       <router-link
