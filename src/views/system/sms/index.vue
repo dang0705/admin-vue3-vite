@@ -2,7 +2,7 @@
   <Table-view
     :columns="columns"
     :condition-forms="conditions"
-    module="docs/smsNotice.ts" />
+    module="docs/smsNotice" />
 </template>
 
 <script setup lang="ts" name="systemSmsNotice">

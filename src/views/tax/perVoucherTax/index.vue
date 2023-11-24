@@ -4,7 +4,7 @@
     :columns="columns"
     getListFnName="taxSettleRecordItem"
     :condition-forms="conditionForms"
-    module="tax/index.ts">
+    module="tax/index">
     <template #actions="{ row }">
       <el-button
         v-auth="'taxSupervision_settleRecordItem_view'"

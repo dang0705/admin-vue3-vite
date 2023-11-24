@@ -4,7 +4,7 @@
     :columns="columns"
     :condition-forms="conditionForms"
     :actions="actions"
-    module="finance/merchantRecharge.ts"
+    module="finance/merchantRecharge"
     labelWidth="120px"
     exportAuth="finance_merchantRecharge_export"
     downBlobFileUrl="/finance/merchantRecharge/export">

@@ -4,7 +4,7 @@
     :actions="actions"
     :condition-forms="conditionForms"
     getListFnName="refundRecordPayPage"
-    module="finance/merchantRefund.ts" />
+    module="finance/merchantRefund" />
 </template>
 
 <script setup lang="ts">

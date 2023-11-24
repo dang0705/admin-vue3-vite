@@ -30,7 +30,7 @@
     :getListFnName="
       tabType === '1' ? 'fetchList' : tabType === '2' ? 'waterBankPage' : ''
     "
-    module="finance/waterSpPaymentBank.ts">
+    module="finance/waterSpPaymentBank">
     <!-- <template #loanType="{ formData }">
       <el-form-item label="出入账状态:" prop="loanType">
         <el-select

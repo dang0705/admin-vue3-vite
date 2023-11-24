@@ -2,7 +2,7 @@
   <TableView
     ref="merchantAccountCapitalRef"
     :columns="indexThead"
-    module="finance/merchantRecharge.ts"
+    module="finance/merchantRecharge"
     :staticQuery="staticQuery"
     :condition-forms="conditionForms"
     labelWidth="140px"

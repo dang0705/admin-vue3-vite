@@ -2,7 +2,7 @@
   <Table-view
     :columns="columns"
     :condition-forms="conditionForms"
-    module="finance/InvoiceNotAppliedFor.ts"
+    module="finance/InvoiceNotAppliedFor"
     labelWidth="120px"
     downBlobFileUrl="/finance/invoiceRecord/export"
     downBlobFileName="未申请发票.xlsx"
@@ -52,8 +52,8 @@
         financeType === 'applyfor'
           ? '申请开票'
           : financeType === 'open'
-            ? '开具发票'
-            : '申请合并开票'
+          ? '开具发票'
+          : '申请合并开票'
       "
       submitButtonText="提交"
       width="1000px"

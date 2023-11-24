@@ -53,7 +53,7 @@
           :table-height="250"
           no-pagination
           no-padding
-          module="docs/homeMessage.ts" />
+          module="docs/homeMessage" />
       </li>
     </ul>
   </div>

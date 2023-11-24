@@ -7,7 +7,7 @@
     :columns="columns"
     getListFnName="taxUndertakerTask"
     :condition-forms="isTaskDetail ? [] : conditionForms"
-    module="tax/index.ts">
+    module="tax/index">
     <template #contractName="{ row }">
       <a
         v-auth="'taxSupervision_undertakerTask_down'"

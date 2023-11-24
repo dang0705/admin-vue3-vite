@@ -4,7 +4,7 @@
     exportAuth="core_merchantAccountCapital_export"
     :condition-forms="conditionForms"
     downBlobFileUrl="/finance/merchantAccountCapitalWater/export"
-    module="finance/merchantAccountCapital.ts">
+    module="finance/merchantAccountCapital">
     <template #actions="{ row }">
       <el-button
         icon="view"

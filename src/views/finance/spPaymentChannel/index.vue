@@ -3,7 +3,7 @@
     ref="spPaymentChannelRef"
     :columns="columns"
     :condition-forms="conditionForms"
-    module="core/spPaymentChannel.ts">
+    module="core/spPaymentChannel">
     <template #top-bar="{ otherInfo }">
       <el-button
         icon="folder-add"
