@@ -276,6 +276,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * @param refresh 是否刷新当前页码
    */
   const getDataList = (refresh?: any) => {
+    state.queryForm.ids = []
     // 如果需要刷新，则将state.pagination.current重置为1
     if (refresh !== false) {
       state.pagination!.current = 1

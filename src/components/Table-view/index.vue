@@ -287,9 +287,7 @@ const getTableColumnWidth = ({ width, label }) => {
   }
 }
 
-const newTabs = computed(() => {
-  return state.countResp || props.tabs
-})
+const newTabs = computed(() => state.countResp || props.tabs)
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
@@ -373,17 +371,19 @@ const onSelectionChange = (item: []) => {
 }
 //清空搜索条件;
 const resetQuery = () => {
+  selectObjs.value = []
   state.queryForm = {
+    ids: [],
     ...props.staticQuery,
     ...(newTabs.value?.length && newTabs.value[0].attributeName
       ? { [newTabs.value[0].attributeName]: tabValue.value }
       : {})
   }
-  selectObjs.value = []
   getDataList()
 }
 
 provide('refresh', resetQuery)
+provide('getList', getDataList)
 
 const tableCellFormatter = (row, column, cellValue) => {
   if (column.label?.includes('(元)')) {
