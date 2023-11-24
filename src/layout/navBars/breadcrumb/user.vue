@@ -46,11 +46,11 @@
 		</div>-->
     <div class="layout-navbars-breadcrumb-user-icon" @click="onScreenfullClick">
       <i
-        class="iconfont"
         :title="state.isScreenfull ? $t('user.title6') : $t('user.title5')"
-        :class="
-          !state.isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'
-        " />
+        :class="[
+          'iconfont',
+          !state.isScreenfull ? ICONS.fullscreen : ICONS.exitFullscreen
+        ]" />
     </div>
     <el-dropdown
       class="layout-navbars-breadcrumb-user-icon user-info"

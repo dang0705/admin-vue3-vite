@@ -122,11 +122,11 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
               placement="top"
               v-if="row.readStatus === '0'">
               <SvgIcon
-                name="iconfont icon-biaojiweiyidu"
+                name="iconfont icon_biaojiweiyidu"
                 :size="13"
                 color="#000"
                 class="mr-[18px] cursor-pointer"
-                @click="readMarkOne(row.id, refresh)" />
+                @click.stop="readMarkOne(row.id, refresh)" />
             </el-tooltip>
             <el-tooltip
               content="设为未读"
@@ -134,7 +134,7 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
               placement="top"
               v-if="row.readStatus === '1'">
               <SvgIcon
-                name="iconfont icon-biaojiweiweidu"
+                name="iconfont icon_biaojiweiweidu"
                 :size="13"
                 color="#000"
                 class="mr-[18px] cursor-pointer"
@@ -142,7 +142,7 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
             </el-tooltip>
             <el-tooltip :show-after="300" content="删除" placement="top">
               <SvgIcon
-                name="iconfont icon-shanchu"
+                name="iconfont icon_shanchu"
                 :size="13"
                 color="#000"
                 class="cursor-pointer"

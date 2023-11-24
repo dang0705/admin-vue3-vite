@@ -106,6 +106,7 @@ app.config.globalProperties = {
   HOST,
   BASE,
   TOKEN,
+  ICONS,
   baseURL: import.meta.env.VITE_API_URL
 }
 
