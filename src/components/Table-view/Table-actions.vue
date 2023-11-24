@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import helpers from '/@/utils/helpers'
-import iconMapping from '/@/configuration/icon-mapping'
+import { actionsIcons as iconMapping } from '/@/configuration/icons'
 import { RouteItems } from '/@/types/global'
 import { downBlobFile } from '/@/utils/other'
 

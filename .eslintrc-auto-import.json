@@ -86,6 +86,7 @@
     "watchEffect": true,
     "watchPostEffect": true,
     "watchSyncEffect": true,
-    "TOKEN": true
+    "TOKEN": true,
+    "ICONS": true
   }
 }
