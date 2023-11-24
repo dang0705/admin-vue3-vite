@@ -61,5 +61,5 @@ const actions = () => [
     :static-query="{
       tokenType: 'refresh_token'
     }"
-    module="admin/token" />
+    module="admin/refresh-token" />
 </template>
