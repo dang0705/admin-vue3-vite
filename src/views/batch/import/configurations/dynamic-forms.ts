@@ -294,6 +294,16 @@ export default ({
         ]
         failListColumns.value = [
           {
+            label: '服务商',
+            prop: 'spName',
+            minWidth: 200
+          },
+          {
+            label: '支付通道',
+            prop: 'channelName',
+            minWidth
+          },
+          {
             label: '银行流水号',
             prop: 'bankSerialNumber',
             minWidth: 200
@@ -306,7 +316,7 @@ export default ({
           {
             label: '借贷类型',
             prop: 'loanType',
-            minWidth: 200
+            minWidth: 80
           },
           {
             label: '交易金额',
