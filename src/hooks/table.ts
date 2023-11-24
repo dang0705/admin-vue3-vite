@@ -177,13 +177,11 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         if (optionsMap.size) {
           for (const key of optionsMap.keys()) {
             let options = optionsMap.get(key)
-            console.log('options', options)
 
             watch(
               () => dicWatchObj.value,
               (dicObj) => {
                 let dic = dicObj[options]
-                console.log('dic', dic)
 
                 state.dataList?.forEach((v) => {
                   let obj = dic.find((e: any) => {
@@ -302,7 +300,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
   const downBlobFile = (
     url: string,
     query: any,
-    fileName: string,
+    fileName?: string,
     exportExcel?: boolean
   ) => other.downBlobFile(url, query, fileName, exportExcel)
 

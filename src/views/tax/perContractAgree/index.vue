@@ -2,20 +2,10 @@
   <Table-view
     :staticQuery="staticQuery"
     :columns="columns"
-    getListFnName="taxUndertakingContract"
+    :actions="actions"
     :condition-forms="conditionForms"
-    module="tax/index.ts">
-    <template #actions="{ row }">
-      <el-button
-        v-auth="'taxSupervision_undertakingContract_down'"
-        icon="download"
-        text
-        type="primary"
-        @click="handleContractFile(row)">
-        下载
-      </el-button>
-    </template>
-  </Table-view>
+    module="tax/index"
+    getListFnName="taxUndertakingContract" />
 </template>
 
 <script setup lang="ts">
@@ -60,6 +50,13 @@ const columns = [
     'min-width': 90
   }
 ]
+const actions = ({ contractFile }: any) => [
+  {
+    label: '下载',
+    download: contractFile,
+    auth: 'taxSupervision_undertakingContract_down'
+  }
+]
 const staticQuery = computed(() => {
   return {
     spId: route.query.spId,
@@ -99,9 +96,6 @@ const conditionForms = [
     label: '身份证号'
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.contractFile}`)
-}
 </script>
 <script lang="ts">
 export default {

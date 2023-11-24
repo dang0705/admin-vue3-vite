@@ -5,7 +5,6 @@
     module="finance/InvoiceNotAppliedFor"
     labelWidth="120px"
     downBlobFileUrl="/finance/invoiceRecord/export"
-    downBlobFileName="未申请发票.xlsx"
     exportAuth="finance_invoiceRecordNot_export"
     getFullSelection
     v-model="selectObjs">

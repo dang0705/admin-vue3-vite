@@ -7,7 +7,6 @@
       ref="tabView"
       label-width="100"
       downBlobFileUrl="/admin/user/export"
-      downBlobFileName="users.xlsx"
       exportAuth="sys_user_export"
       module="admin/user">
       <template #top-bar>

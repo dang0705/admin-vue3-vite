@@ -89,7 +89,7 @@ labelWidth="140px">
         noPadding
         :tableData="form.serviceBillRecord"
         :columns="serviceIndexThead"
-        module="core/settleBill.ts"
+        module="core/settleBill"
         :createdIsNeed="false"
         labelWidth="120px">
         <template #statusDesc="{ row }">
@@ -162,7 +162,7 @@ labelWidth="140px">
         noPadding
         :tableData="form.taskBillRecord"
         :columns="taskIndexThead"
-        module="core/settleBill.ts"
+        module="core/settleBill"
         :createdIsNeed="false"
         labelWidth="120px">
         <template #statusDesc="{ row }">
