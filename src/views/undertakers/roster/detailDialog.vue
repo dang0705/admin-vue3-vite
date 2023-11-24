@@ -48,31 +48,43 @@
             <el-image
               class="card_pic"
               style="height: 60px"
-              :src="proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN"
+              :src="proxy.baseURL + '/' + form.undertakerPortrait?.[0]"
               :zoom-rate="1.2"
               :max-scale="7"
               :min-scale="0.2"
               :preview-src-list="[
-                proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN
+                proxy.baseURL + '/' + form.undertakerPortrait?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail1.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
           <div class="card_col">
             <el-image
               class="card_pic"
               style="height: 60px"
-              :src="
-                proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0] + TOKEN
-              "
+              :src="proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0]"
               :zoom-rate="1.2"
               :max-scale="7"
               :min-scale="0.2"
               :preview-src-list="[
-                proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0] + TOKEN
+                proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail2.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
         </div>
       </div>

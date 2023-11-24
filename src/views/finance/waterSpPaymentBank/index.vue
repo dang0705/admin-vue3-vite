@@ -7,25 +7,18 @@
       tabType === '1'
         ? 'finance_waterSpPaymentBank_export'
         : tabType === '2'
-        ? 'hro_waterBankCorporateLinkage_export'
-        : ''
+          ? 'hro_waterBankCorporateLinkage_export'
+          : ''
     "
     :condition-forms="conditionForms"
     :down-blob-file-url="
       tabType === '1'
         ? '/finance/waterSpPaymentBank/export'
         : tabType === '2'
-        ? '/finance/waterBankCorporateLinkage/export'
-        : ''
+          ? '/finance/waterBankCorporateLinkage/export'
+          : ''
     "
     @get-tab-value="toggleTab"
-    :down-blob-file-name="
-      tabType === '1'
-        ? '手动维护银行流水.xlsx'
-        : tabType === '2'
-        ? '银企直联银行流水.xlsx'
-        : ''
-    "
     :tabs="tabs"
     :getListFnName="
       tabType === '1' ? 'fetchList' : tabType === '2' ? 'waterBankPage' : ''

@@ -5,7 +5,6 @@
       :columns="columns"
       :actions="actions"
       down-blob-file-url="core/undertakerInfo/export"
-      down-blob-file-name="undertakerInfo.xlsx"
       label-width="160"
       export-auth="hro_undertakerInfo_export"
       module="core/undertakerInfo">

@@ -3,7 +3,6 @@
     ref="accountCapitalWaterRef"
     :columns="columns"
     :down-blob-file-url="downFileUrl"
-    :down-blob-file-name="downFileName"
     :condition-forms="conditionForms"
     module="finance/merchantAccountCapitalWater"
     :getListFnName="getListFnName"
@@ -14,10 +13,10 @@
       tabType === '1'
         ? 'finance_merchantAccountCapitalWater_batch_export'
         : tabType === '2'
-        ? 'finance_spAccountCapitalWater_batch_export'
-        : tabType === '3'
-        ? 'finance_platAccountCapitalWater_batch_export'
-        : ''
+          ? 'finance_spAccountCapitalWater_batch_export'
+          : tabType === '3'
+            ? 'finance_platAccountCapitalWater_batch_export'
+            : ''
     ">
     <template #subAccountNum="{ row }">
       <router-link
@@ -112,12 +111,12 @@ const columns1 = [
   },
   {
     prop: 'amount',
-    label: '交易金额（元）',
+    label: '交易金额(元)',
     'min-width': 160
   },
   {
     prop: 'overBalance',
-    label: '交易后余额（元）',
+    label: '交易后余额(元)',
     'min-width': 160
   },
   {
@@ -168,12 +167,12 @@ const columns2 = [
   },
   {
     prop: 'amount',
-    label: '交易金额（元）',
+    label: '交易金额(元)',
     'min-width': 160
   },
   {
     prop: 'overBalance',
-    label: '交易后余额（元）',
+    label: '交易后余额(元)',
     'min-width': 160
   },
   {
@@ -214,12 +213,12 @@ const columns3 = [
   },
   {
     prop: 'amount',
-    label: '交易金额（元）',
+    label: '交易金额(元)',
     'min-width': 160
   },
   {
     prop: 'overBalance',
-    label: '交易后余额（元）',
+    label: '交易后余额(元)',
     'min-width': 160
   },
   {
