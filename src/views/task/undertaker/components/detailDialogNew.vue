@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="info_row">
-            <div class="info_label">开始前上传图片：</div>
+            <div class="info_label">开始打卡图片：</div>
             <div class="info_value">
               <div v-for="item in form.startImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
@@ -81,7 +81,18 @@
             </div>
           </div>
           <div class="info_row">
-            <div class="info_label">完成成果图片：</div>
+            <div class="info_label">结束打卡图片：</div>
+            <div class="info_value">
+              <div v-for="item in form.doneImages" :key="item">
+                <UploadFile :modelValue="[item]" :disabled="true" />
+              </div>
+              <div v-if="!form.doneImages?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
+              </div>
+            </div>
+          </div>
+          <div class="info_row">
+            <div class="info_label">任务成果：</div>
             <div class="info_value">
               <div v-for="item in form.doneImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
