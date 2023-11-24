@@ -8,16 +8,16 @@
       'core_settleBillRecord_sp_view'
     ]"
     :exportAuth="
-      tabType === '任务结算单' //  '20' means 任务结算单
+      tabType === '20' //  '20' means 20
         ? 'core_settleBillRecord_task_export'
-        : tabType === '服务结算单'
+        : tabType === '10'
           ? 'core_settleBillRecord_sp_export'
           : ''
     "
     :downBlobFileUrl="
-      tabType === '任务结算单'
+      tabType === '20'
         ? '/core/settleBillRecord/exportTaskSettleBillRecord'
-        : tabType === '服务结算单'
+        : tabType === '10'
           ? '/core/settleBillRecord/exportServiceSettleBillRecord'
           : ''
     "
@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { payChannel } from '/@/configuration/dynamic-control'
 const router = useRouter()
-const tabType = ref('任务结算单')
+const tabType = ref('20')
 const columns = [
   {
     type: 'selection',
