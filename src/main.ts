@@ -59,9 +59,6 @@ ElSelect.props = {
     type: String,
     default: '请选择'
   },
-  clearable: {
-    default: true
-  },
   filterable: {
     default: true
   }
