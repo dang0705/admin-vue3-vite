@@ -40,12 +40,6 @@ import {
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 
-import isWindows from '/@/configuration/is-windows'
-
-if (!isWindows) {
-  document.documentElement.style.setProperty('--el-font-size-base', '14px')
-  document.documentElement.style.setProperty('--el-font-size-medium', '16px')
-}
 // const app = createApp(isDev ? Test : App);
 const app = createApp(App)
 

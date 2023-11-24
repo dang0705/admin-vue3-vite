@@ -19,7 +19,19 @@ import { Local, Session } from '/@/utils/storage'
 import mittBus from '/@/utils/mitt'
 import setIntroduction from '/@/utils/setIconfont'
 import { ElLoading } from 'element-plus'
+import isWindows from '/@/configuration/is-windows'
 
+const fontSize = { small: '', big: '' }
+fontSize.small = isWindows ? '12px' : '14px'
+fontSize.big = isWindows ? '14px' : '16px'
+document.documentElement.style.setProperty(
+  '--el-font-size-base',
+  fontSize.small
+)
+document.documentElement.style.setProperty(
+  '--el-font-size-medium',
+  fontSize.big
+)
 let loadingInstance: any = null
 $bus.on('on-action-loading', () => {
   loadingInstance = ElLoading.service({ background: 'transparent' })
