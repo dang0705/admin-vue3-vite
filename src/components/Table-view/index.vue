@@ -249,40 +249,40 @@ const getDialogData = async (dialog: any) => {
   }
 }
 
-const getTableColumnWidth = (column) => {
-  if (column.width) {
-    return column.width
+const getTableColumnWidth = ({ width, label }) => {
+  if (width) {
+    return width
   }
-  if (!column.label) {
+  if (!width) {
     return
   }
-  if (column.label.includes('手机号')) {
+  if (width.includes('手机号')) {
     return tableColumnsWidth['phone']
-  } else if (column.label.includes('商户')) {
+  } else if (width.includes('商户')) {
     return tableColumnsWidth['merchantName']
-  } else if (column.label.includes('服务商')) {
+  } else if (width.includes('服务商')) {
     return tableColumnsWidth['spList']
   } else if (
-    column.label.includes('姓名') ||
-    column.label.includes('联系人') ||
-    column.label.includes('创建人')
+    width.includes('姓名') ||
+    width.includes('联系人') ||
+    width.includes('创建人')
   ) {
     return tableColumnsWidth['userName']
-  } else if (column.label.includes('时间')) {
+  } else if (width.includes('时间')) {
     return tableColumnsWidth['time']
-  } else if (column.label.includes('代码')) {
+  } else if (width.includes('代码')) {
     return tableColumnsWidth['code']
-  } else if (column.label.includes('身份证')) {
+  } else if (width.includes('身份证')) {
     return tableColumnsWidth['card']
-  } else if (column.label.includes('性别')) {
+  } else if (width.includes('性别')) {
     return tableColumnsWidth['sex']
-  } else if (column.label.includes('年龄')) {
+  } else if (width.includes('年龄')) {
     return tableColumnsWidth['age']
-  } else if (column.label.includes('学历')) {
+  } else if (width.includes('学历')) {
     return tableColumnsWidth['education']
-  } else if (column.label.includes('开户行')) {
+  } else if (width.includes('开户行')) {
     return tableColumnsWidth['bankName']
-  } else if (column.label.includes('银行卡号')) {
+  } else if (width.includes('银行卡号')) {
     return tableColumnsWidth['bankNumber']
   }
 }
