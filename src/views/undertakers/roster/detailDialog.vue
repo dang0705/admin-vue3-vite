@@ -3,6 +3,7 @@
     title="承接人详情"
     v-model="visible"
     :close-on-click-modal="false"
+    @close="close"
     draggable
     width="1000px">
     <el-form
@@ -158,6 +159,7 @@
 import { useDict } from '/@/hooks/dict'
 import { getObj } from '/src/api/core/undertakerInfo'
 defineOptions({ name: 'UndertakerInfoDialog' })
+const emits = defineEmits(['close'])
 const { proxy } = getCurrentInstance()
 // 定义变量内容
 const dataFormRef = ref()
@@ -259,6 +261,10 @@ const getundertakerInfoData = (id: string) => {
     .finally(() => {
       loading.value = false
     })
+}
+const close = () => {
+  visible.value = false
+  emits('close')
 }
 // 暴露变量
 defineExpose({

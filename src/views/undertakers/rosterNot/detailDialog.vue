@@ -2,8 +2,8 @@
   <el-dialog
     title="承接人详情"
     v-model="visible"
-    :close-on-click-modal="false"
     draggable
+    @close="close"
     width="1000px">
     <el-form
       class="form-view"
@@ -151,6 +151,7 @@
 <script setup lang="ts">
 import { useDict } from '/@/hooks/dict'
 import { getObj } from '/src/api/core/undertakerInfo'
+const emits = defineEmits(['close'])
 defineOptions({ name: 'UndertakerInfoDialog' })
 const { proxy } = getCurrentInstance()
 // 定义变量内容
@@ -180,6 +181,10 @@ const form = reactive({
   isBankFourEssentialFactor: '',
   spList: []
 })
+const close = () => {
+  visible.value = false
+  emits('close')
+}
 // 定义校验规则
 const dataRules = ref({
   undertakerName: [

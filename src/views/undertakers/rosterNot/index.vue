@@ -18,7 +18,10 @@
         </el-button>
       </template>
       <!-- 查看 -->
-      <detail-dialog ref="detailDialogRef" />
+      <detail-dialog
+        v-if="showDetailDialog"
+        ref="detailDialogRef"
+        @close="showDetailDialog = false" />
       <Dialog
         v-model="showDialog"
         v-model:form-data="dialogFormData"
@@ -38,6 +41,7 @@ import getColumns from '/@/views/undertakers/rosterNot/configurations/columns'
 import { saveUndertakerSp } from '/@/api/core/undertakerInfoNot'
 const batchMap = Array2Object({ dic: ['gender', 'education'] })
 const showDialog = ref(false)
+const showDetailDialog = ref(false)
 const selectObjs = ref([]) // 勾选的表格行
 const detailDialogRef = ref()
 const dialogFormData = ref({
@@ -45,7 +49,14 @@ const dialogFormData = ref({
 })
 const columns = getColumns(batchMap)
 
-const openDialog = (...arg: any[]) => detailDialogRef.value.openDialog(...arg)
+const openDialog = (...arg: any[]) => {
+  showDetailDialog.value = true
+  nextTick(() => {
+    setTimeout(() => {
+      detailDialogRef.value?.openDialog(...arg)
+    }, 200)
+  })
+}
 // 引入组件
 const DetailDialog = defineAsyncComponent(() => import('./detailDialog.vue'))
 
