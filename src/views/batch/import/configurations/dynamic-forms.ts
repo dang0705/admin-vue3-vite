@@ -81,6 +81,9 @@ export default ({
             label: '手机号',
             minWidth
           },
+          { prop: 'bankName', label: '开户行', minWidth },
+          { prop: 'bankNumber', label: '银行卡号', minWidth: 180 },
+          { prop: 'spName', label: '服务商', minWidth },
           ...failColumnsSuffix
         ]
         break
