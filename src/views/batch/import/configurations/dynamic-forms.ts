@@ -74,7 +74,7 @@ export default ({
           {
             prop: 'undertakerCard',
             label: '身份证号',
-            minWidth
+            minWidth: 180
           },
           {
             prop: 'undertakerPhone',
