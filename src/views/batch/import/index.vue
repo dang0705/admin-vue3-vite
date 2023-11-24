@@ -1,17 +1,9 @@
 <template>
   <TableView
     :columns="columns"
+    :actions="actions"
     :condition-forms="conditionForms"
     module="core/batchUploadRecord">
-    <template #actions="{ row: { id, batchType, batchState } }">
-      <el-button
-        text
-        type="primary"
-        v-auth="'core_batchUploadRecord_view'"
-        @click="view({ id, type: batchType, state: batchState })">
-        查看
-      </el-button>
-    </template>
     <Dialog
       v-model="show"
       disabled
@@ -62,6 +54,21 @@ import dynamicForms from '/@/views/batch/import/configurations/dynamic-forms'
 
 const dialogFormLabelWidth = ref(160)
 const failListColumns = ref<any[]>([])
+const actions = ({ id, batchType, batchState }: any) => [
+  {
+    label: '查看',
+    auth: 'core_batchUploadRecord_view',
+    preview: true,
+    action: {
+      handler: view,
+      params: {
+        id,
+        type: batchType,
+        state: batchState
+      }
+    }
+  }
+]
 
 let currentId = '' // 主键
 const currentType = ref('') // 批次类型
