@@ -36,7 +36,7 @@
             </UploadFile>
           </el-form-item>
           <ul
-            class="pl-[20px] rounded-[6px] bg-[#FFF7F3] text-[12px] pt-[15px] mt-[25px]"
+            class="pl-[20px] rounded-[6px] bg-[#FFF7F3] pt-[15px] mt-[25px]"
             style="border: 1px solid #ff682659">
             <li class="mb-[10px]">文件要求:</li>
             <li class="mb-[10px]">
