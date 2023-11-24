@@ -115,6 +115,16 @@
             </div>
           </div>
         </div>
+        <div class="info_box" v-if="!form.spList?.length">
+          <div class="info_item">
+            <div class="info_label">服务商：</div>
+            <div class="info_value"></div>
+          </div>
+          <div class="info_item">
+            <div class="info_label">是否存在生效协议：</div>
+            <div class="info_value"></div>
+          </div>
+        </div>
       </div>
     </el-form>
     <span class="flex justify-end items-center footer">
