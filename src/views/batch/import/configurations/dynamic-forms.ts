@@ -190,11 +190,6 @@ export default ({
             label: '身份证号',
             minWidth
           },
-          {
-            prop: 'undertakerPhone',
-            label: '手机号',
-            minWidth
-          },
           ...failColumnsSuffix
         ]
         break
