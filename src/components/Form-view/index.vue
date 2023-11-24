@@ -237,6 +237,8 @@ watch(
 const getEvent = (control: string) =>
   ['el-input', 'InputPlus'].includes(control) ? 'keydown' : ''
 const onEnter = ({ key, code }: any) =>
+  !prop.validation &&
+  prop.submitButtonText === '查询' &&
   (key.toLowerCase() === 'enter' || code.toLowerCase() === 'enter') &&
   getList &&
   getList()
