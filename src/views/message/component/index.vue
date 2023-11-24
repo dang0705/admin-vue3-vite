@@ -84,18 +84,12 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
     </template>
     <template #content="{ row, refresh }">
       <div
-        :class="[
-          'flex',
-          'justify-between',
-          'cursor-pointer',
-          'items-center',
-          'text-[12px]'
-        ]"
+        :class="['flex', 'justify-between', 'cursor-pointer', 'items-center']"
         @mouseenter="row.show = false"
         @mouseleave="row.show = true"
         @click="goDetail(row, refresh)">
         <div
-          class="rounded-[3px] relative text-[12px] flex flex-shrink-0 justify-center items-center w-fit h-[20px] px-[6px]"
+          class="rounded-[3px] relative flex flex-shrink-0 justify-center items-center w-fit h-[20px] px-[6px]"
           :style="bgc(row.noticeType)">
           {{ row.title }}
         </div>
@@ -103,14 +97,13 @@ const goDetail = async ({ id, url }: any, refresh: any) => {
           :class="[
             'mr-auto',
             'ml-[12px]',
-            'text-[12px]',
             { 'opacity-[0.5]': row.readStatus === '1' }
           ]"
           v-text="row.content" />
         <div class="h-[52px] relative py-[10px] box-border flex-shrink-0">
           <div
             v-show="row.show"
-            class="text-[12px] h-full text-[#999] cursor-pointer text-right">
+            class="h-full text-[#999] cursor-pointer text-right">
             {{ row.createTime }}
           </div>
           <div

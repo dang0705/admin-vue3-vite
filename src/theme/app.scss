@@ -28,9 +28,13 @@
 	--el-disabled-border-color: transparent; /*全局禁用边框透明*/
 	--el-button-active-bg-color: #ff6826;
 	//--el-button-hover-link-text-color: #ff6826;
-  --table-header-bg-color: #eaeaea; /*表头背景色*/
-  --el-font-size-base: 12px;
-  --el-font-size-medium:14px
+    --table-header-bg-color: #eaeaea; /*表头背景色*/
+    --el-font-size-base: 12px;
+    --el-font-size-medium:14px;
+	--el-menu-item-font-size:var(--el-font-size-base);
+}
+.el-pagination{
+	--el-pagination-font-size:var(--el-font-size-base)
 }
 .el-transfer {
 	--el-transfer-panel-width: 35vw;

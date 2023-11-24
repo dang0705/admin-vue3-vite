@@ -56,7 +56,7 @@
             <div class="info_value">{{ form.doneTime }}</div>
           </div>
           <div class="info_item">
-            <div class="info_label">确认工作量：</div>
+            <div class="info_label">确认任务量：</div>
             <div class="info_value">{{ form.workload }}</div>
           </div>
           <div class="info_item">
@@ -95,7 +95,7 @@
             <div class="info_value">{{ form.enterpriseAcceptanceTime }}</div>
           </div>
           <!-- <div class="info_item">
-            <div class="info_label">企业验收工作量：</div>
+            <div class="info_label">企业验收任务量：</div>
             <div class="info_value">
               {{ form.enterpriseAcceptanceWorkload }}
             </div>

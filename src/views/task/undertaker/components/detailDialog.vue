@@ -11,7 +11,7 @@
     vertical
     :showBtn="showBtn">
     <template #workload>
-      <el-form-item label="确认工作量：" prop="workload">
+      <el-form-item label="确认任务量：" prop="workload">
         <InputPlus disabled :modelValue="formData.workload"></InputPlus>
         <div v-if="formData.workload && formData.measuringUnit">
           {{ batchMap?.task_unit[formData.measuringUnit] }}
