@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import helpers from '/@/utils/helpers'
+import iconMapping from '/@/configuration/icon-mapping'
 import { RouteItems } from '/@/types/global'
 
 const $router = useRouter()
@@ -164,40 +165,86 @@ const handleAction = async ({
     return Promise.reject(err)
   }
 }
-const getIcon = (action) => {
-  let icon
-  if (action.label.includes('查看') || action.preview) {
-    icon = 'icon-chakan'
+
+const getIcon = (action: any) => {
+  const { label: actionLabel, preview, icon = '', type } = action
+  let Icon = ''
+  if (actionLabel.includes('查看') || preview) {
+    return 'icon_chakan'
+  } else if (type === 'delete') {
+    return 'icon_a-shanchu1'
+  }
+  iconMapping.some(({ icon, label }) => {
+    if (helpers.isArray(label)) {
+      return (label as []).some((labelName) => {
+        return actionLabel.includes(labelName) && (Icon = icon)
+      })
+    } else {
+      return actionLabel.includes(label) && (Icon = icon)
+    }
+  })
+  return icon || Icon
+  /*else if (label.includes('导出') || label.includes('下载')) {
+    return 'icon_xiazai'
+  } else if (label.includes('上传')) {
+    return 'icon_shangchuan'
+  } else if (label.includes('停用')) {
+    return 'icon_zhongzhi'
+  } else if (label.includes('编辑')) {
+    return 'icon_bianji'
+  } else if (label.includes('启用')) {
+    return 'icon_zhongzhi'
+  } else if (label.includes('撤销')) {
+    return 'icon_liuchengzuofei'
+  } else if (label.includes('退款审核')) {
+    return 'icon_shenhe'
+  }*/
+  /*  let Icon = icon
+  switch (action.label) {
+    case '标记退款失败':
+      Icon = 'icon_biaojiweiyidu'
+      break
+    case '同步银行卡信息':
+      Icon = 'icon_tongbu'
+      break
+    case '支付':
+      Icon = 'icon_daizhifu'
+      break
+    default:
+  }
+  return Icon*/
+  /*if (action.label.includes('查看') || action.preview) {
+    icon = 'icon_chakan'
   } else if (action.type === 'delete') {
-    icon = 'icon-shanchu1'
+    icon = 'icon_shanchu1'
   } else if (action.label === '编辑') {
-    icon = 'icon-bianji'
+    icon = 'icon_bianji'
   } else if (action.label === '停用') {
-    icon = 'icon-zhongzhi'
+    icon = 'icon_zhongzhi'
   } else if (action.label === '启用') {
-    icon = 'icon-qiyong'
+    icon = 'icon_qiyong'
   } else if (action.label === '撤销') {
-    icon = 'icon-liuchengzuofei'
+    icon = 'icon_liuchengzuofei'
   } else if (action.label === '退款审核') {
-    icon = 'icon-shenhe'
+    icon = 'icon_shenhe'
   } else if (action.label === '标记退款失败') {
-    icon = 'icon-biaojiweiyidu'
+    icon = 'icon_biaojiweiyidu'
   } else if (action.label === '导出完税明细') {
-    icon = 'icon-xiazai'
+    icon = 'icon_xiazai'
   } else if (action.label === '上传完税证明') {
-    icon = 'icon-shangchuan'
+    icon = 'icon_shangchuan'
   } else if (action.label === '下载完税证明') {
-    icon = 'icon-xiazai'
+    icon = 'icon_xiazai'
   } else if (action.label === '下载电子协议') {
-    icon = 'icon-xiazai'
+    icon = 'icon_xiazai'
   } else if (action.label === '同步银行卡信息') {
-    icon = 'icon-tongbu'
+    icon = 'icon_tongbu'
   } else if (action.label === '支付') {
-    icon = 'icon-daizhifu'
+    icon = 'icon_daizhifu'
   } else {
     icon = action.icon
   }
-  return icon
+  return icon*/
 }
 const getColor = (action) => {
   let color

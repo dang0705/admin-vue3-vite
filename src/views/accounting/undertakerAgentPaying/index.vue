@@ -3,7 +3,8 @@
     v-model="selectedRows"
     :columns="columns"
     :condition-forms="conditionForms"
-    module="finance/undertakerAgentPaying.ts"
+    :actions="actions"
+    module="finance/undertakerAgentPaying"
     label-width="150"
     is-tab
     get-full-selection
@@ -29,7 +30,7 @@
     <!-- <template #payStatus="{ row: { payStatus } }">
       {{ playStatusMapping['undertaker_agent_paying_pay_status'][payStatus] }}
     </template> -->
-    <template #actions="{ row }">
+    <!--    <template #actions="{ row }">
       <el-button
         v-if="
           ['待支付', '支付失败'].includes(
@@ -43,7 +44,7 @@
         @click="confirmToPay('pay', row)">
         支付
       </el-button>
-    </template>
+    </template>-->
     <!--    付款弹框-->
     <Dialog
       vertical
@@ -69,6 +70,26 @@ import isArrayItemSame from '/@/utils/is-array-item-same'
 import { useMessageBox } from '/@/hooks/message'
 import columns from '/@/views/accounting/undertakerAgentPaying/columns'
 import conditionForms from '/@/views/accounting/undertakerAgentPaying/conditionForms'
+
+const playStatusMapping = Array2Object({
+  dic: ['undertaker_agent_paying_pay_status']
+})
+const actions = (row) => [
+  {
+    label: '支付',
+    auth: 'finance_undertakerAgentPaying_pay',
+    show: () =>
+      ['待支付', '支付失败'].includes(
+        playStatusMapping.value['undertaker_agent_paying_pay_status'][
+          row.payStatus
+        ]
+      ),
+    action: {
+      handler: confirmToPay,
+      params: ['pay', row]
+    }
+  }
+]
 // 当前tab选中的中文
 const currentTab = ref('')
 // 付款弹框
@@ -80,9 +101,7 @@ const dialog = ref({
 })
 // 选中的表格行
 const selectedRows = ref<any[]>([])
-const playStatusMapping = Array2Object({
-  dic: ['undertaker_agent_paying_pay_status']
-})
+
 // 批量支付
 const confirmToPay = async (
   type = 'batch',
