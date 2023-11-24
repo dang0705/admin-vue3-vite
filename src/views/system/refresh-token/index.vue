@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { delObjs } from '/@/api/admin/refresh-token'
 const conditionForms = [
   {
     key: 'username',
@@ -44,13 +45,24 @@ const columns = [
     width: 80
   }
 ]
-const actions = () => [
-  {
-    label: '下线',
-    type: 'delete',
-    auth: 'sys_token_del'
-  }
-]
+const actions = (row: any) => {
+  const { accessToken, id } = row
+  return [
+    {
+      label: '下线',
+      // type: 'delete',
+      auth: 'sys_token_del',
+      confirm: {
+        ask: '您确定下线吗？',
+        done: '下线成功!'
+      },
+      action: {
+        handler: delObjs,
+        params: [[accessToken]]
+      }
+    }
+  ]
+}
 </script>
 
 <template>
