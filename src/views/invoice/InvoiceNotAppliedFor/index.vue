@@ -51,8 +51,8 @@
         financeType === 'applyfor'
           ? '申请开票'
           : financeType === 'open'
-          ? '开具发票'
-          : '申请合并开票'
+            ? '开具发票'
+            : '申请合并开票'
       "
       submitButtonText="提交"
       width="1000px"
@@ -415,7 +415,7 @@ const forms = computed(() => [
     },
     rules: [
       {
-        required: dialogFormData.value.radioAddress === 0,
+        required: true,
         message: '收件人不能为空',
         trigger: 'blur'
       }
@@ -430,7 +430,7 @@ const forms = computed(() => [
     },
     rules: [
       {
-        required: dialogFormData.value.radioAddress === 0,
+        required: true,
         message: '收件人手机号不能为空',
         trigger: 'blur'
       },
@@ -470,7 +470,7 @@ const forms = computed(() => [
     },
     rules: [
       {
-        required: dialogFormData.value.radioAddress === 0,
+        required: true,
         message: '邮寄地址不能为空',
         trigger: 'blur'
       }
