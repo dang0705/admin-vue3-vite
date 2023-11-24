@@ -75,6 +75,9 @@
               <div v-for="item in form.startImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
               </div>
+              <div v-if="!form.startImages?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
+              </div>
             </div>
           </div>
           <div class="info_row">
@@ -82,6 +85,9 @@
             <div class="info_value">
               <div v-for="item in form.doneImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
+              </div>
+              <div v-if="!form.doneImages?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
               </div>
             </div>
           </div>
