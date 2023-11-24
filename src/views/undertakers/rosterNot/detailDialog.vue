@@ -52,7 +52,14 @@
                 proxy.baseURL + '/' + form.undertakerPortrait?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail1.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
           <div class="card_col">
             <el-image
@@ -66,7 +73,14 @@
                 proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail2.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
         </div>
       </div>

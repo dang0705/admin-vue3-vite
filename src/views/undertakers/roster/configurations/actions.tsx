@@ -56,12 +56,14 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
                 }}></div>
             )
           },
+          value: [],
           column: 12
         },
         {
           // label: '上传身份证国徽面',
           key: 'cardOpposite',
           control: 'UploadFile',
+          value: [],
           props: {
             type: businessType,
             bgColor: '#fbfbfb',

@@ -299,6 +299,7 @@ const conditionForms = computed(() => {
       control: 'UploadFile',
       key: 'workEnvironment',
       label: '服务环境',
+      value: [],
       column: 24
     }
   ]

@@ -12,6 +12,7 @@ const formOne = [
         trigger: 'blur'
       }
     ],
+    value: [],
     props: {
       type: '60'
     }
@@ -32,7 +33,7 @@ const formOne = [
     }
   },
   {
-    control: 'InputPlus',
+    control: 'InputNumber',
     key: 'payingAccountNumber',
     label: '付款账号',
     rules: [

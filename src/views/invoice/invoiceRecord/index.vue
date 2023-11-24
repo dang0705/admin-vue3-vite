@@ -189,6 +189,7 @@ const forms = computed(() => [
     key: 'invoiceFiles',
     label: '发票图片',
     column: 24,
+    value: [],
     props: {
       type: '60',
       disabled: financeType.value === 'see',

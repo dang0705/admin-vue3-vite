@@ -54,6 +54,7 @@ export default (row: any) => {
             control: 'UploadFile',
             key: 'fileUrl',
             label: '上传完税证明',
+            value: [],
             rules: [
               {
                 required: true,

@@ -163,6 +163,7 @@ const addUnderTakerForms = [
         trigger: 'blur'
       }
     ],
+    value: [],
     props: {
       type: '60'
     }

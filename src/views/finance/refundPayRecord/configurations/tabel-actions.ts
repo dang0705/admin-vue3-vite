@@ -36,6 +36,7 @@ export default (row: any) => {
                 return operateMode === '1'
               }
             },
+            value: [],
             props: {
               type: '60'
             }
