@@ -46,7 +46,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
       isKeepAlive: true,
       isAffix: true,
       isIframe: false,
-      icon: 'iconfont icon-shouye'
+      icon: 'iconfont icon_shouye'
     }
   }
   /*	{
