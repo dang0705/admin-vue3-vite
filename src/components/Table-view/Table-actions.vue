@@ -127,7 +127,6 @@ const handleAction = async ({
     downBlobFile(`${url || download}`, params)
     return
   }
-
   const isDownload = type == 'download'
   const shouldRefresh = !preview && !isDownload
   const { useMessage, useMessageBox } = await import('/@/hooks/message')
@@ -160,10 +159,10 @@ const handleAction = async ({
     isDelete
       ? await props.delFnName([props.row[props.mainKey]])
       : handler
-      ? helpers.isArray(params)
-        ? await handler(...(params as []))
-        : await handler(params)
-      : (() => {})()
+        ? helpers.isArray(params)
+          ? await handler(...(params as []))
+          : await handler(params)
+        : (() => {})()
     if (shouldRefresh && save) {
       refresh && refresh()
       useMessage().success(successText)

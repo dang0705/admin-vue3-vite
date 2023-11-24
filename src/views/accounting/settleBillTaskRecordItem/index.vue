@@ -69,7 +69,7 @@
       submitButtonText="确认"
       :label-width="150"
       :forms="accountForms"
-      :columns="20"
+      :columns="24"
       :on-submit="onSubmit"
       width="500px"></Dialog>
   </TableView>
@@ -150,7 +150,7 @@ const newColumns = computed(() => {
   })
   return list
 })
-const onSubmit = async (id) => {
+const onSubmit = async () => {
   const params = {
     id: id.value
   }
