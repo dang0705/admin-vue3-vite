@@ -402,7 +402,7 @@
           </el-col>
 
           <el-col :span="24" class="mb20">
-            <el-form-item label="工作福利：" prop="taskRequireInfo.workFare">
+            <el-form-item label="项目福利：" prop="taskRequireInfo.workFare">
               <InputPlus
                 :disabled="self_disabled"
                 maxlength="500"
@@ -415,7 +415,7 @@
 
           <el-col :span="24" class="mb20">
             <el-form-item
-              label="工作环境："
+              label="服务环境："
               prop="taskRequireInfo.workEnvironment">
               <UploadFile
                 multiple

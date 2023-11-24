@@ -67,7 +67,7 @@ const comForms = [
   {
     control: 'InputPlus',
     key: 'workload',
-    label: '确认工作量',
+    label: '确认任务量',
     props: {
       disabled: true
     },
@@ -126,7 +126,7 @@ export default ({ type }: any) =>
           {
             control: 'InputPlus',
             key: 'enterpriseAcceptanceWorkload',
-            label: '企业验收工作量',
+            label: '企业验收任务量',
             props: {
               disabled: true
             }
@@ -159,7 +159,7 @@ export default ({ type }: any) =>
           ...comForms,
           {
             control: 'InputPlus',
-            label: '企业验收工作量',
+            label: '企业验收任务量',
             key: 'enterpriseAcceptanceWorkload',
             title: '企业验收页',
             rules: [

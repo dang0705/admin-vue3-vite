@@ -318,7 +318,7 @@ const route = useRoute()
 // 定义变量内容
 const dataFormRef = ref()
 const isDetail = ref(false)
-// const iTRTexts = ref(['元 < 单人单月任务金额 <=', '元，比例', '%'])
+// const iTRTexts = ref(['元 < 单人单月任务承揽费 <=', '元，比例', '%'])
 const visible = ref(false)
 const loading = ref(false)
 const spinfoList = ref([])

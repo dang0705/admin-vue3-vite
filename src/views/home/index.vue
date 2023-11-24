@@ -71,7 +71,7 @@ const routes = ref([
   {
     route: '/task/info/add',
     text: '创建任务',
-    icon: 'icon-fabu',
+    icon: 'icon_fabu',
     hover: false,
     bg: '#628EF8',
     iconSize: 22
@@ -79,7 +79,7 @@ const routes = ref([
   {
     route: '/invoice/invoiceRecord/index',
     text: '发票记录',
-    icon: 'icon-invoice',
+    icon: 'icon_fapiaoguanlixitong1',
     hover: false,
     bg: '#8E8BFC',
     iconSize: 18
@@ -87,7 +87,7 @@ const routes = ref([
   {
     route: '/accounting/settleBill/index',
     text: '结算管理',
-    icon: 'icon-accounting',
+    icon: 'icon_jiesuanzhongxin',
     hover: false,
     bg: '#57CA18',
     iconSize: 22
@@ -95,7 +95,7 @@ const routes = ref([
   {
     route: '/finance/merchantAccountCapital/index',
     text: '资金账户',
-    icon: 'icon-finance',
+    icon: 'icon_zijinzhanghu-w',
     hover: false,
     bg: '#FF7D05',
     iconSize: 22
@@ -105,7 +105,7 @@ const routes = ref([
 const dashboardData = [
   {
     title: '任务',
-    icon: 'icon-renwu',
+    icon: 'icon_renwu1',
     auth: 'home_task_statistics',
     url: '/core/homePage/countTask',
     route: '/task/info/index',
@@ -119,7 +119,7 @@ const dashboardData = [
   },
   {
     title: '结算账单',
-    icon: 'icon-bill',
+    icon: 'icon_jiesuanzhangdan',
     url: '/core/homePage/settleBillStatistics',
     route: '/accounting/settleBill/index',
     auth: 'home_settleBill_statistics',
@@ -131,7 +131,7 @@ const dashboardData = [
   },
   {
     title: '公司',
-    icon: 'icon-gongsi',
+    icon: 'icon_gongsi',
     url: '/core/homePage/companyStatistics',
     routes: ['/merchant/info/index', '/sp/info/index'],
     auth: 'home_spInfo_statistics',
@@ -142,7 +142,7 @@ const dashboardData = [
   },
   {
     title: '发票记录',
-    icon: 'icon-fapiaojilu',
+    icon: 'icon_fapiaojilu',
     url: '/core/homePage/invoiceStatistics',
     route: '/invoice/invoiceRecord/index',
     auth: 'home_invoice_statistics',

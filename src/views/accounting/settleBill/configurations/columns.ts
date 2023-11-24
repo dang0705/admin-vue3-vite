@@ -36,7 +36,7 @@ export default [
   },
   {
     prop: 'taskAmountTotal',
-    label: '任务金额(元)',
+    label: '任务承揽费(元)',
     minWidth: 120
   },
   {

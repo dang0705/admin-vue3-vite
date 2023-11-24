@@ -77,7 +77,7 @@ export default [
     'min-width': 200
   },
   {
-    prop: 'paySourceId',
+    prop: 'billDetailNumber',
     label: '任务结算明细编号',
     'min-width': 200
   },

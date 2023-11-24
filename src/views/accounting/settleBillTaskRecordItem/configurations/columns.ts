@@ -110,7 +110,7 @@ export default [
     minWidth: 180
   },
   {
-    prop: 'billDetailNumber',
+    prop: 'detailNumber',
     label: '任务结算明细编号',
     minWidth: 150
   },

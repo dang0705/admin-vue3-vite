@@ -31,7 +31,7 @@ export default [
   },
   {
     control: 'InputPlus',
-    key: 'billDetailNumber',
+    key: 'detailNumber',
     label: '任务结算明细编号'
   },
   {

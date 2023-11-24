@@ -19,6 +19,8 @@
             {{ form.undertakerName }}
             <i
               v-if="
+                gender &&
+                gender.length &&
                 gender.find((item) => item.value === form.undertakerSex)
                   ?.label === '男'
               "
@@ -26,6 +28,8 @@
               style="color: #ff4d94; font-size: 16px; margin-left: 7px"></i>
             <i
               v-if="
+                gender &&
+                gender.length &&
                 gender.find((item) => item.value === form.undertakerSex)
                   ?.label === '女'
               "
@@ -91,6 +95,8 @@
             <div class="info_label">是否银行四要素验证：</div>
             <div class="info_value">
               {{
+                yes_no_type &&
+                yes_no_type.length &&
                 yes_no_type.find(
                   (item) => item.value === form.isBankFourEssentialFactor
                 )?.label
@@ -115,6 +121,16 @@
             <div class="info_value">
               {{ item.isEffectiveContract === '1' ? '是' : '否' }}
             </div>
+          </div>
+        </div>
+        <div class="info_box" v-if="!form.spList?.length">
+          <div class="info_item">
+            <div class="info_label">服务商：</div>
+            <div class="info_value"></div>
+          </div>
+          <div class="info_item">
+            <div class="info_label">是否存在生效协议：</div>
+            <div class="info_value"></div>
           </div>
         </div>
       </div>

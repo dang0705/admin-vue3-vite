@@ -25,39 +25,45 @@
       <div class="flex mb-[24px]">
         <div class="total_list bg-[#fafafa] flex flex-1 mr-9">
           <div class="total_item">
-            <div class="info">
-              <div class="info_label">账户余额</div>
+            <div class="info hover-wrapper">
+              <img src="/src/assets/images/total_1.png" class="icon" alt="" />
               <div class="price_box">
                 <div class="price">
+                  ￥
                   <el-statistic
                     :value="thousandthDivision({ number: form.totalAmount })" />
                 </div>
-                <div class="unit">元</div>
+                <!-- <div class="unit">元</div> -->
               </div>
+              <div class="info_label">账户余额</div>
             </div>
           </div>
           <div class="total_item">
-            <div class="info">
-              <div class="info_label">冻结金额</div>
+            <div class="info hover-wrapper">
+              <img src="/src/assets/images/total_7.png" class="icon" alt="" />
               <div class="price_box">
                 <div class="price">
+                  ￥
                   <el-statistic
                     :value="thousandthDivision({ number: form.freeze })" />
                 </div>
-                <div class="unit">元</div>
+                <!-- <div class="unit">元</div> -->
               </div>
+              <div class="info_label">冻结金额</div>
             </div>
           </div>
           <div class="total_item">
-            <div class="info">
-              <div class="info_label">可用余额</div>
+            <div class="info hover-wrapper">
+              <img src="/src/assets/images/total_4.png" class="icon" alt="" />
               <div class="price_box">
+                <!-- <div class="unit">元</div> -->
                 <div class="price">
+                  ￥
                   <el-statistic
                     :value="thousandthDivision({ number: form.balance })" />
                 </div>
-                <div class="unit">元</div>
               </div>
+              <div class="info_label">可用余额</div>
             </div>
           </div>
         </div>
@@ -280,30 +286,70 @@ const refreshDataList = () => {
     color: rgba(0, 0, 0, 0.5);
     min-width: 100px;
   }
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
   .icon {
     width: 38px;
     height: 37px;
-    margin-right: 15px;
   }
 
   .price_box {
     font-size: 30px;
+    line-height: 42px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
   }
 
   .price {
     color: rgba(0, 0, 0, 0.8);
-    display: inline-block;
+    display: flex;
+    align-items: center;
   }
 
   .unit {
     font-size: var(--el-font-size-medium);
     vertical-align: baseline;
     display: inline-block;
+    transform: translateY(4px);
   }
 
   .info_label {
     font-size: var(--el-font-size-medium);
+    opacity: 0.5;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: #000000;
+  }
+}
+
+.hover-wrapper {
+  position: relative;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    content: '';
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 4px 2px #0000001a;
+    border-radius: 6px;
+  }
+  &:hover {
+    &:before {
+      display: block;
+    }
   }
 }
 

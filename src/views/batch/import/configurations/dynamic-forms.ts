@@ -81,6 +81,9 @@ export default ({
             label: '手机号',
             minWidth
           },
+          { prop: 'bankName', label: '开户行', minWidth },
+          { prop: 'bankNumber', label: '银行卡号', minWidth: 180 },
+          { prop: 'spName', label: '服务商', minWidth },
           ...failColumnsSuffix
         ]
         break
@@ -253,17 +256,17 @@ export default ({
             minWidth: 200
           },
           {
-            label: '任务金额(元)',
+            label: '任务承揽费(元)',
             prop: 'taskAmount',
             minWidth: 200
           },
           {
-            label: '任务开始日期',
+            label: '任务开始时间',
             prop: 'undertaderStartTime',
             minWidth: 200
           },
           {
-            label: '任务结束日期',
+            label: '任务结束时间',
             prop: 'undertaderEndTime',
             minWidth: 200
           },

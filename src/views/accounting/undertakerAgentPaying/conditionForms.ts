@@ -33,7 +33,7 @@ export default [
   {
     label: '任务结算明细编号',
     control: 'InputPlus',
-    key: 'paySourceId'
+    key: 'billDetailNumber'
   },
   {
     label: '结算时间',

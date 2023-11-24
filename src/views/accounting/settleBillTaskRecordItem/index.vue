@@ -39,20 +39,24 @@
       </router-link>
     </template>
     <template #actions="{ row }">
-      <el-button
+      <span
         v-auth="`core_settleBill_agree`"
-        type="text"
+        :class="['cursor-pointer', 'mr-[12px]']"
         v-if="row.contractFile"
-        @click="down(row.contractFile)">
-        查看关联协议
-      </el-button>
-      <el-button
+        style="color: rgba(0, 0, 0, 0.65); font-size: var(--el-font-size-base)"
+        @click.passive="down(row.contractFile)">
+        <i class="iconfont icon_chakan !text-default"></i>
+        <span class="ml-1 hover:underline">查看关联协议</span>
+      </span>
+      <span
         v-auth="`core_settleBillTaskRecordItem_edit`"
         v-if="row.paymentStatus === '40'"
-        type="text"
-        @click="asyncUpdate(row)">
-        同步银行卡信息
-      </el-button>
+        :class="['cursor-pointer']"
+        style="color: #ff5a00; font-size: var(--el-font-size-base)"
+        @click.passive="asyncUpdate(row)">
+        <i class="iconfont icon_tongbu !text-default"></i>
+        <span class="ml-1 hover:underline">同步银行卡信息</span>
+      </span>
     </template>
     <template v-for="(_, slot) in $slots" #[slot]>
       <slot :name="slot" />
@@ -74,6 +78,7 @@
 <script setup lang="ts">
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
+// import actions from './configurations/tabel-actions'
 import {
   queryUnderTakerBankCard,
   updateUnderTakerBankCard

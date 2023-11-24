@@ -47,7 +47,7 @@ labelWidth="140px">
                   </div>
                   <div class="unit">元</div>
                 </div>
-                <div class="info_label">任务金额</div>
+                <div class="info_label">任务承揽费</div>
               </div>
             </div>
           </div>
