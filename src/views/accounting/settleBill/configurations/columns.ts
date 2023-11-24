@@ -71,8 +71,8 @@ export default [
     minWidth: 200
   },
   {
-    prop: 'billSettleTime',
-    label: '账单发放时间',
+    prop: 'xxx',
+    label: '账单结算时间',
     minWidth: 200
   },
   {

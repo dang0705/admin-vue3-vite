@@ -42,8 +42,8 @@ export default [
   },
   {
     control: 'DateRange',
-    key: 'billSettleTimeFromTo',
-    label: '账单发放时间',
+    key: 'xxx',
+    label: '账单结算时间',
     props: {
       valueType: 'string'
     }

@@ -47,6 +47,7 @@
       </el-button>
       <el-button
         v-auth="`core_settleBillTaskRecordItem_edit`"
+        v-if="row.paymentStatus === '40'"
         type="text"
         @click="down(row.contractFile)">
         同步银行卡信息
