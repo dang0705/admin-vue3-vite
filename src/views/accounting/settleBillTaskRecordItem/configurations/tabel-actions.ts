@@ -4,7 +4,7 @@ import {
 } from '/@/api/core/settleBillTaskRecordItem'
 const auth = (auth: string) => `core_settleBill_${auth}`
 export default (row: any) => {
-  const { paymentStatus, contractFile, id, undertakerId } = row
+  const { contractFile } = row
   // window.open(`${proxy.baseURL}/${row.contractFile}`);
   return [
     {

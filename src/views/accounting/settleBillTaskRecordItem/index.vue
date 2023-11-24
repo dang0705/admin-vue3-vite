@@ -1,6 +1,5 @@
 <template>
   <TableView
-    :actions="actions"
     :columns="newColumns"
     module="core/settleBillTaskRecordItem.ts"
     :condition-forms="forms"
@@ -40,6 +39,13 @@
     </template>
     <template #actions="{ row }">
       <el-button
+        v-auth="`core_settleBill_agree`"
+        type="text"
+        v-if="row.contractFile"
+        @click="down(row.contractFile)">
+        查看关联协议
+      </el-button>
+      <el-button
         v-auth="`core_settleBillTaskRecordItem_edit`"
         type="text"
         @click="down(row.contractFile)">
@@ -55,17 +61,6 @@
 <script setup lang="ts">
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
-import actions from './configurations/tabel-actions'
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({
-  dic: ['yes_no_type', 'settle_status', 'payment_status']
-})
-interface BatchUploadRecordPage {
-  isSignServiceContract: number
-  isBankFourEssentialFactor: number
-  billStatus: number
-  paymentStatus: number
-}
 const down = (download) => {
   window.open(`${BASE}/${download}`)
 }
@@ -108,7 +103,6 @@ const newColumns = computed(() => {
   })
   return list
 })
-
 const staticQuery = {
   settleBillId: route.query.id
 }
