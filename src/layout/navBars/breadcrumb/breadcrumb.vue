@@ -43,6 +43,8 @@ import { storeToRefs } from 'pinia'
 import { useThemeConfig } from '/@/stores/themeConfig'
 import { useRoutesList } from '/@/stores/routesList'
 import { homePageRouteName } from '/@/configuration/routes'
+import { RouteItem, RouteItems } from '/@/types/global'
+
 defineOptions({ name: 'layoutBreadcrumb' })
 // 定义变量内容
 const stores = useRoutesList()
@@ -63,7 +65,7 @@ const isShowBreadcrumb = computed(() => {
   initRouteSplit(route.path)
   const { layout, isBreadcrumb } = themeConfig.value
   if (layout === 'classic' || layout === 'transverse') return false
-  else return isBreadcrumb ? true : false
+  else return isBreadcrumb
 })
 // 面包屑点击时
 const onBreadcrumbClick = (v: RouteItem) => {
@@ -82,14 +84,14 @@ const setLocalThemeConfig = () => {
   Local.set('themeConfig', themeConfig.value)
 }
 // 处理面包屑数据
-const getBreadcrumbList = (arr: RouteItems) => {
-  arr.forEach((item: RouteItem) => {
+const getBreadcrumbList = (allRoutes: RouteItems) => {
+  allRoutes.forEach((item: RouteItem) => {
     state.routeSplit.forEach((v: string, k: number, arrs: string[]) => {
       if (state.routeSplitFirst === item.path) {
         state.routeSplitFirst += `/${arrs[state.routeSplitIndex]}`
         state.breadcrumbList.push(item)
         state.routeSplitIndex++
-        if (item.children) getBreadcrumbList(item.children)
+        // if (item.children) getBreadcrumbList(item.children)
       }
     })
   })
