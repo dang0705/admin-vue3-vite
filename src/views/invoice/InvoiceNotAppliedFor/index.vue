@@ -4,7 +4,7 @@
     :condition-forms="conditionForms"
     module="finance/InvoiceNotAppliedFor"
     labelWidth="120px"
-    downBlobFileUrl="/finance/invoiceRecord/export"
+    downBlobFileUrl="/core/settleBillRecord/notInvoiced/export"
     exportAuth="finance_invoiceRecordNot_export"
     getFullSelection
     v-model="selectObjs">

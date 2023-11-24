@@ -3,7 +3,7 @@
     :columns="columns"
     exportAuth="core_merchantAccountCapital_export"
     :condition-forms="conditionForms"
-    downBlobFileUrl="/finance/merchantAccountCapitalWater/export"
+    downBlobFileUrl="/finance/merchantAccountCapital/export"
     module="finance/merchantAccountCapital">
     <template #actions="{ row }">
       <el-button

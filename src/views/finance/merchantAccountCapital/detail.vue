@@ -4,9 +4,10 @@
     :columns="indexThead"
     module="finance/merchantRecharge"
     :staticQuery="staticQuery"
+    exportAuth="finance_merchantRecharge_export"
     :condition-forms="conditionForms"
     labelWidth="140px"
-    downBlobFileUrl="/finance/merchantRecharge/export">
+    downBlobFileUrl="/finance/merchantRecharge/exportByAccountId">
     <template #top-bar>
       <el-button
         v-auth="'finance_merchantRefund_add'"

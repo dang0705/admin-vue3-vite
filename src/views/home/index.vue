@@ -47,10 +47,10 @@
       </li>
       <!--      Messages here-->
       <li
-        class="section ml-[12px] h-[354px] box-border xl:w-[878px] w-[calc(100%-320px-12px)] overflow-hidden">
+        class="section ml-[12px] h-[380px] box-border xl:w-[878px] w-[calc(100%-320px-12px)] overflow-hidden">
         <Message
+          :table-height="270"
           has-more
-          :table-height="250"
           no-pagination
           no-padding
           module="docs/homeMessage" />

@@ -683,14 +683,14 @@ const onColorPickerChange = () => {
   if (!getThemeConfig.value.primary)
     return ElMessage.warning('全局主题 primary 颜色值不能为空')
   // 颜色加深
-  document.documentElement.style.setProperty(
+  /*  document.documentElement.style.setProperty(
     '--el-color-primary-dark-2',
     `${getDarkColor(getThemeConfig.value.primary, 0.1)}`
   )
   document.documentElement.style.setProperty(
     '--el-color-primary',
     getThemeConfig.value.primary
-  )
+  )*/
   // 颜色变浅
   for (let i = 1; i <= 9; i++) {
     document.documentElement.style.setProperty(

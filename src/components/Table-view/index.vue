@@ -211,7 +211,7 @@ import { useUserInfo } from '/@/stores/userInfo'
 import tableColumnsWidth from '/@/configuration/tableColumnsWidth'
 const { userInfos } = storeToRefs(useUserInfo())
 
-defineOptions({ name: 'TableView' })
+defineOptions({ name: 'TableView', inheritAttrs: false })
 
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
 const emit = defineEmits(['update:modelValue', 'get-tab-value'])
