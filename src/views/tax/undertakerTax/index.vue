@@ -80,7 +80,7 @@ const columns = [
   },
   {
     prop: 'taskMoney',
-    label: '任务金额(元)',
+    label: '任务承揽费(元)',
     'min-width': 180
   },
   {
