@@ -185,13 +185,8 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
 
                 state.dataList?.forEach((v) => {
                   let obj = dic.find((e: any) => {
-                    console.log('v[key]', v[key])
-                    console.log('e.value', e.value)
-
                     return e.value == v[key]
                   })
-                  console.log('obj', obj)
-
                   if (obj) {
                     v[key + '_obj'] = {
                       type: obj.color,
