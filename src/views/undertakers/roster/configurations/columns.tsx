@@ -22,17 +22,18 @@ export default (batchMap: Ref) => [
   {
     label: '性别',
     prop: 'undertakerSex',
-    value: ({ undertakerSex }: any) => batchMap?.value.gender[undertakerSex]
+    value: ({ undertakerSex }: any) => batchMap?.value.gender[undertakerSex],
+    minWidth: 48
   },
   {
     label: '年龄',
     prop: 'undertakerAge',
-    minWidth: 60
+    minWidth: 48
   },
   {
     label: '学历',
     prop: 'undertakerEducation',
-    minWidth: 60,
+    minWidth: 100,
     value: ({ undertakerEducation }: any) =>
       batchMap?.value.education[undertakerEducation]
     // slot: true
@@ -40,12 +41,12 @@ export default (batchMap: Ref) => [
   {
     label: '开户行',
     prop: 'bankName',
-    minWidth: 150
+    minWidth: 130
   },
   {
     label: '银行卡号',
     prop: 'bankNumber',
-    minWidth: 200
+    minWidth: 160
   },
   {
     label: '服务商',
@@ -57,7 +58,7 @@ export default (batchMap: Ref) => [
   {
     label: '是否存在生效协议',
     prop: 'isEffectiveContract',
-    minWidth: 160,
+    minWidth: 130,
     slot: ({ row: { spList } }: any) =>
       spList.map(({ isEffectiveContract }: any) => (
         <div>{isEffectiveContract === '0' ? '否' : '是'}</div>
@@ -66,7 +67,7 @@ export default (batchMap: Ref) => [
   {
     label: '是否银行四要素验证',
     prop: 'isBankFourEssentialFactor',
-    minWidth: 160,
+    minWidth: 140,
     value: ({ isBankFourEssentialFactor }: any) =>
       isBankFourEssentialFactor == 0 ? '否' : '是'
   },

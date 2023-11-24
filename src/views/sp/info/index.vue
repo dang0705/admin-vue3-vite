@@ -76,7 +76,7 @@ const columns = [
   {
     label: '社会统一信用代码',
     prop: 'socialCreditCode',
-    minWidth: 200
+    minWidth: 160
   },
   {
     label: '法定代表人',
@@ -91,21 +91,21 @@ const columns = [
   {
     label: '状态',
     prop: 'statusDesc',
-    minWidth: 80,
+    // minWidth: 80,
     slot: true
   },
   {
     label: '是否已开通支付通道',
     prop: 'hasPaymentChannel',
     slot: true,
-    minWidth: 150
+    minWidth: 140
   },
   {
     label: '操作',
     slot: true,
     prop: 'actions',
     fixed: 'right',
-    minWidth: 150
+    minWidth: 200
   }
 ]
 const actions = ({ id, status }) => {

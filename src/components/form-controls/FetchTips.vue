@@ -21,22 +21,31 @@ const props = defineProps({
         'font-size': '12px'
       }
     }
+  },
+  // 自定义的message
+  customMessage: {
+    type: String,
+    default: ''
   }
 })
-
 const message = ref('')
-
 const fetchRequest = async () => {
   const res = await props.handler(props.params)
   let text = res.data || ''
   message.value = props.texts[0] + text + props.texts[1]
 }
-
-fetchRequest()
+watch(
+  () => props.handler,
+  () => {
+    fetchRequest()
+  }
+)
 </script>
 
 <template>
   <div class="w-[100%]">
-    <div class="w-[100%]" :style="customStyle">{{ message }}</div>
+    <div class="w-[100%]" :style="customStyle">
+      {{ customMessage || message }}
+    </div>
   </div>
 </template>

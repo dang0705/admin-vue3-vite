@@ -63,7 +63,7 @@ export default [
     minWidth: 100
   },
   {
-    prop: 'status',
+    prop: 'queryTaskStatus',
     label: '状态',
     minWidth: 100,
     options: 'task_status'

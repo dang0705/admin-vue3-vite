@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="承接人详情"
+    title="承接记录详情"
     v-model="visible"
     :close-on-click-modal="false"
     draggable
@@ -35,13 +35,13 @@
             <div class="info_value">{{ form.createTime }}</div>
           </div>
         </div>
-        <div class="info_item">
+        <!-- <div class="info_item">
           <div class="info_label">证件号码：</div>
           <div class="info_value">{{ form.undertakerCard }}</div>
-        </div>
+        </div> -->
       </div>
       <div :gutter="24">
-        <div class="title_box">个人承接页</div>
+        <div class="title_box">个人承接</div>
         <div class="info_box">
           <div class="info_item">
             <div class="info_label">接单时间：</div>
@@ -88,18 +88,18 @@
         </div>
       </div>
       <div :gutter="24">
-        <div class="title_box">企业验收页</div>
+        <div class="title_box">企业验收</div>
         <div class="info_box">
           <div class="info_item">
             <div class="info_label">企业验收时间：</div>
             <div class="info_value">{{ form.enterpriseAcceptanceTime }}</div>
           </div>
-          <div class="info_item">
+          <!-- <div class="info_item">
             <div class="info_label">企业验收工作量：</div>
             <div class="info_value">
               {{ form.enterpriseAcceptanceWorkload }}
             </div>
-          </div>
+          </div> -->
           <div class="info_item">
             <div class="info_label">企业验收金额：</div>
             <div class="info_value">
@@ -110,7 +110,7 @@
               }}
             </div>
           </div>
-          <div class="info_row">
+          <!-- <div class="info_row">
             <div class="info_label">验收上传图片：</div>
             <div class="info_value">
               <div v-for="item in form.enterpriseAcceptanceImages" :key="item">
@@ -120,7 +120,7 @@
                 <UploadFile :modelValue="[]" :disabled="true" />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </el-form>
