@@ -34,14 +34,14 @@
         v-auth="'finance_invoiceRecordNot_applyfor'">
         申请开票
       </el-button>
-      <el-button
+      <!-- <el-button
         icon="folder-add"
         text
         type="primary"
         @click="applyfor(id, 'open')"
         v-auth="'finance_invoiceRecordNot_open'">
         开票
-      </el-button>
+      </el-button> -->
     </template>
     <Dialog
       vertical
@@ -184,7 +184,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    minWidth: 180
+    minWidth: 120
   }
 ]
 
