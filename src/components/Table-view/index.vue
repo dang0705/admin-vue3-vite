@@ -253,6 +253,9 @@ const getTableColumnWidth = (column) => {
   if (column.width) {
     return column.width
   }
+  if (!column.label) {
+    return
+  }
   if (column.label.includes('手机号')) {
     return tableColumnsWidth['phone']
   } else if (column.label.includes('商户')) {
