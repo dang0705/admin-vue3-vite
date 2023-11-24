@@ -140,11 +140,9 @@
           class="upload-empty"
           :style="props.style"
           v-else-if="
-            selfDisabled
-              ? false
-              : !isImage ||
-                !prefixedUrls?.length ||
-                (multiple && prefixedUrls?.length < limit)
+            !isImage ||
+            !prefixedUrls?.length ||
+            (multiple && prefixedUrls?.length < limit)
           ">
           <slot name="empty">
             <TableSlot
