@@ -24,13 +24,11 @@ const route: any = useRoute()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'invoicingCategoriesDesc',
@@ -44,8 +42,7 @@ const columns = [
   },
   {
     prop: 'updateTime',
-    label: '开票时间',
-    'min-width': 180
+    label: '开票时间'
   },
   {
     label: '操作',

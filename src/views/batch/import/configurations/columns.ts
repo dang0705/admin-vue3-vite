@@ -26,13 +26,11 @@ export default [
   },
   {
     prop: 'createTime',
-    label: '创建时间',
-    minWidth: 200
+    label: '创建时间'
   },
   {
     prop: 'doneTime',
-    label: '完成时间',
-    minWidth: 200
+    label: '完成时间'
   },
   {
     prop: 'createBy',

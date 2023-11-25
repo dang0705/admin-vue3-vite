@@ -6,13 +6,11 @@ interface BatchUploadRecordPage {
 export default [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 160
+    label: '商户'
   },
   {
     prop: 'subAccountNum',
@@ -60,8 +58,7 @@ export default [
   },
   {
     prop: 'updateTime',
-    label: '更新时间',
-    'min-width': 160
+    label: '更新时间'
   },
   {
     label: '操作',

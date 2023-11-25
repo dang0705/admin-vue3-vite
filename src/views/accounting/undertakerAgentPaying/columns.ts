@@ -42,8 +42,7 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankIdDesc',
@@ -62,33 +61,27 @@ export default [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'billName',
-    label: '账单名称',
-    'min-width': 150
+    label: '账单名称'
   },
   {
     prop: 'billId',
-    label: '账单编号',
-    'min-width': 200
+    label: '账单编号'
   },
   {
     prop: 'billDetailNumber',
-    label: '任务结算明细编号',
-    'min-width': 200
+    label: '任务结算明细编号'
   },
   {
     prop: 'paymentInitiationTime',
-    label: '结算时间',
-    'min-width': 180
+    label: '结算时间'
   },
   {
     prop: 'paymentSuccessTime',
-    label: '支付时间',
-    'min-width': 180
+    label: '支付时间'
   },
   {
     prop: 'payStatus',

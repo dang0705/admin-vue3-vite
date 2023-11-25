@@ -5,18 +5,15 @@ export default [
   },
   {
     prop: 'applyNumber',
-    label: '申请编号',
-    'min-width': 175
+    label: '申请编号'
   },
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    'min-width': 175
+    label: '结算单编号'
   },
   {
     prop: 'createTime',
-    label: '申请时间',
-    'min-width': 170
+    label: '申请时间'
   },
   {
     prop: 'invoicingAmount',
@@ -30,13 +27,11 @@ export default [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'status',

@@ -6,8 +6,7 @@ export default [
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    minWidth: 150,
+    label: '任务名称',,
     fixed: 'left'
   },
   {

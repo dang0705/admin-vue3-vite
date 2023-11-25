@@ -6,8 +6,7 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'dutyPaidMonth',
@@ -27,8 +26,7 @@ export default [
   },
   {
     prop: 'createTime',
-    label: '生成时间',
-    minWidth: 150
+    label: '生成时间'
   },
   {
     label: '操作',

@@ -561,3 +561,9 @@ input[type='number'] {
 .el-table td.el-table__cell {
   height: 48px;
 }
+
+.el-table th.el-table__cell > .cell {
+  white-space: pre;
+  // white-space: pre-wrap; // 也行。
+  // white-space: nowrap;
+}

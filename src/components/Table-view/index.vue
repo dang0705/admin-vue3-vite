@@ -267,7 +267,7 @@ const getTableColumnWidth = (column) => {
     label.includes('姓名') ||
     label.includes('联系人') ||
     label.includes('创建人') ||
-    label.includes('承接人')
+    label === '承接人'
   ) {
     return tableColumnsWidth['userName']
   } else if (label.includes('时间')) {
@@ -288,8 +288,34 @@ const getTableColumnWidth = (column) => {
     return tableColumnsWidth['bankNumber']
   } else if (label.includes('状态')) {
     return tableColumnsWidth['status']
-  } else if (label.includes('任务编号') || label.includes('承接编号')) {
+  } else if (
+    label.includes('任务编号') ||
+    label.includes('承接编号') ||
+    label.includes('账单编号') ||
+    label.includes('结算单编号')
+  ) {
     return '150px'
+  } else if (
+    label.includes('任务名称') ||
+    label.includes('账单名称') ||
+    label.includes('服务协议名称')
+  ) {
+    return '150px'
+  } else if (
+    label.includes('是否存在生效协议') ||
+    label.includes('是否银行四要素校验')
+  ) {
+    return '138px'
+  } else if (
+    label.includes('任务承揽费(元)') ||
+    label.includes('管理费(元)') ||
+    label.includes('服务费(元)') ||
+    label.includes('结算金额(元)') ||
+    label.includes('结算总金额(元)')
+  ) {
+    return '120px'
+  } else if (label.includes('支付通道')) {
+    return '100px'
   }
 }
 

@@ -72,13 +72,11 @@ const inOutAccountAddForms = [
 const columns1 = ref([
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
   {
     prop: 'amount',
@@ -97,8 +95,7 @@ const columns1 = ref([
   },
   {
     prop: 'dealTime',
-    label: '交易时间',
-    minWidth: 200
+    label: '交易时间'
   },
   {
     prop: 'status',
@@ -111,13 +108,11 @@ const columns1 = ref([
 const columns2 = ref([
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
   {
     prop: 'amount',
@@ -136,8 +131,7 @@ const columns2 = ref([
   },
   {
     prop: 'dealTime',
-    label: '交易时间',
-    minWidth: 200
+    label: '交易时间'
   }
 ])
 const tabs = ref([

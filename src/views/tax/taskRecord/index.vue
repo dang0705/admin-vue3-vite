@@ -24,18 +24,15 @@ const router = useRouter()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    'min-width': 180
+    label: '任务名称'
   },
 
   {
@@ -55,13 +52,11 @@ const columns = [
   },
   {
     prop: 'startTime',
-    label: '开始时间',
-    'min-width': 180
+    label: '开始时间'
   },
   {
     prop: 'endTime',
-    label: '结束时间',
-    'min-width': 180
+    label: '结束时间'
   },
   {
     prop: 'auditUserName',
@@ -70,8 +65,7 @@ const columns = [
   },
   {
     prop: 'auditTime',
-    label: '审核时间',
-    'min-width': 180
+    label: '审核时间'
   },
   {
     prop: 'status',

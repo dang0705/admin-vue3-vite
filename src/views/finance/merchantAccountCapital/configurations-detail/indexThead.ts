@@ -10,13 +10,11 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
   {
     prop: 'serialNumber',
@@ -30,13 +28,11 @@ export default [
   },
   {
     prop: 'rechargeStartTime',
-    label: '发起充值时间',
-    minWidth: 150
+    label: '发起充值时间'
   },
   {
     prop: 'dealTime',
-    label: '实际交易时间',
-    minWidth: 150
+    label: '实际交易时间'
   },
   {
     prop: 'payingAccountName',
@@ -65,8 +61,7 @@ export default [
   // },
   {
     prop: 'updateTime',
-    label: '更新时间',
-    minWidth: 180
+    label: '更新时间'
   },
   {
     prop: 'status',

@@ -100,8 +100,7 @@ const columns1 = [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 160
+    label: '商户'
   },
   {
     prop: 'subAccountNum',
@@ -121,8 +120,7 @@ const columns1 = [
   },
   {
     prop: 'waterTime',
-    label: '交易时间',
-    'min-width': 160
+    label: '交易时间'
   },
   {
     prop: 'capitalFlow',
@@ -136,8 +134,7 @@ const columns1 = [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
@@ -157,8 +154,7 @@ const columns2 = [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
@@ -177,8 +173,7 @@ const columns2 = [
   },
   {
     prop: 'waterTime',
-    label: '交易时间',
-    'min-width': 160
+    label: '交易时间'
   },
   {
     prop: 'capitalFlow',
@@ -192,8 +187,7 @@ const columns2 = [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 160
+    label: '商户'
   }
 ]
 const columns3 = [
@@ -223,8 +217,7 @@ const columns3 = [
   },
   {
     prop: 'waterTime',
-    label: '交易时间',
-    'min-width': 160
+    label: '交易时间'
   },
   {
     prop: 'capitalFlow',
@@ -239,8 +232,7 @@ const columns3 = [
 
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 160
+    label: '商户'
   }
 ]
 const columns = computed(() => {

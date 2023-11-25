@@ -13,13 +13,11 @@ export default [
   },
   {
     prop: 'billNumber',
-    label: '账单编号',
-    minWidth: 100
+    label: '账单编号'
   },
   {
     prop: 'billName',
-    label: '账单名称',
-    minWidth: 100
+    label: '账单名称'
   },
 
   {
@@ -28,54 +26,45 @@ export default [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 100
+    label: '支付通道'
   },
   {
     prop: 'taskAmountTotal',
-    label: '任务承揽费(元)',
-    minWidth: 120
+    label: '任务承揽费(元)'
   },
   {
     prop: 'managementAmountTotal',
-    label: '管理费(元)',
-    minWidth: 120
+    label: '管理费(元)'
   },
   {
     prop: 'serviceAmountTotal',
-    label: '服务费(元)',
-    minWidth: 120
+    label: '服务费(元)'
   },
   {
     prop: 'billAmountTotal',
-    label: '结算总金额(元)',
-    minWidth: 120
+    label: '结算总金额(元)'
   },
 
   {
     prop: 'taskUndertakerCount',
     label: '任务承接数量',
-    minWidth: 150
+    minWidth: 100
   },
   {
     prop: 'createBillUser',
-    label: '账单创建人',
-    minWidth: 200
+    label: '账单创建人'
   },
   {
     prop: 'billCreateTime',
-    label: '账单生成时间',
-    minWidth: 200
+    label: '账单生成时间'
   },
   {
     prop: 'billSettleTime',
-    label: '账单结算时间',
-    minWidth: 200
+    label: '账单结算时间'
   },
   {
     prop: 'status',
     label: '状态',
-    minWidth: 200,
     options: 'settle_status'
   },
   {

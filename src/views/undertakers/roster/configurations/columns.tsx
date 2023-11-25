@@ -58,7 +58,6 @@ export default (batchMap: Ref) => [
   {
     label: '是否存在生效协议',
     prop: 'isEffectiveContract',
-    minWidth: 130,
     slot: ({ row: { spList } }: any) =>
       spList.map(({ isEffectiveContract }: any) => (
         <div>{isEffectiveContract === '0' ? '否' : '是'}</div>
@@ -67,7 +66,6 @@ export default (batchMap: Ref) => [
   {
     label: '是否银行四要素验证',
     prop: 'isBankFourEssentialFactor',
-    minWidth: 140,
     value: ({ isBankFourEssentialFactor }: any) =>
       isBankFourEssentialFactor == 0 ? '否' : '是'
   },

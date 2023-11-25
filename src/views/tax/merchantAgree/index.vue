@@ -28,13 +28,11 @@ const form = reactive({})
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'agreementName',

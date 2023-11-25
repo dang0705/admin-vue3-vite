@@ -52,13 +52,11 @@ const spPaymentChannelRef = ref()
 const columns = [
   {
     prop: 'channelName',
-    label: '支付通道名称',
-    'min-width': 160
+    label: '支付通道名称'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'mainAccount',
@@ -67,8 +65,7 @@ const columns = [
   },
   {
     prop: 'createTime',
-    label: '创建时间',
-    'min-width': 180
+    label: '创建时间'
   },
   {
     prop: 'bankNameDesc',

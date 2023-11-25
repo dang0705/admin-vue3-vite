@@ -64,8 +64,7 @@ const columns = [
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    minWidth: 150
+    label: '任务名称'
   },
   {
     prop: 'taskNo',
@@ -74,24 +73,20 @@ const columns = [
   {
     prop: 'settleBillName',
     label: '账单名称',
-    minWidth: 150,
     slot: true
   },
   {
     prop: 'billNumber',
     label: '账单编号',
-    minWidth: 150,
     slot: true
   },
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    minWidth: 150
+    label: '结算单编号'
   },
   {
     prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 150
+    label: '结算金额(元)'
   },
   {
     prop: 'merchantName',
@@ -103,29 +98,15 @@ const columns = [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
-  // {
-  // 	prop: 'bankAccountNumberRecipient',
-  // 	label: '收款方银行账号',
-  // 	minWidth: 150,
-  // },
-  // {
-  // 	prop: 'accountNameRecipient',
-  // 	label: '收款方户名',
-  // 	minWidth: 150,
-  // },
-
   {
     prop: 'payTime',
-    label: '付款时间',
-    minWidth: 200
+    label: '付款时间'
   },
   {
     prop: 'status',
     label: '结算状态',
-    minWidth: 150,
     options: 'settle_status'
   }
   // {

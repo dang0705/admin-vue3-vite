@@ -34,13 +34,11 @@ const staticQuery = computed(() => {
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'serialNumber',
@@ -59,8 +57,7 @@ const columns = [
   },
   {
     prop: 'rechargeStartTime',
-    label: '充值时间',
-    'min-width': 180
+    label: '充值时间'
   },
   // 伪代码, 暂不知该字段
   {

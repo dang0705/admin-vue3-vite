@@ -11,8 +11,7 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'channelName',

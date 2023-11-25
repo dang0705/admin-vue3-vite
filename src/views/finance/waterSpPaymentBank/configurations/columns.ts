@@ -11,8 +11,7 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
@@ -36,8 +35,7 @@ export default [
   },
   {
     prop: 'dealTime',
-    label: '交易时间',
-    'min-width': 150
+    label: '交易时间'
   },
   {
     prop: 'status',

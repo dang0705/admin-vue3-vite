@@ -55,8 +55,7 @@ const columns = [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'bankAccountNumber',
@@ -70,8 +69,7 @@ const columns = [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'balance',
@@ -85,8 +83,7 @@ const columns = [
   },
   {
     prop: 'updateTime',
-    label: '更新时间',
-    'min-width': 180
+    label: '更新时间'
   },
   {
     label: '操作',

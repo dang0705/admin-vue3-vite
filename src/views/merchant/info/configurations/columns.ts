@@ -4,7 +4,7 @@ export default [
     prop: 'merchantName',
     minWidth: 200
   },
-  { label: '社会统一信用代码', prop: 'socialCreditCode', minWidth: 165 },
+  { label: '社会统一信用代码', prop: 'socialCreditCode' },
   {
     label: '服务商',
     prop: 'spList',

@@ -1,18 +1,15 @@
 export const serviceIndexThead = [
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    minWidth: 100
+    label: '结算单编号'
   },
   {
     prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 120
+    label: '结算金额(元)'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 100
+    label: '支付通道'
   },
   {
     prop: 'bankAccountNumberRecipient',
@@ -27,13 +24,11 @@ export const serviceIndexThead = [
 
   {
     prop: 'payTime',
-    label: '付款时间',
-    minWidth: 170
+    label: '付款时间'
   },
   {
     prop: 'statusDesc',
     label: '结算状态',
-    minWidth: 100,
     slot: true
   },
   {
@@ -48,13 +43,11 @@ export const serviceIndexThead = [
 export const taskIndexThead = [
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    minWidth: 100
+    label: '结算单编号'
   },
   {
     prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 120
+    label: '结算金额(元)'
   },
   {
     prop: 'taskAmount',
@@ -68,8 +61,7 @@ export const taskIndexThead = [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 100
+    label: '支付通道'
   },
   {
     prop: 'bankAccountNumberRecipient',
@@ -84,8 +76,7 @@ export const taskIndexThead = [
 
   {
     prop: 'payTime',
-    label: '付款时间',
-    minWidth: 170
+    label: '付款时间'
   },
   {
     prop: 'statusDesc',

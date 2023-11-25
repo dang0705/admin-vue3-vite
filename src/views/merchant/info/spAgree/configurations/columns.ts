@@ -1,13 +1,11 @@
 export default [
   {
     prop: 'agreementName',
-    label: '服务协议名称',
-    'min-width': 160
+    label: '服务协议名称'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'isElectronicSignatureDesc',
@@ -21,18 +19,15 @@ export default [
   },
   {
     prop: 'startTime',
-    label: '起始时间',
-    'min-width': 160
+    label: '起始时间'
   },
   {
     prop: 'endTime',
-    label: '结束时间',
-    'min-width': 160
+    label: '结束时间'
   },
   {
     prop: 'terminateTime',
-    label: '终止时间',
-    'min-width': 160
+    label: '终止时间'
   },
   {
     prop: 'statusDesc',

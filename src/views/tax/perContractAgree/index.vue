@@ -14,8 +14,7 @@ const route: any = useRoute()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   // {
   // 	prop: 'merchantName',
