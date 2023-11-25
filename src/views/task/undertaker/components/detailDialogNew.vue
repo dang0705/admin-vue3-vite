@@ -1,8 +1,8 @@
 <template>
   <el-dialog
+    ref="dialog"
     title="承接记录详情"
     v-model="visible"
-    :close-on-click-modal="false"
     draggable
     width="900px">
     <el-form
@@ -94,10 +94,13 @@
           <div class="info_row">
             <div class="info_label">任务成果：</div>
             <div class="info_value">
-              <div v-for="item in form.doneImages" :key="item">
-                <UploadFile :modelValue="[item]" :disabled="true" />
+              <div v-for="item in form.files" :key="item">
+                <UploadFile
+                  fileType="file"
+                  :modelValue="[item]"
+                  :disabled="true" />
               </div>
-              <div v-if="!form.doneImages?.length">
+              <div v-if="!form.files?.length">
                 <UploadFile :modelValue="[]" :disabled="true" />
               </div>
             </div>
@@ -153,6 +156,7 @@ import { getObj } from '/@/api/core/undertakerTask'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const visible = ref(false)
 const loading = ref(false)
+const dialog = ref()
 // 提交表单数据
 const form = reactive({
   id: '',
@@ -179,6 +183,7 @@ const openDialog = (id: string) => {
   visible.value = true
   form.id = ''
   // 获取undertakerInfo信息
+  // dialog.value.scrollTo({ top: 0 })
   if (id) {
     form.id = id
     getundertakerInfoData(id)
@@ -192,6 +197,7 @@ const getundertakerInfoData = (id: string) => {
   getObj(id)
     .then((res: any) => {
       Object.assign(form, res.data)
+      form.files = ['']
     })
     .finally(() => {
       loading.value = false
