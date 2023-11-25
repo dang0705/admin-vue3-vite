@@ -15,13 +15,11 @@ export default [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 150
+    label: '支付通道'
   },
   {
     prop: 'amount',
-    label: '到款金额(元)',
-    'min-width': 150
+    label: '到款金额(元)'
   },
   {
     prop: 'reciprocalAccountName',

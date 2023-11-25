@@ -65,7 +65,6 @@ const columns = [
   {
     prop: 'paymentBankName',
     label: '支付通道',
-    'min-width': 150
   },
   {
     prop: 'merchantName',

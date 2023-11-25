@@ -7,8 +7,7 @@ export default [
   },
   {
     prop: 'undertakerName',
-    label: '承接人',
-    'min-width': 150
+    label: '承接人'
   },
   {
     prop: 'undertakerCard',
@@ -21,8 +20,7 @@ export default [
   },
   {
     prop: 'undertakerBankNumber',
-    label: '承接人银行卡号',
-    'min-width': 200
+    label: '承接人银行卡号'
   },
   {
     prop: 'taskAmount',
@@ -46,8 +44,7 @@ export default [
   },
   {
     prop: 'paymentBankIdDesc',
-    label: '支付通道',
-    'min-width': 150
+    label: '支付通道'
   },
   {
     prop: 'sendBankName',

@@ -16,7 +16,6 @@ export default [
   {
     prop: 'channelName',
     label: '支付通道',
-    'min-width': 150
   },
   {
     prop: 'channelStatusDesc',

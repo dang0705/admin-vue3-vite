@@ -284,7 +284,7 @@ const getTableColumnWidth = (column) => {
     return tableColumnsWidth['education']
   } else if (label.includes('开户行')) {
     return tableColumnsWidth['bankName']
-  } else if (label.includes('银行卡号')) {
+  } else if (label.includes('银行卡号') || label === '承接人银行卡号') {
     return tableColumnsWidth['bankNumber']
   } else if (label.includes('状态')) {
     return tableColumnsWidth['status']
@@ -311,7 +311,9 @@ const getTableColumnWidth = (column) => {
     label.includes('管理费(元)') ||
     label.includes('服务费(元)') ||
     label.includes('结算金额(元)') ||
-    label.includes('结算总金额(元)')
+    label.includes('结算总金额(元)') ||
+    label.includes('到款金额(元)') ||
+    label.includes('代扣税款(元)')
   ) {
     return '120px'
   } else if (label.includes('支付通道')) {

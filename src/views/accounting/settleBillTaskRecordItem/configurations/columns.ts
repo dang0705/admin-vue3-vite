@@ -37,7 +37,7 @@ export default [
   {
     prop: 'taskAmount',
     label: '个人任务承揽费(元)',
-    minWidth: 110
+    minWidth: 130
   },
   {
     prop: 'taxWithheld',
