@@ -95,8 +95,7 @@ const columns1 = [
   },
   {
     prop: 'waterNo',
-    label: '交易流水号',
-    'min-width': 160
+    label: '交易流水号'
   },
   {
     prop: 'merchantName',
@@ -146,8 +145,7 @@ const columns2 = [
   },
   {
     prop: 'waterNo',
-    label: '交易流水号',
-    'min-width': 160
+    label: '交易流水号'
   },
   {
     prop: 'spName',
@@ -191,8 +189,7 @@ const columns3 = [
   },
   {
     prop: 'waterNo',
-    label: '交易流水号',
-    'min-width': 160
+    label: '交易流水号'
   },
   {
     prop: 'paymentBankName',

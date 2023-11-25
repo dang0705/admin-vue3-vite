@@ -1,9 +1,3 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['merchant_recharge_status'] })
-interface BatchUploadRecordPage {
-  status: string
-}
-
 export default [
   {
     type: 'selection',
@@ -23,8 +17,7 @@ export default [
   },
   {
     prop: 'serialNumber',
-    label: '充值流水号',
-    minWidth: 150
+    label: '充值流水号'
   },
   {
     prop: 'amount',

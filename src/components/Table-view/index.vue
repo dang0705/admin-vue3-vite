@@ -321,6 +321,8 @@ const getTableColumnWidth = (column) => {
     return '110px'
   } else if (label.includes('资金账户')) {
     return '100px'
+  } else if (label.includes('流水号')) {
+    return '160px'
   }
 }
 

@@ -1,8 +1,3 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['refund_status'] })
-interface BatchUploadRecordPage {
-  status: number
-}
 export default [
   {
     prop: 'spName',

@@ -1,9 +1,3 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
-interface BatchUploadRecordPage {
-  status: string
-  loanType: string
-}
 export default [
   {
     type: 'selection',
