@@ -1,15 +1,3 @@
-<!-- <TableView
-ref="settleBillDetailRef"
-:columns="indexThead"
-module="core/settleBill.ts"
-getListFnName="taskRecordItem"
-:staticQuery="staticQuery"
-:condition-forms="conditionForms"
-downBlobFileUrl="xxx"
-exportAuth="core_settleBill_export"
-labelWidth="140px">
-
-</TableView> -->
 <template>
   <SettleBillTaskRecordItem>
     <template #tableTop="{ otherInfo }">

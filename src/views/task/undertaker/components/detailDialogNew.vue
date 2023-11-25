@@ -90,13 +90,13 @@
           <div class="info_row">
             <div class="info_label">任务成果：</div>
             <div class="info_value">
-              <div v-for="item in form.files" :key="item">
+              <div v-for="item in form.doneFiles" :key="item">
                 <UploadFile
                   fileType="file"
                   :modelValue="[item]"
                   :disabled="true" />
               </div>
-              <div v-if="!form.files?.length">
+              <div v-if="!form.doneFiles?.length">
                 <UploadFile :modelValue="[]" :disabled="true" />
               </div>
             </div>
@@ -193,7 +193,6 @@ const getundertakerInfoData = (id: string) => {
   getObj(id)
     .then((res: any) => {
       Object.assign(form, res.data)
-      form.files = ['']
     })
     .finally(() => {
       loading.value = false
