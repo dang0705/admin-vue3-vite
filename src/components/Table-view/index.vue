@@ -295,14 +295,7 @@ const getTableColumnWidth = (column) => {
     return tableColumnsWidth['bankNumber']
   } else if (label.includes('状态')) {
     return tableColumnsWidth['status']
-  } else if (
-    label.includes('任务编号') ||
-    label.includes('承接编号') ||
-    label.includes('账单编号') ||
-    label.includes('结算单编号') ||
-    label.includes('批次编号') ||
-    label.includes('申请编号')
-  ) {
+  } else if (label.includes('编号')) {
     return '180px'
   } else if (
     label.includes('任务名称') ||

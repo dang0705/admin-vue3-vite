@@ -175,6 +175,7 @@ export const formsFunc = (reType: any, form: any) => {
           props: {
             disabled: true
           }
+          // required: false 伪代码
         }
       ]
     }

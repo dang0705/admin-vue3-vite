@@ -3,7 +3,7 @@ export default (contractMap) => [
   { label: '证件号码', prop: 'undertakerCard' },
   { label: '手机号码', prop: 'undertakerPhone' },
   { label: '合同名称', prop: 'contractName', width: '180' },
-  { label: '签约编号', prop: 'contractNumber', width: '180' },
+  { label: '签约编号', prop: 'contractNumber' },
   { label: '发起签约时间', prop: 'createTime' },
   { label: '合同开始时间', prop: 'startTime', minWidth: '100' },
   { label: '合同结束时间', prop: 'endTime', minWidth: '100' },

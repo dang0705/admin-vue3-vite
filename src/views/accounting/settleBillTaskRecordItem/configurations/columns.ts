@@ -15,8 +15,7 @@ export default [
   },
   {
     prop: 'billName',
-    label: '账单名称',
-    minWidth: 100
+    label: '账单名称'
   },
   {
     prop: 'billNumber',
@@ -36,18 +35,15 @@ export default [
   },
   {
     prop: 'taskAmount',
-    label: '个人任务承揽费(元)',
-    minWidth: 130
+    label: '个人任务承揽费(元)'
   },
   {
     prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    minWidth: 110
+    label: '代扣税款(元)'
   },
   {
     prop: 'paidAmount',
-    label: '实发金额(元)',
-    minWidth: 110
+    label: '实发金额(元)'
   },
   {
     prop: 'spName',
@@ -67,8 +63,7 @@ export default [
   },
   {
     prop: 'taskUndertakerId',
-    label: '任务承接编号',
-    minWidth: 150
+    label: '任务承接编号'
   },
   {
     prop: 'taskNo',
@@ -80,8 +75,7 @@ export default [
   },
   {
     prop: 'undertakerBankNumber',
-    label: '承接人银行卡号',
-    minWidth: 150
+    label: '承接人银行卡号'
   },
   {
     prop: 'undertaderStartTime',
@@ -93,8 +87,7 @@ export default [
   },
   {
     prop: 'detailNumber',
-    label: '任务结算明细编号',
-    minWidth: 150
+    label: '任务结算明细编号'
   },
   {
     prop: 'billSettleTime',
