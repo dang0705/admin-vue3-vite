@@ -17,8 +17,7 @@ export default [
   },
   {
     prop: 'invoicingAmount',
-    label: '开票金额(元)',
-    'min-width': 120
+    label: '开票金额(元)'
   },
   {
     prop: 'billingTypeDesc',
@@ -37,7 +36,6 @@ export default [
     prop: 'status',
     label: '发票状态',
     options: 'invoice_status'
-    // 'min-width': 100
   },
   {
     prop: 'reason',
@@ -52,8 +50,7 @@ export default [
   },
   {
     prop: 'postOrderNumber',
-    label: '快递单号',
-    'min-width': 180
+    label: '快递单号'
   },
   {
     label: '操作',

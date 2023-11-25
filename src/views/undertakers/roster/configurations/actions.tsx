@@ -5,6 +5,7 @@ export default ({ id, undertakerPhone }: any, id_z, id_f) => [
   {
     label: '加入服务商',
     auth: 'hro_undertakerInfo_join',
+    icon: 'icon_a-tianjiada',
     dialog: {
       title: '加入服务商',
       labelWidth: 120,

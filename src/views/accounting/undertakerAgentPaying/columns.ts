@@ -15,8 +15,7 @@ export default [
   },
   {
     prop: 'undertakerBankName',
-    label: '承接人开户行',
-    'min-width': 150
+    label: '承接人开户行'
   },
   {
     prop: 'undertakerBankNumber',
@@ -25,18 +24,15 @@ export default [
   {
     prop: 'taskAmount',
     label: '任务承揽费(元)',
-    'min-width': 150,
     align: 'right'
   },
   {
     prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    'min-width': 120
+    label: '代扣税款(元)'
   },
   {
     prop: 'paidAmount',
-    label: '实发金额(元)',
-    'min-width': 120
+    label: '实发金额(元)'
   },
   {
     prop: 'spName',
@@ -48,13 +44,11 @@ export default [
   },
   {
     prop: 'sendBankName',
-    label: '付款开户行',
-    'min-width': 150
+    label: '付款开户行'
   },
   {
     prop: 'sendAccountNumber',
-    label: '付款银行账号',
-    'min-width': 150
+    label: '付款银行账号'
   },
   {
     prop: 'merchantName',
@@ -83,15 +77,8 @@ export default [
   {
     prop: 'payStatus',
     label: '支付状态',
-    // slot: true,
-    // 'min-width': 150
     options: 'undertaker_agent_paying_pay_status'
   },
-  // {
-  //   prop: 'taskUndertakerId',
-  //   label: '任务承接编号',
-  //   'min-width': 200
-  // },
   {
     prop: 'payCause',
     label: '支付失败原因',

@@ -28,8 +28,7 @@ export default [
   },
   {
     prop: 'amount',
-    label: '充值金额(元)',
-    minWidth: 150
+    label: '充值金额(元)'
   },
   {
     prop: 'rechargeStartTime',
@@ -54,16 +53,6 @@ export default [
     label: '付款开户行',
     minWidth: 150
   },
-  // {
-  // 	prop: 'reciprocalAccountName',
-  // 	label: '收款户名',
-  // 	minWidth: 150,
-  // },
-  // {
-  // 	prop: 'reciprocalAccountNumber',
-  // 	label: '收款账号',
-  // 	minWidth: 150,
-  // },
   {
     prop: 'updateTime',
     label: '更新时间'
@@ -72,14 +61,12 @@ export default [
     prop: 'status',
     label: '状态',
     options: 'merchant_recharge_status'
-    // minWidth: 150,
-    // value: ({ status }: BatchUploadRecordPage) => batchMap.value.merchant_recharge_status[status],
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 250
+    'min-width': 170
   }
 ]

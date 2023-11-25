@@ -167,18 +167,7 @@ const conditionForms = [
     options: 'settle_status'
   },
   payChannel({ key: 'paymentBankId' })
-  // {
-  // 	control: 'el-select',
-  // 	key: 'paymentBankId',
-  // 	label: '支付通道',
-  // },
 ]
-// const getTab = (type) => {
-//   tabType.value = type
-// }
-// const handleBtn = () => {
-//   useMessage().wraning('功能正在开发, 请等待~')
-// }
 </script>
 <script lang="ts">
 export default {

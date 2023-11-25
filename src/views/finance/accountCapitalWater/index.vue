@@ -114,8 +114,8 @@ const columns1 = [
   },
   {
     prop: 'overBalance',
-    label: '交易后余额(元)',
-    'min-width': 160
+    label: '交易后余额(元)'
+    // 'min-width': 160
   },
   {
     prop: 'waterTime',
@@ -123,8 +123,7 @@ const columns1 = [
   },
   {
     prop: 'capitalFlow',
-    label: '收支标识',
-    'min-width': 160
+    label: '收支标识'
   },
   {
     prop: 'causeDesc',
@@ -137,8 +136,7 @@ const columns1 = [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 160
+    label: '支付通道'
   }
 ]
 const columns2 = [
@@ -157,8 +155,7 @@ const columns2 = [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 160
+    label: '支付通道'
   },
   {
     prop: 'amount',
@@ -175,8 +172,7 @@ const columns2 = [
   },
   {
     prop: 'capitalFlow',
-    label: '收支标识',
-    'min-width': 160
+    label: '收支标识'
   },
   {
     prop: 'causeDesc',
@@ -200,8 +196,7 @@ const columns3 = [
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 160
+    label: '支付通道'
   },
   {
     prop: 'amount',
@@ -218,8 +213,7 @@ const columns3 = [
   },
   {
     prop: 'capitalFlow',
-    label: '收支标识',
-    'min-width': 160
+    label: '收支标识'
   },
   {
     prop: 'causeDesc',

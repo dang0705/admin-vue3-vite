@@ -13,8 +13,7 @@ export const serviceIndexThead = [
   },
   {
     prop: 'bankAccountNumberRecipient',
-    label: '收款方银行账号',
-    minWidth: 150
+    label: '收款方银行账号'
   },
   {
     prop: 'accountNameRecipient',

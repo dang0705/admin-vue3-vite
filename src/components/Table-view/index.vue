@@ -259,20 +259,22 @@ const getTableColumnWidth = (column) => {
   }
   if (label.includes('手机号')) {
     return tableColumnsWidth['phone']
-  } else if (label.includes('商户')) {
+  } else if (label === '商户') {
     return tableColumnsWidth['merchantName']
-  } else if (label.includes('服务商')) {
+  } else if (label === '服务商') {
     return tableColumnsWidth['spList']
   } else if (
     label.includes('姓名') ||
     label.includes('联系人') ||
     label.includes('创建人') ||
+    label.includes('承接人姓名') ||
+    label.includes('收款户名') ||
     label === '承接人'
   ) {
     return tableColumnsWidth['userName']
   } else if (label.includes('时间')) {
     return tableColumnsWidth['time']
-  } else if (label.includes('代码')) {
+  } else if (label.includes('代码') || label.includes('快递单号')) {
     return tableColumnsWidth['code']
   } else if (label.includes('身份证') || label.includes('证件号')) {
     return tableColumnsWidth['card']
@@ -282,9 +284,14 @@ const getTableColumnWidth = (column) => {
     return tableColumnsWidth['age']
   } else if (label.includes('学历')) {
     return tableColumnsWidth['education']
-  } else if (label.includes('开户行')) {
+  } else if (label.includes('开户行') || label.includes('账号类别')) {
     return tableColumnsWidth['bankName']
-  } else if (label.includes('银行卡号') || label === '承接人银行卡号') {
+  } else if (
+    label.includes('银行卡号') ||
+    label === '承接人银行卡号' ||
+    label.includes('银行账号') ||
+    label.includes('服务商银行账号')
+  ) {
     return tableColumnsWidth['bankNumber']
   } else if (label.includes('状态')) {
     return tableColumnsWidth['status']
@@ -293,9 +300,10 @@ const getTableColumnWidth = (column) => {
     label.includes('承接编号') ||
     label.includes('账单编号') ||
     label.includes('结算单编号') ||
+    label.includes('批次编号') ||
     label.includes('申请编号')
   ) {
-    return '150px'
+    return '180px'
   } else if (
     label.includes('任务名称') ||
     label.includes('账单名称') ||
@@ -311,14 +319,14 @@ const getTableColumnWidth = (column) => {
     label.includes('任务承揽费(元)') ||
     label.includes('管理费(元)') ||
     label.includes('服务费(元)') ||
-    label.includes('结算金额(元)') ||
-    label.includes('结算总金额(元)') ||
-    label.includes('到款金额(元)') ||
-    label.includes('交易金额(元)') ||
-    label.includes('代扣税款(元)')
+    label.includes('金额(元)') ||
+    label.includes('税款(元)') ||
+    label.includes('余额(元)')
   ) {
     return '120px'
   } else if (label.includes('支付通道')) {
+    return '110px'
+  } else if (label.includes('资金账户')) {
     return '100px'
   }
 }
@@ -423,7 +431,7 @@ provide('getList', getDataList)
 
 const tableCellFormatter = (row, column, cellValue) => {
   if (column.label?.includes('(元)')) {
-    return cellValue >= 0 && cellValue
+    return cellValue !== null && cellValue !== undefined
       ? `￥${thousandthDivision({ number: cellValue })}`
       : '-'
   }

@@ -50,8 +50,7 @@ const columns = [
   },
   {
     prop: 'subAccountNum',
-    label: '资金账户',
-    'min-width': 150
+    label: '资金账户'
   },
   {
     prop: 'spName',
@@ -59,12 +58,11 @@ const columns = [
   },
   {
     prop: 'bankAccountNumber',
-    label: '银行账号',
-    'min-width': 150
+    label: '银行账号'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
+    label: '支付通道'
   },
   {
     prop: 'merchantName',
@@ -72,13 +70,12 @@ const columns = [
   },
   {
     prop: 'balance',
-    label: '实时余额(元)',
-    'min-width': 150
+    label: '实时余额(元)'
   },
   {
     prop: 'statusDesc',
     label: '是否可用',
-    'min-width': 150
+    'min-width': 80
   },
   {
     prop: 'updateTime',
@@ -89,7 +86,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 250
+    'min-width': 180
   }
 ]
 const accountShow = ref(false)

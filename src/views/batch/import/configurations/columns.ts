@@ -15,12 +15,11 @@ interface BatchUploadRecordPage {
 export default [
   {
     prop: 'batchNumber',
-    label: '批次编号',
-    minWidth: 200
+    label: '批次编号'
   },
   {
     label: '批次类型',
-    minWidth: 200,
+    minWidth: 100,
     value: ({ batchType }: BatchUploadRecordPage) =>
       batchMap.value.batch_type[batchType]
   },
@@ -34,19 +33,18 @@ export default [
   },
   {
     prop: 'createBy',
-    label: '创建人',
-    minWidth: 160
+    label: '创建人'
   },
   {
     label: '状态',
-    value: ({ batchState }: BatchUploadRecordPage) =>
-      batchMap.value.batch_status[batchState]
+    prop: 'batchState',
+    options: 'batch_status'
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    minWidth: 150
+    minWidth: 80
   }
 ]

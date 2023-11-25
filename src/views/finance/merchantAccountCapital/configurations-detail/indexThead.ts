@@ -23,8 +23,7 @@ export default [
   },
   {
     prop: 'amount',
-    label: '充值金额(元)',
-    minWidth: 150
+    label: '充值金额(元)'
   },
   {
     prop: 'rechargeStartTime',

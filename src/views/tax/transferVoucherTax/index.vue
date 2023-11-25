@@ -52,8 +52,7 @@ const columns = [
   },
   {
     prop: 'payingAmount',
-    label: '充值金额(元)',
-    'min-width': 180
+    label: '充值金额(元)'
   },
   {
     prop: 'rechargeStartTime',

@@ -28,8 +28,7 @@ export default [
   },
   {
     prop: 'reciprocalAccountNumber',
-    label: '对方银行账号',
-    'min-width': 150
+    label: '对方银行账号'
   },
   {
     prop: 'dealTime',

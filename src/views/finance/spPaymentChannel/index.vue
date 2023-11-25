@@ -69,19 +69,12 @@ const columns = [
   },
   {
     prop: 'bankNameDesc',
-    label: '账号类别',
-    'min-width': 160
+    label: '账号类别'
   },
   {
     prop: 'bankBranch',
-    label: '开户行',
-    'min-width': 160
+    label: '开户行'
   },
-  // {
-  //   prop: 'bankArea',
-  //   label: '开户地',
-  //   'min-width': 160
-  // },
   {
     prop: 'channelStatusDesc',
     label: '状态'
@@ -91,7 +84,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 150
+    'min-width': 138
   }
 ]
 const conditionForms = [

@@ -76,8 +76,7 @@ export default [
   },
   {
     prop: 'undertakerBankName',
-    label: '承接人开户行',
-    minWidth: 150
+    label: '承接人开户行'
   },
   {
     prop: 'undertakerBankNumber',
@@ -126,9 +125,6 @@ export default [
     prop: 'paymentStatus',
     label: '支付状态',
     options: 'payment_status'
-    // value: ({ paymentStatus }: BatchUploadRecordPage) =>
-    //   batchMap.value.payment_status[paymentStatus],
-    // minWidth: 100
   },
   {
     prop: 'failureReason',
