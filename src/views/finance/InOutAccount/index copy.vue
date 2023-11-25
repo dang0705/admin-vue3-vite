@@ -100,7 +100,6 @@ const columns1 = ref([
   {
     prop: 'status',
     label: '状态',
-    minWidth: 150,
     value: ({ status }: BatchUploadRecordPage) =>
       batchMap.value.merchant_recharge_status[status]
   }

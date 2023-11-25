@@ -23,7 +23,7 @@ export default [
   {
     prop: 'billingTypeDesc',
     label: '发票类型',
-    'min-width': 150
+    'min-width': 100
   },
   {
     prop: 'merchantName',

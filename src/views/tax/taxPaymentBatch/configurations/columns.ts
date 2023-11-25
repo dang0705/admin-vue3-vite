@@ -33,6 +33,6 @@ export default [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    minWidth: 350
+    minWidth: 285
   }
 ]

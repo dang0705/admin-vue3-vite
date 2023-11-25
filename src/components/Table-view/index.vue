@@ -292,7 +292,8 @@ const getTableColumnWidth = (column) => {
     label.includes('任务编号') ||
     label.includes('承接编号') ||
     label.includes('账单编号') ||
-    label.includes('结算单编号')
+    label.includes('结算单编号') ||
+    label.includes('申请编号')
   ) {
     return '150px'
   } else if (
@@ -313,6 +314,7 @@ const getTableColumnWidth = (column) => {
     label.includes('结算金额(元)') ||
     label.includes('结算总金额(元)') ||
     label.includes('到款金额(元)') ||
+    label.includes('交易金额(元)') ||
     label.includes('代扣税款(元)')
   ) {
     return '120px'
@@ -423,7 +425,7 @@ const tableCellFormatter = (row, column, cellValue) => {
   if (column.label?.includes('(元)')) {
     return cellValue >= 0 && cellValue
       ? `￥${thousandthDivision({ number: cellValue })}`
-      : '--'
+      : '-'
   }
   return cellValue
 }

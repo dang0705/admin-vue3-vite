@@ -81,7 +81,6 @@ export const taskIndexThead = [
   {
     prop: 'statusDesc',
     label: '结算状态',
-    minWidth: 100,
     slot: true
   },
   {

@@ -314,8 +314,7 @@ export default ({
           },
           {
             label: '交易金额',
-            prop: 'amount',
-            minWidth: 200
+            prop: 'amount'
           },
           {
             label: '对方账号',

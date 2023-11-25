@@ -84,8 +84,7 @@ const columns = [
   // },
   {
     prop: 'channelStatusDesc',
-    label: '状态',
-    'min-width': 160
+    label: '状态'
   },
   {
     label: '操作',

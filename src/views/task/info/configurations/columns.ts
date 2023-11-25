@@ -6,7 +6,7 @@ export default [
   },
   {
     prop: 'taskName',
-    label: '任务名称',,
+    label: '任务名称',
     fixed: 'left'
   },
   {

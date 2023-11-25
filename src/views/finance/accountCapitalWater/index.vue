@@ -105,13 +105,12 @@ const columns1 = [
   {
     prop: 'subAccountNum',
     label: '资金账户',
-    'min-width': 160,
+    'min-width': 120,
     slot: true
   },
   {
     prop: 'amount',
-    label: '交易金额(元)',
-    'min-width': 160
+    label: '交易金额(元)'
   },
   {
     prop: 'overBalance',
@@ -163,8 +162,7 @@ const columns2 = [
   },
   {
     prop: 'amount',
-    label: '交易金额(元)',
-    'min-width': 160
+    label: '交易金额(元)'
   },
   {
     prop: 'overBalance',
@@ -207,8 +205,7 @@ const columns3 = [
   },
   {
     prop: 'amount',
-    label: '交易金额(元)',
-    'min-width': 160
+    label: '交易金额(元)'
   },
   {
     prop: 'overBalance',

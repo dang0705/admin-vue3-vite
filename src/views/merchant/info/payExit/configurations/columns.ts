@@ -15,12 +15,11 @@ export default [
   },
   {
     prop: 'channelName',
-    label: '支付通道',
+    label: '支付通道'
   },
   {
     prop: 'channelStatusDesc',
-    label: '状态',
-    'min-width': 150
+    label: '状态'
   },
   {
     label: '操作',

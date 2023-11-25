@@ -122,7 +122,7 @@
               {{
                 form.enterpriseAcceptanceMoney
                   ? form.enterpriseAcceptanceMoney + '元'
-                  : '--'
+                  : '-'
               }}
             </div>
           </div>

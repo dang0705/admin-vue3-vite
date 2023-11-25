@@ -32,7 +32,6 @@ export default [
   {
     prop: 'statusDesc',
     label: '协议状态',
-    'min-width': 160,
     slot: true
   },
   {

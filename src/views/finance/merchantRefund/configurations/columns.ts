@@ -15,7 +15,7 @@ export default [
   {
     prop: 'subAccountNum',
     label: '资金账户',
-    'min-width': 160,
+    'min-width': 120,
     slot: true
   },
   {

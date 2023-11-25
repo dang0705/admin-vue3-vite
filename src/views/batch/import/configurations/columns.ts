@@ -39,7 +39,6 @@ export default [
   },
   {
     label: '状态',
-    minWidth: 120,
     value: ({ batchState }: BatchUploadRecordPage) =>
       batchMap.value.batch_status[batchState]
   },

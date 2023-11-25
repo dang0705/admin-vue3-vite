@@ -38,7 +38,6 @@ export default [
   {
     prop: 'status',
     label: '状态',
-    'min-width': 150,
     options: 'water_sp_payment_bank_status'
   }
 ]
