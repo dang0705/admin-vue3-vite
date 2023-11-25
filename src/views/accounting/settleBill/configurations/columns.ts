@@ -5,13 +5,11 @@ export default [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'billNumber',
@@ -26,8 +24,7 @@ export default [
 
   {
     prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 160
+    label: '任务编号'
   },
   {
     prop: 'paymentBankName',

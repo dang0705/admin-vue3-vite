@@ -12,8 +12,7 @@ export default [
   },
   {
     prop: 'undertakerCard',
-    label: '承接人证件号码',
-    'min-width': 200
+    label: '承接人证件号码'
   },
   {
     prop: 'undertakerBankName',

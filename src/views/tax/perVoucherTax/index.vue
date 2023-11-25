@@ -44,8 +44,7 @@ const columns = [
   },
   {
     prop: 'undertakerCard',
-    label: '证件号码',
-    'min-width': 150
+    label: '证件号码'
   },
   {
     prop: 'contractName',

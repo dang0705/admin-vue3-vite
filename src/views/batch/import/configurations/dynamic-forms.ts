@@ -247,8 +247,7 @@ export default ({
           },
           {
             label: '承接人证件号码',
-            prop: 'undertakerCard',
-            minWidth: 200
+            prop: 'undertakerCard'
           },
           {
             label: '任务承揽费(元)',

@@ -35,10 +35,6 @@
             <div class="info_value">{{ form.createTime }}</div>
           </div>
         </div>
-        <!-- <div class="info_item">
-          <div class="info_label">证件号码：</div>
-          <div class="info_value">{{ form.undertakerCard }}</div>
-        </div> -->
       </div>
       <div :gutter="24">
         <div class="title_box">个人承接</div>

@@ -11,13 +11,11 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'paymentBankName',

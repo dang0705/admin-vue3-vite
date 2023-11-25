@@ -1,14 +1,7 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['merchant_recharge_status'] })
-interface BatchUploadRecordPage {
-  status: string
-}
-
 export default [
   {
     prop: 'taskNo',
     label: '任务编号',
-    minWidth: 150,
     fixed: 'left'
   },
   {
@@ -20,52 +13,48 @@ export default [
   {
     prop: 'undertakeTypeStr',
     label: '任务承接方式',
-    minWidth: 120
+    minWidth: 100
   },
   {
     prop: 'taskTypeDesc',
     label: '任务类型',
-    minWidth: 120
+    minWidth: 130
   },
   {
     prop: 'startTime',
-    label: '开始时间',
-    minWidth: 170
+    label: '开始时间'
   },
   {
     prop: 'endTime',
-    label: '结束时间',
-    minWidth: 170
+    label: '结束时间'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 120
+    label: '商户'
   },
   {
     prop: 'areaDescDatas',
     label: '任务地区',
-    minWidth: 170
+    minWidth: 150
   },
   {
     prop: 'unitPrice',
     label: '发包单价(元)',
-    minWidth: 120
+    minWidth: 100
   },
   {
     prop: 'measuringUnitStr',
     label: '计量单位',
-    minWidth: 100
+    minWidth: 80
   },
   {
     prop: 'userCount',
     label: '需要人数',
-    minWidth: 100
+    minWidth: 80
   },
   {
     prop: 'queryTaskStatus',
     label: '状态',
-    minWidth: 100,
     options: 'task_status'
   },
   {

@@ -30,8 +30,7 @@ export default [
   },
   {
     prop: 'undertakerCard',
-    label: '承接人证件号码',
-    minWidth: 150
+    label: '承接人证件号码'
   },
   {
     prop: 'undertakerPhone',
@@ -55,8 +54,7 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
@@ -65,8 +63,7 @@ export default [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'taskName',
@@ -80,8 +77,7 @@ export default [
   },
   {
     prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 100
+    label: '任务编号'
   },
   {
     prop: 'undertakerBankName',

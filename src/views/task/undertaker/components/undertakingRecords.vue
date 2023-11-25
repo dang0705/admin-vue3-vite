@@ -129,28 +129,23 @@ const columns = [
   },
   {
     prop: 'undertakerNumber',
-    label: '承接编号',
-    'min-width': 150
+    label: '承接编号'
   },
   {
     prop: 'undertakerName',
-    label: '承接人',
-    'min-width': 150
+    label: '承接人'
   },
   {
     prop: 'createTime',
-    label: '生成时间',
-    'min-width': 180
+    label: '生成时间'
   },
   {
     prop: 'taskNumber',
-    label: '任务编号',
-    'min-width': 180
+    label: '任务编号'
   },
   {
     prop: 'undertakerCard',
-    label: '承接人证件号码',
-    'min-width': 180
+    label: '承接人证件号码'
   },
   {
     prop: 'undertakerPhone',

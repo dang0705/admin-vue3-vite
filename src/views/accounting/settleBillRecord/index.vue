@@ -69,8 +69,7 @@ const columns = [
   },
   {
     prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 150
+    label: '任务编号'
   },
   {
     prop: 'settleBillName',
@@ -96,13 +95,11 @@ const columns = [
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
