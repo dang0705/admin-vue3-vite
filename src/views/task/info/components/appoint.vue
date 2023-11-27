@@ -57,7 +57,6 @@
 
 <script setup lang="ts">
 import { useMessage } from '/@/hooks/message'
-import { useI18n } from 'vue-i18n'
 import request from '/@/utils/request'
 defineOptions({ name: 'distribution' })
 const emit = defineEmits(['refresh'])
@@ -160,8 +159,6 @@ props.watchField &&
     () => formData.value[props.watchField],
     (value) => openDialog()
   )
-
-const { t } = useI18n()
 
 const loading = ref(false)
 

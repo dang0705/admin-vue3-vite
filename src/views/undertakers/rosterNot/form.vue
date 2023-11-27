@@ -137,11 +137,9 @@ import { useDict } from '/@/hooks/dict'
 import { useMessage } from '/@/hooks/message'
 import { getObj, addObj, putObj } from '/src/api/core/undertakerInfo'
 import { rule } from '/@/utils/validate'
-import { useI18n } from 'vue-i18n'
 import { getSpInfoList } from '/@/api/core/merchantInfo'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const emit = defineEmits(['refresh'])
-const { t } = useI18n()
 
 // 小写字母自动转大写
 const toUpperCase = () =>

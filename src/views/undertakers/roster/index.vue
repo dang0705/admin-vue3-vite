@@ -141,7 +141,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import Array2Object from '/@/utils/array-2-object'
 import conditionForms from '/@/views/undertakers/roster/configurations/condition-forms'
 import getColumns from '/@/views/undertakers/roster/configurations/columns'
@@ -189,12 +188,11 @@ const batchCardDialog = defineAsyncComponent(() => import('./batchCard.vue'))
 const Distribution = defineAsyncComponent(
   () => import('/@/components/Distribution/index.vue')
 )
-const { t } = useI18n()
 const conditionForms2 = ref([
   {
     control: 'SpSelect',
     key: 'spId',
-    label: t('undertakerInfo.spName'),
+    label: '服务商',
     column: 12,
     rules: [
       { required: true, message: '服务商名称不能为空', trigger: 'change' }

@@ -44,16 +44,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useDict } from '/@/hooks/dict'
 import { useMessage } from '/@/hooks/message'
 import { getObj, putAuditTask } from '/@/api/core/task'
-import { useI18n } from 'vue-i18n'
-import { rule } from '/@/utils/validate'
 defineOptions({ name: 'SysOauthClientDetailsDialog' })
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['refresh'])
-
-const { t } = useI18n()
 
 // 定义变量内容
 const dataFormRef = ref()
@@ -101,12 +96,9 @@ const onSubmit = async () => {
       auditPostscript: form.auditPostscript,
       taskId: form.taskId
     })
-    useMessage().success(
-      t(form.taskId ? 'common.editSuccessText' : 'common.addSuccessText')
-    )
+    useMessage().success(form.taskId ? '修改成功' : '添加成功')
     visible.value = false
     emit('refresh')
-  } catch (err: any) {
   } finally {
     loading.value = false
   }
