@@ -7,7 +7,6 @@
       ref="tabView"
       label-width="100"
       downBlobFileUrl="/admin/user/export"
-      exportAuth="sys_user_export"
       module="admin/user">
       <template #top-bar>
         <el-button
@@ -94,11 +93,6 @@ const conditionForms = [
 ]
 
 const columns = [
-  {
-    type: 'selection',
-    width: '40',
-    fixed: 'left'
-  },
   {
     label: '登陆账号',
     prop: 'username',
