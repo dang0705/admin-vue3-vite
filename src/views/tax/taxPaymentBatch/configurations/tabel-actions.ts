@@ -5,13 +5,9 @@ import { downBlobFile } from '/@/utils/other'
 export default (row: any) => {
   const { spName, dutyPaidFile, id } = row
   const exportExcel = () => {
-    downBlobFile(
-      '/finance/dutyPaidDetails/export',
-      {
-        dutyPaidId: id
-      },
-      '完税明细.xlsx'
-    )
+    downBlobFile('/finance/dutyPaidDetails/export', {
+      dutyPaidId: id
+    })
   }
 
   return [
