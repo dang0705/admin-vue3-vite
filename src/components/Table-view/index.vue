@@ -139,7 +139,7 @@
                 ...column
                 // ...(column.label === '操作' ? { renderHeader } : null),
               }"
-              :width="getTableColumnWidth(column)">
+              :minWidth="getTableColumnWidth(column)">
               <template v-if="column.headerSlot" #header>
                 <slot :name="`${column.prop}-header`" :refresh="resetQuery" />
               </template>
@@ -249,47 +249,84 @@ const getDialogData = async (dialog: any) => {
   }
 }
 
-const getTableColumnWidth = ({ width, label }) => {
-  if (width) {
-    return width
+const getTableColumnWidth = (column) => {
+  const { minWidth, label } = column
+  if (minWidth || column['min-width']) {
+    return minWidth || column['min-width']
   }
-  if (!width) {
+  if (!minWidth && !label) {
     return
   }
-  if (width.includes('手机号')) {
+  if (label.includes('手机号')) {
     return tableColumnsWidth['phone']
-  } else if (width.includes('商户')) {
+  } else if (label === '商户') {
     return tableColumnsWidth['merchantName']
-  } else if (width.includes('服务商')) {
+  } else if (label === '服务商') {
     return tableColumnsWidth['spList']
   } else if (
-    width.includes('姓名') ||
-    width.includes('联系人') ||
-    width.includes('创建人')
+    label.includes('姓名') ||
+    label.includes('联系人') ||
+    label.includes('创建人') ||
+    label.includes('承接人姓名') ||
+    label.includes('收款户名') ||
+    label === '承接人'
   ) {
     return tableColumnsWidth['userName']
-  } else if (width.includes('时间')) {
+  } else if (label.includes('时间')) {
     return tableColumnsWidth['time']
-  } else if (width.includes('代码')) {
+  } else if (label.includes('代码') || label.includes('快递单号')) {
     return tableColumnsWidth['code']
-  } else if (width.includes('身份证')) {
+  } else if (label.includes('身份证') || label.includes('证件号')) {
     return tableColumnsWidth['card']
-  } else if (width.includes('性别')) {
+  } else if (label.includes('性别')) {
     return tableColumnsWidth['sex']
-  } else if (width.includes('年龄')) {
+  } else if (label.includes('年龄')) {
     return tableColumnsWidth['age']
-  } else if (width.includes('学历')) {
+  } else if (label.includes('学历')) {
     return tableColumnsWidth['education']
-  } else if (width.includes('开户行')) {
+  } else if (label.includes('开户行') || label.includes('账号类别')) {
     return tableColumnsWidth['bankName']
-  } else if (width.includes('银行卡号')) {
+  } else if (
+    label.includes('银行卡号') ||
+    label === '承接人银行卡号' ||
+    label.includes('银行账号') ||
+    label.includes('服务商银行账号')
+  ) {
     return tableColumnsWidth['bankNumber']
+  } else if (label.includes('状态')) {
+    return tableColumnsWidth['status']
+  } else if (label.includes('编号')) {
+    return '180px'
+  } else if (
+    label.includes('任务名称') ||
+    label.includes('账单名称') ||
+    label.includes('服务协议名称')
+  ) {
+    return '150px'
+  } else if (
+    label.includes('是否存在生效协议') ||
+    label.includes('是否银行四要素校验')
+  ) {
+    return '138px'
+  } else if (
+    label.includes('任务承揽费(元)') ||
+    label.includes('管理费(元)') ||
+    label.includes('服务费(元)') ||
+    label.includes('金额(元)') ||
+    label.includes('税款(元)') ||
+    label.includes('余额(元)')
+  ) {
+    return '120px'
+  } else if (label.includes('支付通道')) {
+    return '110px'
+  } else if (label.includes('资金账户')) {
+    return '100px'
+  } else if (label.includes('流水号')) {
+    return '160px'
   }
 }
 
-const newTabs = computed(() => {
-  return state.countResp || props.tabs
-})
+const newTabs = computed(() => state.countResp || props.tabs)
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
@@ -373,23 +410,25 @@ const onSelectionChange = (item: []) => {
 }
 //清空搜索条件;
 const resetQuery = () => {
+  selectObjs.value = []
   state.queryForm = {
+    ids: [],
     ...props.staticQuery,
     ...(newTabs.value?.length && newTabs.value[0].attributeName
       ? { [newTabs.value[0].attributeName]: tabValue.value }
       : {})
   }
-  selectObjs.value = []
   getDataList()
 }
 
 provide('refresh', resetQuery)
+provide('getList', getDataList)
 
 const tableCellFormatter = (row, column, cellValue) => {
   if (column.label?.includes('(元)')) {
-    return cellValue >= 0 && cellValue
+    return cellValue !== null && cellValue !== undefined
       ? `￥${thousandthDivision({ number: cellValue })}`
-      : '--'
+      : '-'
   }
   return cellValue
 }

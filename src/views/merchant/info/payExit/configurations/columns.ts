@@ -11,18 +11,15 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'channelName',
-    label: '支付通道',
-    'min-width': 150
+    label: '支付通道'
   },
   {
     prop: 'channelStatusDesc',
-    label: '状态',
-    'min-width': 150
+    label: '状态'
   },
   {
     label: '操作',

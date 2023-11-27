@@ -136,23 +136,19 @@ const columns = [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'billNumber',
-    label: '账单编号',
-    'min-width': 175
+    label: '账单编号'
   },
   {
     prop: 'settleBillName',
-    label: '账单名称',
-    'min-width': 150
+    label: '账单名称'
   },
   {
     prop: 'settleBillTypeDesc',
@@ -161,13 +157,11 @@ const columns = [
   },
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    'min-width': 175
+    label: '结算单编号'
   },
   {
     prop: 'payTime',
-    label: '结算完成时间',
-    'min-width': 170
+    label: '结算完成时间'
   },
   {
     prop: 'serviceAmount',

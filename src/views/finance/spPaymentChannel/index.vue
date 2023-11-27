@@ -52,13 +52,11 @@ const spPaymentChannelRef = ref()
 const columns = [
   {
     prop: 'channelName',
-    label: '支付通道名称',
-    'min-width': 160
+    label: '支付通道名称'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 160
+    label: '服务商'
   },
   {
     prop: 'mainAccount',
@@ -67,35 +65,26 @@ const columns = [
   },
   {
     prop: 'createTime',
-    label: '创建时间',
-    'min-width': 180
+    label: '创建时间'
   },
   {
     prop: 'bankNameDesc',
-    label: '账号类别',
-    'min-width': 160
+    label: '账号类别'
   },
   {
     prop: 'bankBranch',
-    label: '开户行',
-    'min-width': 160
+    label: '开户行'
   },
-  // {
-  //   prop: 'bankArea',
-  //   label: '开户地',
-  //   'min-width': 160
-  // },
   {
     prop: 'channelStatusDesc',
-    label: '状态',
-    'min-width': 160
+    label: '状态'
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 150
+    'min-width': 138
   }
 ]
 const conditionForms = [

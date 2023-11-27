@@ -1,6 +1,7 @@
 <template>
   <TableView
     ref="merchantAccountCapitalRef"
+    :actions="actions"
     :columns="indexThead"
     module="finance/merchantRecharge"
     :staticQuery="staticQuery"
@@ -87,25 +88,6 @@
         </div>
       </div>
     </template>
-    <template #actions="{ row }">
-      <el-button
-        v-auth="'finance_merchantRecharge_edit'"
-        v-if="row.status != 30"
-        @click="handleRevoke(row.id)"
-        icon="view"
-        text
-        type="primary">
-        撤销
-      </el-button>
-      <el-button
-        v-auth="'finance_merchantAccountCapital_view_voucher'"
-        @click="handleContractFile(row)"
-        icon="view"
-        text
-        type="primary">
-        查看转账凭证
-      </el-button>
-    </template>
     <Dialog
       vertical
       v-model="show"
@@ -142,16 +124,14 @@
 </template>
 
 <script setup lang="ts" name="商户资金账户详情">
-import {
-  updateMerchantRechargeStatus,
-  addMerchantRecharge
-} from '/@/api/finance/merchantRecharge'
+import { addMerchantRecharge } from '/@/api/finance/merchantRecharge'
 import indexThead from './configurations-detail/indexThead'
+import actions from './configurations-detail/tabel-actions'
 import conditionForms from './configurations-detail/condition-forms'
-import { formsFunc } from '/@/views/finance/merchantAccountCapital/dynamic-forms'
+import { formsFunc } from './configurations-detail/dynamic-forms'
 import { getSelectReceiptAccount, addObj } from '/@/api/finance/merchantRefund'
 import { getObj } from '/@/api/finance/merchantAccountCapital'
-import { useMessage, useMessageBox } from '/@/hooks/message'
+import { useMessage } from '/@/hooks/message'
 import thousandthDivision from '/@/utils/thousandth-division'
 import commonFunction from '/@/utils/commonFunction'
 const route: any = useRoute()
@@ -159,7 +139,6 @@ const reType = ref(0)
 const show = ref(false)
 const merchantAccountCapitalRef = ref()
 const { copyText } = commonFunction()
-const { proxy } = getCurrentInstance()
 
 let dialogFormData = reactive({
   receiptAccountBank: '',
@@ -236,19 +215,6 @@ const handleRe = async (type: number) => {
       item.value = item.receiptAccountNumber
     })
   }
-}
-// 查看转账凭证
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.transferVoucher}`)
-}
-// 撤销
-const handleRevoke = async (id: string) => {
-  try {
-    await useMessageBox().confirm('您确定撤销吗？')
-    await updateMerchantRechargeStatus(id)
-    useMessage().success('撤销成功')
-    merchantAccountCapitalRef.value.resetQuery()
-  } catch (err: any) {}
 }
 // 提交充值/退款
 const onSubmit = async () => {

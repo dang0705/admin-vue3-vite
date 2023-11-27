@@ -1,8 +1,3 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['merchant_recharge_status'] })
-interface BatchUploadRecordPage {
-  status: string
-}
 export default [
   {
     type: 'selection',
@@ -10,33 +5,27 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
   {
     prop: 'serialNumber',
-    label: '充值流水号',
-    minWidth: 150
+    label: '充值流水号'
   },
   {
     prop: 'amount',
-    label: '充值金额(元)',
-    minWidth: 150
+    label: '充值金额(元)'
   },
   {
     prop: 'rechargeStartTime',
-    label: '发起充值时间',
-    minWidth: 150
+    label: '发起充值时间'
   },
   {
     prop: 'dealTime',
-    label: '实际交易时间',
-    minWidth: 150
+    label: '实际交易时间'
   },
   {
     prop: 'payingAccountName',
@@ -65,21 +54,18 @@ export default [
   // },
   {
     prop: 'updateTime',
-    label: '更新时间',
-    minWidth: 180
+    label: '更新时间'
   },
   {
     prop: 'status',
     label: '状态',
-    minWidth: 150,
-    value: ({ status }: BatchUploadRecordPage) =>
-      batchMap.value.merchant_recharge_status[status]
+    options: 'merchant_recharge_status'
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 250
+    'min-width': 180
   }
 ]

@@ -68,22 +68,19 @@ export default ({
         failListColumns.value = [
           {
             prop: 'undertakerName',
-            label: '姓名',
-            minWidth
+            label: '姓名'
           },
           {
             prop: 'undertakerCard',
-            label: '身份证号',
-            minWidth: 180
+            label: '身份证号'
           },
           {
             prop: 'undertakerPhone',
-            label: '手机号',
-            minWidth
+            label: '手机号'
           },
-          { prop: 'bankName', label: '开户行', minWidth },
-          { prop: 'bankNumber', label: '银行卡号', minWidth: 180 },
-          { prop: 'spName', label: '服务商', minWidth },
+          { prop: 'bankName', label: '开户行' },
+          { prop: 'bankNumber', label: '银行卡号' },
+          { prop: 'spName', label: '服务商' },
           ...failColumnsSuffix
         ]
         break
@@ -104,23 +101,19 @@ export default ({
         failListColumns.value = [
           {
             prop: 'undertakerName',
-            label: '姓名',
-            minWidth
+            label: '姓名'
           },
           {
             prop: 'undertakerCard',
-            label: '身份证号',
-            minWidth: 180
+            label: '身份证号'
           },
           {
             prop: 'undertakerCard',
-            label: '银行卡号码',
-            minWidth: 180
+            label: '银行卡号码'
           },
           {
             prop: 'undertakerCard',
-            label: '开户行',
-            minWidth: 180
+            label: '开户行'
           },
           ...failColumnsSuffix
         ]
@@ -149,8 +142,7 @@ export default ({
           },
           {
             prop: 'undertakerCard',
-            label: '身份证号',
-            minWidth: 150
+            label: '身份证号'
           },
           ...failColumnsSuffix
         ]
@@ -182,18 +174,11 @@ export default ({
         failListColumns.value = [
           {
             prop: 'undertakerName',
-            label: '姓名',
-            minWidth
+            label: '姓名'
           },
           {
             prop: 'undertakerCard',
-            label: '身份证号',
-            minWidth
-          },
-          {
-            prop: 'undertakerPhone',
-            label: '手机号',
-            minWidth
+            label: '身份证号'
           },
           ...failColumnsSuffix
         ]
@@ -247,28 +232,23 @@ export default ({
         failListColumns.value = [
           {
             label: '承接人姓名',
-            prop: 'undertakerName',
-            minWidth: 200
+            prop: 'undertakerName'
           },
           {
             label: '承接人证件号码',
-            prop: 'undertakerCard',
-            minWidth: 200
+            prop: 'undertakerCard'
           },
           {
             label: '任务承揽费(元)',
-            prop: 'taskAmount',
-            minWidth: 200
+            prop: 'taskAmount'
           },
           {
             label: '任务开始时间',
-            prop: 'undertaderStartTime',
-            minWidth: 200
+            prop: 'undertaderStartTime'
           },
           {
             label: '任务结束时间',
-            prop: 'undertaderEndTime',
-            minWidth: 200
+            prop: 'undertaderEndTime'
           },
           ...failColumnsSuffix
         ]
@@ -295,8 +275,7 @@ export default ({
         failListColumns.value = [
           {
             label: '服务商',
-            prop: 'spName',
-            minWidth: 200
+            prop: 'spName'
           },
           {
             label: '支付通道',
@@ -305,13 +284,11 @@ export default ({
           },
           {
             label: '银行流水号',
-            prop: 'bankSerialNumber',
-            minWidth: 200
+            prop: 'bankSerialNumber'
           },
           {
             label: '交易时间',
-            prop: 'dealTime',
-            minWidth: 200
+            prop: 'dealTime'
           },
           {
             label: '借贷类型',
@@ -320,8 +297,7 @@ export default ({
           },
           {
             label: '交易金额',
-            prop: 'amount',
-            minWidth: 200
+            prop: 'amount'
           },
           {
             label: '对方账号',

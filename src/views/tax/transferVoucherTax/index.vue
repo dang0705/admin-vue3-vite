@@ -11,7 +11,7 @@
         icon="download"
         text
         type="primary"
-        @click="handleContractFile(row)">
+        @click="handleContractFile(row.transferVoucher)">
         下载凭证
       </el-button>
     </template>
@@ -19,12 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
-import { payChannel } from '/@/configuration/dynamic-control'
-const { proxy } = getCurrentInstance()
+import { downBlobFile } from '/@/utils/other'
 const route: any = useRoute()
-const router = useRouter()
-const form = reactive({})
 const staticQuery = computed(() => {
   return {
     spId: route.query.spId,
@@ -34,13 +30,11 @@ const staticQuery = computed(() => {
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'serialNumber',
@@ -54,13 +48,11 @@ const columns = [
   },
   {
     prop: 'payingAmount',
-    label: '充值金额(元)',
-    'min-width': 180
+    label: '充值金额(元)'
   },
   {
     prop: 'rechargeStartTime',
-    label: '充值时间',
-    'min-width': 180
+    label: '充值时间'
   },
   // 伪代码, 暂不知该字段
   {
@@ -73,7 +65,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 100
   }
 ]
 const conditionForms = [
@@ -99,8 +91,8 @@ const conditionForms = [
     }
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.transferVoucher}`)
+const handleContractFile = (transferVoucher: string) => {
+  downBlobFile(`${transferVoucher}`, {})
 }
 </script>
 <script lang="ts">

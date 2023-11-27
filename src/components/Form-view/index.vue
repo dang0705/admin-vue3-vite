@@ -22,6 +22,7 @@ const emit = defineEmits([
   'submit-and-cancel'
 ])
 const refresh = inject('refresh', () => {})
+const getList = inject('getList', () => {})
 const inDialog = inject('in-dialog', false)
 
 const prop = defineProps({
@@ -232,6 +233,16 @@ watch(
       ? initForm(prop.forms)
       : reset() && stopWatchShow && stopWatchShow() && (stopWatchShow = null)
 )
+
+const getEvent = (control: string) =>
+  ['el-input', 'InputPlus'].includes(control) ? 'keydown' : ''
+const onEnter = ({ key, code }: any) =>
+  !prop.validation &&
+  prop.submitButtonText === '查询' &&
+  (key.toLowerCase() === 'enter' || code.toLowerCase() === 'enter') &&
+  getList &&
+  getList()
+
 const submit = async () => {
   let valid: boolean
   if (prop.validation) {
@@ -346,7 +357,8 @@ defineExpose({
                         ...(form.control === 'el-input'
                           ? { maxlength: 100 }
                           : {})
-                      }">
+                      }"
+                      @[getEvent(form.control)]="onEnter">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">
                         <el-option

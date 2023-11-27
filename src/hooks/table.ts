@@ -126,6 +126,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * 发起分页查询，并设置表格数据和分页信息
    */
   const query = async (others: any = {}) => {
+    state.queryForm.ids = []
     // 判断是否存在state.pageList属性
     if (state.pageList) {
       try {

@@ -11,7 +11,7 @@
         icon="download"
         text
         type="primary"
-        @click="handleContractFile(row)">
+        @click="handleContractFile(row.uploadAttachment)">
         下载
       </el-button>
     </template>
@@ -19,22 +19,16 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
-import { payChannel } from '/@/configuration/dynamic-control'
-const { proxy } = getCurrentInstance()
-const router = useRouter()
+import { downBlobFile } from '/@/utils/other'
 const route: any = useRoute()
-const form = reactive({})
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'agreementName',
@@ -51,7 +45,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 100
   }
 ]
 const staticQuery = computed(() => {
@@ -75,8 +69,8 @@ const conditionForms = [
     value: route.query.merchantId
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.uploadAttachment}`)
+const handleContractFile = (uploadAttachment: string) => {
+  downBlobFile(`${uploadAttachment}`, {})
 }
 </script>
 <script lang="ts">

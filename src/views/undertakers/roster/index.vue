@@ -5,7 +5,6 @@
       :columns="columns"
       :actions="actions"
       down-blob-file-url="core/undertakerInfo/export"
-      down-blob-file-name="undertakerInfo.xlsx"
       label-width="160"
       export-auth="hro_undertakerInfo_export"
       module="core/undertakerInfo">
@@ -59,8 +58,11 @@
       <!-- 编辑、新增  -->
       <form-dialog ref="formDialogRef" />
       <!-- 查看 -->
-      <detail-dialog ref="detailDialogRef" />
-
+      <!-- <detail-dialog ref="detailDialogRef" /> -->
+      <detail-dialog
+        v-if="showDetailDialog"
+        ref="detailDialogRef"
+        @close="showDetailDialog = false" />
       <!-- 批量上传身份证 -->
       <batchCard-dialog ref="batchCardDialogRef" />
 
@@ -144,6 +146,7 @@ import Array2Object from '/@/utils/array-2-object'
 import conditionForms from '/@/views/undertakers/roster/configurations/condition-forms'
 import getColumns from '/@/views/undertakers/roster/configurations/columns'
 import getActions from '/src/views/undertakers/roster/configurations/actions'
+const showDetailDialog = ref(false)
 import id_z from '/@/assets/id/id_z.webp'
 import id_f from '/@/assets/id/id_f.webp'
 
@@ -156,8 +159,15 @@ const customersRef = ref()
 const addUnderTakerRef = ref()
 const bindBankRef = ref()
 const columns = getColumns(batchMap)
-
-const openDialog = (...arg: any[]) => detailDialogRef.value.openDialog(...arg)
+const openDialog = (...arg: any[]) => {
+  showDetailDialog.value = true
+  nextTick(() => {
+    setTimeout(() => {
+      detailDialogRef.value?.openDialog(...arg)
+    }, 200)
+  })
+}
+// const openDialog = (...arg: any[]) => detailDialogRef.value.openDialog(...arg)
 
 const actions = ({ id, undertakerPhone }: any) => [
   {

@@ -15,114 +15,87 @@ export default [
   },
   {
     prop: 'billName',
-    label: '账单名称',
-    minWidth: 100
+    label: '账单名称'
   },
   {
     prop: 'billNumber',
-    label: '账单编号',
-    minWidth: 100
+    label: '账单编号'
   },
   {
     prop: 'undertakerName',
-    label: '承接人',
-    minWidth: 100
+    label: '承接人'
   },
   {
     prop: 'undertakerCard',
-    label: '承接人证件号码',
-    minWidth: 150
+    label: '承接人证件号码'
   },
   {
     prop: 'undertakerPhone',
-    label: '承接人手机号码',
-    minWidth: 150
+    label: '承接人手机号码'
   },
   {
     prop: 'taskAmount',
-    label: '个人任务承揽费(元)',
-    minWidth: 150
+    label: '个人任务承揽费(元)'
   },
   {
     prop: 'taxWithheld',
-    label: '代扣税款(元)',
-    minWidth: 120
+    label: '代扣税款(元)'
   },
   {
     prop: 'paidAmount',
-    label: '实发金额(元)',
-    minWidth: 120
+    label: '实发金额(元)'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 100
+    label: '支付通道'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    minWidth: 100
+    label: '任务名称'
   },
   {
     prop: 'taskUndertakerId',
-    label: '任务承接编号',
-    minWidth: 150
+    label: '任务承接编号'
   },
   {
     prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 100
+    label: '任务编号'
   },
   {
     prop: 'undertakerBankName',
-    label: '承接人开户行',
-    minWidth: 150
+    label: '承接人开户行'
   },
   {
     prop: 'undertakerBankNumber',
-    label: '承接人银行卡号',
-    minWidth: 150
+    label: '承接人银行卡号'
   },
-
-  // {
-  //   prop: 'commissionAmount',
-  //   label: '管理费(元)',
-  //   minWidth: 120
-  // },
   {
     prop: 'undertaderStartTime',
-    label: '承接开始时间',
-    minWidth: 180
+    label: '承接开始时间'
   },
   {
     prop: 'undertaderEndTime',
-    label: '承接结束时间',
-    minWidth: 180
+    label: '承接结束时间'
   },
   {
     prop: 'detailNumber',
-    label: '任务结算明细编号',
-    minWidth: 150
+    label: '任务结算明细编号'
   },
   {
     prop: 'billSettleTime',
-    label: '付款时间',
-    minWidth: 180
+    label: '付款时间'
   },
   {
     prop: 'isSignServiceContract',
     label: '是否存在生效协议',
-    'min-width': 180,
     value: ({ isSignServiceContract }: BatchUploadRecordPage) =>
       batchMap.value.yes_no_type[isSignServiceContract]
   },
@@ -130,8 +103,7 @@ export default [
     prop: 'isBankFourEssentialFactor',
     label: '是否银行四要素校验',
     value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) =>
-      batchMap.value.yes_no_type[isBankFourEssentialFactor],
-    minWidth: 150
+      batchMap.value.yes_no_type[isBankFourEssentialFactor]
   },
   {
     prop: 'billStatus',
@@ -140,16 +112,12 @@ export default [
   },
   {
     prop: 'paymentSuccessTime',
-    label: '支付时间',
-    minWidth: 180
+    label: '支付时间'
   },
   {
     prop: 'paymentStatus',
     label: '支付状态',
     options: 'payment_status'
-    // value: ({ paymentStatus }: BatchUploadRecordPage) =>
-    //   batchMap.value.payment_status[paymentStatus],
-    // minWidth: 100
   },
   {
     prop: 'failureReason',

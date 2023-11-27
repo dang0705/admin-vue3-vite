@@ -1,9 +1,3 @@
-import Array2Object from '/@/utils/array-2-object'
-const batchMap = Array2Object({ dic: ['water_sp_payment_bank_status'] })
-interface BatchUploadRecordPage {
-  status: string
-  loanType: string
-}
 export default [
   {
     type: 'selection',
@@ -11,18 +5,15 @@ export default [
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 150
+    label: '支付通道'
   },
   {
     prop: 'amount',
-    label: '到款金额(元)',
-    'min-width': 150
+    label: '到款金额(元)'
   },
   {
     prop: 'reciprocalAccountName',
@@ -31,18 +22,15 @@ export default [
   },
   {
     prop: 'reciprocalAccountNumber',
-    label: '对方银行账号',
-    'min-width': 150
+    label: '对方银行账号'
   },
   {
     prop: 'dealTime',
-    label: '交易时间',
-    'min-width': 150
+    label: '交易时间'
   },
   {
     prop: 'status',
     label: '状态',
-    'min-width': 150,
     options: 'water_sp_payment_bank_status'
   }
 ]

@@ -14,8 +14,7 @@ const route: any = useRoute()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   // {
   // 	prop: 'merchantName',
@@ -47,7 +46,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 90
+    'min-width': 80
   }
 ]
 const actions = ({ contractFile }: any) => [

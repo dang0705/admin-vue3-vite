@@ -1,5 +1,3 @@
-<!-- downBlobFileUrl="/finance/dutyPaidDetails/export"
-downBlobFileName="完税明细.xlsx" -->
 <template>
   <div>
     <TableView

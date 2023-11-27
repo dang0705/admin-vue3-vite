@@ -36,6 +36,7 @@ export default (row: any) => {
                 return operateMode === '1'
               }
             },
+            value: [],
             props: {
               type: '60'
             }
@@ -80,7 +81,7 @@ export default (row: any) => {
           {
             control: 'InputPlus',
             key: 'receiptAmount',
-            label: '退款金额',
+            label: '退款金额(元)',
             value: thousandthDivision({ number: row.receiptAmount }) + '元',
             props: {
               disabled: true

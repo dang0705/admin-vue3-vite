@@ -1,15 +1,3 @@
-<!-- <TableView
-ref="settleBillDetailRef"
-:columns="indexThead"
-module="core/settleBill.ts"
-getListFnName="taskRecordItem"
-:staticQuery="staticQuery"
-:condition-forms="conditionForms"
-downBlobFileUrl="xxx"
-exportAuth="core_settleBill_export"
-labelWidth="140px">
-
-</TableView> -->
 <template>
   <SettleBillTaskRecordItem>
     <template #tableTop="{ otherInfo }">
@@ -249,17 +237,12 @@ labelWidth="140px">
 import { useDict } from '/@/hooks/dict'
 import { getObj } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
-import Array2Object from '/@/utils/array-2-object'
 import {
   serviceIndexThead,
   taskIndexThead
 } from './configurations-detail/columns'
 import thousandthDivision from '/@/utils/thousandth-division'
 const { settle_status } = useDict('settle_status')
-// setTimeout(() => {
-// const getType = (status: string) => {
-//   return settle_status.value.find((item) => item.value === status).color
-// }
 const getTypeService = computed(() => {
   return settle_status.value.find(
     (item) => item.value === form.serviceBillRecord[0]?.status
@@ -269,10 +252,6 @@ const getTypeTask = computed(() => {
   return settle_status.value.find(
     (item) => item.value === form.taskBillRecord[0]?.status
   ).color
-})
-// }, 1000)
-const batchMap = Array2Object({
-  dic: ['yes_no_type', 'settle_status', 'payment_status']
 })
 const SettleBillTaskRecordItem = defineAsyncComponent(
   () => import('/@/views/accounting/settleBillTaskRecordItem/index.vue')
@@ -285,12 +264,6 @@ const detailDialogRef = ref()
 const importBillRef = ref()
 const settleBillDetailRef = ref()
 const { proxy } = getCurrentInstance()
-interface BatchUploadRecordPage {
-  isSignServiceContract: number
-  isBankFourEssentialFactor: number
-  billStatus: number
-  paymentStatus: number
-}
 const payInFull = ref(true)
 const payInFullType = ref(1) // 1表示全部付款 2任务承揽费 3管理费 4表示无需付款
 const isNeedRecharge = computed(() => {

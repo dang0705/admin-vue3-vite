@@ -129,38 +129,32 @@ const columns = [
   },
   {
     prop: 'undertakerNumber',
-    label: '承接编号',
-    'min-width': 150
+    label: '承接编号'
   },
   {
     prop: 'undertakerName',
-    label: '承接人',
-    'min-width': 150
+    label: '承接人'
   },
   {
     prop: 'createTime',
-    label: '生成时间',
-    'min-width': 180
+    label: '生成时间'
   },
   {
     prop: 'taskNumber',
-    label: '任务编号',
-    'min-width': 180
+    label: '任务编号'
   },
   {
     prop: 'undertakerCard',
-    label: '承接人证件号码',
-    'min-width': 180
+    label: '承接人证件号码'
+    // minWidth: 150
   },
   {
     prop: 'undertakerPhone',
-    label: '承接人手机号',
-    'min-width': 180
+    label: '承接人手机号'
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    'min-width': 180
+    label: '任务名称'
   },
   {
     prop: 'taskMoney',
@@ -169,44 +163,35 @@ const columns = [
   },
   {
     prop: 'startTime',
-    label: '承接开始时间',
-    'min-width': 180
+    label: '承接开始时间'
   },
   {
     prop: 'doneTime',
-    label: '承接完成时间',
-    'min-width': 180
+    label: '承接完成时间'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 180
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 180
+    label: '商户'
   },
   {
     prop: 'isEffectiveContract',
     label: '是否存在生效协议',
-    'min-width': 180,
-    // options: 'yes_no_type'
     value: ({ isEffectiveContract }: BatchUploadRecordPage) =>
       batchMap.value.yes_no_type[isEffectiveContract]
   },
   {
     prop: 'isBankFourEssentialFactor',
     label: '是否银行四要素校验',
-    'min-width': 180,
-    // options: 'yes_no_type'
     value: ({ isBankFourEssentialFactor }: BatchUploadRecordPage) =>
       batchMap.value.yes_no_type[isBankFourEssentialFactor]
   },
   {
     prop: 'state',
     label: '状态',
-    'min-width': 180,
     options: 'undertaking_status'
   },
   {
@@ -214,7 +199,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 150
+    'min-width': 80
   }
 ]
 

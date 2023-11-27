@@ -1,8 +1,8 @@
 <template>
   <el-dialog
+    ref="dialog"
     title="承接记录详情"
     v-model="visible"
-    :close-on-click-modal="false"
     draggable
     width="900px">
     <el-form
@@ -35,10 +35,6 @@
             <div class="info_value">{{ form.createTime }}</div>
           </div>
         </div>
-        <!-- <div class="info_item">
-          <div class="info_label">证件号码：</div>
-          <div class="info_value">{{ form.undertakerCard }}</div>
-        </div> -->
       </div>
       <div :gutter="24">
         <div class="title_box">个人承接</div>
@@ -70,18 +66,38 @@
             </div>
           </div>
           <div class="info_row">
-            <div class="info_label">开始前上传图片：</div>
+            <div class="info_label">开始打卡图片：</div>
             <div class="info_value">
               <div v-for="item in form.startImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
               </div>
+              <div v-if="!form.startImages?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
+              </div>
             </div>
           </div>
           <div class="info_row">
-            <div class="info_label">完成成果图片：</div>
+            <div class="info_label">结束打卡图片：</div>
             <div class="info_value">
               <div v-for="item in form.doneImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
+              </div>
+              <div v-if="!form.doneImages?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
+              </div>
+            </div>
+          </div>
+          <div class="info_row">
+            <div class="info_label">任务成果：</div>
+            <div class="info_value">
+              <div v-for="item in form.doneFiles" :key="item">
+                <UploadFile
+                  fileType="file"
+                  :modelValue="[item]"
+                  :disabled="true" />
+              </div>
+              <div v-if="!form.doneFiles?.length">
+                <UploadFile :modelValue="[]" :disabled="true" />
               </div>
             </div>
           </div>
@@ -106,7 +122,7 @@
               {{
                 form.enterpriseAcceptanceMoney
                   ? form.enterpriseAcceptanceMoney + '元'
-                  : '--'
+                  : '-'
               }}
             </div>
           </div>
@@ -136,6 +152,7 @@ import { getObj } from '/@/api/core/undertakerTask'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const visible = ref(false)
 const loading = ref(false)
+const dialog = ref()
 // 提交表单数据
 const form = reactive({
   id: '',
@@ -162,6 +179,7 @@ const openDialog = (id: string) => {
   visible.value = true
   form.id = ''
   // 获取undertakerInfo信息
+  // dialog.value.scrollTo({ top: 0 })
   if (id) {
     form.id = id
     getundertakerInfoData(id)

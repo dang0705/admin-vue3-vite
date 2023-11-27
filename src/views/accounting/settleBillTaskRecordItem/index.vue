@@ -69,7 +69,7 @@
       submitButtonText="确认"
       :label-width="150"
       :forms="accountForms"
-      :columns="20"
+      :columns="24"
       :on-submit="onSubmit"
       width="500px"></Dialog>
   </TableView>
@@ -79,12 +79,13 @@
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 // import actions from './configurations/tabel-actions'
+import { downBlobFile } from '/@/utils/other'
 import {
   queryUnderTakerBankCard,
   updateUnderTakerBankCard
 } from '/@/api/core/settleBillTaskRecordItem'
-const down = (download) => {
-  window.open(`${BASE}/${download}`)
+const down = (download: string) => {
+  downBlobFile(`${download}`, {})
 }
 const id = ref('')
 const route: any = useRoute()
@@ -150,7 +151,7 @@ const newColumns = computed(() => {
   })
   return list
 })
-const onSubmit = async (id) => {
+const onSubmit = async () => {
   const params = {
     id: id.value
   }

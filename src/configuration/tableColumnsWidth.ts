@@ -10,5 +10,6 @@ export default {
   age: '48px',
   education: '100px',
   bankName: '130px',
-  bankNumber: '160px'
+  bankNumber: '160px',
+  status: '110px'
 }

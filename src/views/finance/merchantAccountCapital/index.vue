@@ -1,7 +1,7 @@
 <template>
   <Table-view
     :columns="columns"
-    exportAuth="core_merchantAccountCapital_export"
+    exportAuth="finance_merchantAccountCapital_export"
     :condition-forms="conditionForms"
     downBlobFileUrl="/finance/merchantAccountCapital/export"
     module="finance/merchantAccountCapital">
@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
 import { payChannel } from '/@/configuration/dynamic-control'
 import spPaymentChannel from '/@/api/core/spPaymentChannel'
 const formData = reactive({})
@@ -50,50 +49,43 @@ const columns = [
   },
   {
     prop: 'subAccountNum',
-    label: '资金账户',
-    'min-width': 150
+    label: '资金账户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'bankAccountNumber',
-    label: '银行账号',
-    'min-width': 150
+    label: '银行账号'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    'min-width': 150
+    label: '支付通道'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'balance',
-    label: '实时余额(元)',
-    'min-width': 150
+    label: '实时余额(元)'
   },
   {
     prop: 'statusDesc',
     label: '是否可用',
-    'min-width': 150
+    'min-width': 80
   },
   {
     prop: 'updateTime',
-    label: '更新时间',
-    'min-width': 180
+    label: '更新时间'
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 250
+    'min-width': 180
   }
 ]
 const accountShow = ref(false)
@@ -150,9 +142,6 @@ const accountForms = [
     }
   }
 ]
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
-}
 const handleViewAccount = (row) => {
   accountShow.value = true
   spPaymentChannel

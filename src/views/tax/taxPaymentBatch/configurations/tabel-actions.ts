@@ -5,13 +5,9 @@ import { downBlobFile } from '/@/utils/other'
 export default (row: any) => {
   const { spName, dutyPaidFile, id } = row
   const exportExcel = () => {
-    downBlobFile(
-      '/finance/dutyPaidDetails/export',
-      {
-        dutyPaidId: id
-      },
-      '完税明细.xlsx'
-    )
+    downBlobFile('/finance/dutyPaidDetails/export', {
+      dutyPaidId: id
+    })
   }
 
   return [
@@ -54,6 +50,7 @@ export default (row: any) => {
             control: 'UploadFile',
             key: 'fileUrl',
             label: '上传完税证明',
+            value: [],
             rules: [
               {
                 required: true,

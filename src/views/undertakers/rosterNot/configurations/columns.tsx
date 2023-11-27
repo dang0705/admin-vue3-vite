@@ -57,7 +57,7 @@ export default (batchMap: Ref) => [
   {
     label: '操作',
     prop: 'actions',
-    minWidth: 100,
+    minWidth: 80,
     fixed: 'right',
     slot: true
   }

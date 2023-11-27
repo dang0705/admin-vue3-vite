@@ -8,16 +8,16 @@
       'core_settleBillRecord_sp_view'
     ]"
     :exportAuth="
-      tabType === '任务结算单' //  '20' means 任务结算单
+      tabType === '20' //  '20' means 20
         ? 'core_settleBillRecord_task_export'
-        : tabType === '服务结算单'
+        : tabType === '10'
           ? 'core_settleBillRecord_sp_export'
           : ''
     "
     :downBlobFileUrl="
-      tabType === '任务结算单'
+      tabType === '20'
         ? '/core/settleBillRecord/exportTaskSettleBillRecord'
-        : tabType === '服务结算单'
+        : tabType === '10'
           ? '/core/settleBillRecord/exportServiceSettleBillRecord'
           : ''
     "
@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { payChannel } from '/@/configuration/dynamic-control'
 const router = useRouter()
-const tabType = ref('任务结算单')
+const tabType = ref('20')
 const columns = [
   {
     type: 'selection',
@@ -64,71 +64,49 @@ const columns = [
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    minWidth: 150
+    label: '任务名称'
   },
   {
     prop: 'taskNo',
-    label: '任务编号',
-    minWidth: 150
+    label: '任务编号'
   },
   {
     prop: 'settleBillName',
     label: '账单名称',
-    minWidth: 150,
     slot: true
   },
   {
     prop: 'billNumber',
     label: '账单编号',
-    minWidth: 150,
     slot: true
   },
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    minWidth: 150
+    label: '结算单编号'
   },
   {
     prop: 'serviceAmount',
-    label: '结算金额(元)',
-    minWidth: 150
+    label: '结算金额(元)'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    minWidth: 150
+    label: '商户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    minWidth: 150
+    label: '服务商'
   },
   {
     prop: 'paymentBankName',
-    label: '支付通道',
-    minWidth: 150
+    label: '支付通道'
   },
-  // {
-  // 	prop: 'bankAccountNumberRecipient',
-  // 	label: '收款方银行账号',
-  // 	minWidth: 150,
-  // },
-  // {
-  // 	prop: 'accountNameRecipient',
-  // 	label: '收款方户名',
-  // 	minWidth: 150,
-  // },
-
   {
     prop: 'payTime',
-    label: '付款时间',
-    minWidth: 200
+    label: '付款时间'
   },
   {
     prop: 'status',
     label: '结算状态',
-    minWidth: 150,
     options: 'settle_status'
   }
   // {
@@ -189,18 +167,7 @@ const conditionForms = [
     options: 'settle_status'
   },
   payChannel({ key: 'paymentBankId' })
-  // {
-  // 	control: 'el-select',
-  // 	key: 'paymentBankId',
-  // 	label: '支付通道',
-  // },
 ]
-// const getTab = (type) => {
-//   tabType.value = type
-// }
-// const handleBtn = () => {
-//   useMessage().wraning('功能正在开发, 请等待~')
-// }
 </script>
 <script lang="ts">
 export default {

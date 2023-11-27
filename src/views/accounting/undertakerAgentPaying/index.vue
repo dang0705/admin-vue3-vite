@@ -9,7 +9,6 @@
     is-tab
     get-full-selection
     down-blob-file-url="/finance/undertakerAgentPaying/export"
-    down-blob-file-name="任务支付流水.xlsx"
     export-auth="finance_undertakerAgentPaying_export"
     @get-tab-value="currentTab = $event">
     <!--    '40' 支付失败 '10待支付'-->
@@ -84,6 +83,7 @@ const actions = (row: any) => [
           row.payStatus
         ]
       ),
+    preview: true,
     action: {
       handler: confirmToPay,
       params: ['pay', row]

@@ -71,6 +71,7 @@ const forms = [
     control: 'UploadFile',
     key: 'contractFiles',
     label: '上传合同扫描件',
+    value: [],
     props: {
       fileType: 'file',
       style: { width: '173px', height: '140px' },

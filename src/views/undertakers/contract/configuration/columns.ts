@@ -1,13 +1,13 @@
 export default (contractMap) => [
-  { label: '姓名', prop: 'undertakerName', width: '100' },
-  { label: '证件号码', prop: 'undertakerCard', width: '180' },
-  { label: '手机号码', prop: 'undertakerPhone', width: '120' },
-  { label: '合同名称', prop: 'contractName', width: '200' },
-  { label: '签约编号', prop: 'contractNumber', width: '210' },
-  { label: '发起签约时间', prop: 'createTime', width: '180' },
-  { label: '合同开始时间', prop: 'startTime', width: '180' },
-  { label: '合同结束时间', prop: 'endTime', width: '180' },
-  { label: '合同终止时间', prop: 'contractEndTime', width: '180' },
+  { label: '姓名', prop: 'undertakerName' },
+  { label: '证件号码', prop: 'undertakerCard' },
+  { label: '手机号码', prop: 'undertakerPhone' },
+  { label: '合同名称', prop: 'contractName', width: '180' },
+  { label: '签约编号', prop: 'contractNumber' },
+  { label: '发起签约时间', prop: 'createTime' },
+  { label: '合同开始时间', prop: 'startTime', minWidth: '100' },
+  { label: '合同结束时间', prop: 'endTime', minWidth: '100' },
+  { label: '合同终止时间', prop: 'contractEndTime', minWidth: '100' },
   {
     label: '合同类型',
     prop: 'contractType',
@@ -18,7 +18,6 @@ export default (contractMap) => [
   {
     label: '合同状态',
     prop: 'state',
-    width: '140',
     // value: ({ state }) => contractMap.value.contract_status[state],
     slot: true
   },

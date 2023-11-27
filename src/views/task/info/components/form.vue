@@ -155,9 +155,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.area') + '：'"
-              prop="areaDatas">
+            <el-form-item label="任务地区：" prop="areaDatas">
               <ChinaArea
                 :disabled="self_disabled"
                 ref="chinaAreaRef"

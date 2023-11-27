@@ -107,18 +107,15 @@ const unitMaps = {
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'socialCreditCode',
-    label: '统一信用代码',
-    'min-width': 180
+    label: '统一信用代码'
   },
   {
     prop: 'agreement',
@@ -150,13 +147,6 @@ const columns = [
     'min-width': 100,
     slot: true
   }
-  // {
-  // 	label: '操作',
-  // 	prop: 'actions',
-  // 	fixed: 'right',
-  // 	slot: true,
-  // 	'min-width': 250,
-  // },
 ]
 const conditionForms = [
   {

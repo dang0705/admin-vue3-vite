@@ -11,7 +11,7 @@
         icon="download"
         text
         type="primary"
-        @click="handleContractFile(row)">
+        @click="handleContractFile(row.contractFile)">
         下载凭证
       </el-button>
     </template>
@@ -19,23 +19,20 @@
 </template>
 
 <script setup lang="ts">
-const { proxy } = getCurrentInstance()
+import { downBlobFile } from '/@/utils/other'
 const route: any = useRoute()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    'min-width': 150
+    label: '任务名称'
   },
   {
     prop: 'undertakerName',
@@ -44,8 +41,7 @@ const columns = [
   },
   {
     prop: 'undertakerCard',
-    label: '证件号码',
-    'min-width': 150
+    label: '证件号码'
   },
   {
     prop: 'contractName',
@@ -54,8 +50,7 @@ const columns = [
   },
   {
     prop: 'paymentSuccessTime',
-    label: '发放时间',
-    'min-width': 150
+    label: '发放时间'
   },
   {
     prop: 'taskAmount',
@@ -77,7 +72,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 100
   }
 ]
 const staticQuery = computed(() => {
@@ -119,8 +114,8 @@ const conditionForms = [
     }
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.contractFile}`)
+const handleContractFile = (contractFile: string) => {
+  downBlobFile(`${contractFile}`, {})
 }
 </script>
 <script lang="ts">

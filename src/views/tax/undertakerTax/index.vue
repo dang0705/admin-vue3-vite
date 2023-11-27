@@ -11,7 +11,7 @@
     <template #contractName="{ row }">
       <a
         v-auth="'taxSupervision_undertakerTask_down'"
-        @click="handleContractFile(row)"
+        @click="handleContractFile(row.contractFile)"
         href="javascript:;"
         class="hover:underline text-blue-400">
         {{ row.contractName }}
@@ -32,10 +32,10 @@
 </template>
 
 <script setup lang="ts">
+import { previewFile, downBlobFile } from '/@/utils/other'
 const DetailDialog = defineAsyncComponent(
   () => import('/@/views/task/undertaker/components/detailDialog.vue')
 )
-const { proxy } = getCurrentInstance()
 const route: any = useRoute()
 const undertakerTaxRef = ref()
 const detailDialogRef = ref()
@@ -49,18 +49,15 @@ const staticQuery = computed(() => {
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'taskName',
-    label: '任务名称',
-    'min-width': 180
+    label: '任务名称'
   },
   {
     prop: 'undertakerName',
@@ -69,8 +66,7 @@ const columns = [
   },
   {
     prop: 'undertakerCard',
-    label: '证件号码',
-    'min-width': 180
+    label: '证件号码'
   },
   {
     prop: 'contractName',
@@ -98,7 +94,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 80
   }
 ]
 const isTaskDetail = computed(() => {
@@ -140,8 +136,9 @@ const conditionForms = [
 const refreshDataList = () => {
   undertakerTaxRef.value.resetQuery()
 }
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.contractFile}`)
+const handleContractFile = (contractFile: string) => {
+  // downBlobFile(contractFile)
+  previewFile({ url: contractFile })
 }
 </script>
 <script lang="ts">

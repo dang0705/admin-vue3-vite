@@ -75,8 +75,7 @@ const columns = [
   },
   {
     label: '社会统一信用代码',
-    prop: 'socialCreditCode',
-    minWidth: 160
+    prop: 'socialCreditCode'
   },
   {
     label: '法定代表人',

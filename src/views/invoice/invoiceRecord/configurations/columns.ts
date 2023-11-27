@@ -5,44 +5,37 @@ export default [
   },
   {
     prop: 'applyNumber',
-    label: '申请编号',
-    'min-width': 175
+    label: '申请编号'
   },
   {
     prop: 'billRecordNum',
-    label: '结算单编号',
-    'min-width': 175
+    label: '结算单编号'
   },
   {
     prop: 'createTime',
-    label: '申请时间',
-    'min-width': 170
+    label: '申请时间'
   },
   {
     prop: 'invoicingAmount',
-    label: '开票金额(元)',
-    'min-width': 120
+    label: '开票金额(元)'
   },
   {
     prop: 'billingTypeDesc',
     label: '发票类型',
-    'min-width': 150
+    'min-width': 100
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'status',
     label: '发票状态',
     options: 'invoice_status'
-    // 'min-width': 100
   },
   {
     prop: 'reason',
@@ -57,8 +50,7 @@ export default [
   },
   {
     prop: 'postOrderNumber',
-    label: '快递单号',
-    'min-width': 180
+    label: '快递单号'
   },
   {
     label: '操作',

@@ -2,8 +2,8 @@
   <el-dialog
     title="承接人详情"
     v-model="visible"
-    :close-on-click-modal="false"
     draggable
+    @close="close"
     width="1000px">
     <el-form
       class="form-view"
@@ -52,7 +52,14 @@
                 proxy.baseURL + '/' + form.undertakerPortrait?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail1.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
           <div class="card_col">
             <el-image
@@ -66,7 +73,14 @@
                 proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0]
               ]"
               :initial-index="4"
-              fit="contain" />
+              fit="contain">
+              <template #error>
+                <img
+                  src="/src/assets/card-fail2.webp"
+                  class="w-[100%]"
+                  alt="" />
+              </template>
+            </el-image>
           </div>
         </div>
       </div>
@@ -137,6 +151,7 @@
 <script setup lang="ts">
 import { useDict } from '/@/hooks/dict'
 import { getObj } from '/src/api/core/undertakerInfo'
+const emits = defineEmits(['close'])
 defineOptions({ name: 'UndertakerInfoDialog' })
 const { proxy } = getCurrentInstance()
 // 定义变量内容
@@ -166,6 +181,10 @@ const form = reactive({
   isBankFourEssentialFactor: '',
   spList: []
 })
+const close = () => {
+  visible.value = false
+  emits('close')
+}
 // 定义校验规则
 const dataRules = ref({
   undertakerName: [

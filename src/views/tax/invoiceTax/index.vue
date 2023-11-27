@@ -11,7 +11,7 @@
         icon="download"
         text
         type="primary"
-        @click="handleContractFile(row)">
+        @click="handleContractFile(row.invoiceFilePath)">
         下载凭证
       </el-button>
     </template>
@@ -19,18 +19,16 @@
 </template>
 
 <script setup lang="ts">
-const { proxy } = getCurrentInstance()
+import { downBlobFile } from '/@/utils/other'
 const route: any = useRoute()
 const columns = [
   {
     prop: 'spName',
-    label: '服务商',
-    'min-width': 150
+    label: '服务商'
   },
   {
     prop: 'merchantName',
-    label: '商户',
-    'min-width': 150
+    label: '商户'
   },
   {
     prop: 'invoicingCategoriesDesc',
@@ -44,15 +42,14 @@ const columns = [
   },
   {
     prop: 'updateTime',
-    label: '开票时间',
-    'min-width': 180
+    label: '开票时间'
   },
   {
     label: '操作',
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 100
   }
 ]
 const staticQuery = computed(() => {
@@ -84,8 +81,8 @@ const conditionForms = [
     }
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.invoiceFilePath}`)
+const handleContractFile = (invoiceFilePath: string) => {
+  downBlobFile(`${invoiceFilePath}`, {})
 }
 </script>
 <script lang="ts">
