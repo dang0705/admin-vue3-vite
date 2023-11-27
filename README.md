@@ -253,3 +253,11 @@ export default (row: any) => {
 import { downBlobFile } from '/@/utils/other'
 downBlobFile(`${contractFile}`, {})
 ```
+
+// 查看pdf
+```
+import { previewFile } from '/@/utils/other'
+previewFile({
+  url: url
+})
+```
