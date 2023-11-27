@@ -33,13 +33,17 @@ const formOne = [
     }
   },
   {
-    control: 'InputNumber',
+    control: 'InputPlus',
     key: 'payingAccountNumber',
     label: '付款账号',
     rules: [
       {
         required: true,
         message: '付款账号不能为空',
+        trigger: 'blur'
+      },
+      {
+        validator: rule.number,
         trigger: 'blur'
       }
     ],

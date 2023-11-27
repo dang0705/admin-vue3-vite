@@ -106,12 +106,13 @@
 
 <script setup lang="ts" name="distribution">
 import { useMessage } from '/@/hooks/message'
-import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill'
-const emit = defineEmits(['refresh'])
+import { getObj, payBillRecord } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge'
 import spPaymentChannel from '/@/api/core/spPaymentChannel'
 import commonFunction from '/@/utils/commonFunction'
+import { rule } from '/@/utils/validate'
+const emit = defineEmits(['refresh'])
 const { copyText } = commonFunction()
 const route: any = useRoute()
 const title = ref('')
@@ -180,6 +181,10 @@ const addUnderTakerForms = [
       {
         required: true,
         message: '付款账号不能为空',
+        trigger: 'blur'
+      },
+      {
+        validator: rule.number,
         trigger: 'blur'
       }
     ],
