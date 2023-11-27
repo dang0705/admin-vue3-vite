@@ -235,7 +235,7 @@ export default (row: any) => {
             },
             action: {
                 handler: submitObj,
-                params: { id },
+                params: { id }, 如果是对象格式, 传{id}  id拼接url后面传[id]  类似于删除传ids的传 [[id]]
             },
         },
         {
@@ -246,4 +246,10 @@ export default (row: any) => {
     ];
 };
 
+```
+
+// 导出配置
+```
+import { downBlobFile } from '/@/utils/other'
+downBlobFile(`${contractFile}`, {})
 ```

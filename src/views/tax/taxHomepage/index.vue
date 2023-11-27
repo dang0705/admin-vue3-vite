@@ -147,13 +147,6 @@ const columns = [
     'min-width': 100,
     slot: true
   }
-  // {
-  // 	label: '操作',
-  // 	prop: 'actions',
-  // 	fixed: 'right',
-  // 	slot: true,
-  // 	'min-width': 250,
-  // },
 ]
 const conditionForms = [
   {

@@ -79,12 +79,13 @@
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
 // import actions from './configurations/tabel-actions'
+import { downBlobFile } from '/@/utils/other'
 import {
   queryUnderTakerBankCard,
   updateUnderTakerBankCard
 } from '/@/api/core/settleBillTaskRecordItem'
-const down = (download) => {
-  window.open(`${BASE}/${download}`)
+const down = (download: string) => {
+  downBlobFile(`${download}`, {})
 }
 const id = ref('')
 const route: any = useRoute()
