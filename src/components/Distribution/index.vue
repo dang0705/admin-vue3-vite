@@ -50,7 +50,6 @@
 
 <script setup lang="ts">
 import { useMessage } from '/@/hooks/message'
-import { useI18n } from 'vue-i18n'
 import request from '/@/utils/request'
 defineOptions({ name: 'Distribution' })
 const props = defineProps({
@@ -154,7 +153,6 @@ props.watchField &&
     () => formData.value[props.watchField],
     async () => (data.value = await getData())
   )
-const { t } = useI18n()
 
 const loading = ref(false)
 
@@ -292,9 +290,7 @@ const onSubmit = async () => {
       ...formData.value
     })
     state.dialog.isShowDialog = false
-    useMessage().success(t('common.editSuccessText'))
-  } catch (e) {
-    console.log(e)
+    useMessage().success('修改成功')
   } finally {
     loading.value = false
   }
