@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '/@/hooks/message'
 import { payChannel } from '/@/configuration/dynamic-control'
 import spPaymentChannel from '/@/api/core/spPaymentChannel'
 const formData = reactive({})
@@ -143,9 +142,6 @@ const accountForms = [
     }
   }
 ]
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
-}
 const handleViewAccount = (row) => {
   accountShow.value = true
   spPaymentChannel

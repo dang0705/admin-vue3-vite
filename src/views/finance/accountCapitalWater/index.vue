@@ -31,8 +31,6 @@
         {{ row.subAccountNum }}
       </router-link>
     </template>
-    <!-- 伪代码 exportAuth -->
-    <template #actions="{ row: {} }"></template>
   </Table-view>
 </template>
 
@@ -41,11 +39,6 @@ import { payChannel } from '/@/configuration/dynamic-control'
 
 const tabType = ref('1')
 const accountCapitalWaterRef = ref()
-// const staticQuery = computed(() => {
-//   return {
-//     isPlatform: tabType.value === '3' ? 1 : undefined
-//   }
-// })
 const getListFnName = computed(() => {
   if (tabType.value === '1') {
     return 'fetchList'
@@ -249,29 +242,6 @@ const conditionForms1 = [
     key: 'cause',
     label: '类型',
     options: 'fund_occurrence_cause'
-    // options: [
-    //   // 伪代码
-    //   {
-    //     label: '充值',
-    //     value: '1'
-    //   },
-    //   {
-    //     label: '充值退款',
-    //     value: '2'
-    //   },
-    //   {
-    //     label: '任务支出',
-    //     value: '3'
-    //   },
-    //   {
-    //     label: '管理费支出',
-    //     value: '4'
-    //   },
-    //   {
-    //     label: '服务费支出',
-    //     value: '5'
-    //   }
-    // ]
   },
   {
     control: 'DateRange',
