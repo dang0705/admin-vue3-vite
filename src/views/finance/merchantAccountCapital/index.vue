@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { payChannel } from '/@/configuration/dynamic-control'
-import spPaymentChannel from '/@/api/core/spPaymentChannel'
+import spPaymentChannel from '/@/api/finance/merchantAccountCapital'
 const formData = reactive({})
 const router = useRouter()
 const columns = [
@@ -125,7 +125,7 @@ const accountForms = [
   },
   {
     control: 'InputCopy',
-    key: 'mainAccount',
+    key: 'bankAccountNumber',
     label: '收款账号',
     props: {
       disabled: true,
@@ -134,7 +134,7 @@ const accountForms = [
   },
   {
     control: 'InputCopy',
-    key: 'spName',
+    key: 'accountName',
     label: '收款户名',
     props: {
       disabled: true,
@@ -145,7 +145,7 @@ const accountForms = [
 const handleViewAccount = (row) => {
   accountShow.value = true
   spPaymentChannel
-    .getObj(row.paymentBankId)
+    .getObj(row.id)
     .then((res: any) => {
       Object.assign(formData, res.data)
     })

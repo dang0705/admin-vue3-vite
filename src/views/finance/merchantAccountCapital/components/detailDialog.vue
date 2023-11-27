@@ -109,7 +109,7 @@ import { useMessage } from '/@/hooks/message'
 import { getObj, payBillRecord } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge'
-import spPaymentChannel from '/@/api/core/spPaymentChannel'
+import spPaymentChannel from '/@/api/finance/merchantAccountCapital'
 import commonFunction from '/@/utils/commonFunction'
 import { rule } from '/@/utils/validate'
 const emit = defineEmits(['refresh'])

@@ -108,7 +108,7 @@
 
 <script setup lang="ts" name="distribution">
 import { useMessage } from '/@/hooks/message'
-import { getObj, addObj, putObj, payBillRecord } from '/@/api/core/settleBill'
+import { getObj, payBillRecord } from '/@/api/core/settleBill'
 import { queryPlatSpBalance } from '/@/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '/@/api/finance/merchantRecharge'
 import spPaymentChannel from '/@/api/core/spPaymentChannel'
