@@ -61,16 +61,7 @@ const downFileUrl = computed(() => {
   } else if (tabType.value === '2') {
     return '/finance/spAccountCapitalWater/export'
   } else if (tabType.value === '3') {
-    return '/finance/spAccountCapitalWater/export'
-  }
-})
-const downFileName = computed(() => {
-  if (tabType.value === '1') {
-    return '商户资金账户.xlsx'
-  } else if (tabType.value === '2') {
-    return '服务商余额账户.xlsx'
-  } else if (tabType.value === '3') {
-    return '平台余额账户.xlsx'
+    return '/finance/spAccountCapitalWater/platform/export'
   }
 })
 const tabs = ref([
