@@ -1,7 +1,7 @@
 <template>
   <Table-view
     :columns="columns"
-    exportAuth="core_merchantAccountCapital_export"
+    exportAuth="finance_merchantAccountCapital_export"
     :condition-forms="conditionForms"
     downBlobFileUrl="/finance/merchantAccountCapital/export"
     module="finance/merchantAccountCapital">
