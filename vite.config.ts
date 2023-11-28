@@ -54,11 +54,11 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
               'element-plus/dist/locale/en.mjs'
             ]
           },
-          plugins,
-          resolve: { alias }
+          plugins
         }),
     envDir: process.cwd(),
     publicDir: isPure ? '' : '../../public',
+    resolve: { alias },
     server: {
       host: '0.0.0.0', // 服务器地址
       port: env.VITE_PORT as unknown as number, // 服务器端口号
