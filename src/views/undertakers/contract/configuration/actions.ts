@@ -20,7 +20,7 @@ export default (contractMap: any, labelMapping: LabelMapping<number>) =>
       show: () => state !== labelMapping['待签署']
       // action: {
       //   handler: () => {
-      //     window.open(BASE + '/' + contractFile + TOKEN)
+      //     window.open(BASE + '/' + contractFile + TOKEN())
       //   }
       // }
     },
