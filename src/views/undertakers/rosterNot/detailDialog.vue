@@ -44,12 +44,14 @@
             <el-image
               class="card_pic"
               style="height: 60px"
-              :src="proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN"
+              :src="
+                proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN()
+              "
               :zoom-rate="1.2"
               :max-scale="7"
               :min-scale="0.2"
               :preview-src-list="[
-                proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN
+                proxy.baseURL + '/' + form.undertakerPortrait?.[0] + TOKEN()
               ]"
               :initial-index="4"
               fit="contain">
@@ -66,13 +68,19 @@
               class="card_pic"
               style="height: 60px"
               :src="
-                proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0] + TOKEN
+                proxy.baseURL +
+                '/' +
+                form.undertakerNationalEmblem?.[0] +
+                TOKEN()
               "
               :zoom-rate="1.2"
               :max-scale="7"
               :min-scale="0.2"
               :preview-src-list="[
-                proxy.baseURL + '/' + form.undertakerNationalEmblem?.[0] + TOKEN
+                proxy.baseURL +
+                  '/' +
+                  form.undertakerNationalEmblem?.[0] +
+                  TOKEN()
               ]"
               :initial-index="4"
               fit="contain">
