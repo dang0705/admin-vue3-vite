@@ -27,6 +27,7 @@
 	--el-disabled-bg-color: transparent; /*全局禁用背景色透明*/
 	--el-disabled-border-color: transparent; /*全局禁用边框透明*/
 	--el-button-active-bg-color: #ff6826;
+	--el-color-primary:var(--primary);
 	//--el-button-hover-link-text-color: #ff6826;
     --table-header-bg-color: #eaeaea; /*表头背景色*/
     --el-font-size-base: 12px;
@@ -40,6 +41,7 @@
 	--el-transfer-panel-width: 35vw;
 }
 .el-button--primary {
+	--el-button-bg-color:var(--primary);
 	--el-button-active-bg-color: var(--el-button-bg-color);
 	//--el-button-hover-bg-color: var(--primary);
 	//--el-button-hover-border-color: var(--primary);
