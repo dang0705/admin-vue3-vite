@@ -88,6 +88,7 @@
             @click="detailDialogRef.openDialog(form.id, 4, 1)"
             icon="view"
             text
+            v-auth="'core_settleBill_d_r'"
             type="primary">
             查看收款账号
           </el-button>
@@ -95,6 +96,7 @@
             @click="handleAccountCapitalDetail(1)"
             icon="view"
             text
+            v-auth="'core_settleBill_d_z'"
             type="primary">
             查看资金账户
           </el-button>
@@ -161,6 +163,7 @@
             @click="detailDialogRef.openDialog(form.id, 4, 2)"
             icon="view"
             text
+            v-auth="'core_settleBill_d_r'"
             type="primary">
             查看收款账号
           </el-button>
@@ -168,6 +171,7 @@
             @click="handleAccountCapitalDetail(2)"
             icon="view"
             text
+            v-auth="'core_settleBill_d_z'"
             type="primary">
             查看资金账户
           </el-button>
