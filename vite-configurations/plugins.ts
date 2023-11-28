@@ -5,7 +5,6 @@ import {
   createStyleImportPlugin,
   VxeTableResolve
 } from 'vite-plugin-style-import'
-import topLevelAwait from 'vite-plugin-top-level-await'
 import viteCompression from 'vite-plugin-compression'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import injectScript from './inject'
@@ -14,7 +13,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default [
   vue(), // Vue 插件
   vueJsx(),
-  // svgBuilder('./public/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
+  createHtmlPlugin({ minify: true }),
+  svgBuilder('./shared/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
   AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -44,10 +44,10 @@ export default [
   createStyleImportPlugin({
     resolves: [VxeTableResolve()] // 配置vxetable 按需加载
   }),
-  topLevelAwait({
+  /*  topLevelAwait({
     promiseExportName: '__tla', // TLA Promise 变量名
     promiseImportName: (i) => `__tla_${i}` // TLA Promise 导入名
-  }),
+  }),*/
   viteCompression({
     deleteOriginFile: false // 压缩后删除原来的文件
   })

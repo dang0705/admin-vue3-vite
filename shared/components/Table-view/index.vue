@@ -119,11 +119,9 @@
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
-            :header-cell-style="
-              header
-                ? tableStyle.headerCellStyle
-                : { headerCellStyle: { background: 'transparent', height: 0 } }
-            "
+            :show-header="header"
+            :row-key="selectMainKey"
+            :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />
