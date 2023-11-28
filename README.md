@@ -36,7 +36,7 @@ export interface FormOptions {
 ### 表格配置
 
 ```ts
-import Array2Object from '/@/utils/array-2-object';
+import Array2Object from '@utils/array-2-object';
 // 字典转map，用于显示中文
 const batchMap = Array2Object({ dic: ['batch_status', 'batch_type'] });
 
@@ -107,8 +107,8 @@ interface BatchUploadRecordPage {
 
 ### Table-view 的 actions配置
 ```ts
-import { RouteItems } from '/@/types/global';
-import { submitObj } from '/@/api/core/settleBill';
+import { RouteItems } from '@jmyg/types/global';
+import { submitObj } from '@jmyg/api/core/settleBill';
 
 // 主配置
 interface Actions {

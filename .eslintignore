@@ -15,4 +15,4 @@ bin
 build
 config
 index.html
-src/assets
+apps/jmyg/src/assets

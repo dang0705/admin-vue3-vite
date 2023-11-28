@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue'
-import { svgBuilder } from '/@/components/IconSelector/index'
+import { svgBuilder } from '../shared/components/IconSelector/index'
 import AutoImport from 'unplugin-auto-import/vite'
 import {
   createStyleImportPlugin,
@@ -14,7 +14,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default [
   vue(), // Vue 插件
   vueJsx(),
-  svgBuilder('./src/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
+  // svgBuilder('./public/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
   AutoImport({
     include: [
       /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -29,17 +29,17 @@ export default [
       'vue-router',
       'pinia',
       {
-        '/@/utils/mitt': [['default', '$bus']],
-        '/@/utils/request': ['$http'],
-        '/@/hooks/keep-alive-list-refresh': [['default', '$refreshList']],
-        '/@/configuration/env': [['default', '__isDev']],
-        '/@/configuration/host': [['default', 'HOST']],
-        '/@/configuration/base-url': [['default', 'BASE']],
-        '/@/configuration/token': [['default', 'TOKEN']],
-        '/@/configuration/icons': [['otherIcons', 'ICONS']]
+        '@utils/mitt': [['default', '$bus']],
+        '@utils/request': ['$http'],
+        '@hooks/keep-alive-list-refresh': [['default', '$refreshList']],
+        '@configurations/env': [['default', '__isDev']],
+        '@configurations/host': [['default', 'HOST']],
+        '@configurations/base-url': [['default', 'BASE']],
+        '@configurations/token': [['default', 'TOKEN']],
+        '@configurations/icons': [['otherIcons', 'ICONS']]
       }
     ], // 自动导入的依赖库数组
-    dts: './auto-imports.d.ts' // 自动导入类型定义文件路径
+    dts: '../../../auto-imports.d.ts' // 自动导入类型定义文件路径
   }),
   createStyleImportPlugin({
     resolves: [VxeTableResolve()] // 配置vxetable 按需加载
