@@ -43,6 +43,7 @@
 .el-button--primary {
 	--el-button-bg-color:var(--primary);
 	--el-button-active-bg-color: var(--el-button-bg-color);
+	--el-button-active-border-color: var(--el-button-bg-color);
 	//--el-button-hover-bg-color: var(--primary);
 	//--el-button-hover-border-color: var(--primary);
 }
