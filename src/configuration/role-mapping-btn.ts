@@ -1,62 +1,53 @@
 const buttons: Record<string, any> = {
   '资金账户': {
     route: '/finance/merchantAccountCapital/index',
-    text: '资金账户',
     icon: 'icon_zijinzhanghu-w',
     bg: '#FF7D05',
     iconSize: 22
   },
   '结算账单': {
     route: '/accounting/settleBill/index',
-    text: '结算管理',
     icon: 'icon_jiesuanzhongxin',
     bg: '#57CA18',
     iconSize: 22
   },
   '发票记录': {
     route: '/invoice/invoiceRecord/index',
-    text: '发票记录',
     icon: 'icon_fapiaoguanlixitong1',
     bg: '#8E8BFC',
     iconSize: 18
   },
   '创建任务': {
     route: '/task/info/add',
-    text: '创建任务',
     icon: 'icon_fabu',
     bg: '#628EF8',
     iconSize: 22
   },
   '商户信息': {
-    text: '商户信息',
     route: '/merchant/info/index',
     icon: 'icon_shanghuxinxi',
     bg: '#628EF8',
     iconSize: 22
   },
   '承接人信息': {
-    text: '承接人信息',
     icon: 'icon_chengjierenxinxi',
     route: '/undertakers/roster/index',
     bg: '#FF7D05',
     iconSize: 22
   },
   '退款支付': {
-    text: '退款支付',
     icon: 'icon_tuikuanzhifu',
     route: '/finance/refundPayRecord/index',
     bg: '#628EF8',
     iconSize: 22
   },
   '交易流水': {
-    text: '交易流水',
     icon: 'icon_jiaoyiliushui',
     route: '/finance/accountCapitalWater/index',
     bg: '#FF7D05',
     iconSize: 22
   },
   '任务支付': {
-    text: '任务支付',
     icon: 'icon_renwuzhifu',
     route: '/accounting/undertakerAgentPaying/index',
     bg: '#57CA18',
@@ -64,7 +55,9 @@ const buttons: Record<string, any> = {
   }
 }
 for (let button in buttons) {
-  buttons[button].hover = false
+  const item = buttons[button]
+  item.hover = false
+  item.text = button
 }
 
 export default [
