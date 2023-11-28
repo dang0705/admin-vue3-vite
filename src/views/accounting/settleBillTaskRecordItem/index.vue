@@ -4,11 +4,7 @@
     :condition-forms="forms"
     :actions="actions"
     :staticQuery="staticQuery"
-    :exportAuth="
-      route.query.id
-        ? 'core_settleBillTaskRecordItem_export'
-        : 'core_settleBill_export'
-    "
+    exportAuth="core_settleBillTaskRecordItem_export"
     labelWidth="140px"
     module="core/settleBillTaskRecordItem"
     downBlobFileUrl="/core/settleBillTaskRecordItem/export">

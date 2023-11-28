@@ -14,14 +14,14 @@
         导入结算
       </el-button>
       <el-button
-        v-auth="'core_settleBill_batch_export'"
+        v-auth="'core_settleBill_export'"
         type="primary"
         class="ml10"
         @click="exportExcel('/core/settleBill/export', downParams)">
         批量导出账单
       </el-button>
       <el-button
-        v-auth="'core_settleBill_batch_export_detail'"
+        v-auth="'core_settleBill_export_detail'"
         style="margin-right: 24px"
         type="primary"
         :disabled="selectObjs.length === 0"

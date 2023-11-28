@@ -11,11 +11,11 @@
     :tabs="tabs"
     :exportAuth="
       tabType === '1'
-        ? 'finance_merchantAccountCapitalWater_batch_export'
+        ? 'finance_merchantAccountCapitalWater_export'
         : tabType === '2'
-          ? 'finance_spAccountCapitalWater_batch_export'
+          ? 'finance_spAccountCapitalWater_export'
           : tabType === '3'
-            ? 'finance_platAccountCapitalWater_batch_export'
+            ? 'finance_platAccountCapitalWater_export'
             : ''
     ">
     <template #subAccountNum="{ row }">
@@ -60,15 +60,18 @@ const downFileUrl = computed(() => {
 const tabs = ref([
   {
     label: '商户资金账户',
-    attributeVal: '1'
+    attributeVal: '1',
+    auth: 'finance_merchantAccountCapitalWater_export'
   },
   {
     label: '服务商余额账户',
-    attributeVal: '2'
+    attributeVal: '2',
+    auth: 'finance_spAccountCapitalWater_export'
   },
   {
     label: '平台余额账户',
-    attributeVal: '3'
+    attributeVal: '3',
+    auth: 'finance_platAccountCapitalWater_export'
   }
 ])
 // 商户资金账户
