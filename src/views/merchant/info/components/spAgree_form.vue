@@ -71,10 +71,7 @@
 
         <el-col :span="12" class="mb20">
           <el-form-item label="要求电子签署：" prop="isElectronicSignature">
-            <el-select
-              :disabled="isDetail"
-              clearable
-              v-model="form.isElectronicSignature">
+            <el-select disabled clearable v-model="form.isElectronicSignature">
               <el-option
                 :key="item.value"
                 :label="item.label"
@@ -347,7 +344,7 @@ let form = reactive<FormData>({
   serviceManager: '',
   agreementType: '',
   isUploadAchievement: '',
-  isElectronicSignature: '',
+  isElectronicSignature: '0',
   paymentBeforeInvoice: '',
   startTime: '',
   endTime: '',
@@ -429,6 +426,7 @@ const dataRules = ref({
 // 打开弹窗
 const openDialog = (id: string, type: any) => {
   visible.value = true
+  set(form, 'isElectronicSignature', '0')
   form.id = ''
   if (type == 'view') {
     isDetail.value = true

@@ -83,8 +83,8 @@ const actions = (row: any) => [
           row.payStatus
         ]
       ),
-    preview: true,
     action: {
+      save: false,
       handler: confirmToPay,
       params: ['pay', row]
     }
