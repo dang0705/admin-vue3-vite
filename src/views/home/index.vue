@@ -1,7 +1,7 @@
 <template>
   <div class="px-[20px]">
     <ul id="dashboard" class="flex my-[18px] mx-auto justify-center">
-      <li class="flex flex-col flex-shrink-0 w-[320px]">
+      <li class="flex flex-col flex-shrink-0 w-[320px]" v-if="routes.length">
         <div
           class="section !px-[12px] !pt-[16px]"
           style="height: 128px; padding-bottom: 10px">
@@ -45,7 +45,6 @@
           </h2>
         </Column>
       </li>
-      <!--      Messages here-->
       <li
         class="section ml-[12px] h-[380px] box-border xl:w-[878px] w-[calc(100%-320px-12px)] overflow-hidden">
         <Message
@@ -62,45 +61,18 @@
 <script setup lang="ts">
 import Column from '/@/views/home/components/column.vue'
 import Message from '/@/views/message/component/index.vue'
+import { useUserInfo } from '/@/stores/userInfo'
+import roleMappingBtn from '/@/configuration/role-mapping-btn'
 
+const { userInfos } = storeToRefs(useUserInfo())
+
+const routes = ref(
+  roleMappingBtn.find(({ role }) => userInfos.value.roles[0] === role)?.icons ||
+    []
+)
 const $router = useRouter()
 
 defineOptions({ name: 'router.home' })
-
-const routes = ref([
-  {
-    route: '/task/info/add',
-    text: '创建任务',
-    icon: 'icon_fabu',
-    hover: false,
-    bg: '#628EF8',
-    iconSize: 22
-  },
-  {
-    route: '/invoice/invoiceRecord/index',
-    text: '发票记录',
-    icon: 'icon_fapiaoguanlixitong1',
-    hover: false,
-    bg: '#8E8BFC',
-    iconSize: 18
-  },
-  {
-    route: '/accounting/settleBill/index',
-    text: '结算管理',
-    icon: 'icon_jiesuanzhongxin',
-    hover: false,
-    bg: '#57CA18',
-    iconSize: 22
-  },
-  {
-    route: '/finance/merchantAccountCapital/index',
-    text: '资金账户',
-    icon: 'icon_zijinzhanghu-w',
-    hover: false,
-    bg: '#FF7D05',
-    iconSize: 22
-  }
-])
 
 const dashboardData = [
   {

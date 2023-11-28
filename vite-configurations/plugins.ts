@@ -5,7 +5,6 @@ import {
   createStyleImportPlugin,
   VxeTableResolve
 } from 'vite-plugin-style-import'
-import topLevelAwait from 'vite-plugin-top-level-await'
 import viteCompression from 'vite-plugin-compression'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import injectScript from './inject'
@@ -44,10 +43,10 @@ export default [
   createStyleImportPlugin({
     resolves: [VxeTableResolve()] // 配置vxetable 按需加载
   }),
-  topLevelAwait({
-    promiseExportName: '__tla', // TLA Promise 变量名
-    promiseImportName: (i) => `__tla_${i}` // TLA Promise 导入名
-  }),
+  // topLevelAwait({
+  //   promiseExportName: '__tla', // TLA Promise 变量名
+  //   promiseImportName: (i) => `__tla_${i}` // TLA Promise 导入名
+  // }),
   viteCompression({
     deleteOriginFile: false // 压缩后删除原来的文件
   })
