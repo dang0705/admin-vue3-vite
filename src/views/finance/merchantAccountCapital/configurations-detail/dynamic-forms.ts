@@ -14,7 +14,8 @@ const formOne = [
     ],
     value: [],
     props: {
-      type: '60'
+      type: '60',
+      accept: ['.jpg', '.jpeg', '.png', '.gif', '.pdf', '.ofd']
     }
   },
   {
@@ -72,7 +73,7 @@ const formOne = [
     label: '开户行联行号',
     rules: [
       {
-        required: true,
+        required: false,
         message: '开户行联行号不能为空',
         trigger: 'blur'
       },
@@ -80,7 +81,8 @@ const formOne = [
         validator: rule.interbank,
         trigger: 'blur'
       }
-    ]
+    ],
+    slot: true
   },
   {
     control: 'InputNumber',

@@ -170,8 +170,14 @@
           <span class="text-[#999]" v-if="acceptText">
             支持{{
               accept.length
-                ? accept.join(',').replace(/image\//g, '')
-                : new_accept.join(',').replace(/image\//g, '')
+                ? accept
+                    .join(',')
+                    .replace(/image\//g, '')
+                    .replace(/\./g, '')
+                : new_accept
+                    .join(',')
+                    .replace(/image\//g, '')
+                    .replace(/\./g, '')
             }}文件
           </span>
           <template v-if="!isImage">
