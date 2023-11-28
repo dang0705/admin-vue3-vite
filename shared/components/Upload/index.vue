@@ -168,8 +168,14 @@
           <span class="text-[#999]" v-if="acceptText">
             支持{{
               accept.length
-                ? accept.join(',').replace(/image\//g, '')
-                : new_accept.join(',').replace(/image\//g, '')
+                ? accept
+                    .join(',')
+                    .replace(/image\//g, '')
+                    .replace(/\./g, '')
+                : new_accept
+                    .join(',')
+                    .replace(/image\//g, '')
+                    .replace(/\./g, '')
             }}文件
           </span>
           <template v-if="!isImage">
@@ -320,8 +326,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-    ? IMAGE_TYPES
-    : FILE_TYPES
+      ? IMAGE_TYPES
+      : FILE_TYPES
 )
 
 // 查看图片
@@ -490,8 +496,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-    ? LIMIT.compression
-    : LIMIT.file
+      ? LIMIT.compression
+      : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value

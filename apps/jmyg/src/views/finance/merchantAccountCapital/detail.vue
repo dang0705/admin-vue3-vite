@@ -117,6 +117,27 @@
       v-model:form-data="dialogFormData"
       :on-cancel="onCancel"
       :on-submit="onSubmit">
+      <template #payingJointBankNumber>
+        <el-form-item
+          label="开户行联行号"
+          prop="payingJointBankNumber"
+          :rules="[
+            {
+              validator: rule.interbank,
+              trigger: 'blur'
+            }
+          ]">
+          <template v-slot:label>
+            <el-tooltip
+              content="您若未提供开户行的联行号信息，在操作余额退款时可能会导致转账不成功。"
+              placement="top">
+              <SvgIcon name="iconfont icon_a-31tishi" class="font12 mr-[3px]" />
+            </el-tooltip>
+            开户行联行号：
+          </template>
+          <InputPlus v-model="dialogFormData.payingJointBankNumber" />
+        </el-form-item>
+      </template>
       <template #receiptAccountNumber>
         <el-form-item
           label="收款账号:"
@@ -157,6 +178,7 @@ import { getObj } from '@jmyg/api/finance/merchantAccountCapital'
 import { useMessage, useMessageBox } from '@hooks/message'
 import thousandthDivision from '@utils/thousandth-division'
 import commonFunction from '@utils/commonFunction'
+import { rule } from '@/utils/validate'
 import total1 from '@/assets/images/total_1.png'
 import total4 from '@/assets/images/total_4.png'
 import total7 from '@/assets/images/total_7.png'

@@ -355,7 +355,7 @@
         </el-row>
       </el-card>
       <!-- <Divider title="办税人信息" /> -->
-      <el-card class="!border-none" header="办税人信息" shadow="never">
+      <!-- <el-card class="!border-none" header="办税人信息" shadow="never">
         <el-row class="paddcus" :gutter="48">
           <el-col :span="12" class="mb20">
             <el-form-item
@@ -414,7 +414,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </el-card>
+      </el-card> -->
       <!-- <Divider title="邮寄信息" /> -->
       <el-card
         :style="{ 'margin-bottom': !isDetail ? '71px' : '0px' }"
