@@ -426,6 +426,7 @@ const dataRules = ref({
 // 打开弹窗
 const openDialog = (id: string, type: any) => {
   visible.value = true
+  set(form, 'isElectronicSignature', '0')
   form.id = ''
   if (type == 'view') {
     isDetail.value = true
