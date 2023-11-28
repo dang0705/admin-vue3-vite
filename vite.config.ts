@@ -10,6 +10,7 @@ import pureApps from './vite-configurations/pure-apps'
 
 const isPure = pureApps.includes($appName)
 
+// @ts-ignore
 const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd())
   const _isDev_ = process.argv.includes('dev')
