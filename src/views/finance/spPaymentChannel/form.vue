@@ -165,6 +165,7 @@ const onSubmit = async () => {
   try {
     form.id ? await putObj(form) : await addObj(form)
     useMessage().success(form.id ? '修改成功' : '添加成功')
+    visible.value = false
   } finally {
     console.log(1)
   }
