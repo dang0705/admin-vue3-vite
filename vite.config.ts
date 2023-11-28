@@ -5,6 +5,7 @@ import proxy from './vite-configurations/proxy'
 import postcss from './vite-configurations/postcss'
 import { alias } from './vite-configurations/alias'
 import $appName from './vite-configurations/get-app-name'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import pureApps from './vite-configurations/pure-apps'
 
 const isPure = pureApps.includes($appName)
@@ -21,7 +22,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
           css: {
             postcss
           },
-          plugins
+          plugins: [createHtmlPlugin({ minify: true })]
         }
       : {
           css: {

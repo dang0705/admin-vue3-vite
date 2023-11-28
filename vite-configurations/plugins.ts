@@ -6,14 +6,12 @@ import {
   VxeTableResolve
 } from 'vite-plugin-style-import'
 import viteCompression from 'vite-plugin-compression'
-import { createHtmlPlugin } from 'vite-plugin-html'
 import injectScript from './inject'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default [
   vue(), // Vue 插件
   vueJsx(),
-  createHtmlPlugin({ minify: true }),
   svgBuilder('./shared/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
   AutoImport({
     include: [
