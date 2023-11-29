@@ -32,7 +32,7 @@
           <i
             class="iconfont el-input__icon login-content-password"
             :class="
-              state.isShowPassword ? 'icon-yincangmima' : 'icon-xianshimima'
+              state.isShowPassword ? 'icon_yanjing-bi' : 'icon_yanqing-xianshi'
             "
             @click="state.isShowPassword = !state.isShowPassword"></i>
         </template>
