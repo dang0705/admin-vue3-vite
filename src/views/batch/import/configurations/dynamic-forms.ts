@@ -39,7 +39,7 @@ export default ({
       case Type['批量导入承接人']:
         currentTitle.value = '批量导入承接人'
         form = [
-          {
+          /*{
             control: 'el-select',
             label: '是否存量用户',
             key: 'paramObject.isInventoryUser',
@@ -54,7 +54,7 @@ export default ({
                 value: 0
               }
             ]
-          },
+          },*/
           {
             control: 'DownloadFile',
             label: '任务承接明细表',
