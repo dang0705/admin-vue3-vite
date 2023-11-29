@@ -63,7 +63,9 @@
                 <slot name="excel-body">
                   <img class="w-[48px] h-[48px] mx-auto" :src="fileImg" />
                 </slot>
-                单机上传或拖拽到此处
+                单击上传
+                <br />
+                或拖拽到此处
               </div>
               <template #tip>
                 <div class="el-upload__tip text-center">

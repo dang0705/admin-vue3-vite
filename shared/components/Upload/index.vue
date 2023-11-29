@@ -146,7 +146,11 @@
               :slot-function="props.empty" />
             <template v-else>
               <img class="w-[48px] h-[48px]" :src="fileImg" />
-              <div class="text-[#000000]">单击上传或拖拽到此处</div>
+              <div class="text-[#000000]">
+                单击上传
+                <br />
+                或拖拽到此处
+              </div>
               <!--              <el-icon>
                 <Plus />
               </el-icon>
