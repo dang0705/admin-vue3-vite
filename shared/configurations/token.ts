@@ -1,3 +1,2 @@
-import { Session } from '@utils/storage'
-
-export default `&token=${Session.getToken()}`
+import { useTokenStore } from '@stores/token'
+export default () => `&token=${useTokenStore().token}`
