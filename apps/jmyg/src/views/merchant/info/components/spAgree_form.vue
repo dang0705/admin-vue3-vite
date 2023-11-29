@@ -426,7 +426,6 @@ const dataRules = ref({
 // 打开弹窗
 const openDialog = (id: string, type: any) => {
   visible.value = true
-  set(form, 'isElectronicSignature', '0')
   form.id = ''
   if (type == 'view') {
     isDetail.value = true
@@ -437,9 +436,11 @@ const openDialog = (id: string, type: any) => {
   // 重置表单数据
   nextTick(() => {
     dataFormRef.value?.resetFields()
-    Object.keys(form).forEach((key: any) => {
-      form[key] = undefined
-    })
+    form['platformFeeRate'] = undefined
+    form['platformFeeFixed'] = undefined
+    form['managementFeeRate'] = undefined
+    form['managementFeeFixed'] = undefined
+    form['businessInsurance'] = undefined
   })
 
   // 获取merchantServiceAgreement信息
@@ -457,9 +458,6 @@ const onSubmit = async () => {
   const valid = await dataFormRef.value.validate().catch(() => {})
   if (!valid) return false
   form.merchantId = route.query.id as string
-  // form.feeRates.forEach((item) => {
-  // 	delete item.id;
-  // });
   try {
     loading.value = true
     form.id ? await putObj(form) : await addObj(form)
