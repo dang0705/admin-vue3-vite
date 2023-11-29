@@ -326,11 +326,13 @@ export async function previewFile({
   url,
   mime = 'application/pdf'
 }: Record<string, string>) {
-  let blob = new Blob([await $http.get(url, { responseType: 'blob' })], {
-    type: `${mime};charset=utf-8`
-  })
-  window.open(URL.createObjectURL(blob), 'newWindow')
+  // let blob = new Blob([await $http.get(url, { responseType: 'blob' })], {
+  //   type: `${mime};charset=utf-8`
+  // })
+  window.open(BASE + '/' + url + TOKEN)
+  // window.open(URL.createObjectURL(blob), 'newWindow')
 }
+
 
 /**
  * @description 生成唯一 uuid

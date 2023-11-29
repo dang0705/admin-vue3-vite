@@ -88,11 +88,13 @@ const addUnderTakerForms = ref([
 const tabs = ref([
   {
     label: '手动维护',
-    attributeVal: '1'
+    attributeVal: '1',
+    auth: 'finance_waterSpPaymentBank_export',
   },
   {
     label: '银企直联',
-    attributeVal: '2'
+    attributeVal: '2',
+    auth: 'hro_waterBankCorporateLinkage_export',
   }
 ])
 const refreshDataList = () => {

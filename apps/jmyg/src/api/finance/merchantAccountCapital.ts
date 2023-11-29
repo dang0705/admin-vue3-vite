@@ -55,3 +55,7 @@ export function queryPlatSpBalance(obj?: Object) {
     data: obj
   })
 }
+
+export default {
+  getObj
+}

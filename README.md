@@ -247,3 +247,17 @@ export default (row: any) => {
 };
 
 ```
+
+// 导出配置
+```
+import { downBlobFile } from '/@/utils/other'
+downBlobFile(`${contractFile}`, {})
+```
+
+// 查看pdf
+```
+import { previewFile } from '/@/utils/other'
+previewFile({
+  url: url
+})
+```

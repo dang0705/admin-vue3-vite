@@ -108,15 +108,14 @@
 import { useMessage } from '@hooks/message'
 import {
   getObj,
-  addObj,
-  putObj,
   payBillRecord
 } from '@jmyg/api/core/settleBill'
-const emit = defineEmits(['refresh'])
 import { queryPlatSpBalance } from '@jmyg/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '@jmyg/api/finance/merchantRecharge'
-import spPaymentChannel from '@jmyg/api/core/spPaymentChannel'
+import spPaymentChannel from '@jmyg/api/finance/merchantAccountCapital'
 import commonFunction from '@utils/commonFunction'
+import { rule } from '@utils/validate'
+const emit = defineEmits(['refresh'])
 const { copyText } = commonFunction()
 const route: any = useRoute()
 const title = ref('')
@@ -185,6 +184,10 @@ const addUnderTakerForms = [
       {
         required: true,
         message: '付款账号不能为空',
+        trigger: 'blur'
+      },
+      {
+        validator: rule.number,
         trigger: 'blur'
       }
     ],

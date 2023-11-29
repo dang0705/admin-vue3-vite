@@ -10,7 +10,7 @@
       <!-- <Divider title="基本信息" /> -->
       <el-card
         class="!border-none"
-        :style="{ 'margin-top': isDetail ? '0px' : '15px' }"
+        :style="{ 'margin-top': '15px' }"
         header="基本信息"
         shadow="never">
         <el-row class="paddcus" :gutter="48">

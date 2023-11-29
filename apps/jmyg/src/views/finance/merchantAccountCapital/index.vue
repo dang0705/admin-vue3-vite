@@ -1,7 +1,7 @@
 <template>
   <Table-view
     :columns="columns"
-    exportAuth="core_merchantAccountCapital_export"
+    exportAuth="finance_merchantAccountCapital_export"
     :condition-forms="conditionForms"
     downBlobFileUrl="/finance/merchantAccountCapital/export"
     module="finance/merchantAccountCapital">
@@ -38,9 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '@hooks/message'
 import { payChannel } from '@configurations/dynamic-control'
-import spPaymentChannel from '@jmyg/api/core/spPaymentChannel'
+import spPaymentChannel from '/@/api/finance/merchantAccountCapital'
 const formData = reactive({})
 const router = useRouter()
 const columns = [
@@ -126,7 +125,7 @@ const accountForms = [
   },
   {
     control: 'InputCopy',
-    key: 'mainAccount',
+    key: 'bankAccountNumber',
     label: '收款账号',
     props: {
       disabled: true,
@@ -135,7 +134,7 @@ const accountForms = [
   },
   {
     control: 'InputCopy',
-    key: 'spName',
+    key: 'accountName',
     label: '收款户名',
     props: {
       disabled: true,
@@ -143,13 +142,10 @@ const accountForms = [
     }
   }
 ]
-const handleBtn = () => {
-  useMessage().wraning('功能正在开发, 请等待~')
-}
 const handleViewAccount = (row) => {
   accountShow.value = true
   spPaymentChannel
-    .getObj(row.paymentBankId)
+    .getObj(row.id)
     .then((res: any) => {
       Object.assign(formData, res.data)
     })

@@ -11,7 +11,7 @@
         icon="download"
         text
         type="primary"
-        @click="handleContractFile(row)">
+        @click="handleContractFile(row.transferVoucher)">
         下载凭证
       </el-button>
     </template>
@@ -19,12 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMessage, useMessageBox } from '@hooks/message'
-import { payChannel } from '@configurations/dynamic-control'
-const { proxy } = getCurrentInstance()
+import { downBlobFile } from '@utils/other'
 const route: any = useRoute()
-const router = useRouter()
-const form = reactive({})
 const staticQuery = computed(() => {
   return {
     spId: route.query.spId,
@@ -69,7 +65,7 @@ const columns = [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 120
+    'min-width': 100
   }
 ]
 const conditionForms = [
@@ -95,8 +91,8 @@ const conditionForms = [
     }
   }
 ]
-const handleContractFile = (row: any) => {
-  window.open(`${proxy.baseURL}/${row.transferVoucher}`)
+const handleContractFile = (transferVoucher: string) => {
+  downBlobFile(`${transferVoucher}`, {})
 }
 </script>
 <script lang="ts">

@@ -4,11 +4,8 @@
     :condition-forms="forms"
     :actions="actions"
     :staticQuery="staticQuery"
-    :exportAuth="
-      route.query.id
-        ? 'core_settleBillTaskRecordItem_export'
-        : 'core_settleBill_export'
-    "
+    exportAuth="core_settleBillTaskRecordItem_export"
+
     labelWidth="140px"
     module="core/settleBillTaskRecordItem"
     downBlobFileUrl="/core/settleBillTaskRecordItem/export">
@@ -78,13 +75,15 @@
 <script setup lang="ts">
 import conditionForms from './configurations/condition-forms'
 import columns from './configurations/columns'
-// import actions from './configurations/tabel-actions'
+import { previewFile } from '@utils/other'
 import {
   queryUnderTakerBankCard,
   updateUnderTakerBankCard
 } from '@jmyg/api/core/settleBillTaskRecordItem'
-const down = (download) => {
-  window.open(`${BASE}/${download}`)
+const down = (download: string) => {
+  previewFile({
+    url: download
+  })
 }
 const id = ref('')
 const route: any = useRoute()

@@ -11,12 +11,12 @@
     :tabs="tabs"
     :exportAuth="
       tabType === '1'
-        ? 'finance_merchantAccountCapitalWater_batch_export'
+        ? 'finance_merchantAccountCapitalWater_export'
         : tabType === '2'
-        ? 'finance_spAccountCapitalWater_batch_export'
-        : tabType === '3'
-        ? 'finance_platAccountCapitalWater_batch_export'
-        : ''
+          ? 'finance_spAccountCapitalWater_export'
+          : tabType === '3'
+            ? 'finance_platAccountCapitalWater_export'
+            : ''
     ">
     <template #subAccountNum="{ row }">
       <router-link
@@ -31,8 +31,6 @@
         {{ row.subAccountNum }}
       </router-link>
     </template>
-    <!-- 伪代码 exportAuth -->
-    <template #actions="{ row: {} }"></template>
   </Table-view>
 </template>
 
@@ -41,11 +39,6 @@ import { payChannel } from '@configurations/dynamic-control'
 
 const tabType = ref('1')
 const accountCapitalWaterRef = ref()
-// const staticQuery = computed(() => {
-//   return {
-//     isPlatform: tabType.value === '3' ? 1 : undefined
-//   }
-// })
 const getListFnName = computed(() => {
   if (tabType.value === '1') {
     return 'fetchList'
@@ -64,27 +57,22 @@ const downFileUrl = computed(() => {
     return '/finance/spAccountCapitalWater/export'
   }
 })
-const downFileName = computed(() => {
-  if (tabType.value === '1') {
-    return '商户资金账户.xlsx'
-  } else if (tabType.value === '2') {
-    return '服务商余额账户.xlsx'
-  } else if (tabType.value === '3') {
-    return '平台余额账户.xlsx'
-  }
-})
+
 const tabs = ref([
   {
     label: '商户资金账户',
-    attributeVal: '1'
+    attributeVal: '1',
+    auth: 'finance_merchantAccountCapitalWater_export'
   },
   {
     label: '服务商余额账户',
-    attributeVal: '2'
+    attributeVal: '2',
+    auth: 'finance_spAccountCapitalWater_export'
   },
   {
     label: '平台余额账户',
-    attributeVal: '3'
+    attributeVal: '3',
+    auth: 'finance_platAccountCapitalWater_export'
   }
 ])
 // 商户资金账户
@@ -258,29 +246,6 @@ const conditionForms1 = [
     key: 'cause',
     label: '类型',
     options: 'fund_occurrence_cause'
-    // options: [
-    //   // 伪代码
-    //   {
-    //     label: '充值',
-    //     value: '1'
-    //   },
-    //   {
-    //     label: '充值退款',
-    //     value: '2'
-    //   },
-    //   {
-    //     label: '任务支出',
-    //     value: '3'
-    //   },
-    //   {
-    //     label: '管理费支出',
-    //     value: '4'
-    //   },
-    //   {
-    //     label: '服务费支出',
-    //     value: '5'
-    //   }
-    // ]
   },
   {
     control: 'DateRange',

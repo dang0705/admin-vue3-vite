@@ -126,6 +126,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * 发起分页查询，并设置表格数据和分页信息
    */
   const query = async (others: any = {}) => {
+    state.queryForm.ids = []
     // 判断是否存在state.pageList属性
     if (state.pageList) {
       try {
@@ -276,7 +277,6 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
    * @param refresh 是否刷新当前页码
    */
   const getDataList = (refresh?: any) => {
-    state.queryForm.ids = []
     // 如果需要刷新，则将state.pagination.current重置为1
     if (refresh !== false) {
       state.pagination!.current = 1
