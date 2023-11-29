@@ -2,7 +2,7 @@ export default {
   excel: {
     downloadTemplate: '下载模板',
     fileFormat: '仅允许导入xls、xlsx格式文件。',
-    operationNotice: '单机上传或拖拽到此处',
+    operationNotice: '单击上传或拖拽到此处',
     clickUpload: '点击上传',
     lineNumbers: '行号',
     misDescription: '错误描述',
