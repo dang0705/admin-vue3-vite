@@ -1,11 +1,10 @@
-const auth = (auth: string) => `core_settleBill_${auth}`
 import thousandthDivision from '@utils/thousandth-division'
 export default (row: any) => {
   const { payStatus, id, transferVoucher } = row
   return [
     {
       label: '支付',
-      auth: auth('submit'),
+      auth: 'finance_merchantRefundPaymentRecord_pay',
       show: () => payStatus === '10' || payStatus === '40',
       dialog: {
         title: '支付',
@@ -101,11 +100,11 @@ export default (row: any) => {
       label: '查看支付凭证',
       show: () => payStatus === '30' && transferVoucher,
       download: transferVoucher,
-      auth: auth('down')
+      auth: 'finance_merchantRefundPaymentRecord_view'
     },
     {
       label: '标记退款失败',
-      auth: auth('audit'),
+      auth: 'finance_merchantRefundPaymentRecord_edit',
       show: () => payStatus === '10' || payStatus === '40',
       dialog: {
         title: '标记退款失败',
