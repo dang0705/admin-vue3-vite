@@ -115,6 +115,7 @@
       <el-skeleton :loading="state.loading">
         <template #default>
           <el-table
+            id="tableRef"
             v-bind="{ ...props, ...$attrs }"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
@@ -123,6 +124,22 @@
             :row-key="selectMainKey"
             :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
+            <el-table-column label="" width="50" v-if="sortDrag">
+              <template #header>
+                <el-icon>
+                  <el-tooltip content="拖动排序" placement="top">
+                    <WarningFilled />
+                  </el-tooltip>
+                </el-icon>
+              </template>
+              <template #default>
+                <div class="move" style="cursor: move">
+                  <el-icon>
+                    <Sort />
+                  </el-icon>
+                </div>
+              </template>
+            </el-table-column>
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />
             </template>
