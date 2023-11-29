@@ -214,18 +214,19 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         // 结束加载数据，设置state.loading为false
         state.loading = false
         await nextTick()
+        // 抓取tab Dom 实现拖拽排序
         const el = document.querySelector('#tableRef table tbody')
         new Sortable(el, {
-        sort: true,
-	    	ghostClass: 'sortable-ghost',
-        handle: '.move',
-        animation: 300,
-	    	onEnd: (e) => {
-	    		const targetRow = list.splice(e.oldIndex, 1)[0]
-	    		list.splice(e.newIndex, 0, targetRow)
-	    		console.log(list)
-	    	},
-	    })
+          sort: true,
+          ghostClass: 'sortable-ghost',
+          handle: '.move',
+          animation: 300,
+          onEnd: (e) => {
+            const targetRow = list.splice(e.oldIndex, 1)[0]
+            list.splice(e.newIndex, 0, targetRow)
+            console.log(list)
+          }
+        })
       }
     }
   }
