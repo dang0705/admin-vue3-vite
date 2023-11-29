@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { payChannel } from '@configurations/dynamic-control'
-import spPaymentChannel from '@api/finance/merchantAccountCapital'
+import spPaymentChannel from '@jmyg/api/finance/merchantAccountCapital'
 const formData = reactive({})
 const router = useRouter()
 const columns = [
