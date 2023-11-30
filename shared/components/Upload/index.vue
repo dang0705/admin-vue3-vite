@@ -262,7 +262,7 @@
       :initial-index="initialIndex"
       v-if="imgViewVisible"
       @close="imgViewVisible = false"
-      :url-list="prefixedUrls" />
+      :url-list="prefixedUrls.map((url) => url + TOKEN())" />
   </div>
 </template>
 
