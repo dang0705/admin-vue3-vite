@@ -8,9 +8,10 @@
     <template #statusDesc="{ row }">
       <Tag :type="getType(row.status)" :text="row.statusDesc"></Tag>
     </template>
-    <template #top-bar>
+    <template #top-bar="{ otherInfo }">
       <el-button
         type="primary"
+        :disabled="otherInfo.records.length > 0"
         @click="$router.push({ path: '/sp/platform/add' })"
         v-auth="'core_platformSp_add'">
         +添加服务商
