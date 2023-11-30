@@ -51,8 +51,8 @@
         financeType === 'applyfor'
           ? '申请开票'
           : financeType === 'open'
-          ? '开具发票'
-          : '申请合并开票'
+            ? '开具发票'
+            : '申请合并开票'
       "
       submitButtonText="提交"
       width="1000px"

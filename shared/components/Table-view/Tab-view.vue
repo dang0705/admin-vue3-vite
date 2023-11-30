@@ -63,7 +63,7 @@
         'h-[16px]',
         'cursor-pointer',
         'ml-[4px]',
-        { disabled: tabScrollIsEnd }
+        tabScrollIsEnd ? 'disabled' : ''
       ]" />
     <div class="flex-shrink-0">
       <slot name="tab-right" />
@@ -149,6 +149,7 @@ const initTab = async (tabsWidth: number) => {
     await nextTick()
     isOverflow.value && (tabsWrapperWidth = initWrapWidth())
     tabInitialized = true
+    isDisabledDirection()
   }
 }
 const init = async () => {
@@ -159,7 +160,6 @@ const onResize = () => {
   tabInitialized = false
   init()
 }
-let hasTabs = false
 watch(
   () => props.tabs,
   async (tabs) => {
@@ -169,8 +169,7 @@ watch(
         currentIndex.value = props.tabs?.findIndex(
           ({ attributeVal }: any) => attributeVal === currentValue.value
         )
-        !hasTabs && moveSlide({ once: true })
-        hasTabs = true
+        moveSlide({ once: true })
       }
     }
   },
@@ -182,6 +181,7 @@ watch(
 
 const slideDistance = ref(16)
 const slideWidth = ref(0)
+const tabScrollIsEnd = ref(false)
 
 const getTabPadding = (el: Element, padding: string) =>
   el && getComputedStyle(el)?.[padding].replace('px', '')
@@ -216,7 +216,6 @@ const onTabClick = (e: any, attributeVal: string, index: number) => {
   emit('get-value', attributeVal)
 }
 
-let tabScrollIsEnd = false
 const scroll = (dir: string) => {
   const isLeft = dir === 'left'
   const { offsetWidth } = currentTab.value
@@ -230,7 +229,7 @@ const scroll = (dir: string) => {
 const isDisabledDirection = () => {
   const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
   tabsScrollLeft.value = tabsWrapper.value.scrollLeft
-  tabScrollIsEnd = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
+  tabScrollIsEnd.value = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
 }
 
 onMounted(() => window.addEventListener('resize', onResize, true))
