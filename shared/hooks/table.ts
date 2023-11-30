@@ -221,10 +221,13 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
           ghostClass: 'sortable-ghost',
           handle: '.move',
           animation: 300,
-          onEnd: (e) => {
-            const targetRow = list.splice(e.oldIndex, 1)[0]
-            list.splice(e.newIndex, 0, targetRow)
-            console.log(list)
+          onEnd: async ({ newIndex, oldIndex }) => {
+            state.dataList.splice(newIndex, 0, list.splice(oldIndex, 1)[0])
+            // state.dataList = list.slice(0)
+            // state.dataList = []
+            // await nextTick()
+            // state.dataList = newArray
+            console.log(state.dataList)
           }
         })
       }

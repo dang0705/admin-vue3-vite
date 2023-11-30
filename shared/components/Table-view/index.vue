@@ -124,6 +124,18 @@
             :row-key="selectMainKey"
             :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
+            <el-table-column
+              type="index"
+              width="50"
+              fixed="left"
+              v-if="sortDrag">
+              <template #header>
+                <el-tooltip content="序号" placement="top">#</el-tooltip>
+              </template>
+              <template #default="scope">
+                <span>{{ scope.$index + 1 }}</span>
+              </template>
+            </el-table-column>
             <el-table-column label="" width="50" v-if="sortDrag">
               <template #header>
                 <el-icon>

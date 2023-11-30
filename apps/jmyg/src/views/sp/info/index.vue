@@ -3,7 +3,6 @@
     :condition-forms="conditionForms"
     :columns="columns"
     :actions="actions"
-    sortDrag
     label-width="140"
     module="core/spInfo">
     <template #statusDesc="{ row }">

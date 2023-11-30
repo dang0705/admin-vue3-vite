@@ -117,5 +117,5 @@ export default {
   sortDrag: {
     type: Boolean,
     default: false
-  },
+  }
 }
