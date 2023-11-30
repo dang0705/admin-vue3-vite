@@ -11,7 +11,7 @@
     <template #top-bar="{ otherInfo }">
       <el-button
         type="primary"
-        :disabled="otherInfo.records.length > 0"
+        :disabled="otherInfo?.records?.length > 0"
         @click="$router.push({ path: '/sp/platform/add' })"
         v-auth="'core_platformSp_add'">
         +添加服务商
