@@ -3,6 +3,7 @@ import other from '@utils/other'
 import helper from '@utils/helpers'
 import { useDict } from '@hooks/dict'
 import Array2Object from '@utils/array-2-object'
+import Sortable from 'sortablejs'
 const dicWatchObj = ref([])
 /**
  * 表格组件基础配置属性
@@ -129,6 +130,7 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
     state.queryForm.ids = []
     // 判断是否存在state.pageList属性
     if (state.pageList) {
+      let list = []
       try {
         // 开始加载数据，设置state.loading为true
         state.loading = true
@@ -146,7 +148,6 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
         // state.dataList = state.isPage ? eval('res.data.' + state.props.item) : res.data;
         // 设置分页信息中的总数据条数
         // state.pagination!.total = state.isPage ? eval('res.data.' + state.props.totalCount) : 0;
-        let list = []
         let total = 0
         // res.data有两种场景数据结构, 如果有list, 说明是有tab切换场景或者统计场景,  如果没有list则就是单纯的表格数据
         if (state.isPage) {
@@ -212,6 +213,20 @@ export function useTable(options?: BasicTableProps, others?: any = null) {
       } finally {
         // 结束加载数据，设置state.loading为false
         state.loading = false
+        await nextTick()
+        // 抓取tab Dom 实现拖拽排序
+        const el = document.querySelector('#tableRef table tbody')
+        new Sortable(el, {
+          sort: true,
+          ghostClass: 'sortable-ghost',
+          handle: '.move',
+          animation: 300,
+          onEnd: (e) => {
+            const targetRow = list.splice(e.oldIndex, 1)[0]
+            list.splice(e.newIndex, 0, targetRow)
+            console.log(list)
+          }
+        })
       }
     }
   }
