@@ -4,15 +4,15 @@
     :columns="columns"
     :actions="actions"
     label-width="140"
-    module="core/spInfo">
+    module="core/platformSp">
     <template #statusDesc="{ row }">
       <Tag :type="getType(row.status)" :text="row.statusDesc"></Tag>
     </template>
     <template #top-bar>
       <el-button
         type="primary"
-        @click="$router.push({ path: '/sp/info/add' })"
-        v-auth="'core_spInfo_add'">
+        @click="$router.push({ path: '/sp/platform/add' })"
+        v-auth="'core_platformSp_add'">
         +添加服务商
       </el-button>
     </template>
@@ -55,12 +55,6 @@ const conditionForms = [
     label: '服务商名称',
     key: 'spName',
     control: 'el-input'
-  },
-  {
-    label: '状态',
-    key: 'status',
-    options: 'sp_status',
-    control: 'el-select'
   }
 ]
 const { sp_status } = useDict('sp_status')
@@ -75,29 +69,24 @@ const columns = [
   },
   {
     label: '社会统一信用代码',
-    prop: 'socialCreditCode'
+    prop: 'socialCreditCode',
+    minWidth: 200
   },
   {
     label: '法定代表人',
     prop: 'legalPersonName',
-    minWidth: 120
+    minWidth: 180
   },
   {
     label: '法人手机号',
     prop: 'legalPersonMobile',
-    minWidth: 120
-  },
-  {
-    label: '状态',
-    prop: 'statusDesc',
-    // minWidth: 80,
-    slot: true
+    minWidth: 180
   },
   {
     label: '是否已开通支付通道',
     prop: 'hasPaymentChannel',
     slot: true,
-    minWidth: 140
+    minWidth: 180
   },
   {
     label: '操作',
@@ -110,10 +99,10 @@ const columns = [
 const actions = ({ id, status }) => {
   return [
     {
-      auth: 'core_spInfo_view',
+      auth: 'core_platformSp_view',
       label: '查看',
       to: {
-        path: '/sp/info/detail',
+        path: '/sp/platform/detail',
         query: {
           id,
           see: 1
@@ -121,21 +110,11 @@ const actions = ({ id, status }) => {
       }
     },
     {
-      auth: 'core_spInfo_edit',
+      auth: 'core_platformSp_edit',
       label: '编辑',
       to: {
-        path: '/sp/info/edit',
+        path: '/sp/platform/edit',
         query: { id }
-      }
-    },
-    {
-      auth: 'core_spInfo_switchStatus',
-      label: status === '1' ? '停用' : '启用',
-      body: '服务商',
-      confirm: true,
-      action: {
-        handler: 'switchStatus',
-        params: { id, status: status === '1' ? '0' : '1' }
       }
     }
   ]
@@ -152,7 +131,8 @@ const forms = ref([
       { required: true, message: '服务商名称不能为空', trigger: 'change' }
     ],
     props: {
-      disabled: true
+      disabled: true,
+      platform: true
     }
   },
   {
