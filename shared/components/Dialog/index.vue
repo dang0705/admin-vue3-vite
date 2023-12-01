@@ -76,6 +76,7 @@ const getSubmitAndCancel = ({ submit, cancel }: any) => {
         v-bind="{
           buttonPosition,
           cancelButtonText,
+          submitButtonText,
           isLastPage,
           labelWidth,
           nextButtonText,

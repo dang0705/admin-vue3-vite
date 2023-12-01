@@ -1,8 +1,8 @@
-import request from "@/utils/request"
+import request from '@/utils/request'
 
 export function fetchList(query?: Object) {
   return request({
-    url: '/hro/salaryPlan/page',
+    url: '/outsourcing/salaryPlanProject/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query?: Object) {
 
 export function addObj(obj?: Object) {
   return request({
-    url: '/hro/salaryPlan',
+    url: '/outsourcing/salaryPlanProject',
     method: 'post',
     data: obj
   })
@@ -18,14 +18,14 @@ export function addObj(obj?: Object) {
 
 export function getObj(id?: string) {
   return request({
-    url: '/hro/salaryPlan/' + id,
+    url: '/outsourcing/salaryPlanProject/' + id,
     method: 'get'
   })
 }
 
 export function delObjs(ids?: Object) {
   return request({
-    url: '/hro/salaryPlan',
+    url: '/outsourcing/salaryPlanProject',
     method: 'delete',
     data: ids
   })
@@ -33,9 +33,8 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
   return request({
-    url: '/hro/salaryPlan',
+    url: '/outsourcing/salaryPlanProject',
     method: 'put',
     data: obj
   })
 }
-
