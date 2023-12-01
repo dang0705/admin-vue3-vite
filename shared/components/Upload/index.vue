@@ -46,7 +46,9 @@
         </li>
       </ul>
       <el-upload
-        v-if="isImage || (!isImage && !disabled)"
+        v-if="
+          (isImage && (multiple ? !disabled : true)) || (!isImage && !disabled)
+        "
         action="#"
         ref="uploadRef"
         drag
