@@ -60,7 +60,18 @@
               </el-select>
             </el-form-item>
           </el-col>
-
+          <el-col :span="12" class="mb20">
+            <el-form-item label="任务时间：" prop="workTimeRange">
+              <el-date-picker
+                :disabled="self_disabled"
+                :teleported="false"
+                v-model="form.workTimeRange"
+                type="datetimerange"
+                start-placeholder="任务开始时间"
+                end-placeholder="任务结束时间"
+                :value-format="dateTimeStr" />
+            </el-form-item>
+          </el-col>
           <el-col :span="12" class="mb20">
             <el-form-item label="服务协议：" prop="serviceContractId">
               <InputPlus
@@ -187,34 +198,6 @@
 							></el-date-picker>
 						</el-form-item>
 					</el-col> -->
-
-          <el-col :span="12" class="mb20">
-            <el-form-item label="任务时间：" prop="workTimeRange">
-              <!-- <el-date-picker
-								:disabled="self_disabled"
-								type="datetime"
-								placeholder="任务开始时间"
-								v-model="form.endTime"
-								:value-format="dateTimeStr"
-							></el-date-picker> -->
-              <el-date-picker
-                :disabled="self_disabled"
-                v-model="form.workTimeRange"
-                type="datetimerange"
-                start-placeholder="任务开始时间"
-                end-placeholder="任务结束时间"
-                :value-format="dateTimeStr" />
-              <!-- <el-time-picker
-								:disabled="self_disabled"
-								:value-format="dateTimeStr"
-								v-model="form.workTimeRange"
-								is-range
-								range-separator="至"
-								start-placeholder="任务开始时间"
-								end-placeholder="任务结束时间"
-							/> -->
-            </el-form-item>
-          </el-col>
 
           <el-col :span="12" class="mb20">
             <el-form-item label="发包单价：" prop="unitPrice">
