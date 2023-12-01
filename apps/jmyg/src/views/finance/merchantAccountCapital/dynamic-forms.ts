@@ -71,6 +71,7 @@ const formOne = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
+    required: false,
     rules: [
       {
         validator: rule.interbank,
@@ -162,6 +163,7 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'InputPlus',
           key: 'payingJointBankNumber',
           label: '开户行联行号',
+          required: false,
           rules: [
             {
               validator: rule.interbank,

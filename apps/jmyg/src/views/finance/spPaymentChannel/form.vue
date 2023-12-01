@@ -102,6 +102,7 @@ const conditionForms = ref([
     control: 'InputPlus',
     key: 'interbankNumber',
     label: '开户行联行号',
+    required: false,
     props: {
       placeholder: '请输入开户行联行号',
       maxlength: 12

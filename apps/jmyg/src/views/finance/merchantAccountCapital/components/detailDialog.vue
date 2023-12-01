@@ -211,6 +211,7 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
+    required: false,
     rules: [
       {
         validator: rule.interbank,
