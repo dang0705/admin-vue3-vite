@@ -192,10 +192,7 @@ const forms = computed(() => [
     value: [],
     props: {
       type: '60',
-      disabled: financeType.value === 'see',
-      hidden:
-        financeType.value === 'see' &&
-        dialogFormData.value.invoiceFiles?.length == 0
+      disabled: financeType.value === 'see'
     },
     rules: [
       {
