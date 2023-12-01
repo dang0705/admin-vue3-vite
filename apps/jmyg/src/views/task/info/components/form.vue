@@ -450,6 +450,7 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useDict } from '@hooks/dict'
 import { useMessage, useMessageBox } from '@hooks/message'
 import { getObj, addObj, putObj } from '@jmyg/api/core/task'
@@ -632,13 +633,21 @@ const onSubmit = async () => {
     form.taskId ? await putObj(form) : await addObj(form)
     // form.taskId ? await addObj(form) : await addObj(form);
     // 您已成功创建指派任务"小白楼保洁服务"！
-    useMessage().success(form.taskId ? '修改成功' : '添加成功')
+    // useMessage().success(form.taskId ? '修改成功' : '添加成功')
     // $bus.emit('close-tag', route.meta.title);
-    closeTagView(route.meta.title as string)
-    router.push({
-      path: '/task/info/index',
-      state: {
-        refresh: 1
+    ElMessageBox.alert(`您已成功创建指派任务${form.taskName}`, '创建任务', {
+      // if you want to disable its autofocus
+      // autofocus: false,
+      confirmButtonText: '确认',
+      callback: (action: Action) => {
+        closeTagView(route.meta.title as string)
+        curStep.value = 0
+        router.push({
+          path: '/task/info/index',
+          state: {
+            refresh: 1
+          }
+        })
       }
     })
   } finally {

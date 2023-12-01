@@ -453,17 +453,19 @@
           </el-col>
         </el-row>
       </el-card>
-      <div
-        v-if="!isDetail"
-        class="page_bottom_wrapper"
-        :style="{ 'width': barWidth }">
-        <span class="flex justify-center items-center">
-          <el-button @click="resetFields">重置</el-button>
-          <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-            确认
-          </el-button>
-        </span>
-      </div>
+      <transition-group>
+        <div
+          v-if="!isDetail"
+          class="page_bottom_wrapper"
+          :style="{ 'width': barWidth }">
+          <span class="flex justify-center items-center">
+            <el-button @click="resetFields">重置</el-button>
+            <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+              确认
+            </el-button>
+          </span>
+        </div>
+      </transition-group>
     </div>
   </el-form>
 </template>
@@ -638,7 +640,6 @@ const dataRules = ref({
   ],
   taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
   taxJointBankNumber: [
-    { required: true, message: '开户行联行号不能为空', trigger: 'blur' },
     {
       validator: rule.interbank,
       trigger: 'blur'
@@ -776,6 +777,8 @@ const industryLevel_option = computed(() => {
   width: 100%;
   bottom: 0;
   right: 0;
+  // transition: all 0.3 ease;
+  z-index: 5;
   height: 56px;
   line-height: 56px;
   -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);

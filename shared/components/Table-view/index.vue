@@ -58,11 +58,7 @@
             <el-tooltip
               class="item"
               effect="dark"
-              :content="
-                showSearch
-                  ? $t('queryTree.hideSearch')
-                  : $t('queryTree.displayTheSearch')
-              "
+              :content="showSearch ? '隐藏搜索' : '显示搜索'"
               placement="top">
               <el-button
                 style="
