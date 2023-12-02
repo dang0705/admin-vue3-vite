@@ -618,7 +618,7 @@ const onSubmit = async () => {
     // 您已成功创建指派任务"小白楼保洁服务"！
     // useMessage().success(form.taskId ? '修改成功' : '添加成功')
     // $bus.emit('close-tag', route.meta.title);
-    ElMessageBox.alert(`您已成功创建指派任务${form.taskName}`, '创建任务', {
+    ElMessageBox.alert(`您已成功创建指派任务"${form.taskName}"！`, '创建任务', {
       // if you want to disable its autofocus
       // autofocus: false,
       confirmButtonText: '确认',
@@ -634,6 +634,7 @@ const onSubmit = async () => {
       }
     })
   } finally {
+    loading.value = false
   }
 }
 
