@@ -283,7 +283,11 @@ export function downBlobFile(
           params: query
         })
   }).then((response) => {
-    handleBlobFile(response.blob, fileName ? fileName : response.fileName)
+    function sliceStr(str) {
+      var reg = new RegExp('inline;filename=', 'g')
+      return str.replace(reg, '')
+    }
+    handleBlobFile(response.blob, fileName ? fileName : sliceStr(response.fileName))
   })
 }
 
