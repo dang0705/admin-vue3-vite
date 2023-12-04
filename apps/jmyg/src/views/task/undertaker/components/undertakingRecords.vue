@@ -29,7 +29,7 @@
 				>验收</el-button
 			> -->
     </template>
-    <detail-dialog ref="detailDialogRef" @refresh="getDataList(false)" />
+    <detail-dialog ref="detailDialogRef" />
   </Table-view>
 </template>
 

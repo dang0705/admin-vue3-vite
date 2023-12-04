@@ -46,7 +46,9 @@
         </li>
       </ul>
       <el-upload
-        v-if="isImage || (!isImage && !disabled)"
+        v-if="
+          (isImage && (multiple ? !disabled : true)) || (!isImage && !disabled)
+        "
         action="#"
         ref="uploadRef"
         drag
@@ -205,8 +207,8 @@
                 <div class="flex items-center">
                   <a
                     class="color-primary hover:underline"
-                    :download="url"
-                    :href="url"
+                    @click="previewFile({ url, noBase: true })"
+                    href="javascript:;"
                     v-text="`附件${index + 1}`" />
                 </div>
               </li>
@@ -249,8 +251,8 @@
           class="color-primary hover:underline"
           v-for="(url, index) in prefixedUrls"
           :key="url"
-          :download="url"
-          :href="url"
+          @click="previewFile({ url, noBase: true })"
+          href="javascript:;"
           v-text="`附件${index + 1}`" />
       </template>
       <div class="el-upload__tip">
@@ -268,6 +270,7 @@
 
 <script setup lang="ts">
 import helper from '@utils/helpers'
+import { previewFile } from '@utils/other'
 import {
   ElNotification,
   formContextKey,
@@ -330,8 +333,8 @@ const new_accept = computed(() =>
   props.accept.length
     ? props.accept
     : props.fileType == 'image'
-    ? IMAGE_TYPES
-    : FILE_TYPES
+      ? IMAGE_TYPES
+      : FILE_TYPES
 )
 
 // 查看图片
@@ -500,8 +503,8 @@ const beforeUpload: UploadProps['beforeUpload'] = ({ name, size, uid }) => {
   const limit = IMAGE_TYPES.includes(suffix)
     ? LIMIT.image
     : COMPRESSION.includes(suffix)
-    ? LIMIT.compression
-    : LIMIT.file
+      ? LIMIT.compression
+      : LIMIT.file
   const sizeValid = size / 1024 / 1024 < (props.fileSize || limit)
   let imgType = (
     props.accept.length ? props.accept : new_accept.value

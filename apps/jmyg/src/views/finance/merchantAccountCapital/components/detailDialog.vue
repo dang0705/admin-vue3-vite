@@ -106,10 +106,7 @@
 
 <script setup lang="ts" name="distribution">
 import { useMessage } from '@hooks/message'
-import {
-  getObj,
-  payBillRecord
-} from '@jmyg/api/core/settleBill'
+import { getObj, payBillRecord } from '@jmyg/api/core/settleBill'
 import { queryPlatSpBalance } from '@jmyg/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '@jmyg/api/finance/merchantRecharge'
 import spPaymentChannel from '@jmyg/api/finance/merchantAccountCapital'
@@ -214,12 +211,8 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
+    required: false,
     rules: [
-      {
-        required: true,
-        message: '开户行联行号不能为空',
-        trigger: 'blur'
-      },
       {
         validator: rule.interbank,
         trigger: 'blur'

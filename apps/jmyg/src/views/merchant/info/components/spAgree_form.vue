@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     width="1000px"
-    :title="form.id ? '编辑' : '新增'"
+    :title="title"
     v-model="visible"
     :close-on-click-modal="false"
     draggable>
@@ -311,7 +311,7 @@ const {
   'service_fee_method'
 )
 const route = useRoute()
-
+const title = ref('')
 // 定义变量内容
 const dataFormRef = ref()
 const isDetail = ref(false)
@@ -429,8 +429,14 @@ const openDialog = (id: string, type: any) => {
   form.id = ''
   if (type == 'view') {
     isDetail.value = true
+    title.value = '查看'
   } else {
     isDetail.value = false
+    if (id) {
+      title.value = '编辑'
+    } else {
+      title.value = '新增'
+    }
   }
 
   // 重置表单数据

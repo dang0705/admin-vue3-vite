@@ -187,13 +187,13 @@ export const openWindow = (
   const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-    ? document.documentElement.clientWidth
-    : screen.width
+      ? document.documentElement.clientWidth
+      : screen.width
   const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-    ? document.documentElement.clientHeight
-    : screen.height
+      ? document.documentElement.clientHeight
+      : screen.height
 
   const left = width / 2 - w / 2 + dualScreenLeft
   const top = height / 2 - h / 2 + dualScreenTop
@@ -283,7 +283,11 @@ export function downBlobFile(
           params: query
         })
   }).then((response) => {
-    handleBlobFile(response.blob, fileName ? fileName : response.fileName)
+    function sliceStr(str) {
+      var reg = new RegExp('inline;filename=', 'g')
+      return str.replace(reg, '')
+    }
+    handleBlobFile(response.blob, fileName ? fileName : sliceStr(response.fileName))
   })
 }
 
@@ -324,15 +328,20 @@ export function handleBlobFile(response: any, fileName: string) {
 
 export async function previewFile({
   url,
-  mime = 'application/pdf'
+  noBase = false
 }: Record<string, string>) {
   // let blob = new Blob([await $http.get(url, { responseType: 'blob' })], {
   //   type: `${mime};charset=utf-8`
   // })
-  window.open(BASE + '/' + url + TOKEN)
+  console.log('url', url)
+  console.log('BASE + ', BASE + '/' + url + TOKEN())
+  if (noBase) {
+    window.open(url + TOKEN())
+  } else {
+    window.open(BASE + '/' + url + TOKEN())
+  }
   // window.open(URL.createObjectURL(blob), 'newWindow')
 }
-
 
 /**
  * @description 生成唯一 uuid

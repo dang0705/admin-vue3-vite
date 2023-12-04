@@ -57,6 +57,10 @@ export default [
     options: 'task_status'
   },
   {
+    prop: 'auditPostscript',
+    label: '驳回原因'
+  },
+  {
     label: '操作',
     prop: 'actions',
     fixed: 'right',

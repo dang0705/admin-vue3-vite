@@ -209,7 +209,6 @@ const forms = ref([
       placeholder: '请输入开户行联行号'
     },
     rules: [
-      { required: true, message: '开户行联行号不能为空', trigger: 'blur' },
       {
         validator: rule.interbank,
         trigger: 'blur'

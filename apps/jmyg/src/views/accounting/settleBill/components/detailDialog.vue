@@ -166,10 +166,6 @@ const addUnderTakerForms = [
         required: true,
         message: '转账凭证不能为空',
         trigger: 'blur'
-      },
-      {
-        validator: rule.number,
-        trigger: 'blur'
       }
     ],
     value: [],
@@ -201,6 +197,10 @@ const addUnderTakerForms = [
         required: true,
         message: '付款账号不能为空',
         trigger: 'blur'
+      },
+      {
+        validator: rule.number,
+        trigger: 'blur'
       }
     ],
     props: {
@@ -226,12 +226,8 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
+    required: false,
     rules: [
-      {
-        required: true,
-        message: '开户行联行号不能为空',
-        trigger: 'blur'
-      },
       {
         validator: rule.interbank,
         trigger: 'blur'

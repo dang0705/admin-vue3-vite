@@ -71,12 +71,8 @@ const formOne = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
+    required: false,
     rules: [
-      {
-        required: false,
-        message: '开户行联行号不能为空',
-        trigger: 'blur'
-      },
       {
         validator: rule.interbank,
         trigger: 'blur'
@@ -166,6 +162,7 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'InputPlus',
           key: 'payingJointBankNumber',
           label: '开户行联行号',
+          required: false,
           props: {
             disabled: true
           }

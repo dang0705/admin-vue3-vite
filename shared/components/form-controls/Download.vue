@@ -26,7 +26,7 @@ const DownloadComponent = {
       h(
         'a',
         {
-          href: `${BASE}/${this.modelValue}${TOKEN}`,
+          href: `${BASE}/${this.modelValue}${TOKEN()}`,
           download: this.text,
           class: 'text-primary'
         },

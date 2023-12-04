@@ -5,12 +5,7 @@
     v-model="visible"
     draggable
     width="900px">
-    <el-form
-      class="form-view"
-      :model="form"
-      formDialogRef
-      label-width="160px"
-      v-loading="loading">
+    <div class="form-view" v-loading="loading">
       <div :gutter="24">
         <!-- <div class="title_box"></div> -->
         <div class="info_box">
@@ -139,7 +134,7 @@
           </div> -->
         </div>
       </div>
-    </el-form>
+    </div>
     <span class="flex justify-end items-center footer">
       <el-button @click="visible = false">取 消</el-button>
       <el-button type="primary" @click="visible = false">确 认</el-button>
@@ -151,8 +146,8 @@
 import { getObj } from '@jmyg/api/core/undertakerTask'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const visible = ref(false)
-const loading = ref(false)
 const dialog = ref()
+const loading = ref(false)
 // 提交表单数据
 const form = reactive({
   id: '',
@@ -167,6 +162,9 @@ const form = reactive({
   workTime: '',
   undertakerPortrait: [],
   undertakerNationalEmblem: [],
+  doneImages: [],
+  startImages: [],
+  doneFiles: [],
   isAuthentication: '',
   bankNumber: '',
   bankName: '',
@@ -188,13 +186,13 @@ const openDialog = (id: string) => {
 
 // 初始化表单数据
 const getundertakerInfoData = (id: string) => {
-  // 获取数据
   loading.value = true
   getObj(id)
     .then((res: any) => {
       Object.assign(form, res.data)
+      loading.value = false
     })
-    .finally(() => {
+    .catch(() => {
       loading.value = false
     })
 }
