@@ -227,9 +227,14 @@ const scroll = (dir: string) => {
 
 // limit direction arrow  disable
 const isDisabledDirection = () => {
-  const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
-  tabsScrollLeft.value = tabsWrapper.value.scrollLeft
-  tabScrollIsEnd.value = wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
+  if (tabsWrapper.value) {
+    const { offsetWidth: wrapperWidth, scrollWidth } = tabsWrapper.value
+    tabsScrollLeft.value = tabsWrapper.value.scrollLeft
+    tabScrollIsEnd.value =
+      wrapperWidth + tabsScrollLeft.value + 2 >= scrollWidth
+  } else {
+    console.log('无法触发isDisabledDirection')
+  }
 }
 
 onMounted(() => window.addEventListener('resize', onResize, true))

@@ -5,12 +5,7 @@
     v-model="visible"
     draggable
     width="900px">
-    <el-form
-      class="form-view"
-      :model="form"
-      formDialogRef
-      label-width="160px"
-      v-loading="loading">
+    <el-form class="form-view" :model="form" formDialogRef label-width="160px">
       <div :gutter="24">
         <!-- <div class="title_box"></div> -->
         <div class="info_box">
@@ -151,7 +146,6 @@
 import { getObj } from '@jmyg/api/core/undertakerTask'
 defineOptions({ name: 'UndertakerInfoDialog' })
 const visible = ref(false)
-const loading = ref(false)
 const dialog = ref()
 // 提交表单数据
 const form = reactive({
@@ -191,15 +185,9 @@ const openDialog = (id: string) => {
 
 // 初始化表单数据
 const getundertakerInfoData = (id: string) => {
-  // 获取数据
-  loading.value = true
-  getObj(id)
-    .then((res: any) => {
-      Object.assign(form, res.data)
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  getObj(id).then((res: any) => {
+    Object.assign(form, res.data)
+  })
 }
 
 // 暴露变量
