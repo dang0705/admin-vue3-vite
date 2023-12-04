@@ -292,6 +292,12 @@
                     v-if="!(!!route.query.see && _.filePath.length == 0)">
                     <UploadFile
                       :type="businessType"
+                      :fileType="
+                        extractFileType(_.filePath[0]) == 'pdf'
+                          ? 'file'
+                          : 'image'
+                      "
+                      :accept="['.jpg', '.jpeg', '.png', '.gif', '.pdf']"
                       v-model="_.filePath"
                       :disabled="!!route.query.see" />
                     <ul
@@ -585,6 +591,16 @@ const addQualifications = () => {
 const removeQualifications = (index: number) =>
   form.qualifications.splice(index, 1)
 
+// 正则匹配资质文件类型
+const extractFileType = (str = '') => {
+  const regex = /fileType=([^&]*)/
+  const match = str.match(regex)
+  if (match && match[1]) {
+    return match[1]
+  } else {
+    return null
+  }
+}
 // 重置
 const resetForm = () => {
   if (!dataFormRef.value) return

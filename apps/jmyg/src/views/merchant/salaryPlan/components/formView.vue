@@ -133,15 +133,6 @@ const forms = ref([
     ]
   },
   {
-    control: 'el-select',
-    key: 'payslipShow',
-    options: 'yes_no_type',
-    label: '工资条是否展示:',
-    rules: [
-      { required: true, message: '工资条是否展示不能为空', trigger: 'change' }
-    ]
-  },
-  {
     control: 'InputPlus',
     key: 'desc',
     label: '备注',
@@ -153,4 +144,8 @@ const forms = ref([
     required: false
   }
 ])
+
+const onSubmit = () => {
+  console.log(222)
+}
 </script>
