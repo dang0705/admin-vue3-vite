@@ -88,7 +88,7 @@
               <div v-for="item in form.doneFiles" :key="item">
                 <UploadFile
                   fileType="file"
-                  :modelValue="[item]"
+                  :modelValue="[item.filePath]"
                   :disabled="true" />
               </div>
               <div v-if="!form.doneFiles?.length">
