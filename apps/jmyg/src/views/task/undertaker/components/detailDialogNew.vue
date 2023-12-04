@@ -92,7 +92,7 @@
                   :disabled="true" />
               </div>
               <div v-if="!form.doneFiles?.length">
-                <UploadFile :modelValue="[]" :disabled="true" />
+                <UploadFile fileType="file" :modelValue="[]" :disabled="true" />
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { previewFile, downBlobFile } from '@utils/other'
 const DetailDialog = defineAsyncComponent(
-  () => import('@jmyg/views/task/undertaker/components/detailDialog.vue')
+  () => import('@jmyg/views/task/undertaker/components/detailDialogNew.vue')
 )
 const route: any = useRoute()
 const undertakerTaxRef = ref()
