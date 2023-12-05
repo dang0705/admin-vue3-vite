@@ -12,7 +12,9 @@ const isPure = pureApps.includes($appName)
 
 // @ts-ignore
 const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
+  
   const env = loadEnv(mode, process.cwd())
+  console.log(mode, '----mode');
   const _isDev_ = process.argv.includes('dev')
   return {
     appType: isPure ? 'mpa' : 'spa',
