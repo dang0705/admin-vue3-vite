@@ -439,7 +439,7 @@ const downParams = computed(() =>
         )
       : selectObjs
   })
-})
+)
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
