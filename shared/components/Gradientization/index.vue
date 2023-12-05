@@ -126,6 +126,7 @@ const changeNumber = (data: any, key: string) => {
     <span v-html="texts[0]" />
     &nbsp;
     <el-input-number
+      placeholder=""
       class="h-fit max-w-[160px]"
       :disabled="forceDisabled || gradual.length - 1 > index || disabled"
       :min="
