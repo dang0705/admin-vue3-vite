@@ -430,7 +430,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1定义
+        1.1 定义
       </span>
     </p>
     <p
@@ -450,7 +450,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1.1&ldquo;
+        1.1.1 &ldquo;
       </span>
       <span
         style="
@@ -548,16 +548,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1.
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        2
+        1.1.2
       </span>
       <span
         style="
@@ -659,7 +650,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1.3&ldquo;积木优工用户或用户&rdquo;指享受积木优工服务的用户。
+        1.1.3 &ldquo;积木优工用户或用户&rdquo;指享受积木优工服务的用户。
       </span>
     </p>
     <p
@@ -679,16 +670,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1.
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        4
+        1.1.4
       </span>
       <span
         style="
@@ -968,7 +950,8 @@
           background-origin: initial;
           background-clip: initial;
         ">
-        1.2本协议构成您与我们之间具有法律约束力的协议，我们在此特别提醒您认真阅读、充分理解本协议各条款，
+        1.2
+        本协议构成您与我们之间具有法律约束力的协议，我们在此特别提醒您认真阅读、充分理解本协议各条款，
       </span>
       <strong>
         <span
@@ -1165,7 +1148,7 @@
             mso-bidi-font-weight: normal;
             font-size: 10.5pt;
           ">
-          2.1本协议是您与我们之间关于您
+          2.1 本协议是您与我们之间关于您
         </span>
       </strong>
       <strong>
@@ -1367,7 +1350,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1账号注册
+        3.1 账号注册
       </span>
     </p>
     <p
@@ -1380,7 +1363,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.1您可注册及登录
+        3.1.1 您可注册及登录
       </span>
       <span
         style="
@@ -1441,7 +1424,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.2为了您能更好
+        3.1.2 为了您能更好
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         地
@@ -1466,7 +1449,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.3若您提供任何错误、不实或不完整的资料，或积木优工有理由怀疑资料为错误、不实或不完整的，或积木优工有理由怀疑其您资料、言行等有悖于积木优工服务主题的，积木优工有权修改您的注册昵称、个人说明、发布的信息等，或暂停或终止该
+        3.1.3
+        若您提供任何错误、不实或不完整的资料，或积木优工有理由怀疑资料为错误、不实或不完整的，或积木优工有理由怀疑其您资料、言行等有悖于积木优工服务主题的，积木优工有权修改您的注册昵称、个人说明、发布的信息等，或暂停或终止该
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         您的账号
@@ -1485,7 +1469,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.4若您故意提供虚假的身份信息、公司信息进行注册，发布虚假招聘信息的，视为严重违反本用户协议，积木优工有权暂停或终止该您账号并停止提供服务。虚假注册、发布虚假信息给积木优工造成经济、名誉损失的，积木优工将追究该您的法律责任。
+        3.1.4
+        若您故意提供虚假的身份信息、公司信息进行注册，发布虚假招聘信息的，视为严重违反本用户协议，积木优工有权暂停或终止该您账号并停止提供服务。虚假注册、发布虚假信息给积木优工造成经济、名誉损失的，积木优工将追究该您的法律责任。
       </span>
     </p>
     <p
@@ -1498,7 +1483,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.2账号信息设置
+        3.2 账号信息设置
       </span>
     </p>
     <p
@@ -1536,7 +1521,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.3账号使用及权属
+        3.3 账号使用及权属
       </span>
     </p>
     <p
@@ -1620,7 +1605,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.3.2由于您的账号关联您的个人信息及
+        3.3.2 由于您的账号关联您的个人信息及
       </span>
       <span
         style="
@@ -1657,7 +1642,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.4账号注销及回收
+        3.4 账号注销及回收
       </span>
     </p>
     <p
@@ -1670,7 +1655,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.4.1您可以依照
+        3.4.1 您可以依照
       </span>
       <span
         style="
@@ -1731,7 +1716,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.4.2您理解并同意，为了充分使用账号资源，如您在注册后未及时进行初次登录使用或连续超过六个月未登录账号并使用，且不存在未到期或未履行完毕的持续性
+        3.4.2
+        您理解并同意，为了充分使用账号资源，如您在注册后未及时进行初次登录使用或连续超过六个月未登录账号并使用，且不存在未到期或未履行完毕的持续性
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         积木优工
@@ -1774,7 +1760,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.5账号违规处置
+        3.5 账号违规处置
       </span>
     </p>
     <p
@@ -1841,20 +1827,9 @@
         word-break: break-all;
         line-height: 22pt;
       ">
-      <!-- [if !supportLists]-->
-      <span
-        style="
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-weight: bold;
-          font-size: 10.5pt;
-        ">
-        4.&nbsp;
-      </span>
-      <!--[endif]-->
       <strong>
         <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          服务内容
+          4.服务内容
         </span>
       </strong>
     </p>
@@ -1870,13 +1845,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        1
+        4.1
       </span>
       <span
         style="
@@ -1996,13 +1965,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        2
+        4.2
       </span>
       <span
         style="
@@ -2086,13 +2049,7 @@
         mso-line-height-rule: exactly;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3
+        4.3
       </span>
       <span
         style="
@@ -2299,13 +2256,7 @@
         mso-line-height-rule: exactly;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
+        4.4
       </span>
       <span style="font-family: 宋体; font-size: 10.5pt">您正常按合作公司</span>
       <span style="font-family: 宋体; font-size: 10.5pt">制定的</span>
@@ -2338,8 +2289,7 @@
         line-height: 22pt;
         mso-line-height-rule: exactly;
       ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.5</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
+      <span style="font-family: 宋体; font-size: 10.5pt">4.5 积木优工</span>
       <span style="font-family: 宋体; font-size: 10.5pt">通过国际互联网为</span>
       <span style="font-family: 宋体; font-size: 10.5pt">您</span>
       <span style="font-family: 宋体; font-size: 10.5pt">
@@ -2371,8 +2321,7 @@
         line-height: 22pt;
         mso-line-height-rule: exactly;
       ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.6</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
+      <span style="font-family: 宋体; font-size: 10.5pt">4.6 积木优工</span>
       <span style="font-family: 宋体; font-size: 10.5pt">
         在提供网络服务时，可能会对部分网络服务收取一定的费用，在此情况下，会在相关页面上做明确的提示。如
       </span>
@@ -2402,8 +2351,7 @@
         line-height: 22pt;
         mso-line-height-rule: exactly;
       ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.7</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">对于利用</span>
+      <span style="font-family: 宋体; font-size: 10.5pt">4.7 对于利用</span>
       <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
       <span style="font-family: 宋体; font-size: 10.5pt">
         进行非法活动，或其言行（无论线上或者线下的）背离
@@ -2437,13 +2385,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        8
+        4.8
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         服务费用
@@ -2563,14 +2505,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          5
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          .用户隐私保护
+          5.用户隐私保护
         </span>
       </strong>
     </p>
@@ -2584,10 +2519,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .1
+        5.1
       </span>
       <span
         style="
@@ -2642,10 +2574,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .2保护用户隐私是
+        5.2 保护用户隐私是
       </span>
       <span
         style="
@@ -2785,10 +2714,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .3在以下（包括但不限于）几种情况下，
+        5.3 在以下（包括但不限于）几种情况下，
       </span>
       <span
         style="
@@ -2921,10 +2847,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .4如您认为您的个人信息被
+        5.4 如您认为您的个人信息被
       </span>
       <span
         style="
@@ -2982,14 +2905,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          6
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          .知识产权
+          6.知识产权
         </span>
       </strong>
     </p>
@@ -3003,10 +2919,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .1除法律法规明确规定，或另有明确协议约定之外，
+        6.1 除法律法规明确规定，或另有明确协议约定之外，
       </span>
       <span
         style="
@@ -3095,10 +3008,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .2用户在
+        6.2 用户在
       </span>
       <span
         style="
@@ -3193,10 +3103,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .3除非有相反证明，您理解并同意，为使用户内容得到更好的分享及推广，提高其传播价值及影响力，
+        6.3
+        除非有相反证明，您理解并同意，为使用户内容得到更好的分享及推广，提高其传播价值及影响力，
       </span>
       <strong>
         <span
@@ -3449,13 +3357,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        4
+        6.4
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         对于用户发表在
@@ -3521,10 +3423,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .5【
+        6.5 【
       </span>
       <span
         style="
@@ -3603,13 +3502,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6
+        6.6
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         侵权投诉
@@ -3745,14 +3638,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          7
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          .免责声明
+          7.免责声明
         </span>
       </strong>
     </p>
@@ -3766,13 +3652,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        7
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        1
+        7.1
       </span>
       <strong>
         <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
@@ -3869,17 +3749,7 @@
       ">
       <strong>
         <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          7
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          .
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          3
+          7.3
         </span>
       </strong>
       <strong>
@@ -3944,21 +3814,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          7
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          .
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          5
+          7.5
         </span>
       </strong>
       <strong>
@@ -4357,14 +4213,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          9.
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          违约及
+          9.违约及
         </span>
       </strong>
       <strong>
@@ -4385,7 +4234,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9.1【违约处理】如您违反本协议约定，
+        9.1 【违约处理】如您违反本协议约定，
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         我们
@@ -4465,10 +4314,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .3【反商业贿赂】您充分了解，任何向
+        9.3 【反商业贿赂】您充分了解，任何向
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         我们
@@ -4511,10 +4357,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .4【关联处理】您因违约导致
+        9.4 【关联处理】您因违约导致
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         我们
@@ -4557,10 +4400,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        .5【信息公示】
+        9.5 【信息公示】
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         我们
@@ -4594,14 +4434,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          10.
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          协议变更及终止
+          10.协议变更及终止
         </span>
       </strong>
     </p>
@@ -5039,7 +4872,7 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        11.4本协议所有条款的标题仅为阅读和理解方便，本身并无实际
+        11.4 本协议所有条款的标题仅为阅读和理解方便，本身并无实际
       </span>
       <span
         class="15"
@@ -5064,7 +4897,7 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        11.6
+        11.5
         积木优工未行使或执行本协议任何权利或利益，不构成对前述权利或利益之放弃。
       </span>
     </p>
@@ -5080,7 +4913,8 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        11.7如您对本协议有任何意见或建议，您可向我们（info@jmyg.com）反馈，我们会给予您必要的帮助。
+        11.6
+        如您对本协议有任何意见或建议，您可向我们（info@jmyg.com）反馈，我们会给予您必要的帮助。
       </span>
     </p>
     <p

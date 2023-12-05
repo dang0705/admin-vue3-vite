@@ -1619,15 +1619,9 @@
         line-height: 16.5pt;
       ">
       <strong>
-        <span style="font-family: 宋体; color: #333333; font-size: 10.5pt">
-          <span style="font-family: Segoe UI">1</span>
-        </span>
-      </strong>
-      <strong>
         <span
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          .
-          <span style="font-family: 宋体">向您提供产品和</span>
+          <span style="font-family: 宋体">1.向您提供产品和</span>
           <span style="font-family: Segoe UI">/</span>
           <span style="font-family: 宋体">或服务</span>
         </span>
@@ -1644,26 +1638,13 @@
       <span
         style="
           mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
+          font-family: '宋体';
           mso-fareast-font-family: 宋体;
           color: #333333;
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        .1.
+        1.1
         <span style="font-family: 宋体">
           安全运行与风控验证。为了保障软件与服务的安全运行，防止您的个人信息被非法获取，更准确地预防欺诈和保护账号安全，我们会收集您的设备信息【包括：设备型号、设备名称、
         </span>
@@ -1779,31 +1760,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        .
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">2</span>
+        <span style="font-family: 宋体">1.2</span>
       </span>
       <span
         style="
@@ -1916,31 +1873,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        .
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">3</span>
+        <span style="font-family: 宋体">1.3</span>
       </span>
       <span
         style="
@@ -2027,31 +1960,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        .
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">4</span>
+        <span style="font-family: 宋体">1.4</span>
       </span>
       <span
         style="
@@ -2138,31 +2047,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        .
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">5</span>
+        <span style="font-family: 宋体">1.5</span>
       </span>
       <span
         style="
@@ -2249,7 +2134,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: Segoe UI">1.6</span>
+        <span style="font-family: 宋体">1.6</span>
       </span>
       <span
         style="
@@ -2361,43 +2246,17 @@
           color: #333333;
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">1</span>
-      </span>
+        "></span>
       <span
         style="
           mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
+          font-family: '宋体';
           mso-fareast-font-family: 宋体;
           color: #333333;
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        .
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">6</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        .
+        1.7
         <span style="font-family: 宋体">设备权限调用汇总</span>
       </span>
     </p>
@@ -3000,16 +2859,9 @@
         line-height: 16.5pt;
       ">
       <strong>
-        <span style="font-family: 宋体; color: #333333; font-size: 10.5pt">
-          <span style="font-family: Segoe UI">2</span>
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          .
+        <span style="font-family: '宋体'; color: #333333; font-size: 10.5pt">
           <span style="font-family: 宋体">
-            我们可能从第三方间接获取您的个人信息
+            2.我们可能从第三方间接获取您的个人信息
           </span>
         </span>
       </strong>
@@ -3088,15 +2940,9 @@
         line-height: 16.5pt;
       ">
       <strong>
-        <span style="font-family: 宋体; color: #333333; font-size: 10.5pt">
-          <span style="font-family: Segoe UI">3</span>
-        </span>
-      </strong>
-      <strong>
         <span
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          .
-          <span style="font-family: 宋体">征得授权同意的例外</span>
+          <span style="font-family: 宋体">3.征得授权同意的例外</span>
         </span>
       </strong>
     </p>
@@ -3499,32 +3345,8 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">（</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: Segoe UI">4</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
         <span style="font-family: 宋体">
-          ）与我们的关联公司必要共享：我们可能会与我们的关联公司共享您的个人信息。我们只会共享必要的个人信息，且这种共享受本政策所声明的目的的约束。关联公司如要改变个人信息的处理目的，将再次征得您的授权和同意；
+          （4）与我们的关联公司必要共享：我们可能会与我们的关联公司共享您的个人信息。我们只会共享必要的个人信息，且这种共享受本政策所声明的目的的约束。关联公司如要改变个人信息的处理目的，将再次征得您的授权和同意；
         </span>
       </span>
     </p>
