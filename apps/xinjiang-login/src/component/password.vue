@@ -42,7 +42,7 @@
       <el-input
         text
         maxlength="4"
-        placeholder="请输入手机号"
+        placeholder="请输入验证码"
         v-model="state.ruleForm.code"
         clearable
         autocomplete="off">
