@@ -63,7 +63,7 @@
           <div class="info_row">
             <div class="info_label">开始打卡图片：</div>
             <div class="info_value">
-              <div v-for="item in form.startImages" :key="item">
+              <div  class="mr-2" v-for="item in form.startImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
               </div>
               <div v-if="!form.startImages?.length">
@@ -74,7 +74,7 @@
           <div class="info_row">
             <div class="info_label">结束打卡图片：</div>
             <div class="info_value">
-              <div v-for="item in form.doneImages" :key="item">
+              <div class="mr-2" v-for="item in form.doneImages" :key="item">
                 <UploadFile :modelValue="[item]" :disabled="true" />
               </div>
               <div v-if="!form.doneImages?.length">
@@ -85,10 +85,10 @@
           <div class="info_row">
             <div class="info_label">任务成果：</div>
             <div class="info_value">
-              <div v-for="item in form.doneFiles" :key="item">
+              <div class="mr-2" v-for="item in form.doneFiles" :key="item">
                 <UploadFile
                   fileType="file"
-                  :modelValue="[item.filePath]"
+                  :modelValue="[item]"
                   :disabled="true" />
               </div>
               <div v-if="!form.doneFiles?.length">
@@ -289,6 +289,8 @@ defineExpose({
   font-size: var(--el-font-size-medium);
   color: #000000;
   line-height: 42px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .footer {
   border-top: 1px solid #e8e8e8;

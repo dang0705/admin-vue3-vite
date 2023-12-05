@@ -189,6 +189,19 @@ const conditionForms = computed(() => {
       label: '服务商'
     },
     {
+      control: 'DateRange',
+      key: 'workTimeRange',
+      label: '任务时间',
+      props: {
+        disabled: true,
+        teleported: false,
+        // valueType: 'string',
+        type: 'datetimerange',
+        'start-placeholder': '任务开始时间',
+        'end-placeholder': '任务结束时间'
+      }
+    },
+    {
       control: 'el-select',
       key: 'serviceContractId',
       label: '服务协议',
@@ -219,31 +232,13 @@ const conditionForms = computed(() => {
     {
       control: 'InputPlus',
       key: 'areaDescDatas',
-      label: '工作地区'
+      label: '任务地区'
     },
     {
       control: 'InputPlus',
       key: 'address',
       label: '任务地址'
     },
-    {
-      control: 'DateRange',
-      key: 'workTimeRange',
-      label: '任务时间',
-      props: {
-        disabled: true,
-        teleported: false,
-        // valueType: 'string',
-        type: 'datetimerange',
-        'start-placeholder': '任务开始时间',
-        'end-placeholder': '任务结束时间'
-      }
-    },
-    // {
-    //   control: 'InputPlus',
-    //   key: 'endTime',
-    //   label: '工作结束时间'
-    // },
     {
       control: 'InputPlus',
       key: 'unitPrice',

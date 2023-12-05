@@ -195,6 +195,10 @@ const columns = [
     options: 'undertaking_status'
   },
   {
+    prop: 'rejectReason',
+    label: '拒绝原因',
+  },
+  {
     label: '操作',
     prop: 'actions',
     fixed: 'right',

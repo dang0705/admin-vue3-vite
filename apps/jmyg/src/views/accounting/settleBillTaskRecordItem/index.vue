@@ -1,5 +1,7 @@
 <template>
-  <TableView
+  <div>
+    <TableView
+    ref="tableViewRef"
     :columns="newColumns"
     :condition-forms="forms"
     :actions="actions"
@@ -45,7 +47,8 @@
         <i class="iconfont icon_chakan !text-default"></i>
         <span class="ml-1 hover:underline">查看关联协议</span>
       </span>
-      <span
+      <!-- <slot> -->
+        <span
         v-auth="`core_settleBillTaskRecordItem_edit`"
         v-if="row.paymentStatus === '40'"
         :class="['cursor-pointer']"
@@ -54,11 +57,15 @@
         <i class="iconfont icon_tongbu !text-default"></i>
         <span class="ml-1 hover:underline">同步银行卡信息</span>
       </span>
+      <!-- </slot> -->
+
     </template>
     <template v-for="(_, slot) in $slots" #[slot]>
       <slot :name="slot" />
     </template>
-    <Dialog
+
+  </TableView>
+  <Dialog
       vertical
       disabled
       v-model="accountShow"
@@ -69,7 +76,8 @@
       :columns="24"
       :on-submit="onSubmit"
       width="500px"></Dialog>
-  </TableView>
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -85,6 +93,7 @@ const down = (download: string) => {
     url: download
   })
 }
+const tableViewRef = ref()
 const id = ref('')
 const route: any = useRoute()
 const accountShow = ref(false)
@@ -110,6 +119,8 @@ const asyncUpdate = async (row) => {
     }
   ]
   accountShow.value = true
+  console.log('accountShow.value', accountShow.value);
+
 }
 const forms = computed(() => {
   if (!route.query.id) {
@@ -154,7 +165,8 @@ const onSubmit = async () => {
     id: id.value
   }
   await updateUnderTakerBankCard(params)
-  accountShow.value = true
+  accountShow.value = false
+  tableViewRef?.value.resetQuery()
 }
 const staticQuery = {
   settleBillId: route.query.id

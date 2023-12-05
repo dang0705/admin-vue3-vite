@@ -9,6 +9,7 @@
       <el-button
         v-auth="'taxSupervision_merchantRecharge_down'"
         icon="download"
+        v-if="row.transferVoucher"
         text
         type="primary"
         @click="handleContractFile(row.transferVoucher)">
