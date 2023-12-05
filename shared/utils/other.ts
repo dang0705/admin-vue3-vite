@@ -187,13 +187,13 @@ export const openWindow = (
   const width = window.innerWidth
     ? window.innerWidth
     : document.documentElement.clientWidth
-      ? document.documentElement.clientWidth
-      : screen.width
+    ? document.documentElement.clientWidth
+    : screen.width
   const height = window.innerHeight
     ? window.innerHeight
     : document.documentElement.clientHeight
-      ? document.documentElement.clientHeight
-      : screen.height
+    ? document.documentElement.clientHeight
+    : screen.height
 
   const left = width / 2 - w / 2 + dualScreenLeft
   const top = height / 2 - h / 2 + dualScreenTop
@@ -275,19 +275,21 @@ export function downBlobFile(
     ...(exportExcel
       ? {
           method: 'post',
-          data: query,
-          headers: { 'Content-Type': 'application/json' }
+          data: { ...query, fileName },
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       : {
           method: 'get',
           params: query
         })
   }).then((response) => {
-    function sliceStr(str) {
+    function sliceStr(str:string) {
       var reg = new RegExp('inline;filename=', 'g')
       return str.replace(reg, '')
     }
-    handleBlobFile(response.blob, fileName ? fileName : sliceStr(response.fileName))
+    handleBlobFile(response.blob,  exportExcel ? sliceStr(response.fileName) : fileName || sliceStr(response.fileName))
   })
 }
 

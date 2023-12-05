@@ -163,8 +163,21 @@
                 // ...(column.label === '操作' ? { renderHeader } : null),
               }"
               :minWidth="getTableColumnWidth(column)">
-              <template v-if="column.headerSlot" #header>
-                <slot :name="`${column.prop}-header`" :refresh="resetQuery" />
+              <template
+                v-if="column.headerSlot"
+                #header="{ $index, column: headerColumn }">
+                <slot :name="`${column.prop}-header`" :refresh="resetQuery">
+                  <TableSlot
+                    has-data
+                    :list="state.dataList"
+                    :slot-function="column.headerSlot"
+                    :selections="selectObjs"
+                    :row="column"
+                    :column="headerColumn"
+                    :index="$index"
+                    :confirm="confirm"
+                    :refresh="resetQuery" />
+                </slot>
               </template>
               <template
                 v-if="column.slot || column.value || column.options"
@@ -357,8 +370,10 @@ const newTabs = computed(() => state.countResp || props.tabs)
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
-const fetchList: any = computed(
-  () => apis[`/src/api/${module.value}`][props.getListFnName]
+const fetchList: any = computed(() =>
+  props.tableData.length
+    ? null
+    : apis[`/src/api/${module.value}`][props.getListFnName]
 )
 const delObj: any = computed(
   () => apis[`/src/api/${module.value}`][props.delFnName]
@@ -368,6 +383,7 @@ const showSearch = ref(true)
 const params = computed(() => props.params)
 const state: BasicTableProps = reactive<BasicTableProps>({
   pageList: fetchList,
+  ...(props.tableData.length ? { dataList: props.tableData } : {}),
   ...(props.staticQuery
     ? {
         queryForm: {
@@ -415,8 +431,8 @@ const exportExcel = async () => {
     true
   )
 }
-const downParams = computed(() => {
-  return Object.assign(state.queryForm, props.params, {
+const downParams = computed(() =>
+  Object.assign(state.queryForm, props.params, {
     ids: props.getFullSelection
       ? selectObjs.value.map(
           ({ [props.selectMainKey]: id }: Record<string, string>) => id
