@@ -83,7 +83,6 @@ const signInSuccess = async () => {
   } else {
     // 初始化登录成功时间问候语
     let currentTimeInfo = formatAxis(new Date())
-    // window.location.href = ''
     // if (route.query?.redirect) {
     //   router.push({
     //     path: <string>route.query?.redirect,
@@ -95,6 +94,9 @@ const signInSuccess = async () => {
     // } else {
     //   router.push('/')
     // }
+    // 跳转到对应线上环境地址
+    const targetUrl = Session.getTargetUrl();
+    window.location.href = targetUrl;
     // 登录成功提示
     const signInText = '欢迎回来！'
     useMessage().success(`${currentTimeInfo}，${signInText}`)

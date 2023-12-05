@@ -44,6 +44,9 @@ export const useUserInfo = defineStore('userInfo', {
             // 存储token 信息
             Session.set('token', res.access_token)
             Session.set('refresh_token', res.refresh_token)
+            // 存储跳转地址信息，目前默认跳转到测试环境地址
+            Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443')
+            Session.set('originalUrl', res.originalUrl)
             resolve(res)
           })
           .catch((err) => {
@@ -67,6 +70,9 @@ export const useUserInfo = defineStore('userInfo', {
             // 存储token 信息
             Session.set('token', res.access_token)
             Session.set('refresh_token', res.refresh_token)
+             // 存储跳转地址信息，目前默认跳转到测试环境地址
+             Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443')
+             Session.set('originalUrl', res.originalUrl)
             resolve(res)
           })
           .catch((err) => {

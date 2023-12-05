@@ -12,6 +12,7 @@
 		"app:jmyg--build-prod": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode prod -- jmyg",
 		"app:privacy-policy--build-prod": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode prod -- privacy-policy",
 		"app:xinjiang-login--dev": "vite --force  --mode xinjiang -- xinjiang-login",
+		"app:xinjiang-login--prod": "vite --force  --mode xinjiang-pord -- xinjiang-login",
 		"app:xinjiang-login--build": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode xinjiang -- xinjiang-login",
 		"app:xinjiang-login--build-prod": "NODE_OPTIONS=--max-old-space-size=4096 vite build --mode xinjiang-prod -- xinjiang-login",
 		"build:docker": "NODE_OPTIONS=--max-old-space-size=4096 vite build --outDir ./docker/dist/ --mode test",

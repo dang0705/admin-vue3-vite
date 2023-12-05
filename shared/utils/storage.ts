@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { useTokenStore } from '@stores/token'
+import { useJumpUrl } from '@stores/jumpUrl'
 
 /**
  * window.localStorage 浏览器永久缓存
@@ -43,9 +44,16 @@ export const Local = {
 export const Session = {
   // 设置临时缓存
   set(key: string, val: any) {
+    console.log(key, '------key');
+    
     if (key === 'token' || key === 'refresh_token') {
       const { token, refreshToken } = storeToRefs(useTokenStore())
       key === 'token' ? (token.value = val) : (refreshToken.value = val)
+      Cookies.set(key, val)
+    }
+    if(['targetUrl', 'originalUrl'].includes(key)) {
+      const { targetUrl, originalUrl } = storeToRefs(useJumpUrl())
+      key === 'targetUrl' ? (targetUrl.value = val) : (originalUrl.value = val)
       Cookies.set(key, val)
     }
     window.sessionStorage.setItem(key, JSON.stringify(val))
@@ -57,6 +65,12 @@ export const Session = {
       return key === 'token'
         ? token.value || Cookies.get(key)
         : refreshToken.value || Cookies.get(key)
+    }
+    if(['targetUrl', 'originalUrl'].includes(key)) {
+      const { targetUrl, originalUrl } = storeToRefs(useJumpUrl())
+      return key === 'targetUrl'
+        ? targetUrl.value || Cookies.get(key)
+        : originalUrl.value || Cookies.get(key)
     }
     let json = <string>window.sessionStorage.getItem(key)
     return JSON.parse(json)
@@ -74,7 +88,10 @@ export const Session = {
     Cookies.remove('token')
     Cookies.remove('refresh_token')
     Cookies.remove('tenantId')
+    Cookies.remove('targetUrl')
+    Cookies.remove('originalUrl')
     useTokenStore().clearToken()
+    useJumpUrl().clearJumpUrl()
     window.sessionStorage.clear()
   },
   // 获取当前存储的 token
@@ -84,5 +101,13 @@ export const Session = {
   // 获取当前的租户
   getTenant() {
     return Local.get('tenantId') ? Local.get('tenantId') : 1
+  },
+  // 获取原始登陆地址
+  getOriginalUrl() {
+    return this.get('originalUrl')
+  },
+  // 获取登陆后跳转的主服务地址
+  getTargetUrl() {
+    return this.get('targetUrl')
   }
 }
