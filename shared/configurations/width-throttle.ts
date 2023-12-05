@@ -1,1 +1,1 @@
-export default 1280
+export default 980
