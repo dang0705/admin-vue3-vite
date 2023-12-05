@@ -21,7 +21,6 @@
       :forms="forms"
       :columns="20"
       v-model:form-data="dialogFormData"
-      :on-cancel="onCancel"
       :on-submit="onSubmit"
       button-position="center" />
   </Table-view>

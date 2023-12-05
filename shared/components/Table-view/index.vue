@@ -380,9 +380,8 @@ const delObj: any = computed(
 )
 
 const showSearch = ref(true)
-const params = computed(() => props.params)
 const state: BasicTableProps = reactive<BasicTableProps>({
-  pageList: fetchList,
+  pageList: fetchList.value,
   ...(props.tableData.length ? { dataList: props.tableData } : {}),
   ...(props.staticQuery
     ? {
@@ -396,6 +395,7 @@ const state: BasicTableProps = reactive<BasicTableProps>({
   createdIsNeed: history.state.tabValue ? false : props.createdIsNeed,
   columns: props.columns
 })
+
 const {
   currentChangeHandle,
   sizeChangeHandle,
@@ -403,7 +403,24 @@ const {
   getDataList,
   downBlobFile,
   renderHeader
-} = useTable(state, params.value ? params : null)
+} = useTable(state)
+
+const watchParams = () =>
+  watch(
+    () => props.params,
+    (value) => {
+      value &&
+        Object.keys(value).length &&
+        Object.keys(value)?.every((key) => value[key] !== undefined) &&
+        getDataList(true, value)
+    },
+    {
+      immediate: !state.createdIsNeed
+    }
+  )
+const paramsWatcher = watchParams()
+
+onUnmounted(paramsWatcher)
 
 const selectObjs = ref([]) as any
 
