@@ -385,7 +385,7 @@ const saveList = async (list) => {
   if (!valid) return false
   try {
     console.log(list, 'list')
-    let res = await saveList({ ...form, saveParams: list })
+    // let res = await saveList({ ...form, saveParams: list })
     console.log(res, 99999)
   } catch (error) {
     console.log(error)
