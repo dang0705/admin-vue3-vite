@@ -3,6 +3,7 @@
     :columns="columns"
     :condition-forms="conditions"
     :actions="actions"
+    labelWidth="120px"
     module="outsourcing/salaryPlan.ts">
     <template #top-bar>
       <el-button

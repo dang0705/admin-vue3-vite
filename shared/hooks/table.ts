@@ -67,7 +67,7 @@ export interface Pagination {
   layout?: String
 }
 
-export function useTable(options?: BasicTableProps, others?: any = null) {
+export function useTable(options?: BasicTableProps, others?: any) {
   const defaultOptions: BasicTableProps = {
     // 列表数据是否正在加载中，默认为false
     dataListLoading: false,

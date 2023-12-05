@@ -3,14 +3,49 @@
     :columns="columns"
     :condition-forms="conditions"
     :actions="actions"
-    :params="{ salaryPlanId: '1' }"
+    :params="{ salaryPlanId: route.query.id }"
     sort-drag
     no-pagination
     module="outsourcing/salaryPlanProject.ts">
     <template #top-bar>
-      <el-button type="primary" @click="visible = true" v-auth="''">
-        添加项目
-      </el-button>
+      <div>
+        <el-form :model="form" label-width="120px" ref="dataFormRef">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                label="薪资方案名称："
+                prop="salaryPlanName"
+                :rules="[
+                  {
+                    required: true,
+                    message: '薪资方案名称不能为空',
+                    trigger: 'blur'
+                  }
+                ]">
+                <InputPlus maxlength="30" v-model="form.salaryPlanName" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24" class="mb20">
+              <el-form-item label="方案备注：" prop="salaryPlaneRemark">
+                <InputPlus
+                  type="textarea"
+                  show-word-limit
+                  maxlength="500"
+                  v-model="form.salaryPlaneRemark" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <el-button type="primary" @click="visible = true" v-auth="''">
+          添加项目
+        </el-button>
+        <el-button type="primary" @click="visible = true" v-auth="''">
+          导出数据模板
+        </el-button>
+        <el-button type="primary" @click="visible = true" v-auth="''">
+          方案试算
+        </el-button>
+      </div>
     </template>
     <template #bottomActions="{ list }">
       <div class="flex items-center justify-center mt-[50px]">
@@ -43,7 +78,16 @@
           <div style="min-width: 145px" class="com_label text-[12px] require">
             <span>项目名称：</span>
           </div>
-          <el-form-item label-width="0" prop="industryLevel1">
+          <el-form-item
+            label-width="0"
+            prop="industryLevel1"
+            :rules="[
+              {
+                required: true,
+                message: '项目名称一级不能为空',
+                trigger: 'change'
+              }
+            ]">
             <el-select
               @change="dialogFormData.industryLevel2 = ''"
               placeholder="一级分类"
@@ -59,6 +103,13 @@
           </el-form-item>
           <el-form-item
             prop="industryLevel2"
+            :rules="[
+              {
+                required: true,
+                message: '项目名称二级不能为空',
+                trigger: 'change'
+              }
+            ]"
             label-width="0"
             style="margin-left: 12px; flex-shrink: 1">
             <el-select
@@ -82,21 +133,64 @@
 
 <script setup lang="ts">
 import { useDict } from '@hooks/dict'
+import { addObj, saveSort } from '@jmyg/api/outsourcing/salaryPlanProject'
 const route: any = useRoute()
 const visible = ref(false)
+const dataFormRef = ref()
 const dialogFormData = ref({
   projectSource: '',
+  projectType: '',
   industryLevel1: '',
   industryLevel2: ''
 })
+const form = reactive({
+  salaryPlanId: '',
+  salaryPlanName: '',
+  salaryPlaneRemark: ''
+})
 const listValue = ref()
 const { industry } = useDict('industry')
-onMounted(() => {
-  listValue.value = {
-    id: route.query.id,
-    salaryPlanName: route.query.salaryPlanName
+const decimalList = [
+  {
+    label: '0',
+    value: 0
+  },
+  {
+    label: '1',
+    value: 1
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '3',
+    value: 3
+  },
+  {
+    label: '4',
+    value: 4
+  },
+  {
+    label: '5',
+    value: 5
+  },
+  {
+    label: '6',
+    value: 6
+  },
+  {
+    label: '7',
+    value: 7
+  },
+  {
+    label: '8',
+    value: 8
   }
-  console.log(route.query.id, route.query.salaryPlanName)
+]
+onMounted(() => {
+  form.salaryPlanId = route.query.id
+  form.salaryPlanName = route.query.salaryPlanName
 })
 
 const columns = [
@@ -106,13 +200,13 @@ const columns = [
     'min-width': 120
   },
   {
-    prop: 'projectSource',
+    prop: 'projectSourceDesc',
     label: '项目来源',
     // value: ({ batchType }: BatchUploadRecordPage) => batchMap.value.batch_type[batchType],
     'min-width': 120
   },
   {
-    prop: 'projectType',
+    prop: 'projectTypeDesc',
     label: '项目类型',
     'min-width': 160
   },
@@ -146,7 +240,7 @@ const actions = (row, list) => {
   return [
     {
       auth: '',
-      label: '删除',
+      label: '查看',
       action: {
         handler: del,
         save: false,
@@ -156,6 +250,15 @@ const actions = (row, list) => {
     {
       auth: '',
       label: '编辑'
+    },
+    {
+      auth: '',
+      label: '删除',
+      action: {
+        handler: del,
+        save: false,
+        params: [list]
+      }
     },
     {
       auth: '',
@@ -223,6 +326,28 @@ const forms = computed(() => [
     label: '项目类型',
     rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
   },
+  ...(dialogFormData.value.projectType === '10'
+    ? [
+        {
+          control: 'el-select',
+          key: 'carry_rule',
+          options: 'carry_rule',
+          label: '进位规则',
+          rules: [
+            { required: true, message: '进位规则不能为空', trigger: 'change' }
+          ]
+        },
+        {
+          control: 'el-select',
+          key: 'decimal',
+          options: decimalList,
+          label: '保留小数位',
+          rules: [
+            { required: true, message: '保留小数位不能为空', trigger: 'change' }
+          ]
+        }
+      ]
+    : []),
   {
     control: 'el-select',
     key: 'salaryShow',
@@ -255,16 +380,28 @@ const forms = computed(() => [
 ])
 
 // 保存
-const saveList = (list) => {
-  console.log(list, 'list')
+const saveList = async (list) => {
+  const valid = await dataFormRef.value.validate().catch(() => {})
+  if (!valid) return false
+  try {
+    console.log(list, 'list')
+    let res = await saveList({ ...form, saveParams: list })
+    console.log(res, 99999)
+  } catch (error) {
+    console.log(error)
+  }
 }
 // 发布
 const releaseList = (list) => {
   console.log(list, 'list')
 }
 
-const onSubmit = () => {
-  console.log(dialogFormData.value, 222)
-  console.log(tableVlue.value, 999)
+const onSubmit = async () => {
+  try {
+    let res = await addObj({ ...form, saveParam: dialogFormData.value })
+    console.log(res, 9999)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
