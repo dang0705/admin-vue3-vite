@@ -1621,7 +1621,7 @@
       <strong>
         <span
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          <span style="font-family: 宋体">1.向您提供产品和</span>
+          <span style="font-family: 宋体">1. 向您提供产品和</span>
           <span style="font-family: Segoe UI">/</span>
           <span style="font-family: 宋体">或服务</span>
         </span>
@@ -2861,7 +2861,7 @@
       <strong>
         <span style="font-family: '宋体'; color: #333333; font-size: 10.5pt">
           <span style="font-family: 宋体">
-            2.我们可能从第三方间接获取您的个人信息
+            2. 我们可能从第三方间接获取您的个人信息
           </span>
         </span>
       </strong>
@@ -2942,7 +2942,7 @@
       <strong>
         <span
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          <span style="font-family: 宋体">3.征得授权同意的例外</span>
+          <span style="font-family: 宋体">3. 征得授权同意的例外</span>
         </span>
       </strong>
     </p>
