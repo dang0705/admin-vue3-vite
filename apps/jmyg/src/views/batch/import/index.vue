@@ -35,6 +35,7 @@
           no-padding
           :columns="failListColumns"
           :params="failParams"
+          :down-blob-file-name="currentTitle"
           export-auth="core_batchUploadRecord_export"
           down-blob-file-url="/core/batchFailDetails/export"
           module="core/batchUploadRecord"
