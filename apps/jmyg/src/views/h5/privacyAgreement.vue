@@ -3100,8 +3100,7 @@
         line-height: 16.5pt;
       ">
       <strong>
-        <span
-          style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
+        <span style="font-family: '宋体'; color: #333333; font-size: 10.5pt">
           1.
           <span style="font-family: 宋体">共享：</span>
         </span>
