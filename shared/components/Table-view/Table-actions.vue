@@ -74,12 +74,16 @@ const props = defineProps({
   mainKey: {
     type: String,
     default: ''
+  },
+  list: {
+    type: Array,
+    default: []
   }
 })
 const refresh = inject('refresh', null)
 const actions = computed(() =>
   (helpers.isFunction(props.actionsOrigin)
-    ? (props.actionsOrigin as Function)(props.row)
+    ? (props.actionsOrigin as Function)(props.row, props.list)
     : props.actionsOrigin
   ).filter(({ show }: Actions) => (show && show()) || show === undefined)
 )

@@ -195,6 +195,7 @@
                 <TableActions
                   v-if="column.prop === 'actions'"
                   :row="row"
+                  :list="state.dataList"
                   :action-body="actionBody"
                   :del-fn-name="delObj"
                   :actionsOrigin="actions"
@@ -209,6 +210,7 @@
             @size-change="sizeChangeHandle"
             @current-change="currentChangeHandle"
             v-bind="state.pagination" />
+          <slot name="bottomActions" :list="state.dataList"></slot>
         </template>
       </el-skeleton>
     </div>
