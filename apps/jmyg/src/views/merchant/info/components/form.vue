@@ -640,6 +640,7 @@ const dataRules = ref({
   ],
   taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
   taxJointBankNumber: [
+  { required: true, message: '开户行联行号不能为空', trigger: 'blur' },
     {
       validator: rule.interbank,
       trigger: 'blur'

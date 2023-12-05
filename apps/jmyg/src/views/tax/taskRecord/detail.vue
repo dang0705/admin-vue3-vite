@@ -36,7 +36,8 @@ const undertakerTaxComponentsRef = ref()
 const agree_list = ref([])
 const formData = reactive({
   merchantId: '',
-  spId: ''
+  spId: '',
+  workTimeRange: []
 })
 const tabs = ref([
   {
@@ -226,15 +227,23 @@ const conditionForms = computed(() => {
       label: '任务地址'
     },
     {
-      control: 'InputPlus',
-      key: 'startTime',
-      label: '工作开始时间'
+      control: 'DateRange',
+      key: 'workTimeRange',
+      label: '任务时间',
+      props: {
+        disabled: true,
+        teleported: false,
+        // valueType: 'string',
+        type: 'datetimerange',
+        'start-placeholder': '任务开始时间',
+        'end-placeholder': '任务结束时间'
+      }
     },
-    {
-      control: 'InputPlus',
-      key: 'endTime',
-      label: '工作结束时间'
-    },
+    // {
+    //   control: 'InputPlus',
+    //   key: 'endTime',
+    //   label: '工作结束时间'
+    // },
     {
       control: 'InputPlus',
       key: 'unitPrice',
@@ -315,6 +324,8 @@ const gettaskData = () => {
   getObj(route.query.taskId)
     .then((res: any) => {
       Object.assign(formData, res.data, res.data.taskRequireInfo)
+      console.log('formData', formData)
+
       getAgreeList()
     })
     .finally(() => {})

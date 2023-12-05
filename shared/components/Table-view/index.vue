@@ -330,7 +330,8 @@ const getTableColumnWidth = (column) => {
     return '150px'
   } else if (
     label.includes('是否存在生效协议') ||
-    label.includes('是否银行四要素校验')
+    label.includes('是否银行四要素校验') ||
+    label.includes('是否银行四要素验证')
   ) {
     return '138px'
   } else if (

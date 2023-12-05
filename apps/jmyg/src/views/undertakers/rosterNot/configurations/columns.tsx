@@ -50,7 +50,7 @@ export default (batchMap: Ref) => [
   {
     label: '是否银行四要素验证',
     prop: 'isBankFourEssentialFactor',
-    minWidth: 160,
+    minWidth: 138,
     value: ({ isBankFourEssentialFactor }: any) =>
       isBankFourEssentialFactor == 0 ? '否' : '是'
   },

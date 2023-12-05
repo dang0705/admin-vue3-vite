@@ -255,6 +255,11 @@
           href="javascript:;"
           v-text="`附件${index + 1}`" />
       </template>
+      <img
+        v-if="disabled && !isImage && prefixedUrls?.length === 0"
+        class="w-[120px] h-[120px]"
+        :src="fileFailImg"
+        alt="" />
       <div class="el-upload__tip">
         <slot name="tip" />
       </div>
@@ -291,6 +296,7 @@ import helpers from '@utils/helpers'
 import propsData from './props'
 import getFileExt from '@utils/get-file-ext'
 import placeholderImg from '@/assets/images/zhanwei.png'
+import fileFailImg from '@/assets/images/file_ico.webp'
 import failedImg from '@/assets/images/fail.png'
 import fileImg from '@/assets/uploadImg/file.webp'
 

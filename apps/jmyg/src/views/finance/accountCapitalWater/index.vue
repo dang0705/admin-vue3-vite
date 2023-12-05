@@ -54,7 +54,8 @@ const downFileUrl = computed(() => {
   } else if (tabType.value === '2') {
     return '/finance/spAccountCapitalWater/export'
   } else if (tabType.value === '3') {
-    return '/finance/spAccountCapitalWater/export'
+    // /finance/spAccountCapitalWater/platform/page
+    return '/finance/spAccountCapitalWater/platform/export'
   }
 })
 
