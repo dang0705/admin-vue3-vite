@@ -16,6 +16,14 @@ export function addObj(obj?: Object) {
   })
 }
 
+export function saveSort(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlanProject/saveSort',
+    method: 'post',
+    data: obj
+  })
+}
+
 export function getObj(id?: string) {
   return request({
     url: '/outsourcing/salaryPlanProject/' + id,
