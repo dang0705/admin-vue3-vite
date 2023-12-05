@@ -1,9 +1,12 @@
 <template>
   <Table-view
     :columns="columns"
-    :condition-forms="conditions"
     :actions="actions"
-    :params="{ salaryPlanId: route.query.id }"
+    v-bind="{
+      ...(route.query.id
+        ? { staticQuery: { salaryPlanId: route.query.id } }
+        : {})
+    }"
     sort-drag
     no-pagination
     module="outsourcing/salaryPlanProject.ts">

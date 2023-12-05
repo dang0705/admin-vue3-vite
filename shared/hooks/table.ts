@@ -2,7 +2,6 @@ import { CellStyle } from 'element-plus'
 import other from '@utils/other'
 import helper from '@utils/helpers'
 import { useDict } from '@hooks/dict'
-import Array2Object from '@utils/array-2-object'
 import Sortable from 'sortablejs'
 const dicWatchObj = ref([])
 /**
@@ -67,7 +66,7 @@ export interface Pagination {
   layout?: String
 }
 
-export function useTable(options?: BasicTableProps, others?: any) {
+export function useTable(options?: BasicTableProps) {
   const defaultOptions: BasicTableProps = {
     // 列表数据是否正在加载中，默认为false
     dataListLoading: false,
@@ -126,7 +125,7 @@ export function useTable(options?: BasicTableProps, others?: any) {
   /**
    * 发起分页查询，并设置表格数据和分页信息
    */
-  const query = async (others: any = {}) => {
+  const query = async (params: any = {}) => {
     state.queryForm.ids = []
     // 判断是否存在state.pageList属性
     if (state.pageList) {
@@ -137,7 +136,7 @@ export function useTable(options?: BasicTableProps, others?: any) {
         // 调用state.pageList方法发起分页查询
         const res = await state.pageList({
           ...state.queryForm,
-          ...others,
+          ...params,
           current: state.pagination?.current,
           size: state.pagination?.size,
           descs: state.descs?.join(','),
@@ -234,15 +233,6 @@ export function useTable(options?: BasicTableProps, others?: any) {
     }
   }
 
-  //   监听外部参数的变化，刷新列表
-  others
-    ? watch(
-        () => others?.value,
-        (value) => Object.keys(value).length && query(value),
-        { immediate: true }
-      )
-    : state.createdIsNeed && query()
-
   /**
    * 分页大小改变事件处理函数
    * @param val 新的分页大小
@@ -251,7 +241,7 @@ export function useTable(options?: BasicTableProps, others?: any) {
     // 修改state.pagination中的size属性
     state.pagination!.size = +val
     // 再次发起查询操作
-    query(others?.value)
+    query()
   }
 
   /**
@@ -262,9 +252,10 @@ export function useTable(options?: BasicTableProps, others?: any) {
     // 修改state.pagination中的current属性
     state.pagination!.current = val
     // 再次发起查询操作
-    query(others?.value)
+    query()
   }
 
+  onMounted(() => state.createdIsNeed && query())
   // 排序触发事件
   const sortChangeHandle = (column: any) => {
     const prop = other.toUnderline(column.prop)
@@ -286,21 +277,22 @@ export function useTable(options?: BasicTableProps, others?: any) {
         state.descs?.splice(state.descs.indexOf(prop), 1)
       }
     }
-    query(others?.value)
+    query()
   }
 
   /**
    * 获取数据列表，并可选择是否刷新当前页码
    * 刷新后不跳转第一页，则入参 getDataList(false)
    * @param refresh 是否刷新当前页码
+   * @param params 额外参数
    */
-  const getDataList = (refresh?: any) => {
+  const getDataList = (refresh?: any, params?: unknown) => {
     // 如果需要刷新，则将state.pagination.current重置为1
     if (refresh !== false) {
       state.pagination!.current = 1
     }
     // 再次发起查询操作
-    query(others?.value)
+    query(params)
   }
 
   /**

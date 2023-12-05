@@ -42,7 +42,7 @@ export default {
   // 额外的参数
   params: {
     type: Object,
-    default: null
+    default: {}
   },
   conditionForms: {
     type: Array,
