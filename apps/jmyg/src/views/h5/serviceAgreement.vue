@@ -2284,7 +2284,7 @@
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         11.6
-        如您对本协议有任何意见或建议，您可向我们（info@jmyg.com）反馈，我们会给予您必要的帮助。
+        如您对本协议有任何意见或建议，您可向我们（hr@jmyg.com）反馈，我们会给予您必要的帮助。
       </span>
     </p>
     <p

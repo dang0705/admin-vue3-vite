@@ -356,32 +356,8 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】隐私</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        权
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
         <span style="font-family: 宋体">
-          政策》（包括更新版本）的全部内容。
+          】隐私权政策》（包括更新版本）的全部内容。
         </span>
       </span>
     </p>
@@ -5098,19 +5074,8 @@
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
           1.
           <span style="font-family: 宋体">
-            因本政策以及我们处理您个人信息事宜引起的任何争议，您可诉至上海市
+            因本政策以及我们处理您个人信息事宜引起的任何争议，您可诉至上海市宝山区人民法院。
           </span>
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; color: #333333; font-size: 10.5pt">
-          宝山
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
-          <span style="font-family: 宋体">区人民法院。</span>
         </span>
       </strong>
     </p>
