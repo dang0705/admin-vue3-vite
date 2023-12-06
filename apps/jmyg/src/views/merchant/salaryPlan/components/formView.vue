@@ -187,7 +187,7 @@ const decimalList = [
   }
 ]
 onMounted(() => {
-  form.salaryPlanId = route.query.id
+  form.salaryPlanId = route.query.salaryPlanId
   form.salaryPlanName = route.query.salaryPlanName
 })
 
