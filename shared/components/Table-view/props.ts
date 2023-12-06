@@ -114,7 +114,7 @@ export default {
     default: true
   },
   // 是否允许表格列表拖动排序
-  sortDrag: {
+  drag: {
     type: Boolean,
     default: false
   }

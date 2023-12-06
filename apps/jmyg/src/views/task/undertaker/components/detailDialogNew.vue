@@ -48,7 +48,11 @@
           </div>
           <div class="info_item">
             <div class="info_label">确认任务量：</div>
-            <div class="info_value">{{ form.workload }}</div>
+            <div class="info_value">{{ form.workload }}
+              <div v-if="form.workload && form.measuringUnit">
+                {{ batchMap?.task_unit[form.measuringUnit] }}
+            </div>
+            </div>
           </div>
           <div class="info_item">
             <div class="info_label">承接人确认金额：</div>
@@ -144,6 +148,8 @@
 
 <script setup lang="ts">
 import { getObj } from '@jmyg/api/core/undertakerTask'
+import Array2Object from '@utils/array-2-object'
+const batchMap = Array2Object({ dic: ['task_unit'] })
 defineOptions({ name: 'UndertakerInfoDialog' })
 const visible = ref(false)
 const dialog = ref()

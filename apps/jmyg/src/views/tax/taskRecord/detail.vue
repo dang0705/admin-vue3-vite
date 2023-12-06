@@ -263,12 +263,12 @@ const conditionForms = computed(() => {
     {
       control: 'InputPlus',
       key: 'businessMerchant',
-      label: '业务商户'
+      label: '业务联系人'
     },
     {
       control: 'InputPlus',
       key: 'businessPhone',
-      label: '业务商户手机号'
+      label: '联系人手机号'
     },
     {
       control: 'el-select',

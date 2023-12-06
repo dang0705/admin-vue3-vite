@@ -2,12 +2,7 @@
   <Table-view
     :columns="columns"
     :actions="actions"
-    v-bind="{
-      ...(route.query.id
-        ? { staticQuery: { salaryPlanId: route.query.id } }
-        : {})
-    }"
-    sort-drag
+    drag
     no-pagination
     module="outsourcing/salaryPlanProject.ts">
     <template #top-bar>
