@@ -112,7 +112,7 @@
         <template #default>
           <el-table
             id="tableRef"
-            v-bind="{ ...props, ...$attrs }"
+            v-bind="props"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"

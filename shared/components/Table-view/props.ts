@@ -117,5 +117,9 @@ export default {
   drag: {
     type: Boolean,
     default: false
+  },
+  maxHeight: {
+    type: Number,
+    default: null
   }
 }
