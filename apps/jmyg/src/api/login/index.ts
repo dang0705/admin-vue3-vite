@@ -15,10 +15,6 @@ const FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded'
  * @param data
  */
 export const login = (data: any) => {
-  console.log(env, '-----env');
-  console.log(import.meta.env, '------import.meta.env');
-  
-  
   const basicAuth = 'Basic ' + window.btoa(env.VITE_OAUTH2_PASSWORD_CLIENT)
   Session.set('basicAuth', basicAuth)
   let encPassword = data.password

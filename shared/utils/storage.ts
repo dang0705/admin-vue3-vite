@@ -44,8 +44,6 @@ export const Local = {
 export const Session = {
   // 设置临时缓存
   set(key: string, val: any) {
-    console.log(key, '------key');
-    
     if (key === 'token' || key === 'refresh_token') {
       const { token, refreshToken } = storeToRefs(useTokenStore())
       key === 'token' ? (token.value = val) : (refreshToken.value = val)
