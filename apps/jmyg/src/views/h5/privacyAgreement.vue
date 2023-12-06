@@ -440,26 +440,13 @@
       <span
         style="
           mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        小程序
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
           font-family: 'Segoe UI';
           mso-fareast-font-family: 宋体;
           color: #333333;
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">的经营者为</span>
+        <span style="font-family: 宋体">小程序的经营者为</span>
       </span>
       <span
         style="
@@ -780,7 +767,10 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】是</span>
+        <span style="font-family: 宋体">】是【</span>
+      </span>
+      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
+        是一款针对灵活用工场景的小程序，用户通过小程序进行实名认证并与服务商签署自由职业者服务协议以承揽任务，并通过完成不同的任务获得相应项目承揽经营收入
       </span>
       <span
         style="
@@ -793,71 +783,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        【
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        是
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        一款针对灵活用工场景的小程序，用户
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        通过小程序进行实名认证并与服务商签署
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        自由职业者服务
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        协议
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        以承揽任务
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        并通过
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        完成
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        不同的
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        任务获得相应
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        项目承揽经营
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        收入
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        】
+        】。我们将在本政策中依次向您说明每项功能可能收集的个人信息范围、收集目的、收集方式，以及拒绝提供个人信息可能导致的结果。请您知悉，您拒绝提供各项功能实现所必要的对应信息时，仍然可以使用【
       </span>
       <span
         style="
@@ -867,11 +793,7 @@
           color: #333333;
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">
-          。我们将在本政策中依次向您说明每项功能可能收集的个人信息范围、收集目的、收集方式，以及拒绝提供个人信息可能导致的结果。请您知悉，您拒绝提供各项功能实现所必要的对应信息时，仍然可以使用【
-        </span>
-      </span>
+        "></span>
       <span
         style="
           mso-spacerun: 'yes';
@@ -894,31 +816,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        小程序
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">的其他功能。</span>
+        <span style="font-family: 宋体">】小程序的其他功能。</span>
       </span>
     </p>
     <p
@@ -1825,20 +1723,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        】
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        进行银行卡四要素验证
+        】进行银行卡四要素验证
       </span>
       <span
         style="
@@ -2147,85 +2032,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        当您使用【信息浏览】功能
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        时，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        您
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        浏览的
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        记录信息会存储在我们的服务器中，因为存储是实现这一功能所必需的。我们会以加密的方式存储，您也可以
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        向我们申请
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        删除这些信息。
+        当您使用【信息浏览】功能时，您浏览的记录信息会存储在我们的服务器中，因为存储是实现这一功能所必需的。我们会以加密的方式存储，您也可以向我们申请删除这些信息。
       </span>
     </p>
     <p
@@ -2886,13 +2693,8 @@
         <span
           style="font-family: 'Segoe UI'; color: #333333; font-size: 10.5pt">
           <span style="font-family: 宋体">
-            第三方平台会向我们同步您在该平台上使用的头像、昵称、地区（如有）、性别（如有）及好友信息
+            第三方平台会向我们同步您在该平台上使用的头像、昵称、地区（如有）、性别（如有）及好友信息（如有）
           </span>
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; color: #333333; font-size: 10.5pt">
-          （如有）
         </span>
       </strong>
       <span
@@ -4201,31 +4003,9 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】访问、获取、更正自己的</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        头像或昵称
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">；</span>
+        <span style="font-family: 宋体">
+          】访问、获取、更正自己的头像或昵称；
+        </span>
       </span>
     </p>
     <p
@@ -4242,7 +4022,7 @@
         ">
         <span style="font-family: 宋体">（</span>
         2
-        <span style="font-family: 宋体">）通过【</span>
+        <span style="font-family: 宋体">）通过【 我的</span>
       </span>
       <span
         style="
@@ -4255,7 +4035,6 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">我的</span>
         <span style="font-family: Segoe UI">-</span>
         <span style="font-family: 宋体">个人资料</span>
       </span>
@@ -4268,81 +4047,9 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】设置、访问、获取、更正</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        个人资料
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">信息，含</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        【
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        民族、学历、参加工作时间
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &nbsp;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        】
+        <span style="font-family: 宋体">
+          】设置、访问、获取、更正个人资料信息，含【 民族、学历、参加工作时间 】
+        </span>
       </span>
     </p>
     <p
@@ -4359,7 +4066,7 @@
         ">
         <span style="font-family: 宋体">（</span>
         3
-        <span style="font-family: 宋体">）通过【</span>
+        <span style="font-family: 宋体">）通过【 我的</span>
       </span>
       <span
         style="
@@ -4372,35 +4079,12 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">我的</span>
         <span style="font-family: Segoe UI">-</span>
         <span style="font-family: 宋体">设置</span>
         <span style="font-family: Segoe UI">-</span>
-        <span style="font-family: 宋体">更换手机号</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">】访问、获取、更正</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        手机号
+        <span style="font-family: 宋体">
+          更换手机号 】访问、获取、更正手机号
+        </span>
       </span>
       <span
         style="
@@ -4456,31 +4140,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】访问、获取、更正</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        银行卡
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">信息。</span>
+        <span style="font-family: 宋体">】访问、获取、更正银行卡信息。</span>
       </span>
     </p>
     <p
@@ -4753,33 +4413,7 @@
           mso-font-kerning: 0pt;
         ">
         <span style="font-family: 宋体">
-          】交互界面自行访问、更正或删除某些信息（实名认证后的信息、您的部分使用记录及有关信息）；如您确有必要访问、修改或依法要求删除该类信息，请您按照本政策第
-        </span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        九
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">
-          条中所提供的联系方式，将您的问题通过邮件发送至指定的联系邮箱，我们将尽快审核所涉问题，并在核验您的用户身份后及时予以回复。
+          】交互界面自行访问、更正或删除某些信息（实名认证后的信息、您的部分使用记录及有关信息）；如您确有必要访问、修改或依法要求删除该类信息，请您按照本政策第九条中所提供的联系方式，将您的问题通过邮件发送至指定的联系邮箱，我们将尽快审核所涉问题，并在核验您的用户身份后及时予以回复。
         </span>
       </span>
     </p>
@@ -4947,9 +4581,7 @@
         ">
         <span style="font-family: 宋体">（</span>
         1
-        <span style="font-family: 宋体">）在您接受</span>
-        <span style="font-family: Segoe UI">cookies</span>
-        <span style="font-family: 宋体">的情况下，【</span>
+        <span style="font-family: 宋体">）在您接受cookies的情况下，【</span>
       </span>
       <span
         style="
@@ -4974,12 +4606,8 @@
           mso-font-kerning: 0pt;
         ">
         <span style="font-family: 宋体">
-          】会在您的计算机以及相关移动设备上设定或取用
+          】会在您的计算机以及相关移动设备上设定或取用cookies，以便您能登录或使用依赖于cookies的【
         </span>
-        cookies
-        <span style="font-family: 宋体">，以便您能登录或使用依赖于</span>
-        <span style="font-family: Segoe UI">cookies</span>
-        <span style="font-family: 宋体">的【</span>
       </span>
       <span
         style="
@@ -5027,10 +4655,8 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】使用</span>
-        cookies
         <span style="font-family: 宋体">
-          可为您提供更加周到的个性化服务，包括推广服务。
+          】使用cookies可为您提供更加周到的个性化服务，包括推广服务。
         </span>
       </span>
     </p>
@@ -5048,17 +4674,9 @@
         ">
         <span style="font-family: 宋体">（</span>
         2
-        <span style="font-family: 宋体">）您有权选择接受或拒绝接受</span>
-        <span style="font-family: Segoe UI">cookies</span>
         <span style="font-family: 宋体">
-          。您可以通过修改浏览器设置的方式或在移动设备中设置拒绝接受
+          ）您有权选择接受或拒绝接受cookies。您可以通过修改浏览器设置的方式或在移动设备中设置拒绝接受cookies。但如果您选择拒绝接受cookies，则您可能无法登录或使用依赖于cookies的【
         </span>
-        <span style="font-family: Segoe UI">cookies</span>
-        <span style="font-family: 宋体">。但如果您选择拒绝接受</span>
-        <span style="font-family: Segoe UI">cookies</span>
-        <span style="font-family: 宋体">，则您可能无法登录或使用依赖于</span>
-        <span style="font-family: Segoe UI">cookies</span>
-        <span style="font-family: 宋体">的【</span>
       </span>
       <span
         style="
@@ -5123,9 +4741,9 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">】所设</span>
-        cookies
-        <span style="font-family: 宋体">所取得的有关信息，将适用本政策。</span>
+        <span style="font-family: 宋体">
+          】所设cookies所取得的有关信息，将适用本政策。
+        </span>
       </span>
     </p>
     <p class="MsoNormal">
@@ -5302,32 +4920,8 @@
           mso-font-kerning: 0pt;
         ">
         2.
-        <span style="font-family: 宋体">如遇本政策更新，我们会通过</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ascii-font-family: 'Segoe UI';
-          mso-hansi-font-family: 'Segoe UI';
-          mso-bidi-font-family: 'Segoe UI';
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        小程序
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 'Segoe UI';
-          mso-fareast-font-family: 宋体;
-          color: #333333;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
         <span style="font-family: 宋体">
-          推送通知或其他合理方式通知您，以便您能及时了解本政策的最新版本。
+          如遇本政策更新，我们会通过小程序推送通知或其他合理方式通知您，以便您能及时了解本政策的最新版本。
         </span>
       </span>
     </p>
