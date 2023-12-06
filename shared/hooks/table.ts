@@ -40,6 +40,7 @@ export interface BasicTableProps {
   tabsAuth?: string[]
   // 表格配置的columns
   columns?: any[]
+  drag?: boolean
 }
 
 /**
@@ -212,23 +213,25 @@ export function useTable(options?: BasicTableProps) {
       } finally {
         // 结束加载数据，设置state.loading为false
         state.loading = false
-        await nextTick()
-        // 抓取tab Dom 实现拖拽排序
-        const el = document.querySelector('#tableRef table tbody')
-        new Sortable(el, {
-          sort: true,
-          ghostClass: 'sortable-ghost',
-          handle: '.move',
-          animation: 300,
-          onEnd: async ({ newIndex, oldIndex }) => {
-            state.dataList.splice(newIndex, 0, list.splice(oldIndex, 1)[0])
-            // state.dataList = list.slice(0)
-            // state.dataList = []
-            // await nextTick()
-            // state.dataList = newArray
-            console.log(state.dataList)
-          }
-        })
+        if (state.drag) {
+          await nextTick()
+          // 抓取tab Dom 实现拖拽排序
+          const el = document.querySelector('#tableRef table tbody')
+          new Sortable(el, {
+            sort: true,
+            ghostClass: 'sortable-ghost',
+            handle: '.move',
+            animation: 300,
+            onEnd: async ({ newIndex, oldIndex }) => {
+              state.dataList.splice(newIndex, 0, list.splice(oldIndex, 1)[0])
+              // state.dataList = list.slice(0)
+              // state.dataList = []
+              // await nextTick()
+              // state.dataList = newArray
+              console.log(state.dataList)
+            }
+          })
+        }
       }
     }
   }

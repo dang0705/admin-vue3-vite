@@ -120,11 +120,7 @@
             :row-key="selectMainKey"
             :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
-            <el-table-column
-              type="index"
-              width="50"
-              fixed="left"
-              v-if="sortDrag">
+            <el-table-column type="index" width="50" fixed="left" v-if="drag">
               <template #header>
                 <el-tooltip content="序号" placement="top">#</el-tooltip>
               </template>
@@ -132,7 +128,7 @@
                 <span>{{ scope.$index + 1 }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="" width="50" v-if="sortDrag">
+            <el-table-column label="" width="50" v-if="drag">
               <template #header>
                 <el-icon>
                   <el-tooltip content="拖动排序" placement="top">
@@ -247,6 +243,8 @@ import apis from '@jmyg/api'
 import helpers from '@utils/helpers'
 import { useUserInfo } from '@stores/userInfo'
 import tableColumnsWidth from '@configurations/tableColumnsWidth'
+
+const $route = useRoute()
 const { userInfos } = storeToRefs(useUserInfo())
 
 defineOptions({ name: 'TableView', inheritAttrs: false })
@@ -381,12 +379,14 @@ const delObj: any = computed(
 
 const showSearch = ref(true)
 const state: BasicTableProps = reactive<BasicTableProps>({
+  drag: props.drag,
   pageList: fetchList.value,
-  ...(props.tableData.length ? { dataList: props.tableData } : {}),
-  ...(props.staticQuery
+  ...(props.tableData?.length ? { dataList: props.tableData } : {}),
+  ...(props.staticQuery || Object.keys($route.query).length
     ? {
         queryForm: {
-          ...props.staticQuery
+          ...props.staticQuery,
+          ...$route.query
         }
       }
     : {}),
@@ -547,12 +547,15 @@ $refreshList(resetQuery, catchHistoryTabState)
 .el-table .cell {
   position: relative;
 }
+
 .top-bar .export + .top-bar-extra-buttons .el-button:first-child {
   margin-left: 10px;
 }
+
 .top-bar-extra-buttons .el-button:not(:first-child) {
   margin-left: 10px;
 }
+
 .table-view.no-border .el-table__inner-wrapper::before {
   background-color: unset;
 }
