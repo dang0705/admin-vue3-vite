@@ -380,7 +380,7 @@ const delObj: any = computed(
 const showSearch = ref(true)
 const state: BasicTableProps = reactive<BasicTableProps>({
   drag: props.drag,
-  pageList: fetchList.value,
+  pageList: fetchList,
   ...(props.tableData?.length ? { dataList: props.tableData } : {}),
   ...(props.staticQuery || Object.keys($route.query).length
     ? {
