@@ -5,7 +5,7 @@
     drag
     no-pagination
     module="outsourcing/salaryPlanProject.ts">
-    <template #top-bar>
+    <template #top-bar="{ otherInfo }">
       <div>
         <el-form :model="form" label-width="120px" ref="dataFormRef">
           <el-row class="paddcus" :gutter="48">
@@ -34,7 +34,10 @@
             </el-col>
           </el-row>
         </el-form>
-        <el-button type="primary" @click="visible = true" v-auth="''">
+        <el-button
+          type="primary"
+          @click="addSalaryPlan(otherInfo.records)"
+          v-auth="''">
           添加项目
         </el-button>
         <el-button type="primary" @click="visible = true" v-auth="''">
@@ -78,7 +81,7 @@
           </div>
           <el-form-item
             label-width="0"
-            prop="industryLevel1"
+            prop="leve1"
             :rules="[
               {
                 required: true,
@@ -87,20 +90,20 @@
               }
             ]">
             <el-select
-              @change="dialogFormData.industryLevel2 = ''"
+              @change="dialogFormData.leve2 = ''"
               placeholder="一级分类"
               class="w100"
               clearable
-              v-model="dialogFormData.industryLevel1">
+              v-model="dialogFormData.leve1">
               <el-option
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                v-for="item in industryLevel_option.industryLevel1_option" />
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+                v-for="item in industryLevel_option.leve1_option" />
             </el-select>
           </el-form-item>
           <el-form-item
-            prop="industryLevel2"
+            prop="leve2"
             :rules="[
               {
                 required: true,
@@ -111,16 +114,16 @@
             label-width="0"
             style="margin-left: 12px; flex-shrink: 1">
             <el-select
-              @change="twoC(e)"
+              @change="twoChange"
               placeholder="二级分类"
               class="w100"
               clearable
-              v-model="dialogFormData.industryLevel2">
+              v-model="dialogFormData.leve2">
               <el-option
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                v-for="item in industryLevel_option.industryLevel2_option" />
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+                v-for="item in industryLevel_option.leve2_option" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -131,15 +134,21 @@
 
 <script setup lang="ts">
 import { useDict } from '@hooks/dict'
-import { addObj, saveSort } from '@jmyg/api/outsourcing/salaryPlanProject'
+import {
+  addObj,
+  saveSort,
+  getList
+} from '@jmyg/api/outsourcing/salaryPlanProject'
+import closeTagView from '@utils/close-tag-view'
+const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
 const dataFormRef = ref()
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
-  industryLevel1: '',
-  industryLevel2: ''
+  leve1: '',
+  leve2: ''
 })
 const form = reactive({
   salaryPlanId: '',
@@ -147,7 +156,7 @@ const form = reactive({
   salaryPlaneRemark: ''
 })
 const listValue = ref()
-const { industry } = useDict('industry')
+const industry = ref([])
 const decimalList = [
   {
     label: '0',
@@ -186,9 +195,11 @@ const decimalList = [
     value: 8
   }
 ]
-onMounted(() => {
+onMounted(async () => {
   form.salaryPlanId = route.query.salaryPlanId
   form.salaryPlanName = route.query.salaryPlanName
+  let res = await getList()
+  industry.value = res.data
 })
 
 const columns = [
@@ -265,31 +276,48 @@ const actions = (row, list) => {
   ]
 }
 
+// 添加项目
+const addSalaryPlan = async (list) => {
+  console.log(list, 999)
+
+  saveSort({ ...form, saveParams: list })
+  visible.value = true
+}
+
+// 删除
 const del = (list) => {
   console.log(list, 9999)
 }
 
+// 系统项项目名称数据树形处理
 const industryLevel_option = computed(() => {
   let industryLevel_option = {
-    industryLevel1_option: [],
-    industryLevel2_option: []
+    leve1_option: [],
+    leve2_option: []
   }
   industry.value.forEach((item: object) => {
-    if (!item.parentValue) {
-      industryLevel_option.industryLevel1_option.push(item)
+    if (item.parentId === '0') {
+      industryLevel_option.leve1_option.push(item)
     }
     if (
-      dialogFormData.value.industryLevel1 == item.parentValue &&
-      dialogFormData.value.industryLevel1
+      dialogFormData.value.leve1 == item.parentId &&
+      dialogFormData.value.leve1
     ) {
-      industryLevel_option.industryLevel2_option.push(item)
+      industryLevel_option.leve2_option.push(item)
     }
   })
   return industryLevel_option
 })
 
-const twoC = (e) => {
-  console.log(e, 6666)
+// 系统项项目名称二级筛选自动带入项目类型
+const twoChange = (id) => {
+  if (id) {
+    dialogFormData.value.projectType = industry.value.filter(
+      (item) => item.id === id
+    )[0].type
+  } else {
+    dialogFormData.value.projectType = ''
+  }
 }
 
 const forms = computed(() => [
@@ -298,6 +326,10 @@ const forms = computed(() => [
     key: 'projectSource',
     options: 'salary_plan_project_source',
     label: '项目来源',
+    onChange: (value) => {
+      dialogFormData.value = {}
+      dialogFormData.value.projectSource = value
+    },
     rules: [{ required: true, message: '项目来源不能为空', trigger: 'change' }]
   },
   ...(dialogFormData.value.projectSource === '10'
@@ -322,6 +354,9 @@ const forms = computed(() => [
     key: 'projectType',
     options: 'salary_plan_project_type',
     label: '项目类型',
+    props: {
+      disabled: dialogFormData.value.projectSource === '10'
+    },
     rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
   },
   ...(dialogFormData.value.projectType === '10'
@@ -384,6 +419,14 @@ const saveList = async (list) => {
   try {
     console.log(list, 'list')
     let res = await saveSort({ ...form, saveParams: list })
+    closeTagView(route.meta.title as string)
+    $router.push({
+      path: '/merchant/salaryPlan/add',
+      query: {
+        salaryPlanId: form.salaryPlanId,
+        salaryPlanName: form.salaryPlanName
+      }
+    })
     console.log(res, 99999)
   } catch (error) {
     console.log(error)
