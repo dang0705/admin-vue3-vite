@@ -3,7 +3,7 @@
  * label为按钮关键字, 内部使用的是action.label.includes方法进行包含匹配
  * 注入新图标之前请仔细检查是否已存在同类型图标,如已存在则改成数组或者数组中追加
  */
-export const iconsUrl = '//at.alicdn.com/t/c/font_4194340_p8cvsljrfl.css'
+export const iconsUrl = '//at.alicdn.com/t/c/font_4194340_55uohmc85uq.css'
 // &#xe6ef;
 export const actionsIcons = [
   {

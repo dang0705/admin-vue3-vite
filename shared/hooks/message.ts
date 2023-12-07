@@ -39,7 +39,7 @@ export function useMessage() {
   return new MessageClass()
 }
 
-export function useMessageBox() {
+export function useMessageBox(args = {}) {
   class MessageBoxClass implements MessageImplements {
     // 普通提示
     info(msg: string): void {
@@ -68,7 +68,8 @@ export function useMessageBox() {
         confirmButtonText: t('common.confirmButtonText'),
         cancelButtonText: t('common.cancelButtonText'),
         type,
-        ...(icon ? { icon } : {})
+        ...(icon ? { icon } : {}),
+        ...args
       })
     }
 

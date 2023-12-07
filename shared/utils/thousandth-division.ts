@@ -15,9 +15,9 @@ export default function ({
     ? +number
     : number
   if (number === null) return '-'
-  if (number === 0 || number === undefined) return '0.00'
+  else if (!number) return '0.00'
   const isNegative = number < 0 // 检查是否为负值
-  const absoluteNumber = Math.abs(number) // 获取绝对值进行处理
+  const absoluteNumber = Math.abs(number as number) // 获取绝对值进行处理
   const str = absoluteNumber.toFixed(decimals as number)
   const parts = str.split('.')
   const integerPart = parts[0]

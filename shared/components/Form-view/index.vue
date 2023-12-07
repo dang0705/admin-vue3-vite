@@ -347,7 +347,11 @@ defineExpose({
                   <el-form-item
                     v-else
                     :prop="form.key"
-                    :label="`${form.label ? form.label + '：' : ''}`"
+                    :label="`${
+                      form.label
+                        ? form.label + (!form.hiddenColon ? '：' : '')
+                        : ''
+                    }`"
                     :label-width="form.labelWidth"
                     :rules="form.rules">
                     <component

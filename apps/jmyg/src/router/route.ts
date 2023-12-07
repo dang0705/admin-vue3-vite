@@ -83,6 +83,24 @@ export const staticRoutes: Array<RouteRecordRaw> = [
           path: '/test',
           name: 'test',
           component: () => import('@jmyg/views/Test.vue')
+        },
+        {
+          path: '/experiment',
+          name: 'experiment',
+          component: () => import('@layouts/index.vue'),
+          children: [
+            {
+              path: 'formula',
+              name: '表达式',
+              component: () => import('@jmyg/views/experiment/formula.vue')
+            },
+            {
+              path: 'editable-table',
+              name: '可编辑表格',
+              component: () =>
+                import('@jmyg/views/experiment/editable-table.vue')
+            }
+          ]
         }
       ]
     : []),

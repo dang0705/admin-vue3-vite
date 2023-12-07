@@ -59,18 +59,18 @@
           </el-button>
         </el-form-item>
         <el-form-item label="收款账号">
-          {{ spPaymentChannelData.mainAccount }}
+          {{ spPaymentChannelData.bankAccountNumber }}
           <el-button
-            @click="copyText(spPaymentChannelData.mainAccount)"
+            @click="copyText(spPaymentChannelData.bankAccountNumber)"
             text
             type="primary">
             复制
           </el-button>
         </el-form-item>
         <el-form-item label="收款户名">
-          {{ spPaymentChannelData.spName }}
+          {{ spPaymentChannelData.accountName }}
           <el-button
-            @click="copyText(spPaymentChannelData.spName)"
+            @click="copyText(spPaymentChannelData.accountName)"
             text
             type="primary">
             复制
@@ -116,7 +116,8 @@ import {
 } from '@jmyg/api/core/settleBill'
 import { queryPlatSpBalance } from '@jmyg/api/finance/merchantAccountCapital'
 import { addMerchantRecharge } from '@jmyg/api/finance/merchantRecharge'
-import spPaymentChannel from '@jmyg/api/core/spPaymentChannel'
+import spPaymentChannel from '@jmyg/api/finance/merchantAccountCapital'
+// import spPaymentChannel from '@jmyg/api/core/spPaymentChannel'
 import commonFunction from '@utils/commonFunction'
 import { rule } from '@utils/validate'
 const emit = defineEmits(['refresh'])
@@ -279,13 +280,13 @@ const getmerchantInfoData = () => {
       Object.assign(form, res.data)
       console.log('form-1', form)
       getQueryBalance()
-      const id =
+      const accountId =
         settleBillType.value == 1
-          ? form.serviceBillRecord[0].paymentBankId
-          : form.taskBillRecord[0].paymentBankId
+          ? form.serviceBillRecord[0].accountId
+          : form.taskBillRecord[0].accountId
       if (dialogType.value === 4) {
         spPaymentChannel
-          .getObj(id)
+          .getObj(accountId)
           .then((res: any) => {
             Object.assign(spPaymentChannelData, res.data)
             // console.log('form-1', form);

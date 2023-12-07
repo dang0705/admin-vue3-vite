@@ -1,0 +1,35 @@
+.salary{
+  background-color: #E7F3FF;
+  border: 1px solid #1890FF;
+  height: 24px;
+  line-height: 24px;
+  border-radius: 2px;
+  color:#1890FF;
+  display: inline-block;
+  padding: 0 8px;
+  margin: 0 2px;
+}
+.function{
+  color:#FF6826;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 2px;
+}
+.px-5{
+  padding: 0 5px 0;
+}
+.mx-5{
+  margin: 0 5px 0;
+}
+.text-xs{
+  font-size: 12px;
+}
+em{
+  font-style: normal;
+}
+
+.mce-content-body [contentEditable=false][data-mce-selected]{
+  outline: none;
+  user-select: none;
+  position: relative;
+}

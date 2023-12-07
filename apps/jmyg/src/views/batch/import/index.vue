@@ -33,6 +33,7 @@
       <template #after-forms v-if="hasFail">
         <TableView
           no-padding
+          :created-is-need="false"
           :columns="failListColumns"
           :params="failParams"
           :down-blob-file-name="currentTitle"
