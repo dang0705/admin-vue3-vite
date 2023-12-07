@@ -52,6 +52,7 @@ const actions = ({ contractFile }: any) => [
   {
     label: '下载',
     download: contractFile,
+    show: () => contractFile,
     auth: 'taxSupervision_undertakingContract_down'
   }
 ]

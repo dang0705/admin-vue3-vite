@@ -10,14 +10,14 @@ export function fetchList(query?: Object) {
 
 export function waterBankPage(query?: Object) {
   return request({
-    url: '/finance///waterBankCorporateLinkage/page',
+    url: '/finance/waterBankCorporateLinkage/page',
     method: 'get',
     params: query
   })
 }
 export function waterBankExport(query?: Object) {
   return request({
-    url: '/finance//waterBankCorporateLinkage/export',
+    url: '/finance/waterBankCorporateLinkage/export',
     method: 'get',
     params: query
   })
