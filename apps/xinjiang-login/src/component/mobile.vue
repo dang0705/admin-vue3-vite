@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { sendMobileCode } from '@jmyg/api/admin/modify'
+import { sendMobileCode } from '@/api/admin/modify'
 import { useMessage } from '@hooks/message'
 import { useUserInfo } from '@stores/userInfo'
 import { rule } from '@utils/validate'

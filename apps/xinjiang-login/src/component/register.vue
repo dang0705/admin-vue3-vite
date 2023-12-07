@@ -71,7 +71,7 @@ import {
   registerUser,
   validateUsername,
   validatePhone
-} from '@jmyg/api/admin/user'
+} from '@/api/admin/user'
 import { useMessage } from '@hooks/message'
 // import { useI18n } from 'vue-i18n'
 import { rule } from '@utils/validate'
