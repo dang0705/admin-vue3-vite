@@ -83,17 +83,6 @@ const signInSuccess = async () => {
   } else {
     // 初始化登录成功时间问候语
     let currentTimeInfo = formatAxis(new Date())
-    // if (route.query?.redirect) {
-    //   router.push({
-    //     path: <string>route.query?.redirect,
-    //     query:
-    //       Object.keys(<string>route.query?.params).length > 0
-    //         ? JSON.parse(<string>route.query?.params)
-    //         : ''
-    //   })
-    // } else {
-    //   router.push('/')
-    // }
     // 跳转到对应线上环境地址
     const targetUrl = Session.getTargetUrl();
     window.location.href = targetUrl;

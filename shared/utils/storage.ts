@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+import Cookies from '@configurations/cookie'
 import { useTokenStore } from '@stores/token'
 import { useJumpUrl } from '@stores/jumpUrl'
 
@@ -44,9 +44,9 @@ export const Local = {
 export const Session = {
   // 设置临时缓存
   set(key: string, val: any) {
-    if (key === 'token' || key === 'refresh_token') {
-      const { token, refreshToken } = storeToRefs(useTokenStore())
-      key === 'token' ? (token.value = val) : (refreshToken.value = val)
+    if (key === 'access_token' || key === 'refresh_token') {
+      const { accessToken, refreshToken } = storeToRefs(useTokenStore())
+      key === 'access_token' ? (accessToken.value = val) : (refreshToken.value = val)
       Cookies.set(key, val)
     }
     if(['targetUrl', 'originalUrl'].includes(key)) {
@@ -58,10 +58,10 @@ export const Session = {
   },
   // 获取临时缓存
   get(key: string) {
-    if (key === 'token' || key === 'refresh_token') {
-      const { token, refreshToken } = storeToRefs(useTokenStore())
-      return key === 'token'
-        ? token.value || Cookies.get(key)
+    if (key === 'access_token' || key === 'refresh_token') {
+      const { accessToken, refreshToken } = storeToRefs(useTokenStore())
+      return key === 'access_token'
+        ? accessToken.value || Cookies.get(key)
         : refreshToken.value || Cookies.get(key)
     }
     if(['targetUrl', 'originalUrl'].includes(key)) {
@@ -75,15 +75,15 @@ export const Session = {
   },
   // 移除临时缓存
   remove(key: string) {
-    if (key === 'token' || key === 'refresh_token') {
-      useTokenStore()[`${key === 'token' ? 'token' : 'refreshToken'}Remove`]()
+    if (key === 'access_token' || key === 'refresh_token') {
+      useTokenStore()[`${key === 'access_token' ? 'accessToken' : 'refreshToken'}Remove`]()
       return Cookies.remove(key)
     }
     window.sessionStorage.removeItem(key)
   },
   // 移除全部临时缓存
   clear() {
-    Cookies.remove('token')
+    Cookies.remove('access_token')
     Cookies.remove('refresh_token')
     Cookies.remove('tenantId')
     Cookies.remove('targetUrl')
@@ -94,7 +94,7 @@ export const Session = {
   },
   // 获取当前存储的 token
   getToken() {
-    return this.get('token')
+    return this.get('access_token')
   },
   // 获取当前的租户
   getTenant() {

@@ -11,7 +11,8 @@ const service: AxiosInstance = axios.create({
   baseURL: env.VITE_API_URL,
   timeout: 50000, // 全局超时时间
   paramsSerializer: (params: any) =>
-    qs.stringify(params, { arrayFormat: 'repeat' })
+    qs.stringify(params, { arrayFormat: 'repeat' }),
+    withCredentials: false
 })
 
 interface Config extends AxiosRequestConfig {
