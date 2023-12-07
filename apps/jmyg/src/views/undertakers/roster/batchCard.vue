@@ -10,8 +10,7 @@
       :model="form"
       :rules="dataRules"
       formDialogRef
-      label-width="120px"
-      v-loading="loading">
+      label-width="120px">
       <el-row :gutter="24">
         <el-col :span="24" class="mb20">
           <el-form-item label="上传身份证:" prop="cardZip">
@@ -47,7 +46,10 @@
     </el-form>
     <template #footer>
       <div class="flex items-center justify-end">
-        <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+        <el-button
+          type="primary"
+          v-debounce="onSubmit"
+          :disabled="!form.cardZip.length">
           确认导入
         </el-button>
         <el-button @click="visible = false">取消</el-button>
