@@ -114,7 +114,11 @@ const init = async (forms: FormOptions[]) => {
     item.onChange &&
       watch(
         () => prop.modelValue[item.key],
-        (value) => item.onChange && item.onChange(value, formData.value)
+        (value, oldValue) => {
+          oldValue !== '' &&
+            item.onChange &&
+            item.onChange(value, formData.value)
+        }
       )
     // stopWatchShow && (stopWatchShow as Function)() && (stopWatchShow = null)
     item.show &&
@@ -343,7 +347,11 @@ defineExpose({
                   <el-form-item
                     v-else
                     :prop="form.key"
-                    :label="`${form.label ? form.label + '：' : ''}`"
+                    :label="`${
+                      form.label
+                        ? form.label + (!form.hiddenColon ? '：' : '')
+                        : ''
+                    }`"
                     :label-width="form.labelWidth"
                     :rules="form.rules">
                     <component

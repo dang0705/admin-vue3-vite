@@ -393,6 +393,12 @@ const resetQuery = () => {
   getDataList()
 }
 
+// 前端删除列表一项
+const delListItem = (id) => {
+  state.dataList = state.dataList?.filter((item) => item.id !== id)
+}
+
+provide('delListItem', delListItem)
 provide('refresh', resetQuery)
 provide('getList', getDataList)
 
@@ -419,7 +425,8 @@ const catchHistoryTabState = () => {
 onMounted(catchHistoryTabState)
 // 暴露变量
 defineExpose({
-  resetQuery
+  resetQuery,
+  delListItem
 })
 // 接受外部强刷页面的钩子
 $refreshList(resetQuery, catchHistoryTabState)

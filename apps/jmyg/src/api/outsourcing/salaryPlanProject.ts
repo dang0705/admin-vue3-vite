@@ -53,3 +53,11 @@ export function putObj(obj?: Object) {
     data: obj
   })
 }
+
+export function releaseObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlanProject/release',
+    method: 'post',
+    data: obj
+  })
+}
