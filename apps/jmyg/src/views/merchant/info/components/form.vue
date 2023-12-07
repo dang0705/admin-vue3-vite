@@ -1,473 +1,481 @@
 <template>
-  <el-form
-    ref="dataFormRef"
-    :model="form"
-    :rules="dataRules"
-    label-width="160px"
-    formDialogRef
-    label-position="right">
-    <div>
-      <!-- <Divider title="基本信息" /> -->
-      <el-card
-        class="!border-none"
-        :style="{ 'margin-top': '15px' }"
-        header="基本信息"
-        shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.merchantName') + '：'"
-              prop="merchantName">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="50"
-                v-model="form.merchantName" />
-            </el-form-item>
-          </el-col>
+  <div class="h-fit absolute">
+    <el-form
+      ref="dataFormRef"
+      :model="form"
+      :rules="dataRules"
+      label-width="160px"
+      formDialogRef
+      label-position="right">
+      <div>
+        <!-- <Divider title="基本信息" /> -->
+        <el-card
+          class="!border-none"
+          :style="{ 'margin-top': '15px' }"
+          header="基本信息"
+          shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.merchantName') + '：'"
+                prop="merchantName">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="50"
+                  v-model="form.merchantName" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20 formBox">
-            <div style="min-width: 160px" class="com_label require">行业：</div>
-            <el-form-item label-width="0" prop="industryLevel1">
-              <el-select
-                :disabled="isDetail"
-                @change="form.industryLevel2 = ''"
-                placeholder="一级分类"
-                class="w100"
-                clearable
-                v-model="form.industryLevel1">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in industryLevel_option.industryLevel1_option" />
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              prop="industryLevel2"
-              label-width="0"
-              style="margin-left: 12px; flex-shrink: 1">
-              <el-select
-                :disabled="isDetail"
-                placeholder="二级分类"
-                class="w100"
-                clearable
-                v-model="form.industryLevel2">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in industryLevel_option.industryLevel2_option" />
-              </el-select>
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20 formBox">
+              <div style="min-width: 160px" class="com_label require">
+                行业：
+              </div>
+              <el-form-item label-width="0" prop="industryLevel1">
+                <el-select
+                  :disabled="isDetail"
+                  @change="form.industryLevel2 = ''"
+                  placeholder="一级分类"
+                  class="w100"
+                  clearable
+                  v-model="form.industryLevel1">
+                  <el-option
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    v-for="item in industryLevel_option.industryLevel1_option" />
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                prop="industryLevel2"
+                label-width="0"
+                style="margin-left: 12px; flex-shrink: 1">
+                <el-select
+                  :disabled="isDetail"
+                  placeholder="二级分类"
+                  class="w100"
+                  clearable
+                  v-model="form.industryLevel2">
+                  <el-option
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    v-for="item in industryLevel_option.industryLevel2_option" />
+                </el-select>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.enterpriseType') + '：'"
-              prop="enterpriseType">
-              <el-select
-                :disabled="isDetail"
-                class="w100"
-                clearable
-                v-model="form.enterpriseType">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in enterprise_type" />
-              </el-select>
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.enterpriseType') + '：'"
+                prop="enterpriseType">
+                <el-select
+                  :disabled="isDetail"
+                  class="w100"
+                  clearable
+                  v-model="form.enterpriseType">
+                  <el-option
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    v-for="item in enterprise_type" />
+                </el-select>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.enterpriseScale') + '：'"
-              prop="enterpriseScale">
-              <el-select
-                :disabled="isDetail"
-                class="w100"
-                clearable
-                v-model="form.enterpriseScale">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in enterprise_scale" />
-              </el-select>
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.enterpriseScale') + '：'"
+                prop="enterpriseScale">
+                <el-select
+                  :disabled="isDetail"
+                  class="w100"
+                  clearable
+                  v-model="form.enterpriseScale">
+                  <el-option
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    v-for="item in enterprise_scale" />
+                </el-select>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.area') + '：'"
-              prop="areaDatas">
-              <ChinaArea
-                :disabled="isDetail"
-                ref="chinaAreaRef"
-                v-model="form.areaDatas"
-                class="w100" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.socialCreditCode') + '：'"
-              prop="socialCreditCode">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="18"
-                v-model="form.socialCreditCode" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.area') + '：'"
+                prop="areaDatas">
+                <ChinaArea
+                  :disabled="isDetail"
+                  ref="chinaAreaRef"
+                  v-model="form.areaDatas"
+                  class="w100" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.socialCreditCode') + '：'"
+                prop="socialCreditCode">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="18"
+                  v-model="form.socialCreditCode" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="24" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.address') + '：'"
-              prop="address">
-              <InputPlus
-                :disabled="isDetail"
-                v-model="form.address"
-                :rows="3"
-                maxlength="100"
-                show-word-limit
-                type="textarea" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="24" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.address') + '：'"
+                prop="address">
+                <InputPlus
+                  :disabled="isDetail"
+                  v-model="form.address"
+                  :rows="3"
+                  maxlength="100"
+                  show-word-limit
+                  type="textarea" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.entryDate') + '：'"
-              prop="entryDate">
-              <el-date-picker
-                :disabled="isDetail"
-                type="date"
-                placeholder="入驻日期"
-                v-model="form.entryDate"
-                :value-format="dateStr"></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item label="企业邮箱：" prop="enterpriseMailbox">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="50"
-                v-model="form.enterpriseMailbox" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.entryDate') + '：'"
+                prop="entryDate">
+                <el-date-picker
+                  :disabled="isDetail"
+                  type="date"
+                  placeholder="入驻日期"
+                  v-model="form.entryDate"
+                  :value-format="dateStr"></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="企业邮箱：" prop="enterpriseMailbox">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="50"
+                  v-model="form.enterpriseMailbox" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.businessLicense') + '：'"
-              prop="businessLicense">
-              <UploadFile
-                :disabled="isDetail"
-                :type="businessType"
-                :loading="getInfoLoading"
-                v-model="form.businessLicense" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.businessLicense') + '：'"
+                prop="businessLicense">
+                <UploadFile
+                  :disabled="isDetail"
+                  :type="businessType"
+                  :loading="getInfoLoading"
+                  v-model="form.businessLicense" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item :label="$t('merchantInfo.logo') + '：'" prop="logo">
-              <UploadFile
-                :disabled="isDetail"
-                :type="businessType"
-                :loading="getInfoLoading"
-                v-model="form.logo" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item :label="$t('merchantInfo.logo') + '：'" prop="logo">
+                <UploadFile
+                  :disabled="isDetail"
+                  :type="businessType"
+                  :loading="getInfoLoading"
+                  v-model="form.logo" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="24" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.businessScope') + '：'"
-              prop="businessScope">
-              <InputPlus
-                :disabled="isDetail"
-                v-model="form.businessScope"
-                :rows="3"
-                show-word-limit
-                type="textarea" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.contactName') + '：'"
-              maxlength="30"
-              prop="contactName">
-              <InputPlus :disabled="isDetail" v-model="form.contactName" />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20">
-            <el-form-item label="联系人手机号：" prop="contactPhone">
-              <InputPlus
-                :disabled="isDetail"
-                v-model="form.contactPhone"
-                maxlength="11" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-      <!-- <Divider title="税务信息" /> -->
-      <el-card class="!border-none mt-6" header="税务信息" shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
-              prop="taxRegistrationNumber">
-              <InputPlus :disabled="true" v-model="form.socialCreditCode" />
-              <!-- <span>{{ form.socialCreditCode }}</span> -->
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxType') + '：'"
-              prop="taxType">
-              <el-select
-                :disabled="isDetail"
-                class="w100"
-                clearable
-                v-model="form.taxType">
-                <el-option
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="item in tax_type" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxBankNumber') + '：'"
-              prop="taxBankNumber">
-              <InputPlus
-                :disabled="isDetail"
+            <el-col :span="24" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.businessScope') + '：'"
+                prop="businessScope">
+                <InputPlus
+                  :disabled="isDetail"
+                  v-model="form.businessScope"
+                  :rows="3"
+                  show-word-limit
+                  type="textarea" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.contactName') + '：'"
                 maxlength="30"
-                v-model="form.taxBankNumber" />
-            </el-form-item>
-          </el-col>
+                prop="contactName">
+                <InputPlus :disabled="isDetail" v-model="form.contactName" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxBankName') + '：'"
-              prop="taxBankName">
-              <InputPlus :disabled="isDetail" v-model="form.taxBankName" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="联系人手机号：" prop="contactPhone">
+                <InputPlus
+                  :disabled="isDetail"
+                  v-model="form.contactPhone"
+                  maxlength="11" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+        <!-- <Divider title="税务信息" /> -->
+        <el-card class="!border-none mt-6" header="税务信息" shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxRegistrationNumber') + '：'"
+                prop="taxRegistrationNumber">
+                <InputPlus :disabled="true" v-model="form.socialCreditCode" />
+                <!-- <span>{{ form.socialCreditCode }}</span> -->
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="开户行联行号：" prop="taxJointBankNumber">
-              <InputPlus
-                maxlength="12"
-                :disabled="isDetail"
-                v-model="form.taxJointBankNumber" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <!-- <div style="min-width: 160px" class="com_label require">企业电话</div> -->
-            <!-- <el-form-item label-width="0px" prop="areaCode">
-							<InputPlus :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
-						</el-form-item>
-						&nbsp;&nbsp;-&nbsp;&nbsp; -->
-            <el-form-item prop="phoneNumber" label="企业电话：">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="30"
-                v-model="form.phoneNumber"
-                placeholder="电话号码" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="24" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxBankArea') + '：'"
-              prop="taxBankArea">
-              <InputPlus
-                :disabled="isDetail"
-                v-model="form.taxBankArea"
-                :rows="3"
-                show-word-limit
-                maxlength="100"
-                type="textarea" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-      <!-- <Divider title="法人信息" /> -->
-      <el-card class="!border-none" header="法人信息" shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.legalPersonName') + '：'"
-              prop="legalPersonName">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="30"
-                v-model="form.legalPersonName" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxType') + '：'"
+                prop="taxType">
+                <el-select
+                  :disabled="isDetail"
+                  class="w100"
+                  clearable
+                  v-model="form.taxType">
+                  <el-option
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    v-for="item in tax_type" />
+                </el-select>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.legalPersonMobile') + '：'"
-              prop="legalPersonMobile">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="11"
-                v-model="form.legalPersonMobile" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxBankNumber') + '：'"
+                prop="taxBankNumber">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="30"
+                  v-model="form.taxBankNumber" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.legalPersonIdCard') + '：'"
-              prop="legalPersonIdCard">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="18"
-                v-model="form.legalPersonIdCard" />
-            </el-form-item>
-          </el-col>
-          <!-- 占位 -->
-          <el-col :span="12" class="mb20"></el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.legalPersonPortrait') + '：'"
-              prop="legalPersonPortrait">
-              <UploadFile
-                :loading="getInfoLoading"
-                :disabled="isDetail"
-                :type="businessType"
-                v-model="form.legalPersonPortrait" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.legalPersonNationalEmblem') + '：'"
-              prop="legalPersonNationalEmblem">
-              <UploadFile
-                :loading="getInfoLoading"
-                :disabled="isDetail"
-                :type="businessType"
-                v-model="form.legalPersonNationalEmblem" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-      <!-- <Divider title="办税人信息" /> -->
-      <!-- <el-card class="!border-none" header="办税人信息" shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxManagerName') + '：'"
-              prop="taxManagerName">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="30"
-                v-model="form.taxManagerName" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxBankName') + '：'"
+                prop="taxBankName">
+                <InputPlus :disabled="isDetail" v-model="form.taxBankName" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxManagerMobile') + '：'"
-              prop="taxManagerMobile">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="11"
-                v-model="form.taxManagerMobile" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="开户行联行号：" prop="taxJointBankNumber">
+                <InputPlus
+                  maxlength="12"
+                  :disabled="isDetail"
+                  v-model="form.taxJointBankNumber" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <!-- <div style="min-width: 160px" class="com_label require">企业电话</div> -->
+              <!-- <el-form-item label-width="0px" prop="areaCode">
+                <InputPlus :disabled="isDetail" v-model="form.areaCode" placeholder="区号" />
+              </el-form-item>
+              &nbsp;&nbsp;-&nbsp;&nbsp; -->
+              <el-form-item prop="phoneNumber" label="企业电话：">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="30"
+                  v-model="form.phoneNumber"
+                  placeholder="电话号码" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxBankArea') + '：'"
+                prop="taxBankArea">
+                <InputPlus
+                  :disabled="isDetail"
+                  v-model="form.taxBankArea"
+                  :rows="3"
+                  show-word-limit
+                  maxlength="100"
+                  type="textarea" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+        <!-- <Divider title="法人信息" /> -->
+        <el-card class="!border-none" header="法人信息" shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.legalPersonName') + '：'"
+                prop="legalPersonName">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="30"
+                  v-model="form.legalPersonName" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxManagerIdCard') + '：'"
-              prop="taxManagerIdCard">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="18"
-                v-model="form.taxManagerIdCard" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20"></el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxManagerPortrait') + '：'"
-              prop="taxManagerPortrait">
-              <UploadFile
-                :loading="getInfoLoading"
-                :disabled="isDetail"
-                :type="businessType"
-                v-model="form.taxManagerPortrait" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.legalPersonMobile') + '：'"
+                prop="legalPersonMobile">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="11"
+                  v-model="form.legalPersonMobile" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              :label="$t('merchantInfo.taxManagerNationalEmblem') + '：'"
-              prop="taxManagerNationalEmblem">
-              <UploadFile
-                :loading="getInfoLoading"
-                :disabled="isDetail"
-                :type="businessType"
-                v-model="form.taxManagerNationalEmblem" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card> -->
-      <!-- <Divider title="邮寄信息" /> -->
-      <el-card
-        :style="{ 'margin-bottom': !isDetail ? '71px' : '0px' }"
-        class="!border-none"
-        header="邮寄信息"
-        shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item label="收件人：" prop="recipient">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="30"
-                v-model="form.recipient" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.legalPersonIdCard') + '：'"
+                prop="legalPersonIdCard">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="18"
+                  v-model="form.legalPersonIdCard" />
+              </el-form-item>
+            </el-col>
+            <!-- 占位 -->
+            <el-col :span="12" class="mb20"></el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.legalPersonPortrait') + '：'"
+                prop="legalPersonPortrait">
+                <UploadFile
+                  :loading="getInfoLoading"
+                  :disabled="isDetail"
+                  :type="businessType"
+                  v-model="form.legalPersonPortrait" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.legalPersonNationalEmblem') + '：'"
+                prop="legalPersonNationalEmblem">
+                <UploadFile
+                  :loading="getInfoLoading"
+                  :disabled="isDetail"
+                  :type="businessType"
+                  v-model="form.legalPersonNationalEmblem" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+        <!-- <Divider title="办税人信息" /> -->
+        <!-- <el-card class="!border-none" header="办税人信息" shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxManagerName') + '：'"
+                prop="taxManagerName">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="30"
+                  v-model="form.taxManagerName" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="收件人手机号：" prop="recipientMobile">
-              <InputPlus
-                :disabled="isDetail"
-                maxlength="11"
-                v-model="form.recipientMobile" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxManagerMobile') + '：'"
+                prop="taxManagerMobile">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="11"
+                  v-model="form.taxManagerMobile" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="24" class="mb20">
-            <el-form-item label="邮寄地址：" prop="postAddress">
-              <InputPlus
-                :disabled="isDetail"
-                v-model="form.postAddress"
-                :rows="3"
-                maxlength="100"
-                show-word-limit
-                type="textarea" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-      <transition-group>
-        <div
-          v-if="!isDetail"
-          class="page_bottom_wrapper"
-          :style="{ 'width': barWidth }">
-          <span class="flex justify-center items-center">
-            <el-button @click="resetFields">重置</el-button>
-            <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
-              确认
-            </el-button>
-          </span>
-        </div>
-      </transition-group>
-    </div>
-  </el-form>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxManagerIdCard') + '：'"
+                prop="taxManagerIdCard">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="18"
+                  v-model="form.taxManagerIdCard" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20"></el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxManagerPortrait') + '：'"
+                prop="taxManagerPortrait">
+                <UploadFile
+                  :loading="getInfoLoading"
+                  :disabled="isDetail"
+                  :type="businessType"
+                  v-model="form.taxManagerPortrait" />
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                :label="$t('merchantInfo.taxManagerNationalEmblem') + '：'"
+                prop="taxManagerNationalEmblem">
+                <UploadFile
+                  :loading="getInfoLoading"
+                  :disabled="isDetail"
+                  :type="businessType"
+                  v-model="form.taxManagerNationalEmblem" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card> -->
+        <!-- <Divider title="邮寄信息" /> -->
+        <el-card
+          :style="{ 'margin-bottom': !isDetail ? '71px' : '0px' }"
+          class="!border-none"
+          header="邮寄信息"
+          shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item label="收件人：" prop="recipient">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="30"
+                  v-model="form.recipient" />
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12" class="mb20">
+              <el-form-item label="收件人手机号：" prop="recipientMobile">
+                <InputPlus
+                  :disabled="isDetail"
+                  maxlength="11"
+                  v-model="form.recipientMobile" />
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24" class="mb20">
+              <el-form-item label="邮寄地址：" prop="postAddress">
+                <InputPlus
+                  :disabled="isDetail"
+                  v-model="form.postAddress"
+                  :rows="3"
+                  maxlength="100"
+                  show-word-limit
+                  type="textarea" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
+
+        <!--        <div
+            v-if="!isDetail"
+            class="page_bottom_wrapper"
+            :style="{ 'width': barWidth }">
+            <span class="flex justify-center items-center">
+              <el-button @click="resetFields">重置</el-button>
+              <el-button type="primary" v-debounce="onSubmit" :disabled="loading">
+                确认
+              </el-button>
+            </span>
+          </div>-->
+      </div>
+    </el-form>
+    <BottomButtons @click="onSubmit" text="确认" :disabled="loading">
+      <template #left>
+        <el-button @click="resetFields">重置</el-button>
+      </template>
+    </BottomButtons>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -481,6 +489,7 @@ import uploadBusinessType from '@enums/upload-business-type'
 import closeTagView from '@utils/close-tag-view'
 import { storeToRefs } from 'pinia'
 import { useThemeConfig } from '@stores/themeConfig'
+import BottomButtons from '@components/Bottom-buttons.vue'
 const storesThemeConfig = useThemeConfig()
 const { themeConfig } = storeToRefs(storesThemeConfig)
 const ChinaArea = defineAsyncComponent(
@@ -640,7 +649,7 @@ const dataRules = ref({
   ],
   taxBankName: [{ required: true, message: '开户行不能为空', trigger: 'blur' }],
   taxJointBankNumber: [
-  { required: true, message: '开户行联行号不能为空', trigger: 'blur' },
+    { required: true, message: '开户行联行号不能为空', trigger: 'blur' },
     {
       validator: rule.interbank,
       trigger: 'blur'
