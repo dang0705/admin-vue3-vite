@@ -29,8 +29,8 @@
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import actions from './configurations/actions'
 import { addObj } from '@jmyg/api/outsourcing/salaryPlan'
+import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
 const dialogFormData = ref({})
@@ -45,6 +45,26 @@ const forms = ref([
     ]
   }
 ])
+
+const goFromView = ({ row, type }) => {
+  type === 'view'
+    ? $router.push({
+        path: '/merchant/salaryPlan/view',
+        query: {
+          salaryPlanId: row.id,
+          salaryPlanName: row.salaryPlanName,
+          type: 'see'
+        }
+      })
+    : $router.push({
+        path: '/merchant/salaryPlan/edit',
+        query: {
+          salaryPlanId: row.id,
+          salaryPlanName: row.salaryPlanName
+        }
+      })
+}
+const actions = getActions(goFromView)
 
 const onSubmit = async () => {
   try {

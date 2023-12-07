@@ -10,7 +10,7 @@
       <div>
         <el-form :model="form" label-width="120px" ref="dataFormRef">
           <el-row class="paddcus" :gutter="48">
-            <el-col :span="12" class="mb20">
+            <el-col :span="24" class="mb20">
               <el-form-item
                 label="薪资方案名称："
                 prop="salaryPlanName"
@@ -21,13 +21,17 @@
                     trigger: 'blur'
                   }
                 ]">
-                <InputPlus maxlength="30" v-model="form.salaryPlanName" />
+                <InputPlus
+                  maxlength="30"
+                  :disabled="route.query.type === 'see'"
+                  v-model="form.salaryPlanName" />
               </el-form-item>
             </el-col>
             <el-col :span="24" class="mb20">
               <el-form-item label="方案备注：" prop="salaryPlaneRemark">
                 <InputPlus
                   type="textarea"
+                  :disabled="route.query.type === 'see'"
                   show-word-limit
                   maxlength="500"
                   v-model="form.salaryPlaneRemark" />
@@ -38,15 +42,12 @@
         <el-button
           type="primary"
           @click="addSalaryPlan(otherInfo.records)"
+          v-if="route.query.type !== 'see'"
           v-auth="''">
           添加项目
         </el-button>
-        <el-button type="primary" @click="visible = true" v-auth="''">
-          导出数据模板
-        </el-button>
-        <el-button type="primary" @click="visible = true" v-auth="''">
-          方案试算
-        </el-button>
+        <el-button type="primary" v-auth="''">导出数据模板</el-button>
+        <el-button type="primary" v-auth="''">方案试算</el-button>
       </div>
     </template>
     <template #bottomActions="{ list }">
@@ -54,14 +55,18 @@
         <el-button type="primary" @click="$router.go(-1)" v-auth="''">
           返回
         </el-button>
-        <el-button type="primary" @click="saveList(list, 'save')" v-auth="''">
+        <el-button
+          type="primary"
+          @click="saveList(list, 'save')"
+          v-if="route.query.type !== 'see'"
+          v-auth="''">
           保存
         </el-button>
         <el-button
           type="primary"
           @click="saveList(list, 'release')"
           v-auth="''">
-          发布
+          {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
         </el-button>
       </div>
     </template>
@@ -270,6 +275,7 @@ const actions = (row, list) => {
     {
       auth: '',
       label: '编辑',
+      show: () => route.query.type !== 'see',
       action: {
         handler: edit,
         save: false,
@@ -279,6 +285,7 @@ const actions = (row, list) => {
     {
       auth: '',
       label: '删除',
+      show: () => route.query.type !== 'see',
       action: {
         handler: del,
         save: false,

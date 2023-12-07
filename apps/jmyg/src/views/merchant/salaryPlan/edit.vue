@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 const addSalaryForm = defineAsyncComponent(
-  () => import('../components/formView.vue')
+  () => import('./components/formView.vue')
 )
 </script>
 <script lang="ts">
