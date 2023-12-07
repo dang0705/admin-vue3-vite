@@ -51,7 +51,10 @@ const onSubmit = async () => {
     let res = await addObj(dialogFormData.value)
     $router.push({
       path: '/merchant/salaryPlan/add',
-      query: { id: res.data.id, salaryPlanName: res.data.salaryPlanName }
+      query: {
+        salaryPlanId: res.data.id,
+        salaryPlanName: res.data.salaryPlanName
+      }
     })
   } catch (error) {
     console.log(error)

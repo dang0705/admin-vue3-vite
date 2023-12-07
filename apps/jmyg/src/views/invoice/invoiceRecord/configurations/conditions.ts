@@ -13,7 +13,10 @@ export default [
   {
     label: '申请时间',
     control: 'DateRange',
-    key: 'createTimeFromTo'
+    key: 'createTimeFromTo',
+    props: {
+      valueType: 'string'
+    }
   },
   {
     label: '商户',

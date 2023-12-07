@@ -31,6 +31,13 @@ export function getObj(id?: string) {
   })
 }
 
+export function getList() {
+  return request({
+    url: '/outsourcing/salarySystemItem/list',
+    method: 'get'
+  })
+}
+
 export function delObjs(ids?: Object) {
   return request({
     url: '/outsourcing/salaryPlanProject',

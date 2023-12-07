@@ -88,7 +88,7 @@
           <div class="flex items-center flex-grow flex-wrap">
             <el-button
               v-if="downBlobFileUrl && userInfos.permissionMap[exportAuth]"
-              v-debounce="exportExcel"
+              v-debounce="getExcel"
               icon="download"
               type="primary"
               class="export">
@@ -112,7 +112,7 @@
         <template #default>
           <el-table
             id="tableRef"
-            v-bind="{ ...props, ...$attrs }"
+            v-bind="props"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
@@ -120,11 +120,7 @@
             :row-key="selectMainKey"
             :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
-            <el-table-column
-              type="index"
-              width="50"
-              fixed="left"
-              v-if="sortDrag">
+            <el-table-column type="index" width="50" fixed="left" v-if="drag">
               <template #header>
                 <el-tooltip content="序号" placement="top">#</el-tooltip>
               </template>
@@ -132,7 +128,7 @@
                 <span>{{ scope.$index + 1 }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="" width="50" v-if="sortDrag">
+            <el-table-column label="" width="50" v-if="drag">
               <template #header>
                 <el-icon>
                   <el-tooltip content="拖动排序" placement="top">
@@ -239,19 +235,21 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTableProps, useTable } from '@hooks/table'
 import tableViewProps from './props'
-import thousandthDivision from '@utils/thousandth-division'
 import TableActions from '@components/Table-view/Table-actions.vue'
 import apis from '@jmyg/api'
 import helpers from '@utils/helpers'
+import getTableColumnWidth from './utils/get-column-width'
+import tableCellFormatter from './utils/format-amount-cells'
+import useExportExcel from './utils/export-excel'
+import useConfirm from './utils/confirm'
+import { BasicTableProps, useTable } from '@hooks/table'
 import { useUserInfo } from '@stores/userInfo'
-import tableColumnsWidth from '@configurations/tableColumnsWidth'
-const { userInfos } = storeToRefs(useUserInfo())
-
 defineOptions({ name: 'TableView', inheritAttrs: false })
-
+const $route = useRoute()
+const { userInfos } = storeToRefs(useUserInfo())
 const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
+
 const emit = defineEmits(['update:modelValue', 'get-tab-value'])
 const props = defineProps(tableViewProps)
 const showDialog = ref(false)
@@ -286,94 +284,13 @@ const getDialogData = async (dialog: any) => {
     edit && (dialogFormData.value = (await edit(params)).data)
   }
 }
-
-const getTableColumnWidth = (column) => {
-  const { minWidth, label } = column
-  if (minWidth || column['min-width']) {
-    return minWidth || column['min-width']
-  }
-  if (!minWidth && !label) {
-    return
-  }
-  if (label.includes('手机号')) {
-    return tableColumnsWidth['phone']
-  } else if (label === '商户') {
-    return tableColumnsWidth['merchantName']
-  } else if (label === '服务商') {
-    return tableColumnsWidth['spList']
-  } else if (
-    label.includes('姓名') ||
-    label.includes('联系人') ||
-    label.includes('创建人') ||
-    label.includes('承接人姓名') ||
-    label.includes('收款户名') ||
-    label === '承接人'
-  ) {
-    return tableColumnsWidth['userName']
-  } else if (label.includes('时间')) {
-    return tableColumnsWidth['time']
-  } else if (label.includes('代码') || label.includes('快递单号')) {
-    return tableColumnsWidth['code']
-  } else if (label.includes('身份证') || label.includes('证件号')) {
-    return tableColumnsWidth['card']
-  } else if (label.includes('性别')) {
-    return tableColumnsWidth['sex']
-  } else if (label.includes('年龄')) {
-    return tableColumnsWidth['age']
-  } else if (label.includes('学历')) {
-    return tableColumnsWidth['education']
-  } else if (label.includes('开户行') || label.includes('账号类别')) {
-    return tableColumnsWidth['bankName']
-  } else if (
-    label.includes('银行卡号') ||
-    label === '承接人银行卡号' ||
-    label.includes('银行账号') ||
-    label.includes('服务商银行账号')
-  ) {
-    return tableColumnsWidth['bankNumber']
-  } else if (label.includes('状态')) {
-    return tableColumnsWidth['status']
-  } else if (label.includes('编号')) {
-    return '180px'
-  } else if (
-    label.includes('任务名称') ||
-    label.includes('账单名称') ||
-    label.includes('服务协议名称')
-  ) {
-    return '150px'
-  } else if (
-    label.includes('是否存在生效协议') ||
-    label.includes('是否银行四要素校验') ||
-    label.includes('是否银行四要素验证')
-  ) {
-    return '138px'
-  } else if (
-    label.includes('任务承揽费(元)') ||
-    label.includes('管理费(元)') ||
-    label.includes('服务费(元)') ||
-    label.includes('金额(元)') ||
-    label.includes('税款(元)') ||
-    label.includes('余额(元)')
-  ) {
-    return '120px'
-  } else if (label.includes('支付通道')) {
-    return '110px'
-  } else if (label.includes('资金账户')) {
-    return '100px'
-  } else if (label.includes('流水号')) {
-    return '160px'
-  }
-}
-
 const newTabs = computed(() => state.countResp || props.tabs)
 
 /**
  * 得到以传入的参数作为具体路径中指定的文件内的具体方法
  */
 const fetchList: any = computed(() =>
-  props.tableData.length
-    ? null
-    : apis[`/src/api/${module.value}`][props.getListFnName]
+  props.module ? apis[`/src/api/${module.value}`][props.getListFnName] : null
 )
 const delObj: any = computed(
   () => apis[`/src/api/${module.value}`][props.delFnName]
@@ -381,12 +298,14 @@ const delObj: any = computed(
 
 const showSearch = ref(true)
 const state: BasicTableProps = reactive<BasicTableProps>({
-  pageList: fetchList.value,
-  ...(props.tableData.length ? { dataList: props.tableData } : {}),
-  ...(props.staticQuery
+  drag: props.drag,
+  pageList: fetchList,
+  ...(props.tableData?.length ? { dataList: props.tableData } : {}),
+  ...(props.staticQuery || Object.keys($route.query).length
     ? {
         queryForm: {
-          ...props.staticQuery
+          ...props.staticQuery,
+          ...$route.query
         }
       }
     : {}),
@@ -405,6 +324,7 @@ const {
   renderHeader
 } = useTable(state)
 
+const confirm = useConfirm(getDataList)
 const watchParams = () =>
   watch(
     () => props.params,
@@ -433,21 +353,7 @@ watch(
     immediate: true
   }
 )
-// 导出excel
-const exportExcel = async () => {
-  const { useMessageBox } = await import('@hooks/message')
-  try {
-    await useMessageBox().confirm('确定批量导出数据？')
-  } catch {
-    return
-  }
-  downBlobFile(
-    props.downBlobFileUrl,
-    downParams.value,
-    props.downBlobFileName,
-    true
-  )
-}
+
 const downParams = computed(() =>
   Object.assign(state.queryForm, props.params, {
     ids: props.getFullSelection
@@ -457,6 +363,12 @@ const downParams = computed(() =>
       : selectObjs
   })
 )
+const getExcel = useExportExcel({
+  downBlobFile,
+  downBlobFileUrl: props.downBlobFileUrl,
+  downParams: toValue(downParams.value),
+  downBlobFileName: props.downBlobFileName
+})
 /**
  * 选择表格行
  * @param item  {Array}  选中每行的集合
@@ -473,6 +385,7 @@ const resetQuery = () => {
   state.queryForm = {
     ids: [],
     ...props.staticQuery,
+    ...$route.query,
     ...(newTabs.value?.length && newTabs.value[0].attributeName
       ? { [newTabs.value[0].attributeName]: tabValue.value }
       : {})
@@ -483,37 +396,6 @@ const resetQuery = () => {
 provide('refresh', resetQuery)
 provide('getList', getDataList)
 
-const tableCellFormatter = (row, column, cellValue) => {
-  if (column.label?.includes('(元)')) {
-    return cellValue !== null && cellValue !== undefined
-      ? `￥${thousandthDivision({ number: cellValue })}`
-      : '-'
-  }
-  return cellValue
-}
-/**
- * @description  确认弹框
- * @param confirm {string}    确认文案
- * @param success {string}    成功文案
- * @param fn      {function}  实际操作方法
- * @param params  {object}    参数
- */
-const confirm = async ({
-  text: { confirm, success },
-  handler: { fn, params }
-}) => {
-  const { useMessage, useMessageBox } = await import('@hooks/message')
-  try {
-    await useMessageBox().confirm(confirm)
-  } catch {
-    return
-  }
-  try {
-    await fn(params)
-    getDataList()
-    useMessage().success(success)
-  } catch (err: any) {}
-}
 const tabValue = ref('')
 const getListByTab = (key: string, value: string) => {
   Object.assign(state.queryForm, { [key]: value })
@@ -539,21 +421,9 @@ onMounted(catchHistoryTabState)
 defineExpose({
   resetQuery
 })
-
 // 接受外部强刷页面的钩子
 $refreshList(resetQuery, catchHistoryTabState)
 </script>
 <style>
-.el-table .cell {
-  position: relative;
-}
-.top-bar .export + .top-bar-extra-buttons .el-button:first-child {
-  margin-left: 10px;
-}
-.top-bar-extra-buttons .el-button:not(:first-child) {
-  margin-left: 10px;
-}
-.table-view.no-border .el-table__inner-wrapper::before {
-  background-color: unset;
-}
+@import './index.css';
 </style>

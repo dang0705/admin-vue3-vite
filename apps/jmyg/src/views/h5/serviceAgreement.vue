@@ -159,83 +159,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        在您成为
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">服务平台用户，使用</span>
-        <span style="font-family: 宋体">&ldquo;</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &rdquo;提供的服务之前，请您认真阅读本用户服务协议（
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        以下
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">简称</span>
-        <span style="font-family: 宋体">
-          &ldquo;本协议&rdquo;），本协议系由您与上海极目银河人才科技有限公司（以下简称&ldquo;
-        </span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        平台
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &rdquo;或&ldquo;我们&rdquo;
+        在您成为积木优工服务平台用户，使用&ldquo;积木优工&rdquo;提供的服务之前，请您认真阅读本用户服务协议（以下简称&ldquo;本协议&rdquo;），本协议系由您与上海极目银河人才科技有限公司（以下简称&ldquo;平台&rdquo;或&ldquo;我们&rdquo;
       </span>
       <span
         style="
@@ -255,82 +179,9 @@
           mso-font-kerning: 0pt;
         ">
         <span style="font-family: 宋体">）就我们向您提供各类</span>
-        <span style="font-family: 宋体">APP、</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        小程序、网站
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
         <span style="font-family: 宋体">
-          所订立的相关权利义务规范。请您在注册、使用
+          APP、小程序、网站所订立的相关权利义务规范。请您在注册、使用&ldquo;积木优工&rdquo;之前，认真阅读以下条款，以更好地了解我们所提供的服务以及您享有的权利义务。您开始使用我们提供的服务，即表示您已经确认并接受了本文件中的全部条款。
         </span>
-        <span style="font-family: 宋体">&ldquo;</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &rdquo;之前，认真阅读以下条款，以
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        更好地了解
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们所提供的服务以及您享有的权利义务。您开始使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        提供的服务，即表示您已经确认并接受了本文件中的全部条款。
       </span>
     </p>
     <p
@@ -344,50 +195,9 @@
         mso-line-height-rule: exactly;
       ">
       <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">您阅读并确认</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">本</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">协议后即</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">取代</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">我们与您之间</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">所达成</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">的</span>
-      </strong>
-      <strong>
         <span style="font-family: 宋体; font-size: 10.5pt">
-          任何口头或书面约定、协议、条件或承诺，
+          您阅读并确认本协议后即取代我们与您之间所达成的任何口头或书面约定、协议、条件或承诺，有关我们为您提供积木优工产品服务的全部事宜均以本协议为准。
         </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">
-          有关我们为您提供积木优工产品服务的全部
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">事宜</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">均</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">以本</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">协议</span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">为准。</span>
       </strong>
     </p>
     <p
@@ -409,7 +219,7 @@
             mso-ansi-font-weight: bold;
             font-size: 10.5pt;
           ">
-          1.确认并接受
+          1. 确认并接受
         </span>
       </strong>
     </p>
@@ -450,85 +260,8 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        1.1.1 &ldquo;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &rdquo;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        是
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        一款针对灵活用工场景的小程序，用户
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        通过小程序进行实名认证并与服务商签署
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        自由职业者服务
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        协议
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        以承揽任务
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        并通过
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        完成
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        不同的
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        任务获得相应
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        项目承揽经营
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        收入
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        。
+        1.1.1
+        &ldquo;积木优工&rdquo;是一款针对灵活用工场景的小程序，用户通过小程序进行实名认证并与服务商签署自由职业者服务协议以承揽任务，并通过完成不同的任务获得相应项目承揽经营收入。
       </span>
     </p>
     <p
@@ -557,80 +290,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        &ldquo;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        <span style="font-family: 宋体">账号或账号</span>
-        <span style="font-family: 宋体">&rdquo;指用户在使用</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        服务时可能需要注册的账号。用户可在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        注册并获得的账号，作为登录并使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        的凭证。
+        &ldquo;积木优工账号或账号&rdquo;指用户在使用积木优工服务时可能需要注册的账号。用户可在积木优工注册并获得的账号，作为登录并使用积木优工的凭证。
       </span>
     </p>
     <p
@@ -896,9 +556,8 @@
           mso-font-kerning: 0pt;
         ">
         <span style="font-family: 宋体">
-          违反法律法规底线、社会主义制度底线、国家利益底线、公民合法权益底线、社会公共秩序底线、道德风尚底线和信息真实性底线的
+          违反法律法规底线、社会主义制度底线、国家利益底线、公民合法权益底线、社会公共秩序底线、道德风尚底线和信息真实性底线的&ldquo;七条底线&rdquo;要求的；
         </span>
-        <span style="font-family: 宋体">&ldquo;七条底线&rdquo;要求的；</span>
       </span>
     </p>
     <p
@@ -1022,86 +681,9 @@
       </span>
       <strong>
         <span style="font-family: 宋体; font-size: 10.5pt">
-          <span style="font-family: 宋体">我们的产品仅对</span>
-          <span style="font-family: 宋体">18周岁以上的用户开放，</span>
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            font-size: 10.5pt;
-          ">
-          <span style="font-family: 宋体">如您未满</span>
-          <span style="font-family: 宋体">18周岁，</span>
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          或存在其他不具备与用户行为相适应的民事行为能力的情形，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          请您退出积木优工小程序，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          如您的行为给
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          或第三方造成损失的，我们有权要求您及您的监护人承担赔偿责任。
+          <span style="font-family: 宋体">
+            我们的产品仅对18周岁以上的用户开放，如您未满18周岁，或存在其他不具备与用户行为相适应的民事行为能力的情形，请您退出积木优工小程序，如您的行为给积木优工或第三方造成损失的，我们有权要求您及您的监护人承担赔偿责任。
+          </span>
         </span>
       </strong>
     </p>
@@ -1124,7 +706,7 @@
             mso-ansi-font-weight: bold;
             font-size: 10.5pt;
           ">
-          2.协议范围
+          2. 协议范围
         </span>
       </strong>
     </p>
@@ -1148,64 +730,8 @@
             mso-bidi-font-weight: normal;
             font-size: 10.5pt;
           ">
-          2.1 本协议是您与我们之间关于您
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          下载、安装
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          、使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-          ">
-          <span style="font-family: 宋体">
-            所订立的协议，包括本协议正文、用户隐私政策及我们已经发布的或将来可能发布
-          </span>
-          <span style="font-family: 宋体">
-            /更新的并采取合理途径通知的各类规则、规范、通知等。所有规则均为本协议不可分割的组成部分，且具有同等法律效力。
-          </span>
+          2.1
+          本协议是您与我们之间关于您下载、安装、使用积木优工所订立的协议，包括本协议正文、用户隐私政策及我们已经发布的或将来可能发布/更新的并采取合理途径通知的各类规则、规范、通知等。所有规则均为本协议不可分割的组成部分，且具有同等法律效力。
         </span>
       </strong>
     </p>
@@ -1249,71 +775,7 @@
             background-origin: initial;
             background-clip: initial;
           ">
-          根据国家法律法规变化及
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            font-family: 宋体;
-            font-size: 10.5pt;
-            background-image: initial;
-            background-position: initial;
-            background-size: initial;
-            background-repeat: initial;
-            background-attachment: initial;
-            background-origin: initial;
-            background-clip: initial;
-          ">
-          运营需要，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            font-family: 宋体;
-            font-size: 10.5pt;
-            background-image: initial;
-            background-position: initial;
-            background-size: initial;
-            background-repeat: initial;
-            background-attachment: initial;
-            background-origin: initial;
-            background-clip: initial;
-          ">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="
-            font-family: 宋体;
-            font-size: 10.5pt;
-            background-image: initial;
-            background-position: initial;
-            background-size: initial;
-            background-repeat: initial;
-            background-attachment: initial;
-            background-origin: initial;
-            background-clip: initial;
-          ">
-          有权对本协议条款不时地进行修改，并根据国家法律法规的要求进行公示，修改后的协议在公示后生效并代替原来的协议。您应不时关注并阅读最新版的协议及网站公告。如您不同意更新后的新协议，您有权立即停止使用本服务。如您继续使用本服务，即视为完全同意更新后的协议。如果本协议中任何一条被司法或行政机关判定废止、无效或因任何理由不可执行，该条应视为可分的且并不影响任何其余条款的有效性和可执行性。
+          根据国家法律法规变化及积木优工运营需要，我们有权对本协议条款不时地进行修改，并根据国家法律法规的要求进行公示，修改后的协议在公示后生效并代替原来的协议。您应不时关注并阅读最新版的协议及网站公告。如您不同意更新后的新协议，您有权立即停止使用本服务。如您继续使用本服务，即视为完全同意更新后的协议。如果本协议中任何一条被司法或行政机关判定废止、无效或因任何理由不可执行，该条应视为可分的且并不影响任何其余条款的有效性和可执行性。
         </span>
       </strong>
     </p>
@@ -1336,7 +798,7 @@
             mso-ansi-font-weight: bold;
             font-size: 10.5pt;
           ">
-          3.账号管理
+          3. 账号管理
         </span>
       </strong>
     </p>
@@ -1363,55 +825,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.1 您可注册及登录
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，您可按照
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        页面提示填写信息、阅读并同意本协议，在完成全部注册登录程序后，成为
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        用户。您了解并同意，您有义务保持您提供信息的真实性、有效性及完整性。当您的个人信息发生变动时，应及时通知
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        进行更新。
+        3.1.1
+        您可注册及登录积木优工，您可按照积木优工页面提示填写信息、阅读并同意本协议，在完成全部注册登录程序后，成为积木优工用户。您了解并同意，您有义务保持您提供信息的真实性、有效性及完整性。当您的个人信息发生变动时，应及时通知积木优工进行更新。
       </span>
     </p>
     <p
@@ -1424,19 +839,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.1.2 为了您能更好
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        地
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        享有积木优工的服务，您应向积木优工提供本人真实、正确、最新及完整的资料；随时更新登记资料，保持其真实性及有效性；承接项目服务过程中，务必保持
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        账号的
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        唯一性。
+        3.1.2
+        为了您能更好地享有积木优工的服务，您应向积木优工提供本人真实、正确、最新及完整的资料；随时更新登记资料，保持其真实性及有效性；承接项目服务过程中，务必保持账号的唯一性。
       </span>
     </p>
     <p
@@ -1450,13 +854,7 @@
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         3.1.3
-        若您提供任何错误、不实或不完整的资料，或积木优工有理由怀疑资料为错误、不实或不完整的，或积木优工有理由怀疑其您资料、言行等有悖于积木优工服务主题的，积木优工有权修改您的注册昵称、个人说明、发布的信息等，或暂停或终止该
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您的账号
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，或暂停或终止提供积木优工提供的全部或部分服务。
+        若您提供任何错误、不实或不完整的资料，或积木优工有理由怀疑资料为错误、不实或不完整的，或积木优工有理由怀疑其您资料、言行等有悖于积木优工服务主题的，积木优工有权修改您的注册昵称、个人说明、发布的信息等，或暂停或终止该您的账号，或暂停或终止提供积木优工提供的全部或部分服务。
       </span>
     </p>
     <p
@@ -1496,19 +894,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您在注册或使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        时设置的名称、头像和简介等账号信息资料应遵守法律法规、社会道德风尚和信息真实性等原则，不得出现不良信息，不得冒用他人姓名、名称、字号、头像等或采取其他足以引起混淆的方式设置账号，不得侵害第三方的合法权益。
+        您在注册或使用积木优工时设置的名称、头像和简介等账号信息资料应遵守法律法规、社会道德风尚和信息真实性等原则，不得出现不良信息，不得冒用他人姓名、名称、字号、头像等或采取其他足以引起混淆的方式设置账号，不得侵害第三方的合法权益。
       </span>
     </p>
     <p
@@ -1537,61 +923,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          3.3.1
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          您
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          理解并接受
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          对该账号的授权仅限于您个人、非商业、不可转让及非排他性的使用，
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          保留该账号的所有权，并可以在必要时收回该账号，您仅可为访问或使用本服务的目的而使用该账号。
+          3.3.1您理解并接受积木优工对该账号的授权仅限于您个人、非商业、不可转让及非排他性的使用，积木优工保留该账号的所有权，并可以在必要时收回该账号，您仅可为访问或使用本服务的目的而使用该账号。
         </span>
       </strong>
     </p>
@@ -1605,31 +937,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.3.2 由于您的账号关联您的个人信息及
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        平台商业信息，您的账号仅限您本人使用。未经
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        公司同意，您直接或间接授权第三方使用您账号或获取您账号项下信息的行为无效。
+        3.3.2
+        由于您的账号关联您的个人信息及积木优工平台商业信息，您的账号仅限您本人使用。未经积木优工公司同意，您直接或间接授权第三方使用您账号或获取您账号项下信息的行为无效。
       </span>
     </p>
     <p
@@ -1655,55 +964,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        3.4.1 您可以依照
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        平台的流程申请注销您的
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        账号，但您仍应对您在注销账号前或使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        平台服务期间的行为承担相应责任。注销成功后，除非法律法规另有规定，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        公司不会为您提供账号记录、内容、虚拟财产等恢复或提供服务，请您谨慎操作。
+        3.4.1
+        您可以依照积木优工平台的流程申请注销您的积木优工账号，但您仍应对您在注销账号前或使用积木优工平台服务期间的行为承担相应责任。注销成功后，除非法律法规另有规定，积木优工公司不会为您提供账号记录、内容、虚拟财产等恢复或提供服务，请您谨慎操作。
       </span>
     </p>
     <p
@@ -1717,37 +979,7 @@
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         3.4.2
-        您理解并同意，为了充分使用账号资源，如您在注册后未及时进行初次登录使用或连续超过六个月未登录账号并使用，且不存在未到期或未履行完毕的持续性
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        平台服务的，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        公司有权收回您的账号。如您的账号被收回，您无法通过您此前持有的账号登录并使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        平台，您账号下保存的个性化设置和使用记录也将无法恢复。
+        您理解并同意，为了充分使用账号资源，如您在注册后未及时进行初次登录使用或连续超过六个月未登录账号并使用，且不存在未到期或未履行完毕的持续性积木优工平台服务的，积木优工公司有权收回您的账号。如您的账号被收回，您无法通过您此前持有的账号登录并使用积木优工平台，您账号下保存的个性化设置和使用记录也将无法恢复。
       </span>
     </p>
     <p
@@ -1773,49 +1005,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        若您在注册或使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        账号时，存在任何违反法律法规或不符合本协议约定的行为，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        公司有权不予注册；已经注册的，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        公司有权视情况要求用户限期改正
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        或
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        单方采取短期封禁、永久封禁、注销账号等措施，由此带来的包括但不限于内容、虚拟财产清空等损失由您本人及该账号使用者自行承担。
+        若您在注册或使用积木优工账号时，存在任何违反法律法规或不符合本协议约定的行为，积木优工公司有权不予注册；已经注册的，积木优工公司有权视情况要求用户限期改正或单方采取短期封禁、永久封禁、注销账号等措施，由此带来的包括但不限于内容、虚拟财产清空等损失由您本人及该账号使用者自行承担。
       </span>
     </p>
     <p
@@ -1829,7 +1019,7 @@
       ">
       <strong>
         <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          4.服务内容
+          4. 服务内容
         </span>
       </strong>
     </p>
@@ -1855,102 +1045,9 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        <span style="font-family: 宋体">您在</span>
-        <span style="font-family: 宋体">&ldquo;</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &rdquo;服务平台（下称&ldquo;平台&rdquo;）
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        完成
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        注册后，通过
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        引荐领取
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        及完成
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        合作公司在平台上发布的项目任务并获得相应项目费用，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您选择并委托
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        为
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        提供费用结算及办理各项税务事项并承诺严格遵守有关法律法规，严格按税收有关文件执行。
+        <span style="font-family: 宋体">
+          您在&ldquo;积木优工&rdquo;服务平台（下称&ldquo;平台&rdquo;）完成注册后，通过我们引荐领取及完成合作公司在平台上发布的项目任务并获得相应项目费用，您选择并委托我们为您提供费用结算及办理各项税务事项并承诺严格遵守有关法律法规，严格按税收有关文件执行。
+        </span>
       </span>
     </p>
     <p
@@ -1976,29 +1073,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        您应根据合作公司的要求完成项目任务，期间您应遵守合作公司有关项目内容、质量等方面的要求。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        服务供应商或
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        合作公司可根据自身的运营要求制定具体项目进程安排，您应予遵守
+        您应根据合作公司的要求完成项目任务，期间您应遵守合作公司有关项目内容、质量等方面的要求。服务供应商或合作公司可根据自身的运营要求制定具体项目进程安排，您应予遵守。
       </span>
       <span
         style="
@@ -2007,34 +1082,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        &nbsp;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        将按合作公司的相关规定与合作公司共同对您为合作公司提供的任务成果进行验收。
+        我们将按合作公司的相关规定与合作公司共同对您为合作公司提供的任务成果进行验收。
       </span>
     </p>
     <p
@@ -2060,184 +1108,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        将根据经合作公司确认的任务标准及收费标准
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        ，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        并在收到合作公司支付的费用后向您支付项目费。由于您所提供的项目内容、质量、时长等情况的不同，该等项目费用金额可能会呈现浮动，您清楚并了解该等浮动为正常情况。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        以人民币形式向您支付项目费用，您应缴纳的个人所得税及其他相关税费由
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          letter-spacing: 0pt;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        负责代扣代缴。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我司将通过
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        【
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        银行转账
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        】
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        的方式
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        向您
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        支付上述项目费用。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        您应向
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        我们
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          mso-ansi-font-weight: normal;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        提供以您本人实名注册的对应账户信息，以及相关必要的证件。若具体账户信息在指定的网络平台在线提供的，以您在线提供的信息为准。
+        我们将根据经合作公司确认的任务标准及收费标准，并在收到合作公司支付的费用后向您支付项目费。由于您所提供的项目内容、质量、时长等情况的不同，该等项目费用金额可能会呈现浮动，您清楚并了解该等浮动为正常情况。我们以人民币形式向您支付项目费用，您应缴纳的个人所得税及其他相关税费由我们负责代扣代缴。我司将通过【银行转账的方式】向您支付上述项目费用。您应向我们提供以您本人实名注册的对应账户信息，以及相关必要的证件。若具体账户信息在指定的网络平台在线提供的，以您在线提供的信息为准。
       </span>
     </p>
     <p
@@ -2258,82 +1129,8 @@
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         4.4
       </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您正常按合作公司</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">制定的</span>
       <span style="font-family: 宋体; font-size: 10.5pt">
-        费用结算规则计算的收入，其正常应纳税税款，由我们代扣代缴。
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        您应当知悉及确认如您为
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">多家合作公司</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">提供服务并</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        取得收入，根据税法规定需要合并计算，从而可能导致适用更高的个人所得税税率并按合并收入计算缴纳
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">税费</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">。</span>
-    </p>
-    <p
-      class="p"
-      style="
-        margin-top: 1.05pt;
-        margin-right: 10.95pt;
-        margin-left: 0pt;
-        mso-para-margin-left: 0gd;
-        text-indent: 21pt;
-        mso-char-indent-count: 0;
-        padding: 0pt 0pt 0pt 0pt;
-        word-break: break-all;
-        mso-pagination: widow-orphan;
-        line-height: 22pt;
-        mso-line-height-rule: exactly;
-      ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.5 积木优工</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">通过国际互联网为</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        提供网络服务，包括在线及离线的相关业务。为使用网络服务，
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        应自行配备进入国际互联网所必需的设备，包括计算机、数据机
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">或其他</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        存取装置，并自行支付
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">登录国际互联网</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">所需要的费用。</span>
-    </p>
-    <p
-      class="p"
-      style="
-        margin-top: 1.05pt;
-        margin-right: 10.95pt;
-        margin-left: 0pt;
-        mso-para-margin-left: 0gd;
-        text-indent: 21pt;
-        mso-char-indent-count: 0;
-        padding: 0pt 0pt 0pt 0pt;
-        word-break: break-all;
-        mso-pagination: widow-orphan;
-        line-height: 22pt;
-        mso-line-height-rule: exactly;
-      ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.6 积木优工</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        在提供网络服务时，可能会对部分网络服务收取一定的费用，在此情况下，会在相关页面上做明确的提示。如
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        拒绝支付该等费用，则不能使用相关的网络服务。付费业务将在本注册条款的基础上另行规定服务条款，以规范付费业务的内容和双方的权利义务，
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">应认真阅读，如</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        购买付费业务，则视为接受付费业务的服务条款。
+        您正常按合作公司制定的费用结算规则计算的收入，其正常应纳税税款，由我们代扣代缴。您应当知悉及确认如您为多家合作公司提供服务并取得收入，根据税法规定需要合并计算，从而可能导致适用更高的个人所得税税率并按合并收入计算缴纳税费。
       </span>
     </p>
     <p
@@ -2351,28 +1148,49 @@
         line-height: 22pt;
         mso-line-height-rule: exactly;
       ">
-      <span style="font-family: 宋体; font-size: 10.5pt">4.7 对于利用</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
       <span style="font-family: 宋体; font-size: 10.5pt">
-        进行非法活动，或其言行（无论线上或者线下的）背离
+        4.5
+        积木优工通过国际互联网为您提供网络服务，包括在线及离线的相关业务。为使用网络服务，您应自行配备进入国际互联网所必需的设备，包括计算机、数据机或其他存取装置，并自行支付登录国际互联网所需要的费用。
       </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">服务</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">目的的，</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
+    </p>
+    <p
+      class="p"
+      style="
+        margin-top: 1.05pt;
+        margin-right: 10.95pt;
+        margin-left: 0pt;
+        mso-para-margin-left: 0gd;
+        text-indent: 21pt;
+        mso-char-indent-count: 0;
+        padding: 0pt 0pt 0pt 0pt;
+        word-break: break-all;
+        mso-pagination: widow-orphan;
+        line-height: 22pt;
+        mso-line-height-rule: exactly;
+      ">
       <span style="font-family: 宋体; font-size: 10.5pt">
-        将严肃处理，包括将其列入黑名单、将其被投诉的情形公之于众、删除
+        4.6
+        积木优工在提供网络服务时，可能会对部分网络服务收取一定的费用，在此情况下，会在相关页面上做明确的提示。如您拒绝支付该等费用，则不能使用相关的网络服务。付费业务将在本注册条款的基础上另行规定服务条款，以规范付费业务的内容和双方的权利义务，您应认真阅读，如您购买付费业务，则视为接受付费业务的服务条款。
       </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">您</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">账号等</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">处罚措施，给</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
+    </p>
+    <p
+      class="p"
+      style="
+        margin-top: 1.05pt;
+        margin-right: 10.95pt;
+        margin-left: 0pt;
+        mso-para-margin-left: 0gd;
+        text-indent: 21pt;
+        mso-char-indent-count: 0;
+        padding: 0pt 0pt 0pt 0pt;
+        word-break: break-all;
+        mso-pagination: widow-orphan;
+        line-height: 22pt;
+        mso-line-height-rule: exactly;
+      ">
       <span style="font-family: 宋体; font-size: 10.5pt">
-        造成经济或者名誉损失的，
-      </span>
-      <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      <span style="font-family: 宋体; font-size: 10.5pt">
-        将追究其法律责任。
+        4.7
+        对于利用积木优工进行非法活动，或其言行（无论线上或者线下的）背离积木优工服务目的的，积木优工将严肃处理，包括将其列入黑名单、将其被投诉的情形公之于众、删除您账号等处罚措施，给积木优工造成经济或者名誉损失的，积木优工将追究其法律责任。
       </span>
     </p>
     <p
@@ -2404,64 +1222,7 @@
         4.8.1
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        为向您提供的
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        服务付出了大量的成本，除
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        明示的收费业务外，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        向您提供的
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        服务是免费的。如未来
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        向您收取合理费用，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        会采取合理方式并以合理的期限提前通知您，确保您有充分选择的权利。
+        我们为向您提供的积木优工服务付出了大量的成本，除积木优工明示的收费业务外，我们向您提供的积木优工服务是免费的。如未来我们向您收取合理费用，我们会采取合理方式并以合理的期限提前通知您，确保您有充分选择的权利。
       </span>
     </p>
     <p
@@ -2477,19 +1238,7 @@
         4.8.2
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        在
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        降低收费服务的收费标准或者将收费服务改为免费服务提供时，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        保留不对原付费用户提供退费或者费用调整之权利。
+        在我们降低收费服务的收费标准或者将收费服务改为免费服务提供时，我们保留不对原付费用户提供退费或者费用调整之权利。
       </span>
     </p>
     <p
@@ -2505,7 +1254,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          5.用户隐私保护
+          5. 用户隐私保护
         </span>
       </strong>
     </p>
@@ -2528,40 +1277,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        非常重视对用户个人信息的保护。
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        将按照本协议及《
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        用户
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        隐私政策》的规定收集、使用、储存和分享您的个人信息。本协议对个人信息保护规定的内容与上述《
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        用户
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        隐私政策》有相冲突的，及本协议对个人信息保护相关内容未作明确规定的，均应以《
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        用户
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        隐私政策》的内容为准。
+        积木优工非常重视对用户个人信息的保护。积木优工将按照本协议及《用户隐私政策》的规定收集、使用、储存和分享您的个人信息。本协议对个人信息保护规定的内容与上述《用户隐私政策》有相冲突的，及本协议对个人信息保护相关内容未作明确规定的，均应以《用户隐私政策》的内容为准。
       </span>
     </p>
     <p
@@ -2574,44 +1290,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5.2 保护用户隐私是
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        的一项基本政策，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        不对外公开或向第三方提供用户的注册资料及用户在使用网络服务时存储在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">的非公开内容，但下列情况除外：</span>
-        <span style="font-family: 宋体">&nbsp;</span>
+        5.2
+        保护用户隐私是积木优工的一项基本政策，积木优工不对外公开或向第三方提供用户的注册资料及用户在使用网络服务时存储在积木优工的非公开内容，但下列情况除外：&nbsp;
       </span>
     </p>
     <p
@@ -2714,19 +1394,7 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5.3 在以下（包括但不限于）几种情况下，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权使用用户的个人信息：
+        5.3 在以下（包括但不限于）几种情况下，积木优工有权使用用户的个人信息：
       </span>
     </p>
     <p
@@ -2744,31 +1412,7 @@
       </span>
       <!--[endif]-->
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        某些情况下为进行相关商业合作需要调取用户的个人信息，该等情形包括但不限于在进行第三方旅游产品促销或抽奖时，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可能会与赞助商共享用户的个人信息，在这些情况下
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可能会在发送用户信息之前进行提示，您可以通过不参与来终止传送过程。
+        某些情况下为进行相关商业合作需要调取用户的个人信息，该等情形包括但不限于在进行第三方旅游产品促销或抽奖时，积木优工可能会与赞助商共享用户的个人信息，在这些情况下积木优工可能会在发送用户信息之前进行提示，您可以通过不参与来终止传送过程。
       </span>
     </p>
     <p
@@ -2792,10 +1436,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可能会将用户信息与第三方数据匹配。
+        积木优工可能会将用户信息与第三方数据匹配。
       </span>
     </p>
     <p
@@ -2819,22 +1460,7 @@
           font-size: 10.5pt;
           mso-font-kerning: 0pt;
         ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        会披露用户统计数据，向未来的合作伙伴、广告商及其他第三方以及为了其他合法目的而描述公司的服务。在对用户隐私资料进行匿名化、去标识化处理的前提下，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可对用户数据库进行分析并对用户数据库进行商业上合理范围内的利用。
+        积木优工会披露用户统计数据，向未来的合作伙伴、广告商及其他第三方以及为了其他合法目的而描述公司的服务。在对用户隐私资料进行匿名化、去标识化处理的前提下，积木优工可对用户数据库进行分析并对用户数据库进行商业上合理范围内的利用。
       </span>
     </p>
     <p
@@ -2847,49 +1473,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        5.4 如您认为您的个人信息被
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        超目的使用
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        或
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        被其他用户侵权，请立即与
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        联系，并按照要求提供相应的证明资料，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        将及时调查核实处理。
+        5.4
+        如您认为您的个人信息被积木优工超目的使用或被其他用户侵权，请立即与积木优工联系，并按照要求提供相应的证明资料，积木优工将及时调查核实处理。
       </span>
     </p>
     <p
@@ -2905,7 +1490,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          6.知识产权
+          6. 知识产权
         </span>
       </strong>
     </p>
@@ -2919,83 +1504,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6.1 除法律法规明确规定，或另有明确协议约定之外，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">网站、</span>
-        <span style="font-family: 宋体">
-          APP、产品和服务所依托软件的著作权、专利权、网站架构、程序设计及其他相关权利归
-        </span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        所有；
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">使用的</span>
-        <span style="font-family: 宋体">&ldquo;</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        &rdquo;（文字）、（图形）以及其他注册商标、所有设计图样以及其他图样、产品、程序及服务名称等商业标识、商业名称，其著作权、商标权，或外观设计专利等权益归
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        所有。上述知识产权均受到法律保护，未经
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        书面许可，任何人不得以任何形式进行使用或创造相关衍生作品。
+        6.1
+        除法律法规明确规定，或另有明确协议约定之外，积木优工网站、APP、产品和服务所依托软件的著作权、专利权、网站架构、程序设计及其他相关权利归积木优工所有；积木优工使用的&ldquo;积木优工&rdquo;（文字）、（图形）以及其他注册商标、所有设计图样以及其他图样、产品、程序及服务名称等商业标识、商业名称，其著作权、商标权，或外观设计专利等权益归积木优工所有。上述知识产权均受到法律保护，未经积木优工书面许可，任何人不得以任何形式进行使用或创造相关衍生作品。
       </span>
     </p>
     <p
@@ -3008,89 +1518,15 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6.2 用户在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        上传或发布的内容（包括但不限于文字、图片、视频、音频等），用户应保证其为著作权人或已取得相关权利人的合法授权，并且该内容不会侵犯任何第三方的合法权益，并保证该等内容具有准确性、真实性、正当性、合法性，且不得以任何形式侵犯第三人权益，因抄袭、转载、侵权等行为所产生的纠纷由用户自行解决，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        不承担任何法律责任。用户的内容侵犯了任何第三方的著作权或其他权利，第三方发出有效的权利通知时，
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权在初步审核的基础上决定删除相关的内容。且
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        &nbsp;&nbsp;
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权在必要时配合第三方、司法机关或行政机关完成相关的取证，并根据法律、主管部门或司法部门的要求披露用户信息。若您认为您的知识产权或其他合法权益被侵犯，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        你可以
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        向
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        提供资料或可依法
+        6.2
+        用户在积木优工上传或发布的内容（包括但不限于文字、图片、视频、音频等），用户应保证其为著作权人或已取得相关权利人的合法授权，并且该内容不会侵犯任何第三方的合法权益，并保证该等内容具有准确性、真实性、正当性、合法性，且不得以任何形式侵犯第三人权益，因抄袭、转载、侵权等行为所产生的纠纷由用户自行解决，积木优工不承担任何法律责任。用户的内容侵犯了任何第三方的著作权或其他权利，第三方发出有效的权利通知时，积木优工有权在初步审核的基础上决定删除相关的内容。且积木优工有权在必要时配合第三方、司法机关或行政机关完成相关的取证，并根据法律、主管部门或司法部门的要求披露用户信息。若您认为您的知识产权或其他合法权益被侵犯，你可以向积木优工提供资料或可依法
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         <span style="font-family: 宋体">以邮件形式（</span>
         <span style="font-family: 宋体">info@jmyg.com）</span>
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        向
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        发出权利通知。请注意：如果权利通知的陈述失实，权利通知提交者将承担对由此造成的全部法律责任（包括但不限于赔偿各种费用及律师费）。
+        向积木优工发出权利通知。请注意：如果权利通知的陈述失实，权利通知提交者将承担对由此造成的全部法律责任（包括但不限于赔偿各种费用及律师费）。
       </span>
     </p>
     <p
@@ -3111,239 +1547,8 @@
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
           <span style="font-family: 宋体">
-            对于用户在任何时间、任何地点通过
+            对于用户在任何时间、任何地点通过PC或移动终端等设备访问及/或使用积木优工及其关联网站、APP等产品或服务时发表的任何形式的文字、图片、音视频等知识产权信息，在法律规定的保护期限内用户授予积木优工免费的、不可撤销的、非排他的、无地域限制的许可使用权利及再授权给其他第三方使用并可以自身名义对第三方侵权行为进行维权，维权形式包括但不限于以发送侵权通告函件、提起诉讼、申请仲裁等方式。用户同意将其著作权非排他地授予积木优工该等权利包括但不限于：复制权、发行权、出租权、展览权、表演权、放映权、广播权、信息网络传播权、摄制权、改编权、翻译权、汇编权等可由著作权人转让的其他权益，该等授权覆盖积木优工现有服务以及未来任何时候提供的服务。同时，对于用户提供、发布及在积木优工服务中形成的除个人信息外的文字、图片、视频、音频等非个人信息，用户同意积木优工存储、使用、复制、修订、编辑、发布、展示、翻译、分发用户的非个人信息或制作其派生作品，并以已知或日后开发的形式、媒体或技术将上述信息纳入其他作品内。用户理解并确认，本服务协议已经构成《著作权法》第二十五条所规定的书面协议，其效力及于用户在积木优工网站、产品及服务等载体发布的任何受著作权法保护的作品内容，无论该内容形成于本协议签订前还是本协议签订后。无论用户以注册或不注册等方式使用积木优工的服务均视为已充分理解并完全同意本协议的条款，明确向积木优工作出上述许可。
           </span>
-          <span style="font-family: 宋体">PC或移动终端等设备访问及/或使用</span>
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          <span style="font-family: 宋体">及其关联网站、</span>
-          <span style="font-family: 宋体">
-            APP等产品或服务时发表的任何形式的文字、图片、音视频等知识产权信息，在法律规定的保护期限内用户
-          </span>
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          授予
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          免费的、不可撤销的、非排他的、无地域限制的许可使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          权利及再授权给其他第三方使用并可以自身名义对第三方侵权行为进行维权，维
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          权形式包括但不限于以发送侵权通告函件、提起诉讼、申请仲裁等方式。用户同意将其著作权非排他
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          地
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          授予
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          该等权利包括但不限于：复制权、发行权、出租权、展览权、表演权、放映权、广播权、信息网络传播权、摄制权、改编权、翻译权、汇编权等可由著作权人转让的其他权益，该等授权覆盖
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          现有服务以及未来任何时候提供的服务。同时，对于用户提供、发布及在
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          服务中形成的除个人信息外的文字、图片、视频、音频等非个人信息，用户同意
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          存储、使用、复制、修订、编辑、发布、展示、翻译、分发用户的非个人信息或制作其派生作品，并以已知或日后开发的形式、媒体或技术将上述信息纳入
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          其他作品
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          内。用户理解并确认，本服务协议已经构成《著作权法》第二十五条所规定的书面协议，其效力及于用户在
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          网站、产品及服务等载体发布的任何受著作权法保护的作品内容，无论该内容形成于本协议签订前还是本协议签订后。无论用户以注册或不注册等方式使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          的服务均视为已充分理解并完全同意本协议的条款，明确向
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          作出上述许可。
         </span>
       </strong>
     </p>
@@ -3360,57 +1565,7 @@
         6.4
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        对于用户发表在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">网站、</span>
-        <span style="font-family: 宋体">APP的内容，任何人未经</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        事先书面许可，禁止使用任何机器人、蜘蛛、其他自动设备，或手动程序来监视或复制
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">网站、</span>
-        <span style="font-family: 宋体">APP中包含的任何内容。否则，</span>
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权依法追究法律责任。
+        对于用户发表在积木优工网站、APP的内容，任何人未经积木优工事先书面许可，禁止使用任何机器人、蜘蛛、其他自动设备，或手动程序来监视或复制积木优工网站、APP中包含的任何内容。否则，积木优工有权依法追究法律责任。
       </span>
     </p>
     <p
@@ -3423,73 +1578,11 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        6.5 【
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
+        6.5 【积木优工
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        权利声明】用户在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">网站、</span>
-        <span style="font-family: 宋体">APP中发布的文字、图片、音视频</span>
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        及其他
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        内容，将受到法律的保护；该等文字、图片、音视频
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        及其他
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        内容用户享有著作权，未经
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        &nbsp;
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">
-          或其他权利人书面授权许可，任何人不得进行修改、出租、散布或衍生其他作品，不得为任何非私人或商业目的获取或使用本网站的任何部分或通过本网站可直接或间接获得的任何内容、服务或资料。任何第三方违反本协议的规定以任何方式，和
-        </span>
-        <span style="font-family: 宋体">
-          /或以任何文字对本网站的任何部分进行发表、复制、转载、更改、引用、链接、下载或
-        </span>
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        以其他方式
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        <span style="font-family: 宋体">
-          进行使用，或向任何其他第三方提供获取本网站任何内容的渠道，则对本网站的使用权将立即终止，且任何第三方必须按照本公司的要求，归还或销毁使用本网站任何部分的内容所创建的资料的任何副本。未经本协议明确允许而擅自使用本网站任何内容、服务或资料的，构成对本协议的违约行为，且可能触犯著作权、商标、专利和
-        </span>
-        <span style="font-family: 宋体">/或其他方面的法律法规。</span>
+        权利声明】用户在积木优工网站、APP中发布的文字、图片、音视频及其他内容，将受到法律的保护；该等文字、图片、音视频及其他内容用户享有著作权，未经
+        积木优工或其他权利人书面授权许可，任何人不得进行修改、出租、散布或衍生其他作品，不得为任何非私人或商业目的获取或使用本网站的任何部分或通过本网站可直接或间接获得的任何内容、服务或资料。任何第三方违反本协议的规定以任何方式，和/或以任何文字对本网站的任何部分进行发表、复制、转载、更改、引用、链接、下载或以其他方式进行使用，或向任何其他第三方提供获取本网站任何内容的渠道，则对本网站的使用权将立即终止，且任何第三方必须按照本公司的要求，归还或销毁使用本网站任何部分的内容所创建的资料的任何副本。未经本协议明确允许而擅自使用本网站任何内容、服务或资料的，构成对本协议的违约行为，且可能触犯著作权、商标、专利和/或其他方面的法律法规。
       </span>
     </p>
     <p
@@ -3521,28 +1614,7 @@
         6.6.1
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        尊重并保护您及他人的知识产权、名誉权、姓名权、隐私权等合法权益。您保证，在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        上传的文字、图片、视频、音频、链接等不侵犯任何第三方的知识产权、名誉权、姓名权、隐私权等合法权益。否则，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权在收到权利方或者相关方通知的情况下移除该涉嫌侵权内容。
+        我们尊重并保护您及他人的知识产权、名誉权、姓名权、隐私权等合法权益。您保证，在积木优工上传的文字、图片、视频、音频、链接等不侵犯任何第三方的知识产权、名誉权、姓名权、隐私权等合法权益。否则，我们有权在收到权利方或者相关方通知的情况下移除该涉嫌侵权内容。
       </span>
     </p>
     <p
@@ -3558,37 +1630,7 @@
         6.6.2
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您认为
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        上的内容侵犯您的合法权益，您可通过邮箱（
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        info@jmyg.com
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ）向我们提供相关文件或信息（包括内容链接、身份材料、享有权利
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        及
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        存在侵权行为的证明文件等）。
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        将在收到有效通知后判断决定是否对涉嫌侵权的内容进行处理。
+        您认为积木优工上的内容侵犯您的合法权益，您可通过邮箱（info@jmyg.com）向我们提供相关文件或信息（包括内容链接、身份材料、享有权利及存在侵权行为的证明文件等）。我们将在收到有效通知后判断决定是否对涉嫌侵权的内容进行处理。
       </span>
     </p>
     <p
@@ -3604,25 +1646,7 @@
         6.6.3
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        除非另有证明，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        储存在其服务器上的数据是用户使用
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        的唯一有效证据。
+        除非另有证明，我们储存在其服务器上的数据是用户使用积木优工的唯一有效证据。
       </span>
     </p>
     <p
@@ -3638,7 +1662,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          7.免责声明
+          7. 免责声明
         </span>
       </strong>
     </p>
@@ -3676,65 +1700,7 @@
       </strong>
       <strong>
         <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          您理解并同意，
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          提供的产品和服务
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          涉及
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          互联网及移动
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          通信等
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          服务，可能会受到各个环节不稳定因素的影响。因此因不可抗力、计算机病毒或黑客攻击、系统不稳定、用户所在位置、用户关机、互联网络、通信线路等其他
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          无法预测或控制的原因，造成服务中断、取消或终止的风险，由此给您带来的损失
-        </span>
-      </strong>
-      <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          不承担赔偿责任。
+          您理解并同意，积木优工提供的产品和服务涉及互联网及移动通信等服务，可能会受到各个环节不稳定因素的影响。因此因不可抗力、计算机病毒或黑客攻击、系统不稳定、用户所在位置、用户关机、互联网络、通信线路等其他积木优工无法预测或控制的原因，造成服务中断、取消或终止的风险，由此给您带来的损失积木优工不承担赔偿责任。
         </span>
       </strong>
     </p>
@@ -3753,27 +1719,8 @@
         </span>
       </strong>
       <strong>
-        <span style="font-family: 宋体; font-size: 10.5pt">积木优工</span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          不保证，包括但不限于：本服务
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          符合
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          用户的使用要求；本服务不受干扰，及时、安全、可靠或不出现错误。
+        <span style="font-family: 宋体; font-size: 10.5pt">
+          积木优工不保证，包括但不限于：本服务符合用户的使用要求；本服务不受干扰，及时、安全、可靠或不出现错误。
         </span>
       </strong>
     </p>
@@ -3821,68 +1768,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          始终在不断变更和改进
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          服务，我们会尽最大努力向您提供服务，确保服务的连贯性和安全性。基于此，我们可能会对
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          进行更新，您应将软件更新到最新版本，否则我们不保证您可正常使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          。
+          我们始终在不断变更和改进积木优工服务，我们会尽最大努力向您提供服务，确保服务的连贯性和安全性。基于此，我们可能会对积木优工进行更新，您应将软件更新到最新版本，否则我们不保证您可正常使用积木优工。
         </span>
       </strong>
     </p>
@@ -3906,41 +1792,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          您理解并同意，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          根据自身商业决策、政府行为、不可抗力等原因可能会选择中止、中断及终止
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          的部分或全部服务。如有此等情形发生，我们会采取合理的方式并以合理的期限提前通知您，除法律法规另有规定外，我们不承担由此对您造成的损失。
+          您理解并同意，我们根据自身商业决策、政府行为、不可抗力等原因可能会选择中止、中断及终止积木优工的部分或全部服务。如有此等情形发生，我们会采取合理的方式并以合理的期限提前通知您，除法律法规另有规定外，我们不承担由此对您造成的损失。
         </span>
       </strong>
     </p>
@@ -3964,69 +1816,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          在
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          发生合并、分立、收购、资产转让时，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          可在单方通知您后，将本协议下部分或全部
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          服务及相应的权利义务转交由第三方运营或履行。具体受让主体以
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          通知为准。
+          在我们发生合并、分立、收购、资产转让时，我们可在单方通知您后，将本协议下部分或全部积木优工服务及相应的权利义务转交由第三方运营或履行。具体受让主体以我们通知为准。
         </span>
       </strong>
     </p>
@@ -4050,21 +1840,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          如发生下列任何一种情形，
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          有权不经通知而中断或终止向您提供服务：
+          如发生下列任何一种情形，我们有权不经通知而中断或终止向您提供服务：
         </span>
       </strong>
     </p>
@@ -4086,21 +1862,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          根据法律法规规定您应提交真实信息，而您提供的个人资料不真实
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          或
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          与注册时信息不一致又未能提供合理证明。
+          根据法律法规规定您应提交真实信息，而您提供的个人资料不真实或与注册时信息不一致又未能提供合理证明。
         </span>
       </strong>
     </p>
@@ -4183,7 +1945,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          8.国际使用之特别敬告
+          8. 国际使用之特别敬告
         </span>
       </strong>
     </p>
@@ -4213,14 +1975,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          9.违约及
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          赔偿
+          9. 违约及赔偿
         </span>
       </strong>
     </p>
@@ -4234,37 +1989,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9.1 【违约处理】如您违反本协议约定，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        有权作出独立判断，立即暂停或终止向您提供部分或全部
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        服务，包括禁言、屏蔽信息、删除发布内容、封禁账号、注销账号等措施。您应自行承担自身损失（包括但不限于虚拟财产清空、无法正常使用账号及相关
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        服务、无法正常获取您账号内资产或其他权益等），以及相应法律责任。
+        9.1
+        【违约处理】如您违反本协议约定，我们有权作出独立判断，立即暂停或终止向您提供部分或全部积木优工服务，包括禁言、屏蔽信息、删除发布内容、封禁账号、注销账号等措施。您应自行承担自身损失（包括但不限于虚拟财产清空、无法正常使用账号及相关积木优工服务、无法正常获取您账号内资产或其他权益等），以及相应法律责任。
       </span>
     </p>
     <p
@@ -4280,28 +2006,7 @@
         9.2
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        【责任承担】您承担法律责任的形式包括但不限于：对受到侵害者赔偿损失、赔礼道歉、消除影响、返还财产等。如您的行为给
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        或任何其他方
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        造成损失的，您应承担全部赔偿责任，包括行政处罚
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        、
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        直接损失及可得利益损失，以及相关人士为维权而发生的调查、取证费用损失
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，以及
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        律师费损失等相关维权损失。
+        【责任承担】您承担法律责任的形式包括但不限于：对受到侵害者赔偿损失、赔礼道歉、消除影响、返还财产等。如您的行为给我们或任何其他方造成损失的，您应承担全部赔偿责任，包括行政处罚、直接损失及可得利益损失，以及相关人士为维权而发生的调查、取证费用损失，以及律师费损失等相关维权损失。
       </span>
     </p>
     <p
@@ -4314,37 +2019,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9.3 【反商业贿赂】您充分了解，任何向
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        的雇员或顾问等提供实物、现金、现金等价物、劳务、旅游等价值明显超出正常商务洽谈范畴的利益，均视为商业贿赂行为。发生前述情形的，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可立即终止与您的所有合作并追究您的法律责任。您保证不以任何形式侵犯
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        及其分公司、子公司、关联企业
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，以及
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        该等机构之高级职员、代理人、品牌共有人
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        或其他
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        合作伙伴及员工的权益，并使其免受损害，并承诺全面承担由此引发的全部法律责任。
+        9.3
+        【反商业贿赂】您充分了解，任何向我们的雇员或顾问等提供实物、现金、现金等价物、劳务、旅游等价值明显超出正常商务洽谈范畴的利益，均视为商业贿赂行为。发生前述情形的，我们可立即终止与您的所有合作并追究您的法律责任。您保证不以任何形式侵犯积木优工及其分公司、子公司、关联企业，以及该等机构之高级职员、代理人、品牌共有人或其他合作伙伴及员工的权益，并使其免受损害，并承诺全面承担由此引发的全部法律责任。
       </span>
     </p>
     <p
@@ -4357,37 +2033,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9.4 【关联处理】您因违约导致
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        终止本协议时，出于维护平台秩序的目的，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可根据与您在其他协议项下达成的约定终止与您在其他协议项下的合作。如您违反
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        与您在其他合作项下订立的协议，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        亦有权终止本协议。除前述协议终止外，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        亦可关联追究您的违约责任。
+        9.4
+        【关联处理】您因违约导致我们终止本协议时，出于维护平台秩序的目的，我们可根据与您在其他协议项下达成的约定终止与您在其他协议项下的合作。如您违反积木优工与您在其他合作项下订立的协议，我们亦有权终止本协议。除前述协议终止外，我们亦可关联追究您的违约责任。
       </span>
     </p>
     <p
@@ -4400,25 +2047,8 @@
         line-height: 22pt;
       ">
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        9.5 【信息公示】
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        可将对您上述违约行为的处置信息，以及其他经国家行政或司法机关生效法律文书确认的违法信息，在
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        上予以公示。对涉嫌违反法律法规的行为，我们有义务保存有关记录，向国家有关机关报告并配合调查。
+        9.5
+        【信息公示】我们可将对您上述违约行为的处置信息，以及其他经国家行政或司法机关生效法律文书确认的违法信息，在积木优工上予以公示。对涉嫌违反法律法规的行为，我们有义务保存有关记录，向国家有关机关报告并配合调查。
       </span>
     </p>
     <p
@@ -4434,7 +2064,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          10.协议变更及终止
+          10. 协议变更及终止
         </span>
       </strong>
     </p>
@@ -4461,41 +2091,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          我们
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          有权在必要时修改本协议内容，并将通过合理的方式（包括但不限于
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          app或网站
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          公告、系统消息、站内信、手机短信、电子邮件等）及合理的期限提前通知您，该等通知于发送之日视为已送达您。您可以通过平台相关页面查阅最新版本的协议内容。
+          我们有权在必要时修改本协议内容，并将通过合理的方式（包括但不限于积木优工app或网站公告、系统消息、站内信、手机短信、电子邮件等）及合理的期限提前通知您，该等通知于发送之日视为已送达您。您可以通过平台相关页面查阅最新版本的协议内容。
         </span>
       </strong>
     </p>
@@ -4522,54 +2118,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          本协议变更生效后，如您继续使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          ，即视为您已接受修改后的协议。如您不接受修改后的协议，应当停止使用
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          产品和服务
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          。
+          本协议变更生效后，如您继续使用积木优工，即视为您已接受修改后的协议。如您不接受修改后的协议，应当停止使用积木优工产品和服务。
         </span>
       </strong>
     </p>
@@ -4590,56 +2139,7 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        【协议终止】您注销您的
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        账号或
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        通知您终止为您提供
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        积木优工
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        产品或
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        服务（包括但不限于封禁账号、注销账号等）时，本协议将同时终止，
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        我们
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        将不再另行通知您终止本协议。
+        【协议终止】您注销您的积木优工账号或我们通知您终止为您提供积木优工产品或服务（包括但不限于封禁账号、注销账号等）时，本协议将同时终止，我们将不再另行通知您终止本协议。
       </span>
     </p>
     <p
@@ -4659,35 +2159,7 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        您同意
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        基于其自行之考虑，因任何理由终止本服务，具体原因包含但不限于缺乏使用，或
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        认为您已经违反本协议的文字及精神等方面。
+        您同意积木优工基于其自行之考虑，因任何理由终止本服务，具体原因包含但不限于缺乏使用，或积木优工认为您已经违反本协议的文字及精神等方面。
       </span>
     </p>
     <p
@@ -4703,28 +2175,7 @@
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          11.法律的适用
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          、
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          管辖
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          及其他
+          11. 法律的适用、管辖及其他
         </span>
       </strong>
     </p>
@@ -4757,13 +2208,7 @@
         11.2
       </span>
       <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        本协议的成立、生效、履行、解释及纠纷解决，均受到中华人民共和国大陆法律（仅为本协议之目的，不包括香港特别行政区及澳门特别行政区法律法规，和中国台湾地区有关规定
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        不包含冲突法）管辖。
+        本协议的成立、生效、履行、解释及纠纷解决，均受到中华人民共和国大陆法律（仅为本协议之目的，不包括香港特别行政区及澳门特别行政区法律法规，和中国台湾地区有关规定，不包含冲突法）管辖。
       </span>
     </p>
     <p
@@ -4783,80 +2228,14 @@
           若有任何服务条款与法律相抵触（下称
         </span>
         <span style="font-family: 宋体">
-          &ldquo;待定条款&rdquo;），待定条款将按尽可能接近的方法重新解析，
+          &ldquo;待定条款&rdquo;），待定条款将按尽可能接近的方法重新解析，而其他条款则保持对用户产生法律效力和影响，因用户解释本服务协议或通过积木优工预订任何产品而导致的争议，应首先友好协商解决，
         </span>
       </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        而其他
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        条款则保持对用户产生法律效力和影响，因用户解释本服务协议或通过
-      </span>
-      <span
-        style="
-          mso-spacerun: 'yes';
-          font-family: 宋体;
-          font-size: 10.5pt;
-          mso-font-kerning: 0pt;
-        ">
-        积木优工
-      </span>
-      <span style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        预订任何产品而导致的争议，应首先友好协商解决，
-      </span>
       <strong>
         <span
           class="15"
           style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          协商不成时，应将纠纷或争
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          议提请
-        </span>
-      </strong>
-      <strong>
-        <span
-          style="
-            mso-spacerun: 'yes';
-            font-family: 宋体;
-            mso-ansi-font-weight: bold;
-            mso-bidi-font-weight: normal;
-            font-size: 10.5pt;
-            mso-font-kerning: 0pt;
-          ">
-          积木优工
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          所在
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          地有管辖权的
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          人民
-        </span>
-      </strong>
-      <strong>
-        <span
-          class="15"
-          style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-          法院管辖。
+          协商不成时，应将纠纷或争议提请积木优工所在地有管辖权的人民法院管辖。
         </span>
       </strong>
     </p>
@@ -4872,17 +2251,8 @@
       <span
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        11.4 本协议所有条款的标题仅为阅读和理解方便，本身并无实际
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        含义
-      </span>
-      <span
-        class="15"
-        style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
-        ，不能作为本协议涵义解释的依据。
+        11.4
+        本协议所有条款的标题仅为阅读和理解方便，本身并无实际含义，不能作为本协议涵义解释的依据。
       </span>
     </p>
     <p
@@ -4914,7 +2284,7 @@
         class="15"
         style="font-family: 宋体; letter-spacing: 0pt; font-size: 10.5pt">
         11.6
-        如您对本协议有任何意见或建议，您可向我们（info@jmyg.com）反馈，我们会给予您必要的帮助。
+        如您对本协议有任何意见或建议，您可向我们（hr@jmyg.com）反馈，我们会给予您必要的帮助。
       </span>
     </p>
     <p

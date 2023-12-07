@@ -10,6 +10,10 @@ const TableSlot = {
       type: Object,
       default: () => ({})
     },
+    column: {
+      type: Object,
+      default: () => ({})
+    },
     selections: {
       type: Array,
       default: () => []
@@ -25,6 +29,14 @@ const TableSlot = {
     hasData: {
       type: Boolean,
       default: false
+    },
+    list: {
+      type: Array,
+      default: () => []
+    },
+    index: {
+      type: Number,
+      default: 0
     }
   },
   render() {
@@ -37,7 +49,10 @@ const TableSlot = {
               row: this.row,
               selections: this.selections,
               refresh: this.refresh,
-              confirm: this.confirm
+              confirm: this.confirm,
+              list: this.list,
+              index: this.index,
+              column: this.column
             })
           )
         : null
@@ -48,7 +63,10 @@ const TableSlot = {
             row: this.row,
             selections: this.selections,
             refresh: this.refresh,
-            confirm: this.confirm
+            confirm: this.confirm,
+            list: this.list,
+            index: this.index,
+            column: this.column
           })
         )
   }
