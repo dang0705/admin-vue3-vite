@@ -9,8 +9,7 @@ import 'tinymce/themes/silver/theme'
 import 'tinymce/icons/default'
 import 'tinymce/models/dom'
 
-const focused = ref(false)
-const emits = defineEmits(['update:modelValue', 'get-formula-text'])
+const emits = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
     type: String,
@@ -73,7 +72,6 @@ const init = reactive({
   content_css: '/tinymce/css/index.css' //以css文件方式自定义可编辑区域的css样式，css文件需自己创建并引入
 })
 
-let used = []
 const transfer = ({ isSalary = true, value, match, offset, string }) => {
   return string[offset - 1] === '>' && string[offset + match.length] === '<'
     ? match
@@ -112,7 +110,7 @@ const value = ref('')
 watch(
   () => value.value,
   (value, oldValue) => {
-    oldValue && emitStringContent()
+    oldValue && emitStringContent(value)
   }
 )
 watchEffect(() => {
@@ -131,12 +129,14 @@ const sectionGoToEnd = async () => {
   tinymce.activeEditor?.selection?.collapse(false)
 }
 
-const emitStringContent = () =>
+const emitStringContent = (value) =>
   emits(
-    'get-formula-text',
-    tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
+    'update:modelValue',
+    value
+    // tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
   )
-
+const html2string = (html: string) =>
+  tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
 const insertContent = (content, type) => {
   tinymce.activeEditor?.insertContent(
     type
@@ -166,6 +166,7 @@ onMounted(() => {
 })
 onUnmounted(() => tinymce.remove())
 defineExpose({
-  insertContent
+  insertContent,
+  html2string
 })
 </script>
