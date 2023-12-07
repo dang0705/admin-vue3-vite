@@ -366,7 +366,7 @@ const downParams = computed(() =>
 const getExcel = useExportExcel({
   downBlobFile,
   downBlobFileUrl: props.downBlobFileUrl,
-  downParams: toValue(downParams.value),
+  downParams,
   downBlobFileName: props.downBlobFileName
 })
 /**
