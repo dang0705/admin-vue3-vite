@@ -1,5 +1,6 @@
 <template>
   <Table-view
+    ref="tableViewRef"
     :columns="columns"
     :actions="actions"
     drag
@@ -53,10 +54,13 @@
         <el-button type="primary" @click="$router.go(-1)" v-auth="''">
           返回
         </el-button>
-        <el-button type="primary" @click="saveList(list)" v-auth="''">
+        <el-button type="primary" @click="saveList(list, 'save')" v-auth="''">
           保存
         </el-button>
-        <el-button type="primary" @click="releaseList(list)" v-auth="''">
+        <el-button
+          type="primary"
+          @click="saveList(list, 'release')"
+          v-auth="''">
           发布
         </el-button>
       </div>
@@ -67,10 +71,10 @@
       title="添加工资项目"
       :label-width="150"
       :show-cancel="false"
+      :showBtn="!disabled"
       :forms="forms"
       :columns="20"
       v-model:form-data="dialogFormData"
-      :on-cancel="onCancel"
       :on-submit="onSubmit"
       submit-button-text="提交"
       button-position="center">
@@ -94,6 +98,7 @@
               placeholder="一级分类"
               class="w100"
               clearable
+              :disabled="disabled"
               v-model="dialogFormData.leve1">
               <el-option
                 :key="item.id"
@@ -118,6 +123,7 @@
               placeholder="二级分类"
               class="w100"
               clearable
+              :disabled="disabled"
               v-model="dialogFormData.leve2">
               <el-option
                 :key="item.id"
@@ -133,17 +139,22 @@
 </template>
 
 <script setup lang="ts">
-import { useDict } from '@hooks/dict'
 import {
   addObj,
   saveSort,
-  getList
+  getList,
+  getObj,
+  putObj,
+  releaseObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
+const tableViewRef = ref()
 const dataFormRef = ref()
+const disabled = ref(false)
+const id = ref(null)
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
@@ -160,39 +171,39 @@ const industry = ref([])
 const decimalList = [
   {
     label: '0',
-    value: 0
+    value: '0'
   },
   {
     label: '1',
-    value: 1
+    value: '1'
   },
   {
     label: '2',
-    value: 2
+    value: '2'
   },
   {
     label: '3',
-    value: 3
+    value: '3'
   },
   {
     label: '4',
-    value: 4
+    value: '4'
   },
   {
     label: '5',
-    value: 5
+    value: '5'
   },
   {
     label: '6',
-    value: 6
+    value: '6'
   },
   {
     label: '7',
-    value: 7
+    value: '7'
   },
   {
     label: '8',
-    value: 8
+    value: '8'
   }
 ]
 onMounted(async () => {
@@ -220,13 +231,13 @@ const columns = [
     'min-width': 160
   },
   {
-    prop: 'isShow',
+    prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value ? '是' : '否'),
     'min-width': 160
   },
   {
-    prop: 'isPayslip',
+    prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value ? '是' : '否'),
     'min-width': 160
@@ -251,14 +262,19 @@ const actions = (row, list) => {
       auth: '',
       label: '查看',
       action: {
-        handler: del,
+        handler: view,
         save: false,
-        params: [list]
+        params: row
       }
     },
     {
       auth: '',
-      label: '编辑'
+      label: '编辑',
+      action: {
+        handler: edit,
+        save: false,
+        params: { row, list }
+      }
     },
     {
       auth: '',
@@ -266,7 +282,7 @@ const actions = (row, list) => {
       action: {
         handler: del,
         save: false,
-        params: [list]
+        params: { row, list }
       }
     },
     {
@@ -278,15 +294,41 @@ const actions = (row, list) => {
 
 // 添加项目
 const addSalaryPlan = async (list) => {
-  console.log(list, 999)
-
-  saveSort({ ...form, saveParams: list })
+  listValue.value = list
+  disabled.value = false
+  id.value = null
   visible.value = true
 }
 
+// 查看
+const view = async (row) => {
+  visible.value = true
+  disabled.value = true
+  try {
+    let res = await getObj(row.id)
+    dialogFormData.value = res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// 编辑
+const edit = async ({ row, list }) => {
+  listValue.value = list
+  disabled.value = false
+  id.value = row.id
+  visible.value = true
+  try {
+    let res = await getObj(row.id)
+    dialogFormData.value = res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // 删除
-const del = (list) => {
-  console.log(list, 9999)
+const del = ({ row, list }) => {
+  tableViewRef?.value.delListItem(row.id)
 }
 
 // 系统项项目名称数据树形处理
@@ -326,6 +368,9 @@ const forms = computed(() => [
     key: 'projectSource',
     options: 'salary_plan_project_source',
     label: '项目来源',
+    props: {
+      disabled: disabled.value
+    },
     onChange: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
@@ -344,6 +389,9 @@ const forms = computed(() => [
           control: 'InputPlus',
           key: 'projectName',
           label: '项目名称',
+          props: {
+            disabled: disabled.value
+          },
           rules: [
             { required: true, message: '项目名称不能为空', trigger: 'blur' }
           ]
@@ -355,7 +403,7 @@ const forms = computed(() => [
     options: 'salary_plan_project_type',
     label: '项目类型',
     props: {
-      disabled: dialogFormData.value.projectSource === '10'
+      disabled: dialogFormData.value.projectSource === '10' || disabled.value
     },
     rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
   },
@@ -363,18 +411,24 @@ const forms = computed(() => [
     ? [
         {
           control: 'el-select',
-          key: 'carry_rule',
+          key: 'carryRule',
           options: 'carry_rule',
           label: '进位规则',
+          props: {
+            disabled: disabled.value
+          },
           rules: [
             { required: true, message: '进位规则不能为空', trigger: 'change' }
           ]
         },
         {
           control: 'el-select',
-          key: 'decimal',
+          key: 'decimalPlaces',
           options: decimalList,
           label: '保留小数位',
+          props: {
+            disabled: disabled.value
+          },
           rules: [
             { required: true, message: '保留小数位不能为空', trigger: 'change' }
           ]
@@ -386,6 +440,9 @@ const forms = computed(() => [
     key: 'salaryShow',
     options: 'yes_no_type',
     label: '薪资表是否展示',
+    props: {
+      disabled: disabled.value
+    },
     rules: [
       { required: true, message: '薪资表是否展示不能为空', trigger: 'change' }
     ]
@@ -395,6 +452,9 @@ const forms = computed(() => [
     key: 'payslipShow',
     options: 'yes_no_type',
     label: '工资条是否展示',
+    props: {
+      disabled: disabled.value
+    },
     rules: [
       { required: true, message: '工资条是否展示不能为空', trigger: 'change' }
     ]
@@ -406,41 +466,55 @@ const forms = computed(() => [
     props: {
       type: 'textarea',
       maxlength: '500',
-      showWordLimit: true
+      showWordLimit: true,
+      disabled: disabled.value
     },
     required: false
   }
 ])
 
-// 保存
-const saveList = async (list) => {
+// 保存 发布
+const saveList = async (list, type) => {
   const valid = await dataFormRef.value.validate().catch(() => {})
   if (!valid) return false
   try {
-    console.log(list, 'list')
-    let res = await saveSort({ ...form, saveParams: list })
-    closeTagView(route.meta.title as string)
-    $router.push({
-      path: '/merchant/salaryPlan/add',
-      query: {
-        salaryPlanId: form.salaryPlanId,
-        salaryPlanName: form.salaryPlanName
+    if (type === 'save') {
+      await saveSort({ ...form, modify: '1', saveParams: list })
+      if (form.salaryPlanName != route.query.salaryPlanName) {
+        closeTagView(route.meta.title as string)
+        $router.push({
+          path: '/merchant/salaryPlan/add',
+          query: {
+            salaryPlanId: form.salaryPlanId,
+            salaryPlanName: form.salaryPlanName
+          }
+        })
       }
-    })
-    console.log(res, 99999)
+    } else {
+      await releaseObj({ ...form, modify: '1', saveParams: list })
+      closeTagView(route.meta.title as string)
+      $router.push({ path: '/merchant/salaryPlan/index' })
+    }
   } catch (error) {
     console.log(error)
   }
 }
-// 发布
-const releaseList = (list) => {
-  console.log(list, 'list')
-}
 
+// 提交
 const onSubmit = async () => {
   try {
-    let res = await addObj({ ...form, saveParam: dialogFormData.value })
-    console.log(res, 9999)
+    await saveSort({ ...form, modify: '0', saveParams: listValue.value })
+    id.value == null
+      ? await addObj({
+          ...form,
+          modify: '0',
+          param: dialogFormData.value
+        })
+      : await putObj({
+          ...form,
+          modify: '0',
+          param: dialogFormData.value
+        })
   } catch (error) {
     console.log(error)
   }

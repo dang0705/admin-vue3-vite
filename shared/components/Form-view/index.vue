@@ -114,7 +114,11 @@ const init = async (forms: FormOptions[]) => {
     item.onChange &&
       watch(
         () => prop.modelValue[item.key],
-        (value) => item.onChange && item.onChange(value, formData.value)
+        (value, oldValue) => {
+          oldValue !== '' &&
+            item.onChange &&
+            item.onChange(value, formData.value)
+        }
       )
     // stopWatchShow && (stopWatchShow as Function)() && (stopWatchShow = null)
     item.show &&
