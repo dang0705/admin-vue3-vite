@@ -11,6 +11,7 @@ interface Show {
 }
 export interface FormOptions {
   control: string // 控件名称
+  hiddenColon?: boolean // 隐藏label冒号
   label: string // 中文字
   key: string // 后端字段
   columns?: number // 控件栅格column

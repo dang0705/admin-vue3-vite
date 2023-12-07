@@ -1,9 +1,5 @@
 <template>
-  <editor
-    v-model="value"
-    :init="init"
-    :disabled="disabled"
-    @blur="emitStringContent" />
+  <editor v-model="value" :init="init" :disabled="disabled" />
 </template>
 <script setup lang="ts">
 import tinymce from 'tinymce/tinymce'
@@ -13,7 +9,8 @@ import 'tinymce/themes/silver/theme'
 import 'tinymce/icons/default'
 import 'tinymce/models/dom'
 
-const emits = defineEmits(['update:modelValue', 'get-formula'])
+const focused = ref(false)
+const emits = defineEmits(['update:modelValue', 'get-formula-text'])
 const props = defineProps({
   modelValue: {
     type: String,
@@ -85,18 +82,13 @@ const transfer = ({ isSalary = true, value, match, offset, string }) => {
       } ${isSalary ? 'salary' : 'function'}">${value}</span>`
 }
 const parseString = (value) => {
-  used = []
   // First step is to parse salary item
   const parsedSalaryItem = props.salaries?.reduce(
-    (acc: string, rule) =>
+    (acc: string, salary) =>
       acc?.replace(
-        new RegExp(`(?<!\\p{L})${rule.text}(?!\\p{L})`, 'gu'),
-        (match, offset, string) => {
-          !used.length
-            ? used.push(rule)
-            : !used.some(({ text }) => text === match) && used.push(rule)
-          return transfer({ value: rule.text, match, offset, string })
-        }
+        new RegExp(`(?<!\\p{L})${salary}(?!\\p{L})`, 'gu'),
+        (match, offset, string) =>
+          transfer({ value: salary, match, offset, string })
       ),
     value
   )
@@ -117,6 +109,12 @@ const parseString = (value) => {
   }, parsedSalaryItem)
 }
 const value = ref('')
+watch(
+  () => value.value,
+  (value, oldValue) => {
+    oldValue && emitStringContent()
+  }
+)
 watchEffect(() => {
   props.functions?.length &&
     props.salaries?.length &&
@@ -133,19 +131,20 @@ const sectionGoToEnd = async () => {
   tinymce.activeEditor?.selection?.collapse(false)
 }
 
-const emitStringContent = () => {
+const emitStringContent = () =>
   emits(
-    'update:modelValue',
+    'get-formula-text',
     tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
   )
-}
-const insertContent = async (content, type) => {
+
+const insertContent = (content, type) => {
   tinymce.activeEditor?.insertContent(
     type
       ? `<span class="${
           type === 'salary' ? 'salary-item salary' : 'function-item function'
         } mceNonEditable">${content}</span>`
-      : content
+      : content,
+    { no_events: true }
   )
 }
 
@@ -160,6 +159,10 @@ onMounted(() => {
       value.value = parseString(value.value)
     }, 1000)
   })
+  // editor?.on('blur', async (e) => {
+  //   await nextTick()
+  //   console.log(e)
+  // })
 })
 onUnmounted(() => tinymce.remove())
 defineExpose({
