@@ -10,6 +10,7 @@ import other from './other'
 const service: AxiosInstance = axios.create({
   baseURL: env.VITE_API_URL,
   timeout: 50000, // 全局超时时间
+  withCredentials: false,
   paramsSerializer: (params: any) =>
     qs.stringify(params, { arrayFormat: 'repeat' })
 })
@@ -52,13 +53,11 @@ service.interceptors.request.use(
     if (token && !config.headers?.skipToken) {
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
-
     config.headers.tenantId = 0
-    // console.log("Local.get('dev'):",Local.get('dev')['api-version'] );
-    // if (Local.get('dev')) {
-    //   //just for testing so far
-    //   config.headers!['api-version'] = Local.get('dev')['api-version'];
-    // }
+    if (Local.get('api-version')) {
+      //just for testing so far
+      config.headers!['api-version'] = Local.get('api-version')
+    }
 
     // 请求报文加密
     if (config.headers![CommonHeaderEnum.ENC_FLAG]) {
@@ -151,10 +150,6 @@ const handleResponse = (response: AxiosResponse<any>) => {
  * 添加 Axios 的响应拦截器，用于全局响应结果处理
  */
 service.interceptors.response.use(handleResponse, (error) => {
-  if(error.status === undefined ){    
-    console.error("",error)
-    return Promise.reject();
-  }
   const {
     response: { status, data: { msg } = {}, config }
   } = error

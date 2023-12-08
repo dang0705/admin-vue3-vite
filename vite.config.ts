@@ -62,6 +62,7 @@ const viteConfig = defineConfig(({ mode, command }: ConfigEnv) => {
     resolve: { alias },
     server: {
       host: '0.0.0.0', // 服务器地址
+      // host: 'local.zhidianjh.com', // 服务器地址-本地测试用
       port: env.VITE_PORT as unknown as number, // 服务器端口号
       open: env.VITE_OPEN === 'true', // 是否自动打开浏览器
       hmr: true, // 启用热更新
