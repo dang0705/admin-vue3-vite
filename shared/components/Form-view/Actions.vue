@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { actionsParams } from '@components/Form-view/Form-view-props'
+import { actionsProps } from '@components/Form-view/Form-view-props'
 defineOptions({
   name: 'Form-action',
   inheritAttrs: false
 })
 const props = defineProps({
-  ...actionsParams,
+  ...actionsProps,
   vertical: { type: Boolean, default: false },
   modelValue: {
     type: Number,
@@ -15,7 +15,7 @@ const props = defineProps({
 const formView = inject('formView', null)
 const emit = defineEmits(['update:modelValue'])
 
-const page = props.pagination
+const page = props.isPagination
   ? computed({
       get: () => props.modelValue,
       set: (value) => emit('update:modelValue', value)
@@ -60,7 +60,7 @@ getIcon()
       }`,
       { horizontal: !vertical, 'ml-[8px]': !vertical }
     ]">
-    <template v-if="pagination">
+    <template v-if="isPagination">
       <el-button plain v-if="page" @click="page--">
         {{ prevButtonText }}
       </el-button>
@@ -70,7 +70,7 @@ getIcon()
     </template>
 
     <el-button
-      v-if="pagination ? isLastPage : true"
+      v-if="isPagination ? isLastPage : true"
       v-debounce="submit"
       type="primary"
       v-bind="icons.length ? { icon: icons[0] } : {}">
@@ -78,7 +78,7 @@ getIcon()
     </el-button>
     <slot name="third-button" />
     <el-button
-      v-if="showCancel && !pagination"
+      v-if="showCancel && !isPagination"
       :class="{
         'no-text-with-icon': isResetButton,
         '!ml-[8px]': !vertical,

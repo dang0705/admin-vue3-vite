@@ -29,7 +29,7 @@ export interface FormOptions {
   required?: boolean // 表单为必填字段
   validator?: string //utils/validate.ts的rule对象中对应的validator
 }
-export const actionsParams = {
+export const actionsProps = {
   showBtn: {
     type: Boolean,
     default: true
@@ -66,7 +66,7 @@ export const actionsParams = {
     type: Boolean,
     default: true
   },
-  pagination: {
+  isPagination: {
     type: Boolean,
     default: false
   },
@@ -146,5 +146,5 @@ export default {
     type: Boolean,
     default: false
   },
-  ...actionsParams
+  ...actionsProps
 }

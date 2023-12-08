@@ -33,22 +33,17 @@ const prop = defineProps({
   },
   ...FormViewProps
 })
-const form = ref()
-const data = ref({})
+const formRef = ref()
 const formData = computed({
-  get() {
-    return Object.assign(prop.modelValue, data.value)
-  },
+  get: () => prop.modelValue,
   set(value: any) {
     emit('update:modelValue', value)
   }
 })
-const formOptions = reactive({} as any)
-
+const controlOptions = reactive({} as any)
 interface OptionsParams {
   keyFrom?: string | []
   keyTo?: string | []
-
   [k: string]: any
 }
 
@@ -113,7 +108,7 @@ const init = async (forms: FormOptions[]) => {
 
     item.onChange &&
       watch(
-        () => prop.modelValue[item.key],
+        () => prop.modelValue?.[item.key],
         (value, oldValue) => {
           oldValue !== '' &&
             item.onChange &&
@@ -121,9 +116,21 @@ const init = async (forms: FormOptions[]) => {
         }
       )
     // stopWatchShow && (stopWatchShow as Function)() && (stopWatchShow = null)
-    item.show &&
+    helper.isFunction(item.show) &&
+      watchEffect(() => {
+        const isShow = !!item.show(formData.value)
+        item.hidden = !isShow
+        if (prop.validation) {
+          item.rules &&
+            (item.rules = isShow ? rulesCache[item.key as string] : [])
+        }
+        isShow
+          ? nextTick(() => formRef?.value?.clearValidate())
+          : (formData.value[item.key] = null)
+      })
+    /*    item.show &&
       (stopWatchShow = watch(
-        () => prop.modelValue[item.show?.by as string],
+        () => prop.modelValue?.[item.show?.by as string],
         () => {
           const isShow = item.show && !!item.show.fn(formData.value)
           item.hidden = !isShow
@@ -135,7 +142,7 @@ const init = async (forms: FormOptions[]) => {
           !isShow && (formData.value[item.key] = null)
         },
         { immediate: true }
-      ))
+      ))*/
     if (!item.options) continue
 
     // 处理options数据源
@@ -151,10 +158,10 @@ const init = async (forms: FormOptions[]) => {
         $dictStore.dict.splice(dictCacheIndex, 1)
       }
       const { [options as string]: dic } = useDict(options as string)
-      formOptions[item.key] = computed(() => dic.value)
+      controlOptions[item.key] = computed(() => dic.value)
     } else {
       if (helper.isArray(options)) {
-        formOptions[item.key] = options
+        controlOptions[item.key] = options
       } else if (helper.isObject(options)) {
         const { url, params = {} } = options as {
           url: string
@@ -166,23 +173,23 @@ const init = async (forms: FormOptions[]) => {
             const params = {}
             ;(keyFrom as []).forEach((key: string) => {
               watch(
-                () => prop.modelValue[key as string],
+                () => prop.modelValue?.[key as string],
                 async (value) => {
                   params[key] = value
                   ;(value !== '' || value !== undefined) &&
-                    (formOptions[item.key] = (
-                      await request.get(url, { params })
+                    (controlOptions[item.key] = (
+                      await $http.get(url, { params })
                     ).data)
                 }
               )
             })
           } else {
             stopWatchShow = watch(
-              () => prop.modelValue[keyFrom as string],
+              () => prop.modelValue?.[keyFrom as string],
               async (value) => {
                 formData.value[item.key] = ''
                 ;(value !== '' || value !== undefined) &&
-                  (formOptions[item.key] = (
+                  (controlOptions[item.key] = (
                     await request.get(url, {
                       params: { [keyTo as string]: value }
                     })
@@ -191,7 +198,7 @@ const init = async (forms: FormOptions[]) => {
             )
           }
         } else {
-          formOptions[item.key] = (await request.get(url, { params })).data
+          controlOptions[item.key] = (await $http.get(url, { params })).data
         }
       }
     }
@@ -210,14 +217,15 @@ pagination.value &&
   watch(
     () => page.value,
     async (page: number) => {
-      await init(prop.forms[page])
+      await init(prop.forms?.[page] as FormOptions[])
       emit('get-page', page)
     }
   )
 const reset = async () => {
   await nextTick()
-  form?.value?.resetFields()
+  formRef?.value?.resetFields()
 }
+
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
 }
@@ -234,16 +242,16 @@ watch(
   () => prop.show,
   async (show) =>
     show
-      ? initForm(prop.forms)
+      ? initForm(prop.forms as [])
       : reset() && stopWatchShow && stopWatchShow() && (stopWatchShow = null)
 )
 
 const getEvent = (control: string) =>
   ['el-input', 'InputPlus'].includes(control) ? 'keydown' : ''
-const onEnter = ({ key, code }: any) =>
+const onEnter = ({ key }: Record<string, string>) =>
   !prop.validation &&
   prop.submitButtonText === '查询' &&
-  (key.toLowerCase() === 'enter' || code.toLowerCase() === 'enter') &&
+  (key as string).toLowerCase() === 'enter' &&
   getList &&
   getList()
 
@@ -251,9 +259,8 @@ const submit = async () => {
   let valid: boolean
   if (prop.validation) {
     try {
-      valid = !prop.disabled ? await form.value.validate() : true
+      valid = !prop.disabled ? await formRef.value.validate() : true
     } catch (e) {
-      console.warn(e)
       valid = false
     }
     prop.debug && emit('get-validation', valid)
@@ -283,7 +290,7 @@ const stepsData = computed(() => {
   if (!pagination.value) return []
   prop.forms?.forEach(
     (_, index: number) =>
-      (steps[index] = (prop.steps[index] as string) || `第${index + 1}步`)
+      (steps[index] = (prop.steps?.[index] as string) || `第${index + 1}步`)
   )
   return steps
 })
@@ -311,7 +318,7 @@ defineExpose({
         :label-width="labelWidth"
         :model="formData"
         :rules="formRules"
-        ref="form">
+        ref="formRef">
         <div
           :class="[
             'flex',
@@ -370,7 +377,7 @@ defineExpose({
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">
                         <el-option
-                          v-for="item in formOptions[form.key]"
+                          v-for="item in controlOptions[form.key]"
                           :key="item[form.props?.value]"
                           :value="item[form.props?.value || 'value']"
                           :label="item[form.props?.label || 'label']" />
@@ -380,10 +387,10 @@ defineExpose({
                           !form.hidden && form.control === 'el-radio-group'
                         ">
                         <el-radio
-                          v-for="item in formOptions[form.key]"
+                          v-for="item in controlOptions[form.key]"
                           :key="item[form.props?.value || 'value']"
                           :label="item[form.props?.value || 'value']">
-                          {{ item[form.props?.label || 'label'] }}
+                          {{ item[form?.props?.label || 'label'] }}
                         </el-radio>
                       </template>
                     </component>
@@ -415,7 +422,7 @@ defineExpose({
             :submit="submit"
             :cancel="cancel"
             :pagination="pagination"
-            :is-last-page="isLastPage"
+            :is-last-page="isLastPage as boolean"
             class="ml-2" />
         </div>
       </el-form>

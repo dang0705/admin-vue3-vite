@@ -325,7 +325,7 @@ const rejectForms = computed(() =>
               trigger: 'blur'
             }
           ],
-          show: { by: 'auditPass', fn: ({ auditPass }) => !auditPass }
+          show: ({ auditPass }) => !auditPass
         }
       ]
 )
