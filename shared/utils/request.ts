@@ -53,13 +53,11 @@ service.interceptors.request.use(
     if (token && !config.headers?.skipToken) {
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
-
     config.headers.tenantId = 0
-    // console.log("Local.get('dev'):",Local.get('dev')['api-version'] );
-    // if (Local.get('dev')) {
-    //   //just for testing so far
-    //   config.headers!['api-version'] = Local.get('dev')['api-version'];
-    // }
+    if (Local.get('api-version')) {
+      //just for testing so far
+      config.headers!['api-version'] = Local.get('api-version')
+    }
 
     // 请求报文加密
     if (config.headers![CommonHeaderEnum.ENC_FLAG]) {

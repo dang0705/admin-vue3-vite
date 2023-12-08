@@ -8,7 +8,7 @@ import {
   refreshTokenApi
 } from '@jmyg/api/login'
 import { useMessage } from '@hooks/message'
-
+import Cookie from 'js-cookie'
 /**
  * @function useUserInfo
  * @returns {UserInfosStore}
@@ -41,7 +41,15 @@ export const useUserInfo = defineStore('userInfo', {
       return new Promise((resolve, reject) => {
         login(data)
           .then((res) => {
-            Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443/#/home')
+            const { access_token, refresh_token } = res
+            if (__isDev) {
+              Cookie.set('accesstoken', access_token)
+              Cookie.set('refreshtoken', refresh_token)
+            }
+            Session.set(
+              'targetUrl',
+              'https://jmyg-admin.zhidianjh.com:8443/#/home'
+            )
             // 本地测试用-后续从接口拿跳转路径
             // Session.set('targetUrl', 'http://local.zhidianjh.com:8891/#/home')
             resolve(res)
@@ -64,7 +72,10 @@ export const useUserInfo = defineStore('userInfo', {
       return new Promise((resolve, reject) => {
         loginByMobile(data.mobile, data.code)
           .then((res) => {
-            Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443/#/home')
+            Session.set(
+              'targetUrl',
+              'https://jmyg-admin.zhidianjh.com:8443/#/home'
+            )
             // 本地测试用-后续从接口拿跳转路径
             // Session.set('targetUrl', 'http://local.zhidianjh.com:8891/#/home')
             resolve(res)
