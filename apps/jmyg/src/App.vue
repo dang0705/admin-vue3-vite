@@ -24,14 +24,14 @@ import Cookies from '@configurations/cookie'
 import { useTokenStore } from '@stores/token'
 
 // 存储token 信息
-const token = Session.get('access_token')
-if(!token) {
+const token = Session.get('accesstoken')
+const cookies = Cookies.get();
+if(!token && cookies?.accesstoken) {
   const { accessToken, refreshToken } = storeToRefs(useTokenStore())
-  const cookies = Cookies.get();
   accessToken.value = cookies.accesstoken;
   refreshToken.value = cookies.refreshtoken;
-  Session.set('access_token', cookies.accesstoken)
-  Session.set('refresh_token', cookies.refreshtoken)
+  Session.set('accesstoken', cookies.accesstoken)
+  Session.set('refreshtoken', cookies.refreshtoken)
   // 后续cookies写入原始登陆url后，也要记录到当前Session和store中
 }
 
