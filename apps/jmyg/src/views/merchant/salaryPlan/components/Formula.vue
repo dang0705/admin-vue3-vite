@@ -8,7 +8,6 @@ import array2Object from '@utils/array-2-object'
 const editor = ref('')
 const formula = ref('SUM(基础工资,考勤奖)')
 const formulaText = computed(() => editor.value.html2string(formula.value))
-const parsedData = ref({})
 const dialogVisible = ref(false)
 
 let salaries = ref([])
@@ -52,7 +51,16 @@ const handleParse = async () => {
     salaryPlanId: 666
   })
   if (message === 'success') {
-    parsedData.value = calcFactor
+    return calcFactor
+  } else {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().error(message)
+    return false
+  }
+}
+const initTrial = async () => {
+  const parsedSuccess = await handleParse()
+  if (parsedSuccess) {
     forms.value = [
       {
         label: '未打卡扣款 =',
@@ -68,7 +76,7 @@ const handleParse = async () => {
     const controlTypeMap = array2Object({
       array: salary_plan_project_type.value
     })
-    calcFactor.forEach(({ projectName, projectType }, index) => {
+    parsedSuccess.forEach(({ projectName, projectType }, index) => {
       const control =
         controlTypeMap[projectType] === '日期'
           ? 'DateRange'
@@ -83,30 +91,22 @@ const handleParse = async () => {
       })
     })
     dialogVisible.value = true
-  } else {
-    const { useMessage } = await import('@hooks/message')
-    useMessage().error(message)
   }
 }
-
-const handleTrial = async () => {
-  await trial({
+const handleTrial = () =>
+  trial({
     ...formData.value,
     salaryPlanId: 666,
     salaryPlanProjectId: 666011
   })
-}
-// watch(
-//   () => formulaText.value,
-//   () => (parsedData.value = {})
-// )
+
 const onQueryClear = () => {}
 
 const insertContent = (content, type = 'salary') =>
   editor.value.insertContent(content, type)
 
 const onSave = () => {
-  console.log(1)
+  handleParse()
 }
 </script>
 <template>
@@ -121,7 +121,7 @@ const onSave = () => {
       <span class="text-lg" v-text="itemName" />
       <p class="flex items-center">
         <!--        <el-button type="primary" v-debounce="handleParse">解析</el-button>-->
-        <el-button type="primary" v-debounce="handleParse">
+        <el-button type="primary" v-debounce="initTrial">
           <Svg-icon name="iconfont icon_jisuan mr-[3px]" />
           试算
         </el-button>
