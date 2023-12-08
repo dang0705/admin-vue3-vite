@@ -75,16 +75,16 @@ export const Session = {
   },
   // 移除临时缓存
   remove(key: string) {
-    if (key === 'accessToken' || key === 'refreshToken') {
-      useTokenStore()[`${key === 'accessToken' ? 'accessToken' : 'refreshToken'}Remove`]()
+    if (key === 'accesstoken' || key === 'refreshtoken') {
+      useTokenStore()[`${key === 'accesstoken' ? 'accessToken' : 'refreshToken'}Remove`]()
       return Cookies.remove(key)
     }
     window.sessionStorage.removeItem(key)
   },
   // 移除全部临时缓存
   clear() {
-    Cookies.remove('accessToken')
-    Cookies.remove('refreshToken')
+    Cookies.remove('accesstoken')
+    Cookies.remove('refreshtoken')
     Cookies.remove('tenantId')
     Cookies.remove('targetUrl')
     Cookies.remove('originalUrl')
