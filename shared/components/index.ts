@@ -82,5 +82,9 @@ export const customComponents = [
   {
     name: 'Tag',
     component: () => import('@components/Tag/index.vue')
+  },
+  {
+    name: 'BottomButtons',
+    component: () => import('@components/Bottom-buttons.vue')
   }
 ]
