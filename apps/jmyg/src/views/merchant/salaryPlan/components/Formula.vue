@@ -1,18 +1,48 @@
 <script setup>
 import Editor from '@components/T-editor.vue'
 import { useDict } from '@hooks/dict'
-import { Search } from '@element-plus/icons-vue'
+// import { Search } from '@element-plus/icons-vue'
 import { getSalaryItems, parse, trial } from '@jmyg/api/outsourcing/formula'
 import array2Object from '@utils/array-2-object'
+import formulaSymbols from '@jmyg/configurations/formula-symbols'
 
+const { modelValue, itemName, salaryPlanId, salaryPlanProjectId } = defineProps(
+  {
+    modelValue: {
+      type: String,
+      default: ''
+    },
+    itemName: {
+      type: String,
+      default: '',
+      required: true
+    },
+    salaryPlanId: {
+      type: [Number, String],
+      default: 0,
+      required: true
+    },
+    salaryPlanProjectId: {
+      type: [Number, String],
+      default: 0,
+      required: true
+    }
+  }
+)
+const emits = defineEmits(['update:modelValue'])
 const editor = ref('')
-const formula = ref('SUM(基础工资,考勤奖)')
-const formulaText = computed(() => editor.value.html2string(formula.value))
 const dialogVisible = ref(false)
 
+const formulaValue = computed({
+  get: () => modelValue,
+  set: (value) => {
+    emits('update:modelValue', value)
+  }
+})
 let salaries = ref([])
+
 const getSalaries = async () =>
-  (salaries.value = (await getSalaryItems({ salaryPlanId: 666 })).data)
+  (salaries.value = (await getSalaryItems({ salaryPlanId })).data)
 getSalaries()
 
 let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
@@ -22,32 +52,20 @@ let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
 const functions = computed(() =>
   outsourcing_excel_support_formula.value.map(({ label }) => label)
 )
-const symbols = [
-  '+',
-  '-',
-  '×',
-  '/',
-  '(',
-  ')',
-  ',',
-  '=',
-  '<',
-  '>',
-  '≤',
-  '≥',
-  '≠'
-]
 const formulaName = ref('销售人员专用薪资方案')
-const itemName = ref('未打卡扣款=')
-const query = ref('')
 const formData = ref({})
 const forms = ref([])
+const query = ref('')
+const filteredSalaries = computed(() => {
+  const filtered = salaries.value.filter((salary) => salary === query.value)
+  return filtered.length ? filtered : salaries.value
+})
 
 const handleParse = async () => {
   const {
     data: { message, calcFactor }
   } = await parse({
-    formula: formulaText.value,
+    formula: editor.value.html2string(formulaValue.value),
     salaryPlanId: 666
   })
   if (message === 'success') {
@@ -70,7 +88,7 @@ const initTrial = async () => {
           disabled: true
         },
         key: 'formula',
-        value: `${formulaText.value}`
+        value: editor.value.html2string(formulaValue.value)
       }
     ]
     const controlTypeMap = array2Object({
@@ -90,15 +108,23 @@ const initTrial = async () => {
         control
       })
     })
+    forms.value.push({ title: '输出项', key: 'output', required: false })
     dialogVisible.value = true
   }
 }
-const handleTrial = () =>
-  trial({
+let trialValue = ref(null)
+watchEffect(() => !dialogVisible.value && (trialValue.value = null))
+
+const handleTrial = async () => {
+  const {
+    data: { returnValue }
+  } = await trial({
     ...formData.value,
-    salaryPlanId: 666,
-    salaryPlanProjectId: 666011
+    salaryPlanId,
+    salaryPlanProjectId
   })
+  trialValue.value = returnValue
+}
 
 const onQueryClear = () => {}
 
@@ -130,7 +156,7 @@ const onSave = () => {
     <ul>
       <li class="mb-5">
         <Editor
-          v-model="formula"
+          v-model="formulaValue"
           ref="editor"
           :salaries="salaries"
           :functions="functions" />
@@ -139,7 +165,7 @@ const onSave = () => {
         <h1 class="flex-shrink-0">常用符号：</h1>
         <div class="flex flex-wrap">
           <el-button
-            v-for="symbol in symbols"
+            v-for="symbol in formulaSymbols"
             :key="symbol"
             class="my-[2px]"
             @click="insertContent(symbol, '')">
@@ -172,17 +198,17 @@ const onSave = () => {
                 class="w-[140px]"
                 @clear="onQueryClear" />
             </li>
-            <li>
+            <!--            <li>
               <el-button type="primary" class="mx-[4px]" :icon="Search">
                 查询
               </el-button>
-            </li>
+            </li>-->
           </ul>
         </header>
         <div
           class="salary-items overflow-y-auto flex flex-wrap p-[10px] h-[180px]">
           <el-button
-            v-for="salary in salaries"
+            v-for="salary in filteredSalaries"
             :key="salary"
             class="mb-2"
             @click="insertContent(salary)">
@@ -195,10 +221,15 @@ const onSave = () => {
     <Dialog
       v-model="dialogVisible"
       v-model:form-data="formData"
+      keep-show-after-confirm
       :columns="24"
       :forms="forms"
       :onSubmit="handleTrial"
       vertical
-      title="公式试算" />
+      title="公式试算">
+      <template #after-forms>
+        <div>{{ itemName }} {{ trialValue }}</div>
+      </template>
+    </Dialog>
   </div>
 </template>

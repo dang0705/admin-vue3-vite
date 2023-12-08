@@ -34,6 +34,10 @@ export const actionsParams = {
     type: Boolean,
     default: true
   },
+  keepShowAfterConfirm: {
+    type: Boolean,
+    default: false
+  },
   buttonsIcon: {
     type: Array,
     default: () => []
