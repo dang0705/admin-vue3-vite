@@ -100,8 +100,11 @@ export const useUserInfo = defineStore('userInfo', {
         loginBySocial(state, code)
           .then((res) => {
             // 存储token 信息
-            Session.set('token', res.access_token)
-            Session.set('refresh_token', res.refresh_token)
+            const { access_token, refresh_token } = res;
+            if (__isDev) {
+              Cookie.set('accesstoken', access_token)
+              Cookie.set('refreshtoken', refresh_token)
+            }
             resolve(res)
           })
           .catch((err) => {
