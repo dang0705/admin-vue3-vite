@@ -1,17 +1,17 @@
 export const useTokenStore = defineStore('token-store', {
   state: () => ({
-    token: '',
+    accessToken: '',
     refreshToken: ''
   }),
   actions: {
-    tokenRemove() {
-      this.token = ''
+    accessTokenRemove() {
+      this.accessToken = ''
     },
     refreshTokenRemove() {
       this.refreshToken = ''
     },
     clearToken() {
-      this.token = this.refreshToken = ''
+      this.accessToken = this.refreshToken = ''
     }
   },
   persist: true

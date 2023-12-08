@@ -41,9 +41,9 @@ export const useUserInfo = defineStore('userInfo', {
       return new Promise((resolve, reject) => {
         login(data)
           .then((res) => {
-            // 存储token 信息
-            Session.set('token', res.access_token)
-            Session.set('refresh_token', res.refresh_token)
+            Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443/#/home')
+            // 本地测试用-后续从接口拿跳转路径
+            // Session.set('targetUrl', 'http://local.zhidianjh.com:8891/#/home')
             resolve(res)
           })
           .catch((err) => {
@@ -64,9 +64,9 @@ export const useUserInfo = defineStore('userInfo', {
       return new Promise((resolve, reject) => {
         loginByMobile(data.mobile, data.code)
           .then((res) => {
-            // 存储token 信息
-            Session.set('token', res.access_token)
-            Session.set('refresh_token', res.refresh_token)
+            Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443/#/home')
+            // 本地测试用-后续从接口拿跳转路径
+            // Session.set('targetUrl', 'http://local.zhidianjh.com:8891/#/home')
             resolve(res)
           })
           .catch((err) => {
