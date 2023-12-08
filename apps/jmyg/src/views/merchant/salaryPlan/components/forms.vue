@@ -43,10 +43,14 @@
           type="primary"
           @click="addSalaryPlan(otherInfo.records)"
           v-if="route.query.type !== 'see'"
-          v-auth="''">
+          v-auth="'outsourcing_salaryPlanProject_add'">
           添加项目
         </el-button>
-        <el-button type="primary" v-auth="''">导出数据模板</el-button>
+        <el-button
+          type="primary"
+          v-auth="'outsourcing_salaryPlanProject_export_data'">
+          导出数据模板
+        </el-button>
         <el-button type="primary" v-auth="''">方案试算</el-button>
       </div>
     </template>
@@ -59,13 +63,13 @@
           type="primary"
           @click="saveList(list, 'save')"
           v-if="route.query.type !== 'see'"
-          v-auth="''">
+          v-auth="'outsourcing_salaryPlanProject_save'">
           保存
         </el-button>
         <el-button
           type="primary"
           @click="saveList(list, 'release')"
-          v-auth="''">
+          v-auth="'outsourcing_salaryPlan_edit_release'">
           {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
         </el-button>
       </div>
@@ -264,7 +268,7 @@ const columns = [
 const actions = (row, list) => {
   return [
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_view_info',
       label: '查看',
       action: {
         handler: view,
@@ -273,7 +277,7 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_edit',
       label: '编辑',
       show: () => route.query.type !== 'see',
       action: {
@@ -283,7 +287,7 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
       show: () => route.query.type !== 'see',
       action: {
@@ -293,9 +297,14 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_edit_formula',
       label: '修改公式',
-      show: () => row.projectSource === '30'
+      show: () => row.projectSource === '30',
+      action: {
+        handler: goFormula,
+        save: false,
+        params: row.id
+      }
     }
   ]
 }
@@ -337,6 +346,18 @@ const edit = async ({ row, list }) => {
 // 删除
 const del = ({ row, list }) => {
   tableViewRef?.value.delListItem(row.id)
+}
+
+// 修改公式
+const goFormula = (id) => {
+  $router.push({
+    path: '/merchant/salaryPlan/edit/formula',
+    query: {
+      salaryPlanId: form.salaryPlanId,
+      salaryPlanName: form.salaryPlanName,
+      salaryPlanProjectId: id
+    }
+  })
 }
 
 // 系统项项目名称数据树形处理

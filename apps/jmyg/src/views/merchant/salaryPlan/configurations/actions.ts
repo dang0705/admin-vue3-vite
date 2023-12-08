@@ -6,11 +6,11 @@ export default (
   (row: any) => [
     {
       label: '绑定客户',
-      auth: ''
+      auth: 'outsourcing_salaryPlan_merchant_view'
     },
     {
       label: '查看',
-      auth: '',
+      auth: 'outsourcing_salaryPlan_view',
       action: {
         handler: goFromView,
         save: false,
@@ -19,7 +19,7 @@ export default (
     },
     {
       label: '编辑',
-      auth: '',
+      auth: 'outsourcing_salarySystemItem_view',
       action: {
         handler: goFromView,
         save: false,
@@ -28,11 +28,11 @@ export default (
     },
     {
       label: '克隆',
-      auth: ''
+      auth: 'outsourcing_salaryPlan_copy'
     },
     {
       label: '删除',
-      auth: '',
+      auth: 'outsourcing_salaryPlan_del',
       confirm: {
         ask: '您确定将此方案删除吗？'
       },
@@ -43,7 +43,7 @@ export default (
     },
     {
       label: '停用',
-      auth: '',
+      auth: 'outsourcing_salaryPlan_edit',
       show: () => row.state == '0',
       confirm: {
         ask: '您确定将此方案停用吗？'
