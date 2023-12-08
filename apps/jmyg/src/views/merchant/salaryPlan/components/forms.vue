@@ -5,6 +5,7 @@
     :actions="actions"
     drag
     no-pagination
+    size="5000"
     module="outsourcing/salaryPlanProject.ts">
     <template #top-bar="{ otherInfo }">
       <div>
