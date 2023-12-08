@@ -12,7 +12,7 @@ const service: AxiosInstance = axios.create({
   timeout: 50000, // 全局超时时间
   withCredentials: false,
   paramsSerializer: (params: any) =>
-    qs.stringify(params, { arrayFormat: 'repeat' }),
+    qs.stringify(params, { arrayFormat: 'repeat' })
 })
 
 interface Config extends AxiosRequestConfig {
@@ -152,10 +152,6 @@ const handleResponse = (response: AxiosResponse<any>) => {
  * 添加 Axios 的响应拦截器，用于全局响应结果处理
  */
 service.interceptors.response.use(handleResponse, (error) => {
-  if(error.status === undefined ){
-    console.error("",error)
-    return Promise.reject();
-  }
   const {
     response: { status, data: { msg } = {}, config }
   } = error
