@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { nextTick } from 'vue'
+
 defineOptions({
   name: 'BottomButtons'
 })
-defineProps({
+const props = defineProps({
   text: {
     type: String,
     default: '保存'
@@ -14,20 +16,37 @@ defineProps({
   position: {
     type: String,
     default: 'relative'
+  },
+  to: {
+    type: String,
+    default: '.layout-backtop'
   }
 })
 const emits = defineEmits(['click'])
 const debounceOptions = { params: 'click' }
 const exist = ref(true)
+const setWrapperPadding = (size: number) =>
+  (document.querySelector(props.to).style.paddingBottom = `${size}px`)
 
-onActivated(() => (exist.value = true))
-onDeactivated(() => (exist.value = false))
+onMounted(async () => {
+  await nextTick()
+  setWrapperPadding(64)
+})
+onActivated(() => {
+  exist.value = true
+  setWrapperPadding(64)
+})
+onDeactivated(() => {
+  exist.value = false
+  setWrapperPadding(0)
+})
 </script>
 
 <template>
-  <teleport to=".layout-main-scroll">
+  <teleport :to="to">
     <div
       v-if="exist"
+      id="bottom-button"
       class="left-0 bottom-0 w-full flex justify-center items-center z-[50]"
       :class="position"
       style="

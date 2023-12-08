@@ -1,5 +1,5 @@
 <template>
-  <div class="h-fit absolute">
+  <div>
     <el-form
       ref="dataFormRef"
       :model="form"
