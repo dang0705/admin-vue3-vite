@@ -44,7 +44,7 @@ export default (
     {
       label: '停用',
       auth: 'outsourcing_salaryPlan_edit',
-      show: () => row.state == '0',
+      show: () => row.state == '1',
       confirm: {
         ask: '您确定将此方案停用吗？'
       },
