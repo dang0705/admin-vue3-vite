@@ -57,7 +57,7 @@ const goFromView = ({ row, type }) => {
         }
       })
     : $router.push({
-        path: '/merchant/salaryPlan/edit',
+        path: '/merchant/salaryPlan/edit/index',
         query: {
           salaryPlanId: row.id,
           salaryPlanName: row.salaryPlanName
