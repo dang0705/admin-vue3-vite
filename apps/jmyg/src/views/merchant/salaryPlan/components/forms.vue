@@ -365,7 +365,8 @@ const goFormula = ({ id, formula }) => {
     path: '/merchant/salaryPlan/edit/formula',
     query: {
       salaryPlanName: form.salaryPlanName,
-      salaryPlanProjectId: id
+      salaryPlanProjectId: id,
+      salaryPlanId: form.salaryPlanId
     }
   })
 }
