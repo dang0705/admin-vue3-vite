@@ -73,7 +73,9 @@ const init = reactive({
 })
 
 const transfer = ({ isSalary = true, value, match, offset, string }) => {
-  return string[offset - 1] === '>' && string[offset + match.length] === '<'
+  return string !== `<p>${match}</p>` &&
+    string[offset - 1] === '>' &&
+    string[offset + match.length] === '<'
     ? match
     : `<span class="mceNonEditable ${
         isSalary ? 'salary-item' : 'function-item'
@@ -135,7 +137,7 @@ const emitStringContent = (value) =>
     value
     // tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
   )
-const html2string = (html: string) =>
+const html2string = () =>
   tinymce.activeEditor?.getContent({ format: 'text' }).replace(/\s+/g, '')
 const insertContent = (content, type) => {
   tinymce.activeEditor?.insertContent(

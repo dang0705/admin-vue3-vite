@@ -2,36 +2,33 @@
 import Editor from '@components/T-editor.vue'
 import { useDict } from '@hooks/dict'
 // import { Search } from '@element-plus/icons-vue'
-import { getSalaryItems, parse, trial } from '@jmyg/api/outsourcing/formula'
+import {
+  getSalaryItems,
+  parse,
+  trial,
+  putObj
+} from '@jmyg/api/outsourcing/formula'
 import array2Object from '@utils/array-2-object'
 import formulaSymbols from '@jmyg/configurations/formula-symbols'
-
-const { modelValue, itemName, salaryPlanId, salaryPlanProjectId } = defineProps(
-  {
-    modelValue: {
-      type: String,
-      default: ''
-    },
-    itemName: {
-      type: String,
-      default: '',
-      required: true
-    },
-    salaryPlanId: {
-      type: [Number, String],
-      default: 0,
-      required: true
-    },
-    salaryPlanProjectId: {
-      type: [Number, String],
-      default: 0,
-      required: true
-    }
-  }
-)
+import closeTagView from '@utils/close-tag-view'
+const {
+  modelValue,
+  itemName,
+  salaryPlanId = '',
+  salaryPlanName = '',
+  salaryPlanProjectId = ''
+} = defineProps([
+  'modelValue',
+  'itemName',
+  'salaryPlanId',
+  'salaryPlanName',
+  'salaryPlanProjectId'
+])
 const emits = defineEmits(['update:modelValue'])
 const editor = ref('')
 const dialogVisible = ref(false)
+const $router = useRouter()
+const $route = useRoute()
 
 const formulaValue = computed({
   get: () => modelValue,
@@ -43,7 +40,6 @@ let salaries = ref([])
 
 const getSalaries = async () =>
   (salaries.value = (await getSalaryItems({ salaryPlanId })).data)
-getSalaries()
 
 let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
   'outsourcing_excel_support_formula',
@@ -52,7 +48,6 @@ let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
 const functions = computed(() =>
   outsourcing_excel_support_formula.value.map(({ label }) => label)
 )
-const formulaName = ref('销售人员专用薪资方案')
 const formData = ref({})
 const forms = ref([])
 const query = ref('')
@@ -113,7 +108,12 @@ const initTrial = async () => {
   }
 }
 let trialValue = ref(null)
-watchEffect(() => !dialogVisible.value && (trialValue.value = null))
+
+watchEffect(() => {
+  // !dialogVisible.value && (trialValue.value = null)
+  console.log(salaryPlanId)
+  salaryPlanId && getSalaries()
+})
 
 const handleTrial = async () => {
   const {
@@ -131,8 +131,19 @@ const onQueryClear = () => {}
 const insertContent = (content, type = 'salary') =>
   editor.value.insertContent(content, type)
 
-const onSave = () => {
-  handleParse()
+const onSave = async () => {
+  // handleParse()
+  if (!editor.value.html2string(formulaValue.value)) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().error('公式尚未填写')
+    return
+  }
+  await putObj({
+    salaryPlanProjectId,
+    formula: editor.value.html2string(formulaValue.value)
+  })
+  $router.back()
+  closeTagView($route.meta.title)
 }
 </script>
 <template>
@@ -140,11 +151,11 @@ const onSave = () => {
     class="px-[60px] bg-white h-fit min-h-full flex flex-col absolute pt-[15px]">
     <p class="text-lg my-[6px]">
       薪资方案名称：
-      <span class="text-gray-400" v-text="formulaName" />
+      <span class="text-gray-400" v-text="salaryPlanName" />
     </p>
     <div
       class="flex justify-between items-center text-lg px-[10px] font-bold h-[40px] bg-[#FAFAFA] border-[1px] border-[#E7E7E7]">
-      <span class="text-lg" v-text="itemName" />
+      <span class="text-lg" v-text="`${itemName}=`" />
       <p class="flex items-center">
         <!--        <el-button type="primary" v-debounce="handleParse">解析</el-button>-->
         <el-button type="primary" v-debounce="initTrial">
@@ -169,7 +180,9 @@ const onSave = () => {
             :key="symbol"
             class="my-[2px]"
             @click="insertContent(symbol, '')">
-            {{ symbol }}
+            <span class="font-bold text-lg">
+              {{ symbol }}
+            </span>
           </el-button>
         </div>
       </li>
