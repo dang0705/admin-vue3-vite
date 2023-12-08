@@ -317,7 +317,7 @@ const actions = (row, list) => {
         params: {
           salaryPlanId: form.salaryPlanId,
           salaryPlanName: form.salaryPlanName,
-          salaryPlanProjectId: id
+          salaryPlanProjectId: row.id
         }
       }
     }
@@ -364,12 +364,12 @@ const del = ({ row, list }) => {
 }
 
 // 修改公式
-const goFormula = ({ id, formula }) => {
+const goFormula = ({ salaryPlanProjectId, formula }) => {
   $router.push({
     path: '/merchant/salaryPlan/edit/formula',
     query: {
       salaryPlanName: form.salaryPlanName,
-      salaryPlanProjectId: id,
+      salaryPlanProjectId,
       salaryPlanId: form.salaryPlanId
     }
   })
