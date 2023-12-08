@@ -43,7 +43,7 @@ export const useUserInfo = defineStore('userInfo', {
           .then((res) => {
             Session.set('targetUrl', 'https://jmyg-admin.zhidianjh.com:8443/#/home')
             // 本地测试用-后续从接口拿跳转路径
-            // Session.set('targetUrl', 'http://local.zhidianjh.com:8891/#/home')
+            // Session.set('targetUrl', 'http://local.zhidianjh.com:8889/#/home')
             resolve(res)
           })
           .catch((err) => {
