@@ -314,7 +314,11 @@ const actions = (row, list) => {
       action: {
         handler: goFormula,
         save: false,
-        params: { id: row.id, formula: row.formula }
+        params: {
+          salaryPlanId: form.salaryPlanId,
+          salaryPlanName: form.salaryPlanName,
+          salaryPlanProjectId: id
+        }
       }
     }
   ]
