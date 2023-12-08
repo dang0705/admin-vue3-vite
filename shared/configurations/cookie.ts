@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
-export default Cookies.withAttributes({
+const cookies = Cookies.withAttributes({
   path: '/',
   ...(__isDev ? {} : { domain: '.zhidianjh.com' })
 })
+export default cookies
+export const getToken = () => cookies.get('accesstoken')
