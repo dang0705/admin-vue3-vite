@@ -99,7 +99,7 @@ const accuracyRef = ref(null)
 watch(() => labels.value, (labels) => labels.length && (data.value = labels.map(({label}) => ({
   label,
   minimumBase: 0,
-  highestBase: 0,
+  highestBase: 100,
   paymentRatio: 0,
   whetherToMakeUpPayment: false,
   chargingAccuracy: '1'
