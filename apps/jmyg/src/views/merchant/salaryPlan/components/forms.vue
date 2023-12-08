@@ -232,24 +232,34 @@ const columns = [
     prop: 'projectSourceDesc',
     label: '项目来源',
     // value: ({ batchType }: BatchUploadRecordPage) => batchMap.value.batch_type[batchType],
-    'min-width': 120
+    'min-width': 80
   },
   {
     prop: 'projectTypeDesc',
     label: '项目类型',
-    'min-width': 160
+    'min-width': 80
   },
   {
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 160
+    'min-width': 80
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 160
+    'min-width': 80
+  },
+  {
+    prop: 'grouping',
+    label: '分组',
+    'min-width': 80
+  },
+  {
+    prop: 'salaryPlanProjectDesc',
+    label: '备注',
+    'min-width': 200
   },
   {
     prop: 'formula',
@@ -353,10 +363,8 @@ const goFormula = ({ id, formula }) => {
   $router.push({
     path: '/merchant/salaryPlan/edit/formula',
     query: {
-      salaryPlanId: form.salaryPlanId,
       salaryPlanName: form.salaryPlanName,
-      salaryPlanProjectId: id,
-      formula: formula == null ? '' : formula
+      salaryPlanProjectId: id
     }
   })
 }
@@ -392,6 +400,7 @@ const twoChange = (id) => {
   }
 }
 
+// Dialog配置项
 const forms = computed(() => [
   {
     control: 'el-select',
@@ -491,7 +500,17 @@ const forms = computed(() => [
   },
   {
     control: 'InputPlus',
-    key: 'desc',
+    key: 'grouping',
+    label: '分组',
+    props: {
+      maxlength: '20',
+      disabled: disabled.value
+    },
+    required: false
+  },
+  {
+    control: 'InputPlus',
+    key: 'salaryPlanProjectDesc',
     label: '备注',
     props: {
       type: 'textarea',
