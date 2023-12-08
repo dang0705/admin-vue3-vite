@@ -1,181 +1,186 @@
 <template>
-  <el-form
-    ref="dataFormRef"
-    :model="form"
-    :rules="dataRules"
-    formDialogRef
-    label-width="160px"
-    v-loading="loading">
-    <div>
-      <!-- <Divider title="基本信息" /> -->
-      <el-card class="!border-none" header="基本信息" shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item label="服务商名称：" prop="spName">
-              <InputPlus v-model="form.spName" :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
+  <div class="h-fit absolute w-full">
+    <el-form
+      ref="dataFormRef"
+      :model="form"
+      :rules="dataRules"
+      formDialogRef
+      label-width="160px"
+      v-loading="loading">
+      <div>
+        <!-- <Divider title="基本信息" /> -->
+        <el-card class="!border-none" header="基本信息" shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item label="服务商名称：" prop="spName">
+                <InputPlus
+                  v-model="form.spName"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="社会统一信用代码：" prop="socialCreditCode">
-              <InputPlus
-                v-model="form.socialCreditCode"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" class="mb20">
-            <el-form-item label="营业执照：" prop="businessLicense">
-              <UploadFile
-                :type="businessType"
-                v-model="form.businessLicense"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="24" class="mb20">
-            <el-form-item label="经营范围：" prop="businessScope">
-              <InputPlus
-                type="textarea"
-                v-model="form.businessScope"
-                autosize
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="社会统一信用代码：" prop="socialCreditCode">
+                <InputPlus
+                  v-model="form.socialCreditCode"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="营业执照：" prop="businessLicense">
+                <UploadFile
+                  :type="businessType"
+                  v-model="form.businessLicense"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="24" class="mb20">
+              <el-form-item label="经营范围：" prop="businessScope">
+                <InputPlus
+                  type="textarea"
+                  v-model="form.businessScope"
+                  autosize
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
 
-      <!-- <Divider title="法人信息" /> -->
-      <el-card class="!border-none" header="法人信息" shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col :span="12" class="mb20">
-            <el-form-item label="法人姓名：" prop="legalPersonName">
-              <InputPlus
-                v-model="form.legalPersonName"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
+        <!-- <Divider title="法人信息" /> -->
+        <el-card class="!border-none" header="法人信息" shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col :span="12" class="mb20">
+              <el-form-item label="法人姓名：" prop="legalPersonName">
+                <InputPlus
+                  v-model="form.legalPersonName"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="法人手机号：" prop="legalPersonMobile">
-              <InputPlus
-                v-model="form.legalPersonMobile"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="法人手机号：" prop="legalPersonMobile">
+                <InputPlus
+                  v-model="form.legalPersonMobile"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="法人身份证号：" prop="legalPersonIdCard">
-              <InputPlus
-                v-model="form.legalPersonIdCard"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item label="法人身份证号：" prop="legalPersonIdCard">
+                <InputPlus
+                  v-model="form.legalPersonIdCard"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20"></el-col>
+            <el-col :span="12" class="mb20"></el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item label="法人身份证头像面：" prop="legalPersonPortrait">
-              <UploadFile
-                :type="businessType"
-                v-model="form.legalPersonPortrait"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                label="法人身份证头像面："
+                prop="legalPersonPortrait">
+                <UploadFile
+                  :type="businessType"
+                  v-model="form.legalPersonPortrait"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12" class="mb20">
-            <el-form-item
-              label="法人身份证国徽面："
-              prop="legalPersonNationalEmblem">
-              <UploadFile
-                :type="businessType"
-                v-model="form.legalPersonNationalEmblem"
-                :disabled="!!route.query.see" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
+            <el-col :span="12" class="mb20">
+              <el-form-item
+                label="法人身份证国徽面："
+                prop="legalPersonNationalEmblem">
+                <UploadFile
+                  :type="businessType"
+                  v-model="form.legalPersonNationalEmblem"
+                  :disabled="!!route.query.see" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-card>
 
-      <!-- <Divider title="资质信息" /> -->
-      <el-card
-        :style="{ 'margin-bottom': !route.query.see ? '71px' : '0px' }"
-        class="!border-none"
-        header="资质信息"
-        shadow="never">
-        <el-row class="paddcus" :gutter="48">
-          <el-col
-            :span="24"
-            class="mb20"
-            v-for="(_, index) in form.qualifications"
-            :key="index">
-            <el-row>
-              <el-col :span="12" class="mb20">
-                <el-form-item
-                  label="资质名称："
-                  :prop="`qualifications[${index}].qualificationName`"
-                  :rules="[
-                    {
-                      required: route.query.see
-                        ? false
-                        : _.filePath.length != 0,
-                      message: '资质名称不能为空',
-                      trigger: 'blur'
-                    }
-                  ]">
-                  <InputPlus
-                    v-model="_.qualificationName"
-                    :disabled="!!route.query.see"
-                    :placeholder="!!route.query.see ? '' : '请输入'" />
-                </el-form-item>
-              </el-col>
+        <!-- <Divider title="资质信息" /> -->
+        <el-card
+          :style="{ 'margin-bottom': !route.query.see ? '71px' : '0px' }"
+          class="!border-none"
+          header="资质信息"
+          shadow="never">
+          <el-row class="paddcus" :gutter="48">
+            <el-col
+              :span="24"
+              class="mb20"
+              v-for="(_, index) in form.qualifications"
+              :key="index">
+              <el-row>
+                <el-col :span="12" class="mb20">
+                  <el-form-item
+                    label="资质名称："
+                    :prop="`qualifications[${index}].qualificationName`"
+                    :rules="[
+                      {
+                        required: route.query.see
+                          ? false
+                          : _.filePath.length != 0,
+                        message: '资质名称不能为空',
+                        trigger: 'blur'
+                      }
+                    ]">
+                    <InputPlus
+                      v-model="_.qualificationName"
+                      :disabled="!!route.query.see"
+                      :placeholder="!!route.query.see ? '' : '请输入'" />
+                  </el-form-item>
+                </el-col>
 
-              <el-col :span="12" class="mb20">
-                <el-form-item
-                  label="资质文件："
-                  :prop="`qualifications[${index}].filePath`"
-                  :rules="[
-                    {
-                      type: 'array',
-                      required: route.query.see
-                        ? false
-                        : _.qualificationName != '',
-                      message: '资质文件不能为空',
-                      trigger: 'change'
-                    }
-                  ]">
-                  <div
-                    class="flex items-start flex-wrap"
-                    v-if="!(!!route.query.see && _.filePath.length == 0)">
-                    <UploadFile
-                      :type="businessType"
-                      v-model="_.filePath"
-                      :disabled="!!route.query.see" />
-                    <ul
-                      class="gradual-tax-operation flex items-center ml-[10px]"
-                      v-if="
-                        !route.query.see &&
-                        index === form.qualifications.length - 1
-                      ">
-                      <li
-                        style="color: #ff6826"
-                        class="text-[14px] cursor-pointer"
-                        @click="addQualifications">
-                        &plus;添加
-                      </li>
-                      <li
-                        style="color: #e02020"
-                        class="text-[14px] cursor-pointer ml-[10px]"
-                        v-if="index"
-                        @click="removeQualifications(index)">
-                        删除
-                      </li>
-                    </ul>
-                  </div>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-col>
-        </el-row>
-      </el-card>
-      <div
+                <el-col :span="12" class="mb20">
+                  <el-form-item
+                    label="资质文件："
+                    :prop="`qualifications[${index}].filePath`"
+                    :rules="[
+                      {
+                        type: 'array',
+                        required: route.query.see
+                          ? false
+                          : _.qualificationName != '',
+                        message: '资质文件不能为空',
+                        trigger: 'change'
+                      }
+                    ]">
+                    <div
+                      class="flex items-start flex-wrap"
+                      v-if="!(!!route.query.see && _.filePath.length == 0)">
+                      <UploadFile
+                        :type="businessType"
+                        v-model="_.filePath"
+                        :disabled="!!route.query.see" />
+                      <ul
+                        class="gradual-tax-operation flex items-center ml-[10px]"
+                        v-if="
+                          !route.query.see &&
+                          index === form.qualifications.length - 1
+                        ">
+                        <li
+                          style="color: #ff6826"
+                          class="text-[14px] cursor-pointer"
+                          @click="addQualifications">
+                          &plus;添加
+                        </li>
+                        <li
+                          style="color: #e02020"
+                          class="text-[14px] cursor-pointer ml-[10px]"
+                          v-if="index"
+                          @click="removeQualifications(index)">
+                          删除
+                        </li>
+                      </ul>
+                    </div>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
+        </el-card>
+        <!--      <div
         v-if="!route.query.see"
         class="page_bottom_wrapper"
         :style="{ 'width': barWidth }">
@@ -185,30 +190,39 @@
             确认
           </el-button>
         </span>
+      </div>-->
       </div>
-    </div>
-  </el-form>
-
-  <el-dialog
-    v-model="visible"
-    title=""
-    width="30%"
-    center
-    :close-on-click-modal="false"
-    :close-on-press-escape="false"
-    @close="visible = false">
-    <div class="text-center">
-      您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？
-    </div>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="goSpList()">谢谢，不用了</el-button>
-        <el-button type="primary" @click="goSpList('pay')">
-          开通支付通道
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
+    </el-form>
+    <BottomButtons
+      v-if="!route.query.see"
+      @click="onSubmit"
+      text="确认"
+      :disabled="loading">
+      <template #left>
+        <el-button @click="resetForm">重置</el-button>
+      </template>
+    </BottomButtons>
+    <el-dialog
+      v-model="visible"
+      title=""
+      width="30%"
+      center
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      @close="visible = false">
+      <div class="text-center">
+        您已成功添加服务商-{{ form.spName }}，是否立即前往开通支付通道？
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="goSpList()">谢谢，不用了</el-button>
+          <el-button type="primary" @click="goSpList('pay')">
+            开通支付通道
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -221,6 +235,7 @@ import uploadBusinessType from '@enums/upload-business-type'
 import { limitText } from '@jmyg/rules'
 import closeTagView from '@utils/close-tag-view'
 import { useThemeConfig } from '@stores/themeConfig'
+import BottomButtons from '@components/Bottom-buttons.vue'
 const storesThemeConfig = useThemeConfig()
 const { themeConfig } = storeToRefs(storesThemeConfig)
 

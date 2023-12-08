@@ -52,7 +52,7 @@ service.interceptors.request.use(
     if (token && !config.headers?.skipToken) {
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
-    // debugger
+
     config.headers.tenantId = 0
     // console.log("Local.get('dev'):",Local.get('dev')['api-version'] );
     // if (Local.get('dev')) {

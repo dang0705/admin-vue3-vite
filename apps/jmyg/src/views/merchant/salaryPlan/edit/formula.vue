@@ -5,7 +5,9 @@ import { Search } from '@element-plus/icons-vue'
 import { getSalaryItems, parse, trial } from '@jmyg/api/outsourcing/formula'
 import array2Object from '@utils/array-2-object'
 
+const editor = ref('')
 const formula = ref('SUM(基础工资,考勤奖)')
+const formulaText = computed(() => editor.value.html2string(formula.value))
 const parsedData = ref({})
 const dialogVisible = ref(false)
 
@@ -18,7 +20,6 @@ const handleTrial = async () => {
   await trial({ ...formData.value, salaryPlanId: 666 })
 }
 
-const editor = ref('')
 let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
   'outsourcing_excel_support_formula',
   'salary_plan_project_type'
@@ -41,7 +42,6 @@ const symbols = [
   '≥',
   '≠'
 ]
-const formulaText = ref('')
 const formulaName = ref('销售人员专用薪资方案')
 const itemName = ref('未打卡扣款=')
 const query = ref('')
@@ -52,7 +52,7 @@ const handleParse = async () => {
   const {
     data: { message, calcFactor }
   } = await parse({
-    formula: formulaText.value || formula.value,
+    formula: formulaText.value,
     salaryPlanId: 666
   })
   if (message === 'success') {
@@ -66,7 +66,7 @@ const handleParse = async () => {
           disabled: true
         },
         key: 'formula',
-        value: `${formulaText.value || formula.value}`
+        value: `${formulaText.value}`
       }
     ]
     const controlTypeMap = array2Object({
@@ -98,13 +98,15 @@ const handleParse = async () => {
 // )
 const onQueryClear = () => {}
 
-const getFormulaText = (e) => (formulaText.value = e)
 const insertContent = (content, type = 'salary') =>
   editor.value.insertContent(content, type)
+
+const onSave = () => {
+  console.log(1)
+}
 </script>
 <template>
-  <div
-    class="px-[60px] bg-white h-full flex flex-col flex-wrap absolute pt-[15px]">
+  <div class="px-[60px] bg-white h-fit flex flex-col absolute pt-[15px]">
     <p class="text-lg my-[6px]">
       薪资方案名称：
       <span class="text-gray-400" v-text="formulaName" />
@@ -120,14 +122,13 @@ const insertContent = (content, type = 'salary') =>
         </el-button>
       </p>
     </div>
-    <ul>
+    <ul class="mb-[64px]">
       <li class="mb-5">
         <Editor
           v-model="formula"
           ref="editor"
           :salaries="salaries"
-          :functions="functions"
-          @get-formula-text="getFormulaText" />
+          :functions="functions" />
       </li>
       <li class="mb-5 flex items-center">
         <h1 class="flex-shrink-0">常用符号：</h1>
@@ -185,25 +186,14 @@ const insertContent = (content, type = 'salary') =>
         </div>
       </section>
     </ul>
-    <div
-      class="absolute bottom-0 left-0 w-full flex justify-center items-center"
-      style="
-        height: 64px;
-        background: #ffffff;
-        box-shadow:
-          0 -9px 28px 8px #0000000d,
-          0 -6px 16px 0 #00000014,
-          0 -3px 6px -4px #0000001f;
-      ">
-      <el-button type="primary">保存</el-button>
-    </div>
+    <BottomButtons @click="onSave" />
+    <Dialog
+      v-model="dialogVisible"
+      v-model:form-data="formData"
+      :columns="24"
+      :forms="forms"
+      :onSubmit="handleTrial"
+      vertical
+      title="公式试算" />
   </div>
-  <Dialog
-    v-model="dialogVisible"
-    v-model:form-data="formData"
-    :columns="24"
-    :forms="forms"
-    :onSubmit="handleTrial"
-    vertical
-    title="公式试算" />
 </template>
