@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import { addObj } from '@jmyg/api/outsourcing/salaryPlan'
+import { addObj, delObjs } from '@jmyg/api/outsourcing/salaryPlan'
 import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
@@ -64,7 +64,13 @@ const goFromView = ({ row, type }) => {
         }
       })
 }
-const actions = getActions(goFromView)
+
+const delItem = async (id) => {
+  console.log(id, 123)
+  await delObjs([id])
+}
+
+const actions = getActions(goFromView, delItem)
 
 const onSubmit = async () => {
   try {

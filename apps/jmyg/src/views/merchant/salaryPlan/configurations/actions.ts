@@ -1,4 +1,4 @@
-export default (goFromView: Function) => (row: any) => [
+export default (goFromView: Function, delItem: Function) => (row: any) => [
   {
     label: '绑定客户',
     auth: ''
@@ -27,7 +27,14 @@ export default (goFromView: Function) => (row: any) => [
   },
   {
     label: '删除',
-    auth: ''
+    auth: '',
+    confirm: {
+      ask: '您确定将此方案删除吗？'
+    },
+    action: {
+      handler: delItem,
+      params: row.id
+    }
   },
   {
     label: '停用',
