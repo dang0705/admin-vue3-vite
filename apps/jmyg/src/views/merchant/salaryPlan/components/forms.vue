@@ -294,7 +294,8 @@ const actions = (row, list) => {
     },
     {
       auth: '',
-      label: '修改公式'
+      label: '修改公式',
+      show: () => row.projectSource === '30'
     }
   ]
 }
@@ -414,7 +415,7 @@ const forms = computed(() => [
     },
     rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
   },
-  ...(dialogFormData.value.projectType === '10'
+  ...(dialogFormData.value.projectSource === '30'
     ? [
         {
           control: 'el-select',
