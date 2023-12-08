@@ -4,6 +4,7 @@ import { nextTick } from 'vue'
 defineOptions({
   name: 'BottomButtons'
 })
+const height = '64px'
 const props = defineProps({
   text: {
     type: String,
@@ -25,16 +26,15 @@ const props = defineProps({
 const emits = defineEmits(['click'])
 const debounceOptions = { params: 'click' }
 const exist = ref(true)
-const setWrapperPadding = (size: number) =>
-  (document.querySelector(props.to).style.paddingBottom = `${size}px`)
-
-onMounted(async () => {
+const setWrapperPadding = async (size: string | number) => {
   await nextTick()
-  setWrapperPadding(64)
-})
+  document.querySelector(props.to).style.paddingBottom = size
+}
+
+onMounted(() => setWrapperPadding(height))
 onActivated(() => {
   exist.value = true
-  setWrapperPadding(64)
+  setWrapperPadding(height)
 })
 onDeactivated(() => {
   exist.value = false
@@ -50,13 +50,13 @@ onDeactivated(() => {
       class="left-0 bottom-0 w-full flex justify-center items-center z-[50]"
       :class="position"
       style="
-        height: 64px;
         background: #ffffff;
         box-shadow:
           0 -9px 28px 8px #0000000d,
           0 -6px 16px 0 #00000014,
           0 -3px 6px -4px #0000001f;
-      ">
+      "
+      :style="{ height }">
       <slot name="left" />
       <el-button
         type="primary"
