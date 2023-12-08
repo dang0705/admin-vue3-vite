@@ -38,3 +38,11 @@ export function putObj(obj?: Object) {
     data: obj
   })
 }
+
+export function updateObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlan/updateState',
+    method: 'post',
+    data: obj
+  })
+}

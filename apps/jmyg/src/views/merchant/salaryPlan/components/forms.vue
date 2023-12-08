@@ -500,7 +500,12 @@ const saveList = async (list, type) => {
     } else {
       await releaseObj({ ...form, modify: '1', saveParams: list })
       closeTagView(route.meta.title as string)
-      $router.push({ path: '/merchant/salaryPlan/index' })
+      $router.push({
+        path: '/merchant/salaryPlan/index',
+        state: {
+          refresh: 1
+        }
+      })
     }
   } catch (error) {
     console.log(error)
