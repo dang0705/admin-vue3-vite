@@ -152,7 +152,7 @@ const handleResponse = (response: AxiosResponse<any>) => {
  * 添加 Axios 的响应拦截器，用于全局响应结果处理
  */
 service.interceptors.response.use(handleResponse, (error) => {
-  if(error.status === undefined ){    
+  if(error.status === undefined ){
     console.error("",error)
     return Promise.reject();
   }
