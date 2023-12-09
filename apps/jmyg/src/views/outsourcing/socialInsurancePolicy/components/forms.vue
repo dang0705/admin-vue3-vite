@@ -1,5 +1,6 @@
 <script setup lang="tsx">
 import {useDict} from "@hooks/dict";
+import BottomButtons from '@components/Bottom-buttons.vue'
 
 const formData = ref({})
 
@@ -130,23 +131,96 @@ const titleForms = [
     control: 'InputPlus',
     key: 'projectName',
     label: '项目名称'
-  }
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '参保地区',
+  },
+]
+
+const bottomForms = [
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '大病医疗收费方式',
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '年收费时间',
+  },
+  {
+    control: 'InputPlus',
+    key: 'projectName',
+    label: '补缴最长期限（月）'
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '计算方式',
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '增员截止日期',
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '减员截止日期',
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '增员规则',
+  },
+  {
+    control: 'el-select',
+    key: 'projectType',
+    options: 'social_insurance_policy_calc_type',
+    label: '减员规则',
+  },
 ]
 
 </script>
 
 <template>
-  <Table-view :table-data="data" :columns="columns" no-pagination>
+    <Table-view :table-data="data" :columns="columns" no-pagination>
     <template #top-bar="{ otherInfo }">
       <FormView
       v-model="formData"
-      :columns="24"
+      :columns="12"
       label-width="130px"
-        :disabled="false"
-        :showBtn="false"
+      :disabled="false"
+      :showBtn="false"
       :forms="titleForms">
     </FormView>
     </template>
+    <template #bottomActions>
+      <FormView
+      v-model="formData"
+      :columns="12"
+      label-width="150px"
+      :disabled="false"
+      :showBtn="false"
+      :forms="bottomForms">
+    </FormView>
+    </template>
+    <BottomButtons
+      text="发布">
+      <template #left>
+        <el-button>返回</el-button>
+        <el-button>保存</el-button>
+      </template>
+    </BottomButtons>
   </Table-view>
 </template>
 

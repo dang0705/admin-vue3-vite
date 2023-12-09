@@ -54,9 +54,9 @@ service.interceptors.request.use(
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
     config.headers.tenantId = 0
-    if (Local.get('api-version')) {
+    if (Local.get('dev')) {
       //just for testing so far
-      config.headers!['api-version'] = Local.get('api-version')
+      config.headers!['api-version'] = Local.get('dev')['api-version']
     }
 
     // 请求报文加密
