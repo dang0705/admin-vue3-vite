@@ -430,7 +430,7 @@ const forms = computed(() => [
     props: {
       disabled: disabled.value
     },
-    onChange: (value) => {
+    change: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
     },

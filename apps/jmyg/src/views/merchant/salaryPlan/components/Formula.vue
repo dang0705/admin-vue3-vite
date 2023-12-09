@@ -1,7 +1,6 @@
 <script setup>
 import Editor from '@components/T-editor.vue'
 import { useDict } from '@hooks/dict'
-// import { Search } from '@element-plus/icons-vue'
 import {
   getSalaryItems,
   parse,
@@ -11,31 +10,22 @@ import {
 import array2Object from '@utils/array-2-object'
 import formulaSymbols from '@jmyg/configurations/formula-symbols'
 import closeTagView from '@utils/close-tag-view'
+const modelValue = defineModel()
 const {
-  modelValue,
   itemName,
   salaryPlanId = '',
   salaryPlanName = '',
   salaryPlanProjectId = ''
 } = defineProps([
-  'modelValue',
   'itemName',
   'salaryPlanId',
   'salaryPlanName',
   'salaryPlanProjectId'
 ])
-const emits = defineEmits(['update:modelValue'])
 const editor = ref('')
 const dialogVisible = ref(false)
 const $router = useRouter()
 const $route = useRoute()
-
-const formulaValue = computed({
-  get: () => modelValue,
-  set: (value) => {
-    emits('update:modelValue', value)
-  }
-})
 let salaries = ref([])
 
 const getSalaries = async () =>
@@ -60,7 +50,7 @@ const handleParse = async () => {
   const {
     data: { message, calcFactor }
   } = await parse({
-    formula: editor.value.html2string(formulaValue.value),
+    formula: editor.value.html2string(modelValue),
     salaryPlanId: 666
   })
   if (message === 'success') {
@@ -76,14 +66,14 @@ const initTrial = async () => {
   if (parsedSuccess) {
     forms.value = [
       {
-        label: '未打卡扣款 =',
+        label: `${itemName} =`,
         hiddenColon: true,
         control: 'InputPlus',
         props: {
           disabled: true
         },
         key: 'formula',
-        value: editor.value.html2string(formulaValue.value)
+        value: editor.value.html2string(modelValue)
       }
     ]
     const controlTypeMap = array2Object({
@@ -111,7 +101,6 @@ let trialValue = ref(null)
 
 watchEffect(() => {
   // !dialogVisible.value && (trialValue.value = null)
-  console.log(salaryPlanId)
   salaryPlanId && getSalaries()
 })
 
@@ -126,21 +115,19 @@ const handleTrial = async () => {
   trialValue.value = returnValue
 }
 
-const onQueryClear = () => {}
-
 const insertContent = (content, type = 'salary') =>
   editor.value.insertContent(content, type)
 
 const onSave = async () => {
   // handleParse()
-  if (!editor.value.html2string(formulaValue.value)) {
+  if (!editor.value.html2string(modelValue)) {
     const { useMessage } = await import('@hooks/message')
     useMessage().error('公式尚未填写')
     return
   }
   await putObj({
     salaryPlanProjectId,
-    formula: editor.value.html2string(formulaValue.value)
+    formula: editor.value.html2string(modelValue)
   })
   // $route.params.state = '1'
   $router.back()
@@ -168,7 +155,7 @@ const onSave = async () => {
     <ul>
       <li class="mb-5">
         <Editor
-          v-model="formulaValue"
+          v-model="modelValue"
           ref="editor"
           :salaries="salaries"
           :functions="functions" />
@@ -181,9 +168,7 @@ const onSave = async () => {
             :key="symbol"
             class="my-[2px]"
             @click="insertContent(symbol, '')">
-            <span class="font-bold text-lg">
-              {{ symbol }}
-            </span>
+            <span class="font-bold text-lg" v-text="symbol" />
           </el-button>
         </div>
       </li>
@@ -191,11 +176,11 @@ const onSave = async () => {
         <h1 class="flex-shrink-0">常用函数：</h1>
         <div class="flex flex-wrap">
           <el-button
-            v-for="func in functions"
-            :key="func"
+            v-for="fn in functions"
+            :key="fn"
             class="my-[2px]"
-            @click="insertContent(func, 'function')">
-            {{ func }}
+            @click="insertContent(fn, 'function')">
+            {{ fn }}
           </el-button>
         </div>
       </li>
@@ -209,8 +194,7 @@ const onSave = async () => {
                 v-model="query"
                 placeholder="请输入薪资项目搜索"
                 clearable
-                class="w-[140px]"
-                @clear="onQueryClear" />
+                class="w-[140px]" />
             </li>
             <!--            <li>
               <el-button type="primary" class="mx-[4px]" :icon="Search">

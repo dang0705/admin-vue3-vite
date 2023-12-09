@@ -81,9 +81,13 @@
     "resolveJsonModule":true
 	},
 	"include": [
-		"apps/jmyg/src/**/*.ts",
-		"apps/jmyg/src/**/*.vue",
-		"apps/jmyg/src/**/*.tsx",
-		"apps/jmyg/src/**/*.d.ts", "auto-imports.d.ts"], // **Represents any directory, and * represents any file. Indicates that all files in the src directory will be compiled
+		"apps/**/*.ts",
+		"apps/**/*.vue",
+		"apps/**/*.tsx",
+		"apps/**/*.d.ts",
+    "shared/**/*.ts",
+    "shared/**/*.vue",
+    "shared/**/*.tsx",
+    "auto-imports.d.ts"], // **Represents any directory, and * represents any file. Indicates that all files in the src directory will be compiled
 	"exclude": ["node_modules", "dist"] // Indicates the file directory that does not need to be compiled
 }

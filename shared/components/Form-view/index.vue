@@ -49,7 +49,6 @@ interface OptionsParams {
 
 const formConfigs = ref<any[]>([])
 const rulesCache: any = {}
-let stopWatchShow: unknown = null
 
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
@@ -79,9 +78,10 @@ const init = async (forms: FormOptions[]) => {
 
       if (item.validator && isInput) {
         const setValidator = (validator: string) => {
-          if (!rule[validator]) throw new Error(`wrong validator ${validator}`)
+          if (!rule[validator as never])
+            throw new Error(`wrong validator ${validator}`)
           return {
-            validator: rule[validator],
+            validator: rule[validator as never],
             trigger: 'blur'
           }
         }
@@ -106,19 +106,19 @@ const init = async (forms: FormOptions[]) => {
     }
     // }
 
-    item.onChange &&
+    item.change &&
       watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
-          oldValue !== '' &&
-            item.onChange &&
-            item.onChange(value, formData.value)
+          // Ignore the effect of data from api's first update
+          !helper.isEmpty(oldValue) &&
+            item.change &&
+            item.change(value, formData.value)
         }
       )
-    // stopWatchShow && (stopWatchShow as Function)() && (stopWatchShow = null)
     helper.isFunction(item.show) &&
       watchEffect(() => {
-        const isShow = !!item.show(formData.value)
+        const isShow = item.show?.(formData.value)
         item.hidden = !isShow
         if (prop.validation) {
           item.rules &&
@@ -128,21 +128,6 @@ const init = async (forms: FormOptions[]) => {
           ? nextTick(() => formRef?.value?.clearValidate())
           : (formData.value[item.key] = null)
       })
-    /*    item.show &&
-      (stopWatchShow = watch(
-        () => prop.modelValue?.[item.show?.by as string],
-        () => {
-          const isShow = item.show && !!item.show.fn(formData.value)
-          item.hidden = !isShow
-          if (prop.validation) {
-            item.rules &&
-              (item.rules = isShow ? rulesCache[item.key as string] : [])
-          }
-
-          !isShow && (formData.value[item.key] = null)
-        },
-        { immediate: true }
-      ))*/
     if (!item.options) continue
 
     // 处理options数据源
@@ -154,7 +139,7 @@ const init = async (forms: FormOptions[]) => {
         const dictCacheIndex = $dictStore.dict.findIndex(
           ({ key }) => key === item.options
         )
-        delete dictCache[item.options]
+        delete dictCache[item.options as string]
         $dictStore.dict.splice(dictCacheIndex, 1)
       }
       const { [options as string]: dic } = useDict(options as string)
@@ -170,7 +155,7 @@ const init = async (forms: FormOptions[]) => {
         const { keyFrom = null, keyTo = null } = params
         if (keyFrom) {
           if (helper.isArray(keyFrom)) {
-            const params = {}
+            const params: Record<string, any> = {}
             ;(keyFrom as []).forEach((key: string) => {
               watch(
                 () => prop.modelValue?.[key as string],
@@ -184,7 +169,7 @@ const init = async (forms: FormOptions[]) => {
               )
             })
           } else {
-            stopWatchShow = watch(
+            watch(
               () => prop.modelValue?.[keyFrom as string],
               async (value) => {
                 formData.value[item.key] = ''
@@ -217,11 +202,11 @@ pagination.value &&
   watch(
     () => page.value,
     async (page: number) => {
-      await init(prop.forms?.[page] as FormOptions[])
+      await init(prop.forms?.[page] as unknown as FormOptions[])
       emit('get-page', page)
     }
   )
-const reset = async () => {
+const reset = async (): Promise<void> => {
   await nextTick()
   formRef?.value?.resetFields()
 }
@@ -229,7 +214,6 @@ const reset = async () => {
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
 }
-
 watch(
   () => prop.forms as [],
   async (forms: any[]) => {
@@ -240,10 +224,7 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) =>
-    show
-      ? initForm(prop.forms as [])
-      : reset() && stopWatchShow && stopWatchShow() && (stopWatchShow = null)
+  async (show) => (show ? initForm(prop.forms as []) : reset())
 )
 
 const getEvent = (control: string) =>

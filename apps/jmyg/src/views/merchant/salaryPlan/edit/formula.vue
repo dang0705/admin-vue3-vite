@@ -9,11 +9,10 @@
 <script setup lang="ts">
 import Formula from '@jmyg/views/merchant/salaryPlan/components/Formula.vue'
 import { getObj } from '@jmyg/api/outsourcing/salaryPlanProject'
-
 const {
-  query: { salaryPlanProjectId, salaryPlanId, formula }
+  query: { salaryPlanProjectId, salaryPlanId }
 } = useRoute()
-// const formula = ref('')
+const formula = ref('')
 const itemName = ref('')
 const salaryPlanName = ref('')
 
@@ -21,7 +20,7 @@ const getDetail = async () => {
   const {
     data: { formula: FORMULA, projectName, salaryPlanName: SALARY_PLAN_NAME }
   } = await getObj(salaryPlanProjectId)
-  // formula.value = FORMULA
+  formula.value = FORMULA
   itemName.value = projectName
   salaryPlanName.value = SALARY_PLAN_NAME
 }
