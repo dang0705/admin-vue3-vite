@@ -10,7 +10,11 @@ import injectScript from './inject'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 export default [
-  vue(), // Vue 插件
+  vue({
+    script: {
+      defineModel: true
+    }
+  }), // Vue 插件
   vueJsx(),
   svgBuilder('./shared/assets/icons/'), // 将 SVG 文件转换成 Vue 组件
   AutoImport({
