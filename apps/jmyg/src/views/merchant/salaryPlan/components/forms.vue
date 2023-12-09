@@ -317,7 +317,8 @@ const actions = (row, list) => {
         params: {
           salaryPlanId: form.salaryPlanId,
           salaryPlanName: form.salaryPlanName,
-          salaryPlanProjectId: row.id
+          salaryPlanProjectId: row.id,
+          formula: row.formula
         }
       }
     }
@@ -370,7 +371,8 @@ const goFormula = ({ salaryPlanProjectId, formula }) => {
     query: {
       salaryPlanName: form.salaryPlanName,
       salaryPlanProjectId,
-      salaryPlanId: form.salaryPlanId
+      salaryPlanId: form.salaryPlanId,
+      formula: formula
     }
   })
 }
