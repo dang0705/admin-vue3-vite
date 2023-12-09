@@ -111,12 +111,7 @@ const conditionForms = ref([
     props: {
       placeholder: '请输入开户行联行号'
     },
-    rules: [
-      {
-        validator: rule.interbank,
-        trigger: 'blur'
-      }
-    ]
+    validator: 'interbank'
   },
   {
     control: 'InputPlus',

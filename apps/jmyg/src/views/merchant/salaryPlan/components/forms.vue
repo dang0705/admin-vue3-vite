@@ -432,8 +432,7 @@ const forms = computed(() => [
     change: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
-    },
-    rules: [{ required: true, message: '项目来源不能为空', trigger: 'change' }]
+    }
   },
   ...(dialogFormData.value.projectSource === '10'
     ? [
@@ -449,10 +448,7 @@ const forms = computed(() => [
           label: '项目名称',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '项目名称不能为空', trigger: 'blur' }
-          ]
+          }
         }
       ]),
   {
@@ -462,8 +458,7 @@ const forms = computed(() => [
     label: '项目类型',
     props: {
       disabled: dialogFormData.value.projectSource === '10' || disabled.value
-    },
-    rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
+    }
   },
   ...(dialogFormData.value.projectSource === '30'
     ? [
@@ -474,10 +469,7 @@ const forms = computed(() => [
           label: '进位规则',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '进位规则不能为空', trigger: 'change' }
-          ]
+          }
         },
         {
           control: 'el-select',
@@ -486,10 +478,7 @@ const forms = computed(() => [
           label: '保留小数位',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '保留小数位不能为空', trigger: 'change' }
-          ]
+          }
         }
       ]
     : []),
@@ -500,10 +489,7 @@ const forms = computed(() => [
     label: '薪资表是否展示',
     props: {
       disabled: disabled.value
-    },
-    rules: [
-      { required: true, message: '薪资表是否展示不能为空', trigger: 'change' }
-    ]
+    }
   },
   {
     control: 'el-select',
@@ -512,10 +498,7 @@ const forms = computed(() => [
     label: '工资条是否展示',
     props: {
       disabled: disabled.value
-    },
-    rules: [
-      { required: true, message: '工资条是否展示不能为空', trigger: 'change' }
-    ]
+    }
   },
   {
     control: 'InputPlus',

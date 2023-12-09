@@ -36,12 +36,10 @@ const inOutAccountAddForms = [
     label: '服务商',
     props: {
       platform: true
-    },
-    rules: [{ required: true, message: '服务商不能为空', trigger: 'blur' }]
+    }
   },
   payChannel({
-    key: 'channelId',
-    rules: [{ required: true, message: '支付通道不能为空', trigger: 'blur' }]
+    key: 'channelId'
   })
 ]
 const refreshDataList = () => {
