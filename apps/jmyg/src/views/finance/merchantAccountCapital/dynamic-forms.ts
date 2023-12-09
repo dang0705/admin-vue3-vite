@@ -37,17 +37,7 @@ const formOne = [
     control: 'InputPlus',
     key: 'payingAccountNumber',
     label: '付款账号',
-    rules: [
-      {
-        required: true,
-        message: '付款账号不能为空',
-        trigger: 'blur'
-      },
-      {
-        validator: rule.number,
-        trigger: 'blur'
-      }
-    ],
+    validator: 'number',
     props: {
       maxlength: 30
     }
@@ -164,12 +154,7 @@ export const formsFunc = (reType: any, form: any) => {
           key: 'payingJointBankNumber',
           label: '开户行联行号',
           required: false,
-          rules: [
-            {
-              validator: rule.interbank,
-              trigger: 'blur'
-            }
-          ],
+          validator: 'interbank',
           props: {
             disabled: true
           }
