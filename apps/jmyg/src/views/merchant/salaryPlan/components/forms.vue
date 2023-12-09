@@ -329,8 +329,7 @@ const actions = (row, list) => {
         params: {
           salaryPlanId: form.salaryPlanId,
           salaryPlanName: form.salaryPlanName,
-          salaryPlanProjectId: row.id,
-          formula: row.formula
+          salaryPlanProjectId: row.id
         }
       }
     }
