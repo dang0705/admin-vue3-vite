@@ -142,6 +142,7 @@ const onSave = async () => {
     salaryPlanProjectId,
     formula: editor.value.html2string(formulaValue.value)
   })
+  // $route.params.state = '1'
   $router.back()
   closeTagView($route.meta.title)
 }

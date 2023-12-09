@@ -158,6 +158,7 @@ import {
   releaseObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
+// import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
@@ -165,6 +166,17 @@ const tableViewRef = ref()
 const dataFormRef = ref()
 const disabled = ref(false)
 const id = ref(null)
+// $router.beforeEach(
+//   (
+//     to: RouteLocationNormalized,
+//     from: RouteLocationNormalized,
+//     next: NavigationGuardNext
+//   ) => {
+//     console.log(from.params.state, 3333)
+//     if (from.params.state === '1') tableViewRef.value.getDataList()
+//     next()
+//   }
+// )
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
