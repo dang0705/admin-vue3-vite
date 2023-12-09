@@ -20,8 +20,8 @@ export interface FormOptions {
   title?: string // 表单区间的标题上
   afterTitle?: string // 表单区间的标题下
   hidden?: boolean // 表单隐藏,但有表单数据
-  onChange?: Function // 控件值改变回调
-  show?: () => boolean // 控制表单(控件)动态显隐
+  change?: Function // 控件值改变回调
+  show?: (formData: any) => boolean // 控制表单(控件)动态显隐
   required?: boolean // 表单为必填字段
   validator?: string //utils/validate.ts的rule对象中对应的validator
 }

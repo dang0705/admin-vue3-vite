@@ -7,7 +7,7 @@ const experiments = router.options.routes.find(
 ).children
 </script>
 <template>
-  <el-select v-model="model" placeholder="placeholder">
+  <el-select>
     <el-option
       v-for="{ name } in experiments"
       :key="name"
