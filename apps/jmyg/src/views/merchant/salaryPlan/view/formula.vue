@@ -23,7 +23,7 @@ const {
 
 const back = () => {
   $router.push({
-    path: '/merchant/salaryPlan/edit/index',
+    path: '/merchant/salaryPlan/view/index',
     query: { salaryPlanId, salaryPlanName },
     state: { refresh: 1 }
   })
