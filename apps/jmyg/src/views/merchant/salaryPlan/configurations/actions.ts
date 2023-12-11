@@ -5,8 +5,9 @@ export default (
   ) =>
   (row: any) => [
     {
-      label: '绑定客户',
-      auth: 'outsourcing_salaryPlan_merchant_view'
+      label: '绑定商户',
+      auth: 'outsourcing_salaryPlan_merchant_view',
+      show: () => row.state == '1'
     },
     {
       label: '查看',
@@ -15,7 +16,8 @@ export default (
         handler: goFromView,
         save: false,
         params: { row, type: 'view' }
-      }
+      },
+      show: () => row.state != '0'
     },
     {
       label: '编辑',
@@ -24,7 +26,8 @@ export default (
         handler: goFromView,
         save: false,
         params: { row, type: 'edit' }
-      }
+      },
+      show: () => row.state == '0'
     },
     {
       label: '克隆',
@@ -39,7 +42,8 @@ export default (
       action: {
         handler: delItem,
         params: row.id
-      }
+      },
+      show: () => row.state == '0'
     },
     {
       label: '停用',
@@ -51,6 +55,16 @@ export default (
       action: {
         handler: upDateItem,
         params: row.id
+      }
+    },
+    {
+      label: '新增版本',
+      auth: 'outsourcing_salaryPlan_edit',
+      show: () => row.state == '1',
+      action: {
+        handler: goFromView,
+        save: false,
+        params: { row, type: 'edit' }
       }
     }
   ]
