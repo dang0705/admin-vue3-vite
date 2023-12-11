@@ -55,25 +55,29 @@
         <el-button type="primary" v-auth="''">方案试算</el-button>
       </div>
     </template>
-    <template #bottomActions="{ list }">
-      <div class="flex items-center justify-center mt-[50px]">
-        <el-button type="primary" @click="$router.go(-1)" v-auth="''">
-          返回
-        </el-button>
+    <template #table-bottom="{ list }">
+      <Bottom-buttons>
+        <template #left>
+          <el-button type="primary" @click="$router.go(-1)" v-auth="''">
+            返回
+          </el-button>
+        </template>
         <el-button
           type="primary"
-          @click="saveList(list, 'save')"
+          v-debounce:[getSaveOptions(list)]="saveList"
           v-if="route.query.type !== 'see'"
           v-auth="'outsourcing_salaryPlanProject_save'">
           保存
         </el-button>
-        <el-button
-          type="primary"
-          @click="saveList(list, 'release')"
-          v-auth="'outsourcing_salaryPlan_edit_release'">
-          {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
-        </el-button>
-      </div>
+        <template #right>
+          <el-button
+            type="primary"
+            v-debounce:[getReleaseOptions(list)]="saveList"
+            v-auth="'outsourcing_salaryPlan_edit_release'">
+            {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
+          </el-button>
+        </template>
+      </Bottom-buttons>
     </template>
     <Dialog
       vertical
@@ -158,6 +162,7 @@ import {
   releaseObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
+import BottomButtons from '@components/Bottom-buttons.vue'
 // import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const $router = useRouter()
 const route: any = useRoute()
@@ -166,6 +171,8 @@ const tableViewRef = ref()
 const dataFormRef = ref()
 const disabled = ref(false)
 const id = ref(null)
+const getSaveOptions = (list: string) => ({ params: [list, 'save'] })
+const getReleaseOptions = (list: string) => ({ params: [list, 'release'] })
 // $router.beforeEach(
 //   (
 //     to: RouteLocationNormalized,

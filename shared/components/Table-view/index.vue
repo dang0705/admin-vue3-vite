@@ -219,7 +219,7 @@
             @size-change="sizeChangeHandle"
             @current-change="currentChangeHandle"
             v-bind="state.pagination" />
-          <slot name="bottomActions" :list="state.dataList"></slot>
+          <slot name="table-bottom" :list="state.dataList" />
         </template>
       </el-skeleton>
     </div>

@@ -58,12 +58,14 @@ onDeactivated(() => {
       "
       :style="{ height }">
       <slot name="left" />
-      <el-button
-        type="primary"
-        v-debounce:[debounceOptions]="emits"
-        :disabled="disabled">
-        {{ text }}
-      </el-button>
+      <slot>
+        <el-button
+          type="primary"
+          v-debounce:[debounceOptions]="emits"
+          :disabled="disabled">
+          {{ text }}
+        </el-button>
+      </slot>
       <slot name="right" />
     </div>
   </teleport>
