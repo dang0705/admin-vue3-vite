@@ -1,0 +1,26 @@
+export default {
+   salaryPlan: {
+        index: '#',
+        importsalaryPlanTip: '导入薪资方案管理表',
+        id: ' id',
+        salaryPlanNumber: '薪资方案编号',
+        salaryPlanName: '薪资方案名称',
+        state: '状态(0:停用;1:启用)',
+        createBy: '创建人',
+        createTime: '创建时间',
+        updateBy: '修改人',
+        updateTime: '更新时间',
+        delFlag: '删除标志，0未删除，1已删除',
+        tenantId: '租户id',
+        inputIdTip: '请输入 id',
+        inputSalaryPlanNumberTip: '请输入薪资方案编号',
+        inputSalaryPlanNameTip: '请输入薪资方案名称',
+        inputStateTip: '请输入状态(0:停用;1:启用)',
+        inputCreateByTip: '请输入创建人',
+        inputCreateTimeTip: '请输入创建时间',
+        inputUpdateByTip: '请输入修改人',
+        inputUpdateTimeTip: '请输入更新时间',
+        inputDelFlagTip: '请输入删除标志，0未删除，1已删除',
+        inputTenantIdTip: '请输入租户id',
+    }
+}

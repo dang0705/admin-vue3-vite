@@ -1,0 +1,72 @@
+.form-view {
+	[class^='el-'].is-disabled,
+	[class^='el-'][class$='--disabled'] {
+		cursor: auto;
+		color: var(--el-text-color-regular);
+		-webkit-text-fill-color: var(--el-text-color-regular);
+		&:not(.el-input-number__decrease, .el-input-number__increase, .el-button) {
+			@apply !w-fit;
+		}
+		* {
+			color: inherit !important;
+			cursor: inherit !important;
+			-webkit-text-fill-color: inherit !important;
+		}
+		.el-input__wrapper {
+			@apply px-0;
+			:is(span.el-input__suffix) {
+				display: none;
+			}
+		}
+		.el-input-number {
+			&__decrease,
+			&__increase {
+				display: none;
+			}
+		}
+		/*下拉框箭头隐藏*/
+		&.el-select {
+			:is(span.el-input__suffix) {
+				display: none;
+			}
+			.el-select__tags-text {
+				overflow: initial;
+				text-overflow: initial;
+				white-space: normal;
+			}
+		}
+
+		&.el-date-editor {
+			justify-content: unset;
+			/*:is(.el-icon) {
+			display: none;
+		}*/
+			&.el-input__wrapper {
+				box-shadow: unset;
+				@apply px-0;
+				.el-range-input {
+					width: fit-content;
+					/*text-align: left;*/
+				}
+				.el-range-separator {
+					flex-grow: unset;
+				}
+			}
+		}
+	}
+
+	[class^='el-'].is-disabled:not(.el-input-number__decrease, .el-input-number__increase, .el-button),
+	[class^='el-'][class$='--disabled']:not(.el-input-number__decrease, .el-input-number__increase, .el-button) {
+		width: 100% !important;
+	}
+}
+
+.el-input-number.is-disabled .el-input-number__decrease,
+.el-input-number.is-disabled .el-input-number__increase {
+	display: none;
+}
+
+.el-input-number.is-disabled .el-input__wrapper {
+	padding-left: 0;
+	padding-right: 0;
+}

@@ -1,0 +1,15 @@
+.el-table .cell {
+  position: relative;
+}
+
+.top-bar .export + .top-bar-extra-buttons .el-button:first-child {
+  margin-left: 10px;
+}
+
+.top-bar-extra-buttons .el-button:not(:first-child) {
+  margin-left: 10px;
+}
+
+.table-view.no-border .el-table__inner-wrapper::before {
+  background-color: unset;
+}

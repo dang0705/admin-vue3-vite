@@ -1,0 +1,7 @@
+declare module '@'
+declare module '@root'
+declare module '@stores'
+declare module '@components'
+declare module '@layouts'
+declare module '@utils'
+declare module '@configurations'

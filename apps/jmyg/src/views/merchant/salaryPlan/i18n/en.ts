@@ -1,0 +1,26 @@
+export default {
+   salaryPlan: {
+        index: '#',
+        importsalaryPlanTip: 'import SalaryPlan',
+        id: 'id',
+        salaryPlanNumber: 'salaryPlanNumber',
+        salaryPlanName: 'salaryPlanName',
+        state: 'state',
+        createBy: 'createBy',
+        createTime: 'createTime',
+        updateBy: 'updateBy',
+        updateTime: 'updateTime',
+        delFlag: 'delFlag',
+        tenantId: 'tenantId',
+        inputIdTip: 'input id',
+        inputSalaryPlanNumberTip: 'input salaryPlanNumber',
+        inputSalaryPlanNameTip: 'input salaryPlanName',
+        inputStateTip: 'input state',
+        inputCreateByTip: 'input createBy',
+        inputCreateTimeTip: 'input createTime',
+        inputUpdateByTip: 'input updateBy',
+        inputUpdateTimeTip: 'input updateTime',
+        inputDelFlagTip: 'input delFlag',
+        inputTenantIdTip: 'input tenantId',
+    }
+}
