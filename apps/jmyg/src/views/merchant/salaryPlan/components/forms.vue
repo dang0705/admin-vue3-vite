@@ -383,14 +383,15 @@ const del = ({ row, list }) => {
 }
 
 // 修改公式
-const goFormula = ({ salaryPlanProjectId, formula }) => {
+const goFormula = ({ salaryPlanProjectId }) => {
   $router.push({
-    path: '/merchant/salaryPlan/edit/formula',
+    path: `/merchant/salaryPlan/${
+      route.name.includes('查看') ? 'view' : 'edit'
+    }/formula`,
     query: {
       salaryPlanName: form.salaryPlanName,
       salaryPlanProjectId,
-      salaryPlanId: form.salaryPlanId,
-      formula: formula
+      salaryPlanId: form.salaryPlanId
     }
   })
 }

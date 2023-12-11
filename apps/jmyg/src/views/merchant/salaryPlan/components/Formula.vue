@@ -7,10 +7,11 @@ import {
   trial,
   putObj
 } from '@jmyg/api/outsourcing/formula'
+import { useUserInfo } from '@stores/userInfo'
 import array2Object from '@utils/array-2-object'
 import formulaSymbols from '@jmyg/configurations/formula-symbols'
-import closeTagView from '@utils/close-tag-view'
 const modelValue = defineModel()
+const { userInfos } = storeToRefs(useUserInfo())
 const {
   itemName,
   salaryPlanId = '',
@@ -24,8 +25,6 @@ const {
 ])
 const editor = ref('')
 const dialogVisible = ref(false)
-const $router = useRouter()
-const $route = useRoute()
 let salaries = ref([])
 
 const getSalaries = async () =>
@@ -118,6 +117,7 @@ const handleTrial = async () => {
 const insertContent = (content, type = 'salary') =>
   editor.value.insertContent(content, type)
 
+const emits = defineEmits(['back'])
 const onSave = async () => {
   // handleParse()
   if (!editor.value.html2string(modelValue)) {
@@ -130,8 +130,7 @@ const onSave = async () => {
     formula: editor.value.html2string(modelValue)
   })
   // $route.params.state = '1'
-  $router.back()
-  closeTagView($route.meta.title)
+  emits('back')
 }
 </script>
 <template>
@@ -146,7 +145,18 @@ const onSave = async () => {
       <span class="text-lg" v-text="`${itemName}=`" />
       <p class="flex items-center">
         <!--        <el-button type="primary" v-debounce="handleParse">解析</el-button>-->
-        <el-button type="primary" v-debounce="initTrial">
+        <el-button
+          type="primary"
+          v-if="
+            !userInfos.permissionMap['outsourcing_excel_trial'] &&
+            userInfos.permissionMap['outsourcing_excel_parser']
+          ">
+          解析
+        </el-button>
+        <el-button
+          type="primary"
+          v-debounce="initTrial"
+          v-auth="`outsourcing_excel_trial`">
           <Svg-icon name="iconfont icon_jisuan mr-[3px]" />
           试算
         </el-button>

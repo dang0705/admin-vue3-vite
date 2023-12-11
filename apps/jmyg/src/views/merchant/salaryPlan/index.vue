@@ -49,7 +49,7 @@ const forms = ref([
 const goFromView = ({ row, type }) => {
   type === 'view'
     ? $router.push({
-        path: '/merchant/salaryPlan/view',
+        path: '/merchant/salaryPlan/view/index',
         query: {
           salaryPlanId: row.id,
           salaryPlanName: row.salaryPlanName,
