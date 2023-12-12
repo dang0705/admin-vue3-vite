@@ -422,17 +422,7 @@ const forms = computed(() => [
     props: {
       disabled: dialogFormData.value.radioAddress === 1
     },
-    rules: [
-      {
-        required: true,
-        message: '收件人手机号不能为空',
-        trigger: 'blur'
-      },
-      {
-        validator: rule.mobile,
-        trigger: 'blur'
-      }
-    ]
+    validator: 'mobile'
   },
   ...(financeType.value === 'open'
     ? [

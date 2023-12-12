@@ -90,9 +90,10 @@ export const staticRoutes: Array<RouteRecordRaw> = [
           component: () => import('@layouts/index.vue'),
           children: [
             {
-              path: 'formula',
-              name: '表达式',
-              component: () => import('@jmyg/views/experiment/formula.vue')
+              path: 'pagination-form',
+              name: '分页表单',
+              component: () =>
+                import('@jmyg/views/experiment/pagination-form.vue')
             },
             {
               path: 'editable-table',

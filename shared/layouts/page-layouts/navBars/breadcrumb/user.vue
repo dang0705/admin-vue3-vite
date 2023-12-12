@@ -216,6 +216,9 @@ const onHandleCommandClick = (path: string) => {
         Session.clear()
         // 使用 reload 时，不需要调用 resetRoute() 重置路由
         window.location.reload()
+        // 退出时跳转到原始登陆地址-目前暂未提供地址先隐藏逻辑
+        // const originalUrl = Session.get('originalUrl')
+        // window.location.href(originalUrl)
       })
       .catch(() => {})
   } else if (path === 'personal') {

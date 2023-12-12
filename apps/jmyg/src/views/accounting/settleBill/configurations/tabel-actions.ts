@@ -34,9 +34,6 @@ export default (row: any) => {
             control: 'el-radio-group',
             key: 'auditPass',
             value: true,
-            rules: [
-              { required: true, message: '审核结果不能为空', trigger: 'blur' }
-            ],
             options: [
               {
                 label: '审核通过',
@@ -52,18 +49,12 @@ export default (row: any) => {
             label: '驳回原因',
             key: 'auditPostscript',
             control: 'InputPlus',
-            rules: [
-              { required: true, message: '驳回原因不能为空', trigger: 'blur' }
-            ],
             props: {
               rows: 5,
               showWordLimit: true,
               type: 'textarea'
             },
-            show: {
-              by: 'auditPass',
-              fn: ({ auditPass }: any) => !auditPass
-            }
+            show: ({ auditPass }: any) => !auditPass
           }
         ]
       },

@@ -29,12 +29,7 @@ export default (row: any) => {
             control: 'UploadFile',
             key: 'transferVouchers',
             label: '上传转账凭证',
-            show: {
-              by: 'operateMode',
-              fn: ({ operateMode }: any) => {
-                return operateMode === '1'
-              }
-            },
+            show: ({ operateMode }: any) => operateMode === '1',
             value: [],
             props: {
               type: '60'

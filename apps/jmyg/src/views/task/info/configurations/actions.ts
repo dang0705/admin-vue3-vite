@@ -85,12 +85,7 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
                 type: 'textarea'
               },
               value: '',
-              show: {
-                by: 'auditPass',
-                fn: ({ auditPass }: any) => {
-                  return !auditPass
-                }
-              }
+              show: ({ auditPass }: any) => !auditPass
             }
           ]
         },

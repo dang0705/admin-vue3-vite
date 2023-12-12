@@ -112,7 +112,7 @@
         <template #default>
           <el-table
             id="tableRef"
-            v-bind="props"
+            v-bind="{ ...props, size: 'default' }"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="tableStyle.cellStyle"
@@ -219,7 +219,7 @@
             @size-change="sizeChangeHandle"
             @current-change="currentChangeHandle"
             v-bind="state.pagination" />
-          <slot name="bottomActions" :list="state.dataList"></slot>
+          <slot name="table-bottom" :list="state.dataList" />
         </template>
       </el-skeleton>
     </div>

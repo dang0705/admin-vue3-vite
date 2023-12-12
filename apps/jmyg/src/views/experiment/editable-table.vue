@@ -69,6 +69,7 @@ const columns = [
       <li>
         <el-select v-model={global.chargingAccuracy}
                    style={{width: '180px'}}
+                   ref={accuracyRef}
                    onChange={(e: string) => globalOperate(precise_type.value.find(({value}) => value === e)?.label || '', 'chargingAccuracy', '收费精度')}>
           {precise_type.value.map(({label, value}) => <el-option key={value} label={label} value={value}/>)}
         </el-select>
@@ -93,11 +94,12 @@ interface Item {
 }
 
 const data = ref<Item[]>([])
+const accuracyRef = ref(null)
 
 watch(() => labels.value, (labels) => labels.length && (data.value = labels.map(({label}) => ({
   label,
   minimumBase: 0,
-  highestBase: 0,
+  highestBase: 100,
   paymentRatio: 0,
   whetherToMakeUpPayment: false,
   chargingAccuracy: '1'
@@ -113,9 +115,11 @@ const globalOperate = async (showValue: number | string, prop: string, label: st
       prop === 'minimumBase' && (matched = !!item.highestBase);
       matched && (arr[index][prop] = global[prop]);
     });
-    await nextTick()
   } catch (e) {
     global[prop] = prop === 'chargingAccuracy' ? '1' : 0
+  }finally {
+    await nextTick()
+    accuracyRef.value.blur()
   }
 }
 

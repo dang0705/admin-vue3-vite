@@ -1,2 +1,2 @@
-import { useTokenStore } from '@stores/token'
-export default () => `&token=${useTokenStore().token}`
+import { getToken } from '@configurations/cookie'
+export default () => `&token=${getToken()}`

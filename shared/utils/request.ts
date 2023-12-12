@@ -10,6 +10,7 @@ import other from './other'
 const service: AxiosInstance = axios.create({
   baseURL: env.VITE_API_URL,
   timeout: 50000, // 全局超时时间
+  withCredentials: false,
   paramsSerializer: (params: any) =>
     qs.stringify(params, { arrayFormat: 'repeat' })
 })
@@ -53,9 +54,9 @@ service.interceptors.request.use(
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
     config.headers.tenantId = 0
-    if (Local.get('api-version')) {
+    if (Local.get('dev')) {
       //just for testing so far
-      config.headers!['api-version'] = Local.get('api-version')
+      config.headers!['api-version'] = Local.get('dev')['api-version']
     }
 
     // 请求报文加密

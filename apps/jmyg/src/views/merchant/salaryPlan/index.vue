@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import { addObj } from '@jmyg/api/outsourcing/salaryPlan'
+import { addObj, delObjs, updateObj } from '@jmyg/api/outsourcing/salaryPlan'
 import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
@@ -49,7 +49,7 @@ const forms = ref([
 const goFromView = ({ row, type }) => {
   type === 'view'
     ? $router.push({
-        path: '/merchant/salaryPlan/view',
+        path: '/merchant/salaryPlan/view/index',
         query: {
           salaryPlanId: row.id,
           salaryPlanName: row.salaryPlanName,
@@ -57,14 +57,18 @@ const goFromView = ({ row, type }) => {
         }
       })
     : $router.push({
-        path: '/merchant/salaryPlan/edit',
+        path: '/merchant/salaryPlan/edit/index',
         query: {
           salaryPlanId: row.id,
           salaryPlanName: row.salaryPlanName
         }
       })
 }
-const actions = getActions(goFromView)
+
+const delItem = async (id) => await delObjs([id])
+const upDateItem = async (id) => await updateObj({ id: id, state: '2' })
+
+const actions = getActions(goFromView, delItem, upDateItem)
 
 const onSubmit = async () => {
   try {

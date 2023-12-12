@@ -162,13 +162,6 @@ const addUnderTakerForms = [
     control: 'UploadFile',
     key: 'transferVouchers',
     label: '上传转账凭证',
-    rules: [
-      {
-        required: true,
-        message: '转账凭证不能为空',
-        trigger: 'blur'
-      }
-    ],
     value: [],
     props: {
       type: '60'
@@ -178,13 +171,6 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingAccountName',
     label: '付款户名',
-    rules: [
-      {
-        required: true,
-        message: '付款户名不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       maxlength: 30
     }
@@ -193,17 +179,7 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingAccountNumber',
     label: '付款账号',
-    rules: [
-      {
-        required: true,
-        message: '付款账号不能为空',
-        trigger: 'blur'
-      },
-      {
-        validator: rule.number,
-        trigger: 'blur'
-      }
-    ],
+    validator: 'number',
     props: {
       maxlength: 30
     }

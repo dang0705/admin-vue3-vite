@@ -40,13 +40,7 @@ export default (row: any) => {
               showWordLimit: true,
               type: 'textarea'
             },
-            show: {
-              by: 'auditPass',
-              fn: ({ auditPass }: any) => {
-                // console.log('auditPass', auditPass);
-                return !auditPass
-              }
-            }
+            show: ({ auditPass }: any) => !auditPass
           }
         ]
       },

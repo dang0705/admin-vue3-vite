@@ -40,13 +40,7 @@ export default (row: any) => {
               showWordLimit: true,
               type: 'textarea'
             },
-            show: {
-              by: 'auditPass',
-              fn: ({ auditPass }: any) => {
-                // console.log('auditPass', auditPass);
-                return !auditPass
-              }
-            }
+            show: ({ auditPass }: any) => !auditPass
           }
         ]
       },
@@ -61,7 +55,7 @@ export default (row: any) => {
       label: '查看支付凭证',
       show: () => status === '40' && transferVoucher,
       download: transferVoucher,
-      auth: auth('down')
+      auth: 'finance_merchantRefund_voucher'
     }
   ]
 }

@@ -20,6 +20,20 @@ import mittBus from '@utils/mitt'
 import setIntroduction from '@utils/setIconfont'
 import { ElLoading } from 'element-plus'
 import isWindows from '@configurations/is-windows'
+import Cookies from '@configurations/cookie'
+import { useTokenStore } from '@stores/token'
+
+// 存储token 信息
+const token = Session.get('accesstoken')
+const cookies = Cookies.get();
+if(!token && cookies?.accesstoken) {
+  const { accessToken, refreshToken } = storeToRefs(useTokenStore())
+  accessToken.value = cookies.accesstoken;
+  refreshToken.value = cookies.refreshtoken;
+  Session.set('accesstoken', cookies.accesstoken)
+  Session.set('refreshtoken', cookies.refreshtoken)
+  // 后续cookies写入原始登陆url后，也要记录到当前Session和store中
+}
 
 const fontSize = { small: '', big: '' }
 fontSize.small = isWindows ? '12px' : '14px'

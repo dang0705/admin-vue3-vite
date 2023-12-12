@@ -5,6 +5,7 @@
     :actions="actions"
     drag
     no-pagination
+    size="5000"
     module="outsourcing/salaryPlanProject.ts">
     <template #top-bar="{ otherInfo }">
       <div>
@@ -43,32 +44,40 @@
           type="primary"
           @click="addSalaryPlan(otherInfo.records)"
           v-if="route.query.type !== 'see'"
-          v-auth="''">
+          v-auth="'outsourcing_salaryPlanProject_add'">
           添加项目
         </el-button>
-        <el-button type="primary" v-auth="''">导出数据模板</el-button>
+        <el-button
+          type="primary"
+          v-auth="'outsourcing_salaryPlanProject_export_data'">
+          导出数据模板
+        </el-button>
         <el-button type="primary" v-auth="''">方案试算</el-button>
       </div>
     </template>
-    <template #bottomActions="{ list }">
-      <div class="flex items-center justify-center mt-[50px]">
-        <el-button type="primary" @click="$router.go(-1)" v-auth="''">
-          返回
-        </el-button>
+    <template #table-bottom="{ list }">
+      <Bottom-buttons>
+        <template #left>
+          <el-button type="primary" @click="$router.go(-1)" v-auth="''">
+            返回
+          </el-button>
+        </template>
         <el-button
           type="primary"
-          @click="saveList(list, 'save')"
+          v-debounce:[getSaveOptions(list)]="saveList"
           v-if="route.query.type !== 'see'"
-          v-auth="''">
+          v-auth="'outsourcing_salaryPlanProject_save'">
           保存
         </el-button>
-        <el-button
-          type="primary"
-          @click="saveList(list, 'release')"
-          v-auth="''">
-          {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
-        </el-button>
-      </div>
+        <template #right>
+          <el-button
+            type="primary"
+            v-debounce:[getReleaseOptions(list)]="saveList"
+            v-auth="'outsourcing_salaryPlan_edit_release'">
+            {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
+          </el-button>
+        </template>
+      </Bottom-buttons>
     </template>
     <Dialog
       vertical
@@ -153,6 +162,8 @@ import {
   releaseObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
+import BottomButtons from '@components/Bottom-buttons.vue'
+// import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
@@ -160,6 +171,19 @@ const tableViewRef = ref()
 const dataFormRef = ref()
 const disabled = ref(false)
 const id = ref(null)
+const getSaveOptions = (list: string) => ({ params: [list, 'save'] })
+const getReleaseOptions = (list: string) => ({ params: [list, 'release'] })
+// $router.beforeEach(
+//   (
+//     to: RouteLocationNormalized,
+//     from: RouteLocationNormalized,
+//     next: NavigationGuardNext
+//   ) => {
+//     console.log(from.params.state, 3333)
+//     if (from.params.state === '1') tableViewRef.value.getDataList()
+//     next()
+//   }
+// )
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
@@ -225,27 +249,37 @@ const columns = [
     'min-width': 120
   },
   {
+    prop: 'grouping',
+    label: '分组',
+    'min-width': 80
+  },
+  {
     prop: 'projectSourceDesc',
     label: '项目来源',
     // value: ({ batchType }: BatchUploadRecordPage) => batchMap.value.batch_type[batchType],
-    'min-width': 120
+    'min-width': 80
   },
   {
     prop: 'projectTypeDesc',
     label: '项目类型',
-    'min-width': 160
+    'min-width': 80
   },
   {
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 160
+    'min-width': 80
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 160
+    'min-width': 80
+  },
+  {
+    prop: 'salaryPlanProjectDesc',
+    label: '备注',
+    'min-width': 200
   },
   {
     prop: 'formula',
@@ -264,7 +298,7 @@ const columns = [
 const actions = (row, list) => {
   return [
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_view_info',
       label: '查看',
       action: {
         handler: view,
@@ -273,7 +307,7 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_edit',
       label: '编辑',
       show: () => route.query.type !== 'see',
       action: {
@@ -283,7 +317,7 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
+      auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
       show: () => route.query.type !== 'see',
       action: {
@@ -293,8 +327,18 @@ const actions = (row, list) => {
       }
     },
     {
-      auth: '',
-      label: '修改公式'
+      auth: 'outsourcing_salaryPlanProject_edit_formula',
+      label: '修改公式',
+      show: () => row.projectSource === '30',
+      action: {
+        handler: goFormula,
+        save: false,
+        params: {
+          salaryPlanId: form.salaryPlanId,
+          salaryPlanName: form.salaryPlanName,
+          salaryPlanProjectId: row.id
+        }
+      }
     }
   ]
 }
@@ -338,6 +382,20 @@ const del = ({ row, list }) => {
   tableViewRef?.value.delListItem(row.id)
 }
 
+// 修改公式
+const goFormula = ({ salaryPlanProjectId }) => {
+  $router.push({
+    path: `/merchant/salaryPlan/${
+      route.name.includes('查看') ? 'view' : 'edit'
+    }/formula`,
+    query: {
+      salaryPlanName: form.salaryPlanName,
+      salaryPlanProjectId,
+      salaryPlanId: form.salaryPlanId
+    }
+  })
+}
+
 // 系统项项目名称数据树形处理
 const industryLevel_option = computed(() => {
   let industryLevel_option = {
@@ -369,6 +427,7 @@ const twoChange = (id) => {
   }
 }
 
+// Dialog配置项
 const forms = computed(() => [
   {
     control: 'el-select',
@@ -378,11 +437,10 @@ const forms = computed(() => [
     props: {
       disabled: disabled.value
     },
-    onChange: (value) => {
+    change: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
-    },
-    rules: [{ required: true, message: '项目来源不能为空', trigger: 'change' }]
+    }
   },
   ...(dialogFormData.value.projectSource === '10'
     ? [
@@ -398,10 +456,7 @@ const forms = computed(() => [
           label: '项目名称',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '项目名称不能为空', trigger: 'blur' }
-          ]
+          }
         }
       ]),
   {
@@ -411,10 +466,9 @@ const forms = computed(() => [
     label: '项目类型',
     props: {
       disabled: dialogFormData.value.projectSource === '10' || disabled.value
-    },
-    rules: [{ required: true, message: '项目类型不能为空', trigger: 'change' }]
+    }
   },
-  ...(dialogFormData.value.projectType === '10'
+  ...(dialogFormData.value.projectSource === '30'
     ? [
         {
           control: 'el-select',
@@ -423,10 +477,7 @@ const forms = computed(() => [
           label: '进位规则',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '进位规则不能为空', trigger: 'change' }
-          ]
+          }
         },
         {
           control: 'el-select',
@@ -435,10 +486,7 @@ const forms = computed(() => [
           label: '保留小数位',
           props: {
             disabled: disabled.value
-          },
-          rules: [
-            { required: true, message: '保留小数位不能为空', trigger: 'change' }
-          ]
+          }
         }
       ]
     : []),
@@ -449,10 +497,7 @@ const forms = computed(() => [
     label: '薪资表是否展示',
     props: {
       disabled: disabled.value
-    },
-    rules: [
-      { required: true, message: '薪资表是否展示不能为空', trigger: 'change' }
-    ]
+    }
   },
   {
     control: 'el-select',
@@ -461,14 +506,21 @@ const forms = computed(() => [
     label: '工资条是否展示',
     props: {
       disabled: disabled.value
-    },
-    rules: [
-      { required: true, message: '工资条是否展示不能为空', trigger: 'change' }
-    ]
+    }
   },
   {
     control: 'InputPlus',
-    key: 'desc',
+    key: 'grouping',
+    label: '分组',
+    props: {
+      maxlength: '20',
+      disabled: disabled.value
+    },
+    required: false
+  },
+  {
+    control: 'InputPlus',
+    key: 'salaryPlanProjectDesc',
     label: '备注',
     props: {
       type: 'textarea',
@@ -500,7 +552,12 @@ const saveList = async (list, type) => {
     } else {
       await releaseObj({ ...form, modify: '1', saveParams: list })
       closeTagView(route.meta.title as string)
-      $router.push({ path: '/merchant/salaryPlan/index' })
+      $router.push({
+        path: '/merchant/salaryPlan/index',
+        state: {
+          refresh: 1
+        }
+      })
     }
   } catch (error) {
     console.log(error)

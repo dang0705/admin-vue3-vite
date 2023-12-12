@@ -107,12 +107,7 @@ const conditionForms = ref([
       placeholder: '请输入开户行联行号',
       maxlength: 12
     },
-    rules: [
-      {
-        validator: rule.interbank,
-        trigger: 'blur'
-      }
-    ]
+    validator: 'interbank'
   },
   {
     control: 'InputPlus',
