@@ -44,10 +44,7 @@ const forms = ref([
   {
     control: 'InputPlus',
     key: 'salaryPlanName',
-    label: '薪资方案名称',
-    rules: [
-      { required: true, message: '薪资方案名称不能为空', trigger: 'blur' }
-    ]
+    label: '薪资方案名称'
   }
 ])
 

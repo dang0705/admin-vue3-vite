@@ -58,9 +58,6 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
               control: 'el-radio-group',
               key: 'auditPass',
               value: true,
-              rules: [
-                { required: true, message: '审核结果不能为空', trigger: 'blur' }
-              ],
               options: [
                 {
                   label: '审核通过',
@@ -76,9 +73,6 @@ export default ({ appointRef, addUnderTakerRef, callback }: any) => {
               label: '驳回原因',
               key: 'auditPostscript',
               control: 'InputPlus',
-              rules: [
-                { required: true, message: '驳回原因不能为空', trigger: 'blur' }
-              ],
               props: {
                 rows: 5,
                 showWordLimit: true,

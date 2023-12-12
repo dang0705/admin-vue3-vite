@@ -303,10 +303,7 @@ const forms = computed(() => [
         {
           control: 'InputPlus',
           key: 'invoiceNumber',
-          label: '发票编号',
-          rules: [
-            { required: true, message: '发票编号不能为空', trigger: 'blur' }
-          ]
+          label: '发票编号'
         },
         {
           control: 'InputPlus',
