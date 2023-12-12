@@ -55,7 +55,7 @@ export default (row: any) => {
       label: '查看支付凭证',
       show: () => status === '40' && transferVoucher,
       download: transferVoucher,
-      auth: auth('down')
+      auth: 'finance_merchantRefund_voucher'
     }
   ]
 }

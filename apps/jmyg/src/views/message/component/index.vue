@@ -10,7 +10,7 @@ defineProps({
   },
   tableHeight: {
     type: Number,
-    default: 0
+    default: null
   },
   title: {
     type: String,
