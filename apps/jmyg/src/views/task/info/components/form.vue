@@ -649,7 +649,7 @@ const requireChange = () => {
 
 const onNext = async () => {
   const valid = await dataFormRef.value.validate().catch(() => {})
-  if (!valid) return false
+  // if (!valid) return false
   curStep.value++
 }
 
