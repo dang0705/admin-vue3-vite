@@ -259,7 +259,7 @@ const titleForms = computed(() => [
           }
         }
       ]
-    : [{}]),
+    : [{ props: { disabled: true } }]),
   {
     control: 'InputPlus',
     key: 'salaryPlaneRemark',

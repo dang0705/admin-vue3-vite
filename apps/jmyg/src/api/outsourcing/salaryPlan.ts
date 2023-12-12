@@ -54,3 +54,11 @@ export function addVersion(obj?: Object) {
     data: obj
   })
 }
+
+export function copyObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlan/copy/salaryPlan',
+    method: 'post',
+    data: obj
+  })
+}

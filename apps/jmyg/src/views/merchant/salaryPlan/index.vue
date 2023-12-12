@@ -23,6 +23,16 @@
       v-model:form-data="dialogFormData"
       :on-submit="onSubmit"
       button-position="center" />
+    <Distribution
+      ref="customersRef"
+      id-filed="id"
+      ids-field="merchantIds"
+      save-method="post"
+      watch-field="id"
+      :titles="['未绑定商户', '已绑定商户']"
+      list-url="outsourcing/salaryPlan/query/salaryPlanMerchant"
+      save-url="outsourcing/salaryPlan/update/salaryPlanMerchant"
+      title="绑定商户" />
   </Table-view>
 </template>
 
@@ -33,11 +43,16 @@ import {
   addObj,
   delObjs,
   updateObj,
-  addVersion
+  addVersion,
+  copyObj
 } from '@jmyg/api/outsourcing/salaryPlan'
 import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
+const customersRef = ref()
+const Distribution = defineAsyncComponent(
+  () => import('@components/Distribution/index.vue')
+)
 const dialogFormData = ref({})
 
 const forms = ref([
@@ -79,11 +94,12 @@ const goFromView = async ({ row, type }) => {
     })
   }
 }
-
+const bindItem = (row) => customersRef.value.openDialog(row)
+const copyItem = async (id) => await copyObj({ salaryPlanId: id })
 const delItem = async (id) => await delObjs([id])
 const upDateItem = async (id) => await updateObj({ id: id, state: '2' })
 
-const actions = getActions(goFromView, delItem, upDateItem)
+const actions = getActions(goFromView, delItem, upDateItem, copyItem, bindItem)
 
 const onSubmit = async () => {
   try {

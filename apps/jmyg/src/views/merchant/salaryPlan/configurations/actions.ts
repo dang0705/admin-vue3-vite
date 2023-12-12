@@ -1,12 +1,19 @@
 export default (
     goFromView: Function,
     delItem: Function,
-    upDateItem: Function
+    upDateItem: Function,
+    copyItem: Function,
+    bindItem: Function
   ) =>
   (row: any) => [
     {
       label: '绑定商户',
       auth: 'outsourcing_salaryPlan_merchant_view',
+      preview: true,
+      action: {
+        handler: bindItem,
+        params: row
+      },
       show: () => row.state == '1'
     },
     {
@@ -31,7 +38,14 @@ export default (
     },
     {
       label: '克隆',
-      auth: 'outsourcing_salaryPlan_copy'
+      auth: 'outsourcing_salaryPlan_copy',
+      confirm: {
+        ask: '您确定克隆此方案吗？'
+      },
+      action: {
+        handler: copyItem,
+        params: row.id
+      }
     },
     {
       label: '删除',
