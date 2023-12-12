@@ -283,6 +283,7 @@ const titleForms = computed(() => [
           title: '版本信息',
           required: false,
           props: {
+            valueFormat: 'YYYY-MM-DD',
             disabled: versionInfo.value?.effectType != 2
           }
         },
@@ -315,9 +316,10 @@ const titleForms = computed(() => [
         },
         {
           control: 'InputPlus',
-          key: 'projectName',
+          key: 'versionRemark',
           label: '备注',
           required: false,
+          value: versionInfo.value?.versionRemark,
           column: 24,
           props: {
             type: 'textarea',
@@ -397,7 +399,10 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_edit',
       label: '编辑',
-      show: () => route.query.type !== 'see',
+      show: () =>
+        route.query.type == 'add' ||
+        route.query.type == 'edit' ||
+        versionInfo?.effectType == 2,
       action: {
         handler: edit,
         save: false,
@@ -407,7 +412,10 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
-      show: () => route.query.type !== 'see',
+      show: () =>
+        route.query.type == 'add' ||
+        route.query.type == 'edit' ||
+        versionInfo?.effectType == 2,
       action: {
         handler: del,
         save: false,
@@ -417,7 +425,11 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_edit_formula',
       label: '修改公式',
-      show: () => row.projectSource === '30',
+      show: () =>
+        row.projectSource === '30' &&
+        (route.query.type == 'add' ||
+          route.query.type == 'edit' ||
+          versionInfo?.effectType == 2),
       action: {
         handler: goFormula,
         save: false,
@@ -622,12 +634,20 @@ const forms = computed(() => [
 
 // 保存 发布
 const saveList = async (list, type) => {
-  // console.log(tableViewRef.value, 3333)
   // const valid = await tableViewRef.value.validate().catch(() => {})
   // if (!valid) return false
   try {
     if (type === 'save') {
-      await saveSort({ ...form, modify: '1', saveParams: list })
+      await saveSort({
+        ...form,
+        modify: '1',
+        saveParams: list,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       if (form.salaryPlanName != route.query.salaryPlanName) {
         closeTagView(route.meta.title as string)
         $router.push({
@@ -638,8 +658,26 @@ const saveList = async (list, type) => {
           }
         })
       }
+      if (route.query.type === 'see' || route.query.type === 'addVersion') {
+        closeTagView(route.meta.title as string)
+        $router.push({
+          path: '/merchant/salaryPlan/index',
+          state: {
+            refresh: 1
+          }
+        })
+      }
     } else {
-      await releaseObj({ ...form, modify: '1', saveParams: list })
+      await releaseObj({
+        ...form,
+        modify: '1',
+        saveParams: list,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       closeTagView(route.meta.title as string)
       $router.push({
         path: '/merchant/salaryPlan/index',
@@ -656,18 +694,40 @@ const saveList = async (list, type) => {
 // 提交
 const onSubmit = async () => {
   try {
-    await saveSort({ ...form, modify: '0', saveParams: listValue.value })
+    await saveSort({
+      ...form,
+      modify: '0',
+      saveParams: listValue.value,
+      versionParam: {
+        versionId: versionInfo.value?.versionId,
+        effectTime: form.effectTime,
+        versionRemark: form.versionRemark
+      }
+    })
     id.value == null
       ? await addObj({
           ...form,
           modify: '0',
-          param: dialogFormData.value
+          param: dialogFormData.value,
+          versionParam: {
+            versionId: versionInfo.value.versionId,
+            effectTime: form.effectTime,
+            versionRemark: form.versionRemark
+          }
         })
       : await putObj({
           ...form,
           modify: '0',
-          param: dialogFormData.value
+          param: dialogFormData.value,
+          versionParam: {
+            versionId: versionInfo.value.versionId,
+            effectTime: form.effectTime,
+            versionRemark: form.versionRemark
+          }
         })
+    tableViewRef.value?.getDataList(true, {
+      versionId: versionInfo.value.versionId
+    })
   } catch (error) {
     console.log(error)
   }

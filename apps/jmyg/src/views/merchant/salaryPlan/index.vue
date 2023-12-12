@@ -66,7 +66,8 @@ const goFromView = async ({ row, type }) => {
       path: '/merchant/salaryPlan/edit/index',
       query: {
         salaryPlanId: row.id,
-        salaryPlanName: row.salaryPlanName
+        salaryPlanName: row.salaryPlanName,
+        type
       }
     })
   } else if (type === 'addVersion') {
