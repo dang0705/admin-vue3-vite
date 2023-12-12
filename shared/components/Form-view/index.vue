@@ -122,9 +122,8 @@ const init = async (forms: FormOptions[]) => {
             item.change(value, formData.value)
         }
       )
-    clearShowWatcher()
     helper.isFunction(item.show) &&
-      (showWatcher[item.key] = watchEffect(() => {
+      (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
         item.hidden = !isShow
         if (prop.validation) {
