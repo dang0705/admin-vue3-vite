@@ -164,26 +164,12 @@ export default ({ type }: any) =>
             control: 'InputPlus',
             label: '企业验收任务量',
             key: 'enterpriseAcceptanceWorkload',
-            title: '企业验收页',
-            rules: [
-              {
-                required: true,
-                message: '转账凭证不能为空',
-                trigger: 'blur'
-              }
-            ]
+            title: '企业验收页'
           },
           {
             control: 'InputPlus',
             key: 'enterpriseAcceptanceMoney',
-            label: '企业验收金额',
-            rules: [
-              {
-                required: true,
-                message: '转账凭证不能为空',
-                trigger: 'blur'
-              }
-            ]
+            label: '企业验收金额'
           },
           {
             control: 'UploadFile',
@@ -195,14 +181,7 @@ export default ({ type }: any) =>
               type: '40',
               multiple: true,
               limit: 3
-            },
-            rules: [
-              {
-                required: true,
-                message: '转账凭证不能为空',
-                trigger: 'blur'
-              }
-            ]
+            }
           }
         ]
         break

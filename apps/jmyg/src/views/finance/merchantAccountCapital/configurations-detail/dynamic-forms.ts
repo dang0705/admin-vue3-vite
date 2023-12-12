@@ -15,13 +15,6 @@ const formOne = [
     control: 'InputPlus',
     key: 'payingAccountName',
     label: '付款户名',
-    rules: [
-      {
-        required: true,
-        message: '付款户名不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       maxlength: 30
     }
@@ -39,13 +32,6 @@ const formOne = [
     control: 'InputPlus',
     key: 'payingBankName',
     label: '开户行',
-    rules: [
-      {
-        required: true,
-        message: '开户行不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       maxlength: 50
     }
