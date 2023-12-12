@@ -5,45 +5,23 @@
     :actions="actions"
     drag
     no-pagination
-    size="5000"
     module="outsourcing/salaryPlanProject.ts">
     <template #top-bar="{ otherInfo }">
-      <div>
-        <el-form :model="form" label-width="120px" ref="dataFormRef">
-          <el-row class="paddcus" :gutter="48">
-            <el-col :span="24" class="mb20">
-              <el-form-item
-                label="薪资方案名称："
-                prop="salaryPlanName"
-                :rules="[
-                  {
-                    required: true,
-                    message: '薪资方案名称不能为空',
-                    trigger: 'blur'
-                  }
-                ]">
-                <InputPlus
-                  maxlength="30"
-                  :disabled="route.query.type === 'see'"
-                  v-model="form.salaryPlanName" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="24" class="mb20">
-              <el-form-item label="方案备注：" prop="salaryPlaneRemark">
-                <InputPlus
-                  type="textarea"
-                  :disabled="route.query.type === 'see'"
-                  show-word-limit
-                  maxlength="500"
-                  v-model="form.salaryPlaneRemark" />
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
+      <div class="w-full">
+        <FormView
+          ref="FormViewRef"
+          v-model="form"
+          label-width="120px"
+          :showBtn="false"
+          :forms="titleForms"></FormView>
         <el-button
           type="primary"
           @click="addSalaryPlan(otherInfo.records)"
-          v-if="route.query.type !== 'see'"
+          v-if="
+            route.query.type == 'add' ||
+            route.query.type == 'edit' ||
+            versionInfo?.effectType == 2
+          "
           v-auth="'outsourcing_salaryPlanProject_add'">
           添加项目
         </el-button>
@@ -65,7 +43,10 @@
         <el-button
           type="primary"
           v-debounce:[getSaveOptions(list)]="saveList"
-          v-if="route.query.type !== 'see'"
+          :disabled="
+            (route.query.type === 'see' || route.query.type === 'addVersion') &&
+            versionInfo?.effectType != 2
+          "
           v-auth="'outsourcing_salaryPlanProject_save'">
           保存
         </el-button>
@@ -73,8 +54,9 @@
           <el-button
             type="primary"
             v-debounce:[getReleaseOptions(list)]="saveList"
+            v-if="route.query.type == 'add' || route.query.type == 'edit'"
             v-auth="'outsourcing_salaryPlan_edit_release'">
-            {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
+            发布
           </el-button>
         </template>
       </Bottom-buttons>
@@ -88,6 +70,7 @@
       :showBtn="!disabled"
       :forms="forms"
       :columns="20"
+      :save="false"
       v-model:form-data="dialogFormData"
       :on-submit="onSubmit"
       submit-button-text="提交"
@@ -159,7 +142,8 @@ import {
   getList,
   getObj,
   putObj,
-  releaseObj
+  releaseObj,
+  getVersionObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 import BottomButtons from '@components/Bottom-buttons.vue'
@@ -168,22 +152,13 @@ const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
 const tableViewRef = ref()
-const dataFormRef = ref()
+const FormViewRef = ref()
+const versionInfo = ref()
 const disabled = ref(false)
 const id = ref(null)
 const getSaveOptions = (list: string) => ({ params: [list, 'save'] })
 const getReleaseOptions = (list: string) => ({ params: [list, 'release'] })
-// $router.beforeEach(
-//   (
-//     to: RouteLocationNormalized,
-//     from: RouteLocationNormalized,
-//     next: NavigationGuardNext
-//   ) => {
-//     console.log(from.params.state, 3333)
-//     if (from.params.state === '1') tableViewRef.value.getDataList()
-//     next()
-//   }
-// )
+
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
@@ -240,7 +215,120 @@ onMounted(async () => {
   form.salaryPlanName = route.query.salaryPlanName
   let res = await getList()
   industry.value = res.data
+  let Version = await getVersionObj(route.query.salaryPlanId)
+  Object.assign(form, Version.data)
+  versionInfo.value = Version.data.salaryPlanVersionList.filter(
+    (item) => item.effectType == 1
+  )[0]
 })
+
+const versionChange = (value) => {
+  versionInfo.value = form.salaryPlanVersionList.filter(
+    (item) => item.version == value
+  )[0]
+  tableViewRef.value?.getDataList(true, {
+    versionId: versionInfo.value.versionId
+  })
+}
+// 头部版本信息配置
+const titleForms = computed(() => [
+  {
+    control: 'InputPlus',
+    key: 'salaryPlanName',
+    label: '薪资方案名称',
+    column: 12,
+    props: {
+      maxlength: '30',
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
+    }
+  },
+  ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+        {
+          control: 'el-select',
+          key: 'version',
+          label: '版本',
+          options: form.salaryPlanVersionList,
+          required: false,
+          value: versionInfo.value?.version,
+          change: (value) => versionChange(value),
+          props: {
+            clearable: false,
+            label: 'version',
+            value: 'version'
+          }
+        }
+      ]
+    : [{}]),
+  {
+    control: 'InputPlus',
+    key: 'salaryPlaneRemark',
+    label: '方案备注',
+    column: 12,
+    required: false,
+    props: {
+      type: 'textarea',
+      maxlength: '500',
+      showWordLimit: true,
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
+    }
+  },
+  ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+        {
+          control: 'elDatePicker',
+          key: 'effectTime',
+          label: '生效日期',
+          value: versionInfo.value?.effectTime,
+          title: '版本信息',
+          required: false,
+          props: {
+            disabled: versionInfo.value?.effectType != 2
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'invalidTime',
+          label: '失效日期',
+          value: versionInfo.value?.invalidTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateName',
+          label: '更新人',
+          value: versionInfo.value?.updateName,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateTime',
+          label: '更新时间',
+          value: versionInfo.value?.updateTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'projectName',
+          label: '备注',
+          required: false,
+          column: 24,
+          props: {
+            type: 'textarea',
+            maxlength: '500',
+            showWordLimit: true,
+            disabled: versionInfo.value?.effectType != 2
+          }
+        }
+      ]
+    : [])
+])
 
 const columns = [
   {
@@ -534,8 +622,9 @@ const forms = computed(() => [
 
 // 保存 发布
 const saveList = async (list, type) => {
-  const valid = await dataFormRef.value.validate().catch(() => {})
-  if (!valid) return false
+  // console.log(tableViewRef.value, 3333)
+  // const valid = await tableViewRef.value.validate().catch(() => {})
+  // if (!valid) return false
   try {
     if (type === 'save') {
       await saveSort({ ...form, modify: '1', saveParams: list })

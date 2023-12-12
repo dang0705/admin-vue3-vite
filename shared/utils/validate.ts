@@ -105,7 +105,7 @@ export const rule = {
     }
 
     if (!isPhone.test(value)) {
-      callback(new Error('请输入合法手机号'))
+      callback(new Error('请输入正确的手机号'))
     } else {
       callback()
     }

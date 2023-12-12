@@ -15,7 +15,7 @@ export default (
       action: {
         handler: goFromView,
         save: false,
-        params: { row, type: 'view' }
+        params: { row, type: 'see' }
       },
       show: () => row.state != '0'
     },
@@ -64,7 +64,7 @@ export default (
       action: {
         handler: goFromView,
         save: false,
-        params: { row, type: 'edit' }
+        params: { row, type: 'addVersion' }
       }
     }
   ]

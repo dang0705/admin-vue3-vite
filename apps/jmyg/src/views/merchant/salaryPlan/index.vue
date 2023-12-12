@@ -29,7 +29,12 @@
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import { addObj, delObjs, updateObj } from '@jmyg/api/outsourcing/salaryPlan'
+import {
+  addObj,
+  delObjs,
+  updateObj,
+  addVersion
+} from '@jmyg/api/outsourcing/salaryPlan'
 import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
@@ -46,23 +51,35 @@ const forms = ref([
   }
 ])
 
-const goFromView = ({ row, type }) => {
-  type === 'view'
-    ? $router.push({
-        path: '/merchant/salaryPlan/view/index',
-        query: {
-          salaryPlanId: row.id,
-          salaryPlanName: row.salaryPlanName,
-          type: 'see'
-        }
-      })
-    : $router.push({
-        path: '/merchant/salaryPlan/edit/index',
-        query: {
-          salaryPlanId: row.id,
-          salaryPlanName: row.salaryPlanName
-        }
-      })
+const goFromView = async ({ row, type }) => {
+  if (type === 'see') {
+    $router.push({
+      path: '/merchant/salaryPlan/view/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName,
+        type
+      }
+    })
+  } else if (type === 'edit') {
+    $router.push({
+      path: '/merchant/salaryPlan/edit/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName
+      }
+    })
+  } else if (type === 'addVersion') {
+    let res = await addVersion({ salaryPlanId: row.id })
+    $router.push({
+      path: '/merchant/salaryPlan/addVersion/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName,
+        type
+      }
+    })
+  }
 }
 
 const delItem = async (id) => await delObjs([id])
@@ -77,7 +94,8 @@ const onSubmit = async () => {
       path: '/merchant/salaryPlan/add',
       query: {
         salaryPlanId: res.data.id,
-        salaryPlanName: res.data.salaryPlanName
+        salaryPlanName: res.data.salaryPlanName,
+        type: 'add'
       }
     })
   } catch (error) {

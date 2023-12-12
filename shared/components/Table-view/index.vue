@@ -426,7 +426,8 @@ onMounted(catchHistoryTabState)
 // 暴露变量
 defineExpose({
   resetQuery,
-  delListItem
+  delListItem,
+  getDataList
 })
 // 接受外部强刷页面的钩子
 $refreshList(resetQuery, catchHistoryTabState)

@@ -46,3 +46,11 @@ export function updateObj(obj?: Object) {
     data: obj
   })
 }
+
+export function addVersion(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlan/add/version',
+    method: 'post',
+    data: obj
+  })
+}
