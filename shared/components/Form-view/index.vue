@@ -49,8 +49,12 @@ interface OptionsParams {
 }
 
 const formConfigs = ref<any[]>([])
-const rulesCache: any = {}
+const rulesCache = ref<Record<string, any>>({})
 let showWatcher: Record<string, WatchStopHandle> = {}
+const resetFormView = () => {
+  clearShowWatcher()
+  rulesCache.value = {}
+}
 const clearShowWatcher = () => {
   for (let watcher in showWatcher) {
     showWatcher[watcher]()
@@ -61,10 +65,11 @@ const init = async (forms: FormOptions[]) => {
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
+    item.rules = []
+    item.hidden = item.hidden ?? false
     const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
       item.control
     )
-    item.hidden = item.hidden ?? false
 
     // Handle the default rules when need validation
     if (prop.validation) {
@@ -79,8 +84,9 @@ const init = async (forms: FormOptions[]) => {
           { required: true, message, trigger }
         ]
       }
-      !rulesCache[item.key]?.length &&
-        (rulesCache[item.key] = [...(item.rules || [])])
+      item.show &&
+        !rulesCache.value[item.key]?.length &&
+        (rulesCache.value[item.key] = [...(item.rules || [])])
 
       if (item.validator && isInput) {
         const setValidator = (validator: string) => {
@@ -122,13 +128,14 @@ const init = async (forms: FormOptions[]) => {
             item.change(value, formData.value)
         }
       )
+    clearShowWatcher()
     helper.isFunction(item.show) &&
       (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
         item.hidden = !isShow
         if (prop.validation) {
           item.rules &&
-            (item.rules = isShow ? rulesCache[item.key as string] : [])
+            (item.rules = isShow ? rulesCache.value[item.key as string] : [])
         }
         isShow
           ? nextTick(() => formRef?.value?.clearValidate())
@@ -232,7 +239,7 @@ watch(
 watch(
   () => prop.show,
   async (show) =>
-    show ? initForm(prop.forms as []) : clearShowWatcher() && reset()
+    show ? initForm(prop.forms as []) : resetFormView() && reset()
 )
 
 const getEvent = (control: string) =>
