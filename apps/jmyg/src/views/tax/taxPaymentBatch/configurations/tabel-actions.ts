@@ -51,13 +51,6 @@ export default (row: any) => {
             key: 'fileUrl',
             label: '上传完税证明',
             value: [],
-            rules: [
-              {
-                required: true,
-                message: '上传完税证明不能为空',
-                trigger: 'blur'
-              }
-            ],
             props: {
               type: '60',
               accept: ['.jpg', '.pdf']

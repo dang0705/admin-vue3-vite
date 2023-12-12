@@ -51,9 +51,6 @@ const conditionForms = ref([
     control: 'SpSelect',
     key: 'spId',
     label: '服务商:',
-    rules: [
-      { required: true, message: '服务商名称不能为空', trigger: 'change' }
-    ],
     props: {
       disabled: true
     }
@@ -64,18 +61,14 @@ const conditionForms = ref([
     label: '支付通道名称:',
     props: {
       placeholder: '请输入支付通道名称'
-    },
-    rules: [
-      { required: true, message: '支付通道名称不能为空', trigger: 'blur' }
-    ]
+    }
   },
   {
     control: 'el-select',
     options: 'bank_name',
     forceOptions: true,
     key: 'bankName',
-    label: '账号类别:',
-    rules: [{ required: true, message: '账号类别不能为空', trigger: 'change' }]
+    label: '账号类别:'
   },
   // {
   // 	control: 'InputPlus',
@@ -92,8 +85,7 @@ const conditionForms = ref([
     label: '开户行:',
     props: {
       placeholder: '请输入开户行'
-    },
-    rules: [{ required: true, message: '开户行不能为空', trigger: 'blur' }]
+    }
   },
   {
     control: 'InputPlus',
@@ -101,8 +93,7 @@ const conditionForms = ref([
     label: '开户地:',
     props: {
       placeholder: '请输入开户地'
-    },
-    rules: [{ required: true, message: '开户地不能为空', trigger: 'blur' }]
+    }
   },
   {
     control: 'InputPlus',
@@ -119,8 +110,7 @@ const conditionForms = ref([
     label: '主账号:',
     props: {
       placeholder: '请输入主账号'
-    },
-    rules: [{ required: true, message: '主账号不能为空', trigger: 'blur' }]
+    }
   }
 ])
 

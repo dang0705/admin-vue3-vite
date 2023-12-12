@@ -133,14 +133,7 @@ const forms = computed(() => [
     label: '发票编号',
     props: {
       disabled: financeType.value === 'see'
-    },
-    rules: [
-      {
-        required: financeType.value === 'open',
-        message: '发票编号不能为空',
-        trigger: 'blur'
-      }
-    ]
+    }
   },
   {
     control: 'InputPlus',

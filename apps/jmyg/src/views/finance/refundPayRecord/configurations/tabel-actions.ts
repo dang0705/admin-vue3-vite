@@ -108,13 +108,6 @@ export default (row: any) => {
             label: '退款失败原因',
             key: 'failureReason',
             control: 'InputPlus',
-            rules: [
-              {
-                required: true,
-                message: '退款失败原因不能为空',
-                trigger: 'blur'
-              }
-            ],
             props: {
               rows: 3,
               showWordLimit: true,
