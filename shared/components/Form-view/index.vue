@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { WatchStopHandle } from 'vue'
 import request from '@utils/request'
 import helper from '@utils/helpers'
 import { dictCache, useDict } from '@hooks/dict'
@@ -49,7 +50,12 @@ interface OptionsParams {
 
 const formConfigs = ref<any[]>([])
 const rulesCache: any = {}
-
+let showWatcher: Record<string, WatchStopHandle> = {}
+const clearShowWatcher = () => {
+  for (let watcher in showWatcher) {
+    showWatcher[watcher]()
+  }
+}
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
   for (let i = 0; i < forms.length; i++) {
@@ -116,8 +122,9 @@ const init = async (forms: FormOptions[]) => {
             item.change(value, formData.value)
         }
       )
+    clearShowWatcher()
     helper.isFunction(item.show) &&
-      watchEffect(() => {
+      (showWatcher[item.key] = watchEffect(() => {
         const isShow = item.show?.(formData.value)
         item.hidden = !isShow
         if (prop.validation) {
@@ -127,7 +134,7 @@ const init = async (forms: FormOptions[]) => {
         isShow
           ? nextTick(() => formRef?.value?.clearValidate())
           : (formData.value[item.key] = null)
-      })
+      }))
     if (!item.options) continue
 
     // 处理options数据源
@@ -221,10 +228,12 @@ watch(
   },
   { immediate: true }
 )
+
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) => (show ? initForm(prop.forms as []) : reset())
+  async (show) =>
+    show ? initForm(prop.forms as []) : clearShowWatcher() && reset()
 )
 
 const getEvent = (control: string) =>
@@ -343,13 +352,15 @@ defineExpose({
                     :label-width="form.labelWidth"
                     :rules="form.rules">
                     <component
-                      :is="!form.hidden ? form.control : 'template'"
+                      :is="
+                        !form.hidden ? form.control || 'el-input' : 'template'
+                      "
                       v-model="formData[form.key]"
                       v-bind="{
                         ...form.props,
                         ...(form.props?.disabled ? { placeholder: '' } : {}),
-                        clearable: form.props?.clearable ?? true,
-                        disabled: form.props?.disabled ?? prop.disabled,
+                        clearable: form.props?.clearable || true,
+                        disabled: form.props?.disabled || prop.disabled,
                         ...(form.control === 'el-input'
                           ? { maxlength: 100 }
                           : {})
