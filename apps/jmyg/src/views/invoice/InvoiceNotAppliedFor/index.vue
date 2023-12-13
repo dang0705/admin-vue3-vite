@@ -111,6 +111,7 @@ import {
   applyInvoice,
   saveInvoice
 } from '@jmyg/api/finance/InvoiceNotAppliedFor'
+
 const financeType = ref() // 进入方式 applyfor申请 open开票 merge合并开票
 const selectObjs = ref([]) // 勾选的表格行
 
@@ -362,6 +363,7 @@ const forms = computed(() => [
             // hoverNoBorder: 'none',
             // hoverBg: '#fff7f3',
             // style: "{ width: '173px', height: '140px' }"
+          }
         }
       ]
     : []),
@@ -386,6 +388,7 @@ const forms = computed(() => [
     label: '收件人',
     props: {
       disabled: dialogFormData.value.radioAddress === 1
+    }
   },
   {
     control: 'InputPlus',
@@ -402,12 +405,12 @@ const forms = computed(() => [
           control: 'el-select',
           key: 'postType',
           label: '快递公司',
-          options: 'express_company',
+          options: 'express_company'
         },
         {
           control: 'InputPlus',
           key: 'postOrderNumber',
-          label: '快递单号',
+          label: '快递单号'
         }
       ]
     : []),
@@ -417,7 +420,7 @@ const forms = computed(() => [
     label: '邮寄地址',
     props: {
       disabled: dialogFormData.value.radioAddress === 1
-    },
+    }
   }
 ])
 
