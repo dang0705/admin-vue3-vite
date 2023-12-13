@@ -12,28 +12,31 @@
         v-model="form"
         label-width="120px"
         :showBtn="false"
-        :forms="titleForms" />
+        :forms="titleForms"/>
     </template>
-    <template #top-bar="{ otherInfo }">
-      <div class="w-full">
-        <el-button
-          type="primary"
-          @click="addSalaryPlan(otherInfo.records)"
-          v-if="
-            route.query.type == 'add' ||
-            route.query.type == 'edit' ||
-            versionInfo?.effectType == 2
-          "
-          v-auth="'outsourcing_salaryPlanProject_add'">
-          添加项目
-        </el-button>
-        <el-button
-          type="primary"
-          v-auth="'outsourcing_salaryPlanProject_export_data'">
-          导出数据模板
-        </el-button>
-        <el-button type="primary" v-auth="''">方案试算</el-button>
-      </div>
+    <template #top-bar="{ otherInfo, dialog,dialogFormData, list }">
+      <el-button
+        type="primary"
+        @click="addSalaryPlan(otherInfo.records)"
+        v-if="
+          route.query.type == 'add' ||
+          route.query.type == 'edit' ||
+          versionInfo?.effectType == 2
+        "
+        v-auth="'outsourcing_salaryPlanProject_add'">
+        添加项目
+      </el-button>
+      <el-button
+        type="primary"
+        v-auth="'outsourcing_salaryPlanProject_export_data'">
+        导出数据模板
+      </el-button>
+      <el-button
+        type="primary"
+        v-auth="''"
+        @click="trialOfThePlan(dialog, list,dialogFormData,versionInfo.versionId,route.query.salaryPlanId)">
+        方案试算
+      </el-button>
     </template>
     <template #table-bottom="{ list }">
       <Bottom-buttons>
@@ -103,7 +106,7 @@
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-                v-for="item in industryLevel_option.leve1_option" />
+                v-for="item in industryLevel_option.leve1_option"/>
             </el-select>
           </el-form-item>
           <el-form-item
@@ -128,7 +131,7 @@
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-                v-for="item in industryLevel_option.leve2_option" />
+                v-for="item in industryLevel_option.leve2_option"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -149,6 +152,7 @@ import {
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 import BottomButtons from '@components/Bottom-buttons.vue'
+import trialOfThePlan from '@jmyg/views/merchant/salaryPlan/configurations/trial-of-the-plan'
 // import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const $router = useRouter()
 const route: any = useRoute()
@@ -158,8 +162,8 @@ const FormViewRef = ref()
 const versionInfo = ref()
 const disabled = ref(false)
 const id = ref(null)
-const getSaveOptions = (list: string) => ({ params: [list, 'save'] })
-const getReleaseOptions = (list: string) => ({ params: [list, 'release'] })
+const getSaveOptions = (list: string) => ({params: [list, 'save']})
+const getReleaseOptions = (list: string) => ({params: [list, 'release']})
 
 const dialogFormData = ref({
   projectSource: '',
@@ -247,22 +251,22 @@ const titleForms = computed(() => [
   },
   ...(route.query.type === 'see' || route.query.type === 'addVersion'
     ? [
-        {
-          control: 'el-select',
-          key: 'version',
-          label: '版本',
-          options: form.salaryPlanVersionList,
-          required: false,
-          value: versionInfo.value?.version,
-          change: (value) => versionChange(value),
-          props: {
-            clearable: false,
-            label: 'version',
-            value: 'version'
-          }
+      {
+        control: 'el-select',
+        key: 'version',
+        label: '版本',
+        options: form.salaryPlanVersionList,
+        required: false,
+        value: versionInfo.value?.version,
+        change: (value) => versionChange(value),
+        props: {
+          clearable: false,
+          label: 'version',
+          value: 'version'
         }
-      ]
-    : [{ props: { disabled: true } }]),
+      }
+    ]
+    : [{props: {disabled: true}}]),
   {
     control: 'InputPlus',
     key: 'salaryPlanRemark',
@@ -330,8 +334,8 @@ const titleForms = computed(() => [
             showWordLimit: true,
             disabled: versionInfo.value?.effectType != 2
           }
-        }
-      ]
+        },
+    ]
     : [])
 ])
 
@@ -420,7 +424,7 @@ const actions = (row, list) => {
       action: {
         handler: edit,
         save: false,
-        params: { row, list }
+        params: {row, list}
       }
     },
     {
@@ -435,7 +439,7 @@ const actions = (row, list) => {
       action: {
         handler: del,
         save: false,
-        params: { row, list }
+        params: {row, list}
       }
     },
     {
@@ -480,7 +484,7 @@ const view = async (row) => {
 }
 
 // 编辑
-const edit = async ({ row, list }) => {
+const edit = async ({row, list}) => {
   listValue.value = list
   disabled.value = false
   id.value = row.id
@@ -494,12 +498,12 @@ const edit = async ({ row, list }) => {
 }
 
 // 删除
-const del = ({ row, list }) => {
+const del = ({row, list}) => {
   tableViewRef?.value.delListItem(row.id)
 }
 
 // 修改公式
-const goFormula = ({ salaryPlanProjectId }) => {
+const goFormula = ({salaryPlanProjectId}) => {
   $router.push({
     path: `/merchant/salaryPlan/${
       route.name.includes('查看') ? 'view' : 'edit'
@@ -541,8 +545,8 @@ const twoChange = (id) => {
     dialogFormData.value.projectType = arr.type
     if (dialogFormData.value.projectCheck) {
       let name1 = industry.value.filter(
-      (item) => item.id === dialogFormData.value.leve1
-    )[0].name
+        (item) => item.id === dialogFormData.value.leve1
+      )[0].name
       dialogFormData.value.displayName = name1 + '-' + arr.name
     }
   } else {
@@ -585,11 +589,11 @@ const forms = computed(() => [
   },
   ...(dialogFormData.value.projectSource == '10'
     ? [
-        {
-          key: 'projectNameS',
-          slot: true
-        }
-      ]
+      {
+        key: 'projectNameS',
+        slot: true
+      }
+    ]
     : [
         {
           control: 'InputPlus',
@@ -600,7 +604,7 @@ const forms = computed(() => [
             maxlength: '20'
           }
         }
-      ]),
+    ]),
   {
     control: 'el-select',
     key: 'projectType',
@@ -622,30 +626,30 @@ const forms = computed(() => [
   {
     key: 'projectCheck',
     column: 4,
-    label: '与项目名称一致',
+    labelWidth: '0',
     slot: ({row}: any) => <el-checkbox class="!text-default" disabled={disabled.value} v-model={row.projectCheck} change={projectCheckChange()} label="与项目名称一致"/>
   },
   ...(dialogFormData.value.projectSource === '30'
     ? [
-        {
-          control: 'el-select',
-          key: 'carryRule',
-          options: 'carry_rule',
-          label: '进位规则',
-          props: {
-            disabled: disabled.value
-          }
-        },
-        {
-          control: 'el-select',
-          key: 'decimalPlaces',
-          options: decimalList,
-          label: '保留小数位',
-          props: {
-            disabled: disabled.value
-          }
+      {
+        control: 'el-select',
+        key: 'carryRule',
+        options: 'carry_rule',
+        label: '进位规则',
+        props: {
+          disabled: disabled.value
         }
-      ]
+      },
+      {
+        control: 'el-select',
+        key: 'decimalPlaces',
+        options: decimalList,
+        label: '保留小数位',
+        props: {
+          disabled: disabled.value
+        }
+      }
+    ]
     : []),
   {
     control: 'el-select',
@@ -763,25 +767,25 @@ const onSubmit = async () => {
     })
     id.value == null
       ? await addObj({
-          ...form,
-          modify: '0',
-          param: dialogFormData.value,
-          versionParam: {
-            versionId: versionInfo.value.versionId,
-            effectTime: form.effectTime,
-            versionRemark: form.versionRemark
-          }
-        })
+        ...form,
+        modify: '0',
+        param: dialogFormData.value,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       : await putObj({
-          ...form,
-          modify: '0',
-          param: dialogFormData.value,
-          versionParam: {
-            versionId: versionInfo.value.versionId,
-            effectTime: form.effectTime,
-            versionRemark: form.versionRemark
-          }
-        })
+        ...form,
+        modify: '0',
+        param: dialogFormData.value,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
     tableViewRef.value?.getDataList(true, {
       versionId: versionInfo.value.versionId
     })

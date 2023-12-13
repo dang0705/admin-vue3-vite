@@ -62,48 +62,39 @@
       v-model:form-data="dialogFormData"
       :onSubmit="onSubmit">
       <template #settleBillRecordId>
-        <el-form-item label="结算单编号：">
-          <div>
-            <div v-if="financeType === 'applyfor'">
-              {{ dialogFormData.settleBillRecordId }}
-            </div>
-            <div
-              v-else
-              v-for="(item, index) in dialogFormData.billRecordNums"
-              :key="index">
-              {{ item }}
-            </div>
+        <div>
+          <div v-if="financeType === 'applyfor'">
+            {{ dialogFormData.settleBillRecordId }}
           </div>
-        </el-form-item>
+          <div
+            v-else
+            v-for="(item, index) in dialogFormData.billRecordNums"
+            :key="index">
+            {{ item }}
+          </div>
+        </div>
       </template>
       <template #serviceAmount>
-        <el-form-item label="结算金额：">
-          <div>
-            <div v-if="financeType === 'applyfor'">
-              {{ dialogFormData.serviceAmount }}
-            </div>
-            <div
-              v-else
-              v-for="(item, index) in dialogFormData.serviceAmounts"
-              :key="index">
-              {{ item }}元
-            </div>
+        <div>
+          <div v-if="financeType === 'applyfor'">
+            {{ dialogFormData.serviceAmount }}
           </div>
-        </el-form-item>
+          <div
+            v-else
+            v-for="(item, index) in dialogFormData.serviceAmounts"
+            :key="index">
+            {{ item }}元
+          </div>
+        </div>
       </template>
       <template #address>
-        <el-form-item
-          label="邮寄信息："
-          prop="address"
-          v-if="financeType !== 'open'">
-          <el-radio-group
-            v-model="dialogFormData.radioAddress"
-            class="ml-4"
-            @change="radioChange">
-            <el-radio :label="1" size="large">默认邮寄地址</el-radio>
-            <el-radio :label="0" size="large">手动填写</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-radio-group
+          v-model="dialogFormData.radioAddress"
+          class="ml-4"
+          @change="radioChange">
+          <el-radio :label="1" size="large">默认邮寄地址</el-radio>
+          <el-radio :label="0" size="large">手动填写</el-radio>
+        </el-radio-group>
       </template>
     </Dialog>
   </Table-view>
@@ -316,11 +307,13 @@ const forms = computed(() => [
       ]
     : [
         {
+          label: '结算单编号',
           slot: true,
           key: 'settleBillRecordId',
           column: 12
         },
         {
+          label: '结算金额',
           slot: true,
           key: 'serviceAmount',
           column: 12
@@ -343,19 +336,17 @@ const forms = computed(() => [
     control: 'el-select',
     key: 'billingType',
     label: '开票类型',
-    options: 'invoice_type',
-    rules: [{ required: true, message: '开票类型不能为空', trigger: 'change' }]
+    options: 'invoice_type'
   },
   {
     control: 'el-select',
     key: 'invoicingCategories',
     label: '开票类目',
-    options: dialogFormData.value.invoiceCategoryList,
+    options: dialogFormData.value.invoiceCategoryList
     // props: {   // 多选类目 暂时不做
     // 	multiple: financeType.value === 'merge',
     // 	reserveKeyword: false,
     // },
-    rules: [{ required: true, message: '开票类目不能为空', trigger: 'change' }]
   },
   ...(financeType.value === 'open'
     ? [
@@ -371,15 +362,6 @@ const forms = computed(() => [
             // hoverNoBorder: 'none',
             // hoverBg: '#fff7f3',
             // style: "{ width: '173px', height: '140px' }"
-          },
-          rules: [
-            {
-              type: 'array',
-              required: true,
-              message: '发票图片不能为空',
-              trigger: 'change'
-            }
-          ]
         }
       ]
     : []),
@@ -393,6 +375,7 @@ const forms = computed(() => [
     column: 24
   },
   {
+    label: '邮寄信息',
     slot: true,
     key: 'address',
     column: 24
@@ -403,14 +386,6 @@ const forms = computed(() => [
     label: '收件人',
     props: {
       disabled: dialogFormData.value.radioAddress === 1
-    },
-    rules: [
-      {
-        required: true,
-        message: '收件人不能为空',
-        trigger: 'blur'
-      }
-    ]
   },
   {
     control: 'InputPlus',
@@ -428,17 +403,11 @@ const forms = computed(() => [
           key: 'postType',
           label: '快递公司',
           options: 'express_company',
-          rules: [
-            { required: true, message: '快递公司不能为空', trigger: 'change' }
-          ]
         },
         {
           control: 'InputPlus',
           key: 'postOrderNumber',
           label: '快递单号',
-          rules: [
-            { required: true, message: '快递单号不能为空', trigger: 'blur' }
-          ]
         }
       ]
     : []),
@@ -449,13 +418,6 @@ const forms = computed(() => [
     props: {
       disabled: dialogFormData.value.radioAddress === 1
     },
-    rules: [
-      {
-        required: true,
-        message: '邮寄地址不能为空',
-        trigger: 'blur'
-      }
-    ]
   }
 ])
 

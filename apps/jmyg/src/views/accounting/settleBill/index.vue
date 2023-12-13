@@ -54,104 +54,67 @@
       label-width="178px"
       :forms="excelForms">
       <template #merchantId="{ formData }">
-        <el-form-item
-          label="结算商户"
-          prop="merchantId"
-          :rules="[
-            { required: true, message: '结算商户不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            @change="getTaskList(formData)"
-            clearable
-            v-model="formData.merchantId">
-            <el-option
-              :key="item.id"
-              :label="item.merchantName"
-              :value="item.id"
-              v-for="item in formInfo.merchantList" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          @change="getTaskList(formData)"
+          clearable
+          v-model="formData.merchantId">
+          <el-option
+            :key="item.id"
+            :label="item.merchantName"
+            :value="item.id"
+            v-for="item in formInfo.merchantList" />
+        </el-select>
       </template>
       <template #spId="{ formData }">
-        <el-form-item
-          label="服务商"
-          prop="spId"
-          :rules="[
-            { required: true, message: '服务商不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            @change="
-              getTaskList(formData), getSpPaymentChannelListData(formData)
-            "
-            clearable
-            v-model="formData.spId">
-            <el-option
-              :key="item.id"
-              :label="item.spName"
-              :value="item.id"
-              v-for="item in formInfo.spinfoList" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          @change="getTaskList(formData), getSpPaymentChannelListData(formData)"
+          clearable
+          v-model="formData.spId">
+          <el-option
+            :key="item.id"
+            :label="item.spName"
+            :value="item.id"
+            v-for="item in formInfo.spinfoList" />
+        </el-select>
       </template>
       <template #taskId="{ formData }">
-        <el-form-item
-          prop="taskId"
-          label="结算任务"
-          :rules="[
-            { required: true, message: '结算任务不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            placeholder="请选择"
-            class="w100"
-            clearable
-            v-model="formData.taskId">
-            <el-option
-              :key="item.taskId"
-              :label="item.taskName"
-              :value="item.taskId"
-              v-for="item in formInfo.taskList" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          placeholder="请选择"
+          class="w100"
+          clearable
+          v-model="formData.taskId">
+          <el-option
+            :key="item.taskId"
+            :label="item.taskName"
+            :value="item.taskId"
+            v-for="item in formInfo.taskList" />
+        </el-select>
       </template>
       <template #paymentBankId="{ formData }">
-        <el-form-item
-          prop="paymentBankId"
-          label="支付通道"
-          :rules="[
-            { required: true, message: '支付通道不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            placeholder="请选择"
-            class="w100"
-            clearable
-            v-model="formData.paymentBankId">
-            <el-option
-              :key="item.id"
-              :label="item.channelName"
-              :value="item.id"
-              v-for="item in formInfo.spPaymentChannelList" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          placeholder="请选择"
+          class="w100"
+          clearable
+          v-model="formData.paymentBankId">
+          <el-option
+            :key="item.id"
+            :label="item.channelName"
+            :value="item.id"
+            v-for="item in formInfo.spPaymentChannelList" />
+        </el-select>
       </template>
       <template #platformBankId="{ formData }">
-        <el-form-item
-          prop="platformBankId"
-          label="平台支付通道"
-          :rules="[
-            { required: true, message: '平台支付通道不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            placeholder="请选择"
-            class="w100"
-            clearable
-            v-model="formData.platformBankId">
-            <el-option
-              :key="item.id"
-              :label="item.channelName"
-              :value="item.id"
-              v-for="item in formInfo.spPaymentChannelList1" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          placeholder="请选择"
+          class="w100"
+          clearable
+          v-model="formData.platformBankId">
+          <el-option
+            :key="item.id"
+            :label="item.channelName"
+            :value="item.id"
+            v-for="item in formInfo.spPaymentChannelList1" />
+        </el-select>
       </template>
     </Upload-excel>
   </TableView>

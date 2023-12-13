@@ -30,6 +30,8 @@ export default ({
       },
       {
         key: 'status',
+        label: '状态明细',
+        required: false,
         slot: true
       }
     ]

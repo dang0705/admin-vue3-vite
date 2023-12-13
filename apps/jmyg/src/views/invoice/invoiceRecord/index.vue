@@ -62,11 +62,7 @@ const actions = getActions(applyfor)
 
 const forms = computed(() => [
   {
-    slot: true,
     title: '基本信息',
-    column: 24
-  },
-  {
     control: 'InputPlus',
     key: 'merchantName',
     label: '开票抬头',
@@ -123,11 +119,7 @@ const forms = computed(() => [
     }
   },
   {
-    slot: true,
     title: '开票信息',
-    column: 24
-  },
-  {
     control: 'InputPlus',
     key: 'invoiceNumber',
     label: '发票编号',
@@ -150,14 +142,7 @@ const forms = computed(() => [
     options: 'invoice_type',
     props: {
       disabled: true
-    },
-    rules: [
-      {
-        required: financeType.value === 'open',
-        message: '开票类型不能为空',
-        trigger: 'change'
-      }
-    ]
+    }
   },
   {
     control: 'el-select',
@@ -168,14 +153,7 @@ const forms = computed(() => [
       disabled: true
       // 多选类目 暂时不做
       // multiple: Array.isArray(dialogFormData.value.invoicingCategories),
-    },
-    rules: [
-      {
-        required: financeType.value === 'open',
-        message: '开票类目不能为空',
-        trigger: 'change'
-      }
-    ]
+    }
   },
   {
     control: 'UploadFile',
@@ -186,22 +164,11 @@ const forms = computed(() => [
     props: {
       type: '60',
       disabled: financeType.value === 'see'
-    },
-    rules: [
-      {
-        type: 'array',
-        required: financeType.value === 'open',
-        message: '发票图片不能为空',
-        trigger: 'change'
-      }
-    ]
+    }
   },
+
   {
-    slot: true,
     title: '邮寄信息',
-    column: 24
-  },
-  {
     control: 'InputPlus',
     key: 'postUsername',
     label: '收件人',
@@ -224,14 +191,7 @@ const forms = computed(() => [
     options: 'express_company',
     props: {
       disabled: financeType.value === 'see'
-    },
-    rules: [
-      {
-        required: financeType.value === 'open',
-        message: '快递公司不能为空',
-        trigger: 'change'
-      }
-    ]
+    }
   },
   {
     control: 'InputPlus',
@@ -239,14 +199,7 @@ const forms = computed(() => [
     label: '快递单号',
     props: {
       disabled: financeType.value === 'see'
-    },
-    rules: [
-      {
-        required: financeType.value === 'open',
-        message: '快递单号不能为空',
-        trigger: 'blur'
-      }
-    ]
+    }
   },
   {
     control: 'InputPlus',
@@ -275,14 +228,7 @@ const rejectForms = computed(() =>
             type: 'textarea',
             maxlength: '500',
             showWordLimit: true
-          },
-          rules: [
-            {
-              required: true,
-              message: '作废原因不能为空',
-              trigger: 'blur'
-            }
-          ]
+          }
         }
       ]
     : [
@@ -311,13 +257,6 @@ const rejectForms = computed(() =>
             maxlength: '500',
             showWordLimit: true
           },
-          rules: [
-            {
-              required: true,
-              message: '驳回原因不能为空',
-              trigger: 'blur'
-            }
-          ],
           show: ({ auditPass }) => !auditPass
         }
       ]

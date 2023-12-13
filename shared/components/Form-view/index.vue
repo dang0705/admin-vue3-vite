@@ -223,10 +223,7 @@ pagination.value &&
       emit('get-page', page)
     }
   )
-const reset = async (): Promise<void> => {
-  await nextTick()
-  formRef?.value?.resetFields()
-}
+const reset = () => formRef?.value?.resetFields()
 
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
@@ -242,14 +239,8 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) => {
-    if (show) {
-      initForm(prop.forms as [])
-    } else {
-      await reset()
-      resetFormView()
-    }
-  }
+  async (show) =>
+    show ? initForm(prop.forms as []) : reset() && resetFormView()
 )
 
 const getEvent = (control: string) =>
@@ -351,16 +342,12 @@ defineExpose({
 
                 <el-col
                   v-bind="form.column ? { span: form.column } : dynamicColumns"
-                  :class="['mb-2', { 'mb-[14px]': vertical }]"
+                  :class="[
+                    validation ? 'mb-[18px]' : 'mb-2',
+                    { 'mb-[14px]': vertical }
+                  ]"
                   v-show="!form.hidden">
-                  <slot
-                    v-if="form.slot"
-                    :name="form.key"
-                    v-bind="{ form, formData, dynamicColumns }">
-                    <Table-slot :slot-function="form.slot" :row="formData" />
-                  </slot>
                   <el-form-item
-                    v-else
                     :prop="form.key"
                     :label="`${
                       form.label
@@ -369,7 +356,15 @@ defineExpose({
                     }`"
                     :label-width="form.labelWidth"
                     :rules="form.rules">
+                    <template #label v-if="form.labelSlot">
+                      <slot :name="`${form.key}-label`">
+                        <Table-slot
+                          :slot-function="form.labelSlot"
+                          :row="formData" />
+                      </slot>
+                    </template>
                     <component
+                      v-if="!form.slot"
                       :is="
                         !form.hidden ? form.control || 'el-input' : 'template'
                       "
@@ -404,6 +399,12 @@ defineExpose({
                         </el-radio>
                       </template>
                     </component>
+                    <slot
+                      v-else
+                      :name="form.key"
+                      v-bind="{ form, formData, dynamicColumns }">
+                      <Table-slot :slot-function="form.slot" :row="formData" />
+                    </slot>
                   </el-form-item>
                 </el-col>
                 <el-col :span="24" v-if="form.afterTitle">

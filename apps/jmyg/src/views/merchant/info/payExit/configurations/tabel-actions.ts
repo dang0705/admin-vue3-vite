@@ -29,9 +29,6 @@ export default (row: any) => {
             label: '驳回原因',
             key: 'reason',
             control: 'InputPlus',
-            rules: [
-              { required: true, message: '驳回原因不能为空', trigger: 'blur' }
-            ],
             props: {
               rows: 5,
               showWordLimit: true,

@@ -39,21 +39,24 @@ const formOne = [
   {
     control: 'InputPlus',
     key: 'payingJointBankNumber',
-    label: '开户行联行号',
+    validator: 'interbank',
     required: false,
+    labelSlot: () => (
+      <>
+        <el-tooltip
+          content="您若未提供开户行的联行号信息，在操作余额退款时可能会导致转账不成功。"
+          placement="top">
+          <SvgIcon name="iconfont icon_a-31tishi" class="font12 mr-[3px]" />
+        </el-tooltip>
+        开户行联行号
+      </>
+    ),
     slot: true
   },
   {
     control: 'InputNumber',
     key: 'payingAmount',
     label: '付款金额',
-    rules: [
-      {
-        required: true,
-        message: '付款金额不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       unit: '元'
     }
@@ -79,13 +82,6 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'InputNumber',
           key: 'receiptAmount',
           label: '申请退款金额',
-          rules: [
-            {
-              required: true,
-              message: '申请退款金额不能为空',
-              trigger: 'blur'
-            }
-          ],
           props: {
             unit: '元'
           }
@@ -103,13 +99,6 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'el-select',
           key: 'receiptAccountNumber',
           label: '收款账号',
-          rules: [
-            {
-              required: true,
-              message: '收款账号不能为空',
-              trigger: 'blur'
-            }
-          ],
           // options: receiptAccountOptions.value,
           slot: true
         },

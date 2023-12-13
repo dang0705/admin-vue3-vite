@@ -15,20 +15,18 @@
       :columns="24"
       v-model:form-data="dialogFormData">
       <template #status>
-        <el-form-item label="状态明细：">
-          <ul class="flex">
-            <li class="mr20">
-              成功
-              <span v-text="dialogFormData.success" class="text-success" />
-              条
-            </li>
-            <li v-if="hasFail">
-              失败
-              <span v-text="dialogFormData.fail" class="text-error" />
-              条
-            </li>
-          </ul>
-        </el-form-item>
+        <ul class="flex">
+          <li class="mr20">
+            成功
+            <span v-text="dialogFormData.success" class="text-success" />
+            条
+          </li>
+          <li v-if="hasFail">
+            失败
+            <span v-text="dialogFormData.fail" class="text-error" />
+            条
+          </li>
+        </ul>
       </template>
       <template #after-forms v-if="hasFail">
         <TableView

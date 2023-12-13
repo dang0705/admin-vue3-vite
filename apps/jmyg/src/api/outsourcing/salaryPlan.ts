@@ -62,3 +62,6 @@ export function copyObj(obj?: Object) {
     data: obj
   })
 }
+
+export const trialPlan = (params: any) =>
+  $http.post('/outsourcing/salaryPlan/trialToExcel', params)

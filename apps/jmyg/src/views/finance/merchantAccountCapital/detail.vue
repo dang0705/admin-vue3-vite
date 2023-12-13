@@ -100,25 +100,7 @@
       :on-cancel="onCancel"
       :on-submit="onSubmit">
       <template #payingJointBankNumber>
-        <el-form-item
-          label="开户行联行号"
-          prop="payingJointBankNumber"
-          :rules="[
-            {
-              validator: rule.interbank,
-              trigger: 'blur'
-            }
-          ]">
-          <template v-slot:label>
-            <el-tooltip
-              content="您若未提供开户行的联行号信息，在操作余额退款时可能会导致转账不成功。"
-              placement="top">
-              <SvgIcon name="iconfont icon_a-31tishi" class="font12 mr-[3px]" />
-            </el-tooltip>
-            开户行联行号：
-          </template>
-          <InputPlus v-model="dialogFormData.payingJointBankNumber" />
-        </el-form-item>
+        <InputPlus v-model="dialogFormData.payingJointBankNumber" />
       </template>
       <template #receiptAccountNumber>
         <el-form-item

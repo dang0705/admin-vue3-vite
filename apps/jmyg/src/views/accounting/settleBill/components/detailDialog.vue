@@ -188,13 +188,6 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingBankName',
     label: '开户行',
-    rules: [
-      {
-        required: true,
-        message: '开户行不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       maxlength: 50
     }
@@ -203,25 +196,12 @@ const addUnderTakerForms = [
     control: 'InputPlus',
     key: 'payingJointBankNumber',
     label: '开户行联行号',
-    required: false,
-    rules: [
-      {
-        validator: rule.interbank,
-        trigger: 'blur'
-      }
-    ]
+    required: false
   },
   {
     control: 'InputNumber',
     key: 'payingAmount',
     label: '付款金额',
-    rules: [
-      {
-        required: true,
-        message: '付款金额不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       unit: '元'
     }
