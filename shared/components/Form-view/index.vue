@@ -369,7 +369,15 @@ defineExpose({
                     }`"
                     :label-width="form.labelWidth"
                     :rules="form.rules">
+                    <template #label v-if="form.labelSlot">
+                      <slot :name="`${form.key}-label`">
+                        <Table-slot
+                          :slot-function="form.labelSlot"
+                          :row="formData" />
+                      </slot>
+                    </template>
                     <component
+                      v-if="!form.slot"
                       :is="
                         !form.hidden ? form.control || 'el-input' : 'template'
                       "
@@ -404,6 +412,12 @@ defineExpose({
                         </el-radio>
                       </template>
                     </component>
+                    <slot
+                      v-else
+                      :name="form.key"
+                      v-bind="{ form, formData, dynamicColumns }">
+                      <Table-slot :slot-function="form.slot" :row="formData" />
+                    </slot>
                   </el-form-item>
                 </el-col>
                 <el-col :span="24" v-if="form.afterTitle">
