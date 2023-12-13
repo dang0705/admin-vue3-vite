@@ -50,7 +50,7 @@ const handleParse = async () => {
     data: { message, calcFactor }
   } = await parse({
     formula: editor.value.html2string(modelValue),
-    salaryPlanId: 666
+    salaryPlanId
   })
   if (message === 'success') {
     return calcFactor
