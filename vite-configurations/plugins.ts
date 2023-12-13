@@ -12,7 +12,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default [
   vue({
     script: {
-      defineModel: true
+      defineModel: true,
+      propsDestructure: true
     }
   }), // Vue 插件
   vueJsx(),
