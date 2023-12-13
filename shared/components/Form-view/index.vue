@@ -51,17 +51,22 @@ interface OptionsParams {
 const formConfigs = ref<any[]>([])
 const rulesCache = ref<Record<string, any>>({})
 let showWatcher: Record<string, WatchStopHandle> = {}
+let changeWatcher: Record<string, WatchStopHandle> = {}
 const resetFormView = () => {
-  clearShowWatcher()
+  clearWatcher()
   rulesCache.value = {}
 }
-const clearShowWatcher = () => {
+const clearWatcher = () => {
   for (let watcher in showWatcher) {
     showWatcher[watcher]()
+  }
+  for (let watcher in changeWatcher) {
+    changeWatcher[watcher]()
   }
 }
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
+  clearWatcher()
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
@@ -117,9 +122,8 @@ const init = async (forms: FormOptions[]) => {
       formData.value[item.key] = item.value
     }
     // }
-
     item.change &&
-      watch(
+      (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
           // Ignore the effect of data from api's first update
@@ -127,8 +131,7 @@ const init = async (forms: FormOptions[]) => {
             item.change &&
             item.change(value, formData.value)
         }
-      )
-    clearShowWatcher()
+      ))
     helper.isFunction(item.show) &&
       (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
@@ -202,7 +205,8 @@ const init = async (forms: FormOptions[]) => {
     }
   }
 }
-
+onDeactivated(clearWatcher)
+onActivated(() => formConfigs.value.length && init(prop.forms as []))
 const resetFields = () => prop.cancelButtonText === '重置' && reset()
 
 const page = ref(0)

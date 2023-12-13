@@ -6,14 +6,16 @@
     drag
     no-pagination
     module="outsourcing/salaryPlanProject.ts">
+    <template #tableTop>
+      <FormView
+        ref="FormViewRef"
+        v-model="form"
+        label-width="120px"
+        :showBtn="false"
+        :forms="titleForms" />
+    </template>
     <template #top-bar="{ otherInfo }">
       <div class="w-full">
-        <FormView
-          ref="FormViewRef"
-          v-model="form"
-          label-width="120px"
-          :showBtn="false"
-          :forms="titleForms"></FormView>
         <el-button
           type="primary"
           @click="addSalaryPlan(otherInfo.records)"
