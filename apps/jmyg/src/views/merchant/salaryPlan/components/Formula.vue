@@ -232,10 +232,10 @@ const onSave = async () => {
       v-model="dialogVisible"
       v-model:form-data="formData"
       keep-show-after-confirm
+      vertical
       :columns="24"
       :forms="forms"
       :onSubmit="handleTrial"
-      vertical
       title="公式试算">
       <template #after-forms>
         <div>{{ itemName }} {{ trialValue }}</div>
