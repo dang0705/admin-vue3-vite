@@ -101,8 +101,11 @@
                   refresh: resetQuery,
                   otherInfo: state.otherInfo,
                   query: state.queryForm,
-                  selectObjs: selectObjs,
-                  downParams: downParams
+                  selectObjs,
+                  downParams,
+                  dialog,
+                  dialogFormData,
+                  list: state.dataList
                 }" />
             </div>
           </div>
@@ -225,10 +228,10 @@
     </div>
     <slot />
     <Dialog
-      v-model="showDialog"
+      v-model="dialog.show"
       v-model:form-data="dialogFormData"
       append-to-body
-      v-bind="_dialog"
+      v-bind="dialog"
       :columns="24"
       :on-submit="onDialogSubmit" />
   </div>
@@ -252,8 +255,7 @@ const TabView = defineAsyncComponent(() => import('./Tab-view.vue'))
 
 const emit = defineEmits(['update:modelValue', 'get-tab-value'])
 const props = defineProps(tableViewProps)
-const showDialog = ref(false)
-const _dialog = ref({})
+const dialog = ref({ show: false })
 const dialogFormData = ref({})
 
 const slots = useSlots()
@@ -266,18 +268,17 @@ const module = computed(() =>
     : `${props.module}.ts`
 )
 const onDialogSubmit = async () => {
-  const action = _dialog.value.action?.handler
+  const action = dialog.value.action?.handler
   action &&
     (await action({
       ...dialogFormData.value,
-      ...(_dialog.value.action?.params || {})
+      ...(dialog.value.action?.params || {})
     }))
   const { useMessage } = await import('@hooks/message')
-  useMessage().success(_dialog.value.successText)
+  useMessage().success(dialog.value.successText)
 }
 const getDialogData = async (dialog: any) => {
-  showDialog.value = true
-  _dialog.value = dialog
+  dialog.value = { show: true, ...dialog }
   if (dialog.edit) {
     const { name, params } = dialog.edit
     const edit = apis[`/src/api/${module.value}`][name || 'getObj']
@@ -394,9 +395,8 @@ const resetQuery = () => {
 }
 
 // 前端删除列表一项
-const delListItem = (id) => {
-  state.dataList = state.dataList?.filter((item) => item.id !== id)
-}
+const delListItem = (id: string) =>
+  (state.dataList = state.dataList?.filter((item) => item.id !== id))
 
 provide('delListItem', delListItem)
 provide('refresh', resetQuery)
