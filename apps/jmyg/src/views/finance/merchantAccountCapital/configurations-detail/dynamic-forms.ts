@@ -48,13 +48,6 @@ const formOne = [
     control: 'InputNumber',
     key: 'payingAmount',
     label: '付款金额',
-    rules: [
-      {
-        required: true,
-        message: '付款金额不能为空',
-        trigger: 'blur'
-      }
-    ],
     props: {
       unit: '元'
     }
@@ -80,13 +73,6 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'InputNumber',
           key: 'receiptAmount',
           label: '申请退款金额',
-          rules: [
-            {
-              required: true,
-              message: '申请退款金额不能为空',
-              trigger: 'blur'
-            }
-          ],
           props: {
             unit: '元'
           }
@@ -104,13 +90,6 @@ export const formsFunc = (reType: any, form: any) => {
           control: 'el-select',
           key: 'receiptAccountNumber',
           label: '收款账号',
-          rules: [
-            {
-              required: true,
-              message: '收款账号不能为空',
-              trigger: 'blur'
-            }
-          ],
           // options: receiptAccountOptions.value,
           slot: true
         },

@@ -23,16 +23,36 @@
       v-model:form-data="dialogFormData"
       :on-submit="onSubmit"
       button-position="center" />
+    <Distribution
+      ref="customersRef"
+      id-filed="id"
+      ids-field="merchantIds"
+      save-method="post"
+      watch-field="id"
+      :titles="['未绑定商户', '已绑定商户']"
+      list-url="outsourcing/salaryPlan/query/salaryPlanMerchant"
+      save-url="outsourcing/salaryPlan/update/salaryPlanMerchant"
+      title="绑定商户" />
   </Table-view>
 </template>
 
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import { addObj, delObjs, updateObj } from '@jmyg/api/outsourcing/salaryPlan'
+import {
+  addObj,
+  delObjs,
+  updateObj,
+  addVersion,
+  copyObj
+} from '@jmyg/api/outsourcing/salaryPlan'
 import getActions from '@jmyg/views/merchant/salaryPlan/configurations/actions'
 const $router = useRouter()
 const visible = ref(false)
+const customersRef = ref()
+const Distribution = defineAsyncComponent(
+  () => import('@components/Distribution/index.vue')
+)
 const dialogFormData = ref({})
 
 const forms = ref([
@@ -43,29 +63,43 @@ const forms = ref([
   }
 ])
 
-const goFromView = ({ row, type }) => {
-  type === 'view'
-    ? $router.push({
-        path: '/merchant/salaryPlan/view/index',
-        query: {
-          salaryPlanId: row.id,
-          salaryPlanName: row.salaryPlanName,
-          type: 'see'
-        }
-      })
-    : $router.push({
-        path: '/merchant/salaryPlan/edit/index',
-        query: {
-          salaryPlanId: row.id,
-          salaryPlanName: row.salaryPlanName
-        }
-      })
+const goFromView = async ({ row, type }) => {
+  if (type === 'see') {
+    $router.push({
+      path: '/merchant/salaryPlan/view/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName,
+        type
+      }
+    })
+  } else if (type === 'edit') {
+    $router.push({
+      path: '/merchant/salaryPlan/edit/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName,
+        type
+      }
+    })
+  } else if (type === 'addVersion') {
+    let res = await addVersion({ salaryPlanId: row.id })
+    $router.push({
+      path: '/merchant/salaryPlan/addVersion/index',
+      query: {
+        salaryPlanId: row.id,
+        salaryPlanName: row.salaryPlanName,
+        type
+      }
+    })
+  }
 }
-
+const bindItem = (row) => customersRef.value.openDialog(row)
+const copyItem = async (id) => await copyObj({ salaryPlanId: id })
 const delItem = async (id) => await delObjs([id])
 const upDateItem = async (id) => await updateObj({ id: id, state: '2' })
 
-const actions = getActions(goFromView, delItem, upDateItem)
+const actions = getActions(goFromView, delItem, upDateItem, copyItem, bindItem)
 
 const onSubmit = async () => {
   try {
@@ -74,7 +108,8 @@ const onSubmit = async () => {
       path: '/merchant/salaryPlan/add',
       query: {
         salaryPlanId: res.data.id,
-        salaryPlanName: res.data.salaryPlanName
+        salaryPlanName: res.data.salaryPlanName,
+        type: 'add'
       }
     })
   } catch (error) {

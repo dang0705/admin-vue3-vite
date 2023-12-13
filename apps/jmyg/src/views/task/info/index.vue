@@ -16,11 +16,9 @@
       </el-button>
     </template> -->
     <template #TaskType="{ formData }">
-      <el-form-item label="任务类型：">
-        <TaskType
-          v-model:taskTypeFirst="formData.taskTypeFirst"
-          v-model:taskTypeSecond="formData.taskTypeSecond" />
-      </el-form-item>
+      <TaskType
+        v-model:taskTypeFirst="formData.taskTypeFirst"
+        v-model:taskTypeSecond="formData.taskTypeSecond" />
     </template>
     <Appoint
       ref="appointRef"

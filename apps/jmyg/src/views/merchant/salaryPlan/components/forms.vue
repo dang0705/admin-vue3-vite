@@ -5,55 +5,38 @@
     :actions="actions"
     drag
     no-pagination
-    size="5000"
     module="outsourcing/salaryPlanProject.ts">
-    <template #top-bar="{ otherInfo }">
-      <div>
-        <el-form :model="form" label-width="120px" ref="dataFormRef">
-          <el-row class="paddcus" :gutter="48">
-            <el-col :span="24" class="mb20">
-              <el-form-item
-                label="薪资方案名称："
-                prop="salaryPlanName"
-                :rules="[
-                  {
-                    required: true,
-                    message: '薪资方案名称不能为空',
-                    trigger: 'blur'
-                  }
-                ]">
-                <InputPlus
-                  maxlength="30"
-                  :disabled="route.query.type === 'see'"
-                  v-model="form.salaryPlanName" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="24" class="mb20">
-              <el-form-item label="方案备注：" prop="salaryPlaneRemark">
-                <InputPlus
-                  type="textarea"
-                  :disabled="route.query.type === 'see'"
-                  show-word-limit
-                  maxlength="500"
-                  v-model="form.salaryPlaneRemark" />
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <el-button
-          type="primary"
-          @click="addSalaryPlan(otherInfo.records)"
-          v-if="route.query.type !== 'see'"
-          v-auth="'outsourcing_salaryPlanProject_add'">
-          添加项目
-        </el-button>
-        <el-button
-          type="primary"
-          v-auth="'outsourcing_salaryPlanProject_export_data'">
-          导出数据模板
-        </el-button>
-        <el-button type="primary" v-auth="''">方案试算</el-button>
-      </div>
+    <template #tableTop>
+      <FormView
+        ref="FormViewRef"
+        v-model="form"
+        label-width="120px"
+        :showBtn="false"
+        :forms="titleForms"/>
+    </template>
+    <template #top-bar="{ otherInfo, dialog,dialogFormData, list }">
+      <el-button
+        type="primary"
+        @click="addSalaryPlan(otherInfo.records)"
+        v-if="
+          route.query.type == 'add' ||
+          route.query.type == 'edit' ||
+          versionInfo?.effectType == 2
+        "
+        v-auth="'outsourcing_salaryPlanProject_add'">
+        添加项目
+      </el-button>
+      <el-button
+        type="primary"
+        v-auth="'outsourcing_salaryPlanProject_export_data'">
+        导出数据模板
+      </el-button>
+      <el-button
+        type="primary"
+        v-auth="''"
+        @click="trialOfThePlan(dialog, list,dialogFormData,versionInfo.versionId,route.query.salaryPlanId)">
+        方案试算
+      </el-button>
     </template>
     <template #table-bottom="{ list }">
       <Bottom-buttons>
@@ -65,7 +48,10 @@
         <el-button
           type="primary"
           v-debounce:[getSaveOptions(list)]="saveList"
-          v-if="route.query.type !== 'see'"
+          :disabled="
+            (route.query.type === 'see' || route.query.type === 'addVersion') &&
+            versionInfo?.effectType != 2
+          "
           v-auth="'outsourcing_salaryPlanProject_save'">
           保存
         </el-button>
@@ -73,8 +59,9 @@
           <el-button
             type="primary"
             v-debounce:[getReleaseOptions(list)]="saveList"
+            v-if="route.query.type == 'add' || route.query.type == 'edit'"
             v-auth="'outsourcing_salaryPlan_edit_release'">
-            {{ route.query.type !== 'see' ? '发布' : '发布更新' }}
+            发布
           </el-button>
         </template>
       </Bottom-buttons>
@@ -87,7 +74,8 @@
       :show-cancel="false"
       :showBtn="!disabled"
       :forms="forms"
-      :columns="20"
+      :columns="18"
+      :save="false"
       v-model:form-data="dialogFormData"
       :on-submit="onSubmit"
       submit-button-text="提交"
@@ -112,13 +100,13 @@
               placeholder="一级分类"
               class="w100"
               clearable
-              :disabled="disabled"
+              :disabled="disabled || dialogFormData.defaultItem == '1'"
               v-model="dialogFormData.leve1">
               <el-option
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-                v-for="item in industryLevel_option.leve1_option" />
+                v-for="item in industryLevel_option.leve1_option"/>
             </el-select>
           </el-form-item>
           <el-form-item
@@ -137,13 +125,13 @@
               placeholder="二级分类"
               class="w100"
               clearable
-              :disabled="disabled"
+              :disabled="disabled || dialogFormData.defaultItem == '1'"
               v-model="dialogFormData.leve2">
               <el-option
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"
-                v-for="item in industryLevel_option.leve2_option" />
+                v-for="item in industryLevel_option.leve2_option"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -152,48 +140,42 @@
   </Table-view>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import {
   addObj,
   saveSort,
   getList,
   getObj,
   putObj,
-  releaseObj
+  releaseObj,
+  getVersionObj
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 import BottomButtons from '@components/Bottom-buttons.vue'
+import trialOfThePlan from '@jmyg/views/merchant/salaryPlan/configurations/trial-of-the-plan'
 // import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 const $router = useRouter()
 const route: any = useRoute()
 const visible = ref(false)
 const tableViewRef = ref()
-const dataFormRef = ref()
+const FormViewRef = ref()
+const versionInfo = ref()
 const disabled = ref(false)
 const id = ref(null)
-const getSaveOptions = (list: string) => ({ params: [list, 'save'] })
-const getReleaseOptions = (list: string) => ({ params: [list, 'release'] })
-// $router.beforeEach(
-//   (
-//     to: RouteLocationNormalized,
-//     from: RouteLocationNormalized,
-//     next: NavigationGuardNext
-//   ) => {
-//     console.log(from.params.state, 3333)
-//     if (from.params.state === '1') tableViewRef.value.getDataList()
-//     next()
-//   }
-// )
+const getSaveOptions = (list: string) => ({params: [list, 'save']})
+const getReleaseOptions = (list: string) => ({params: [list, 'release']})
+
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
   leve1: '',
-  leve2: ''
+  leve2: '',
+  projectCheck: true,
 })
 const form = reactive({
   salaryPlanId: '',
   salaryPlanName: '',
-  salaryPlaneRemark: ''
+  salaryPlanRemark: ''
 })
 const listValue = ref()
 const industry = ref([])
@@ -240,7 +222,122 @@ onMounted(async () => {
   form.salaryPlanName = route.query.salaryPlanName
   let res = await getList()
   industry.value = res.data
+  let Version = await getVersionObj(route.query.salaryPlanId)
+  Object.assign(form, Version.data)
+  versionInfo.value = Version.data.salaryPlanVersionList.filter(
+    (item) => item.effectType == 1
+  )[0]
 })
+
+const versionChange = (value) => {
+  versionInfo.value = form.salaryPlanVersionList.filter(
+    (item) => item.version == value
+  )[0]
+  tableViewRef.value?.getDataList(true, {
+    versionId: versionInfo.value.versionId
+  })
+}
+// 头部版本信息配置
+const titleForms = computed(() => [
+  {
+    control: 'InputPlus',
+    key: 'salaryPlanName',
+    label: '薪资方案名称',
+    column: 12,
+    props: {
+      maxlength: '30',
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
+    }
+  },
+  ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+      {
+        control: 'el-select',
+        key: 'version',
+        label: '版本',
+        options: form.salaryPlanVersionList,
+        required: false,
+        value: versionInfo.value?.version,
+        change: (value) => versionChange(value),
+        props: {
+          clearable: false,
+          label: 'version',
+          value: 'version'
+        }
+      }
+    ]
+    : [{props: {disabled: true}}]),
+  {
+    control: 'InputPlus',
+    key: 'salaryPlanRemark',
+    label: '方案备注',
+    column: 12,
+    required: false,
+    props: {
+      type: 'textarea',
+      maxlength: '500',
+      showWordLimit: true,
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
+    }
+  },
+  ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+        {
+          control: 'elDatePicker',
+          key: 'effectTime',
+          label: '生效日期',
+          value: versionInfo.value?.effectTime == null ? '' : versionInfo.value?.effectTime,
+          title: '版本信息',
+          required: false,
+          props: {
+            valueFormat: 'YYYY-MM-DD',
+            disabled: versionInfo.value?.effectType != 2
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'invalidTime',
+          label: '失效日期',
+          value: versionInfo.value?.invalidTime == null ? '' : versionInfo.value?.invalidTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateName',
+          label: '更新人',
+          value: versionInfo.value?.updateName,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateTime',
+          label: '更新时间',
+          value: versionInfo.value?.updateTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'versionRemark',
+          label: '备注',
+          required: false,
+          value: versionInfo.value?.versionRemark,
+          column: 24,
+          props: {
+            type: 'textarea',
+            maxlength: '500',
+            showWordLimit: true,
+            disabled: versionInfo.value?.effectType != 2
+          }
+        },
+    ]
+    : [])
+])
 
 const columns = [
   {
@@ -260,30 +357,41 @@ const columns = [
     'min-width': 80
   },
   {
+    prop: 'defaultItem',
+    label: '是否默认项',
+    value: (value: string) => (value ? '是' : '否'),
+    'min-width': 80
+  },
+  {
     prop: 'projectTypeDesc',
     label: '项目类型',
+    'min-width': 80
+  },
+  {
+    prop: 'displayName',
+    label: '显示名称',
     'min-width': 80
   },
   {
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 80
+    'min-width': 100
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 80
-  },
-  {
-    prop: 'salaryPlanProjectDesc',
-    label: '备注',
-    'min-width': 200
+    'min-width': 100
   },
   {
     prop: 'formula',
     label: '计算公式',
+    'min-width': 200
+  },
+  {
+    prop: 'salaryPlanProjectDesc',
+    label: '备注',
     'min-width': 200
   },
   {
@@ -309,27 +417,39 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_edit',
       label: '编辑',
-      show: () => route.query.type !== 'see',
+      show: () =>
+        route.query.type == 'add' ||
+        route.query.type == 'edit' ||
+        versionInfo.value?.effectType == 2,
       action: {
         handler: edit,
         save: false,
-        params: { row, list }
+        params: {row, list}
       }
     },
     {
       auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
-      show: () => route.query.type !== 'see',
+      type: 'delete',
+      show: () =>
+        row.defaultItem != '1'&&
+        (route.query.type == 'add' ||
+        route.query.type == 'edit' ||
+        versionInfo.value?.effectType == 2),
       action: {
         handler: del,
         save: false,
-        params: { row, list }
+        params: {row, list}
       }
     },
     {
       auth: 'outsourcing_salaryPlanProject_edit_formula',
       label: '修改公式',
-      show: () => row.projectSource === '30',
+      show: () =>
+        row.projectSource === '30' &&
+        (route.query.type == 'add' ||
+          route.query.type == 'edit' ||
+          versionInfo.value?.effectType == 2),
       action: {
         handler: goFormula,
         save: false,
@@ -364,7 +484,7 @@ const view = async (row) => {
 }
 
 // 编辑
-const edit = async ({ row, list }) => {
+const edit = async ({row, list}) => {
   listValue.value = list
   disabled.value = false
   id.value = row.id
@@ -378,12 +498,12 @@ const edit = async ({ row, list }) => {
 }
 
 // 删除
-const del = ({ row, list }) => {
+const del = ({row, list}) => {
   tableViewRef?.value.delListItem(row.id)
 }
 
 // 修改公式
-const goFormula = ({ salaryPlanProjectId }) => {
+const goFormula = ({salaryPlanProjectId}) => {
   $router.push({
     path: `/merchant/salaryPlan/${
       route.name.includes('查看') ? 'view' : 'edit'
@@ -419,14 +539,38 @@ const industryLevel_option = computed(() => {
 // 系统项项目名称二级筛选自动带入项目类型
 const twoChange = (id) => {
   if (id) {
-    dialogFormData.value.projectType = industry.value.filter(
+    let arr = industry.value.filter(
       (item) => item.id === id
-    )[0].type
+    )[0]
+    dialogFormData.value.projectType = arr.type
+    if (dialogFormData.value.projectCheck) {
+      let name1 = industry.value.filter(
+        (item) => item.id === dialogFormData.value.leve1
+      )[0].name
+      dialogFormData.value.displayName = name1 + '-' + arr.name
+    }
   } else {
     dialogFormData.value.projectType = ''
+    dialogFormData.value.displayName = ''
   }
 }
 
+// 显示名称显示逻辑
+const projectCheckChange = () => {
+  if (dialogFormData.value.projectCheck) {
+    if (dialogFormData.value.projectSource === '10' && dialogFormData.value.leve2 != '' && dialogFormData.value.leve2 != null) {
+      let name1 = industry.value.filter(
+        (item) => item.id === dialogFormData.value.leve1
+      )[0].name
+      let name2 = industry.value.filter(
+        (item) => item.id === dialogFormData.value.leve2
+      )[0].name
+      dialogFormData.value.displayName = name1 + '-' + name2
+    }else {
+      dialogFormData.value.displayName = dialogFormData.value.projectName
+    }
+  }
+}
 // Dialog配置项
 const forms = computed(() => [
   {
@@ -440,55 +584,72 @@ const forms = computed(() => [
     change: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
+      dialogFormData.value.projectCheck = true
     }
   },
-  ...(dialogFormData.value.projectSource === '10'
+  ...(dialogFormData.value.projectSource == '10'
     ? [
-        {
-          key: 'projectNameS',
-          slot: true
-        }
-      ]
+      {
+        key: 'projectNameS',
+        slot: true
+      }
+    ]
     : [
         {
           control: 'InputPlus',
           key: 'projectName',
           label: '项目名称',
           props: {
-            disabled: disabled.value
+            disabled: disabled.value || dialogFormData.value.defaultItem == '1',
+            maxlength: '20'
           }
         }
-      ]),
+    ]),
   {
     control: 'el-select',
     key: 'projectType',
     options: 'salary_plan_project_type',
     label: '项目类型',
     props: {
-      disabled: dialogFormData.value.projectSource === '10' || disabled.value
+      disabled: dialogFormData.value.projectSource === '10' || disabled.value || dialogFormData.value.defaultItem == '1'
     }
+  },
+  {
+    control: 'InputPlus',
+    key: 'displayName',
+    label: '显示名称',
+    props: {
+      disabled: disabled.value || dialogFormData.value.projectCheck,
+      maxlength: '20'
+    }
+  },
+  {
+    key: 'projectCheck',
+    column: 4,
+    labelWidth: '0',
+    slot: ({row}: any) => <el-checkbox class="!text-default" disabled={disabled.value} v-model={row.projectCheck} change={projectCheckChange()} label="与项目名称一致"/>
   },
   ...(dialogFormData.value.projectSource === '30'
     ? [
-        {
-          control: 'el-select',
-          key: 'carryRule',
-          options: 'carry_rule',
-          label: '进位规则',
-          props: {
-            disabled: disabled.value
-          }
-        },
-        {
-          control: 'el-select',
-          key: 'decimalPlaces',
-          options: decimalList,
-          label: '保留小数位',
-          props: {
-            disabled: disabled.value
-          }
+      {
+        control: 'el-select',
+        key: 'carryRule',
+        options: 'carry_rule',
+        label: '进位规则',
+        props: {
+          disabled: disabled.value
         }
-      ]
+      },
+      {
+        control: 'el-select',
+        key: 'decimalPlaces',
+        options: decimalList,
+        label: '保留小数位',
+        props: {
+          disabled: disabled.value
+        }
+      }
+    ]
     : []),
   {
     control: 'el-select',
@@ -534,11 +695,20 @@ const forms = computed(() => [
 
 // 保存 发布
 const saveList = async (list, type) => {
-  const valid = await dataFormRef.value.validate().catch(() => {})
-  if (!valid) return false
+  // const valid = await tableViewRef.value.validate().catch(() => {})
+  // if (!valid) return false
   try {
     if (type === 'save') {
-      await saveSort({ ...form, modify: '1', saveParams: list })
+      await saveSort({
+        ...form,
+        modify: '1',
+        saveParams: list,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       if (form.salaryPlanName != route.query.salaryPlanName) {
         closeTagView(route.meta.title as string)
         $router.push({
@@ -549,8 +719,26 @@ const saveList = async (list, type) => {
           }
         })
       }
+      if (route.query.type === 'see' || route.query.type === 'addVersion') {
+        closeTagView(route.meta.title as string)
+        $router.push({
+          path: '/merchant/salaryPlan/index',
+          state: {
+            refresh: 1
+          }
+        })
+      }
     } else {
-      await releaseObj({ ...form, modify: '1', saveParams: list })
+      await releaseObj({
+        ...form,
+        modify: '1',
+        saveParams: list,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       closeTagView(route.meta.title as string)
       $router.push({
         path: '/merchant/salaryPlan/index',
@@ -567,18 +755,40 @@ const saveList = async (list, type) => {
 // 提交
 const onSubmit = async () => {
   try {
-    await saveSort({ ...form, modify: '0', saveParams: listValue.value })
+    await saveSort({
+      ...form,
+      modify: '0',
+      saveParams: listValue.value,
+      versionParam: {
+        versionId: versionInfo.value?.versionId,
+        effectTime: form.effectTime,
+        versionRemark: form.versionRemark
+      }
+    })
     id.value == null
       ? await addObj({
-          ...form,
-          modify: '0',
-          param: dialogFormData.value
-        })
+        ...form,
+        modify: '0',
+        param: dialogFormData.value,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
       : await putObj({
-          ...form,
-          modify: '0',
-          param: dialogFormData.value
-        })
+        ...form,
+        modify: '0',
+        param: dialogFormData.value,
+        versionParam: {
+          versionId: versionInfo.value.versionId,
+          effectTime: form.effectTime,
+          versionRemark: form.versionRemark
+        }
+      })
+    tableViewRef.value?.getDataList(true, {
+      versionId: versionInfo.value.versionId
+    })
   } catch (error) {
     console.log(error)
   }

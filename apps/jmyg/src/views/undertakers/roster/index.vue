@@ -189,9 +189,6 @@ const conditionForms2 = ref([
     key: 'spId',
     label: '服务商',
     column: 12,
-    rules: [
-      { required: true, message: '服务商名称不能为空', trigger: 'change' }
-    ],
     labelWidth: 70
   } /*,
   {

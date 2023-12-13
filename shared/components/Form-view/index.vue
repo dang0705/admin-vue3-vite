@@ -51,17 +51,22 @@ interface OptionsParams {
 const formConfigs = ref<any[]>([])
 const rulesCache = ref<Record<string, any>>({})
 let showWatcher: Record<string, WatchStopHandle> = {}
+let changeWatcher: Record<string, WatchStopHandle> = {}
 const resetFormView = () => {
-  clearShowWatcher()
+  clearWatcher()
   rulesCache.value = {}
 }
-const clearShowWatcher = () => {
+const clearWatcher = () => {
   for (let watcher in showWatcher) {
     showWatcher[watcher]()
+  }
+  for (let watcher in changeWatcher) {
+    changeWatcher[watcher]()
   }
 }
 const init = async (forms: FormOptions[]) => {
   formConfigs.value = []
+  clearWatcher()
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
@@ -117,9 +122,8 @@ const init = async (forms: FormOptions[]) => {
       formData.value[item.key] = item.value
     }
     // }
-
     item.change &&
-      watch(
+      (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
           // Ignore the effect of data from api's first update
@@ -127,8 +131,7 @@ const init = async (forms: FormOptions[]) => {
             item.change &&
             item.change(value, formData.value)
         }
-      )
-    clearShowWatcher()
+      ))
     helper.isFunction(item.show) &&
       (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
@@ -202,7 +205,8 @@ const init = async (forms: FormOptions[]) => {
     }
   }
 }
-
+onDeactivated(clearWatcher)
+onActivated(() => formConfigs.value.length && init(prop.forms as []))
 const resetFields = () => prop.cancelButtonText === '重置' && reset()
 
 const page = ref(0)
@@ -219,10 +223,7 @@ pagination.value &&
       emit('get-page', page)
     }
   )
-const reset = async (): Promise<void> => {
-  await nextTick()
-  formRef?.value?.resetFields()
-}
+const reset = () => formRef?.value?.resetFields()
 
 const initForm = (forms: any[]) => {
   helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
@@ -239,7 +240,7 @@ watch(
 watch(
   () => prop.show,
   async (show) =>
-    show ? initForm(prop.forms as []) : resetFormView() && reset()
+    show ? initForm(prop.forms as []) : reset() && resetFormView()
 )
 
 const getEvent = (control: string) =>
@@ -341,14 +342,12 @@ defineExpose({
 
                 <el-col
                   v-bind="form.column ? { span: form.column } : dynamicColumns"
-                  :class="['mb-2', { 'mb-[14px]': vertical }]"
+                  :class="[
+                    validation ? 'mb-[18px]' : 'mb-2',
+                    { 'mb-[14px]': vertical }
+                  ]"
                   v-show="!form.hidden">
-                  <slot
-                    v-if="form.slot"
-                    :name="form.key"
-                    v-bind="{ form, formData, dynamicColumns }" />
                   <el-form-item
-                    v-else
                     :prop="form.key"
                     :label="`${
                       form.label
@@ -357,7 +356,15 @@ defineExpose({
                     }`"
                     :label-width="form.labelWidth"
                     :rules="form.rules">
+                    <template #label v-if="form.labelSlot">
+                      <slot :name="`${form.key}-label`">
+                        <Table-slot
+                          :slot-function="form.labelSlot"
+                          :row="formData" />
+                      </slot>
+                    </template>
                     <component
+                      v-if="!form.slot"
                       :is="
                         !form.hidden ? form.control || 'el-input' : 'template'
                       "
@@ -392,6 +399,12 @@ defineExpose({
                         </el-radio>
                       </template>
                     </component>
+                    <slot
+                      v-else
+                      :name="form.key"
+                      v-bind="{ form, formData, dynamicColumns }">
+                      <Table-slot :slot-function="form.slot" :row="formData" />
+                    </slot>
                   </el-form-item>
                 </el-col>
                 <el-col :span="24" v-if="form.afterTitle">

@@ -21,12 +21,13 @@ export interface FormOptions {
   forceOptions?: boolean // 强制刷新字典
   value?: unknown // 组件默认数据
   rules?: FormItemRule[] // 验证规则
-  slot?: boolean | string //插槽,
+  labelSlot?: boolean | string //label插槽,
+  slot?: boolean | string //控件插槽,
   title?: string // 表单区间的标题上
   afterTitle?: string // 表单区间的标题下
   hidden?: boolean // 表单隐藏,但有表单数据
   change?: Function // 控件值改变回调
-  show?: () => boolean // 控制表单(控件)动态显隐
+  show?: (formData: any) => boolean // 控制表单(控件)动态显隐
   required?: boolean // 表单为必填字段
   validator?: string //utils/validate.ts的rule对象中对应的validator
 }

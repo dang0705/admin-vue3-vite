@@ -204,10 +204,12 @@ const bottomForms = [
       :forms="titleForms">
     </FormView>
     </template>
-    <template #bottomActions>
+    <template #table-bottom>
       <FormView
+      class="mt-[20px]"
       v-model="formData"
       :columns="12"
+      vertical
       label-width="150px"
       :disabled="false"
       :showBtn="false"

@@ -46,11 +46,16 @@ const filteredSalaries = computed(() => {
 })
 
 const handleParse = async () => {
+  if (!editor.value.html2string(modelValue)) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().error('公式尚未填写')
+    return false
+  }
   const {
     data: { message, calcFactor }
   } = await parse({
     formula: editor.value.html2string(modelValue),
-    salaryPlanId: 666
+    salaryPlanId
   })
   if (message === 'success') {
     return calcFactor
@@ -89,10 +94,10 @@ const initTrial = async () => {
         ...(!index ? { title: '输入项' } : {}),
         label: projectName,
         key: projectName,
-        control
+        control,
+        ...(index === parsedSuccess.length - 1 ? { afterTitle: '输出项' } : {})
       })
     })
-    forms.value.push({ title: '输出项', key: 'output', required: false })
     dialogVisible.value = true
   }
 }
@@ -119,18 +124,15 @@ const insertContent = (content, type = 'salary') =>
 
 const emits = defineEmits(['back'])
 const onSave = async () => {
-  // handleParse()
-  if (!editor.value.html2string(modelValue)) {
-    const { useMessage } = await import('@hooks/message')
-    useMessage().error('公式尚未填写')
-    return
+  const parsedSuccess = await handleParse()
+  if (parsedSuccess) {
+    await putObj({
+      salaryPlanProjectId,
+      formula: editor.value.html2string(modelValue)
+    })
+    // $route.params.state = '1'
+    emits('back')
   }
-  await putObj({
-    salaryPlanProjectId,
-    formula: editor.value.html2string(modelValue)
-  })
-  // $route.params.state = '1'
-  emits('back')
 }
 </script>
 <template>
@@ -230,10 +232,10 @@ const onSave = async () => {
       v-model="dialogVisible"
       v-model:form-data="formData"
       keep-show-after-confirm
+      vertical
       :columns="24"
       :forms="forms"
       :onSubmit="handleTrial"
-      vertical
       title="公式试算">
       <template #after-forms>
         <div>{{ itemName }} {{ trialValue }}</div>

@@ -46,3 +46,22 @@ export function updateObj(obj?: Object) {
     data: obj
   })
 }
+
+export function addVersion(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlan/add/version',
+    method: 'post',
+    data: obj
+  })
+}
+
+export function copyObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/salaryPlan/copy/salaryPlan',
+    method: 'post',
+    data: obj
+  })
+}
+
+export const trialPlan = (params: any) =>
+  $http.post('/outsourcing/salaryPlan/trialToExcel', params)

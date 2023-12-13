@@ -61,3 +61,10 @@ export function releaseObj(obj?: Object) {
     data: obj
   })
 }
+
+export function getVersionObj(id?: string) {
+  return request({
+    url: '/outsourcing/salaryPlan/queryInfo/' + id,
+    method: 'get'
+  })
+}
