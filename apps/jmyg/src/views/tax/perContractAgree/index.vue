@@ -79,7 +79,7 @@ const conditionForms = [
   {
     control: 'DateRange',
     key: 'queryTimeRange',
-    label: '签署时间',
+    label: '签署日期',
     props: {
       valueType: 'string'
     }
