@@ -97,7 +97,7 @@
               placeholder="一级分类"
               class="w100"
               clearable
-              :disabled="disabled"
+              :disabled="disabled || dialogFormData.defaultItem == '1'"
               v-model="dialogFormData.leve1">
               <el-option
                 :key="item.id"
@@ -122,7 +122,7 @@
               placeholder="二级分类"
               class="w100"
               clearable
-              :disabled="disabled"
+              :disabled="disabled || dialogFormData.defaultItem == '1'"
               v-model="dialogFormData.leve2">
               <el-option
                 :key="item.id"
@@ -171,7 +171,7 @@ const dialogFormData = ref({
 const form = reactive({
   salaryPlanId: '',
   salaryPlanName: '',
-  salaryPlaneRemark: ''
+  salaryPlanRemark: ''
 })
 const listValue = ref()
 const industry = ref([])
@@ -265,7 +265,7 @@ const titleForms = computed(() => [
     : [{ props: { disabled: true } }]),
   {
     control: 'InputPlus',
-    key: 'salaryPlaneRemark',
+    key: 'salaryPlanRemark',
     label: '方案备注',
     column: 12,
     required: false,
@@ -282,7 +282,7 @@ const titleForms = computed(() => [
           control: 'elDatePicker',
           key: 'effectTime',
           label: '生效日期',
-          value: versionInfo.value?.effectTime,
+          value: versionInfo.value?.effectTime == null ? '' : versionInfo.value?.effectTime,
           title: '版本信息',
           required: false,
           props: {
@@ -294,7 +294,7 @@ const titleForms = computed(() => [
           control: 'InputPlus',
           key: 'invalidTime',
           label: '失效日期',
-          value: versionInfo.value?.invalidTime,
+          value: versionInfo.value?.invalidTime == null ? '' : versionInfo.value?.invalidTime,
           props: {
             disabled: true
           }
@@ -353,30 +353,41 @@ const columns = [
     'min-width': 80
   },
   {
+    prop: 'defaultItem',
+    label: '是否默认项',
+    value: (value: string) => (value ? '是' : '否'),
+    'min-width': 80
+  },
+  {
     prop: 'projectTypeDesc',
     label: '项目类型',
+    'min-width': 80
+  },
+  {
+    prop: 'displayName',
+    label: '显示名称',
     'min-width': 80
   },
   {
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 80
+    'min-width': 100
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value ? '是' : '否'),
-    'min-width': 80
-  },
-  {
-    prop: 'salaryPlanProjectDesc',
-    label: '备注',
-    'min-width': 200
+    'min-width': 100
   },
   {
     prop: 'formula',
     label: '计算公式',
+    'min-width': 200
+  },
+  {
+    prop: 'salaryPlanProjectDesc',
+    label: '备注',
     'min-width': 200
   },
   {
@@ -405,7 +416,7 @@ const actions = (row, list) => {
       show: () =>
         route.query.type == 'add' ||
         route.query.type == 'edit' ||
-        versionInfo?.effectType == 2,
+        versionInfo.value?.effectType == 2,
       action: {
         handler: edit,
         save: false,
@@ -415,10 +426,12 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
+      type: 'delete',
       show: () =>
-        route.query.type == 'add' ||
+        row.defaultItem != '1'&&
+        (route.query.type == 'add' ||
         route.query.type == 'edit' ||
-        versionInfo?.effectType == 2,
+        versionInfo.value?.effectType == 2),
       action: {
         handler: del,
         save: false,
@@ -432,7 +445,7 @@ const actions = (row, list) => {
         row.projectSource === '30' &&
         (route.query.type == 'add' ||
           route.query.type == 'edit' ||
-          versionInfo?.effectType == 2),
+          versionInfo.value?.effectType == 2),
       action: {
         handler: goFormula,
         save: false,
@@ -538,11 +551,21 @@ const twoChange = (id) => {
   }
 }
 
+// 显示名称显示逻辑
 const projectCheckChange = () => {
   if (dialogFormData.value.projectCheck) {
-    if (dialogFormData.value.projectSource === '10')
+    if (dialogFormData.value.projectSource === '10' && dialogFormData.value.leve2 != '' && dialogFormData.value.leve2 != null) {
+      let name1 = industry.value.filter(
+        (item) => item.id === dialogFormData.value.leve1
+      )[0].name
+      let name2 = industry.value.filter(
+        (item) => item.id === dialogFormData.value.leve2
+      )[0].name
+      dialogFormData.value.displayName = name1 + '-' + name2
+    }else {
       dialogFormData.value.displayName = dialogFormData.value.projectName
     }
+  }
 }
 // Dialog配置项
 const forms = computed(() => [
@@ -560,7 +583,7 @@ const forms = computed(() => [
       dialogFormData.value.projectCheck = true
     }
   },
-  ...(dialogFormData.value.projectSource === '10'
+  ...(dialogFormData.value.projectSource == '10'
     ? [
         {
           key: 'projectNameS',
@@ -573,7 +596,7 @@ const forms = computed(() => [
           key: 'projectName',
           label: '项目名称',
           props: {
-            disabled: disabled.value,
+            disabled: disabled.value || dialogFormData.value.defaultItem == '1',
             maxlength: '20'
           }
         }
@@ -584,7 +607,7 @@ const forms = computed(() => [
     options: 'salary_plan_project_type',
     label: '项目类型',
     props: {
-      disabled: dialogFormData.value.projectSource === '10' || disabled.value
+      disabled: dialogFormData.value.projectSource === '10' || disabled.value || dialogFormData.value.defaultItem == '1'
     }
   },
   {
@@ -727,8 +750,6 @@ const saveList = async (list, type) => {
 
 // 提交
 const onSubmit = async () => {
-  console.log(dialogFormData.value,999);
-  return
   try {
     await saveSort({
       ...form,

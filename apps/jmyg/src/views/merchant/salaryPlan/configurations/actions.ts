@@ -50,6 +50,7 @@ export default (
     {
       label: '删除',
       auth: 'outsourcing_salaryPlan_del',
+      type: 'delete',
       confirm: {
         ask: '您确定将此方案删除吗？'
       },
@@ -74,6 +75,7 @@ export default (
     {
       label: '新增版本',
       auth: 'outsourcing_salaryPlan_edit',
+      icon: 'icon_a-tianjiada',
       show: () => row.state == '1',
       action: {
         handler: goFromView,

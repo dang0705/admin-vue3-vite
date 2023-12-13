@@ -29,7 +29,7 @@ export default [
     'min-width': 120
   },
   {
-    prop: 'salary_plan_desc',
+    prop: 'salaryPlanRemark',
     label: '备注',
     'min-width': 160
   },
