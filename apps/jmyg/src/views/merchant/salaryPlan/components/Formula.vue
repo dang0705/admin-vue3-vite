@@ -46,11 +46,16 @@ const filteredSalaries = computed(() => {
 })
 
 const handleParse = async () => {
+  if (!editor.value.html2string(modelValue)) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().error('公式尚未填写')
+    return false
+  }
   const {
     data: { message, calcFactor }
   } = await parse({
     formula: editor.value.html2string(modelValue),
-    salaryPlanId: 666
+    salaryPlanId
   })
   if (message === 'success') {
     return calcFactor
@@ -119,18 +124,15 @@ const insertContent = (content, type = 'salary') =>
 
 const emits = defineEmits(['back'])
 const onSave = async () => {
-  // handleParse()
-  if (!editor.value.html2string(modelValue)) {
-    const { useMessage } = await import('@hooks/message')
-    useMessage().error('公式尚未填写')
-    return
+  const parsedSuccess = await handleParse()
+  if (parsedSuccess) {
+    await putObj({
+      salaryPlanProjectId,
+      formula: editor.value.html2string(modelValue)
+    })
+    // $route.params.state = '1'
+    emits('back')
   }
-  await putObj({
-    salaryPlanProjectId,
-    formula: editor.value.html2string(modelValue)
-  })
-  // $route.params.state = '1'
-  emits('back')
 }
 </script>
 <template>

@@ -242,8 +242,14 @@ watch(
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) =>
-    show ? initForm(prop.forms as []) : resetFormView() && reset()
+  async (show) => {
+    if (show) {
+      initForm(prop.forms as [])
+    } else {
+      await reset()
+      resetFormView()
+    }
+  }
 )
 
 const getEvent = (control: string) =>
