@@ -94,10 +94,10 @@ const initTrial = async () => {
         ...(!index ? { title: '输入项' } : {}),
         label: projectName,
         key: projectName,
-        control
+        control,
+        ...(index === parsedSuccess.length - 1 ? { afterTitle: '输出项' } : {})
       })
     })
-    forms.value.push({ title: '输出项', key: 'output', required: false })
     dialogVisible.value = true
   }
 }

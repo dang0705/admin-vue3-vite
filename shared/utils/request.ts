@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Local, Session } from '@utils/storage'
 import { useMessageBox } from '@hooks/message'
+import apiVersion from '@configurations/api-version'
 import qs from 'qs'
 import other from './other'
 
@@ -54,9 +55,11 @@ service.interceptors.request.use(
       config.headers![CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`
     }
     config.headers.tenantId = 0
-    if (Local.get('dev')) {
+    if (Local.get('dev') || __isDev) {
       //just for testing so far
-      config.headers!['api-version'] = Local.get('dev')['api-version']
+      config.headers!['api-version'] = __isDev
+        ? apiVersion
+        : Local.get('dev')['api-version']
     }
 
     // 请求报文加密
