@@ -166,7 +166,7 @@ const dialogFormData = ref({
   projectType: '',
   leve1: '',
   leve2: '',
-  projectCheck: false,
+  projectCheck: true,
 })
 const form = reactive({
   salaryPlanId: '',
@@ -522,16 +522,27 @@ const industryLevel_option = computed(() => {
 // 系统项项目名称二级筛选自动带入项目类型
 const twoChange = (id) => {
   if (id) {
-    dialogFormData.value.projectType = industry.value.filter(
+    let arr = industry.value.filter(
       (item) => item.id === id
-    )[0].type
+    )[0]
+    dialogFormData.value.projectType = arr.type
+    if (dialogFormData.value.projectCheck) {
+      let name1 = industry.value.filter(
+      (item) => item.id === dialogFormData.value.leve1
+    )[0].name
+      dialogFormData.value.displayName = name1 + '-' + arr.name
+    }
   } else {
     dialogFormData.value.projectType = ''
+    dialogFormData.value.displayName = ''
   }
 }
 
 const projectCheckChange = () => {
-  console.log(dialogFormData.value,666);
+  if (dialogFormData.value.projectCheck) {
+    if (dialogFormData.value.projectSource === '10')
+      dialogFormData.value.displayName = dialogFormData.value.projectName
+    }
 }
 // Dialog配置项
 const forms = computed(() => [
@@ -546,6 +557,7 @@ const forms = computed(() => [
     change: (value) => {
       dialogFormData.value = {}
       dialogFormData.value.projectSource = value
+      dialogFormData.value.projectCheck = true
     }
   },
   ...(dialogFormData.value.projectSource === '10'
@@ -561,7 +573,8 @@ const forms = computed(() => [
           key: 'projectName',
           label: '项目名称',
           props: {
-            disabled: disabled.value
+            disabled: disabled.value,
+            maxlength: '20'
           }
         }
       ]),
@@ -579,14 +592,15 @@ const forms = computed(() => [
     key: 'displayName',
     label: '显示名称',
     props: {
-      disabled: disabled.value || dialogFormData.value.projectCheck
+      disabled: disabled.value || dialogFormData.value.projectCheck,
+      maxlength: '20'
     }
   },
   {
     key: 'projectCheck',
     column: 4,
     label: '与项目名称一致',
-    slot: ({row}: any) => <el-checkbox class="!text-default" v-model={row.projectCheck} change={projectCheckChange()} label="与项目名称一致"/>
+    slot: ({row}: any) => <el-checkbox class="!text-default" disabled={disabled.value} v-model={row.projectCheck} change={projectCheckChange()} label="与项目名称一致"/>
   },
   ...(dialogFormData.value.projectSource === '30'
     ? [
