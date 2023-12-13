@@ -103,24 +103,17 @@
         <InputPlus v-model="dialogFormData.payingJointBankNumber" />
       </template>
       <template #receiptAccountNumber>
-        <el-form-item
-          label="收款账号:"
-          prop="receiptAccountNumber"
-          :rules="[
-            { required: true, message: '收款账号不能为空', trigger: 'blur' }
-          ]">
-          <el-select
-            @change="handleFilterAccount(dialogFormData.receiptAccountNumber)"
-            placeholder="请选择"
-            class="w100"
-            v-model="dialogFormData.receiptAccountNumber">
-            <el-option
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              v-for="item in receiptAccountOptions" />
-          </el-select>
-        </el-form-item>
+        <el-select
+          @change="handleFilterAccount(dialogFormData.receiptAccountNumber)"
+          placeholder="请选择"
+          class="w100"
+          v-model="dialogFormData.receiptAccountNumber">
+          <el-option
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            v-for="item in receiptAccountOptions" />
+        </el-select>
       </template>
     </Dialog>
   </TableView>
