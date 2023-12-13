@@ -350,7 +350,9 @@ defineExpose({
                   <slot
                     v-if="form.slot"
                     :name="form.key"
-                    v-bind="{ form, formData, dynamicColumns }" />
+                    v-bind="{ form, formData, dynamicColumns }">
+                    <Table-slot :slot-function="form.slot" :row="formData" />
+                  </slot>
                   <el-form-item
                     v-else
                     :prop="form.key"

@@ -71,7 +71,7 @@
       :show-cancel="false"
       :showBtn="!disabled"
       :forms="forms"
-      :columns="20"
+      :columns="18"
       :save="false"
       v-model:form-data="dialogFormData"
       :on-submit="onSubmit"
@@ -137,7 +137,7 @@
   </Table-view>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import {
   addObj,
   saveSort,
@@ -165,7 +165,8 @@ const dialogFormData = ref({
   projectSource: '',
   projectType: '',
   leve1: '',
-  leve2: ''
+  leve2: '',
+  projectCheck: false,
 })
 const form = reactive({
   salaryPlanId: '',
@@ -529,6 +530,9 @@ const twoChange = (id) => {
   }
 }
 
+const projectCheckChange = () => {
+  console.log(dialogFormData.value,666);
+}
 // Dialog配置项
 const forms = computed(() => [
   {
@@ -569,6 +573,20 @@ const forms = computed(() => [
     props: {
       disabled: dialogFormData.value.projectSource === '10' || disabled.value
     }
+  },
+  {
+    control: 'InputPlus',
+    key: 'displayName',
+    label: '显示名称',
+    props: {
+      disabled: disabled.value || dialogFormData.value.projectCheck
+    }
+  },
+  {
+    key: 'projectCheck',
+    column: 4,
+    label: '与项目名称一致',
+    slot: ({row}: any) => <el-checkbox class="!text-default" v-model={row.projectCheck} change={projectCheckChange()} label="与项目名称一致"/>
   },
   ...(dialogFormData.value.projectSource === '30'
     ? [
@@ -695,6 +713,8 @@ const saveList = async (list, type) => {
 
 // 提交
 const onSubmit = async () => {
+  console.log(dialogFormData.value,999);
+  return
   try {
     await saveSort({
       ...form,
