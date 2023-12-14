@@ -81,10 +81,20 @@
       submit-button-text="提交"
       button-position="center">
       <template #projectNameS>
-        <el-col :span="24" class="formBox !px-0">
+        <el-col :span="24" class="formBox" style="padding-right: 0">
+          <div style="min-width: 145px" class="com_label text-[12px] require">
+            <span>项目名称：</span>
+          </div>
           <el-form-item
             label-width="0"
-            prop="leve1">
+            prop="leve1"
+            :rules="[
+              {
+                required: true,
+                message: '项目名称一级不能为空',
+                trigger: 'change'
+              }
+            ]">
             <el-select
               @change="dialogFormData.leve2 = ''"
               placeholder="一级分类"
@@ -582,7 +592,8 @@ const forms = computed(() => [
       {
         key: 'projectNameS',
         slot: true,
-        label: '项目名称'
+        labelWidth: '0',
+        required: false
       }
     ]
     : [
