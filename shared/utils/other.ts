@@ -263,7 +263,7 @@ export function base64Encrypt(src: string) {
  */
 export function downBlobFile(
   url: any,
-  query: any,
+  query?: any,
   fileName?: string,
   exportExcel = false,
   localFile = false
@@ -285,11 +285,16 @@ export function downBlobFile(
           params: query
         })
   }).then((response) => {
-    function sliceStr(str:string) {
+    function sliceStr(str: string) {
       var reg = new RegExp('inline;filename=', 'g')
       return str.replace(reg, '')
     }
-    handleBlobFile(response.blob,  exportExcel ? sliceStr(response.fileName) : fileName || sliceStr(response.fileName))
+    handleBlobFile(
+      response.blob,
+      exportExcel
+        ? sliceStr(response.fileName)
+        : fileName || sliceStr(response.fileName)
+    )
   })
 }
 
