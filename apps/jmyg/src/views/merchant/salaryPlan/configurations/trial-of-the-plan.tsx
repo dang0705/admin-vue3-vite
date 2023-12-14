@@ -25,9 +25,10 @@ export default async (
   dialog.labelWidth = 200
   dialog.keepShowAfterConfirm = true
   const forms: any[] = []
-  const valid = list.some(({ projectType, projectName, projectSource }) => {
-    const valid = sourceTypeMap[projectSource] !== '计算项'
-    if (valid) {
+  let hasValid = false
+  list.forEach(({ projectType, projectName, projectSource }) => {
+    hasValid = sourceTypeMap[projectSource] !== '计算项'
+    if (hasValid) {
       const control =
         controlTypeMap[projectType] === '日期'
           ? 'DateRange'
@@ -42,9 +43,8 @@ export default async (
         ...(__isDev ? { value: 1 } : {})
       })
     }
-    return valid
   })
-  valid && (forms[0].title = '输入项')
+  hasValid && (forms[0].title = '输入项')
   dialog.forms = forms
   const name = ref('')
   const link = ref('')
@@ -76,8 +76,8 @@ export default async (
     )
   })
 
-  dialog.show = valid
-  if (!valid) {
+  dialog.show = hasValid
+  if (!hasValid) {
     const { useMessage } = await import('@hooks/message')
     useMessage().success('无可用工资项目')
   }
