@@ -1,8 +1,16 @@
 <script setup lang="tsx">
 import {useDict} from "@hooks/dict";
 import BottomButtons from '@components/Bottom-buttons.vue'
+import {getInsuredArea} from '@jmyg/api/outsourcing/socialInsurancePolicyItem'
 
 const formData = ref({})
+const areaList = ref([])
+
+onMounted(async () => {
+  let res = await getInsuredArea()
+  areaList.value = res.data
+  console.log(areaList.value);
+})
 
 let globalInit = {
   minimumBase: 0,
@@ -135,8 +143,12 @@ const titleForms = [
   {
     control: 'el-select',
     key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    options: 'areaList',
     label: '参保地区',
+    props: {
+      label: 'name',
+      value: 'id'
+    }
   },
 ]
 
