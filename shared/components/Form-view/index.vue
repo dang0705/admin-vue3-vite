@@ -120,7 +120,7 @@ const init = async (forms: FormOptions[]) => {
     // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
     if (
       !helpers.isEmpty(item.value) &&
-      helpers.isEmpty(formData.value[item.key])
+      [null, undefined].includes(formData.value[item.key])
     ) {
       formData.value[item.key] = item.value
     }
