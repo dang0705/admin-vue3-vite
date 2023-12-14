@@ -359,7 +359,7 @@ const columns = [
   {
     prop: 'defaultItem',
     label: '是否默认项',
-    value: (value: string) => (value ? '是' : '否'),
+    value: (value: string) => (value.defaultItem == '1' ? '是' : '否'),
     'min-width': 80
   },
   {
@@ -375,13 +375,13 @@ const columns = [
   {
     prop: 'salaryShow',
     label: '薪资表是否展示',
-    value: (value: string) => (value ? '是' : '否'),
+    value: (value: string) => (value.salaryShow == '1' ? '是' : '否'),
     'min-width': 100
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
-    value: (value: string) => (value ? '是' : '否'),
+    value: (value: string) => (value.payslipShow == '1' ? '是' : '否'),
     'min-width': 100
   },
   {
@@ -491,7 +491,9 @@ const edit = async ({row, list}) => {
   visible.value = true
   try {
     let res = await getObj(row.id)
-    dialogFormData.value = res.data
+    console.log(res.data,6666);
+    dialogFormData.value = {...res.data}
+    console.log(dialogFormData.value,'dialogFormData.value');
   } catch (error) {
     console.log(error)
   }
@@ -579,7 +581,7 @@ const forms = computed(() => [
     options: 'salary_plan_project_source',
     label: '项目来源',
     props: {
-      disabled: disabled.value
+      disabled: disabled.value || dialogFormData.value.defaultItem == '1'
     },
     change: (value) => {
       dialogFormData.value = {}
@@ -658,6 +660,7 @@ const forms = computed(() => [
     key: 'salaryShow',
     options: 'yes_no_type',
     label: '薪资表是否展示',
+    value: '1',
     props: {
       disabled: disabled.value
     }
@@ -667,6 +670,7 @@ const forms = computed(() => [
     key: 'payslipShow',
     options: 'yes_no_type',
     label: '工资条是否展示',
+    value: '1',
     props: {
       disabled: disabled.value
     }

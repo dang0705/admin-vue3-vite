@@ -23,8 +23,8 @@ const {
 
 const back = () => {
   $router.push({
-    path: '/merchant/salaryPlan/edit/index',
-    query: { salaryPlanId, salaryPlanName, type: 'edit' },
+    path: '/merchant/salaryPlan/add/index',
+    query: { salaryPlanId, salaryPlanName, type: 'add' },
     state: { refresh: 1 }
   })
   closeTagView($route.meta.title as string)

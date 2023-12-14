@@ -2,14 +2,15 @@
 import {useDict} from "@hooks/dict";
 import BottomButtons from '@components/Bottom-buttons.vue'
 import {getInsuredArea} from '@jmyg/api/outsourcing/socialInsurancePolicyItem'
+import { yearTimeList,dayList } from './dropList'
 
-const formData = ref({})
+const titleFormData = ref({})
+const BottomFormData = ref({})
 const areaList = ref([])
 
 onMounted(async () => {
   let res = await getInsuredArea()
   areaList.value = res.data
-  console.log(areaList.value);
 })
 
 let globalInit = {
@@ -134,82 +135,87 @@ const globalOperate = async (showValue: number | string, prop: string, label: st
   }
 }
 
-const titleForms = [
+const titleForms = computed(() => [
   {
     control: 'InputPlus',
-    key: 'projectName',
-    label: '项目名称'
+    key: 'name',
+    label: '社保政策'
   },
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'areaList',
+    key: 'insuredAreaId',
+    options: areaList.value,
     label: '参保地区',
     props: {
       label: 'name',
       value: 'id'
     }
   },
-]
+])
 
-const bottomForms = [
+const bottomForms = computed(() => [
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'criticalIllnessChargingType',
+    options: 'critical_illness_charging_type',
     label: '大病医疗收费方式',
   },
-  {
+  ...(BottomFormData.value.criticalIllnessChargingType == '1' ? [{
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'chargingMonth',
+    options: yearTimeList,
     label: '年收费时间',
-  },
+  }]:[]),
   {
-    control: 'InputPlus',
-    key: 'projectName',
-    label: '补缴最长期限（月）'
+    control: 'el-input-number',
+    key: 'payBackMaxMonth',
+    label: '补缴最长期限（月）',
+    props: {
+      min: 0,
+      max: 24,
+      stepStrictly: true
+    }
   },
   {
     control: 'el-select',
-    key: 'projectType',
+    key: 'calcType',
     options: 'social_insurance_policy_calc_type',
     label: '计算方式',
   },
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'addTimePoint',
+    options: dayList,
     label: '增员截止日期',
   },
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'subTimePoint',
+    options: dayList,
     label: '减员截止日期',
   },
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'addEffectTimeType',
+    options: 'add_effect_time_type',
     label: '增员规则',
   },
   {
     control: 'el-select',
-    key: 'projectType',
-    options: 'social_insurance_policy_calc_type',
+    key: 'subEffectTimeType',
+    options: 'sub_effect_time_type',
     label: '减员规则',
   },
-]
+])
 
 </script>
 
 <template>
     <Table-view :table-data="data" :columns="columns" no-pagination>
-    <template #top-bar="{ otherInfo }">
+    <template #tableTop>
       <FormView
-      v-model="formData"
-      :columns="12"
+      v-model="titleFormData"
+      :columns="6"
       label-width="130px"
       :disabled="false"
       :showBtn="false"
@@ -219,7 +225,7 @@ const bottomForms = [
     <template #table-bottom>
       <FormView
       class="mt-[20px]"
-      v-model="formData"
+      v-model="BottomFormData"
       :columns="12"
       vertical
       label-width="150px"
