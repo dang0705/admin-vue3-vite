@@ -491,9 +491,7 @@ const edit = async ({row, list}) => {
   visible.value = true
   try {
     let res = await getObj(row.id)
-    console.log(res.data,6666);
     dialogFormData.value = {...res.data}
-    console.log(dialogFormData.value,'dialogFormData.value');
   } catch (error) {
     console.log(error)
   }
