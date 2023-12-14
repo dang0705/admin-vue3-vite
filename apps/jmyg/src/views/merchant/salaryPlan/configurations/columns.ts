@@ -19,6 +19,11 @@ export default [
     'min-width': 80
   },
   {
+    prop: 'version',
+    label: '当前生效版本',
+    'min-width': 100
+  },
+  {
     prop: 'createBy',
     label: '创建人',
     'min-width': 80

@@ -361,7 +361,7 @@ const columns = [
     prop: 'defaultItem',
     label: '是否默认项',
     value: (value: string) => (value.defaultItem == '1' ? '是' : '否'),
-    'min-width': 80
+    'min-width': 100
   },
   {
     prop: 'projectTypeDesc',
@@ -377,13 +377,13 @@ const columns = [
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value.salaryShow == '1' ? '是' : '否'),
-    'min-width': 100
+    'min-width': 120
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value.payslipShow == '1' ? '是' : '否'),
-    'min-width': 100
+    'min-width': 120
   },
   {
     prop: 'formula',
@@ -720,17 +720,16 @@ const saveList = async (list, type) => {
           versionRemark: form.versionRemark
         }
       })
-      if (form.salaryPlanName != route.query.salaryPlanName) {
-        closeTagView(route.meta.title as string)
-        $router.push({
-          path: '/merchant/salaryPlan/add',
-          query: {
-            salaryPlanId: form.salaryPlanId,
-            salaryPlanName: form.salaryPlanName
-          }
-        })
-      }
-      if (route.query.type === 'see' || route.query.type === 'addVersion') {
+      // if (form.salaryPlanName != route.query.salaryPlanName) {
+      //   closeTagView(route.meta.title as string)
+      //   $router.push({
+      //     path: route.path,
+      //     query: {
+      //       salaryPlanId: form.salaryPlanId,
+      //       salaryPlanName: form.salaryPlanName
+      //     }
+      //   })
+      // }
         closeTagView(route.meta.title as string)
         $router.push({
           path: '/merchant/salaryPlan/index',
@@ -738,7 +737,6 @@ const saveList = async (list, type) => {
             refresh: 1
           }
         })
-      }
     } else {
       await releaseObj({
         ...form,
