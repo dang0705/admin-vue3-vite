@@ -25,10 +25,11 @@ export default async (
   dialog.labelWidth = 200
   dialog.keepShowAfterConfirm = true
   const forms: any[] = []
-  let hasValid = false
+  let hasValid: boolean | null = null
   list.forEach(({ projectType, projectName, projectSource }) => {
-    hasValid = sourceTypeMap[projectSource] !== '计算项'
-    if (hasValid) {
+    const validStandard = sourceTypeMap[projectSource] !== '计算项'
+    hasValid === null && validStandard && (hasValid = validStandard)
+    if (validStandard) {
       const control =
         controlTypeMap[projectType] === '日期'
           ? 'DateRange'
