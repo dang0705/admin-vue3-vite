@@ -46,3 +46,11 @@ export function getInsuredArea(query?: Object) {
     params: query
   })
 }
+
+export function saveObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/socialInsurancePolicy',
+    method: 'post',
+    data: obj
+  })
+}

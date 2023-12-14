@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import {useDict} from "@hooks/dict";
 import BottomButtons from '@components/Bottom-buttons.vue'
-import {getInsuredArea} from '@jmyg/api/outsourcing/socialInsurancePolicyItem'
+import { getInsuredArea,saveObj } from '@jmyg/api/outsourcing/socialInsurancePolicyItem'
 import { yearTimeList,dayList } from './dropList'
 
 const titleFormData = ref({})
@@ -135,6 +135,12 @@ const globalOperate = async (showValue: number | string, prop: string, label: st
   }
 }
 
+// 保存
+const save = async () => {
+  let res = await saveObj({...titleFormData.value,itemList: data.value,version: BottomFormData.value})
+  console.log(res,9999);
+}
+
 const titleForms = computed(() => [
   {
     control: 'InputPlus',
@@ -160,7 +166,7 @@ const bottomForms = computed(() => [
     options: 'critical_illness_charging_type',
     label: '大病医疗收费方式',
   },
-  ...(BottomFormData.value.criticalIllnessChargingType == '1' ? [{
+  ...(BottomFormData.value?.criticalIllnessChargingType == '1' ? [{
     control: 'el-select',
     key: 'chargingMonth',
     options: yearTimeList,
@@ -238,7 +244,7 @@ const bottomForms = computed(() => [
       text="发布">
       <template #left>
         <el-button>返回</el-button>
-        <el-button>保存</el-button>
+        <el-button @click="save">保存</el-button>
       </template>
     </BottomButtons>
   </Table-view>

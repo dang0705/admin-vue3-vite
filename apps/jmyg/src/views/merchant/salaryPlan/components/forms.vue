@@ -69,7 +69,7 @@
     <Dialog
       vertical
       v-model="visible"
-      title="添加工资项目"
+      :title="dialogTitle"
       :label-width="150"
       :show-cancel="false"
       :showBtn="!disabled"
@@ -165,6 +165,7 @@ const id = ref(null)
 const getSaveOptions = (list: string) => ({params: [list, 'save']})
 const getReleaseOptions = (list: string) => ({params: [list, 'release']})
 
+const dialogTitle = ref('添加工资项目')
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
@@ -430,7 +431,10 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
-      type: 'delete',
+      icon: 'icon_a-shanchu1',
+      confirm: {
+        ask: '您确定将此方案项删除吗？'
+      },
       show: () =>
         row.defaultItem != '1'&&
         (route.query.type == 'add' ||
@@ -468,6 +472,7 @@ const addSalaryPlan = async (list) => {
   listValue.value = list
   disabled.value = false
   id.value = null
+  dialogTitle.value = '添加工资项目'
   visible.value = true
 }
 
@@ -475,9 +480,10 @@ const addSalaryPlan = async (list) => {
 const view = async (row) => {
   visible.value = true
   disabled.value = true
+  dialogTitle.value = row.defaultItem == '1' ? '默认项详情' : '工资项目详情'
   try {
     let res = await getObj(row.id)
-    dialogFormData.value = res.data
+    dialogFormData.value = {...res.data}
   } catch (error) {
     console.log(error)
   }
@@ -489,6 +495,7 @@ const edit = async ({row, list}) => {
   disabled.value = false
   id.value = row.id
   visible.value = true
+  dialogTitle.value = row.defaultItem == '1' ? '修改默认项' : '修改工资项目'
   try {
     let res = await getObj(row.id)
     dialogFormData.value = {...res.data}
@@ -783,7 +790,7 @@ const onSubmit = async () => {
       : await putObj({
         ...form,
         modify: '0',
-        param: dialogFormData.value,
+        param: {...dialogFormData.value,id: id.value},
         versionParam: {
           versionId: versionInfo.value.versionId,
           effectTime: form.effectTime,
