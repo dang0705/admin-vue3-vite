@@ -7,7 +7,7 @@ let { salary_plan_project_type, salary_plan_project_source } = useDict(
   'salary_plan_project_type',
   'salary_plan_project_source'
 )
-export default (
+export default async (
   dialog: any,
   list: any[],
   dialogFormData: any,
@@ -24,9 +24,10 @@ export default (
   dialog.save = false
   dialog.labelWidth = 200
   dialog.keepShowAfterConfirm = true
-  const forms: any[] = [{ title: '输入项' }]
-  list.forEach(({ projectType, projectName, projectSource }) => {
-    if (sourceTypeMap[projectSource] !== '计算项') {
+  const forms: any[] = []
+  const valid = list.some(({ projectType, projectName, projectSource }) => {
+    const valid = sourceTypeMap[projectSource] !== '计算项'
+    if (valid) {
       const control =
         controlTypeMap[projectType] === '日期'
           ? 'DateRange'
@@ -41,12 +42,15 @@ export default (
         ...(__isDev ? { value: 1 } : {})
       })
     }
+    return valid
   })
+  valid && (forms[0].title = '输入项')
   dialog.forms = forms
   const name = ref('')
   const link = ref('')
   dialog.action = {
     params: {},
+    save: false,
     handler: async () => {
       const {
         data: { fileName, url }
@@ -59,7 +63,6 @@ export default (
       link.value = url
     }
   }
-
   dialog.forms.push({
     title: '输出项',
     labelWidth: '0',
@@ -74,5 +77,9 @@ export default (
     )
   })
 
-  dialog.show = true
+  dialog.show = valid
+  if (!valid) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().success('无可用工资项目')
+  }
 }

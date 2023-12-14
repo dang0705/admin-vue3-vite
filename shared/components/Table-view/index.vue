@@ -274,8 +274,10 @@ const onDialogSubmit = async () => {
       ...dialogFormData.value,
       ...(dialog.value.action?.params || {})
     }))
-  const { useMessage } = await import('@hooks/message')
-  useMessage().success(dialog.value.successText)
+  if (dialog.value.action?.save !== false) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().success(dialog.value.successText)
+  }
 }
 const getDialogData = async (dialog: any) => {
   dialog.value = { show: true, ...dialog }
