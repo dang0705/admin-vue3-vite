@@ -68,12 +68,11 @@ export default async (
     labelWidth: '0',
     required: false,
     slot: () => (
-      <a
+      <span
         class={['text-primary', 'hover:underline', 'cursor-pointer']}
-        download
         onClick={() => downBlobFile(link.value, {}, name.value)}>
         {name.value}
-      </a>
+      </span>
     )
   })
 
