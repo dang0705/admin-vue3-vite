@@ -88,6 +88,7 @@ const initTrial = async () => {
       })
     })
     dialogVisible.value = true
+    trialValue.value = null
   }
 }
 let trialValue = ref(null)
