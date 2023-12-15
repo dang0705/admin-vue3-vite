@@ -1,4 +1,4 @@
-import request from "@utils/request"
+import request from '@utils/request'
 
 export function fetchList(query?: Object) {
   return request({
@@ -38,4 +38,3 @@ export function putObj(obj?: Object) {
     data: obj
   })
 }
-

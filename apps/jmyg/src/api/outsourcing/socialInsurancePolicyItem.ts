@@ -18,7 +18,14 @@ export function addObj(obj?: Object) {
 
 export function getObj(id?: string) {
   return request({
-    url: '/outsourcing/socialInsurancePolicyItem/' + id,
+    url: '/outsourcing/socialInsurancePolicy/' + id,
+    method: 'get'
+  })
+}
+
+export function getVersionObj(id?: string) {
+  return request({
+    url: '/outsourcing/socialInsurancePolicy/getAllVersion/' + id,
     method: 'get'
   })
 }
@@ -33,7 +40,7 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicyItem',
+    url: '/outsourcing/socialInsurancePolicy',
     method: 'put',
     data: obj
   })

@@ -23,7 +23,27 @@ import getActions from '@jmyg/views/benefit/socialInsurancePolicy/configurations
 const $router = useRouter()
 const selectObjs = ref([]) // 勾选的表格行
 
-const actions = getActions()
+const goFromView = async ({ row, type }) => {
+  if (type === 'see') {
+    $router.push({
+      path: '/benefit/socialInsurancePolicy/add',
+      query: {
+        id: row.id,
+        type
+      }
+    })
+  } else if (type === 'edit') {
+    $router.push({
+      path: '/benefit/socialInsurancePolicy/edit',
+      query: {
+        id: row.id,
+        type
+      }
+    })
+  }
+}
+
+const actions = getActions(goFromView)
 
 const addOut = () => {
   $router.push({

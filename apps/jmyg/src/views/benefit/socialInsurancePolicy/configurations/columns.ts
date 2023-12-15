@@ -25,7 +25,7 @@ export default [
   {
     prop: 'policySpecialist',
     label: '社保政策专员',
-    'min-width': 80
+    'min-width': 120
   },
   {
     prop: 'state',
@@ -36,7 +36,7 @@ export default [
   {
     prop: 'version',
     label: '当前生效版本',
-    'min-width': 80
+    'min-width': 120
   },
   {
     prop: 'createName',

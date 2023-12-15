@@ -8,7 +8,13 @@ export default [
     label: '参保地区',
     control: 'el-select',
     key: 'insuredArea',
-    options: 'salary_plan_state'
+    options: {
+      url: '/outsourcing/insuredArea/list'
+    },
+    props: {
+      label: 'name',
+      value: 'name'
+    }
   },
   {
     label: '社保政策专员',

@@ -1,18 +1,20 @@
-export default () => (row: any) => [
+export default (goFromView: Function) => (row: any) => [
   {
     label: '查看',
     auth: '',
+    show: () => row.state != 0,
     action: {
-      handler: () => {},
+      handler: goFromView,
       save: false,
-      params: { row, type: 'view' }
+      params: { row, type: 'see' }
     }
   },
   {
     label: '修改',
     auth: '',
+    show: () => row.state == 0,
     action: {
-      handler: () => {},
+      handler: goFromView,
       save: false,
       params: { row, type: 'edit' }
     }
@@ -24,17 +26,13 @@ export default () => (row: any) => [
   {
     label: '删除',
     auth: '',
-    confirm: {
-      ask: '您确定将此政策删除吗？'
-    },
-    action: {
-      handler: () => {},
-      params: row.id
-    }
+    type: 'delete',
+    show: () => row.state != 1
   },
   {
     label: '停用',
     auth: '',
+    show: () => row.state == 1,
     confirm: {
       ask: '您确定将此政策停用吗？'
     },
@@ -42,5 +40,10 @@ export default () => (row: any) => [
       handler: () => {},
       params: row.id
     }
+  },
+  {
+    label: '新增版本',
+    auth: '',
+    show: () => row.state == 1
   }
 ]

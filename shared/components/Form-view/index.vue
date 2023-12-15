@@ -282,6 +282,7 @@ const cancel = () => {
   resetFields()
   prop.onCancel ? prop.onCancel() : emit('update:show', false)
 }
+const validate = () => formRef.value.validate()
 emit('submit-and-cancel', { submit, cancel })
 const dynamicColumns = prop.columns
   ? { span: prop.columns }
@@ -299,7 +300,8 @@ const stepsData = computed(() => {
 defineExpose({
   reset,
   submit,
-  cancel
+  cancel,
+  validate
 })
 </script>
 
