@@ -217,11 +217,7 @@ const conditionForms = [
 const forms = computed(() => [
   {
     slot: true,
-    title: {
-      html: '基本信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '基本信息',
     column: 24
   },
   {
@@ -283,11 +279,7 @@ const forms = computed(() => [
   },
   {
     slot: true,
-    title: {
-      html: '开票信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '开票信息',
     column: 24
   },
   ...(financeType.value === 'open'
@@ -369,11 +361,7 @@ const forms = computed(() => [
     : []),
   {
     slot: true,
-    title: {
-      html: '邮寄信息',
-      style:
-        'height: 40px;background: #F1F1F1;border-radius: 6px;color:#000;padding: 10px 0 0 20px;margin-bottom:0'
-    },
+    title: '邮寄信息',
     column: 24
   },
   {
