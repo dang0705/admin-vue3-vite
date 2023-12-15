@@ -86,5 +86,9 @@ export const customComponents = [
   {
     name: 'BottomButtons',
     component: () => import('@components/Bottom-buttons.vue')
+  },
+  {
+    name: 'ChinaArea',
+    component: () => import('@components/ChinaArea/index.vue')
   }
 ]
