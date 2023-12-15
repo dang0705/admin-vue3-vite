@@ -2,19 +2,14 @@ import request from '@/utils/request'
 
 export function fetchList(query?: Object) {
   return request({
-    url: '/outsourcing/employee/getBasePage',
+    url: '/outsourcing/employee/getEmployeeList',
     method: 'get',
     params: query
   })
 }
 
-export function addObj(obj?: Object) {
-  return request({
-    url: '/outsourcing/employee',
-    method: 'post',
-    data: obj
-  })
-}
+export const addObj = (params?: Object) =>
+  $http.post('/outsourcing/employee/saveEmployeeInfo', params)
 
 export function getObj(id?: string) {
   return request({
@@ -38,3 +33,11 @@ export function putObj(obj?: Object) {
     data: obj
   })
 }
+
+export const contract = (params: any) =>
+  $http.get('/outsourcing/employeeContract/operateEmployeeContract', params)
+
+export const insurance = (params: any) =>
+  $http.post('/outsourcing/employee/operateEmployeeInsured', params)
+export const getStep = (params: any) =>
+  $http.get('/outsourcing/employee/getStepAndStus', { params })

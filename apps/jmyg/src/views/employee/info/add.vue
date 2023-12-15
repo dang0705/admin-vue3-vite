@@ -1,16 +1,11 @@
 <template>
-  <!-- <div class="layout-padding cache overflow-auto">
-    <div class="layout-padding-auto layout-padding-view"> -->
-  <div class="h-fit absolute">
-    <addForm />
-  </div>
-  <!-- </div>
-  </div> -->
+  <Info />
 </template>
 
 <script setup lang="ts">
-const addForm = defineAsyncComponent(() => import('./components/form.vue'))
+import Info from './components/Info.vue'
 </script>
+
 <script lang="ts">
 export default {
   created() {
