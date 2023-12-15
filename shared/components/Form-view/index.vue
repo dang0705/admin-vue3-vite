@@ -70,9 +70,23 @@ const init = async (forms: FormOptions[]) => {
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
-    item.rules = []
     item.hidden = item.hidden ?? false
+    if (!item.key) continue
+    // 如果forms的item有默认值，给formData对应的key赋值
+    // todo 以下if判断会在动态forms中无法重新赋值, 后续优化
+    // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
+    if (
+      !helpers.isEmpty(item.value) &&
+      helpers.isEmpty(formData.value[item.key])
+    ) {
+      formData.value[item.key] = item.value
+    }
+    item.control = item.control || (item.options ? 'el-select' : 'el-input')
+    item.rules = []
     const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
+      item.control
+    )
+    const isSelect = ['el-select', 'SpSelect', 'MerchantSelect'].includes(
       item.control
     )
 
@@ -115,21 +129,14 @@ const init = async (forms: FormOptions[]) => {
       }
     }
 
-    // 如果forms的item有默认值，给formData对应的key赋值
-    // todo 以下if判断会在动态forms中无法重新赋值, 后续优化
-    // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
-    if (item.value !== undefined && item.value !== null) {
-      formData.value[item.key] = item.value
-    }
     // }
     item.change &&
       (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
-          // Ignore the effect of data from api's first update
-          !helper.isEmpty(oldValue) &&
-            item.change &&
-            item.change(value, formData.value)
+          // Ignore the effect of data from api's first update when control is select type
+          const condition = isSelect ? !helper.isEmpty(oldValue) : true
+          condition && item.change && item.change(value, formData.value)
         }
       ))
     helper.isFunction(item.show) &&
@@ -208,25 +215,30 @@ const init = async (forms: FormOptions[]) => {
 onDeactivated(clearWatcher)
 onActivated(() => formConfigs.value.length && init(prop.forms as []))
 const resetFields = () => prop.cancelButtonText === '重置' && reset()
-
-const page = ref(0)
+const currentPage = ref(1)
 const isLastPage = computed(() =>
-  pagination.value ? page.value === prop.forms?.length - 1 : null
+  pagination.value ? currentPage.value === prop.forms?.length - 1 : null
 )
 const pagination = computed(() => helper.isArray(prop.forms?.[0]))
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
-pagination.value &&
-  watch(
-    () => page.value,
-    async (page: number) => {
-      await init(prop.forms?.[page] as unknown as FormOptions[])
-      emit('get-page', page)
-    }
-  )
-const reset = () => formRef?.value?.resetFields()
 
+watch(
+  () => prop.page,
+  (page) => pagination.value && page && (currentPage.value = prop.page - 1),
+  { immediate: true }
+)
+watch(
+  () => currentPage.value,
+  (page: number) => {
+    init(prop.forms?.[page] as unknown as FormOptions[])
+  }
+)
+
+const reset = () => formRef?.value?.resetFields()
 const initForm = (forms: any[]) => {
-  helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
+  helper.isArray(forms[currentPage.value])
+    ? init(forms[currentPage.value])
+    : init(forms as [])
 }
 watch(
   () => prop.forms as [],
@@ -303,7 +315,7 @@ defineExpose({
   <div :class="['flex', stepDir === 'horizontal' ? 'flex-col' : 'flex-row']">
     <el-steps
       :direction="stepDir"
-      :active="page"
+      :active="currentPage"
       v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }"
       process-status="finish"
       finish-status="success">
@@ -333,13 +345,9 @@ defineExpose({
                       v-if="helper.isString(form.title)"
                       v-text="form.title"
                       class="text-lg pl-[20px] mb-[10px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px] font-bold" />
-                    <h1
-                      v-else
-                      v-html="form.title.html"
-                      :style="form.title.style" />
+                    <Table-slot v-else :slot-function="form.title.html" />
                   </slot>
                 </el-col>
-
                 <el-col
                   v-bind="form.column ? { span: form.column } : dynamicColumns"
                   :class="[
@@ -366,7 +374,11 @@ defineExpose({
                     <component
                       v-if="!form.slot"
                       :is="
-                        !form.hidden ? form.control || 'el-input' : 'template'
+                        form.key
+                          ? !form.hidden
+                            ? form.control || 'el-input'
+                            : 'template'
+                          : 'template'
                       "
                       v-model="formData[form.key]"
                       v-bind="{
@@ -428,13 +440,18 @@ defineExpose({
           <Actions
             v-if="!inDialog"
             v-bind="$props"
-            v-model="page"
+            v-model="currentPage"
+            :use-bottom-button="useBottomButton"
             :buttons-icon="buttonsIcon"
             :submit="submit"
             :cancel="cancel"
-            :pagination="pagination"
+            :isPagination="pagination"
             :is-last-page="isLastPage as boolean"
-            class="ml-2" />
+            class="ml-2">
+            <template v-for="(_, slot) in $slots" #[slot]>
+              <slot :name="slot" />
+            </template>
+          </Actions>
         </div>
       </el-form>
     </div>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { actionsProps } from '@components/Form-view/Form-view-props'
+import BottomButtons from '@components/Bottom-buttons.vue'
+
 defineOptions({
   name: 'Form-action',
   inheritAttrs: false
@@ -14,21 +16,25 @@ const props = defineProps({
 })
 const formView = inject('formView', null)
 const emit = defineEmits(['update:modelValue'])
+const page = ref(0)
 
-const page = props.isPagination
-  ? computed({
-      get: () => props.modelValue,
-      set: (value) => emit('update:modelValue', value)
-    })
-  : 0
+watchEffect(() => {
+  page.value = props.modelValue
+})
+watch(
+  () => page.value,
+  (page) => emit('update:modelValue', page)
+)
+
 const next = async () => {
   let valid: boolean
   try {
-    valid = await formView?.$refs?.form.validate()
-  } catch (e) {
-    valid = false
-  }
-  valid && page.value++
+    valid = await formView?.$refs?.formRef.validate()
+    // valid && (await props.submit())
+    if (valid) {
+      page.value += 1
+    }
+  } catch (e) {}
 }
 
 const icons = ref([])
@@ -41,55 +47,70 @@ const getIcon = () => {
 }
 const isResetButton = props.cancelButtonText === '重置'
 getIcon()
+// const getRealBottomButtonSlot = (slot: string) =>
+//   slot.replace('bottom-button-', '')
 </script>
 
 <template>
-  <div
-    v-if="showBtn"
-    :class="[
-      'flex',
-      'actions',
-      'h-fit',
-      'flex-shrink-0',
-      `justify-${
-        buttonPosition === 'right'
-          ? 'end'
-          : buttonPosition === 'center'
-          ? 'center'
-          : 'start'
-      }`,
-      { horizontal: !vertical, 'ml-[8px]': !vertical }
-    ]">
-    <template v-if="isPagination">
-      <el-button plain v-if="page" @click="page--">
-        {{ prevButtonText }}
+  <div v-if="showBtn">
+    <BottomButtons v-if="isPagination || useBottomButton">
+      <template #left>
+        <el-button plain v-if="page" @click="page -= 1">
+          {{ prevButtonText }}
+        </el-button>
+      </template>
+      <template #default>
+        <!--        if need save-->
+        <el-button type="primary" v-if="paginationWithSave">
+          {{ submitButtonText }}
+        </el-button>
+        <el-button type="primary" v-else-if="!isLastPage" v-debounce="next">
+          {{ nextButtonText }}
+        </el-button>
+      </template>
+      <template #right>
+        <el-button type="primary" v-if="isLastPage" v-debounce="submit">
+          {{ submitButtonText }}
+        </el-button>
+      </template>
+    </BottomButtons>
+    <div
+      v-else
+      :class="[
+        'flex',
+        'actions',
+        'h-fit',
+        'flex-shrink-0',
+        `justify-${
+          buttonPosition === 'right'
+            ? 'end'
+            : buttonPosition === 'center'
+            ? 'center'
+            : 'start'
+        }`,
+        { horizontal: !vertical, 'ml-[8px]': !vertical }
+      ]">
+      <el-button
+        v-debounce="submit"
+        type="primary"
+        v-bind="icons.length ? { icon: icons[0] } : {}">
+        {{ submitButtonText }}
       </el-button>
-      <el-button type="primary" v-if="!isLastPage" @click="next">
-        {{ nextButtonText }}
+      <slot name="third-button" />
+      <el-button
+        v-if="showCancel && !isPagination"
+        :class="{
+          'no-text-with-icon': isResetButton,
+          '!ml-[8px]': !vertical,
+          'w-[32px]': isResetButton
+        }"
+        v-debounce="cancel"
+        v-bind="{
+          ...(icons.length ? { icon: icons[1] } : {})
+        }">
+        {{ isResetButton ? '' : cancelButtonText || '取消' }}
       </el-button>
-    </template>
-
-    <el-button
-      v-if="isPagination ? isLastPage : true"
-      v-debounce="submit"
-      type="primary"
-      v-bind="icons.length ? { icon: icons[0] } : {}">
-      {{ submitButtonText }}
-    </el-button>
-    <slot name="third-button" />
-    <el-button
-      v-if="showCancel && !isPagination"
-      :class="{
-        'no-text-with-icon': isResetButton,
-        '!ml-[8px]': !vertical,
-        'w-[32px]': isResetButton
-      }"
-      v-debounce="cancel"
-      v-bind="{
-        ...(icons.length ? { icon: icons[1] } : {})
-      }">
-      {{ isResetButton ? '' : cancelButtonText || '取消' }}
-    </el-button>
+    </div>
   </div>
 </template>
 <style scoped>
