@@ -121,5 +121,9 @@ export default {
   maxHeight: {
     type: Number,
     default: null
+  },
+  headerCellStyle: {
+    type: Object,
+    default: null
   }
 }

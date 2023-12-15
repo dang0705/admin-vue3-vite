@@ -18,7 +18,7 @@ import { homePageRouteName } from '@configurations/routes'
  */
 
 // 扩展 RouteMeta 接口
-declare module 'vue-router' {
+/*declare module 'vue-router' {
   interface RouteMeta {
     isLink?: string
     isHide?: boolean
@@ -29,7 +29,7 @@ declare module 'vue-router' {
     roles?: string[]
     icon?: string
   }
-}
+}*/
 
 /**
  * 定义静态路由（默认路由）
@@ -94,6 +94,12 @@ export const staticRoutes: Array<RouteRecordRaw> = [
               name: '分页表单',
               component: () =>
                 import('@jmyg/views/experiment/pagination-form.vue')
+            },
+            {
+              path: 'multi-level-table-header',
+              name: '多级表头',
+              component: () =>
+                import('@jmyg/views/experiment/multi-level-header.vue')
             },
             {
               path: 'editable-table',
