@@ -118,35 +118,37 @@
             v-bind="{ ...props, size: 'default' }"
             :class="['table-view', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
-            :cell-style="tableStyle.cellStyle"
+            :cell-style="cellStyle || tableStyle.cellStyle"
             :show-header="header"
             :row-key="selectMainKey"
-            :header-cell-style="tableStyle.headerCellStyle"
+            :header-cell-style="headerCellStyle || tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
-            <el-table-column type="index" width="50" fixed="left" v-if="drag">
-              <template #header>
-                <el-tooltip content="序号" placement="top">#</el-tooltip>
-              </template>
-              <template #default="scope">
-                <span>{{ scope.$index + 1 }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="" width="50" v-if="drag">
-              <template #header>
-                <el-icon>
-                  <el-tooltip content="拖动排序" placement="top">
-                    <WarningFilled />
-                  </el-tooltip>
-                </el-icon>
-              </template>
-              <template #default>
-                <div class="move" style="cursor: move">
+            <template v-if="drag">
+              <el-table-column type="index" width="50" fixed="left">
+                <template #header>
+                  <el-tooltip content="序号" placement="top">#</el-tooltip>
+                </template>
+                <template #default="scope">
+                  <span>{{ scope.$index + 1 }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="" width="50">
+                <template #header>
                   <el-icon>
-                    <Sort />
+                    <el-tooltip content="拖动排序" placement="top">
+                      <WarningFilled />
+                    </el-tooltip>
                   </el-icon>
-                </div>
-              </template>
-            </el-table-column>
+                </template>
+                <template #default>
+                  <div class="move" style="cursor: move">
+                    <el-icon>
+                      <Sort />
+                    </el-icon>
+                  </div>
+                </template>
+              </el-table-column>
+            </template>
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />
             </template>
@@ -179,8 +181,13 @@
                 </slot>
               </template>
               <template
-                v-if="column.slot || column.value || column.options"
-                v-slot="{ row }">
+                v-if="
+                  column.slot ||
+                  column.value ||
+                  column.options ||
+                  column.children
+                "
+                #default="{ row }">
                 <slot
                   :name="column.prop"
                   :row="row"
@@ -204,6 +211,12 @@
                     :confirm="confirm"
                     :refresh="resetQuery" />
                 </slot>
+                <!--                multi level header Todo only two layer now-->
+                <el-table-column
+                  v-for="{ prop, label } in column.children || []"
+                  :key="label"
+                  :prop="prop"
+                  :label="label" />
                 <TableActions
                   v-if="column.prop === 'actions'"
                   :row="row"
@@ -343,7 +356,9 @@ const watchParams = () =>
   )
 const paramsWatcher = watchParams()
 
-onUnmounted(paramsWatcher)
+onUnmounted(() => {
+  paramsWatcher()
+})
 
 const selectObjs = ref([]) as any
 

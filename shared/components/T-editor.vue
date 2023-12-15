@@ -8,7 +8,7 @@ import 'tinymce/themes/silver'
 import 'tinymce/themes/silver/theme'
 import 'tinymce/icons/default'
 import 'tinymce/models/dom'
-
+import escapeStringRegexp from 'escape-string-regexp'
 const emits = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: {
@@ -73,23 +73,26 @@ const init = reactive({
 })
 
 const transfer = ({ isSalary = true, value, match, offset, string }) => {
+  // return match
   return string !== `<p>${match}</p>` &&
     string[offset - 1] === '>' &&
     string[offset + match.length] === '<'
     ? match
     : `<span class="mceNonEditable ${
         isSalary ? 'salary-item' : 'function-item'
-      } ${isSalary ? 'salary' : 'function'}">${value}</span>`
+      } ${isSalary ? 'salary' : 'function'}">${match}</span>`
 }
-const parseString = (value) => {
+const salariesRegex = computed(() =>
+  props.salaries.map((salary) => escapeStringRegexp(salary as string)).join('|')
+)
+const parseString = (value: string) => {
+  const regex = new RegExp(salariesRegex.value, 'g')
   // First step is to parse salary item
   const parsedSalaryItem = props.salaries?.reduce(
     (acc: string, salary) =>
-      acc?.replace(
-        new RegExp(`(?<!\\p{L})${salary}(?!\\p{L})`, 'gu'),
-        (match, offset, string) =>
-          transfer({ value: salary, match, offset, string })
-      ),
+      acc?.replace(regex, (match, offset, string) => {
+        return transfer({ value: salary, match, offset, string })
+      }),
     value
   )
   // Finally to operate the string that has parsed salary item

@@ -67,19 +67,8 @@ const handleParse = async () => {
 }
 const initTrial = async () => {
   const parsedSuccess = await handleParse()
+  forms.value = []
   if (parsedSuccess) {
-    forms.value = [
-      {
-        label: `${itemName} =`,
-        hiddenColon: true,
-        control: 'InputPlus',
-        props: {
-          disabled: true
-        },
-        key: 'formula',
-        value: editor.value.html2string(modelValue)
-      }
-    ]
     const controlTypeMap = array2Object({
       array: salary_plan_project_type.value
     })
@@ -99,6 +88,7 @@ const initTrial = async () => {
       })
     })
     dialogVisible.value = true
+    trialValue.value = null
   }
 }
 let trialValue = ref(null)
@@ -114,7 +104,8 @@ const handleTrial = async () => {
   } = await trial({
     ...formData.value,
     salaryPlanId,
-    salaryPlanProjectId
+    salaryPlanProjectId,
+    formula: editor.value.html2string(modelValue)
   })
   trialValue.value = returnValue
 }
@@ -233,12 +224,18 @@ const onSave = async () => {
       v-model:form-data="formData"
       keep-show-after-confirm
       vertical
+      :label-width="200"
       :columns="24"
       :forms="forms"
       :onSubmit="handleTrial"
       title="公式试算">
+      <template #before-forms>
+        <div class="mb-[8px]">
+          {{ itemName }} = {{ editor.html2string(modelValue) }}
+        </div>
+      </template>
       <template #after-forms>
-        <div>{{ itemName }} {{ trialValue }}</div>
+        <div>{{ itemName }} = {{ trialValue }}</div>
       </template>
     </Dialog>
   </div>

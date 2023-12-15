@@ -36,6 +36,7 @@
 		"driver.js": "^0.9.8",
 		"echarts": "^5.4.1",
 		"element-plus": "2.4.3",
+		"escape-string-regexp": "^5.0.0",
 		"fast-formula-parser": "^1.0.19",
 		"html2canvas": "^1.4.1",
 		"js-cookie": "^3.0.1",

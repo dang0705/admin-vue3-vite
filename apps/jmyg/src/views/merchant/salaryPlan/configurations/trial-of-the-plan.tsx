@@ -32,7 +32,7 @@ export default async (
     if (validStandard) {
       const control =
         controlTypeMap[projectType] === '日期'
-          ? 'DateRange'
+          ? 'el-date-picker'
           : controlTypeMap[projectType] === '数值'
           ? 'el-input-number'
           : 'el-input'
