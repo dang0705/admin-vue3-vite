@@ -105,7 +105,7 @@ const handleTrial = async () => {
     ...formData.value,
     salaryPlanId,
     salaryPlanProjectId,
-    formula: modelValue.value
+    formula: editor.value.html2string(modelValue)
   })
   trialValue.value = returnValue
 }
