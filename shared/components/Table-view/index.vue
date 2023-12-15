@@ -123,30 +123,32 @@
             :row-key="selectMainKey"
             :header-cell-style="tableStyle.headerCellStyle"
             @selection-change="onSelectionChange">
-            <el-table-column type="index" width="50" fixed="left" v-if="drag">
-              <template #header>
-                <el-tooltip content="序号" placement="top">#</el-tooltip>
-              </template>
-              <template #default="scope">
-                <span>{{ scope.$index + 1 }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="" width="50" v-if="drag">
-              <template #header>
-                <el-icon>
-                  <el-tooltip content="拖动排序" placement="top">
-                    <WarningFilled />
-                  </el-tooltip>
-                </el-icon>
-              </template>
-              <template #default>
-                <div class="move" style="cursor: move">
+            <template v-if="drag">
+              <el-table-column type="index" width="50" fixed="left">
+                <template #header>
+                  <el-tooltip content="序号" placement="top">#</el-tooltip>
+                </template>
+                <template #default="scope">
+                  <span>{{ scope.$index + 1 }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="" width="50">
+                <template #header>
                   <el-icon>
-                    <Sort />
+                    <el-tooltip content="拖动排序" placement="top">
+                      <WarningFilled />
+                    </el-tooltip>
                   </el-icon>
-                </div>
-              </template>
-            </el-table-column>
+                </template>
+                <template #default>
+                  <div class="move" style="cursor: move">
+                    <el-icon>
+                      <Sort />
+                    </el-icon>
+                  </div>
+                </template>
+              </el-table-column>
+            </template>
             <template #empty v-if="hasEmptySlot">
               <slot name="empty" />
             </template>
