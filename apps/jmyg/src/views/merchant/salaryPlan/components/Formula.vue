@@ -103,7 +103,8 @@ const handleTrial = async () => {
   } = await trial({
     ...formData.value,
     salaryPlanId,
-    salaryPlanProjectId
+    salaryPlanProjectId,
+    formula: modelValue.value
   })
   trialValue.value = returnValue
 }
@@ -222,6 +223,7 @@ const onSave = async () => {
       v-model:form-data="formData"
       keep-show-after-confirm
       vertical
+      :label-width="200"
       :columns="24"
       :forms="forms"
       :onSubmit="handleTrial"
