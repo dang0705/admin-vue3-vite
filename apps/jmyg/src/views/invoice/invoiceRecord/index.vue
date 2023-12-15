@@ -17,7 +17,7 @@
       :showBtn="financeType !== 'see'"
       :onSubmit="onSubmit"
       submitButtonText="提交"
-      width="1000px" />
+      width="1000px"/>
     <Dialog
       v-model:form-data="rejectFormData"
       v-model="rejectShow"
@@ -27,20 +27,21 @@
       :columns="24"
       :onSubmit="onSubmit"
       vertical
-      submitButtonText="确认" />
+      submitButtonText="确认"/>
   </Table-view>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import {
   getObj,
   auditInvoice,
   cancelInvoice
 } from '@jmyg/api/finance/invoiceRecord'
-import { saveInvoice } from '@jmyg/api/finance/InvoiceNotAppliedFor'
+import {saveInvoice} from '@jmyg/api/finance/InvoiceNotAppliedFor'
 import conditions from '@jmyg/views/invoice/invoiceRecord/configurations/conditions'
 import getActions from '@jmyg/views/invoice/invoiceRecord/configurations/actions'
 import columns from '@jmyg/views/invoice/invoiceRecord/configurations/columns'
+
 const financeType = ref() // 进入方式 see查看 open开票 cancel作废 reject驳回
 const applyfor = async (id: string, type: string) => {
   financeType.value = type
@@ -214,52 +215,49 @@ const forms = computed(() => [
 const rejectForms = computed(() =>
   financeType.value === 'cancel'
     ? [
-        {
-          control: 'InputPlus',
-          title: {
-            html: '您确定要作废本发票吗？',
-            style: {
-              textAlign: 'center'
-            }
-          },
-          key: 'reason',
-          label: '作废原因',
-          props: {
-            type: 'textarea',
-            maxlength: '500',
-            showWordLimit: true
-          }
-        }
-      ]
-    : [
-        {
-          control: 'el-radio-group',
-          key: 'auditPass',
-          label: '发票审核',
-          options: [
-            {
-              label: '审核通过',
-              value: true
-            },
-            {
-              label: '审核驳回',
-              value: false
-            }
-          ],
-          value: true
+      {
+        control: 'InputPlus',
+        title: {
+          html: () => (<h1 class="flex my-2 text-lg justify-center">您确定要作废本发票吗？</h1>)
         },
-        {
-          control: 'InputPlus',
-          key: 'reason',
-          label: '驳回原因',
-          props: {
-            type: 'textarea',
-            maxlength: '500',
-            showWordLimit: true
-          },
-          show: ({ auditPass }) => !auditPass
+        key: 'reason',
+        label: '作废原因',
+        props: {
+          type: 'textarea',
+          maxlength: '500',
+          showWordLimit: true
         }
-      ]
+      }
+    ]
+    : [
+      {
+        control: 'el-radio-group',
+        key: 'auditPass',
+        label: '发票审核',
+        options: [
+          {
+            label: '审核通过',
+            value: true
+          },
+          {
+            label: '审核驳回',
+            value: false
+          }
+        ],
+        value: true
+      },
+      {
+        control: 'InputPlus',
+        key: 'reason',
+        label: '驳回原因',
+        props: {
+          type: 'textarea',
+          maxlength: '500',
+          showWordLimit: true
+        },
+        show: ({auditPass}) => !auditPass
+      }
+    ]
 )
 
 const applyShow = ref(false)
@@ -284,13 +282,13 @@ const onSubmit = async (refresh: any) => {
     if (financeType.value === 'open') {
       dialogFormData.value.invoicingAmount =
         dialogFormData.value.invoicingAmount.slice(0, -1)
-      await saveInvoice({ ...dialogFormData.value })
+      await saveInvoice({...dialogFormData.value})
       applyShow.value = false
     } else if (financeType.value === 'cancel') {
-      await cancelInvoice({ ...rejectFormData.value })
+      await cancelInvoice({...rejectFormData.value})
       rejectShow.value = false
     } else {
-      await auditInvoice({ ...rejectFormData.value })
+      await auditInvoice({...rejectFormData.value})
       rejectShow.value = false
     }
     refresh()
@@ -299,7 +297,7 @@ const onSubmit = async (refresh: any) => {
   }
 }
 </script>
-<script lang="ts">
+<script lang="tsx">
 export default {
   created() {
     this.$options.name = this.$route.meta.title

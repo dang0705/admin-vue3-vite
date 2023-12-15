@@ -1,9 +1,10 @@
 <template>
   <el-cascader
-    ref="chinaArea"
+    v-model="selectedOptions"
     :options="optionsData"
     :props="cascaderProps"
-    v-model="selectedOptions"
+    ref="chinaArea"
+    class="w-full"
     @change="handleChange" />
 </template>
 <script setup lang="ts">

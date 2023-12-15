@@ -20,38 +20,38 @@ const columns = [
     prop: 'minimumBase',
     label: '最低基数',
     headerSlot: ({row: {label}}) =>
-        <el-tooltip class="item" effect="dark" content="最低基数 <= 最高基数" placement="top" show-after={300}>
-          <ul>
-            <li>{label}</li>
-            <li>
-              <el-input-number placeholder="全局" precision={2} min={0}
-                               v-model={global.minimumBase}
-                               onChange={(e: number) => globalOperate(e, 'minimumBase', '最低基数')}/>
-            </li>
-          </ul>
-        </el-tooltip>,
+      <el-tooltip class="item" effect="dark" content="最低基数 <= 最高基数" placement="top" show-after={300}>
+        <ul>
+          <li>{label}</li>
+          <li>
+            <el-input-number placeholder="全局" precision={2} min={0}
+                             v-model={global.minimumBase}
+                             onChange={(e: number) => globalOperate(e, 'minimumBase', '最低基数')}/>
+          </li>
+        </ul>
+      </el-tooltip>,
     slot: ({row}: any) =>
-        <p>
-          <el-input-number placeholder="<=最高基数" precision={2} min={0} max={row.highestBase}
-                           v-model={row.minimumBase}/>
-        </p>
+      <p>
+        <el-input-number placeholder="<=最高基数" precision={2} min={0} max={row.highestBase}
+                         v-model={row.minimumBase}/>
+      </p>
 
   },
   {
     prop: 'highestBase',
     label: '最高基数',
     headerSlot: ({row: {label}}) =>
-        <el-tooltip className="item" effect="dark" content={`最高基数不超过${highestBaseMax}`} placement="top"
-                    show-after={300}>
-          <ul>
-            <li>{label}</li>
-            <li>
-              <el-input-number placeholder="全局" precision={2} min={0} max={highestBaseMax}
-                               v-model={global.highestBase}
-                               onChange={(e: number) => globalOperate(e, 'highestBase', '最高基数')}/>
-            </li>
-          </ul>
-        </el-tooltip>,
+      <el-tooltip className="item" effect="dark" content={`最高基数不超过${highestBaseMax}`} placement="top"
+                  show-after={300}>
+        <ul>
+          <li>{label}</li>
+          <li>
+            <el-input-number placeholder="全局" precision={2} min={0} max={highestBaseMax}
+                             v-model={global.highestBase}
+                             onChange={(e: number) => globalOperate(e, 'highestBase', '最高基数')}/>
+          </li>
+        </ul>
+      </el-tooltip>,
     slot: ({row}: any) => <el-input-number precision={2} min={0} max={highestBaseMax} v-model={row.highestBase}/>
   },
   {
@@ -79,13 +79,16 @@ const columns = [
       </li>
     </ul>,
     slot: ({row}: any) =>
-        <el-select v-model={row.chargingAccuracy}
-                   style={{width: '180px'}}>
-          {precise_type.value.map(({label, value}) => <el-option key={value} label={label} value={value}/>)}
-        </el-select>
+      <el-select v-model={row.chargingAccuracy}
+                 style={{width: '180px'}}>
+        {precise_type.value.map(({label, value}) => <el-option key={value} label={label} value={value}/>)}
+      </el-select>
   }
 ]
-const {social_insurance_policy_item_type: labels, precise_type} = useDict('social_insurance_policy_item_type', 'precise_type')
+const {
+  social_insurance_policy_item_type: labels,
+  precise_type
+} = useDict('social_insurance_policy_item_type', 'precise_type')
 
 interface Item {
   label: string; //字典
@@ -120,7 +123,7 @@ const globalOperate = async (showValue: number | string, prop: string, label: st
     });
   } catch (e) {
     global[prop] = prop === 'chargingAccuracy' ? '1' : 0
-  }finally {
+  } finally {
     await nextTick()
     accuracyRef.value.blur()
   }
@@ -193,28 +196,28 @@ const bottomForms = [
 </script>
 
 <template>
-    <Table-view :table-data="data" :columns="columns" no-pagination>
+  <Table-view :table-data="data" :columns="columns" no-pagination>
     <template #top-bar="{ otherInfo }">
       <FormView
-      v-model="formData"
-      :columns="12"
-      label-width="130px"
-      :disabled="false"
-      :showBtn="false"
-      :forms="titleForms">
-    </FormView>
+        v-model="formData"
+        :columns="12"
+        label-width="130px"
+        :disabled="false"
+        :showBtn="false"
+        :forms="titleForms">
+      </FormView>
     </template>
     <template #table-bottom>
       <FormView
-      class="mt-[20px]"
-      v-model="formData"
-      :columns="12"
-      vertical
-      label-width="150px"
-      :disabled="false"
-      :showBtn="false"
-      :forms="bottomForms">
-    </FormView>
+        class="mt-[20px]"
+        v-model="formData"
+        :columns="12"
+        vertical
+        label-width="150px"
+        :disabled="false"
+        :showBtn="false"
+        :forms="bottomForms">
+      </FormView>
     </template>
     <BottomButtons
       text="发布">
