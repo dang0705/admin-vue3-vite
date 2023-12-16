@@ -115,8 +115,9 @@
         <template #default>
           <el-table
             id="tableRef"
-            v-bind="{ ...props, size: 'default' }"
-            :class="['table-view', { 'no-border': !border }]"
+            :border="border"
+            :max-height="maxHeight"
+            :class="['table-view', 'w-full', { 'no-border': !border }]"
             :data="tableData.length > 0 ? tableData : state.dataList"
             :cell-style="cellStyle || tableStyle.cellStyle"
             :show-header="header"
