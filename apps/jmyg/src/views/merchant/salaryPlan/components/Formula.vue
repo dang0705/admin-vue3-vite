@@ -16,12 +16,14 @@ const {
   itemName,
   salaryPlanId = '',
   salaryPlanName = '',
-  salaryPlanProjectId = ''
+  salaryPlanProjectId = '',
+  salaryPlanVersion = ''
 } = defineProps([
   'itemName',
   'salaryPlanId',
   'salaryPlanName',
-  'salaryPlanProjectId'
+  'salaryPlanProjectId',
+  'salaryPlanVersion'
 ])
 const editor = ref('')
 const dialogVisible = ref(false)
@@ -55,7 +57,8 @@ const handleParse = async () => {
     data: { message, calcFactor }
   } = await parse({
     formula: editor.value.html2string(modelValue),
-    salaryPlanId
+    salaryPlanId,
+    salaryPlanVersion
   })
   if (message === 'success') {
     return calcFactor

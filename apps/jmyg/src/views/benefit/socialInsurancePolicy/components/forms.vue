@@ -19,10 +19,13 @@ onMounted(async () => {
   areaList.value = res.data
   if (route.query.id) {
     let res = await getVersionObj(route.query.id)
-    res.data.versionList[0].itemList?.map(item => {
+    res.data.versionList.forEach(i => {
+      i.itemList?.forEach(item => {
       item.canPayBack = item.canPayBack == 0 ? false : true
       item.label = item.name
       return item
+    })
+    return i
     })
     versionList.value = res.data.versionList
     console.log(versionList.value,9999);
@@ -195,6 +198,16 @@ const release = async () => {
   })
 }
 
+// 切换版本
+const versionChange = (value) => {
+  let obj = versionList.value.filter(item => item.version == value)[0]
+  Object.assign(titleFormData.value, obj)
+  Object.assign(BottomFormData.value, obj)
+  data.value = obj.itemList
+  console.log(titleFormData,99999);
+  // console.log(value,999);
+}
+
 const titleForms = computed(() => [
   {
     control: 'InputPlus',
@@ -220,7 +233,7 @@ const titleForms = computed(() => [
         options: versionList.value,
         required: false,
         value: versionList.value[0]?.version,
-        // change: (value) => versionChange(value),
+        change: (value) => versionChange(value),
         props: {
           clearable: false,
           label: 'version',
@@ -235,7 +248,6 @@ const titleForms = computed(() => [
           control: 'elDatePicker',
           key: 'effectTime',
           label: '生效日期',
-          // value: versionInfo.value?.effectTime == null ? '' : versionInfo.value?.effectTime,
           title: '版本信息',
           required: false,
           props: {
@@ -247,7 +259,6 @@ const titleForms = computed(() => [
           control: 'InputPlus',
           key: 'invalidTime',
           label: '失效日期',
-          // value: versionInfo.value?.invalidTime == null ? '' : versionInfo.value?.invalidTime,
           props: {
             disabled: true
           }
@@ -256,7 +267,6 @@ const titleForms = computed(() => [
           control: 'InputPlus',
           key: 'updateName',
           label: '更新人',
-          // value: versionInfo.value?.updateName,
           props: {
             disabled: true
           }
@@ -265,7 +275,6 @@ const titleForms = computed(() => [
           control: 'InputPlus',
           key: 'updateTime',
           label: '更新时间',
-          // value: versionInfo.value?.updateTime,
           props: {
             disabled: true
           }
@@ -275,7 +284,6 @@ const titleForms = computed(() => [
           key: 'versionRemark',
           label: '备注',
           required: false,
-          // value: versionInfo.value?.versionRemark,
           column: 24,
           props: {
             type: 'textarea',
