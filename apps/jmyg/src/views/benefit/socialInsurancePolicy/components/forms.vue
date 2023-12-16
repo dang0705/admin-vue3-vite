@@ -28,7 +28,6 @@ onMounted(async () => {
     return i
     })
     versionList.value = res.data.versionList
-    console.log(versionList.value,9999);
     data.value = res.data.versionList[0].itemList
     titleFormData.value = {name: res.data.name,insuredAreaId: res.data.insuredAreaId,...res.data.versionList[0]}
     BottomFormData.value = res.data.versionList[0]
@@ -57,13 +56,14 @@ const columns = [
             <li>
               <el-input-number placeholder="全局" precision={2} min={0}
                                v-model={global.minValue}
+                               disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable}
                                onChange={(e: number) => globalOperate(e, 'minValue', '最低基数')}/>
             </li>
           </ul>
         </el-tooltip>,
     slot: ({row}: any) =>
         <p>
-          <el-input-number placeholder="<=最高基数" precision={2} min={0} max={row.maxValue}
+          <el-input-number placeholder="<=最高基数" disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable} precision={2} min={0} max={row.maxValue}
                            v-model={row.minValue}/>
         </p>
 
@@ -79,21 +79,22 @@ const columns = [
             <li>
               <el-input-number placeholder="全局" precision={2} min={0} max={maxValueMax}
                                v-model={global.maxValue}
+                               disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable}
                                onChange={(e: number) => globalOperate(e, 'maxValue', '最高基数')}/>
             </li>
           </ul>
         </el-tooltip>,
-    slot: ({row}: any) => <el-input-number precision={2} min={0} max={maxValueMax} v-model={row.maxValue}/>
+    slot: ({row}: any) => <el-input-number disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable} precision={2} min={0} max={maxValueMax} v-model={row.maxValue}/>
   },
   {
     prop: 'paymentRatio',
     label: '缴纳比例(%)',
-    slot: ({row}: any) => <el-input-number precision={2} min={0} v-model={row.paymentRatio}/>
+    slot: ({row}: any) => <el-input-number disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable} precision={2} min={0} v-model={row.paymentRatio}/>
   },
   {
     prop: 'canPayBack',
     label: '是否补缴',
-    slot: ({row}: any) => <el-checkbox v-model={row.canPayBack} label="补缴"/>
+    slot: ({row}: any) => <el-checkbox disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable} v-model={row.canPayBack} label="补缴"/>
   },
   {
     prop: 'precise',
@@ -104,6 +105,7 @@ const columns = [
         <el-select v-model={global.precise}
                    style={{width: '180px'}}
                    ref={accuracyRef}
+                   disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable}
                    onChange={(e: string) => globalOperate(precise_type.value.find(({value}) => value === e)?.label || '', 'precise', '收费精度')}>
           {precise_type.value.map(({label, value}) => <el-option key={value} label={label} value={value}/>)}
         </el-select>
@@ -111,6 +113,7 @@ const columns = [
     </ul>,
     slot: ({row}: any) =>
         <el-select v-model={row.precise}
+        disabled={(route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable}
                    style={{width: '180px'}}>
           {precise_type.value.map(({label, value}) => <el-option key={value} label={label} value={value}/>)}
         </el-select>
@@ -200,19 +203,22 @@ const release = async () => {
 
 // 切换版本
 const versionChange = (value) => {
-  let obj = versionList.value.filter(item => item.version == value)[0]
-  Object.assign(titleFormData.value, obj)
-  Object.assign(BottomFormData.value, obj)
+  let obj:object = versionList.value.filter(item => item.version == value)[0]
+  titleFormData.value = {name: titleFormData.value.name,insuredAreaId: titleFormData.value.insuredAreaId,...obj}
+  BottomFormData.value = obj
   data.value = obj.itemList
-  console.log(titleFormData,99999);
-  // console.log(value,999);
+  console.log(titleFormData.value,3333);
+  console.log(versionList.value,99999);
 }
 
 const titleForms = computed(() => [
   {
     control: 'InputPlus',
     key: 'name',
-    label: '社保政策'
+    label: '社保政策',
+    props: {
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
+    }
   },
   {
     control: 'el-select',
@@ -221,7 +227,8 @@ const titleForms = computed(() => [
     label: '参保地区',
     props: {
       label: 'name',
-      value: 'id'
+      value: 'id',
+      disabled: route.query.type === 'see' || route.query.type === 'addVersion'
     }
   },
   ...(route.query.type === 'see' || route.query.type === 'addVersion'
@@ -252,7 +259,7 @@ const titleForms = computed(() => [
           required: false,
           props: {
             valueFormat: 'YYYY-MM-DD',
-            // disabled: versionInfo.value?.effectType != 2
+            disabled: !BottomFormData.value.editable
           }
         },
         {
@@ -289,7 +296,7 @@ const titleForms = computed(() => [
             type: 'textarea',
             maxlength: '500',
             showWordLimit: true,
-            // disabled: versionInfo.value?.effectType != 2
+            disabled: !BottomFormData.value.editable
           }
         },
     ]
@@ -302,12 +309,18 @@ const bottomForms = computed(() => [
     key: 'criticalIllnessChargingType',
     options: 'critical_illness_charging_type',
     label: '大病医疗收费方式',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
   ...(BottomFormData.value?.criticalIllnessChargingType == '1' ? [{
     control: 'el-select',
     key: 'chargingMonth',
     options: yearTimeList,
     label: '年收费时间',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   }]:[]),
   {
     control: 'el-input-number',
@@ -316,7 +329,8 @@ const bottomForms = computed(() => [
     props: {
       min: 0,
       max: 24,
-      stepStrictly: true
+      stepStrictly: true,
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
     }
   },
   {
@@ -324,30 +338,45 @@ const bottomForms = computed(() => [
     key: 'calcType',
     options: 'social_insurance_policy_calc_type',
     label: '计算方式',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
   {
     control: 'el-select',
     key: 'addTimePoint',
     options: dayList,
     label: '增员截止日期',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
   {
     control: 'el-select',
     key: 'subTimePoint',
     options: dayList,
     label: '减员截止日期',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
   {
     control: 'el-select',
     key: 'addEffectTimeType',
     options: 'add_effect_time_type',
     label: '增员规则',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
   {
     control: 'el-select',
     key: 'subEffectTimeType',
     options: 'sub_effect_time_type',
     label: '减员规则',
+    props: {
+      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
+    }
   },
 ])
 
@@ -381,11 +410,30 @@ const bottomForms = computed(() => [
 			>
 			</FormView>
 		</template>
-		<BottomButtons @click="release" text="发布">
+		<BottomButtons>
 			<template #left>
-				<el-button>返回</el-button>
-				<el-button @click="save">保存</el-button>
-			</template>
+          <el-button type="primary" @click="$router.go(-1)" v-auth="''">
+            返回
+          </el-button>
+        </template>
+        <el-button
+          type="primary"
+          v-debounce="save"
+          :disabled="
+            (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.editable
+          "
+          v-auth="''">
+          保存
+        </el-button>
+        <template #right>
+          <el-button
+            type="primary"
+            v-debounce="release"
+            v-if="route.query.type == 'add' || route.query.type == 'edit'"
+            v-auth="''">
+            发布
+          </el-button>
+        </template>
 		</BottomButtons>
 	</Table-view>
 </template>

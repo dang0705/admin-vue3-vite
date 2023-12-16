@@ -20,7 +20,11 @@
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
 import getActions from '@jmyg/views/benefit/socialInsurancePolicy/configurations/actions'
-import { addVersion } from '@jmyg/api/outsourcing/socialInsurancePolicy'
+import {
+  addVersion,
+  cloneObj,
+  upDateObj
+} from '@jmyg/api/outsourcing/socialInsurancePolicy'
 const $router = useRouter()
 const selectObjs = ref([]) // 勾选的表格行
 
@@ -34,12 +38,17 @@ const goFromView = async ({ row, type }) => {
     }
   })
 }
-
-const actions = getActions(goFromView)
+const cloneItem = async (row) =>
+  await cloneObj({ id: row.id, name: row.name + 'copy' })
+const upDateItem = async (id) => await upDateObj(id)
+const actions = getActions(goFromView, cloneItem, upDateItem)
 
 const addOut = () => {
   $router.push({
-    path: '/benefit/socialInsurancePolicy/add'
+    path: '/benefit/socialInsurancePolicy/add',
+    query: {
+      type: 'add'
+    }
   })
 }
 </script>

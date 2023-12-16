@@ -16,6 +16,21 @@ export function addObj(obj?: Object) {
   })
 }
 
+export function cloneObj(obj?: Object) {
+  return request({
+    url: '/outsourcing/socialInsurancePolicy/clone',
+    method: 'post',
+    data: obj
+  })
+}
+
+export function upDateObj(id?: string) {
+  return request({
+    url: '/outsourcing/socialInsurancePolicy/stop/' + id,
+    method: 'post'
+  })
+}
+
 export function addVersion(obj?: Object) {
   return request({
     url: '/outsourcing/socialInsurancePolicy/addVersion',
