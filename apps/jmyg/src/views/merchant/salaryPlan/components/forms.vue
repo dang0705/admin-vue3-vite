@@ -148,7 +148,8 @@ import {
   getObj,
   putObj,
   releaseObj,
-  getVersionObj
+  getVersionObj,
+  delObjs
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 import BottomButtons from '@components/Bottom-buttons.vue'
@@ -442,7 +443,6 @@ const actions = (row, list) => {
         versionInfo.value?.effectType == 2),
       action: {
         handler: del,
-        save: false,
         params: {row, list}
       }
     },
@@ -505,8 +505,18 @@ const edit = async ({row, list}) => {
 }
 
 // 删除
-const del = ({row, list}) => {
-  tableViewRef?.value.delListItem(row.id)
+const del = async ({row, list}) => {
+  await saveSort({
+    ...form,
+    modify: '0',
+    saveParams: list,
+    versionParam: {
+      versionId: versionInfo.value.versionId,
+      effectTime: form.effectTime,
+      versionRemark: form.versionRemark
+    }
+  })
+  await delObjs([row.id])
 }
 
 // 修改公式
