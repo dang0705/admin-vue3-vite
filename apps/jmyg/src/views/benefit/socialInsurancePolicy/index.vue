@@ -20,27 +20,19 @@
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
 import getActions from '@jmyg/views/benefit/socialInsurancePolicy/configurations/actions'
+import { addVersion } from '@jmyg/api/outsourcing/socialInsurancePolicy'
 const $router = useRouter()
 const selectObjs = ref([]) // 勾选的表格行
 
 const goFromView = async ({ row, type }) => {
-  if (type === 'see') {
-    $router.push({
-      path: '/benefit/socialInsurancePolicy/add',
-      query: {
-        id: row.id,
-        type
-      }
-    })
-  } else if (type === 'edit') {
-    $router.push({
-      path: '/benefit/socialInsurancePolicy/edit',
-      query: {
-        id: row.id,
-        type
-      }
-    })
-  }
+  if (type == 'addVersion') await addVersion({ id: row.id })
+  $router.push({
+    path: `/benefit/socialInsurancePolicy/${type}`,
+    query: {
+      id: row.id,
+      type
+    }
+  })
 }
 
 const actions = getActions(goFromView)

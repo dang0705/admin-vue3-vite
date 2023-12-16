@@ -24,9 +24,10 @@ onMounted(async () => {
       item.label = item.name
       return item
     })
-    versionList.value = res.data.versionList[0]
+    versionList.value = res.data.versionList
+    console.log(versionList.value,9999);
     data.value = res.data.versionList[0].itemList
-    titleFormData.value = {name: res.data.name,insuredAreaId: res.data.insuredAreaId}
+    titleFormData.value = {name: res.data.name,insuredAreaId: res.data.insuredAreaId,...res.data.versionList[0]}
     BottomFormData.value = res.data.versionList[0]
   }
 })
@@ -210,6 +211,81 @@ const titleForms = computed(() => [
       value: 'id'
     }
   },
+  ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+      {
+        control: 'el-select',
+        key: 'version',
+        label: '版本',
+        options: versionList.value,
+        required: false,
+        value: versionList.value[0]?.version,
+        // change: (value) => versionChange(value),
+        props: {
+          clearable: false,
+          label: 'version',
+          value: 'version'
+        }
+      }
+    ]
+    : [{props: {disabled: true}}]),
+    ...(route.query.type === 'see' || route.query.type === 'addVersion'
+    ? [
+        {
+          control: 'elDatePicker',
+          key: 'effectTime',
+          label: '生效日期',
+          // value: versionInfo.value?.effectTime == null ? '' : versionInfo.value?.effectTime,
+          title: '版本信息',
+          required: false,
+          props: {
+            valueFormat: 'YYYY-MM-DD',
+            // disabled: versionInfo.value?.effectType != 2
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'invalidTime',
+          label: '失效日期',
+          // value: versionInfo.value?.invalidTime == null ? '' : versionInfo.value?.invalidTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateName',
+          label: '更新人',
+          // value: versionInfo.value?.updateName,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'updateTime',
+          label: '更新时间',
+          // value: versionInfo.value?.updateTime,
+          props: {
+            disabled: true
+          }
+        },
+        {
+          control: 'InputPlus',
+          key: 'versionRemark',
+          label: '备注',
+          required: false,
+          // value: versionInfo.value?.versionRemark,
+          column: 24,
+          props: {
+            type: 'textarea',
+            maxlength: '500',
+            showWordLimit: true,
+            // disabled: versionInfo.value?.effectType != 2
+          }
+        },
+    ]
+    : [])
 ])
 
 const bottomForms = computed(() => [
@@ -276,7 +352,7 @@ const bottomForms = computed(() => [
 				ref="titleFormDataRef"
 				v-model="titleFormData"
 				:columns="6"
-				label-width="130px"
+				label-width="100px"
 				:disabled="false"
 				:showBtn="false"
 				:forms="titleForms"

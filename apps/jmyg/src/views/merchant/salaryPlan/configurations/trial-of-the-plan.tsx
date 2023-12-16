@@ -41,7 +41,14 @@ export default async (
         label: projectName,
         key: projectName,
         control,
-        ...(__isDev ? { value: 1 } : {})
+        ...(__isDev ? { value: 1 } : {}),
+        ...(controlTypeMap[projectType] === '日期'
+          ? {
+              props: {
+                valueFormat: 'YYYY-MM-DD'
+              }
+            }
+          : {})
       })
     }
   })

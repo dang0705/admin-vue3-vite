@@ -16,6 +16,14 @@ export function addObj(obj?: Object) {
   })
 }
 
+export function addVersion(obj?: Object) {
+  return request({
+    url: '/outsourcing/socialInsurancePolicy/addVersion',
+    method: 'post',
+    data: obj
+  })
+}
+
 export function getObj(id?: string) {
   return request({
     url: '/outsourcing/socialInsurancePolicy/' + id,

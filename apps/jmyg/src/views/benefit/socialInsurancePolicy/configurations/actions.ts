@@ -44,6 +44,12 @@ export default (goFromView: Function) => (row: any) => [
   {
     label: '新增版本',
     auth: '',
-    show: () => row.state == 1
+    icon: 'icon_a-tianjiada',
+    show: () => row.state == 1,
+    action: {
+      handler: goFromView,
+      save: false,
+      params: { row, type: 'addVersion' }
+    }
   }
 ]
