@@ -2,7 +2,7 @@ import request from '@utils/request'
 
 export function fetchList(query?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/page',
+    url: '/outsourcing/socialInsurancePolicy/manageList',
     method: 'get',
     params: query
   })
