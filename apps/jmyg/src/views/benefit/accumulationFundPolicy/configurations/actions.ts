@@ -6,7 +6,7 @@ export default (
   (row: any) => [
     {
       label: '查看',
-      auth: 'outsourcing_socialInsurancePolicyVersion_view',
+      auth: 'outsourcing_accumulationFundPolicyVersion_view',
       show: () => row.state != 0,
       action: {
         handler: goFromView,
@@ -16,7 +16,7 @@ export default (
     },
     {
       label: '修改',
-      auth: 'outsourcing_socialInsurancePolicy_edit',
+      auth: 'outsourcing_accumulationFundPolicy_edit',
       show: () => row.state == 0,
       action: {
         handler: goFromView,
@@ -26,7 +26,7 @@ export default (
     },
     {
       label: '克隆',
-      auth: 'outsourcing_socialInsurancePolicy_edit',
+      auth: 'outsourcing_accumulationFundPolicy_edit',
       confirm: {
         ask: '您确定克隆此政策吗？'
       },
@@ -37,13 +37,13 @@ export default (
     },
     {
       label: '删除',
-      auth: 'outsourcing_socialInsurancePolicy_del',
+      auth: 'outsourcing_accumulationFundPolicy_del',
       type: 'delete',
       show: () => row.state != 1
     },
     {
       label: '停用',
-      auth: 'outsourcing_socialInsurancePolicy_edit',
+      auth: 'outsourcing_accumulationFundPolicy_edit',
       show: () => row.state == 1,
       confirm: {
         ask: '您确定将此政策停用吗？'
@@ -55,7 +55,7 @@ export default (
     },
     {
       label: '新增版本',
-      auth: 'outsourcing_socialInsurancePolicyVersion_add',
+      auth: 'outsourcing_accumulationFundPolicyVersion_add',
       icon: 'icon_a-tianjiada',
       show: () => row.state == 1,
       action: {
