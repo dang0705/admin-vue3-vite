@@ -2,13 +2,14 @@
 import { WatchStopHandle } from 'vue'
 import request from '@utils/request'
 import helper from '@utils/helpers'
+import helpers from '@utils/helpers'
 import { dictCache, useDict } from '@hooks/dict'
 import { rule } from '@utils/validate'
 import FormViewProps, {
   FormOptions
 } from '@components/Form-view/Form-view-props'
 import Actions from '@components/Form-view/Actions.vue'
-import helpers from '@utils/helpers'
+import maxLength from '@configurations/max-length'
 
 defineOptions({
   name: 'Form-view'
@@ -18,6 +19,8 @@ const emit = defineEmits([
   'update:modelValue',
   'update:valid',
   'update:show',
+  'update:page',
+  'update:nesting-data',
   'get-validation',
   'get-page',
   'submit-and-cancel'
@@ -32,6 +35,10 @@ const prop = defineProps({
     default: null,
     required: true
   },
+  nestingData: {
+    type: Object,
+    default: null
+  },
   ...FormViewProps
 })
 const formRef = ref()
@@ -39,12 +46,41 @@ const formData = computed({
   get: () => prop.modelValue,
   set(value: any) {
     emit('update:modelValue', value)
+    if (!helpers.isEmpty(prop.nestingData)) {
+      const nestingValue = {}
+      const setValue = (
+        obj: { [x: string]: any },
+        keys: string | any[],
+        value: any
+      ) => {
+        const lastKeyIndex = keys.length - 1
+        for (let i = 0; i < lastKeyIndex; ++i) {
+          const key = keys[i]
+          if (!(key in obj)) {
+            obj[key] = {}
+          }
+          obj = obj[key]
+        }
+        obj[keys[lastKeyIndex]] = value
+      }
+
+      for (let key in value) {
+        if (key.includes('.')) {
+          const keys = key.split('.')
+          setValue(nestingValue, keys, value[key])
+        }
+      }
+
+      emit('update:nesting-data', nestingValue)
+    }
   }
 })
 const controlOptions = reactive({} as any)
+
 interface OptionsParams {
   keyFrom?: string | []
   keyTo?: string | []
+
   [k: string]: any
 }
 
@@ -213,46 +249,39 @@ const init = async (forms: FormOptions[]) => {
   }
 }
 onDeactivated(clearWatcher)
-onActivated(() => formConfigs.value.length && init(prop.forms as []))
+onActivated(() => formConfigs.value.length && init(forms.value))
 const resetFields = () => prop.cancelButtonText === '重置' && reset()
-const currentPage = ref(1)
+
+const pagination = computed(
+  () => helper.isArray(prop.forms?.[0]) && !helpers.isEmpty(prop.page)
+)
 const isLastPage = computed(() =>
   pagination.value ? currentPage.value === prop.forms?.length - 1 : null
 )
-const pagination = computed(() => helper.isArray(prop.forms?.[0]))
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
-
-watch(
-  () => prop.page,
-  (page) => pagination.value && page && (currentPage.value = prop.page - 1),
-  { immediate: true }
-)
-watch(
-  () => currentPage.value,
-  (page: number) => {
-    init(prop.forms?.[page] as unknown as FormOptions[])
-  }
+const currentPage = computed({
+  get: () => prop.page,
+  set: (page) => emit('update:page', page)
+})
+const forms = computed(() =>
+  pagination.value
+    ? (prop.forms[currentPage.value] as unknown as FormOptions[])
+    : prop.forms
 )
 
-const reset = () => formRef?.value?.resetFields()
-const initForm = (forms: any[]) => {
-  helper.isArray(forms[currentPage.value])
-    ? init(forms[currentPage.value])
-    : init(forms as [])
-}
 watch(
-  () => prop.forms as [],
-  async (forms: any[]) => {
-    forms.length && initForm(forms as [])
+  () => forms.value as [],
+  (forms: any[]) => {
+    forms.length && init(forms)
   },
   { immediate: true }
 )
+const reset = () => formRef?.value?.resetFields()
 
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) =>
-    show ? initForm(prop.forms as []) : reset() && resetFormView()
+  async (show) => (show ? init(forms.value) : reset() && resetFormView())
 )
 
 const getEvent = (control: string) =>
@@ -279,6 +308,7 @@ const submit = async () => {
   try {
     prop.onSubmit && (await prop.onSubmit(refresh))
     prop.save && prop.validation && refresh && refresh()
+    pagination.value && currentPage.value++
     !prop.keepShowAfterConfirm && emit('update:show', false)
     // If FormView use in condition, validate will be false, so it won't refresh
   } catch (e) {
@@ -303,6 +333,14 @@ const stepsData = computed(() => {
   )
   return steps
 })
+
+const onChange = (key, value) => {
+  // console.log(key, value)
+  formData.value = {
+    ...formData.value,
+    [key]: value
+  }
+}
 // 暴露变量
 defineExpose({
   reset,
@@ -315,10 +353,9 @@ defineExpose({
   <div :class="['flex', stepDir === 'horizontal' ? 'flex-col' : 'flex-row']">
     <el-steps
       :direction="stepDir"
-      :active="currentPage"
-      v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }"
-      process-status="finish"
-      finish-status="success">
+      :active="currentPage + 1"
+      align-center
+      v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }">
       <el-step v-for="step in stepsData" :key="step" :title="step" />
     </el-steps>
     <div class="form-view">
@@ -382,15 +419,16 @@ defineExpose({
                       "
                       v-model="formData[form.key]"
                       v-bind="{
-                        ...form.props,
-                        ...(form.props?.disabled ? { placeholder: '' } : {}),
                         clearable: form.props?.clearable || true,
                         disabled: form.props?.disabled || prop.disabled,
-                        ...(form.control === 'el-input'
-                          ? { maxlength: 100 }
-                          : {})
+                        ...(['el-input', 'InputPlus'].includes(form.control)
+                          ? { maxlength: maxLength.input }
+                          : {}),
+                        ...(form.props?.disabled ? { placeholder: '' } : {}),
+                        ...form.props
                       }"
-                      @[getEvent(form.control)]="onEnter">
+                      @[getEvent(form.control)]="onEnter"
+                      @change="onChange(form.key, $event)">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">
                         <el-option
@@ -447,7 +485,8 @@ defineExpose({
             :cancel="cancel"
             :isPagination="pagination"
             :is-last-page="isLastPage as boolean"
-            class="ml-2">
+            class="ml-2"
+            @next="submit">
             <template v-for="(_, slot) in $slots" #[slot]>
               <slot :name="slot" />
             </template>

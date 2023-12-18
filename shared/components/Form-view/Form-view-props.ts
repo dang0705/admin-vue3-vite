@@ -160,5 +160,10 @@ export default {
     type: Number,
     default: null
   },
+  // key 嵌套
+  nestingKey: {
+    type: Boolean,
+    default: false
+  },
   ...actionsProps
 }
