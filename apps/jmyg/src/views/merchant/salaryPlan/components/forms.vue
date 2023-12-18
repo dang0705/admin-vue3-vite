@@ -238,6 +238,8 @@ const versionChange = (value) => {
   tableViewRef.value?.getDataList(true, {
     versionId: versionInfo.value.versionId
   })
+  Object.assign(form, versionInfo.value)
+  console.log(versionInfo.value,form,99999);
 }
 // 头部版本信息配置
 const titleForms = computed(() => [
@@ -293,7 +295,8 @@ const titleForms = computed(() => [
           required: false,
           props: {
             valueFormat: 'YYYY-MM-DD',
-            disabled: versionInfo.value?.effectType != 2
+            disabled: versionInfo.value?.effectType != 2,
+            disabledDate: (time) => time.getTime() <= Date.now()
           }
         },
         {

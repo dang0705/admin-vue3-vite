@@ -274,7 +274,8 @@ const titleForms = computed(() => [
           title: '版本信息',
           props: {
             valueFormat: 'YYYY-MM-DD',
-            disabled: !BottomFormData.value.editable
+            disabled: !BottomFormData.value.editable,
+            disabledDate: (time) => time.getTime() <= Date.now()
           }
         },
         {
