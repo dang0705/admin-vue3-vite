@@ -227,7 +227,7 @@ onMounted(async () => {
   let Version = await getVersionObj(route.query.salaryPlanId)
   Object.assign(form, Version.data)
   versionInfo.value = Version.data.salaryPlanVersionList.filter(
-    (item) => item.effectType == 1
+    (item) => route.query.type === 'addVersion' ? item.effectType == 2 : item.effectType == 1
   )[0]
 })
 
@@ -239,7 +239,6 @@ const versionChange = (value) => {
     versionId: versionInfo.value.versionId
   })
   Object.assign(form, versionInfo.value)
-  console.log(versionInfo.value,form,99999);
 }
 // 头部版本信息配置
 const titleForms = computed(() => [
