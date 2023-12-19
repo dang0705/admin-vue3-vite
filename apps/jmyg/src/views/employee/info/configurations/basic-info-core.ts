@@ -21,7 +21,6 @@ export default [
   {
     label: '证件类型',
     key: 'idType',
-    control: 'el-select',
     options: 'id_type',
     value: '1',
     props: { disabled: true }
@@ -55,7 +54,6 @@ export default [
   {
     label: '性别',
     key: 'gender',
-    control: 'el-select',
     options: 'gender',
     props: {
       disabled: true
@@ -85,7 +83,6 @@ export default [
   {
     label: '最高学历',
     key: 'educationRequirement',
-    control: 'el-select',
     options: 'education'
   },
   {

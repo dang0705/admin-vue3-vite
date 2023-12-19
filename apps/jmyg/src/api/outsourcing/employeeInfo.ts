@@ -10,6 +10,8 @@ export function fetchList(query?: Object) {
 
 export const addObj = (params?: Object) =>
   $http.post('/outsourcing/employee/saveEmployeeInfo', params)
+export const putObj = (params?: Object) =>
+  $http.post('/outsourcing/employee/updateEmployeeInfo', params)
 
 export function getObj(id?: string) {
   return request({
@@ -26,18 +28,13 @@ export function delObjs(ids?: Object) {
   })
 }
 
-export function putObj(obj?: Object) {
-  return request({
-    url: '/outsourcing/employee',
-    method: 'put',
-    data: obj
-  })
-}
-
 export const contract = (params: any) =>
-  $http.get('/outsourcing/employeeContract/operateEmployeeContract', params)
+  $http.post('/outsourcing/employeeContract/operateEmployeeContract', params)
 
 export const insurance = (params: any) =>
   $http.post('/outsourcing/employee/operateEmployeeInsured', params)
 export const getStep = (params: any) =>
   $http.get('/outsourcing/employee/getStepAndStus', { params })
+
+export const getEmployeeAllInfo = (params: any) =>
+  $http.get('/outsourcing/employee/getEmployeeAllInfo', { params })

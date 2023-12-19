@@ -1,4 +1,8 @@
 import title from './utils/block-title'
+import uploadBusinessType from '@enums/upload-business-type'
+const businessType = {
+  type: uploadBusinessType.employee
+}
 export const index = [
   {
     title: {
@@ -11,7 +15,7 @@ export const index = [
   {
     label: '合同起止时间',
     control: 'DateRange',
-    key: 'time',
+    key: 'startEndTime',
     value: []
   },
   {
@@ -29,6 +33,7 @@ export default [
     label: '合同模板',
     control: 'UploadFile',
     key: 'contractFile',
+    props: businessType,
     value: []
   }
 ]
