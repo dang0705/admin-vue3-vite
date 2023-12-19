@@ -2,7 +2,7 @@ import request from '@utils/request'
 
 export function fetchList(query?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/manageList',
+    url: '/outsourcing/accumulationFundPolicy/manageList',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query?: Object) {
 
 export function addObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy',
+    url: '/outsourcing/accumulationFundPolicy',
     method: 'post',
     data: obj
   })
@@ -18,7 +18,7 @@ export function addObj(obj?: Object) {
 
 export function cloneObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/clone',
+    url: '/outsourcing/accumulationFundPolicy/clone',
     method: 'post',
     data: obj
   })
@@ -26,14 +26,14 @@ export function cloneObj(obj?: Object) {
 
 export function upDateObj(id?: string) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/stop/' + id,
+    url: '/outsourcing/accumulationFundPolicy/stop/' + id,
     method: 'post'
   })
 }
 
 export function addVersion(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/addVersion',
+    url: '/outsourcing/accumulationFundPolicy/addVersion',
     method: 'post',
     data: obj
   })
@@ -41,14 +41,14 @@ export function addVersion(obj?: Object) {
 
 export function getObj(id?: string) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/' + id,
+    url: '/outsourcing/accumulationFundPolicy/' + id,
     method: 'get'
   })
 }
 
 export function delObjs(ids?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy',
+    url: '/outsourcing/accumulationFundPolicy',
     method: 'delete',
     data: ids
   })
@@ -56,7 +56,7 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy',
+    url: '/outsourcing/accumulationFundPolicy',
     method: 'put',
     data: obj
   })

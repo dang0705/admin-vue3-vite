@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import {useDict} from "@hooks/dict";
 import BottomButtons from '@components/Bottom-buttons.vue'
-import { getInsuredArea,saveObj,putObj,getObj,getVersionObj } from '@jmyg/api/outsourcing/socialInsurancePolicyItem'
+import { getInsuredArea,saveObj,putObj,getObj,getVersionObj } from '@jmyg/api/outsourcing/accumulationFundPolicyItem'
 import { yearTimeList,dayList } from './dropList'
 import closeTagView from '@utils/close-tag-view'
 const $router = useRouter()
@@ -119,7 +119,7 @@ const columns = [
         </el-select>
   }
 ]
-const {social_insurance_policy_item_type: labels, precise_type} = useDict('social_insurance_policy_item_type', 'precise_type')
+const {accumulation_fund_policy_item_type: labels, precise_type} = useDict('accumulation_fund_policy_item_type', 'precise_type')
 
 interface Item {
   label: string; //字典
@@ -185,7 +185,7 @@ const save = async () => {
   : await saveObj({...titleFormData.value,insuredArea,itemList: data.value,version: BottomFormData.value})
   closeTagView(route.meta.title as string)
   $router.push({
-    path: '/benefit/socialInsurancePolicy/index',
+    path: '/benefit/accumulationFundPolicy/index',
     state: {
       refresh: 1
     }
@@ -212,7 +212,7 @@ const release = async () => {
   await putObj({...titleFormData.value,state: '1',id: id,insuredArea,itemList: data.value,version: BottomFormData.value})
   closeTagView(route.meta.title as string)
   $router.push({
-    path: '/benefit/socialInsurancePolicy/index',
+    path: '/benefit/accumulationFundPolicy/index',
     state: {
       refresh: 1
     }
@@ -231,7 +231,7 @@ const titleForms = computed(() => [
   {
     control: 'InputPlus',
     key: 'name',
-    label: '社保政策',
+    label: '公积金政策',
     props: {
       disabled: route.query.type === 'see' || route.query.type === 'addVersion'
     }
@@ -320,15 +320,6 @@ const titleForms = computed(() => [
 ])
 
 const bottomForms = computed(() => [
-  {
-    control: 'el-select',
-    key: 'criticalIllnessChargingType',
-    options: 'critical_illness_charging_type',
-    label: '大病医疗收费方式',
-    props: {
-      disabled: (route.query.type === 'see' || route.query.type === 'addVersion') && !BottomFormData.value.editable
-    }
-  },
   ...(BottomFormData.value?.criticalIllnessChargingType == '1' ? [{
     control: 'el-select',
     key: 'chargingMonth',
@@ -352,7 +343,7 @@ const bottomForms = computed(() => [
   {
     control: 'el-select',
     key: 'calcType',
-    options: 'social_insurance_policy_calc_type',
+    options: 'accumulation_fund_policy_calc_type',
     label: '计算方式',
     value: '1',
     props: {

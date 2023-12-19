@@ -1,6 +1,6 @@
 export default [
   {
-    label: '社保政策',
+    label: '公积金政策',
     control: 'InputPlus',
     key: 'name'
   },
@@ -17,7 +17,7 @@ export default [
     }
   },
   {
-    label: '社保政策专员',
+    label: '公积金政策专员',
     control: 'el-select',
     key: 'policySpecialistId',
     options: ''

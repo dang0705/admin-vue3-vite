@@ -90,5 +90,9 @@ export const customComponents = [
   {
     name: 'ChinaArea',
     component: () => import('@components/ChinaArea/index.vue')
+  },
+  {
+    name: 'Iframe',
+    component: () => import('@components/Iframe/index.vue')
   }
 ]
