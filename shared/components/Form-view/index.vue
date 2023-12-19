@@ -122,9 +122,9 @@ const init = async (forms: FormOptions[]) => {
     const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
       item.control
     )
-    const isSelect = ['el-select', 'SpSelect', 'MerchantSelect'].includes(
+    /*  const isSelect = ['el-select', 'SpSelect', 'MerchantSelect'].includes(
       item.control
-    )
+    )*/
 
     // Handle the default rules when need validation
     if (prop.validation) {
@@ -166,7 +166,7 @@ const init = async (forms: FormOptions[]) => {
     }
 
     // }
-    item.change &&
+    /*   item.change &&
       (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
@@ -174,7 +174,7 @@ const init = async (forms: FormOptions[]) => {
           const condition = isSelect ? !helper.isEmpty(oldValue) : true
           condition && item.change && item.change(value, formData.value)
         }
-      ))
+      ))*/
     helper.isFunction(item.show) &&
       (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
@@ -336,8 +336,9 @@ const stepsData = computed(() => {
   return steps
 })
 
-const onChange = (key, value) => {
-  // console.log(key, value)
+const onChange = (key: string, value: unknown, index: number) => {
+  formConfigs.value[index].change &&
+    formConfigs.value[index].change(value, formData.value)
   formData.value = {
     ...formData.value,
     [key]: value
@@ -377,7 +378,7 @@ defineExpose({
           <el-row :gutter="10" class="w-full">
             <slot name="before-forms" />
             <slot name="forms">
-              <template v-for="form in formConfigs" :key="form.key">
+              <template v-for="(form, index) in formConfigs" :key="form.key">
                 <el-col :span="24" v-if="form.title">
                   <slot :name="`title-before-${form.key}`">
                     <h1
@@ -430,7 +431,7 @@ defineExpose({
                         ...form.props
                       }"
                       @[getEvent(form.control)]="onEnter"
-                      @change="onChange(form.key, $event)">
+                      @change="onChange(form.key, $event, index)">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">
                         <el-option
