@@ -86,5 +86,9 @@ export const customComponents = [
   {
     name: 'BottomButtons',
     component: () => import('@components/Bottom-buttons.vue')
+  },
+  {
+    name: 'Iframe',
+    component: () => import('@components/Iframe/index.vue')
   }
 ]
