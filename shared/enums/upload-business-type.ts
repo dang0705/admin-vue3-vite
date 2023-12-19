@@ -4,5 +4,6 @@ export default {
   sp: '20', // 服务商附件
   contract: '30', // 合同附件
   task: '40', // 任务附件
-  hro: '50' // 承接人附件
+  hro: '50', // 承接人附件
+  employee: '80'
 } as StringValue

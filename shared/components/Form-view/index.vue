@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { WatchStopHandle } from 'vue'
 import request from '@utils/request'
-import helper from '@utils/helpers'
+import helpers from '@utils/helpers'
 import { dictCache, useDict } from '@hooks/dict'
 import { rule } from '@utils/validate'
 import FormViewProps, {
   FormOptions
 } from '@components/Form-view/Form-view-props'
 import Actions from '@components/Form-view/Actions.vue'
-import helpers from '@utils/helpers'
+import maxLength from '@configurations/max-length'
 
 defineOptions({
   name: 'Form-view'
@@ -18,6 +18,8 @@ const emit = defineEmits([
   'update:modelValue',
   'update:valid',
   'update:show',
+  'update:page',
+  'update:nesting-data',
   'get-validation',
   'get-page',
   'submit-and-cancel'
@@ -32,6 +34,10 @@ const prop = defineProps({
     default: null,
     required: true
   },
+  nestingData: {
+    type: Object,
+    default: null
+  },
   ...FormViewProps
 })
 const formRef = ref()
@@ -39,9 +45,37 @@ const formData = computed({
   get: () => prop.modelValue,
   set(value: any) {
     emit('update:modelValue', value)
+    if (!helpers.isEmpty(prop.nestingData)) {
+      const nestingValue = {}
+      const setValue = (
+        obj: { [x: string]: any },
+        keys: string | any[],
+        value: any
+      ) => {
+        const lastKeyIndex = keys.length - 1
+        for (let i = 0; i < lastKeyIndex; ++i) {
+          const key = keys[i]
+          if (!(key in obj)) {
+            obj[key] = {}
+          }
+          obj = obj[key]
+        }
+        obj[keys[lastKeyIndex]] = value
+      }
+
+      for (let key in value) {
+        if (key.includes('.')) {
+          const keys = key.split('.')
+          setValue(nestingValue, keys, value[key])
+        }
+      }
+
+      emit('update:nesting-data', nestingValue)
+    }
   }
 })
 const controlOptions = reactive({} as any)
+
 interface OptionsParams {
   keyFrom?: string | []
   keyTo?: string | []
@@ -81,6 +115,7 @@ const init = async (forms: FormOptions[]) => {
     ) {
       formData.value[item.key] = item.value
     }
+    item.control = item.control || (item.options ? 'el-select' : 'el-input')
     item.rules = []
     const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
       item.control
@@ -126,17 +161,16 @@ const init = async (forms: FormOptions[]) => {
     }
 
     // }
-    item.change &&
+    /*   item.change &&
       (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
         (value, oldValue) => {
-          // Ignore the effect of data from api's first update
-          !helper.isEmpty(oldValue) &&
-            item.change &&
-            item.change(value, formData.value)
+          // Ignore the effect of data from api's first update when control is select type
+          const condition = isSelect ? !helper.isEmpty(oldValue) : true
+          condition && item.change && item.change(value, formData.value)
         }
-      ))
-    helper.isFunction(item.show) &&
+      ))*/
+    helpers.isFunction(item.show) &&
       (showWatcher[item.key] = watchSyncEffect(() => {
         const isShow = item.show?.(formData.value)
         item.hidden = !isShow
@@ -152,7 +186,7 @@ const init = async (forms: FormOptions[]) => {
 
     // 处理options数据源
     const { options } = item
-    if (helper.isString(options)) {
+    if (helpers.isString(options)) {
       if (item.forceOptions) {
         const { dict } = await import('@stores/dict')
         const $dictStore = dict()
@@ -165,16 +199,16 @@ const init = async (forms: FormOptions[]) => {
       const { [options as string]: dic } = useDict(options as string)
       controlOptions[item.key] = computed(() => dic.value)
     } else {
-      if (helper.isArray(options)) {
+      if (helpers.isArray(options)) {
         controlOptions[item.key] = options
-      } else if (helper.isObject(options)) {
+      } else if (helpers.isObject(options)) {
         const { url, params = {} } = options as {
           url: string
           params: OptionsParams
         }
         const { keyFrom = null, keyTo = null } = params
         if (keyFrom) {
-          if (helper.isArray(keyFrom)) {
+          if (helpers.isArray(keyFrom)) {
             const params: Record<string, any> = {}
             ;(keyFrom as []).forEach((key: string) => {
               watch(
@@ -210,41 +244,39 @@ const init = async (forms: FormOptions[]) => {
   }
 }
 onDeactivated(clearWatcher)
-onActivated(() => formConfigs.value.length && init(prop.forms as []))
+onActivated(() => formConfigs.value.length && init(forms.value))
 const resetFields = () => prop.cancelButtonText === '重置' && reset()
 
-const page = ref(0)
-const isLastPage = computed(() =>
-  pagination.value ? page.value === prop.forms?.length - 1 : null
+const pagination = computed(
+  () => helpers.isArray(prop.forms?.[0]) && !helpers.isEmpty(prop.page)
 )
-const pagination = computed(() => helper.isArray(prop.forms?.[0]))
+const isLastPage = computed(() =>
+  pagination.value ? currentPage.value === prop.forms?.length - 1 : null
+)
 // 初始化formData 主要为了options可能为reactive类型, 需要捕获forms状态的更新后,再初始化表单
-pagination.value &&
-  watch(
-    () => page.value,
-    async (page: number) => {
-      await init(prop.forms?.[page] as unknown as FormOptions[])
-      emit('get-page', page)
-    }
-  )
-const reset = () => formRef?.value?.resetFields()
+const currentPage = computed({
+  get: () => prop.page,
+  set: (page) => emit('update:page', page)
+})
+const forms = computed(() =>
+  pagination.value
+    ? (prop.forms[currentPage.value] as unknown as FormOptions[])
+    : prop.forms
+)
 
-const initForm = (forms: any[]) => {
-  helper.isArray(forms[0]) ? init(forms[0]) : init(forms as [])
-}
 watch(
-  () => prop.forms as [],
-  async (forms: any[]) => {
-    forms.length && initForm(forms as [])
+  () => forms.value as [],
+  (forms: any[]) => {
+    forms.length && init(forms)
   },
   { immediate: true }
 )
+const reset = () => formRef?.value?.resetFields()
 
 // 每次弹框关闭后,清空验证状态
 watch(
   () => prop.show,
-  async (show) =>
-    show ? initForm(prop.forms as []) : reset() && resetFormView()
+  async (show) => (show ? init(forms.value) : reset() && resetFormView())
 )
 
 const getEvent = (control: string) =>
@@ -271,6 +303,9 @@ const submit = async () => {
   try {
     prop.onSubmit && (await prop.onSubmit(refresh))
     prop.save && prop.validation && refresh && refresh()
+    pagination.value &&
+      (prop.next || helpers.isEmpty(prop.next)) &&
+      currentPage.value++
     !prop.keepShowAfterConfirm && emit('update:show', false)
     // If FormView use in condition, validate will be false, so it won't refresh
   } catch (e) {
@@ -296,6 +331,15 @@ const stepsData = computed(() => {
   )
   return steps
 })
+
+const onChange = (key: string, value: unknown, index: number) => {
+  formConfigs.value[index].change &&
+    formConfigs.value[index].change(value, formData.value)
+  formData.value = {
+    ...formData.value,
+    [key]: value
+  }
+}
 // 暴露变量
 defineExpose({
   reset,
@@ -309,10 +353,9 @@ defineExpose({
   <div :class="['flex', stepDir === 'horizontal' ? 'flex-col' : 'flex-row']">
     <el-steps
       :direction="stepDir"
-      :active="page"
-      v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }"
-      process-status="finish"
-      finish-status="success">
+      :active="currentPage + 1"
+      align-center
+      v-bind="{ ...(stepSpace ? { space: stepSpace } : {}) }">
       <el-step v-for="step in stepsData" :key="step" :title="step" />
     </el-steps>
     <div class="form-view">
@@ -332,20 +375,16 @@ defineExpose({
           <el-row :gutter="10" class="w-full">
             <slot name="before-forms" />
             <slot name="forms">
-              <template v-for="form in formConfigs" :key="form.key">
+              <template v-for="(form, index) in formConfigs" :key="form.key">
                 <el-col :span="24" v-if="form.title">
                   <slot :name="`title-before-${form.key}`">
                     <h1
-                      v-if="helper.isString(form.title)"
+                      v-if="helpers.isString(form.title)"
                       v-text="form.title"
                       class="text-lg pl-[20px] mb-[10px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px] font-bold" />
-                    <h1
-                      v-else
-                      v-html="form.title.html"
-                      :style="form.title.style" />
+                    <Table-slot v-else :slot-function="form.title.html" />
                   </slot>
                 </el-col>
-
                 <el-col
                   v-bind="form.column ? { span: form.column } : dynamicColumns"
                   :class="[
@@ -380,15 +419,16 @@ defineExpose({
                       "
                       v-model="formData[form.key]"
                       v-bind="{
-                        ...form.props,
-                        ...(form.props?.disabled ? { placeholder: '' } : {}),
                         clearable: form.props?.clearable || true,
                         disabled: form.props?.disabled || prop.disabled,
-                        ...(form.control === 'el-input'
-                          ? { maxlength: 100 }
-                          : {})
+                        ...(['el-input', 'InputPlus'].includes(form.control)
+                          ? { maxlength: maxLength.input }
+                          : {}),
+                        ...(form.props?.disabled ? { placeholder: '' } : {}),
+                        ...form.props
                       }"
-                      @[getEvent(form.control)]="onEnter">
+                      @[getEvent(form.control)]="onEnter"
+                      @change="onChange(form.key, $event, index)">
                       <template
                         v-if="!form.hidden && form.control === 'el-select'">
                         <el-option
@@ -420,7 +460,7 @@ defineExpose({
                 <el-col :span="24" v-if="form.afterTitle">
                   <slot :name="`title-after-${form.key}`">
                     <h1
-                      v-if="helper.isString(form.afterTitle)"
+                      v-if="helpers.isString(form.afterTitle)"
                       v-text="form.afterTitle"
                       class="text-lg pl-[20px] mb-[10px] h-[40px] leading-[40px] bg-[#f1f1f1] rounded-[6px] font-bold" />
                     <h1
@@ -438,13 +478,19 @@ defineExpose({
           <Actions
             v-if="!inDialog"
             v-bind="$props"
-            v-model="page"
+            v-model="currentPage"
+            :use-bottom-button="useBottomButton"
             :buttons-icon="buttonsIcon"
             :submit="submit"
             :cancel="cancel"
-            :pagination="pagination"
+            :isPagination="pagination"
             :is-last-page="isLastPage as boolean"
-            class="ml-2" />
+            class="ml-2"
+            @next="submit">
+            <template v-for="(_, slot) in $slots" #[slot]>
+              <slot :name="slot" />
+            </template>
+          </Actions>
         </div>
       </el-form>
     </div>

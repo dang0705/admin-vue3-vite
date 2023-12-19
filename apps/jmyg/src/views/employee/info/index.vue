@@ -3,6 +3,8 @@
     :condition-forms="conditionForms"
     :columns="columns"
     :actions="actions"
+    down-blob-file-url="/outsourcing/employee/export"
+    export-auth="outsourcing_employee_export"
     module="outsourcing/employeeInfo"
     label-width="140">
     <template #statusDesc="{ row }">
@@ -15,13 +17,6 @@
         @click="openDialog()">
         员工导入
       </el-button> -->
-      <el-button
-        v-auth="'outsourcing_employee_export'"
-        type="primary"
-        class="ml10"
-        @click="exportExcel('/outsourcing/employee/export', downParams)">
-        批量导出
-      </el-button>
       <el-button
         v-auth="'outsourcing_employee_add'"
         type="primary"

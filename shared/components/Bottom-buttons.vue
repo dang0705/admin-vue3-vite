@@ -58,7 +58,7 @@ onDeactivated(() => {
       "
       :style="{ height }">
       <slot name="left" />
-      <slot>
+      <slot name="default">
         <el-button
           type="primary"
           v-debounce:[debounceOptions]="emits"

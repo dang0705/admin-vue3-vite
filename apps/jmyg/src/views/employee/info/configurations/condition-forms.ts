@@ -1,12 +1,12 @@
 export default [
   {
-    control: 'InputPlus',
     key: 'name',
-    label: '姓名'
+    label: '姓名',
+    props: { maxlength: 10 }
   },
   {
-    control: 'InputPlus',
     key: 'idCode',
+    props: { maxlength: 18 },
     label: '身份证号码'
   },
   {
@@ -24,7 +24,7 @@ export default [
   {
     control: 'InputPlus',
     key: 'superiorCompany',
-    label: '上级公司'
+    label: '公司'
   },
   // 缺字段
   // {
@@ -37,5 +37,5 @@ export default [
     control: 'SpSelect',
     key: 'spId',
     label: '服务商'
-  },
+  }
 ]

@@ -12,9 +12,9 @@ import ElementPlus, {
   ElTimePicker,
   ElDatePicker
 } from 'element-plus'
-import '@jmyg/theme/tailwind.css'
+import '@theme/tailwind.css'
 import 'element-plus/dist/index.css'
-import '@jmyg/theme/index.scss'
+import '@theme/index.scss'
 import debounce from '@/directive/debounce'
 import {
   ElementIcons,
@@ -43,9 +43,13 @@ import 'splitpanes/dist/splitpanes.css'
 // const app = createApp(isDev ? Test : App);
 const app = createApp(App)
 
-ElInput.props.placeholder = {
-  type: String,
-  default: '请输入'
+ElInput.props = {
+  ...ElInput.props,
+  // maxlength: 100,
+  placeholder: {
+    type: String,
+    default: '请输入'
+  }
 }
 ElSelect.props = {
   ...ElSelect.props,

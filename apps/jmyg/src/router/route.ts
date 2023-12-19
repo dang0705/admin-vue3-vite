@@ -106,6 +106,11 @@ export const staticRoutes: Array<RouteRecordRaw> = [
               name: '可编辑表格',
               component: () =>
                 import('@jmyg/views/experiment/editable-table.vue')
+            },
+            {
+              path: 'manual-model',
+              name: '手动绑定值',
+              component: () => import('@jmyg/views/experiment/manual-model.vue')
             }
           ]
         }

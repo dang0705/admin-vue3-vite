@@ -29,6 +29,7 @@ const sharedDirs = [
   'hooks',
   'layouts',
   'stores',
+  'theme',
   'utils'
 ]
 const sharedAliases = () => {

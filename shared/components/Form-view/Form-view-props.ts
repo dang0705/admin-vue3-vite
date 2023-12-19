@@ -3,6 +3,7 @@ import { FormItemRule } from 'element-plus'
 interface Props {
   value?: string
   label?: string
+  disabled?: boolean // 是否禁用
   [k: string]: any
 }
 export interface FormOptions {
@@ -30,6 +31,14 @@ export const actionsProps = {
   showBtn: {
     type: Boolean,
     default: true
+  },
+  paginationMode: {
+    type: String,
+    default: 'independent' //'independent'|'common'  two ways to handle pagination save
+  },
+  paginationWithSave: {
+    type: Boolean,
+    default: false
   },
   keepShowAfterConfirm: {
     type: Boolean,
@@ -70,6 +79,18 @@ export const actionsProps = {
   isLastPage: {
     type: Boolean,
     default: false
+  },
+  useBottomButton: {
+    type: Boolean,
+    default: false
+  },
+  next: {
+    type: Boolean,
+    default: null
+  },
+  prev: {
+    type: Boolean,
+    default: null
   },
   submit: { type: Function, default: null },
   cancel: { type: Function, default: null }
@@ -140,6 +161,15 @@ export default {
     default: true
   },
   forceUpdate: {
+    type: Boolean,
+    default: false
+  },
+  page: {
+    type: Number,
+    default: null
+  },
+  // key 嵌套
+  nestingKey: {
     type: Boolean,
     default: false
   },
