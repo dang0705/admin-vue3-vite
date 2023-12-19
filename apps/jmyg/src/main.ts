@@ -40,18 +40,16 @@ import {
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 
-import maxLength from '@configurations/max-length'
-
 // const app = createApp(isDev ? Test : App);
 const app = createApp(App)
 
 ElInput.props = {
   ...ElInput.props,
+  // maxlength: 100,
   placeholder: {
     type: String,
     default: '请输入'
-  },
-  maxlength: maxLength.input
+  }
 }
 ElSelect.props = {
   ...ElSelect.props,
