@@ -9,7 +9,6 @@ import {
 } from '@jmyg/api/outsourcing/formula'
 import { useUserInfo } from '@stores/userInfo'
 import array2Object from '@utils/array-2-object'
-import formulaSymbols from '@jmyg/configurations/formula-symbols'
 const modelValue = defineModel()
 const { userInfos } = storeToRefs(useUserInfo())
 const {
@@ -32,9 +31,14 @@ let salaries = ref([])
 const getSalaries = async () =>
   (salaries.value = (await getSalaryItems({ salaryPlanId })).data)
 
-let { outsourcing_excel_support_formula, salary_plan_project_type } = useDict(
+let {
+  outsourcing_excel_support_formula,
+  salary_plan_project_type,
+  outsourcing_excel_support_symbol: symbols
+} = useDict(
   'outsourcing_excel_support_formula',
-  'salary_plan_project_type'
+  'salary_plan_project_type',
+  'outsourcing_excel_support_symbol'
 )
 const functions = computed(() =>
   outsourcing_excel_support_formula.value.map(({ label }) => label)
@@ -170,11 +174,11 @@ const onSave = async () => {
         <h1 class="flex-shrink-0">常用符号：</h1>
         <div class="flex flex-wrap">
           <el-button
-            v-for="symbol in formulaSymbols"
-            :key="symbol"
+            v-for="{ label } in symbols"
+            :key="label"
             class="my-[2px]"
-            @click="insertContent(symbol, '')">
-            <span class="font-bold text-lg" v-text="symbol" />
+            @click="insertContent(label, '')">
+            <span class="font-bold text-lg" v-text="label" />
           </el-button>
         </div>
       </li>
