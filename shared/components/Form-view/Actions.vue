@@ -39,7 +39,9 @@ getIcon()
 
 <template>
   <div v-if="showBtn">
-    <BottomButtons v-if="isPagination && useBottomButton">
+    <BottomButtons
+      v-if="isPagination && useBottomButton"
+      :hide-default="isLastPage">
       <template #left>
         <el-button plain v-if="modelValue" v-debounce="previous">
           {{ prevButtonText }}

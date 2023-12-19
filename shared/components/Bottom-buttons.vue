@@ -18,6 +18,10 @@ const props = defineProps({
     type: String,
     default: 'relative'
   },
+  hideDefault: {
+    type: Boolean,
+    default: false
+  },
   to: {
     type: String,
     default: '.layout-backtop'
@@ -58,7 +62,7 @@ onDeactivated(() => {
       "
       :style="{ height }">
       <slot name="left" />
-      <slot name="default">
+      <slot name="default" v-if="!hideDefault">
         <el-button
           type="primary"
           v-debounce:[debounceOptions]="emits"
