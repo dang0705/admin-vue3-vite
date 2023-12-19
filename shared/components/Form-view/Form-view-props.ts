@@ -84,6 +84,14 @@ export const actionsProps = {
     type: Boolean,
     default: false
   },
+  next: {
+    type: Boolean,
+    default: null
+  },
+  prev: {
+    type: Boolean,
+    default: null
+  },
   submit: { type: Function, default: null },
   cancel: { type: Function, default: null }
 }

@@ -15,27 +15,7 @@ const props = defineProps({
   }
 })
 const formView = inject('formView', null)
-const emit = defineEmits(['update:modelValue'])
-const page = ref(0)
-
-watchEffect(() => {
-  page.value = props.modelValue
-})
-watch(
-  () => page.value,
-  (page) => emit('update:modelValue', page)
-)
-
-const next = async () => {
-  let valid: boolean
-  try {
-    valid = await formView?.$refs?.formRef.validate()
-    // valid && (await props.submit())
-    if (valid) {
-      page.value += 1
-    }
-  } catch (e) {}
-}
+const emit = defineEmits(['update:modelValue', 'next'])
 
 const icons = ref([])
 const getIcon = () => {
@@ -46,6 +26,12 @@ const getIcon = () => {
     })
 }
 const isResetButton = props.cancelButtonText === '重置'
+const previous = () => {
+  let page = props.modelValue
+  page--
+  emit('update:modelValue', page)
+}
+
 getIcon()
 // const getRealBottomButtonSlot = (slot: string) =>
 //   slot.replace('bottom-button-', '')
@@ -53,9 +39,9 @@ getIcon()
 
 <template>
   <div v-if="showBtn">
-    <BottomButtons v-if="isPagination || useBottomButton">
+    <BottomButtons v-if="isPagination && useBottomButton">
       <template #left>
-        <el-button plain v-if="page" @click="page -= 1">
+        <el-button plain v-if="modelValue" v-debounce="previous">
           {{ prevButtonText }}
         </el-button>
       </template>
@@ -64,7 +50,10 @@ getIcon()
         <el-button type="primary" v-if="paginationWithSave">
           {{ submitButtonText }}
         </el-button>
-        <el-button type="primary" v-else-if="!isLastPage" v-debounce="next">
+        <el-button
+          type="primary"
+          v-else-if="!isLastPage"
+          v-debounce="() => emit('next')">
           {{ nextButtonText }}
         </el-button>
       </template>

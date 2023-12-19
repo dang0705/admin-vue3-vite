@@ -308,7 +308,9 @@ const submit = async () => {
   try {
     prop.onSubmit && (await prop.onSubmit(refresh))
     prop.save && prop.validation && refresh && refresh()
-    pagination.value && currentPage.value++
+    pagination.value &&
+      (prop.next || helpers.isEmpty(prop.next)) &&
+      currentPage.value++
     !prop.keepShowAfterConfirm && emit('update:show', false)
     // If FormView use in condition, validate will be false, so it won't refresh
   } catch (e) {
