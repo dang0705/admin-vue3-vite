@@ -85,7 +85,6 @@ interface OptionsParams {
 const formConfigs = ref<any[]>([])
 const rulesCache = ref<Record<string, any>>({})
 let showWatcher: Record<string, WatchStopHandle> = {}
-let changeWatcher: Record<string, WatchStopHandle> = {}
 const resetFormView = () => {
   clearWatcher()
   rulesCache.value = {}
@@ -93,9 +92,6 @@ const resetFormView = () => {
 const clearWatcher = () => {
   for (let watcher in showWatcher) {
     showWatcher[watcher]()
-  }
-  for (let watcher in changeWatcher) {
-    changeWatcher[watcher]()
   }
 }
 const init = async (forms: FormOptions[]) => {
@@ -160,7 +156,6 @@ const init = async (forms: FormOptions[]) => {
       }
     }
 
-    // }
     /*   item.change &&
       (changeWatcher[item.key] = watch(
         () => prop.modelValue?.[item.key],
@@ -332,9 +327,11 @@ const stepsData = computed(() => {
   return steps
 })
 
-const onChange = (key: string, value: unknown, index: number) => {
-  formConfigs.value[index].change &&
-    formConfigs.value[index].change(value, formData.value)
+const onChange = async (key: string, value: unknown, index: number) => {
+  const { change = null } = formConfigs.value[index]
+  change && change(value, formData.value)
+  // ensure the change implement is effective
+  await nextTick()
   formData.value = {
     ...formData.value,
     [key]: value
