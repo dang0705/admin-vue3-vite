@@ -2,7 +2,7 @@ import request from '@utils/request'
 
 export function fetchList(query?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicyItem/page',
+    url: '/outsourcing/accumulationFundPolicyItem/page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query?: Object) {
 
 export function addObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicyItem',
+    url: '/outsourcing/accumulationFundPolicyItem',
     method: 'post',
     data: obj
   })
@@ -18,21 +18,21 @@ export function addObj(obj?: Object) {
 
 export function getObj(id?: string) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/' + id,
+    url: '/outsourcing/accumulationFundPolicy/' + id,
     method: 'get'
   })
 }
 
 export function getVersionObj(id?: string) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy/getAllVersion/' + id,
+    url: '/outsourcing/accumulationFundPolicy/getAllVersion/' + id,
     method: 'get'
   })
 }
 
 export function delObjs(ids?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicyItem',
+    url: '/outsourcing/accumulationFundPolicyItem',
     method: 'delete',
     data: ids
   })
@@ -40,7 +40,7 @@ export function delObjs(ids?: Object) {
 
 export function putObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy',
+    url: '/outsourcing/accumulationFundPolicy',
     method: 'put',
     data: obj
   })
@@ -56,7 +56,7 @@ export function getInsuredArea(query?: Object) {
 
 export function saveObj(obj?: Object) {
   return request({
-    url: '/outsourcing/socialInsurancePolicy',
+    url: '/outsourcing/accumulationFundPolicy',
     method: 'post',
     data: obj
   })

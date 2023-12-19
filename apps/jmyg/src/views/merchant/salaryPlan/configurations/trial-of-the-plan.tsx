@@ -1,12 +1,13 @@
 import { useDict } from '@hooks/dict'
 import array2Object from '@utils/array-2-object'
 import { trialPlan } from '@jmyg/api/outsourcing/salaryPlan'
+import { downBlobFile } from '@utils/other'
 
 let { salary_plan_project_type, salary_plan_project_source } = useDict(
   'salary_plan_project_type',
   'salary_plan_project_source'
 )
-export default (
+export default async (
   dialog: any,
   list: any[],
   dialogFormData: any,
@@ -21,50 +22,71 @@ export default (
   })
   dialog.title = '方案试算'
   dialog.save = false
+  dialog.labelWidth = 200
   dialog.keepShowAfterConfirm = true
   const forms: any[] = []
-  list.forEach(({ projectType, projectName, projectSource }, index) => {
-    if (sourceTypeMap[projectSource] !== '计算项') {
+  let hasValid: boolean | null = null
+  list.forEach(({ projectType, projectName, projectSource }) => {
+    const validStandard = sourceTypeMap[projectSource] !== '计算项'
+    hasValid === null && validStandard && (hasValid = validStandard)
+    if (validStandard) {
       const control =
         controlTypeMap[projectType] === '日期'
-          ? 'DateRange'
+          ? 'el-date-picker'
           : controlTypeMap[projectType] === '数值'
           ? 'el-input-number'
           : 'el-input'
 
       forms.push({
-        ...(!index ? { title: '输入项' } : {}),
         label: projectName,
         key: projectName,
         control,
-        ...(__isDev ? { value: 1 } : {})
+        ...(__isDev ? { value: 1 } : {}),
+        ...(controlTypeMap[projectType] === '日期'
+          ? {
+              props: {
+                valueFormat: 'YYYY-MM-DD'
+              }
+            }
+          : {})
       })
     }
   })
+  hasValid && (forms[0].title = '输入项')
   dialog.forms = forms
-  const link = ''
+  const name = ref('')
+  const link = ref('')
   dialog.action = {
     params: {},
+    save: false,
     handler: async () => {
-      await trialPlan({
+      const {
+        data: { fileName, url }
+      } = await trialPlan({
         versionId,
         salaryPlanId,
         ...dialogFormData
       })
+      name.value = fileName
+      link.value = url
     }
   }
   dialog.forms.push({
     title: '输出项',
-    label: '结果',
+    labelWidth: '0',
     required: false,
     slot: () => (
-      <a
-        class={['text-primary', 'hover:underline']}
-        download
-        href={link}
-        v-text={dialogFormData['社保代缴']}
-      />
+      <span
+        class={['text-primary', 'hover:underline', 'cursor-pointer']}
+        onClick={() => downBlobFile(link.value, {}, name.value)}>
+        {name.value}
+      </span>
     )
   })
-  dialog.show = true
+
+  dialog.show = hasValid
+  if (!hasValid) {
+    const { useMessage } = await import('@hooks/message')
+    useMessage().success('无可用工资项目')
+  }
 }

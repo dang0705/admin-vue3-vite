@@ -69,7 +69,7 @@
     <Dialog
       vertical
       v-model="visible"
-      title="添加工资项目"
+      :title="dialogTitle"
       :label-width="150"
       :show-cancel="false"
       :showBtn="!disabled"
@@ -148,7 +148,8 @@ import {
   getObj,
   putObj,
   releaseObj,
-  getVersionObj
+  getVersionObj,
+  delObjs
 } from '@jmyg/api/outsourcing/salaryPlanProject'
 import closeTagView from '@utils/close-tag-view'
 import BottomButtons from '@components/Bottom-buttons.vue'
@@ -165,6 +166,7 @@ const id = ref(null)
 const getSaveOptions = (list: string) => ({params: [list, 'save']})
 const getReleaseOptions = (list: string) => ({params: [list, 'release']})
 
+const dialogTitle = ref('添加工资项目')
 const dialogFormData = ref({
   projectSource: '',
   projectType: '',
@@ -225,7 +227,7 @@ onMounted(async () => {
   let Version = await getVersionObj(route.query.salaryPlanId)
   Object.assign(form, Version.data)
   versionInfo.value = Version.data.salaryPlanVersionList.filter(
-    (item) => item.effectType == 1
+    (item) => route.query.type === 'addVersion' ? item.effectType == 2 : item.effectType == 1
   )[0]
 })
 
@@ -236,6 +238,7 @@ const versionChange = (value) => {
   tableViewRef.value?.getDataList(true, {
     versionId: versionInfo.value.versionId
   })
+  Object.assign(form, versionInfo.value)
 }
 // 头部版本信息配置
 const titleForms = computed(() => [
@@ -291,7 +294,8 @@ const titleForms = computed(() => [
           required: false,
           props: {
             valueFormat: 'YYYY-MM-DD',
-            disabled: versionInfo.value?.effectType != 2
+            disabled: versionInfo.value?.effectType != 2,
+            disabledDate: (time) => time.getTime() <= Date.now()
           }
         },
         {
@@ -360,7 +364,7 @@ const columns = [
     prop: 'defaultItem',
     label: '是否默认项',
     value: (value: string) => (value.defaultItem == '1' ? '是' : '否'),
-    'min-width': 80
+    'min-width': 100
   },
   {
     prop: 'projectTypeDesc',
@@ -376,13 +380,13 @@ const columns = [
     prop: 'salaryShow',
     label: '薪资表是否展示',
     value: (value: string) => (value.salaryShow == '1' ? '是' : '否'),
-    'min-width': 100
+    'min-width': 120
   },
   {
     prop: 'payslipShow',
     label: '工资条是否展示',
     value: (value: string) => (value.payslipShow == '1' ? '是' : '否'),
-    'min-width': 100
+    'min-width': 120
   },
   {
     prop: 'formula',
@@ -430,7 +434,10 @@ const actions = (row, list) => {
     {
       auth: 'outsourcing_salaryPlanProject_del',
       label: '删除',
-      type: 'delete',
+      icon: 'icon_a-shanchu1',
+      confirm: {
+        ask: '您确定将此方案项删除吗？'
+      },
       show: () =>
         row.defaultItem != '1'&&
         (route.query.type == 'add' ||
@@ -438,7 +445,6 @@ const actions = (row, list) => {
         versionInfo.value?.effectType == 2),
       action: {
         handler: del,
-        save: false,
         params: {row, list}
       }
     },
@@ -468,6 +474,7 @@ const addSalaryPlan = async (list) => {
   listValue.value = list
   disabled.value = false
   id.value = null
+  dialogTitle.value = '添加工资项目'
   visible.value = true
 }
 
@@ -475,9 +482,10 @@ const addSalaryPlan = async (list) => {
 const view = async (row) => {
   visible.value = true
   disabled.value = true
+  dialogTitle.value = row.defaultItem == '1' ? '默认项详情' : '工资项目详情'
   try {
     let res = await getObj(row.id)
-    dialogFormData.value = res.data
+    dialogFormData.value = {...res.data}
   } catch (error) {
     console.log(error)
   }
@@ -489,6 +497,7 @@ const edit = async ({row, list}) => {
   disabled.value = false
   id.value = row.id
   visible.value = true
+  dialogTitle.value = row.defaultItem == '1' ? '修改默认项' : '修改工资项目'
   try {
     let res = await getObj(row.id)
     dialogFormData.value = {...res.data}
@@ -498,8 +507,18 @@ const edit = async ({row, list}) => {
 }
 
 // 删除
-const del = ({row, list}) => {
-  tableViewRef?.value.delListItem(row.id)
+const del = async ({row, list}) => {
+  await saveSort({
+    ...form,
+    modify: '0',
+    saveParams: list,
+    versionParam: {
+      versionId: versionInfo.value.versionId,
+      effectTime: form.effectTime,
+      versionRemark: form.versionRemark
+    }
+  })
+  await delObjs([row.id])
 }
 
 // 修改公式
@@ -713,17 +732,16 @@ const saveList = async (list, type) => {
           versionRemark: form.versionRemark
         }
       })
-      if (form.salaryPlanName != route.query.salaryPlanName) {
-        closeTagView(route.meta.title as string)
-        $router.push({
-          path: '/merchant/salaryPlan/add',
-          query: {
-            salaryPlanId: form.salaryPlanId,
-            salaryPlanName: form.salaryPlanName
-          }
-        })
-      }
-      if (route.query.type === 'see' || route.query.type === 'addVersion') {
+      // if (form.salaryPlanName != route.query.salaryPlanName) {
+      //   closeTagView(route.meta.title as string)
+      //   $router.push({
+      //     path: route.path,
+      //     query: {
+      //       salaryPlanId: form.salaryPlanId,
+      //       salaryPlanName: form.salaryPlanName
+      //     }
+      //   })
+      // }
         closeTagView(route.meta.title as string)
         $router.push({
           path: '/merchant/salaryPlan/index',
@@ -731,7 +749,6 @@ const saveList = async (list, type) => {
             refresh: 1
           }
         })
-      }
     } else {
       await releaseObj({
         ...form,
@@ -783,7 +800,7 @@ const onSubmit = async () => {
       : await putObj({
         ...form,
         modify: '0',
-        param: dialogFormData.value,
+        param: {...dialogFormData.value,id: id.value},
         versionParam: {
           versionId: versionInfo.value.versionId,
           effectTime: form.effectTime,

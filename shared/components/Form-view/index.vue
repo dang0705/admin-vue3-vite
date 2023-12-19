@@ -70,8 +70,18 @@ const init = async (forms: FormOptions[]) => {
   for (let i = 0; i < forms.length; i++) {
     formConfigs.value.push(forms[i])
     const item = formConfigs.value[i] as FormOptions
-    item.rules = []
     item.hidden = item.hidden ?? false
+    if (!item.key) continue
+    // 如果forms的item有默认值，给formData对应的key赋值
+    // todo 以下if判断会在动态forms中无法重新赋值, 后续优化
+    // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
+    if (
+      !helpers.isEmpty(item.value) &&
+      formData.value[item.key] === undefined
+    ) {
+      formData.value[item.key] = item.value
+    }
+    item.rules = []
     const isInput = ['el-input', 'InputPlus', 'el-input-number'].includes(
       item.control
     )
@@ -115,15 +125,6 @@ const init = async (forms: FormOptions[]) => {
       }
     }
 
-    // 如果forms的item有默认值，给formData对应的key赋值
-    // todo 以下if判断会在动态forms中无法重新赋值, 后续优化
-    // if ((item.value !== null || true) && (formData.value[item.key] === null || formData.value[item.key] === undefined)) {
-    if (
-      !helpers.isEmpty(item.value) &&
-      [null, undefined].includes(formData.value[item.key])
-    ) {
-      formData.value[item.key] = item.value
-    }
     // }
     item.change &&
       (changeWatcher[item.key] = watch(
@@ -281,6 +282,7 @@ const cancel = () => {
   resetFields()
   prop.onCancel ? prop.onCancel() : emit('update:show', false)
 }
+const validate = () => formRef.value.validate()
 emit('submit-and-cancel', { submit, cancel })
 const dynamicColumns = prop.columns
   ? { span: prop.columns }
@@ -298,7 +300,8 @@ const stepsData = computed(() => {
 defineExpose({
   reset,
   submit,
-  cancel
+  cancel,
+  validate
 })
 </script>
 
@@ -369,7 +372,11 @@ defineExpose({
                     <component
                       v-if="!form.slot"
                       :is="
-                        !form.hidden ? form.control || 'el-input' : 'template'
+                        form.key
+                          ? !form.hidden
+                            ? form.control || 'el-input'
+                            : 'template'
+                          : 'template'
                       "
                       v-model="formData[form.key]"
                       v-bind="{
@@ -403,7 +410,7 @@ defineExpose({
                       </template>
                     </component>
                     <slot
-                      v-else
+                      v-if="form.slot"
                       :name="form.key"
                       v-bind="{ form, formData, dynamicColumns }">
                       <Table-slot :slot-function="form.slot" :row="formData" />

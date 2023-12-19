@@ -2,6 +2,7 @@
   <Formula
     v-model="formula"
     :item-name="itemName"
+    :salary-plan-version="salaryPlanVersion"
     :salary-plan-name="salaryPlanName"
     :salary-plan-id="salaryPlanId"
     :salary-plan-project-id="salaryPlanProjectId"
@@ -14,6 +15,7 @@ import closeTagView from '@utils/close-tag-view'
 const $router = useRouter()
 const formula = ref('')
 const itemName = ref('')
+const salaryPlanVersion = ref('')
 const $route = useRoute()
 const {
   salaryPlanProjectId = '',
@@ -31,10 +33,11 @@ const back = () => {
 }
 const getDetail = async () => {
   const {
-    data: { formula: FORMULA, projectName }
+    data: { formula: FORMULA, projectName, version }
   } = await getObj(salaryPlanProjectId)
   formula.value = FORMULA
   itemName.value = projectName
+  salaryPlanVersion.value = version
 }
 getDetail()
 // const salaryPlanProjectId = 666011

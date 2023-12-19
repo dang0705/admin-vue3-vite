@@ -1,1 +1,1 @@
-export default 'kevin'
+export default ''

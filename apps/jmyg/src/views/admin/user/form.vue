@@ -102,27 +102,34 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <!--					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('sysuser.post')" prop="post">
-							<el-select class="w100" clearable multiple placeholder="请选择岗位" v-model="dataForm.post">
-								<el-option :key="item.postId" :label="item.postName" :value="item.postId" v-for="item in postData" />
-							</el-select>
-						</el-form-item>
-					</el-col>-->
-          <!--					<el-col :span="12" class="mb20">
-						<el-form-item :label="$t('sysuser.dept')" prop="deptId">
-							<el-tree-select
-								:data="deptData"
-								:props="{ value: 'id', label: 'name', children: 'children' }"
-								check-strictly
-								class="w100"
-								clearable
-								placeholder="请选择所属部门"
-								v-model="dataForm.deptId"
-							>
-							</el-tree-select>
-						</el-form-item>
-					</el-col>-->
+          <el-col :span="12" class="mb20">
+            <el-form-item :label="$t('sysuser.post')" prop="post">
+              <el-select
+                class="w100"
+                clearable
+                multiple
+                placeholder="请选择岗位"
+                v-model="dataForm.post">
+                <el-option
+                  :key="item.postId"
+                  :label="item.postName"
+                  :value="item.postId"
+                  v-for="item in postData" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" class="mb20">
+            <el-form-item :label="$t('sysuser.dept')" prop="deptId">
+              <el-tree-select
+                :data="deptData"
+                :props="{ value: 'id', label: 'name', children: 'children' }"
+                check-strictly
+                class="w100"
+                clearable
+                placeholder="请选择所属部门"
+                v-model="dataForm.deptId"></el-tree-select>
+            </el-form-item>
+          </el-col>
 
           <!--					<el-col :span="12" class="mb20">
 						<el-form-item :label="$t('sysuser.email')" prop="email">

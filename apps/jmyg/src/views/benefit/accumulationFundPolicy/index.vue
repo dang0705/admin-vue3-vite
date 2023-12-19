@@ -3,15 +3,15 @@
     :columns="columns"
     :condition-forms="conditions"
     :actions="actions"
-    labelWidth="100px"
+    labelWidth="120px"
     getFullSelection
     v-model="selectObjs"
-    module="outsourcing/socialInsurancePolicy.ts">
+    module="outsourcing/accumulationFundPolicy.ts">
     <template #top-bar>
       <el-button
         @click="addOut"
         type="primary"
-        v-auth="'outsourcing_socialInsurancePolicyVersion_add'">
+        v-auth="'outsourcing_accumulationFundPolicy_add'">
         新增
       </el-button>
       <el-button
@@ -19,7 +19,7 @@
         :disabled="!selectObjs.length"
         type="primary"
         v-auth="''">
-        批量修改社保政策专员
+        批量修改公积金政策专员
       </el-button>
     </template>
     <Dialog
@@ -37,12 +37,12 @@
 <script setup lang="ts">
 import conditions from './configurations/conditions'
 import columns from './configurations/columns'
-import getActions from '@jmyg/views/benefit/socialInsurancePolicy/configurations/actions'
+import getActions from '@jmyg/views/benefit/accumulationFundPolicy/configurations/actions'
 import {
   addVersion,
   cloneObj,
   upDateObj
-} from '@jmyg/api/outsourcing/socialInsurancePolicy'
+} from '@jmyg/api/outsourcing/accumulationFundPolicy'
 const $router = useRouter()
 const selectObjs = ref([]) // 勾选的表格行
 const visible = ref(false)
@@ -51,7 +51,7 @@ const dialogFormData = ref({})
 const goFromView = async ({ row, type }) => {
   if (type == 'addVersion') await addVersion({ id: row.id })
   $router.push({
-    path: `/benefit/socialInsurancePolicy/${type}`,
+    path: `/benefit/accumulationFundPolicy/${type}`,
     query: {
       id: row.id,
       type
@@ -65,7 +65,7 @@ const actions = getActions(goFromView, cloneItem, upDateItem)
 
 const addOut = () => {
   $router.push({
-    path: '/benefit/socialInsurancePolicy/add',
+    path: '/benefit/accumulationFundPolicy/add',
     query: {
       type: 'add'
     }
@@ -77,7 +77,7 @@ const forms = [
     control: 'el-select',
     key: 'projectSource',
     options: '',
-    label: '选择社保政策专员'
+    label: '选择公积金政策专员'
   }
 ]
 

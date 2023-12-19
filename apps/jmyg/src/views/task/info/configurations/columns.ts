@@ -65,6 +65,6 @@ export default [
     prop: 'actions',
     fixed: 'right',
     slot: true,
-    'min-width': 210
+    'min-width': 400
   }
 ]
