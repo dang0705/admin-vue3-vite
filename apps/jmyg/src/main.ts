@@ -12,9 +12,9 @@ import ElementPlus, {
   ElTimePicker,
   ElDatePicker
 } from 'element-plus'
-import '@jmyg/theme/tailwind.css'
+import '@theme/tailwind.css'
 import 'element-plus/dist/index.css'
-import '@jmyg/theme/index.scss'
+import '@theme/index.scss'
 import debounce from '@/directive/debounce'
 import {
   ElementIcons,

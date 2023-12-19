@@ -378,7 +378,7 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-@import '@jmyg/theme/mixins/index.scss';
+@import '@theme/mixins/index.scss';
 
 .personal {
   .personal-user {
