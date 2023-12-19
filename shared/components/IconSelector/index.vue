@@ -69,7 +69,7 @@
 <script setup lang="ts">
 import type { TabsPaneContext } from 'element-plus'
 import initIconfont from '@utils/getStyleSheets'
-import '@jmyg/theme/iconSelector.scss'
+import '@theme/iconSelector.scss'
 defineOptions({ name: 'Icon-selector' })
 // 定义父组件传过来的值
 const props = defineProps({
